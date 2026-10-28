@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>spec-implementation-audit_2026-10-27.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>spec-implementation-audit_2026-10-27.zh</h1>
+<div class="meta">
+  机读源: <code>spec-implementation-audit_2026-10-27.zh.md</code> ／
+  生成: 2026-10-28 09:52 ／
+  节 11・表 16
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>spec-implementation-audit_2026-10-27.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">一、一句话结论</a></li><li><a href="#sec-2">二、九条硬事实</a></li><li><a href="#sec-3">三、文件之间是什么关系</a></li><li><a href="#sec-4">四、规格书逐节对照</a></li><li><a href="#sec-5">五、已实现的部分，怎么用</a></li><li><a href="#sec-6">六、未实现的部分，怎么补</a></li><li><a href="#sec-7">七、三份方案（单独列）</a></li><li><a href="#sec-8">八、任意节点入口（核心设计）</a></li><li><a href="#sec-9">九、已经拍板的四件事（10-28）</a></li><li><a href="#sec-10">十、下一步（第一批六步）</a></li><li><a href="#sec-11">附：本次调查执行过的关键命令</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>AI 全链路开发框架 —— 现状调查报告</h1>
+<ul><li>调查对象：《AI全链路软件工程平台_实施规格书.md》（1273 行，全文读完好无遗漏）</li><li>调查范围：<code>D:\AI_work_dev</code> 全部文件 + <code>D:\AI_platform\kb-platform</code></li><li>调查日期：2026-10-27（2026-10-28 补充首次提交结果）</li><li>调查方式：能机器查的一律跑命令取证，只有"该不该"这类判断留给人</li></ul>
+<blockquote class="quote">这份是<strong>阅读版</strong>，给人看的。机读源还是原来那两份：规格书本身和仓库里的 <code>.md</code>、<code>.yaml</code>。<br>本页由 <code>tools/gen_view</code> 生成，<strong>不要手改</strong>——改了下次重新生成就没了。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>一、一句话结论</h2>
+<p><strong>流程这一层是真做完了；平台这一层基本还是空的。</strong></p>
+<ul><li><strong>做完的</strong>：8 个工程的主流程、9 个执行 agent、5 个 skill、7 份规则、6 道门禁、编号贯穿全链路、变更环。R60Login 演练 8/8 已由 SE-001 确认，<code>trace_check --strict</code> 实测 6 门全过（164 个编号，0 个孤立）。</li><li><strong>但要看清一件事</strong>：<strong>"确认过"不等于"验证过"</strong>。节点 7 的 12 本结合测试一本都没执行，节点 6 的 21 个用例没判定合格，节点 8 没有发布判定。这套东西目前证明的是"流程能走通"，不是"产物是对的"。</li><li><strong>空的</strong>：模型网关、RAG 生产版、KPI 计量、Prompt 模板库、规格书 §8.1 的四种角色、以及<strong>任意节点入口</strong>。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>二、九条硬事实</h2>
+<p>每一条都跑过命令，不是推断。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">事实</th><th style="text-align:left">影响</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>trace_check</code> 的扫描根只有 <code>docs</code>、<code>.claude</code>、<code>tutorial</code> 三个目录</td><td style="text-align:left">规则 01 声称还扫 <code>tools/</code>、<code>reports/</code> 和根目录的 md，<strong>实际不扫</strong>。这等于扫描范围被悄悄收窄，违反规则 06 自己写的"只能扩大不能缩小"</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">~~git 仓库 0 个提交~~ → <strong>已修（10-28）</strong></td><td style="text-align:left">首次提交 700 个文件；<code>docs/</code>、<code>tools/</code>、<code>reports/</code> 已放开。此后红线⑥才有对象可执行</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">工具层<strong>没有任何一次程序化的大模型调用</strong></td><td style="text-align:left">所以"模型网关"今天没有调用方。它真正的用途只有两处：RAG 的向量化/重排，以及将来换模型供应商时的接口缝</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><code>tools/rag</code> 是<strong>纯标准库的关键词检索</strong>，不是向量检索</td><td style="text-align:left">和规格书说的"知识库"同名但不是一回事。可以先当默认提供方，公司给了服务再换适配器</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">kb-platform 的元数据是 <code>doc_id/scope/title/doc_type/version/status/conf_level/updated_at</code></td><td style="text-align:left">和骨架的 7 个字段（<code>id/type/req_ids/status/sensitivity/owner/version</code>）<strong>对不上</strong>，不能直接灌进去，必须先过一层映射</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">coach 不能从任意节点开跑</td><td style="text-align:left">当前节点永远取"前置已满足且未批准的最小号"；前置没批准就硬阻断，<code>case.yml</code> 里也没有 <code>start_node</code> 字段</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><strong>进度声明有三套，而且全错</strong></td><td style="text-align:left">有文档写 0/8、1/8、"一次都没跑"，实际是 8/8。谁读到那三份都会得到相反印象</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left"><strong>变更环用了没有登记的编号</strong></td><td style="text-align:left"><code>n09.yml</code> 里的 <code>CR-201..CR-205</code> 在 <code>ids.yml</code> 中不存在。这是野号（红线①），门禁没拦住是因为 gate1 不扫 <code>docs/00_plan/</code></td></tr><tr><td style="text-align:left">9</td><td style="text-align:left"><strong>节点 4 的确认版标了一个没签过的版本</strong></td><td style="text-align:left">文件写 <code>status: baselined</code>、<code>v1.0.1</code>，但结项记录说承认的是 v1.0.0。这等于文件在声称一个没人签过的基线</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>三、文件之间是什么关系</h2>
+<h3>3.1 五层结构</h3>
+<pre><code>① 认知源（为什么这么做）   实施规格书.md  ← 这是目标，不是现状
+② 规则（必须怎么做）       CLAUDE.md + rules/00~06
+③ 执行（谁去干）           skills(5) + agents(14) + tools(12)
+④ 产物（做出什么）         docs/10~70_*（真实案件） / tutorial/&lt;案件&gt;/节点N_*（演练）
+⑤ 证据（做没做到）         docs/00_plan/coach/&lt;模块&gt;/（进度）+ reports/（门禁原始输出）</code></pre>
+<p>一句话记法：<strong>①说为什么，②说不许怎样，③是手脚，④是东西，⑤是证据。</strong></p>
+<p>出问题时按 <strong>⑤ → ④ → ③ → ②</strong> 的顺序查：先看证据，再怀疑产物，再怀疑执行，最后才怪规则。</p>
+<h3>3.2 四份入口文件有重叠</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">写给谁</th><th style="text-align:left">关系</th></tr></thead><tbody><tr><td style="text-align:left"><code>START_HERE.md</code></td><td style="text-align:left"><strong>第一次上手的人</strong></td><td style="text-align:left">唯一入口，286 行，三句话能记住。<strong>新人只开这一份</strong></td></tr><tr><td style="text-align:left"><code>使用手册.md</code></td><td style="text-align:left">想查细节的人</td><td style="text-align:left">上面那份的加长版，内容大量重复</td></tr><tr><td style="text-align:left"><code>AGENTS.md</code></td><td style="text-align:left">定角色分工的人</td><td style="text-align:left">Claude Code 不会自动加载它，纯粹给人看</td></tr><tr><td style="text-align:left"><code>CLAUDE.md</code></td><td style="text-align:left">AI 和治理</td><td style="text-align:left"><strong>不是入门材料</strong>，是常时约束</td></tr></tbody></table>
+<h3>3.3 实际调用链</h3>
+<pre><code>用户
+ └─▶ trans-cosmos-ai-lifecycle-coach（唯一的推进入口）
+       ├─▶ tools/coach_brief          定位当前在哪（SessionStart 钩子也会自动跑）
+       ├─▶ 9 个 node agent            每个节点一个，独立上下文，只回报 15 行
+       ├─▶ 5 个验证 agent             审查 / 查机密 / 生成视图 / 训练对比
+       ├─▶ requirement-interrogator   节点 1 必过（这是 Skill，不是 agent）
+       ├─▶ virtual-requirement-author 节点 1 没输入书时用（节点 0）
+       ├─▶ code-from-design           只有真实案件/migration 的节点 5 用
+       └─▶ tools/{registry,impact,trace_check,gen_view,gen_formal}</code></pre>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>四、规格书逐节对照</h2>
+<p>图例：完全实现 / 部分实现 / 未实现 / 纯论述</p>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书章节</th><th style="text-align:left">内容</th><th style="text-align:left">实际状态</th><th style="text-align:left">怎么用，缺什么</th></tr></thead><tbody><tr><td style="text-align:left">§1</td><td style="text-align:left">现状与痛点</td><td style="text-align:left">论述</td><td style="text-align:left">不用实现</td></tr><tr><td style="text-align:left">§2</td><td style="text-align:left">三大认知突破</td><td style="text-align:left">论述</td><td style="text-align:left">已落到规则 00 §11 和答案引擎文档</td></tr><tr><td style="text-align:left">§3</td><td style="text-align:left">四个思维升级</td><td style="text-align:left">论述</td><td style="text-align:left">不用实现</td></tr><tr><td style="text-align:left">§4.1</td><td style="text-align:left">8 个工程的全链路架构</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">打 <code>/trans-cosmos-ai-lifecycle-coach</code> 就能走</td></tr><tr><td style="text-align:left">§4.2</td><td style="text-align:left">各阶段的典型生成物</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">看 <code>tutorial/R60Login/节点1~8</code> 的实物</td></tr><tr><td style="text-align:left">§4.3</td><td style="text-align:left">三层支撑体系</td><td style="text-align:left">部分</td><td style="text-align:left">"上下文枢纽"是用状态文件加产物路径模拟的，没有独立组件</td></tr><tr><td style="text-align:left">§4.4</td><td style="text-align:left">两种划分视角</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">规则 02 §2 的注释已经写清"7 工程"的由来</td></tr><tr><td style="text-align:left">§5.1–5.8</td><td style="text-align:left">8 个工程的详细作业方式</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">每节的作业票在 <code>skills/.../nodes/n01..n08.md</code></td></tr><tr><td style="text-align:left">§6</td><td style="text-align:left">端到端走查 D1–D7</td><td style="text-align:left">部分</td><td style="text-align:left">实际走过一遍，但 D1–D7 的编号没落到任何产物里</td></tr><tr><td style="text-align:left">§7</td><td style="text-align:left">人机分工</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">已机械化：<code>approved_by</code> 必须填人的编号</td></tr><tr><td style="text-align:left">§8</td><td style="text-align:left">团队角色重构</td><td style="text-align:left">部分</td><td style="text-align:left">角色写了，但 <code>case.yml.team</code> 只有一个人，多人协作没验证过</td></tr><tr><td style="text-align:left">§8.1</td><td style="text-align:left">四种角色模式</td><td style="text-align:left"><strong>未实现</strong></td><td style="text-align:left">spec-engineer / developer / rule-maker / scenario-walkthrough 一个都没落地</td></tr><tr><td style="text-align:left">§9.1</td><td style="text-align:left">全链路成果物地图</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">目录序号就是工程序号</td></tr><tr><td style="text-align:left">§9.2</td><td style="text-align:left">成果物六大原则</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">全仓做得最扎实的一块</td></tr><tr><td style="text-align:left">§9.3</td><td style="text-align:left">双重形态（机读源 + 人看视图）</td><td style="text-align:left">部分</td><td style="text-align:left">中文视图链路通了；<strong>日文正式 Excel 只到试跑</strong>；Word 没有；客户模板回流没有</td></tr><tr><td style="text-align:left">§9.4–9.6</td><td style="text-align:left">基本/详细/测试规格书结构</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">结构示例就是实物</td></tr><tr><td style="text-align:left">§10.1</td><td style="text-align:left">上下文枢纽</td><td style="text-align:left">部分</td><td style="text-align:left">效果有（下游只读上游确认版），但没有组件、没有接口</td></tr><tr><td style="text-align:left">§10.2</td><td style="text-align:left">六大连携机制</td><td style="text-align:left">部分</td><td style="text-align:left">缺的是知识沉淀的自动回流</td></tr><tr><td style="text-align:left">§10.2.1</td><td style="text-align:left">差分验证</td><td style="text-align:left">部分</td><td style="text-align:left">只用于训练对比；日常开发里"改前改后差分"没有工具</td></tr><tr><td style="text-align:left">§10.3</td><td style="text-align:left">编号贯穿全链路</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">本次实测全过</td></tr><tr><td style="text-align:left">§10.4</td><td style="text-align:left">平台能力持续进化</td><td style="text-align:left">部分</td><td style="text-align:left">规则写了 5 段和 5 问，但无人自动建单、无自动加检查、无周期启动</td></tr><tr><td style="text-align:left">§11.1</td><td style="text-align:left">7 层平台架构</td><td style="text-align:left">部分</td><td style="text-align:left">映射表在，实际只实现了 4 层</td></tr><tr><td style="text-align:left">§11.1.1</td><td style="text-align:left">4 层与 7 层的对应</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">有图有表</td></tr><tr><td style="text-align:left">§11.2</td><td style="text-align:left">六大核心组件</td><td style="text-align:left">部分</td><td style="text-align:left">逐项见下面 4.1</td></tr><tr><td style="text-align:left">§11.3</td><td style="text-align:left">4 层知识模型</td><td style="text-align:left">部分</td><td style="text-align:left">概念清楚，但"验证层"只有 6 道门，没有指标</td></tr><tr><td style="text-align:left">§11.4</td><td style="text-align:left">Prompt 模板库</td><td style="text-align:left"><strong>未实现</strong></td><td style="text-align:left">模板散落在 skill 和 agent 的 md 里，无法单独演进</td></tr><tr><td style="text-align:left">§12</td><td style="text-align:left">技术选型指南</td><td style="text-align:left">部分</td><td style="text-align:left">选型放在节点 4 由人批准（红线④），但节点 3 的 agent 又把 Oracle 写死了，顺序倒了</td></tr><tr><td style="text-align:left">§13</td><td style="text-align:left">KPI 六大维度</td><td style="text-align:left"><strong>未实现</strong></td><td style="text-align:left">六个公式全是"一个月后更新"的占位</td></tr><tr><td style="text-align:left">§14.2–14.4</td><td style="text-align:left">落地三阶段</td><td style="text-align:left">部分</td><td style="text-align:left">仓库里有一份三期计划，但和规格书的划分不是同一套，同名不同物</td></tr><tr><td style="text-align:left">§14.1</td><td style="text-align:left">三种导入模式</td><td style="text-align:left"><strong>未实现</strong></td><td style="text-align:left">这一项决定"客户只给设计书时用哪一档"，和任意入口强相关</td></tr><tr><td style="text-align:left">§15–§17、§20</td><td style="text-align:left">优先级、案例、新旧对比、总结</td><td style="text-align:left">论述</td><td style="text-align:left">不用实现</td></tr><tr><td style="text-align:left">§18</td><td style="text-align:left">实施检查表</td><td style="text-align:left">部分</td><td style="text-align:left">没有逐条勾选记录</td></tr><tr><td style="text-align:left">§19</td><td style="text-align:left">目录结构参考</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left">序号一致</td></tr><tr><td style="text-align:left">附录 A</td><td style="text-align:left">五步快速开始</td><td style="text-align:left"><strong>完全</strong></td><td style="text-align:left"><code>START_HERE.md</code> 三句话能走</td></tr></tbody></table>
+<h3>4.1 六大核心组件逐项</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">组件</th><th style="text-align:left">规格书要求</th><th style="text-align:left">现状</th><th style="text-align:left">缺什么</th></tr></thead><tbody><tr><td style="text-align:left">模型网关</td><td style="text-align:left">统一模型接入、按用途路由、成本限流审计</td><td style="text-align:left"><strong>完全没有</strong></td><td style="text-align:left">见第六节方案</td></tr><tr><td style="text-align:left">工程专用 Agent</td><td style="text-align:left">8 个工程各一个执行体</td><td style="text-align:left"><strong>有 9 个</strong>（含变更环）</td><td style="text-align:left">要脱掉 R60 的硬编码</td></tr><tr><td style="text-align:left">上下文枢纽</td><td style="text-align:left">统一装配和分发上下文</td><td style="text-align:left">用状态文件加路径模拟</td><td style="text-align:left">没接口、没版本、没 token 预算裁剪</td></tr><tr><td style="text-align:left">知识库（RAG）</td><td style="text-align:left">向量检索加引用</td><td style="text-align:left">关键词检索版</td><td style="text-align:left">见第七节方案</td></tr><tr><td style="text-align:left">评价与治理</td><td style="text-align:left">质量度量、KPI、成熟度评估</td><td style="text-align:left">6 道门加严格模式；<strong>KPI 零</strong></td><td style="text-align:left">见第五节 P1</td></tr><tr><td style="text-align:left">安全</td><td style="text-align:left">分级、脱敏、外投管控</td><td style="text-align:left">门禁第 6 道 + 脱敏工具 + 6 条禁止</td><td style="text-align:left">无鉴权、无审计日志；脱敏占位符风格不统一</td></tr></tbody></table>
+<h3>4.2 成熟度</h3>
+<p>仓库自评 L3。本次复核<strong>同意 L3</strong>，但要说明：这个 3 是<strong>流程层</strong>的 3；平台层（7 层里的后三层）实际在 L1 到 L2 之间。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>五、已实现的部分，怎么用</h2>
+<h3>5.1 走一遍 8 个工程</h3>
+<p>唯一入口就一句话：</p>
+<pre><code>/trans-cosmos-ai-lifecycle-coach</code></pre>
+<p>它做四件事：读盘定位 → 出一张卡片 → 派 agent 出初稿 → 记你的确认。<br>状态存在 <code>docs/00_plan/coach/&lt;模块&gt;/</code> 下，确认时必须填人的编号（如 <code>SE-001</code>）。<br>一次只出一张卡；一个节点确认完就写交接票并结束会话。</p>
+<h3>5.2 门禁</h3>
+<pre><code>py -3 -m tools.trace_check --strict
+py -3 -m tools.trace_check --strict --report reports/trace.json</code></pre>
+<table class="tbl"><thead><tr><th style="text-align:left">门</th><th style="text-align:left">查什么</th><th style="text-align:left">会拦下什么</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">野号</td><td style="text-align:left">自己编的编号</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">双向追溯</td><td style="text-align:left">有用例却没有设计编号</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">front-matter 7 个字段</td><td style="text-align:left">缺字段</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">生成物一致</td><td style="text-align:left">设计改了没重新生成</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">蛇形/驼峰分区</td><td style="text-align:left">定义层写成驼峰</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">机密</td><td style="text-align:left">真实 IP、密码、员工编号</td></tr></tbody></table>
+<p>两个坑要说清：</p>
+<ul><li><strong><code>--skip</code> 这个参数根本不存在</strong>，但规则里写了"禁止用它跳门"。</li><li><strong>第 6 道门扫不到 <code>tools/</code>、<code>reports/</code> 和根目录的 md</strong>（见硬事实第 1 条）。</li></ul>
+<h3>5.3 规则怎么生效</h3>
+<p><code>.claude/rules/</code> 下的 7 份文件是<strong>自动加载</strong>的——不需要"记住要守规矩"，文件在就进上下文。<br>所以改规则的敌人不是"没人遵守"，是"规则越写越长，AI 抓不住重点"。</p>
+<p>判断标准很简单：<strong>一条规则如果机器能查，就不该靠 AI 去读</strong>，应该下沉到门禁里。</p>
+<h3>5.4 变更环</h3>
+<p>说"指摘"就开始：起票 → 出影响面 → <strong>人决定回到哪个节点</strong> → 标记下游失效 → 从该节点重做 → 回归 → 再交付 → 知识沉淀。</p>
+<p>发号、决定回退点、记失效、再批准这四件事都是人的，AI 只出草案。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>六、未实现的部分，怎么补</h2>
+<h3>6.1 P0 —— 真实案件上直接不能用</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">缺口</th><th style="text-align:left">证据</th><th style="text-align:left">怎么补</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>任意节点入口</strong>（客户给基本设计书 → 从节点 3 开始）</td><td style="text-align:left">当前节点算法 + 依赖检查</td><td style="text-align:left">见第八节</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>案件硬编码</strong>：165 处 <code>R60Login</code></td><td style="text-align:left"><code>.claude/</code> 下的 md</td><td style="text-align:left">路径参数化，由 <code>case.yml</code> 注入</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">制造技能只认 R-101</td><td style="text-align:left">技能正文明确拒收其他编号</td><td style="text-align:left">把 R60Area 专用段拆出去，另开通用流程</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>门禁扫描范围与规则不符</strong></td><td style="text-align:left">扫描根只有 3 个目录</td><td style="text-align:left">扩到 <code>tools/</code>、<code>reports/</code>，先评估误报</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">~~git 零提交~~</td><td style="text-align:left">已修</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">节点 3 的 agent 把 Oracle 写死</td><td style="text-align:left">agent 正文与作业票冲突</td><td style="text-align:left">改为"读节点 4 定下的技术栈"</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">变更环用野号 <code>CR-201..205</code></td><td style="text-align:left"><code>n09.yml</code> 与 <code>ids.yml</code> 对不上</td><td style="text-align:left">补登记或改回已发编号，并把 coach 目录纳入 gate1</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">节点 4 确认版标了没签的版本</td><td style="text-align:left">文件与结项记录冲突</td><td style="text-align:left">降回 v1.0.0 或由人重签</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">教学编号的 Q 号零登记，导致阻塞检查永远为空</td><td style="text-align:left"><code>ids.yml</code> 没有 Q 前缀</td><td style="text-align:left">已知是刻意设计，但代价是"未回答 0 件"是假象——有 6 条答案是"延后"，不是"已决定"</td></tr></tbody></table>
+<h3>6.2 P1 —— 影响可信度</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">缺口</th><th style="text-align:left">怎么补</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">KPI 计量为零</td><td style="text-align:left">写一个小工具，从报告和状态文件算能自动算的三个指标，其余留人工</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">日常差分验证</td><td style="text-align:left">对一个编号集合做结构比对（字段增删、值域变化、依赖变化），输出人看的表</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">Prompt 模板库</td><td style="text-align:left">建模板目录，把 agent 里"要 AI 干什么"抽成带变量的模板</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">正式 Excel / 客户模板回流</td><td style="text-align:left">去掉 R101 硬编码，加"指摘页"导出</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">评测治理</td><td style="text-align:left">80 题金标已有，缺趋势存档和对比</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">脱敏占位符风格统一</td><td style="text-align:left">现在的两套占位写法二选一</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><code>docs/</code> 下没有一个中文视图</td><td style="text-align:left">59 本 md 对应 0 个 <code>.zh.html</code>，媒体规则只落在 <code>tutorial/</code> 和 <code>reports/</code></td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">7 个 <code>.zh.html</code> 已过期</td><td style="text-align:left">需要"机读源比视图新就报错"的检查</td></tr></tbody></table>
+<h3>6.3 P2 —— 平台化之后才需要</h3>
+<p>构建门禁、控制台门禁、冒烟门禁、截图对比；异常自动建单；多人并发协作；鉴权与审计日志。</p>
+<p><strong>不建议现在做。</strong> 骨架守的是"成果物的质量"，不是"跑起来的应用的质量"，这是角色不同，不是缺失。</p>
+<h3>6.4 文档与实现不一致的地方（17 处）</h3>
+<p>最容易误导人的几条：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">位置</th><th style="text-align:left">文档说</th><th style="text-align:left">实际</th></tr></thead><tbody><tr><td style="text-align:left">规则 00 §9、CLAUDE.md 禁止条④</td><td style="text-align:left">有 <code>--skip</code> 参数</td><td style="text-align:left">参数不存在</td></tr><tr><td style="text-align:left">规则 01</td><td style="text-align:left">扫 <code>tools/</code>、<code>reports/</code>、根目录 md</td><td style="text-align:left">只扫 3 个目录</td></tr><tr><td style="text-align:left">规则 04 §7</td><td style="text-align:left">A/B 报告放 <code>doc/03_AI/AB_Reports/</code></td><td style="text-align:left">死路径，仓库里是 <code>docs/</code></td></tr><tr><td style="text-align:left">coach 技能 §6</td><td style="text-align:left"><code>requirement-interrogator</code> 是个 agent</td><td style="text-align:left">它是 Skill，agents 目录里没有</td></tr><tr><td style="text-align:left">节点 3 作业票</td><td style="text-align:left">步骤编号 1/4、2/4、3/5、4/5、5/5</td><td style="text-align:left">编号错乱</td></tr><tr><td style="text-align:left">三份进度文档</td><td style="text-align:left">0/8、1/8、"一次没跑"</td><td style="text-align:left">8/8</td></tr><tr><td style="text-align:left">仓库总账、验收记录</td><td style="text-align:left">124 件编号、<code>field_count=56</code></td><td style="text-align:left">164 件、77</td></tr><tr><td style="text-align:left">CLAUDE.md、规则 00</td><td style="text-align:left">R60Common 有 54 个函数、r60util 有 31 个类</td><td style="text-align:left">实测 60 个、19 个</td></tr><tr><td style="text-align:left">平台覆盖评估文档</td><td style="text-align:left">RAG 没有、0/8 确认</td><td style="text-align:left">已过时，是 10-14 的快照</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>七、三份方案（单独列）</h2>
+<h3>7.1 模拟网关（只做接口）</h3>
+<p><strong>先说清为什么接口就够</strong>：今天的执行体是 Claude Code 本身，工具层零调用。真正需要网关的只有两处——RAG 的向量化和重排、以及换供应商时的接口缝。所以只按这两处设计，不做无用的通用抽象。</p>
+<p>要做的四样东西：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">作用</th></tr></thead><tbody><tr><td style="text-align:left"><code>docs/01_context/gateway.yaml</code></td><td style="text-align:left">配置。密钥只写环境变量名，绝不写值</td></tr><tr><td style="text-align:left"><code>docs/40_framework/gateway-contract.md</code></td><td style="text-align:left">给公司的一页接口契约</td></tr><tr><td style="text-align:left"><code>tools/gateway/providers/</code></td><td style="text-align:left">三个实现：OpenAI 兼容、离线桩、公司服务</td></tr><tr><td style="text-align:left"><code>tools/gateway/__main__.py</code></td><td style="text-align:left">命令：ping / chat / embed，全部支持 JSON 输出</td></tr></tbody></table>
+<p>给公司的契约<strong>只要求 OpenAI 兼容</strong>（chat/completions 加 embeddings 两个接口）。如果公司给的是私有协议，只改 providers 一个文件，上层不动。</p>
+<p>三条硬约束写进代码，不靠自觉：</p>
+<ol><li><strong>外发必过脱敏</strong>，开关不可关闭（红线⑦）。</li><li><strong>密钥只从环境变量取</strong>。</li><li><strong>每次调用留审计日志</strong>，记用途、关联编号、模型、耗时、token、是否脱敏，<strong>不记正文</strong>（正文可能含机密）。</li></ol>
+<p>离线桩必须能在完全断网的情况下让整条链路跑通。</p>
+<h3>7.2 RAG 本地知识库（只做接口）</h3>
+<p>现状：切块已经固化，12 个必填字段（含来源路径、来源位置、关联编号、机密等级），词法检索加评测集 80 题。</p>
+<p><strong>这套 chunk 结构设计得比多数 RAG 项目好</strong>——来源路径加来源位置加关联编号，天生支持"引用到节"和"追到编号"。不要推翻它，接口就以它为准。</p>
+<p>接口契约三条（换提供方也不能变，否则引用会碎）：</p>
+<ol><li>每条命中必须能拼出 <strong><code>文件#位置</code></strong> 形式、人可以核对的出处。</li><li>每条命中必须带关联编号，能落回登记表（这正好接红线⑤）。</li><li>分数只用于排序，<strong>不允许跨提供方比较绝对值</strong>（不同算法尺度不同）。</li></ol>
+<p>三层提供方：本地词法（现在默认）→ kb-platform → 公司服务，外加一个离线桩给 CI 用。</p>
+<p><strong>真正的难点不在检索，在语料生产</strong>：现在的 chunk 是一次性手工做的。需要一条"机读源 → 切块 → 补字段 → 建索引 → 评测回归"的流水线，否则每加一个案件都要手做语料，不可持续。</p>
+<h3>7.3 kb-platform 接入</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">用途</th><th style="text-align:left">方式</th><th style="text-align:left">理由</th></tr></thead><tbody><tr><td style="text-align:left">读（检索）</td><td style="text-align:left">命令行 <code>search --json</code>，包成一个提供方</td><td style="text-align:left">不把 numpy 和 FastAPI 装进骨架，门禁保持纯标准库；进程隔离，崩了不影响门禁</td></tr><tr><td style="text-align:left">写（入库）</td><td style="text-align:left">产物先放暂存目录 → <code>lint</code> → <code>ingest</code></td><td style="text-align:left">lint 是唯一能挡住"元数据不合法"的闸，不能跳</td></tr><tr><td style="text-align:left">服务态</td><td style="text-align:left">它的 <code>build_router()</code> 挂到公司网关</td><td style="text-align:left">骨架侧只换提供方</td></tr></tbody></table>
+<p><strong>为什么不直接 import 它的库</strong>：那会把 numpy 变成骨架的硬依赖，<code>trace_check</code> 这些纯标准库工具从此要装科学计算栈——为了检索牺牲门禁的可移植性，不划算。</p>
+<p><strong>接入的真正工作量在元数据映射</strong>：两套 front-matter 对不上。做一个单向生成器，只输出到暂存目录，<strong>不往机读源里写任何东西</strong>。</p>
+<p>建议的机密等级映射：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">等级</th><th style="text-align:left">含义</th></tr></thead><tbody><tr><td style="text-align:left">40</td><td style="text-align:left">已经人确认的确认版</td></tr><tr><td style="text-align:left">30</td><td style="text-align:left">已基线化</td></tr><tr><td style="text-align:left">20</td><td style="text-align:left">草稿</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">教学、虚拟、倒推产出</td></tr></tbody></table>
+<p>这样<strong>虚拟需求书天然低于真实案件文档</strong>，不会被当成事实引用。</p>
+<p>接入前必须先解决它的三个已知风险：向量化器不一致会静默出错却不报错、没有鉴权且权限等级从请求体取、每个请求都初始化数据库。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>八、任意节点入口（核心设计）</h2>
+<h3>8.1 你要的，和现有机制的冲突</h3>
+<p>你要的是：<strong>客户直接给了一本基本设计书 → 从节点 3 开始。</strong></p>
+<p>现有机制挡在两处：</p>
+<ol><li>当前节点永远取"前置已满足且未批准的最小号"，所以永远从节点 1 找起；</li><li>前置没批准就不启动，并且明写"不承认例外"。</li></ol>
+<p>有一种"手工绕过"——把外部设计书塞进节点 2 的目录，再把前两个节点手工改成已批准。<strong>这条路必须明确禁止</strong>：它是在伪造批准证据，直接把红线③变成空话，而且框架根本不校验批准来源。</p>
+<p><strong>所以正确做法不是绕过，是让这种情况成为一种合法状态。</strong></p>
+<h3>8.2 引入与"批准"并列的新概念：外部接收</h3>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left">批准（approved）</th><th style="text-align:left">外部接收（adopted）</th></tr></thead><tbody><tr><td style="text-align:left">谁产出</td><td style="text-align:left">我方</td><td style="text-align:left">外部（客户或上游）</td></tr><tr><td style="text-align:left">谁签</td><td style="text-align:left">我方评审人</td><td style="text-align:left">我方责任人，并记录提供方</td></tr><tr><td style="text-align:left">含义</td><td style="text-align:left">"我们认可它正确"</td><td style="text-align:left"><strong>"我们按它做，而且知道它缺什么"</strong></td></tr></tbody></table>
+<p>两者在下游<strong>等效可用</strong>（都拿它的产物当输入），但在证据上必须能区分——出问题时才能回答"错在我方还是错在来件"。</p>
+<h3>8.3 入口流程六步</h3>
+<pre><code>① 登记     原件只读放进案卷，记哈希、提供方、日期
+② 体检     用 51 个视角扫这本设计书，输出&quot;它没说清什么&quot;
+③ 适配     抽出功能项和画面项，用发号工具换成我方编号，出对照表
+④ 判定缺口 人看体检结果：哪些必须问客户才能开工，哪些可以带着走
+⑤ 签收     状态置为外部接收，签收人必须是人的编号
+⑥ 起跑     coach 从起始节点出第一张卡</code></pre>
+<p><strong>第 ③ 步不能省。</strong> 外部文档几乎不可能自带我方编号、关联字段和追溯链。不做适配就直接用，等于让门禁从第一天起就是红的，或者逼人去跳门。</p>
+<h3>8.4 机制只改一处</h3>
+<pre><code>前：前置节点未批准 → 不起动（不承认例外）
+后：前置节点未批准、且未被外部接收 → 不起动</code></pre>
+<h3>8.5 与七条红线的关系</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">红线</th><th style="text-align:left">外部接收模式下</th></tr></thead><tbody><tr><td style="text-align:left">① 野号禁止</td><td style="text-align:left"><strong>不放松</strong>。外部编号必须先换成我方编号，对照表留档</td></tr><tr><td style="text-align:left">② 无设计不制造</td><td style="text-align:left"><strong>不放松</strong>。从节点 5 起跑等于前四个节点全部外部接收，每份都要有缺口清单</td></tr><tr><td style="text-align:left">③ 无批准不进下一节点</td><td style="text-align:left"><strong>语义扩展</strong>：外部接收也要人签收，AI 不得自签</td></tr><tr><td style="text-align:left">④ 技术栈不得擅改</td><td style="text-align:left">外部设计书隐含技术栈，节点 4 必须记录"栈来自来件"</td></tr><tr><td style="text-align:left">⑤ 用例必须有出处</td><td style="text-align:left"><strong>不放松</strong>。设计书里没有错误编号，节点 6 就会缺字段，由第 ③ 步补出来</td></tr><tr><td style="text-align:left">⑥ 无门禁不提交</td><td style="text-align:left"><strong>不放松</strong></td></tr><tr><td style="text-align:left">⑦ 未脱敏不外发</td><td style="text-align:left"><strong>不放松</strong>；来件本身可能含真实值，第 ① 步入库前先过脱敏</td></tr></tbody></table>
+<p>一句话：<strong>外部接收改变的是"谁产出"，不改变"要有出处、要有人签、要能追溯"。</strong></p>
+<h3>8.6 五种入口组合</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">客户给了什么</th><th style="text-align:left">入口方式</th><th style="text-align:left">起始节点</th></tr></thead><tbody><tr><td style="text-align:left">只有需求书（常规）</td><td style="text-align:left">自产</td><td style="text-align:left">1</td></tr><tr><td style="text-align:left">需求书 + 基本设计书</td><td style="text-align:left">外部接收</td><td style="text-align:left">3</td></tr><tr><td style="text-align:left">只有既有系统代码（改造类）</td><td style="text-align:left">自产 + 节点 0 倒推</td><td style="text-align:left">1</td></tr><tr><td style="text-align:left">只有详细设计书</td><td style="text-align:left">外部接收</td><td style="text-align:left">4 或 5</td></tr><tr><td style="text-align:left">什么都不给</td><td style="text-align:left">—</td><td style="text-align:left">拒绝开工</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>九、已经拍板的四件事（10-28）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">议题</th><th style="text-align:left">决定</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">任意节点入口的方式</td><td style="text-align:left"><strong>走外部接收</strong>；倒推法只保留给"只有现有代码"的改造案件</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">真实案件的产物目录</td><td style="text-align:left"><strong>沿用 <code>docs/10~70_*</code></strong>，不改成一案一目录</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">修复顺序</td><td style="text-align:left"><strong>入口机制和脱 R60 化一起做</strong>（它们是同一件事的两半）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">入库范围</td><td style="text-align:left"><strong><code>docs/</code>、<code>tools/</code>、<code>reports/</code> 全部入库</strong></td></tr></tbody></table>
+<p>第四项已经执行完：首次提交 700 个文件，<code>trace_check --strict</code> 6 门全过；<code>docs/</code> 下 0 个 xlsx；把机密规则手动套到 <code>tools/</code> 和 <code>reports/</code> 上，350 个文件零命中。</p>
+<p>过程中撞到一个 Windows 的坑：<code>tools/trace_check/aux.py</code> 里的 <code>AUX</code> 是 DOS 保留设备名，git 打不开它。改名 <code>aux_checks.py</code> 后正常，而且这个技能文档里本来就写的是 <code>aux_checks</code>，改名反而让文档和代码对上了。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-10">
+<h2>十、下一步（第一批六步）</h2>
+<p>顺序原则：<strong>先有安全网，再动结构。</strong> 安全网已经有了（可以回退），所以下面每一步都是可撤销的。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">步</th><th style="text-align:left">做什么</th><th style="text-align:left">验收</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">路径参数化：165 处 <code>R60Login</code> 改成由 <code>case.yml</code> 注入</td><td style="text-align:left">新案件只改一处，8 个节点卡片路径全对</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>case.yml</code> 增加起始节点、入口方式、外部接收记录；节点状态允许"外部接收"</td><td style="text-align:left">旧案件向后兼容</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">依赖检查改一处</td><td style="text-align:left">构造一个前两节点外部接收的假案件，能出节点 3 的卡片</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">写入口工具：登记、体检、适配发号、判定缺口、签收</td><td style="text-align:left">拿一份脱敏的外部设计书走通，门禁仍全过</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">回归：R60Login 原流程不受影响</td><td style="text-align:left"><code>coach_brief</code> 输出与今天一致</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-11">
+<h2>附：本次调查执行过的关键命令</h2>
+<pre><code>扫描根定义                 -&gt; (&quot;docs&quot;, &quot;.claude&quot;, &quot;tutorial&quot;)   共 3 个目录
+工具层大模型调用            -&gt; 0 处
+RAG 切块必填字段            -&gt; 12 个（含来源路径、来源位置、关联编号）
+kb-platform 必填元数据      -&gt; 8 个（doc_id/scope/title/doc_type/version/status/conf_level/updated_at）
+kb-platform 的 --json       -&gt; 只有 search 和 eval 支持
+门禁全跑                    -&gt; 6 门全过 / 164 个编号 / 0 个孤立 / field_count=77
+机密规则套到 tools+reports  -&gt; 扫 350 个文件，0 命中</code></pre>
+<hr>
+<p>*本页是阅读视图，由机读源生成。要改内容请改机读源再重新生成，不要直接改这里。*</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>spec-implementation-audit_2026-10-27.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>
