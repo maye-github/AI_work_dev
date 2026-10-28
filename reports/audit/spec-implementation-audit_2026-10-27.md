@@ -20,7 +20,7 @@
 | # | 事实 | 影响 |
 |---|---|---|
 | 1 | `trace_check` 的扫描根只有 `docs` / `.claude` / `tutorial`（`tools/trace_check/__init__.py:285`） | 规则 `01-security-redlines.md` 声称扫 `tools/**`、`reports/**`、根目录主要 md —— **实际不扫**。这是"扫描范围被悄悄收窄"，违反规则 06 §3 |
-| 2 | git 仓库存在，**0 个 commit**；`docs/*`、`tools/*`、`reports/*`、`ROADMAP_3PHASE.md`、`AGENTS.md`、`CONTRIBUTING.md` 全在 `.gitignore` 里 | 整仓没有版本历史。红线⑥"无 trace_check 不 commit"目前无对象可执行 |
+| 2 | ~~git 仓库存在，**0 个 commit**~~ → **已修（2026-10-28）**：首次提交 `26f23e9`，700 文件入库；`docs/ tools/ reports/` 已放开 | 红线⑥此后有对象可执行。遗留：`.github/` 与 4 份根目录辅助 md 仍在忽略外 |
 | 3 | 工具层**没有任何一次程序化大模型调用**（`grep -rniE "anthropic\|openai\|chat/completions" tools/` → 0 行） | "模型网关"今天没有调用方。网关的真实用途是 ①RAG 的 embedding/rerank ②换模型供应商的移植缝 |
 | 4 | `tools/rag` 是**纯标准库的词法检索**（hash n-gram + SQLite FTS，`tools/rag/store.py`） | 与规格书 §11.2 的"知识库（RAG）"同名但不是一回事；可作**默认 provider**，公司提供后换 adapter |
 | 5 | kb-platform 的本体元数据是 `doc_id/scope/title/doc_type/version/status/conf_level/updated_at`（`kbkit/pipeline.py:16`） | 与骨架的 7 字段（`id/type/req_ids/status/sensitivity/owner/version`）**不兼容**，不能直接 ingest，必须过一层映射 |
@@ -687,7 +687,7 @@ intake:                       # 仅 entry_mode=intake 时存在
 
 | 步 | 做什么 | 动到的文件 | 验收 |
 |---|---|---|---|
-| 0 | 调 `.gitignore`（放开 `docs/ tools/ reports/`，保留 `.env*`/`build/`/密钥文件）→ 首次 commit | `.gitignore` | `git ls-files \| wc -l > 0`；`git log --oneline` 有 1 条 |
+| 0 | ~~调 `.gitignore` → 首次 commit~~ **✅ 已完成（2026-10-28）**。附带发现并处理：`tools/trace_check/aux.py` 是 Windows 保留设备名（AUX），git 无法 `open()`；改用 `update-index --cacheinfo` 只能硬塞进去，之后 `git status` 永久报假修改、`git add -A` 与 `git diff` 全部失败。经用户同意改名 `aux_checks.py`（`921f706`），`SKILL.md:520` 原本就写 `aux_checks`，改名反而让文档与实体一致 | `.gitignore`、`tools/trace_check/` | `git log --oneline` 2 条；`git status --short` 0 行 |
 | 1 | 路径参数化：8 份作业票 + coach 卡片正文的 `tutorial/R60Login/节点N_*` 改为 `{{case_dir}}`，由 `case.yml.case` 注入；实案件注入 `docs/` 下的工程目录 | `skills/.../nodes/n01..n08.md`、`SKILL.md:132-139` | 新案件 `case.yml` 只改 `case:` 一处，8 个节点卡片路径全对 |
 | 2 | `case.yml` 增 `start_node` / `entry_mode` / `intake[]`；`nNN.yml` 允许 `state: adopted` + `adopted_from` | `templates/case.yml`、`templates/node.yml` | 模板校验通过；旧案件向后兼容（缺键按默认 1/self） |
 | 3 | 依赖检查改一处：`未 approved` → `未 approved 且未 adopted` | `SKILL.md §3.1`、铁则 10、`tools/coach_brief.py:72-79` | 构造一个 `n01/n02 adopted` 的假案件，coach 能出节点 3 的卡 |
