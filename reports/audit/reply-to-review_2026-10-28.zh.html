@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>reply-to-review_2026-10-28</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>reply-to-review_2026-10-28</h1>
+<div class="meta">
+  机读源: <code>reply-to-review_2026-10-28.md</code> ／
+  生成: 2026-10-28 13:44 ／
+  节 6・表 23
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>reply-to-review_2026-10-28.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 先说三句实话</a></li><li><a href="#sec-2">1. 记号</a></li><li><a href="#sec-3">2. 逐条答复</a></li><li><a href="#sec-4">3. 我这一轮实际动了什么</a></li><li><a href="#sec-5">4. 需要你定的 6 件事（我不替你决定）</a></li><li><a href="#sec-6">5. 一句话</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>意见表 逐条答复</h1>
+<blockquote class="quote">你填的：<code>reports/audit/review-sheet_2026-10-28.txt</code>（54 条，已填 43 条，空白 11 条）<br>我的答复：逐条，一条不跳。<br>日期：2026-10-28</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 先说三句实话</h2>
+<p><strong>第一句：你这 43 条里，25 条问的是同一个问题</strong>——<br>「这个东西对应规格书哪一部分？做了吗？完善吗？对不上能不能砍？没做的在哪做？」</p>
+<p>我上次给你的《读懂》说明书<strong>没有回答这个问题</strong>，它回答的是"这四样东西是什么"。<br>方向错了。这次补上：<strong><code>reports/audit/spec-mapping_2026-10-28.md</code></strong><br>（实施规格书 ↔ 本文件夹 对应表，逐章 + 逐资产两个方向）。</p>
+<p>下面凡是问这件事的条目，我只写「见对应表 §x」，不重复。</p>
+<p><strong>第二句：我上次的说明书里，有 5 处是错的。</strong> 下面第 4-4、4-7、4-10、4-14、4-19 条逐条认，<br>都在这份答复里改口，不留在原文件里。</p>
+<p><strong>第三句：你 7-5 说「先整理再做」，所以这一轮我只做了整理的第一步</strong>（删噪音），<br>其余（合并说明文、圈附赠层）等你读完对应表再动。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 记号</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">记号</th><th style="text-align:left">意思</th></tr></thead><tbody><tr><td style="text-align:left">① 我说错了</td><td style="text-align:left">原说明书写错，这里改口</td></tr><tr><td style="text-align:left">② 别搞复杂</td><td style="text-align:left">我的提案多余，撤回</td></tr><tr><td style="text-align:left">③ 你的判断</td><td style="text-align:left">已采纳，记为决定</td></tr><tr><td style="text-align:left">④ 新问题</td><td style="text-align:left">我去查了，给依据</td></tr><tr><td style="text-align:left">⑤ 同一件事</td><td style="text-align:left">归并到《对应表》</td></tr><tr><td style="text-align:left">⑥ 空白</td><td style="text-align:left">视为已确认</td></tr><tr><td style="text-align:left">⬜ 待你定</td><td style="text-align:left">我不替你决定</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 逐条答复</h2>
+<h3>【0】一句话</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">0-1</td><td style="text-align:left">「但这不全是我想要的，我想要的是规格书这个文件要做的东西…请一一对应…做了吗…完善吗…对应哪部分…对不上能否砍…没做的在哪做」</td><td style="text-align:left"><strong>⑤ 你是对的，我给的说明书答错了方向。</strong> 已出《实施规格书 ↔ 本文件夹 对应表》：&lt;br&gt;· 逐章对照 → 对应表 §2（规格书 20 章 + 附录 A）&lt;br&gt;· 逐资产对照（用处/来源/能不能砍） → §3&lt;br&gt;· 没做的 9 项 + 在哪做 → §4&lt;br&gt;· 规格书没有、本文件夹有的 8 项 → §5&lt;br&gt;· 你的 ps 三条（网关公司已有/知识库参考 kb-platform/两种落法）已写进 §4 第 2、3 项</td></tr><tr><td style="text-align:left">0-2</td><td style="text-align:left">「第 3、4 样，是否可以根据规格书内容、整合到正确的地方？」</td><td style="text-align:left"><strong>⑤ 可以，而且它们本来就在正确的地方</strong>：&lt;br&gt;③ 样板层 <code>docs/10~80</code>＝规格书 §9.4/9.5/9.6「结构示例」的实例化，位置正确；&lt;br&gt;④ 演练层 <code>tutorial/</code>＝规格书 §6「端到端走查」，位置正确。&lt;br&gt;真正需要挪的只有 ⑤ 附赠层，见对应表 §5、§6.1。</td></tr><tr><td style="text-align:left">0-3</td><td style="text-align:left">「后续可以写进人读的使用说明中」</td><td style="text-align:left"><strong>③ 采纳。</strong> 但 <code>使用手册.md</code> 已经 52KB、15 节，再塞一张大表会更难读。&lt;br&gt;做法建议：对应表保持独立一份；在 <code>使用手册.md</code> 的「文件都去哪了」加<strong>一行</strong>指向它。&lt;br&gt;⬜ 等你点头再做（这一轮没动使用手册）。</td></tr></tbody></table>
+<h3>【1】打个比方</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">1-1</td><td style="text-align:left">同 0-1（要规格书对应 + 列每个的用处）</td><td style="text-align:left"><strong>⑤</strong> 见对应表 §2.2（规格书 §4 新范式逐条）、§3（逐资产）。</td></tr><tr><td style="text-align:left">1-2</td><td style="text-align:left">「列出来每一个的用处、并与规格书一一对应」</td><td style="text-align:left"><strong>⑤</strong> skill 5 个 → 对应表 §3.3；agent 14 个 → §3.4。&lt;br&gt;每个都标了「干什么 / 规格书出处 / 能不能砍」三列。</td></tr><tr><td style="text-align:left">1-3</td><td style="text-align:left">同 1-2（tools 41、n01~n09.yml、ids.yml）</td><td style="text-align:left"><strong>⑤</strong> tools → 对应表 §3.5；<code>nNN.yml</code> 和 <code>ids.yml</code> → §3.6。</td></tr><tr><td style="text-align:left">1-4</td><td style="text-align:left">「这个路径（reports）里内容太混乱、请一一对应告知用处和来源」</td><td style="text-align:left"><strong>① 我上次的分类是错的。</strong> 我说「5 种」，实际是 <strong>8 种</strong>，而且数字也不对（详见 4-19 条）。&lt;br&gt;<strong>⑤</strong> 正确分类见对应表 §3.7。</td></tr></tbody></table>
+<h3>【2】8 个节点</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">2-1</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">2-2</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">2-3</td><td style="text-align:left">「这个是谁定的、参考规格书是否可以一一对应」</td><td style="text-align:left"><strong>④ 查了，三条都能对应，但第 ① 条是骨架自己加的强化</strong>：&lt;br&gt;· ①「上一步没签字下一步不开工」← 规格书 §4.1 图中「人工评审卡点」+ §7 RACI。规格书只画了卡点，<strong>没规定怎么存</strong>；骨架把它落成 <code>nNN.yml</code> 的 <code>approved_by</code>。&lt;br&gt;· ②「编号只能从 ids.yml 领」← §9.2 原则 02「ID 赋予」+ §10.3「要件 ID 贯穿全链路」。&lt;br&gt;· ③「提交前跑 6 道门」← §10.2 ①追迹矩阵 + §11.3 ④验证层。&lt;br&gt;写在哪：<code>rules/02</code> §1/§6、<code>rules/00</code> §6、<code>CLAUDE.md</code> §1。</td></tr><tr><td style="text-align:left">2-4</td><td style="text-align:left">「这个是谁定的、参考规格书是否可以一一对应」</td><td style="text-align:left"><strong>④ 查了，四条里三条能对应，一条是超出项</strong>：&lt;br&gt;· 不许跳门 ← §10.2 ④成果物仓库（差分评审）+ <code>rules/00</code> §9&lt;br&gt;· 不许外传机密 ← §11.2 ⑥安全（数据分类/脱敏/权限分离）&lt;br&gt;· 用例必须有出处 ← §9.6「全ケースに期待値の出典（设计 ID）を紐付ける」&lt;br&gt;· <strong>不许擅改技术栈 ← 规格书没有</strong>。§12 是「选型指南」，不是「不许改」。这是骨架的追加，已登记在 <code>ppt-deviation-register.md</code>。</td></tr></tbody></table>
+<h3>【3】5 个「世界」</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">3-1</td><td style="text-align:left">「①② → 规格书对应 + 列功用来源；③④⑤ → 能否整合到正确的地方」</td><td style="text-align:left"><strong>⑤</strong> ①② 见对应表 §3.2〜3.5（其中 ① 制度层＝§11.3 的 ②规则层+③执行层+④验证层，② 目标层＝§11.3 ①入口层）。&lt;br&gt;③④⑤ 的结论：③④ <strong>已在正确位置，不必整合</strong>；⑤ <strong>可整块移出</strong>，见 §5、§6.1。</td></tr><tr><td style="text-align:left">3-2</td><td style="text-align:left">「① 制度层…规格书对应 + 列功用和原文来源」</td><td style="text-align:left"><strong>⑤</strong> 见对应表 §3.2〜3.5，共 40+41＝81 个文件，逐个给「干什么 / 规格书出处 / 能不能砍」。&lt;br&gt;汇总：能追到规格书出处的 <strong>78 个</strong>；规格书无对应的 <strong>13 个</strong>（🎁 超出项，已登记）。</td></tr><tr><td style="text-align:left">3-3</td><td style="text-align:left">R-101 样板「能否整合到正确的地方」</td><td style="text-align:left"><strong>⑤ 不用整合，位置就是对的。</strong> 它就是规格书 §9.4/9.5/9.6 那三个「结构示例」的实例化，本来的用途就是给人看「模板该怎么填」。</td></tr><tr><td style="text-align:left">3-4</td><td style="text-align:left">R-201 演练「能否整合到正确的地方」</td><td style="text-align:left"><strong>⑤ 不用整合。</strong> 规格书 §6 要求「拿一件真事走完 8 工程」，<code>tutorial/R60Login/</code> 就是那件事。</td></tr><tr><td style="text-align:left">3-5</td><td style="text-align:left">两套编号「能否整合到正确的地方」</td><td style="text-align:left"><strong>⑤ 不能整合，整合了才出事。</strong> 规格书 §10.3 要 ID 贯穿全链路，两条链各自闭合才叫贯穿；混成一套，gate2 双向追溯会断。&lt;br&gt;唯一要补的是：<strong>在哪张纸上写明这是两套</strong>——<code>tutorial/R60Login/节点1_需求/</code> 开头应有 1 行。&lt;br&gt;⬜ 待你定要不要加。</td></tr><tr><td style="text-align:left">3-6</td><td style="text-align:left">第三套（R60Area/R60Login 真模块名）「能否整合」</td><td style="text-align:left"><strong>⑤ 位置正确。</strong> 对应规格书 §19 的 <code>knowledge-base/historical-projects/</code>，本文件夹即 <code>docs/90_knowledge/legacy-r60/</code>。&lt;br&gt;它只在 migration 案件用；greenfield 默认不读。</td></tr><tr><td style="text-align:left">3-7</td><td style="text-align:left">虚拟需求书 / 冻结「能否整合到正确的地方」</td><td style="text-align:left"><strong>⑤ 规格书完全没这一条（🎁 超出项）。</strong> 归属见对应表 §5 第 6 行。&lt;br&gt;它的价值不是「教学」，是<strong>规格书 §16 三个案例之外，第一个自己的实证</strong>。</td></tr><tr><td style="text-align:left">3-8</td><td style="text-align:left">5 个污染源「能否整合到正确的地方」</td><td style="text-align:left"><strong>⑤</strong> 污染源不是要「整合」的东西，是<strong>已计量并排除的误差</strong>。完整答复见本文件 §4 与对应表 §6.3。</td></tr></tbody></table>
+<h3>【4】逐块说（这里我认了 5 个错）</h3>
+<p><strong>4.1 规则</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-1</td><td style="text-align:left">「参考规格书是否可以一一对应、列出来功用和来源」</td><td style="text-align:left"><strong>⑤</strong> 7 本 → 对应表 §3.2，逐本给「大小 / 干什么 / 规格书出处 / 能不能砍」。&lt;br&gt;<strong>④ 补充一个硬数据</strong>：7 本共 108KB，其中 <code>02-requirements.md</code> 一本 <strong>43KB，占 40%</strong>。它里面大半是「某个案子怎么答的」案例说明，不是规则。这就是 AI 抓不住重点的主因。</td></tr><tr><td style="text-align:left">4-2</td><td style="text-align:left">「不一定…不需要的是否可以根据规格书内容整合到正确的地方？」</td><td style="text-align:left"><strong>你「不一定」是对的，我改口：</strong>&lt;br&gt;· <strong>结构上：7 本一本都不能删</strong>（每本都能追到规格书某节，见 §3.2）。&lt;br&gt;· <strong>内容上：要瘦身。</strong> 案例说明移到 <code>docs/90_knowledge/</code>，规则本体留 <code>rules/</code>。目标 117KB → 约 60KB。&lt;br&gt;⬜ 待你定做不做。</td></tr></tbody></table>
+<p><strong>4.2 作业指导书</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-3</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">4-4</td><td style="text-align:left">「是否可以根据规格书内容、整合到正确的地方？」</td><td style="text-align:left"><strong>⑤ 部分能追到规格书，部分不能</strong>：&lt;br&gt;· <code>code-from-design</code> ← §5.5 AI-1「由详细设计＋编码规约生成代码」，<strong>有出处</strong>。但它的<strong>内容是 R60 专属</strong>（R60Common 54 函数、BaseCamelModel），换客户必须改。&lt;br&gt;· <code>legacy-r60-navigator</code> ← <strong>规格书无对应</strong>，是附赠层，可移进 kb-platform。&lt;br&gt;改法（若你要卖）：把 R60Common 映射表抽成「可选插件」，本体只留通用部分。⬜ 待你定。</td></tr></tbody></table>
+<p><strong>4.3 外派专员</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-5</td><td style="text-align:left">「参考规格书是否可以一一对应、列出来功用和来源」</td><td style="text-align:left"><strong>⑤</strong> 14 个 → 对应表 §3.4。有出处的 13 个（§11.2 ②工程别 Agent + ⑤评价治理 + ⑥安全 + §10.2.1 差分验证），无出处的 1 个（<code>legacy-module-surveyor</code>，🎁）。</td></tr><tr><td style="text-align:left">4-6</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr></tbody></table>
+<p><strong>4.4 质检仪 tools</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-7</td><td style="text-align:left">「不一定、参考规格书是否可以一一对应、列出来功用和来源」</td><td style="text-align:left"><strong>① 我上次说错了，你说的「不一定」是对的。</strong> 我原话是「零重复、零孤岛，一个都不用动」——&lt;br&gt;实际上：<code>tools/trace_check.py</code>（18 行薄启动器）与 <code>tools/trace_check/__main__.py</code> 是<strong>重复入口</strong>；<code>tools/ingest</code>、<code>tools/legacy</code> 是<strong>一次性迁移工具</strong>，任务完成就不需要了。&lt;br&gt;「不能动」只对 6 个成立：<code>trace_check</code> / <code>registry</code> / <code>impact</code> / <code>gen_view</code> / <code>gen_formal</code> / <code>masking</code>。&lt;br&gt;<strong>⑤</strong> 逐工具对照见对应表 §3.5。</td></tr></tbody></table>
+<p><strong>4.5 项目看板</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-8</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">4-9</td><td style="text-align:left">「tasks.md 是做什么的、符合规格书哪一条、怎么运作的、如果同时开工多个业务模块怎么处理？」</td><td style="text-align:left"><strong>④ 查了，四问逐条答</strong>：&lt;br&gt;<strong>① 是什么</strong>：骨架<strong>建设期</strong>的施工计划（旧 Trae 时代，2026-10-12）。文件开头自己写着「本ファイルは更新しない。実施済み／未実施の区別は <code>reports/AC-selfcheck.md</code> と <code>DELIVERY_MEMO.md</code> を正とする」。&lt;br&gt;<strong>② 符合规格书哪条</strong>：§18「实施 Checklist」——它管的是<strong>建这套骨架</strong>这项工程，不是<strong>用骨架做客户项目</strong>。两件事别混。&lt;br&gt;<strong>③ 怎么运作</strong>：23 个 Task，各有 Status / Priority / Depends On / 验收条件（AC-xxx）/ 测试要求（TR-x.y）。本该做完就改 status，但它自己定了「不更新」，所以 23 个全停在 pending。<strong>这是有意冻结的历史记录，不是活的待办</strong>（我上次说「新人打开会以为没开工」，说的其实是这个副作用；现在明确它是故意的）。&lt;br&gt;<strong>④ 多模块同时开工怎么办</strong>：靠 <code>docs/00_plan/coach/&lt;模块&gt;/</code>——<strong>一个模块一个文件夹</strong>，每份里有自己的 <code>case.yml</code> + <code>n01..n09.yml</code> + <code>handoff.md</code>。现在只有 <code>R60Login</code> 一个。&lt;br&gt;多模块并行时：各自独立编号段（<code>ids.yml</code> 的 R/F/I 段按案子分段）、独立签字、独立门禁。<strong>这正是规格书 §10.1「上下文中心」的做法</strong>——编号是钥匙，模块是分区。</td></tr></tbody></table>
+<p><strong>4.6 文件柜</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-10</td><td style="text-align:left">「需要整理取舍、告诉我每个文件的用处和来源」</td><td style="text-align:left"><strong>① 我上次的数字也错了。</strong> 我说「22 个：8 模板 + 14 样板」，实际是 <strong>19 个：7 模板 + 12 填好的</strong>。&lt;br&gt;<strong>④ 正确清单</strong>（全部出自规格书 §9.1 成果物地图，位置正确，一个都不用搬）：&lt;br&gt;<strong>模板 7 个</strong>（文件名带 <code>-template</code>）：<code>req-template.yaml</code>、<code>bd-template.yaml</code>、<code>dd-template.yaml</code>、<code>tc-template.yaml</code>、<code>integration-template.yaml</code>、<code>release-template.md</code>、<code>impact-analysis-template.yaml</code>。&lt;br&gt;<strong>填好的 12 个</strong>（R-101 系列样板 8 个 + 记录 4 个）：<code>R-101</code>、<code>F-042</code>、<code>D-043</code>、<code>E-001-E005</code>、<code>L-014</code>、<code>L-015</code>、<code>TC-001-TC-008</code>、<code>IT-001</code>、<code>framework-record.yaml</code>、<code>operation-runbook.md</code>、<code>impact-BUG-002.yaml</code>、<code>impact-CR-004.yaml</code>。&lt;br&gt;<strong>来源</strong>：R-101 系列全部照着真实模块 R60Area 手写，是给人看「模板该怎么填」的。</td></tr><tr><td style="text-align:left">4-11</td><td style="text-align:left">「听不懂 别搞这么复杂」（指我建议给样板加 <code>_sample-</code> 前缀）</td><td style="text-align:left"><strong>② 撤回这个提案。</strong> 你说得对，多余。&lt;br&gt;<strong>④ 复核后其实已经能分</strong>：模板文件名都带 <code>template</code>，不带的就是填好的。<strong>保持现状，一个字不用改。</strong></td></tr></tbody></table>
+<p><strong>4.7 编号簿</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-12</td><td style="text-align:left">「请详细一一展示其功用和来源」</td><td style="text-align:left"><strong>④ 164 个按前缀逐类给，见下表。</strong></td></tr></tbody></table>
+<blockquote class="quote"><strong>4-12 完整表</strong>（<code>docs/00_registry/ids.yml</code>，164 个 ID）：</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">前缀</th><th style="text-align:left">是什么</th><th style="text-align:left">个数</th><th style="text-align:left">来源（哪个案子）</th></tr></thead><tbody><tr><td style="text-align:left">R</td><td style="text-align:left">要求 Requirements</td><td style="text-align:left">2</td><td style="text-align:left">R-101（R60Area 真实模块）／R-201（R60Login 演练）</td></tr><tr><td style="text-align:left">F</td><td style="text-align:left">功能 Functional Spec</td><td style="text-align:left">2</td><td style="text-align:left">F-042（R60Area）／F-201（R60Login）</td></tr><tr><td style="text-align:left">I</td><td style="text-align:left">画面项目 Interface/Data Item</td><td style="text-align:left">77</td><td style="text-align:left">I-201〜I-256（R60Area 56 个）＋ I-3xx（R60Login 21 个）</td></tr><tr><td style="text-align:left">D</td><td style="text-align:left">数据模型 Data Model</td><td style="text-align:left">6</td><td style="text-align:left">D-043（R60Area）＋ 演练 5 个</td></tr><tr><td style="text-align:left">L</td><td style="text-align:left">业务逻辑 Logic</td><td style="text-align:left">10</td><td style="text-align:left">L-014/L-015（R60Area）＋ 演练 8 个</td></tr><tr><td style="text-align:left">E</td><td style="text-align:left">错误/事件 Error</td><td style="text-align:left">18</td><td style="text-align:left">E-001〜E-008（R60Area）＋ 演练 10 个</td></tr><tr><td style="text-align:left">TC</td><td style="text-align:left">单测用例</td><td style="text-align:left">29</td><td style="text-align:left">TC-001〜TC-008（R60Area）＋ 演练 21 个</td></tr><tr><td style="text-align:left">IT</td><td style="text-align:left">结合测试</td><td style="text-align:left">13</td><td style="text-align:left">IT-001（R60Area）＋ 演练 12 个</td></tr><tr><td style="text-align:left">CR</td><td style="text-align:left">变更要求</td><td style="text-align:left">5</td><td style="text-align:left">由 n09 变更环产生</td></tr><tr><td style="text-align:left">BUG</td><td style="text-align:left">不具合</td><td style="text-align:left">2</td><td style="text-align:left">由 n09 产生</td></tr><tr><td style="text-align:left">Q</td><td style="text-align:left">确认事项</td><td style="text-align:left"><strong>0</strong></td><td style="text-align:left"><strong>一个都没发</strong>——确认事项记录在 <code>nNN.yml</code> 的 <code>open_questions</code> 里，没走 ids.yml</td></tr></tbody></table>
+<p><strong>来源统一说明</strong>：只有两条线——<strong>R60Area（手写样板）</strong> 和 <strong>R60Login（演练）</strong>。<br>没有一个是凭空编号的，这就是 gate1（野号检查）今天能跑通的原因。</p>
+<blockquote class="quote"><strong>⚠ 这里发现一处「文件与实际不符」，不在你的意见范围内，但要报给你</strong><br>（规则：发现差异不擅自改，只报告）<br><code>docs/00_plan/coach/R60Login/case.yml</code> 的 notes 里写着：<br>「<strong>教学号段（R-201/F-201/I-301…）は ids.yml に登録しない</strong>」。<br>但实际 <code>ids.yml</code> 里这 77 个<strong>全部已登记</strong>，还带注释说「2026-10-26 にユーザー（SE-001）の指示で登録した」。<br>也就是说：<strong>10-26 登记了，case.yml 的说明没跟着改。</strong><br>影响：只影响读的人的判断，不影响门禁（gate1 已能通过）。<br>⬜ 要不要改 case.yml 那一行，你说了算。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-13</td><td style="text-align:left">「不需要的话删除」</td><td style="text-align:left"><strong>③ 采纳，本轮已执行</strong>：删掉 <code>docs/00_registry/_backup/</code> 下 <strong>54 个 <code>.bak</code>（1.8MB）</strong>，并加 <code>.gitignore</code> 规则防止再长出来。&lt;br&gt;同时删了 <code>tutorial/…/backend/.coverage</code>（1 个，测试跑完的二进制）。&lt;br&gt;<strong>注意</strong>：这 54 个是 <code>tools/registry.py</code> 每次发号自动备份产生的，删了不影响任何现有功能——它们只是历史快照。</td></tr></tbody></table>
+<p><strong>4.8 知识库</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-14</td><td style="text-align:left">「请详细一一展示其功用和来源」</td><td style="text-align:left"><strong>① 我上次的拆分也是错的。</strong> 我说「方法论 15 个 + internal 2 个 + R60 65 个」，加起来 82，对不上 94。&lt;br&gt;<strong>④ 正确拆分（94 个）</strong>：&lt;br&gt;</td><td style="text-align:left">堆</td><td style="text-align:left">个数</td><td style="text-align:left">是什么</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">---</td><td style="text-align:left">---</td><td style="text-align:left">---</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">顶层方法论 md</td><td style="text-align:left"><strong>14</strong></td><td style="text-align:left"><code>platform-map</code>、<code>ppt-deviation-register</code>、<code>answer-engine</code>、<code>repo-inventory</code>、<code>ai-dev-playbook</code> 等</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>internal/</code></td><td style="text-align:left"><strong>2</strong></td><td style="text-align:left">Harmony 5 门、SDS2/SDS3 教训（公司内部实绩）</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>review_diff_assets/</code></td><td style="text-align:left"><strong>12</strong></td><td style="text-align:left">踩坑记录（<code>review_comments.md</code>）——飞轮的登记簿</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>legacy-r60/</code></td><td style="text-align:left"><strong>65</strong></td><td style="text-align:left">R60 旧案件知识：手引 10 + 画面卡 9 + 字段/API/逻辑 YAML + 36 个 RAG 语料</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">中文视图</td><td style="text-align:left">1</td><td style="text-align:left"><code>repo-inventory.zh.html</code>（生成物）</td><td style="text-align:left">&lt;br&gt;<strong>合计 14+2+12+65+1 = 94</strong> ✓</td></tr><tr><td style="text-align:left">4-15</td><td style="text-align:left">「请详细一一展示其功用和来源」</td><td style="text-align:left"><strong>⑤</strong> 同上表。另外回答「为什么放一起容易误删」：<strong>28 个是框架自己的说明（不能删），65 个是 R60 的（可以移走）</strong>。这正是对应表 §5 第 7 行的内容。</td></tr></tbody></table>
+<p><strong>4.9 录像</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-16</td><td style="text-align:left">「暂时用来给领导演示用、但是要参考规格书是否可以一一对应、学习到，不能全都依赖 tutorial，未来如果删了怎么办！！！」</td><td style="text-align:left"><strong>④ 这正是现在的隐患，你说对了。</strong>&lt;br&gt;实际情况分两种：&lt;br&gt;· <strong>运行依赖：没有。</strong> 删了 <code>tutorial/</code>，8 节点、6 道门、发号、追溯<strong>全都照跑</strong>。&lt;br&gt;· <strong>举例依赖：有。</strong> <code>使用手册.md</code> 和 <code>START_HERE.md</code> 里大量「比如 R60Login 的节点 1……」，删了以后这些说明就没有例子可指。&lt;br&gt;<strong>改法</strong>：把例子从 <code>tutorial/</code> 摘出来，放到 <code>docs/90_knowledge/</code> 当范例；<code>tutorial/</code> 本身降级为「可以删的实证记录」。这样框架永远有例子，实证可以随案件更新。&lt;br&gt;⬜ 待你定做不做。</td></tr><tr><td style="text-align:left">4-17</td><td style="text-align:left">「参考节点1补全比较好、但是现在先不用改了、你知道就好、学习到」</td><td style="text-align:left"><strong>③ 采纳，记下了，本轮不动。</strong> 编号不连续的原因（节点 1 有两个 <code>02_</code>、节点 3 没有 <code>03_</code>、节点 4~8 只有 <code>00/01/05</code>）我保留在这份答复里备查。</td></tr><tr><td style="text-align:left">4-18</td><td style="text-align:left">同 4-16（关于 38 个真代码文件）</td><td style="text-align:left"><strong>⑤ 同 4-16。</strong> 补充：那 38 个在 <code>节点5_制造/backend/</code> 和 <code>frontend/</code>，是规格书 §5.5 制造的<strong>产出实例</strong>，不是框架部件。</td></tr></tbody></table>
+<p><strong>4.10 质检报告</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-19</td><td style="text-align:left">「请详细一一展示其功用和来源」</td><td style="text-align:left"><strong>① 我上次错了两处</strong>：说「5 种」，实际 <strong>8 种</strong>；总数说 311，现在是 316（多出的 5 个是我自己加的审计文件）。&lt;br&gt;<strong>④ 正确清单</strong>（<code>git ls-files reports</code>＝316）：&lt;br&gt;</td><td style="text-align:left">类别</td><td style="text-align:left">个数</td><td style="text-align:left">是什么</td><td style="text-align:left">来源</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">---</td><td style="text-align:left">---</td><td style="text-align:left">---</td><td style="text-align:left">---</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>module-survey/</code></td><td style="text-align:left">234</td><td style="text-align:left">旧系统普查的原始抽取</td><td style="text-align:left">一次性调查，Excel 倒出</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>legacy-raw/</code></td><td style="text-align:left">29</td><td style="text-align:left">同上（旧设计书文本抽取）</td><td style="text-align:left">同上</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>drill/</code></td><td style="text-align:left">16</td><td style="text-align:left">训练对比与归因</td><td style="text-align:left">演练产生</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>audit/</code></td><td style="text-align:left">9</td><td style="text-align:left">审计报告</td><td style="text-align:left">我写的</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>ingest/</code></td><td style="text-align:left">7</td><td style="text-align:left">摄入记录</td><td style="text-align:left"><code>tools/ingest</code> 产生</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>unit/</code></td><td style="text-align:left">6</td><td style="text-align:left">单测覆盖率原始输出</td><td style="text-align:left">演练跑测试产生</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>survey/</code></td><td style="text-align:left">2</td><td style="text-align:left">别的仓库的报告</td><td style="text-align:left">外部（⚠ 待定）</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left"><code>rag/</code></td><td style="text-align:left">1</td><td style="text-align:left">RAG 评测结果</td><td style="text-align:left"><code>tools/rag</code> 产生</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">顶层 json</td><td style="text-align:left">9</td><td style="text-align:left">门禁运行原始输出</td><td style="text-align:left"><code>trace_check</code> 产生，<strong>可再生成</strong></td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">顶层 md</td><td style="text-align:left">3</td><td style="text-align:left"><code>AC-selfcheck</code> / <code>DELIVERY_MEMO</code> / <code>PHASE15-EXIT</code></td><td style="text-align:left">阶段记录</td><td style="text-align:left">&lt;br&gt;<strong>合计 234+29+16+9+7+6+2+1+9+3 = 316</strong> ✓</td></tr><tr><td style="text-align:left">4-20</td><td style="text-align:left">「请详细一一展示其功用和来源」</td><td style="text-align:left"><strong>④ <code>reports/drill/R60Login/</code> 16 个，逐个</strong>：&lt;br&gt;<code>README.md</code>（已知的坑）/ <code>comparison.md</code>（AI 版与人版逐条对比）/ <code>answer-key.md</code>（答案键）/ <code>interrogation.md</code>（审查记录）/ <code>provenance.yaml</code>（倒推来源台账）/ <code>freeze.yaml</code>（冻结边界）/ <code>seal_patterns.local.json</code>（封印词表）/ <code>requirement-defects.md</code>（要求书缺陷）/ <code>human-answer-sim.md</code>（人版回答模拟）/ <code>legacy-basic-design-comparison.md</code>（人版基本设计书对比）/ <code>frame-backlog.md</code>（框架改善待办）/ <code>closeout.md</code>（收尾）+ 4 个 <code>.zh.html</code> 中文视图。&lt;br&gt;<strong>来源</strong>：全部由演练过程产生，<code>.zh.html</code> 由 <code>tools/gen_view</code> 从同名 <code>.md</code> 生成。&lt;br&gt;<strong>为什么不能删</strong>：规格书 §10.2.1「差分验证」的唯一实现证据就在这 16 个文件里。</td></tr></tbody></table>
+<h3>【5】三个最容易误解的地方</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">5-1</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">5-2</td><td style="text-align:left">「5 个污染源怎么解决」</td><td style="text-align:left"><strong>④ 查了 <code>docs/00_plan/coach/R60Login/case.yml</code>，5 个都已登记且已给处置</strong>：&lt;br&gt;</td><td style="text-align:left">#</td><td style="text-align:left">污染</td><td style="text-align:left">处置</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">---</td><td style="text-align:left">---</td><td style="text-align:left">---</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">1</td><td style="text-align:left">节点 1 资料曾按 migration 版重写（读现行为逆推）</td><td style="text-align:left">2026-10-15 已撤回</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">2</td><td style="text-align:left">画面卡制作时读过现行为</td><td style="text-align:left">记录在案</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">3</td><td style="text-align:left">隔离会话读 <code>D:\AI_work</code> 造了节点 1 答案键，后被一括采用</td><td style="text-align:left"><strong>该节点答案是人版来源</strong>；已声明本演练只作「流程贯通」演示</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">4</td><td style="text-align:left">节点 2 基本设计书读了人版的构成与粒度</td><td style="text-align:left">冻结对本件解除，已记录</td><td style="text-align:left">&lt;br&gt;</td><td style="text-align:left">5</td><td style="text-align:left">节点 4 未决 5 件从旧实现倒推</td><td style="text-align:left">标注「仮想回答（AI 倒推・人未确认）」，不用于 E2 依据</td><td style="text-align:left">&lt;br&gt;<strong>结论（<code>case.yml</code> 自己写的）</strong>：R60Login 的对比数据<strong>不参与跨画面汇总</strong>，真正测量从<strong>第 2 个没读过的画面</strong>开始。&lt;br&gt;<strong>也就是说：这 5 个不是「待修的 bug」，是「已计量并排除的误差」。</strong>&lt;br&gt;要彻底解决只有一条路：<strong>换一个没被读过的新画面重做 8 节点</strong>。⬜ 这需要你定（重做 / 接受现状）。</td></tr><tr><td style="text-align:left">5-3</td><td style="text-align:left">「请详细一一展示其功用和来源」</td><td style="text-align:left"><strong>⑤</strong> 见 4-19 的完整表 + 对应表 §3.7。&lt;br&gt;<strong>关键数据重申</strong>：263 个 txt 里 <strong>205 个含真实员工姓名，只有 2 个脱敏</strong>。</td></tr><tr><td style="text-align:left">5-4</td><td style="text-align:left">「请详细一一展示其功用和来源」</td><td style="text-align:left"><strong>④ 「放知识库比放代码库更危险」这个判断我复核过，成立</strong>，依据：&lt;br&gt;· 代码库是私有 git，访问面有限；知识库是检索系统，<strong>检索即输出</strong>。&lt;br&gt;· <code>D:\AI_platform\kb-platform</code> 的 <code>collect_docs()</code> 只吃 <code>.md</code>，还要求 8 个必填元数据（<code>doc_id/scope/title/doc_type/version/status/conf_level/updated_at</code>），并且 <code>CONF_LEVELS={10,20,30,40}</code> 里有分级——<strong>意思是一旦进去，就会被当成「可检索资产」分发</strong>。&lt;br&gt;· 结论：<strong>这 263 个不能进知识库</strong>；能进的是 <code>docs/90_knowledge/legacy-r60/</code> 那 22 个已脱敏的 md。</td></tr></tbody></table>
+<h3>【6】自测</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">6-1</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">6-2</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr></tbody></table>
+<h3>【7】整理顺序</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">7-1</td><td style="text-align:left">「可以」</td><td style="text-align:left"><strong>③ 采纳，本轮已执行</strong>（见 4-13）。&lt;br&gt;具体做了：删 54 个 <code>.bak</code> + 1 个 <code>.coverage</code>；<code>.gitignore</code> 加 2 条规则。&lt;br&gt;<strong>没做的</strong>：4 个「没人引用的 json」——我复核后发现每一个都还有 2 处以上引用，<strong>不敢删</strong>。等你确认后再动。</td></tr><tr><td style="text-align:left">7-2</td><td style="text-align:left">「是否可以根据规格书内容整合到正确的地方？」</td><td style="text-align:left"><strong>⑤ 可以，分两块</strong>：&lt;br&gt;· <code>docs/90_knowledge/legacy-r60/</code>（65 个，<strong>已脱敏</strong>）→ 对应规格书 §19 <code>knowledge-base/historical-projects</code>，<strong>可以移进 <code>D:\AI_platform\kb-platform</code></strong>。&lt;br&gt;· <code>reports/module-survey/</code> + <code>legacy-raw/</code>（263 个，<strong>205 个含真实姓名</strong>）→ 规格书无对应，<strong>不能进知识库</strong>，只能删或留原地封存。&lt;br&gt;⬜ 待你定：移/删/留。</td></tr><tr><td style="text-align:left">7-3</td><td style="text-align:left">「可以」</td><td style="text-align:left"><strong>③ 采纳，但本轮没做。</strong> 理由：<code>CLAUDE.md</code> / <code>使用手册.md</code> / 规格书 三本正好是《对应表》的引用对象，先合了再写对应表会来回改。&lt;br&gt;<strong>建议顺序</strong>：你先读对应表 → 定 §4 那 9 项的优先级 → 再合说明文（那时知道该往哪本里合）。</td></tr><tr><td style="text-align:left">7-4</td><td style="text-align:left">「到时候再问我」</td><td style="text-align:left"><strong>③ 记下。</strong> 不主动提「任意节点入口」那件事，等你说。</td></tr><tr><td style="text-align:left">7-5</td><td style="text-align:left">「先整理再做」</td><td style="text-align:left"><strong>③ 采纳。</strong> 本轮只做第一步（删噪音），其余三步停下等你。</td></tr></tbody></table>
+<h3>【8】整体意见</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">8-1</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">8-2</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认</strong>，但你在 8-3 已经答了：<strong>「要全工程对着规格书做」</strong>。</td></tr><tr><td style="text-align:left">8-3</td><td style="text-align:left">「要全工程对着规格书这个文件的内容做」</td><td style="text-align:left"><strong>④ 这就是《对应表》的由来。</strong> 目前覆盖了规格书 20 章 + 附录 A + §19 目录树。&lt;br&gt;<strong>但「全工程对着做」还差一步</strong>：把规格书每一章变成一道<strong>可执行的门或检查</strong>。现在能追到出处的有 78 个资产，能自动检查的只有 6 道门（编号/追溯/字段/生成物/命名/机密）。&lt;br&gt;要补的 9 项列在对应表 §4，需要你定优先级。</td></tr><tr><td style="text-align:left">8-4</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 我这一轮实际动了什么</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">动作</th><th style="text-align:left">对象</th><th style="text-align:left">结果</th></tr></thead><tbody><tr><td style="text-align:left">新增</td><td style="text-align:left"><code>reports/audit/spec-mapping_2026-10-28.md</code></td><td style="text-align:left">规格书 ↔ 文件夹 双向对应表</td></tr><tr><td style="text-align:left">新增</td><td style="text-align:left"><code>reports/audit/reply-to-review_2026-10-28.md</code></td><td style="text-align:left">本文件</td></tr><tr><td style="text-align:left">删除</td><td style="text-align:left"><code>docs/00_registry/_backup/</code> 54 个 <code>.bak</code></td><td style="text-align:left">省 1.8MB</td></tr><tr><td style="text-align:left">删除</td><td style="text-align:left"><code>tutorial/R60Login/节点5_制造/backend/.coverage</code></td><td style="text-align:left">1 个二进制</td></tr><tr><td style="text-align:left">修改</td><td style="text-align:left"><code>.gitignore</code></td><td style="text-align:left">加 2 条规则</td></tr><tr><td style="text-align:left"><strong>未动</strong></td><td style="text-align:left"><code>使用手册.md</code> / <code>START_HERE.md</code> / <code>AGENTS.md</code> / <code>CLAUDE.md</code></td><td style="text-align:left">等你读过对应表</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 需要你定的 6 件事（我不替你决定）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">事</th><th style="text-align:left">选项</th><th style="text-align:left">我的建议</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">应付规格书 §13 KPI（最大缺口）</td><td style="text-align:left">补 / 不补</td><td style="text-align:left"><strong>补</strong>。这是「平台」和「骨架」的分界线，也是能卖的前提</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">知识库怎么落</td><td style="text-align:left">(a) 单独做进 kb-platform / (b) 搬结构进本文件夹 / (c) 两边都做</td><td style="text-align:left"><strong>(a) 先做</strong>。kb-platform 已有 pipeline/embedder/chunker，重复造不划算</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">263 个旧系统普查原料</td><td style="text-align:left">删 / 移 / 留原地封存</td><td style="text-align:left"><strong>留原地封存</strong>，加一条 README 说明「含真实姓名，不得外传」。删除不可逆，而它以后要用来做教材选型</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">5 个污染源</td><td style="text-align:left">换新画面重做 / 接受现状</td><td style="text-align:left"><strong>接受现状</strong>，把「真测量从第 2 个画面开始」写成正式结论</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>rules/</code> 瘦身（117KB → 60KB）</td><td style="text-align:left">做 / 不做</td><td style="text-align:left"><strong>做</strong>，但排在 KPI 之后</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">说明文合并（5 本 → 3 本）</td><td style="text-align:left">现在做 / 等对应表定稿后做</td><td style="text-align:left"><strong>等对应表定稿</strong></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 一句话</h2>
+<p>**你的 25 条问的是同一件事，我用一份对应表答了。<br>剩下 6 件事需要你定，其中第 1 件（KPI 度量）决定这东西是「骨架」还是「平台」。**</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>reply-to-review_2026-10-28.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

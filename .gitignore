@@ -76,3 +76,9 @@ build/
 # VSCode: 拡張推薦は共有する（Claude Code 拡張の推奨）
 .vscode/*
 !.vscode/extensions.json
+
+# ---- 2026-10-28 断舍离：防止噪音再长出来 ----
+# 発号時の自動バックアップ（tools/registry.py が生成）。履歴は git で足りるため追跡しない
+docs/00_registry/_backup/
+# テスト実行の副産物（Node/Python のカバレッジ中間ファイル）
+tutorial/**/backend/.coverage

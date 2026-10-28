@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>spec-mapping_2026-10-28</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>spec-mapping_2026-10-28</h1>
+<div class="meta">
+  机读源: <code>spec-mapping_2026-10-28.md</code> ／
+  生成: 2026-10-28 13:44 ／
+  节 8・表 32
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>spec-mapping_2026-10-28.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 三句话结论</a></li><li><a href="#sec-2">1. 记号</a></li><li><a href="#sec-3">2. 规格书 → 文件夹（逐章）</a></li><li><a href="#sec-4">3. 文件夹 → 规格书（逐个资产：它是干什么的、出自哪、能不能砍）</a></li><li><a href="#sec-5">4. 没做的部分：清单 + 打算在哪做</a></li><li><a href="#sec-6">5. 规格书里没有、本文件夹有的（🎁 超出项）——这些才真正需要你决定去留</a></li><li><a href="#sec-7">6. 三个你最在意的问题，直接答</a></li><li><a href="#sec-8">7. 一句话</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>实施规格书 ↔ 本文件夹 对应表</h1>
+<blockquote class="quote">回答意见表里反复出现的同一个问题（43 条已填意见里，25 条问的是同一件事）：<br><strong>「<code>AI全链路软件工程平台_实施规格书.md</code> 要求的东西，本文件夹做了吗？完善吗？对应哪一章？对不上的能不能砍？没做的打算在哪做？」</strong><br>日期：2026-10-28 ｜ 基准：<code>AI全链路软件工程平台_实施规格书.md</code>（78KB，20 章 + 附录A）</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 三句话结论</h2>
+<ol><li><strong>规格书里"要平台"的部分（模型网关、向量库、审计日志、成本管理），本文件夹没做，也不该在这里做。</strong></li></ol>
+<p>你说"公司已经有了、后期接入"——就按这个定位。本文件夹只保留<strong>接口位置</strong>，不重复造。</p>
+<ol><li><strong>规格书里"要流程、制度、成果物"的部分，本文件夹做了，而且做超了。</strong></li></ol>
+<p>8 工程、编号贯穿、6 道门、机读源+人读视图二重化——这四样是骨架的真本事，<br>规格书第 4、5、9、10 章要求的东西基本都在，程度在后文逐条标。</p>
+<ol><li><strong>规格书里"要度量"的部分（第 13 章 KPI）基本没做</strong>，这是最大的真空。</li></ol>
+<p>骨架只管"产出对不对"，不管"效率提高了多少"。这不是遗漏，是骨架的定位边界——<br>但你要"卖它"的话，这一块必须补，因为客户买的正是"提了多少效"。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 记号</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">记号</th><th style="text-align:left">意思</th></tr></thead><tbody><tr><td style="text-align:left">✅</td><td style="text-align:left">已做。规格书要求的功能有对应物，能跑</td></tr><tr><td style="text-align:left">🔶</td><td style="text-align:left">部分。有对应物，但缺一块，或只到 Phase1</td></tr><tr><td style="text-align:left">❌</td><td style="text-align:left">未做。规格书要求，本文件夹没有</td></tr><tr><td style="text-align:left">➖</td><td style="text-align:left">非实现。规格书这一段是背景/认知/组织层，不产生文件</td></tr><tr><td style="text-align:left">🎁</td><td style="text-align:left">超出规格书。本文件夹有、规格书没要求（每一条都登记在 <code>docs/90_knowledge/ppt-deviation-register.md</code>）</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 规格书 → 文件夹（逐章）</h2>
+<h3>2.1 第 1〜3 章：现状痛点 / 三大认知突破 / 四个思维升级</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书</th><th style="text-align:left">要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">§1 现状与痛点</td><td style="text-align:left">说明为什么从 V 模型转向全链路</td><td style="text-align:left"><code>docs/90_knowledge/v1-platform-4layer.md</code>、<code>ppt-coverage-assessment.md</code></td><td style="text-align:left">➖</td></tr><tr><td style="text-align:left">§2 三大认知突破</td><td style="text-align:left">认知统一材料</td><td style="text-align:left">同上，写在 <code>使用手册.md</code> 开头</td><td style="text-align:left">➖</td></tr><tr><td style="text-align:left">§3 四个思维升级</td><td style="text-align:left">认知统一材料</td><td style="text-align:left">同上</td><td style="text-align:left">➖</td></tr></tbody></table>
+<p>这三章<strong>不产生任何文件</strong>，它们是"为什么"，不是"做什么"。<strong>不用为它们找对应物。</strong></p>
+<hr>
+<h3>2.2 第 4 章：AI 全链路新范式</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书节</th><th style="text-align:left">要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">§4.1 8 工程全链路架构</td><td style="text-align:left">8 个工程 + 人工评审卡点</td><td style="text-align:left"><code>.claude/skills/trans-cosmos-ai-lifecycle-coach/</code>（每节点一张作业票 <code>nodes/n01..n09.md</code>）＋ <code>.claude/agents/trans-cosmos-ai-node1..node9</code>（9 个执行体）＋ <code>docs/00_plan/coach/&lt;module&gt;/n01..n09.yml</code>（签收台账）</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§4.2 各阶段 AI 典型生成物</td><td style="text-align:left">6 个阶段各有产出物清单</td><td style="text-align:left">见 §2.3 逐工程对照；产出物模板在 <code>docs/10~70_*/</code> 共 8 个</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§4.3 三层支撑体系</td><td style="text-align:left">第一层结构化输入 / 第二层上下文中心 / 第三层平台基础</td><td style="text-align:left">第一层＝<code>front-matter</code> 7 字段强制（gate3）；第二层＝<code>docs/00_registry/ids.yml</code> + <code>tools/trace_check</code> 双向追溯（gate2）；第三层＝<code>.claude/rules/01-security-redlines.md</code> + gate6 机密扫描 + <code>.claude/settings.json</code> 权限</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§4.4 两种划分视角</td><td style="text-align:left">落地以 8 工程为准</td><td style="text-align:left"><code>.claude/rules/02-requirements.md</code> §2 明确写「本骨架采用 8 工程」并解释了 PPT 的 7/8 表记差异</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§4.5 新范式核心变化</td><td style="text-align:left">AI 90% 执行、人拍板</td><td style="text-align:left">体现在 RACI（<code>AGENTS.md</code> §7、<code>rules/02</code> §8）</td><td style="text-align:left">➖</td></tr></tbody></table>
+<blockquote class="quote"><strong>§4.2 为什么是 🔶</strong>：表格列出的 6 类产出物里，「业务术语词典」已做（<code>docs/00_registry/glossary.yml</code>，<strong>50 个中日英三语词条</strong>，不是空壳）；<br>但「外部接口清单」「OpenAPI 接口文档」「DTO/VO 实体类」三项本文件夹没有对应物，详见 §4 的未做清单。</blockquote>
+<hr>
+<h3>2.3 第 5 章：8 工程详细作业方式（逐条对照）</h3>
+<p>这一段是规格书的主体。每个工程有 5 条 AI 作业 + 成果物清单，我逐条对。</p>
+<h4>工程① 要件理解（§5.1）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">AI-1 读需求书，提取业务流程与用语</td><td style="text-align:left"><code>.claude/skills/requirement-interrogator/</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-2 检测暧昧/矛盾/前提不足，产确认事项一览</td><td style="text-align:left">同上。<strong>这是骨架最强的一项</strong>：51 个审查视角，来自 177 件真实 QA 票的抽取；<code>tutorial/R60Login/节点1_需求/02_确认事项一覧.md</code> 是实例</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-3 转成带 ID 的结构化要件表</td><td style="text-align:left"><code>docs/10_requirements/R-101-R60Area.yaml</code> + <code>ids.yml</code> 发号</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-4 过去案件 RAG 检索</td><td style="text-align:left"><code>tools/rag/</code>（SQLite FTS5 + 日文 n-gram，不用模型）。<strong>有实测</strong>：<code>reports/rag/eval-2026-10-19.json</code>，80 道金题，hit@5 = 1.0（按模块过滤）/ 0.8625（不过滤），MRR 0.90</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-5 范围与影响范围初期估算</td><td style="text-align:left">❌ 无。<code>tools/impact</code> 是<strong>变更后</strong>的倒查，不是<strong>开工前</strong>的估算</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">成果物：要件结构化表 / 确认事项一览 / 用语词典 / 要件 ID 一览 / 范围估算</td><td style="text-align:left">前四项 ✅（用语词典 = <code>glossary.yml</code> 50 条）；范围估算 ❌</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<blockquote class="quote"><strong>AI-4 为什么是 🔶 而不是 ✅</strong>：工具是完整的，但<strong>语料只有 R60 那 36 个 chunk</strong>。<br>换一个客户，语料是空的。要变成平台能力，见 §4 的第 2 项。</blockquote>
+<h4>工程② 基本设计（§5.2）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">AI-1 由要件 ID 生成功能一览 / 画面一览</td><td style="text-align:left"><code>docs/20_basic_design/F-042-R60Area.yaml</code>、<code>bd-template.yaml</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-2 架构方案与依赖关系</td><td style="text-align:left">🔶 只有功能切分，没有架构图</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-3 入出力一览（项目 ID / 型 / 桁 / 必须 / 由来要件 ID）</td><td style="text-align:left">✅ <strong>I-201..I-256 共 56 个画面项目</strong>，每项带 <code>req_ids</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-4 非功能与制约检查清单</td><td style="text-align:left">🔶 模板里有 <code>non_functional</code> 字段，但没有 checklist 本体</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-5 按日方规定格式自动生成基本设计书</td><td style="text-align:left">🔶 <code>tools/gen_formal</code>，只到 <code>reports/_auto/</code> 预览版（Phase1）；正式 Excel 与受控回流是 Phase2</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<h4>工程③ 详细设计（§5.3）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">AI-1 按功能展开处理流程与分支条件</td><td style="text-align:left">✅ <code>L-014</code>（检索）/ <code>L-015</code>（编辑）</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-2 项目定义（物理名/论理名/型/桁/初期值/编辑仕样）</td><td style="text-align:left">✅ <code>D-043-R60Area.yaml</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-3 表格定义 / SQL / CRUD 一览</td><td style="text-align:left">✅ D-043 内含 SELECT/INSERT/UPDATE</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-4 错误处理一览（代码/消息/条件/处理）</td><td style="text-align:left">✅ <strong>E-001..E-008 共 18 个错误 ID</strong> 已发号</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-5 边界值与例外模式，指出设计遗漏</td><td style="text-align:left">🔶 在 <code>rules/04-testing.md</code> 用 TC 3/2/3 比例强制，但不在详细设计阶段做</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<blockquote class="quote"><strong>这一段是骨架完成度最高的</strong>。规格书 §9.5 要求的详细设计书 8 章结构，<br>在 <code>D-043</code> / <code>L-014</code> / <code>L-015</code> 上是齐的。</blockquote>
+<h4>工程④ 框架构筑（§5.4）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">AI-1 生成项目脚手架</td><td style="text-align:left">🔶 <code>tutorial/R60Login/节点5_制造/backend/</code>+<code>frontend/</code> 有真代码，但那是制造节点的产出，不是脚手架的<strong>生成器</strong></td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-2 生成 CI/CD 设定文件</td><td style="text-align:left">❌ 无</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">AI-3 共通部品雏形</td><td style="text-align:left">🔶 规则写了（<code>rules/03</code> §2 <code>BaseCamelModel</code> 4 行固定写法），但<strong>没有生成器</strong></td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-4 静态解析设定</td><td style="text-align:left">❌ 无（对应质量门 G2 未实现）</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">成果物：<code>docs/40_framework/framework-record.yaml</code>（技术选型记录）</td><td style="text-align:left">✅ 有，且红线④要求人批准</td><td style="text-align:left">✅</td></tr></tbody></table>
+<h4>工程⑤ 制造（§5.5）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">AI-1 由详细设计 + 编码规约生成代码</td><td style="text-align:left">✅ <code>.claude/skills/code-from-design-trans-cosmos-ai/</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-2 同时生成单体测试代码</td><td style="text-align:left">🔶 节点 6 生成的是 <strong>TC 设计（YAML）</strong>，不是测试代码</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-3 静态解析 + 安全检查（SQL 注入等）自动执行</td><td style="text-align:left">🔶 机密扫描有（gate6），SQL 注入等静态解析<strong>无</strong></td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-4 检测与既有资产重复，提示重构</td><td style="text-align:left">❌ 无</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">AI-5 自动生成「设计 ID ↔ 源码」对应表</td><td style="text-align:left">🔶 <code>trace_check</code> 是<strong>验证</strong>对应关系，不是<strong>生成</strong>对应表</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<h4>工程⑥ 单体测试（§5.6）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">AI-1 由详细设计生成测试观点（同值分割/边界值/决定表）</td><td style="text-align:left">✅ <code>rules/04</code> §6 三技法固定；<code>.claude/agents/trans-cosmos-ai-node6-unit-test</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-2 生成测试用例与测试数据</td><td style="text-align:left">✅ <strong>TC-001..TC-008</strong>，比例 正常3/边界2/异常3 被规则强制</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-3 执行测试、汇总结果、提示失败原因候选</td><td style="text-align:left">❌ 骨架不执行测试（案件侧做）</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">AI-4 测覆盖率、指出不足观点</td><td style="text-align:left">❌ 同上</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">AI-5 未验证观点与遗留课题一览</td><td style="text-align:left">🔶 模板有字段</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<blockquote class="quote">规格书 §5.6 的 AI-3/AI-4 属于"跑起来的应用的质量"，<br>对应质量门 G2〜G5。<strong>本骨架明确只管 G1（文档质量）</strong>，见 <code>rules/04</code> §9.1 的诚实边界表。</blockquote>
+<h4>工程⑦ 结合・综合测试（§5.7）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">AI-1 由业务场景与数据流生成结合测试观点</td><td style="text-align:left">✅ <code>IT-001-R60Area-e2e.yaml</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-2 按日方格式生成测试规格书</td><td style="text-align:left">🔶 模板有，正式 Excel 未做</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-3 造测试数据、支援执行、整理证据</td><td style="text-align:left">❌ 案件侧</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">AI-4 障害票分诊（原因候选/影响范围）</td><td style="text-align:left">🔶 <strong>旁路环 n09</strong> 做这个（<code>trans-cosmos-ai-node9-change</code> + <code>tools/impact</code>）</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-5 自动核对全部要件是否被测试</td><td style="text-align:left">✅ gate2 双向追溯 + <code>trace_check --strict</code></td><td style="text-align:left">✅</td></tr></tbody></table>
+<h4>工程⑧ 发布・运用保守（§5.8）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">AI-1 发布步骤书与切回步骤草案</td><td style="text-align:left">✅ <code>docs/70_release/release-template.md</code>、<code>docs/80_operation/operation-runbook.md</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-2 由要件 ID 自动汇总发布笔记</td><td style="text-align:left">🔶 模板有，自动汇总无</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-3 运用问询一次解析（RAG）</td><td style="text-align:left">🔶 <code>tools/rag</code> 能做，但没有接进来的流程</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">AI-4 改修时影响范围分析</td><td style="text-align:left">✅ <code>tools/impact</code> + <code>docs/80_operation/impact-CR-004.yaml</code> 实例</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">AI-5 保守知识登记进知识库</td><td style="text-align:left">🔶 <code>docs/90_knowledge/review_diff_assets/</code> 有 12 个文件，但<strong>靠人手写</strong></td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">Tag 起票支援</td><td style="text-align:left">❌ <code>rules/05</code> §4 定了命名（<code>baseline/R-xxx</code>、<code>basic-vX.Y</code>），<strong>没有工具</strong></td><td style="text-align:left">❌</td></tr></tbody></table>
+<hr>
+<h3>2.4 第 6 章：端到端走查（1 件改修要望的流程）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">拿一件真事走完 8 个工程</td><td style="text-align:left"><code>tutorial/R60Login/</code> <strong>111 个文件，8 个节点全部签字完成</strong> —— 这是唯一的实例</td><td style="text-align:left">✅ 🎁</td></tr></tbody></table>
+<blockquote class="quote">规格书只是"说要走一遍"，没有要求交付走查记录。<br>本文件夹真的走完了并留下了全部中间物，这是<strong>超出规格书</strong>的。</blockquote>
+<hr>
+<h3>2.5 第 7〜8 章：人机分工矩阵 / 团队角色</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">§7 RACI 矩阵</td><td style="text-align:left"><code>AGENTS.md</code> §7（8 工程 × 人机分工）、<code>rules/02</code> §8</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§8 团队角色重构</td><td style="text-align:left"><code>AGENTS.md</code> §0〜§8（7 类角色）</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<blockquote class="quote">🔶 的原因：<code>AGENTS.md</code> 是<strong>文档</strong>，不是<strong>制度</strong>。<br>真正生效的角色约束写在 <code>.claude/rules/</code> 和 <code>.claude/agents/</code> 里，<code>AGENTS.md</code> 人不看就不起作用。</blockquote>
+<hr>
+<h3>2.6 第 9 章：成果物体系</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书节</th><th style="text-align:left">要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">§9.1 全链路成果物地图</td><td style="text-align:left">8 个工程各有指定形态</td><td style="text-align:left"><code>docs/10_requirements</code> 〜 <code>docs/80_operation</code>，<strong>目录一一对应</strong></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§9.2 六大原则</td><td style="text-align:left">构造化 / ID 赋予 / 入出力明示 / 单一来源 / 二重形态 / 前提明示</td><td style="text-align:left"><strong>六条全部落地，这是骨架的核心成就</strong>：① front-matter 7 字段（gate3）② <code>ids.yml</code> 唯一发号（gate1）③ 项目 ID 强制 ④ NFR-1（<code>rules/00</code> §11）⑤ <code>gen_view</code>+<code>gen_formal</code> ⑥ <code>open_issues</code> 字段</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§9.3 二重化架构</td><td style="text-align:left">机读源 → 日文正式版自动转换</td><td style="text-align:left">🔶 机读源 ✅、<code>.zh.html</code> 中文视图 ✅、正式 Excel 只到预览版</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§9.4 基本设计书 8 章结构</td><td style="text-align:left">变更履历/功能概要/一览/入出力/处理概要/关联/非功能/未确定</td><td style="text-align:left">对照 <code>F-042-R60Area.yaml</code>：8 章齐</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§9.5 详细设计书 8 章结构</td><td style="text-align:left">处理流程/项目定义/SQL/错误/例外/单测观点/代码生成指示</td><td style="text-align:left">对照 <code>D-043</code>+<code>L-014</code>+<code>L-015</code>：齐</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§9.6 测试规格书 7 章结构</td><td style="text-align:left">观点/用例/覆盖率/自动化区分/执行结果/残课题</td><td style="text-align:left">对照 <code>TC-001-TC-008</code>：齐；覆盖率与执行结果字段为空</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<hr>
+<h3>2.7 第 10 章：工程间连携机制</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书节</th><th style="text-align:left">要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">§10.1 上下文中心辐射架构</td><td style="text-align:left">以要件 ID 为钥匙的共通上下文</td><td style="text-align:left">概念实现 = <code>ids.yml</code> + <code>trace_check</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§10.2① 追溯矩阵</td><td style="text-align:left">要件↔设计↔源码↔测试自动关联</td><td style="text-align:left">gate2 双向追溯，<code>orphan_ids=[]</code> 是合格条件</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§10.2② 知识库（RAG）</td><td style="text-align:left">过去案件/用语/规约/既存源码检索</td><td style="text-align:left"><code>tools/rag</code> + <code>glossary.yml</code>；语料只有 R60</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§10.2③ 变更影响分析</td><td style="text-align:left">要件变更时自动定位影响面</td><td style="text-align:left"><code>tools/impact</code> + 节点 9 旁路环</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§10.2④ 成果物仓库</td><td style="text-align:left">Git 版本管理 + 差分评审</td><td style="text-align:left">Git + commit 三行（<code>rules/05</code>）</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§10.2⑤ 设计-代码-测试对应表</td><td style="text-align:left">生成时自动产出</td><td style="text-align:left">🔶 靠 <code>trace_check</code> 验证，不生成表</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§10.2⑥ 品质度量</td><td style="text-align:left">指摘密度 / AI 采用率 / 覆盖率持续计测</td><td style="text-align:left">❌ 只有 <code>reports/drill/R60Login/comparison.md</code> 的记录，无持续计测</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">§10.2.1 差分验证模式（5 个场景）</td><td style="text-align:left">设计vs实现 / 新旧系统 / 版本间 / 要件vs覆盖 / 二重化检查</td><td style="text-align:left">🔶 <strong>只做了「新旧系统比较」一个场景</strong>（<code>.claude/agents/drill-comparator</code>），其余 4 个无</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§10.3 要件 ID 贯穿</td><td style="text-align:left">全成果物共通钥匙</td><td style="text-align:left"><code>rules/02</code> §3 发号 SOP + gate1</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§10.4 进化机制（飞轮）</td><td style="text-align:left">踩坑→归档→规则化→加检查→全员免疫</td><td style="text-align:left"><code>rules/06</code> 完整写了 5 段 + 5 问归因；<code>review_diff_assets/</code> 12 个记录</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<blockquote class="quote"><strong>§10.4 为什么是 🔶</strong>：规则写得很完整，但「anomaly 自动建票」「检查自动追加提案」<br>两项<strong>明写未实现</strong>（<code>rules/06</code> §6 自己承认）。飞轮目前靠人每周手动转。</blockquote>
+<hr>
+<h3>2.8 第 11 章：AI 平台架构（7 层）+ 知识管理（4 层）</h3>
+<p>先看 <strong>7 层</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">层</th><th style="text-align:left">规格书要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">利用层（接点）</td><td style="text-align:left">IDE / 聊天 / Web / CLI / CI</td><td style="text-align:left">VS Code 扩展 ✅、CLI ✅；CI ❌</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">编成层</td><td style="text-align:left">工程别 Agent / 工作流 / 提示词管理</td><td style="text-align:left">9 个节点 agent + 5 个 skill ✅</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">能力层</td><td style="text-align:left">模型网关 / 代码生成 / 文档生成 / 测试生成 / RAG / 静态解析</td><td style="text-align:left">代码生成 ✅、文档生成 ✅、RAG 🔶、<strong>模型网关 ❌（公司提供）</strong>、静态解析 ❌</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">知识层</td><td style="text-align:left">过去案件成果物 / 编码规约 / 用语词典 / 既存源码 / 设计模式</td><td style="text-align:left"><code>docs/90_knowledge/</code>：legacy-r60 65 个（过去案件）+ <code>glossary.yml</code> 50 条；<strong>编码规约/设计模式无独立件</strong></td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">数据・上下文层</td><td style="text-align:left">Git / 要件 ID 管理 / 追溯 DB / 向量 DB</td><td style="text-align:left">Git ✅、<code>ids.yml</code> ✅、追溯＝<code>trace_check</code>（非 DB）✅、<strong>向量 DB ❌（RAG 用 SQLite FTS5，不是向量）</strong></td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">统制・治理层</td><td style="text-align:left">权限 / 审计日志 / 机密脱敏 / 品质评价 / 成本管理</td><td style="text-align:left">权限 ✅（<code>settings.json</code>）、机密脱敏 ✅（<code>tools/masking</code>）、<strong>审计日志 ❌、品质评价 🔶、成本管理 ❌</strong></td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">基盘层</td><td style="text-align:left">云/本地 / GPU / 闭域网 / 认证基盘</td><td style="text-align:left">公司提供</td><td style="text-align:left">➖</td></tr></tbody></table>
+<p>再看 <strong>4 层知识模型（§11.3）</strong>——<strong>这一层是骨架的组织原则，对应得最漂亮</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书层</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">① 入口层（AI 最初读的"项目地图"）</td><td style="text-align:left"><code>CLAUDE.md</code> + <code>docs/01_context/case-profile-*.yaml</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">② 规则层（最佳实践 / 禁止模式 / 用语集 / 工作流 / 教训）</td><td style="text-align:left"><code>.claude/rules/</code> 7 本 + <code>glossary.yml</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">③ 执行层（提示词模板 / AI 技能）</td><td style="text-align:left"><code>.claude/skills/</code> 5 个（+ <code>nodes/</code> 9 张作业票）</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">④ 验证层（品质门 / 自动检查脚本）</td><td style="text-align:left"><code>tools/trace_check</code> 6 道门 + <code>aux_checks</code>（seal/freeze）</td><td style="text-align:left">✅</td></tr></tbody></table>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书节</th><th style="text-align:left">要求</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">§11.1.1 两种架构视角对应</td><td style="text-align:left">4 层功能视角 ↔ 7 层技术视角</td><td style="text-align:left"><code>docs/90_knowledge/v1-platform-4layer.md</code> 就是这个对应表</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§11.2 六大核心组件</td><td style="text-align:left">网关 / 工程别 Agent / 上下文中心 / RAG / 评价治理 / 安全</td><td style="text-align:left">①❌（公司）②✅ ③✅ ④🔶 ⑤🔶 ⑥✅</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§11.3.3 成熟度 L0〜L4</td><td style="text-align:left">L3 = 有验证层，L4 = 进化机制自动运转</td><td style="text-align:left"><strong>当前在 L3</strong>：验证层齐、飞轮靠人手动</td><td style="text-align:left">✅（如实）</td></tr><tr><td style="text-align:left">§11.4 提示词模板库（6 类）</td><td style="text-align:left">需求拆解/概要设计/详细设计/编码生成/测试用例/Bug 分析</td><td style="text-align:left">🔶 <strong>没有独立 <code>prompts/</code> 目录</strong>，融在 5 个 skill 里；6 类中「Bug 分析」对应节点 9</td><td style="text-align:left">🔶</td></tr></tbody></table>
+<hr>
+<h3>2.9 第 12〜15 章：技术选型 / KPI / 路线图</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">§12 选型指南（按机密性选模型）</td><td style="text-align:left"><code>rules/03</code> 定了技术栈（Vue3+FastAPI+Oracle）；<strong>模型选型不做</strong>（公司网关）</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§13 KPI 六大维度</td><td style="text-align:left">❌ <strong>基本空白</strong>。只有 <code>eval/gold-qa.yaml</code>（RAG 80 题）和 <code>reports/drill</code> 的对比记录</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left">§14 落地路线图（3 阶段）</td><td style="text-align:left"><code>ROADMAP_3PHASE.md</code>（11.7KB）</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§15 落地优先级建议</td><td style="text-align:left">➖ 组织层</td><td style="text-align:left">➖</td></tr></tbody></table>
+<blockquote class="quote"><strong>§13 是最大缺口</strong>。规格书要求 6 个维度：生产力 / 品质 / AI 活用度 / 网罗性 / 交付周期 / 知识资产。<br>本文件夹能直接算出来的只有「网罗性」一项（要件覆盖率，靠 <code>trace_check</code>）。<br>其余 5 项一个数据都没有。</blockquote>
+<hr>
+<h3>2.10 第 16〜20 章 + 附录 A</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书</th><th style="text-align:left">内容</th><th style="text-align:left">本文件夹</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">§16 案例参考</td><td style="text-align:left">Kavak / Harmony / JET 三个外部案例</td><td style="text-align:left"><code>docs/90_knowledge/internal/</code>（Harmony 5 门、SDS2/SDS3 教训）</td><td style="text-align:left">➖</td></tr><tr><td style="text-align:left">§17 新旧模式对比</td><td style="text-align:left">认知材料</td><td style="text-align:left">—</td><td style="text-align:left">➖</td></tr><tr><td style="text-align:left">§18 实施 Checklist（Phase1/2/3）</td><td style="text-align:left">每阶段启动前/执行中检查项</td><td style="text-align:left"><code>ROADMAP_3PHASE.md</code></td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left">§19 关键文件结构参考</td><td style="text-align:left"><strong>一张目录树，是本表最直接可对照的东西</strong></td><td style="text-align:left">见下 §2.11</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left">§20 总结</td><td style="text-align:left">认知</td><td style="text-align:left">—</td><td style="text-align:left">➖</td></tr><tr><td style="text-align:left">附录 A 快速开始 5 步</td><td style="text-align:left">新人怎么起步</td><td style="text-align:left"><code>START_HERE.md</code></td><td style="text-align:left">✅</td></tr></tbody></table>
+<h3>2.11 特别：§19 目录树 ↔ 本文件夹（1 对 1）</h3>
+<p>规格书 §19 给了一张「参考目录树」。这一段最值得单独对，因为它是<strong>结构层面的答案</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">规格书 §19 的目录</th><th style="text-align:left">本文件夹的实际位置</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left"><code>docs/requirements/</code>（要件表 / QA 表 / 用语词典）</td><td style="text-align:left"><code>docs/10_requirements/</code> + <code>docs/00_registry/glossary.yml</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left"><code>docs/design/</code>（基本/详细/SQL 一览）</td><td style="text-align:left"><code>docs/20_basic_design/</code> + <code>docs/30_detail_design/</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left"><code>docs/test/</code>（单体 / 结合规格书）</td><td style="text-align:left"><code>docs/50_unit_test/</code> + <code>docs/60_integration_test/</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left"><code>docs/release/</code>（发布步骤 / 发布笔记）</td><td style="text-align:left"><code>docs/70_release/</code></td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left"><code>prompts/</code>（5 个子目录）</td><td style="text-align:left"><strong>无此目录</strong>，功能融在 <code>.claude/skills/</code> 的 5 个技能里</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left"><code>knowledge-base/</code>（用语/规约/模式/过去案件）</td><td style="text-align:left"><code>docs/90_knowledge/</code>（legacy-r60 = 过去案件）</td><td style="text-align:left">🔶</td></tr><tr><td style="text-align:left"><code>agents/</code>（4 个工程别 Agent）</td><td style="text-align:left"><code>.claude/agents/</code>（14 个，比要求多）</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left"><code>context-hub/</code>（ID 管理 / 追溯 DB / 成果物仓库）</td><td style="text-align:left"><code>docs/00_registry/ids.yml</code> + <code>tools/trace_check</code> + Git</td><td style="text-align:left">✅</td></tr><tr><td style="text-align:left"><code>model-gateway/</code>（路由 / 安全过滤 / 成本）</td><td style="text-align:left"><strong>无</strong>（公司提供，后期接入）</td><td style="text-align:left">❌</td></tr><tr><td style="text-align:left"><code>governance/</code>（审计日志 / 品质评价 / 权限）</td><td style="text-align:left"><code>.claude/rules/01</code> + <code>tools/masking</code> + <code>.claude/settings.json</code>；<strong>审计日志无</strong></td><td style="text-align:left">🔶</td></tr></tbody></table>
+<blockquote class="quote"><strong>一个重要判断</strong>：规格书自己写了 <strong>"以上はプラットフォーム構成の参考例であり、必須の標準構成ではない"</strong>（§19 开头的注意）。<br>所以<strong>目录名不同不算缺陷</strong>。真正要对的只有「这 10 个能力有没有」，而这 10 个里 7 个有、1 个换形（prompts）、2 个没（网关、审计日志）。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 文件夹 → 规格书（逐个资产：它是干什么的、出自哪、能不能砍）</h2>
+<p>这一段回答「列出来每一个的用处、来源」「对不上的能不能砍」。</p>
+<h3>3.1 根目录 8 个文件</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">干什么</th><th style="text-align:left">规格书出处</th><th style="text-align:left">能不能砍</th></tr></thead><tbody><tr><td style="text-align:left"><code>AI全链路软件工程平台_实施规格书.md</code></td><td style="text-align:left"><strong>目标本身</strong>，78KB</td><td style="text-align:left">就是规格书</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>CLAUDE.md</code></td><td style="text-align:left">AI 每轮必读的核心约束（7 红线、禁止 5 条、commit 规则）</td><td style="text-align:left">§11.3 ①入口层</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>使用手册.md</code></td><td style="text-align:left">人看的完整手册，52KB</td><td style="text-align:left">附录 A 的展开</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>START_HERE.md</code></td><td style="text-align:left">3 分钟上手</td><td style="text-align:left">附录 A</td><td style="text-align:left"><strong>可与使用手册合并</strong>（内容大量重复）</td></tr><tr><td style="text-align:left"><code>AGENTS.md</code></td><td style="text-align:left">7 类角色定义 + RACI 表</td><td style="text-align:left">§7 + §8</td><td style="text-align:left"><strong>可与 <code>rules/02</code> §8 合并</strong>（两处都在写分工，违反单一来源）</td></tr><tr><td style="text-align:left"><code>CONTRIBUTING.md</code></td><td style="text-align:left">贡献规范（6.4KB，2026-10-12）</td><td style="text-align:left"><strong>规格书无对应</strong></td><td style="text-align:left"><strong>可砍</strong>（无出处，且与其他文档重复）</td></tr><tr><td style="text-align:left"><code>ROADMAP_3PHASE.md</code></td><td style="text-align:left">3 阶段落地计划</td><td style="text-align:left">§14</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>*.zh.html</code>（根目录若有）</td><td style="text-align:left">中文视图</td><td style="text-align:left">§9.3 二重化</td><td style="text-align:left">生成物，随源再生</td></tr></tbody></table>
+<h3>3.2 <code>.claude/rules/</code> 7 本（共 108KB，每轮全部加载）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">大小</th><th style="text-align:left">干什么</th><th style="text-align:left">规格书出处</th><th style="text-align:left">能不能砍</th></tr></thead><tbody><tr><td style="text-align:left"><code>00-project-global.md</code></td><td style="text-align:left">15KB</td><td style="text-align:left">13 条全局硬约束</td><td style="text-align:left">§9.2 六原则 + §4.3 第三层</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>01-security-redlines.md</code></td><td style="text-align:left">8KB</td><td style="text-align:left">机密 3 级 13 条</td><td style="text-align:left">§11.2 ⑥安全</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>02-requirements.md</code></td><td style="text-align:left"><strong>43KB</strong></td><td style="text-align:left">发号 SOP / 确认票 / 状态机 / A-B-C 分类</td><td style="text-align:left">§5.1〜5.3 + §10.3</td><td style="text-align:left">不能，但<strong>要瘦身</strong></td></tr><tr><td style="text-align:left"><code>03-design-coding.md</code></td><td style="text-align:left">13KB</td><td style="text-align:left">BaseCamelModel / 命名分区 / SQL 白名单</td><td style="text-align:left">§5.4〜5.5</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>04-testing.md</code></td><td style="text-align:left">13KB</td><td style="text-align:left">TC 3/2/3 / design_ids / 双臂闭环</td><td style="text-align:left">§5.6〜5.7 + §9.6</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>05-commit-messages.md</code></td><td style="text-align:left">5.7KB</td><td style="text-align:left">7 种 commit + 三段 + Tag 命名</td><td style="text-align:left">§10.2 ④</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>06-knowledge-flywheel.md</code></td><td style="text-align:left">8.9KB</td><td style="text-align:left">飞轮 5 段 + 5 问归因</td><td style="text-align:left">§10.4</td><td style="text-align:left">不能</td></tr></tbody></table>
+<blockquote class="quote"><strong>你问「不需要的是否可以整合到正确的地方」——答案是：这 7 本一本都不能删，但总字数要减。</strong><br><code>02-requirements.md</code> 一本占了全部规则的 40%（43KB）。它里面大量是「某个案子怎么答的」这种<strong>案例说明</strong>，<br>不是规则。案例应该移到 <code>docs/90_knowledge/</code>，规则本体留在 <code>rules/</code>。<br>这样能把这 117KB 降到 60KB 左右，AI 就不容易抓不住重点。</blockquote>
+<h3>3.3 <code>.claude/skills/</code> 5 个（18 个文件）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">skill</th><th style="text-align:left">干什么</th><th style="text-align:left">规格书出处</th><th style="text-align:left">能不能砍</th></tr></thead><tbody><tr><td style="text-align:left"><code>trans-cosmos-ai-lifecycle-coach</code>（13 文件）</td><td style="text-align:left">8 工程的伴跑主持：算「停在哪」、出下一步卡片</td><td style="text-align:left">§4.1 + §11.3 ③执行层</td><td style="text-align:left"><strong>核心，不能</strong></td></tr><tr><td style="text-align:left"><code>requirement-interrogator</code>（2 文件）</td><td style="text-align:left">51 个视角审需求书</td><td style="text-align:left">§5.1 AI-2</td><td style="text-align:left">核心，不能</td></tr><tr><td style="text-align:left"><code>code-from-design-trans-cosmos-ai</code></td><td style="text-align:left">设计 → 代码</td><td style="text-align:left">§5.5 AI-1</td><td style="text-align:left">核心；但<strong>内容绑 R60Common</strong>，换客户要改</td></tr><tr><td style="text-align:left"><code>virtual-requirement-author</code></td><td style="text-align:left">从旧系统倒推「客户可能这么写」的需求书</td><td style="text-align:left"><strong>规格书无对应</strong> 🎁</td><td style="text-align:left">演练专用，取决于是否保留演练</td></tr><tr><td style="text-align:left"><code>legacy-r60-navigator</code></td><td style="text-align:left">读 R60 旧系统的只读导航</td><td style="text-align:left"><strong>规格书无对应</strong> 🎁</td><td style="text-align:left">附赠层，可整块移走</td></tr></tbody></table>
+<h3>3.4 <code>.claude/agents/</code> 14 个</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">agent</th><th style="text-align:left">干什么</th><th style="text-align:left">规格书出处</th><th style="text-align:left">能不能砍</th></tr></thead><tbody><tr><td style="text-align:left"><code>trans-cosmos-ai-node1</code> 〜 <code>node8</code>（8 个）</td><td style="text-align:left">8 个工程各自的产出担当，独立上下文</td><td style="text-align:left">§11.2 ②工程别 Agent</td><td style="text-align:left"><strong>核心</strong></td></tr><tr><td style="text-align:left"><code>trans-cosmos-ai-node9-change</code></td><td style="text-align:left">变更/指摘旁路环（不是第 9 个工程）</td><td style="text-align:left">§10.2 ③变更影响 + §5.8 AI-4</td><td style="text-align:left"><strong>核心</strong> 🎁（规格书没画这条环）</td></tr><tr><td style="text-align:left"><code>spec-reviewer</code></td><td style="text-align:left">独立评审（空白上下文重跑验收清单）</td><td style="text-align:left">§11.2 ⑤评价治理</td><td style="text-align:left">核心</td></tr><tr><td style="text-align:left"><code>deliverable-reviewer</code></td><td style="text-align:left">成果物可读化 + 客户确认书</td><td style="text-align:left">§9.3 二重化</td><td style="text-align:left">核心</td></tr><tr><td style="text-align:left"><code>secret-auditor</code></td><td style="text-align:left">机密审计</td><td style="text-align:left">§11.2 ⑥安全</td><td style="text-align:left">核心</td></tr><tr><td style="text-align:left"><code>drill-comparator</code></td><td style="text-align:left">训练对比与归因</td><td style="text-align:left">§10.2.1 差分验证</td><td style="text-align:left">留（唯一实现的差分场景）</td></tr><tr><td style="text-align:left"><code>legacy-module-surveyor</code></td><td style="text-align:left">旧案件模块选型普查（给教材挑模块）</td><td style="text-align:left"><strong>规格书无对应</strong> 🎁</td><td style="text-align:left">附赠层，可移走</td></tr></tbody></table>
+<h3>3.5 <code>tools/</code> 33 个 py（41 个文件）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">工具</th><th style="text-align:left">干什么</th><th style="text-align:left">规格书出处</th><th style="text-align:left">能不能砍</th></tr></thead><tbody><tr><td style="text-align:left"><code>trace_check</code>（包，6 道门）</td><td style="text-align:left">编号/追溯/字段/生成物一致/命名/机密</td><td style="text-align:left">§9.2 ②ID 赋予 + §10.2 ①追溯 + §11.3 ④验证层</td><td style="text-align:left"><strong>不能，最重要</strong></td></tr><tr><td style="text-align:left"><code>registry.py</code></td><td style="text-align:left">发号 / 判定阻塞 / 作废</td><td style="text-align:left">§10.3</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>impact.py</code></td><td style="text-align:left">给一个 ID，倒查上下游</td><td style="text-align:left">§10.2 ③</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>gen_view</code></td><td style="text-align:left">机读源 → 中文网页</td><td style="text-align:left">§9.2 ⑤二重形态</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>gen_formal</code></td><td style="text-align:left">机读源 → 日文 Excel（Phase1 预览）</td><td style="text-align:left">§9.3</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>masking</code></td><td style="text-align:left">脱敏占位</td><td style="text-align:left">§11.2 ⑥</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>rag</code>（4 文件）</td><td style="text-align:left">旧案件知识检索（SQLite FTS5，80 金题实测）</td><td style="text-align:left">§10.2 ②</td><td style="text-align:left">留，但语料只有 R60</td></tr><tr><td style="text-align:left"><code>ingest</code>（7 文件）</td><td style="text-align:left">旧 Excel 一次性摄入</td><td style="text-align:left">§19 knowledge-base</td><td style="text-align:left">一次性工具，可归档</td></tr><tr><td style="text-align:left"><code>legacy</code>（4 文件）</td><td style="text-align:left">旧案件资料转换</td><td style="text-align:left">§19 knowledge-base</td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left"><code>coach_brief.py</code></td><td style="text-align:left">会话开始时的进度提示</td><td style="text-align:left">§4.1</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>paths.py</code></td><td style="text-align:left">路径常量</td><td style="text-align:left">—</td><td style="text-align:left">留</td></tr></tbody></table>
+<blockquote class="quote"><strong>你说「tools 是不是一个都不用动」——我上次说"零重复、零孤岛"，这句说错了，你的"不一定"是对的。</strong><br>实际情况：<code>tools/trace_check.py</code>（薄启动器，18 行）与 <code>tools/trace_check/__main__.py</code> 是<strong>重复入口</strong>；<br><code>ingest</code> 和 <code>legacy</code> 是<strong>一次性迁移工具</strong>，任务完成就不再需要。<br>所以「不能动」只对 <code>trace_check</code> / <code>registry</code> / <code>impact</code> / <code>gen_view</code> / <code>gen_formal</code> / <code>masking</code> 这 6 个成立。</blockquote>
+<h3>3.6 <code>docs/</code> 目录</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">目录</th><th style="text-align:left">干什么</th><th style="text-align:left">规格书出处</th><th style="text-align:left">能不能砍</th></tr></thead><tbody><tr><td style="text-align:left"><code>00_plan/</code></td><td style="text-align:left">工程进度台账（<code>coach/&lt;模块&gt;/n01..n09.yml</code>）+ spec/tasks/review</td><td style="text-align:left">规格书<strong>未明说</strong>，是骨架的追加 🎁</td><td style="text-align:left">不能（删了就失忆）</td></tr><tr><td style="text-align:left"><code>00_registry/</code></td><td style="text-align:left"><code>ids.yml</code>（164 个 ID）+ <code>glossary.yml</code>（50 条三语）+ <code>_backup/</code></td><td style="text-align:left">§10.3 + §19 context-hub</td><td style="text-align:left">不能（<code>_backup</code> 除外）</td></tr><tr><td style="text-align:left"><code>01_context/</code></td><td style="text-align:left">案件档案（<code>case-profile-*.yaml</code>，技术栈的事实）</td><td style="text-align:left">§11.3 ④项目固有</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>10_requirements</code> 〜 <code>80_operation</code></td><td style="text-align:left">8 个工程的成品与模板，共 22 个文件</td><td style="text-align:left">§9.1 一一对应</td><td style="text-align:left">不能（是样板）</td></tr><tr><td style="text-align:left"><code>90_knowledge/</code> 方法论（14 个 md + internal 2 + review_diff_assets 12 = 28）</td><td style="text-align:left">这套框架"为什么这么设计"</td><td style="text-align:left">§10.4 进化机制 + 骨架自身的说明</td><td style="text-align:left">不能</td></tr><tr><td style="text-align:left"><code>90_knowledge/legacy-r60/</code>（65 个）</td><td style="text-align:left">R60 旧案件知识（手引 10 + 画面卡 9 + 字段/API/逻辑 YAML + 36 个 RAG 语料）</td><td style="text-align:left">§19 <code>knowledge-base/historical-projects</code></td><td style="text-align:left"><strong>可整块移走</strong>（只在 migration 案件有用）</td></tr></tbody></table>
+<h3>3.7 <code>tutorial/</code> 与 <code>reports/</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left">目录</th><th style="text-align:left">干什么</th><th style="text-align:left">规格书出处</th><th style="text-align:left">能不能砍</th></tr></thead><tbody><tr><td style="text-align:left"><code>tutorial/R60Login/</code>（111 个）</td><td style="text-align:left"><strong>唯一走完 8 工程、6 门全过的实证</strong></td><td style="text-align:left">§6 端到端走查</td><td style="text-align:left">不能（删了无法向任何人证明框架跑得通）</td></tr><tr><td style="text-align:left"><code>reports/drill/R60Login/</code>（16 个）</td><td style="text-align:left">AI 版与人版逐条对比、归因、答案键</td><td style="text-align:left">§10.2.1 差分验证</td><td style="text-align:left">不能（唯一证据）</td></tr><tr><td style="text-align:left"><code>reports/module-survey/</code>（234）+ <code>legacy-raw/</code>（29）</td><td style="text-align:left">旧系统普查的原始抽取（Excel 单元格倾倒）</td><td style="text-align:left"><strong>规格书无对应</strong> 🎁</td><td style="text-align:left"><strong>可删或移走</strong>（见 §5）</td></tr><tr><td style="text-align:left"><code>reports/audit/</code>（9 个）</td><td style="text-align:left">我的审计报告</td><td style="text-align:left">无</td><td style="text-align:left">交付后归档</td></tr><tr><td style="text-align:left"><code>reports/ingest/</code>（7）、<code>reports/unit/</code>（6）</td><td style="text-align:left">摄入记录、测试覆盖原始输出</td><td style="text-align:left">无</td><td style="text-align:left">可再生成</td></tr><tr><td style="text-align:left"><code>reports/*.json</code>（9 个）</td><td style="text-align:left">门禁运行原始输出</td><td style="text-align:left">§11.3 ④</td><td style="text-align:left">可再生成</td></tr><tr><td style="text-align:left"><code>reports/AC-selfcheck.md</code> / <code>DELIVERY_MEMO.md</code> / <code>PHASE15-EXIT.md</code></td><td style="text-align:left">阶段记录</td><td style="text-align:left">§18 Checklist</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>eval/gold-qa.yaml</code></td><td style="text-align:left">RAG 金题 80 道</td><td style="text-align:left">§13 KPI（知识资产维度）</td><td style="text-align:left">留</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 没做的部分：清单 + 打算在哪做</h2>
+<p>按"该不该做"排序。前 5 项是真缺口，后 4 项是"本文件夹不该做"。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">规格书要求</th><th style="text-align:left">状态</th><th style="text-align:left">在哪做</th><th style="text-align:left">优先级</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>§13 KPI 六大维度</strong></td><td style="text-align:left">❌ 基本空白</td><td style="text-align:left">新建 <code>reports/metrics/</code>，由 <code>trace_check --report</code> 的 stats + Git 提交记录算出可算的 3 项（网罗性/指摘密度/采用率），其余 3 项（工期/工数/知识资产复用率）需案件侧数据</td><td style="text-align:left"><strong>高</strong>——这是"能不能卖"的分界线</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>§10.2 ② RAG 知识库（平台级）</strong></td><td style="text-align:left">🔶 工具完整、语料只有 R60</td><td style="text-align:left">两条路：<strong>(a)</strong> 单独做进 <code>D:\AI_platform\kb-platform</code>（推荐，那边已有 pipeline/embedder/chunker，且是公司标准）；<strong>(b)</strong> 把 kb-platform 的 4 层知识结构和 8 个必填元数据搬进本文件夹 <code>docs/90_knowledge/</code></td><td style="text-align:left"><strong>高</strong></td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>§11.2 ① 模型网关</strong></td><td style="text-align:left">❌</td><td style="text-align:left">公司已有，后期接入。本文件夹只需在 <code>docs/40_framework/</code> 留一份接口说明（请求/响应/机密分级路由），不实现</td><td style="text-align:left">中（等公司）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>§10.2 ⑥ 品质度量 / §10.2.1 其余 4 个差分场景</strong></td><td style="text-align:left">❌ / 🔶</td><td style="text-align:left">扩 <code>drill-comparator</code> 成 5 个场景；指摘密度从 <code>review_comments.md</code> 算</td><td style="text-align:left">中</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><strong>§5.1 AI-5 开工前范围估算</strong></td><td style="text-align:left">❌</td><td style="text-align:left">节点 1 增加一个产出（<code>R-xxx-scope.yaml</code>：功能点/画面数/外部接口数），或复用 <code>tools/impact</code> 的反向逻辑</td><td style="text-align:left">中</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><strong>§5.4 AI-2/AI-4 CI/CD 与静态解析</strong></td><td style="text-align:left">❌</td><td style="text-align:left">案件侧 CI 接（G2〜G5 是骨架明确不覆盖的，<code>rules/04</code> §9.1 已写清）</td><td style="text-align:left">低（不是本文件夹的活）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><strong>§11.2 ⑤⑥ 审计日志 / 成本管理</strong></td><td style="text-align:left">❌</td><td style="text-align:left">公司网关侧</td><td style="text-align:left">低</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left"><strong>§11.4 独立 <code>prompts/</code> 目录</strong></td><td style="text-align:left">🔶</td><td style="text-align:left">可选。当前融在 skill 里已经能用，独立目录只是换了组织方式</td><td style="text-align:left">低（可不做）</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left"><strong>§5.8 发布 Tag 起票工具</strong></td><td style="text-align:left">❌</td><td style="text-align:left">节点 8 加一条命令</td><td style="text-align:left">低</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 规格书里没有、本文件夹有的（🎁 超出项）——这些才真正需要你决定去留</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">超出项</th><th style="text-align:left">是什么</th><th style="text-align:left">多少</th><th style="text-align:left">处置建议</th></tr></thead><tbody><tr><td style="text-align:left"><strong>验收审查能力（51 视角）</strong></td><td style="text-align:left">从 177 件真实 QA 票抽取的审查观点</td><td style="text-align:left"><code>requirement-interrogator</code></td><td style="text-align:left"><strong>留，这是最值钱的</strong></td></tr><tr><td style="text-align:left"><strong>旁路环 n09</strong></td><td style="text-align:left">变更/指摘不是第 9 个工程，是绕在外面的环</td><td style="text-align:left">1 agent + 1 节点票</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><strong>进度台账 <code>coach/&lt;模块&gt;/n01..n09.yml</code></strong></td><td style="text-align:left">节点级签收状态（规格书只说"人评审卡点"，没说怎么存）</td><td style="text-align:left">11 文件</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><strong>飞轮 5 问归因</strong></td><td style="text-align:left">踩坑→规则化的具体提问法</td><td style="text-align:left"><code>rules/06</code></td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><strong>A/B/C 分类 + 出处等级 E1〜E4</strong></td><td style="text-align:left">客户确认事项的判定框架</td><td style="text-align:left"><code>rules/02</code> §4.1</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><strong>演练（tutorial + 倒推 skill + 对比 agent）</strong></td><td style="text-align:left">虚拟需求书 + 走完 8 节点</td><td style="text-align:left">111 + 16 文件</td><td style="text-align:left"><strong>留，但别让框架依赖它</strong>（见 §6）</td></tr><tr><td style="text-align:left"><strong>R60 旧案件知识库</strong></td><td style="text-align:left">手引/画面卡/chunk</td><td style="text-align:left">65 文件</td><td style="text-align:left">可移进 kb-platform</td></tr><tr><td style="text-align:left"><strong>旧系统普查原始抽取</strong></td><td style="text-align:left">Excel 单元格倾倒</td><td style="text-align:left">263 文件</td><td style="text-align:left">见下</td></tr></tbody></table>
+<blockquote class="quote">这 8 项<strong>全部已登记</strong>在 <code>docs/90_knowledge/ppt-deviation-register.md</code>。<br>规则是"加一条就登记一条"，否则会被误认为"规格书要求的"。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 三个你最在意的问题，直接答</h2>
+<h3>6.1 「对不上的部分是否可以砍掉？」</h3>
+<p>能砍的只有 4 样，其余都不能：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">能砍</th><th style="text-align:left">理由</th></tr></thead><tbody><tr><td style="text-align:left"><code>CONTRIBUTING.md</code></td><td style="text-align:left">规格书无对应，且与其它文档重复</td></tr><tr><td style="text-align:left"><code>docs/00_registry/_backup/</code> 54 个 <code>.bak</code></td><td style="text-align:left">自动备份噪音，删了不留任何损失</td></tr><tr><td style="text-align:left"><code>reports/module-survey/</code> + <code>legacy-raw/</code> 263 个</td><td style="text-align:left">原始投倒，人读不了，205 个含真实员工姓名未脱敏</td></tr><tr><td style="text-align:left"><code>tools/ingest</code> / <code>tools/legacy</code></td><td style="text-align:left">一次性迁移工具，任务完成后不再需要</td></tr></tbody></table>
+<p><strong>不能砍的</strong>：<code>rules/</code> 7 本、<code>tools/</code> 里那 6 个核心工具、<code>ids.yml</code>、<code>docs/10~80</code> 样板、<br><code>tutorial/</code> 实证、<code>reports/drill</code> 证据。</p>
+<h3>6.2 「不能全都依赖 tutorial，未来删了怎么办？」</h3>
+<p>你说得对，这正是现在的隐患。实际情况：</p>
+<ul><li><strong>运行依赖：没有。</strong> 删了 <code>tutorial/</code>，8 个节点、6 道门、发号、追溯全都照跑。</li><li><strong>举例依赖：有。</strong> <code>使用手册.md</code> 和 <code>START_HERE.md</code> 里大量"比如 R60Login 的节点 1……"，</li></ul>
+<p>删了以后这些说明就没有例子可指。</p>
+<p>所以正确做法不是保留 tutorial，而是<strong>把例子从 tutorial 里摘出来，放到 <code>docs/90_knowledge/</code> 当范例</strong>，<br>tutorial 本身变成"可以删的实证记录"。这样框架永远有例子，而实证可以随案件更新。</p>
+<h3>6.3 「5 个污染源怎么解决？」</h3>
+<p><code>docs/00_plan/coach/R60Login/case.yml</code> 的 notes 里已经逐条记着，而且<strong>已经给了处置</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">污染源</th><th style="text-align:left">是什么</th><th style="text-align:left">现有处置</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">节点 1 资料曾按 migration 版重写（读现行为逆推）</td><td style="text-align:left">2026-10-15 已撤回</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">画面卡制作时读过现行为</td><td style="text-align:left">记录在案</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">隔离会话读 <code>D:\AI_work</code> 造了节点 1 答案键，后被一括采用</td><td style="text-align:left"><strong>该节点答案是人版来源</strong>；已声明本演练只作"流程贯通"演示</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">节点 2 基本设计书读了人版的构成与粒度</td><td style="text-align:left">冻结对本件解除，已记录</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">节点 4 未决 5 件从旧实现倒推</td><td style="text-align:left">标注"仮想回答（AI 倒推・人未确认）"，且不用于 E2 依据</td></tr></tbody></table>
+<p><strong>结论（<code>case.yml</code> 自己写的）</strong>：R60Login 的对比数据<strong>不参与跨画面汇总</strong>，<br>真正的测量从<strong>第 2 个没读过的画面</strong>开始。</p>
+<p><strong>也就是说：这 5 个污染源不是"待解决的 bug"，是"已计量并排除的误差"。</strong><br>要彻底"解决"，只有一条路——<strong>换一个没被读过的新画面重做一遍 8 节点</strong>。<br>这需要你决定（是重做，还是就接受"只证明流程能跑通"）。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. 一句话</h2>
+<p><strong>规格书要的三件事，做了一件半：</strong><br><strong>"制度与流程"做完了还超了（§4/§5/§9/§10 大部分 ✅），"平台能力"等公司给（网关、向量库、审计），"度量"几乎没做（§13）。</strong></p>
+<p><strong>下一步该补的不是删文件，是把 §13 度量补上——那才是"平台"和"骨架"的差别。</strong></p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>spec-mapping_2026-10-28.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

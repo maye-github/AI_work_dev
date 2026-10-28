@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>understand-the-repo_2026-10-28.zh</title>
+<title>understand-the-repo_2026-10-28</title>
 <style>
 :root{
   --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
@@ -142,21 +142,21 @@ table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
 <body>
 <div class="wrap">
 <header class="banner">
-<h1>understand-the-repo_2026-10-28.zh</h1>
+<h1>understand-the-repo_2026-10-28</h1>
 <div class="meta">
-  机读源: <code>understand-the-repo_2026-10-28.zh.md</code> ／
-  生成: 2026-10-28 10:25 ／
+  机读源: <code>understand-the-repo_2026-10-28.md</code> ／
+  生成: 2026-10-28 13:44 ／
   节 9・表 7
 </div>
 <div class="warn-note">
-  ⚠️ 本页由机读源 (<code>understand-the-repo_2026-10-28.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  ⚠️ 本页由机读源 (<code>understand-the-repo_2026-10-28.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
   <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
 </div>
 </header>
 <nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 一句话</a></li><li><a href="#sec-2">1. 打个比方：这就是一家外包公司的制度</a></li><li><a href="#sec-3">2. 它是怎么干活的：8 个节点，每个节点一次签收</a></li><li><a href="#sec-4">3. 一把钥匙：仓库里有 5 个&quot;世界&quot;</a></li><li><a href="#sec-5">4. 逐块说：为什么存在，删了会怎样</a></li><li><a href="#sec-6">5. 三个最容易误解的地方</a></li><li><a href="#sec-7">6. 自测：能答出这 8 题就算懂了</a></li><li><a href="#sec-8">7. 懂了之后，整理按这个顺序</a></li><li><a href="#sec-9">8. 如果你还卡着</a></li></ol></nav>
 <section class="sec sec-lead">
 <h1>读懂 D:\AI_work_dev</h1>
-<blockquote class="quote">这份文件的目标：让你能回答"这个东西我是要改、要删、还是留着"，而不是记不住 700 个文件名。<br><strong>看完大概 30 分钟。</strong> 不用一边看一边查文件。</blockquote>
+<blockquote class="quote">这份文件的目标：让你能回答"这个东西我是要改、要删、还是留着"，而不是记不住 700 个文件名。<br><strong>看完大概 30 分钟。</strong> 不用一边看一边查文件。<br><strong>★ 2026-10-28 订正说明</strong>：本文件曾把方向答偏了——它讲「这四样东西是什么」，<br>而你要的是「对应 <code>AI全链路软件工程平台_实施规格书.md</code> 的哪一部分、做了没有、完善不完善、<br>对不上的能不能砍、没做的在哪做」。那份答案在 <strong><code>reports/audit/spec-mapping_2026-10-28.md</code></strong>。<br>本文件同时订正了 7 处事实错误（下文以「&gt; <strong>订正（2026-10-28）</strong>」标出）：<br>§4.4 tools 不是「一个都不用动」、§4.5 tasks.md 是 23 个不是 16 个、§4.6 是 19 个不是 22 个、<br>§4.8 方法论是 28 个不是 15+2 个、§4.10 reports 是 8 种不是 5 种、§5 原料是 263 个不是 274 个、<br>§4.6 撤回 <code>_sample-</code> 前缀提案。逐条答复见 <code>reports/audit/reply-to-review_2026-10-28.md</code>。</blockquote>
 <hr>
 </section>
 <section class="sec sec-plain" id="sec-1">
@@ -241,24 +241,32 @@ table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
 <h3>4.4 <code>tools/</code>（41 个文件）—— 质检仪</h3>
 <p><strong>为什么存在</strong>：</p>
 <table class="tbl"><thead><tr><th style="text-align:left">工具</th><th style="text-align:left">干什么</th><th style="text-align:left">什么时候用</th></tr></thead><tbody><tr><td style="text-align:left"><code>trace_check</code></td><td style="text-align:left"><strong>6 道门</strong>：编号对不对、追溯链断没断、字段齐不齐、命名对不对、机密有没有</td><td style="text-align:left">每次提交前</td></tr><tr><td style="text-align:left"><code>gen_view</code></td><td style="text-align:left">机读文件 → 中文网页（就是你现在看的这种）</td><td style="text-align:left">每个节点做完</td></tr><tr><td style="text-align:left"><code>gen_formal</code></td><td style="text-align:left">机读文件 → 日文正式 Excel</td><td style="text-align:left">自动（每轮结束）</td></tr><tr><td style="text-align:left"><code>registry</code></td><td style="text-align:left">发编号、判阻塞、作废</td><td style="text-align:left">人要新编号时</td></tr><tr><td style="text-align:left"><code>impact</code></td><td style="text-align:left">给一个编号，倒查上下游会影响谁</td><td style="text-align:left">客户提修改时</td></tr><tr><td style="text-align:left"><code>masking</code></td><td style="text-align:left">脱敏</td><td style="text-align:left">发给外部之前</td></tr><tr><td style="text-align:left"><code>rag</code></td><td style="text-align:left">在旧案件知识里搜</td><td style="text-align:left">查旧系统时</td></tr><tr><td style="text-align:left"><code>ingest</code> / <code>legacy</code></td><td style="text-align:left">把旧 Excel / 旧案件搬进来</td><td style="text-align:left">一次性</td></tr></tbody></table>
-<p><strong>这是全仓最干净的一块</strong>：41 个文件，零重复，零孤岛。<strong>一个都不用动。</strong></p>
+<p><strong>这一块的结构最清楚</strong>，但不是「一个都不用动」。真正不能动的只有 6 个：<br><code>trace_check</code> / <code>registry</code> / <code>impact</code> / <code>gen_view</code> / <code>gen_formal</code> / <code>masking</code>。</p>
+<p>可以清理的：<code>tools/trace_check.py</code>（18 行薄启动器）与 <code>tools/trace_check/__main__.py</code> 是<strong>重复入口</strong>；<br><code>ingest</code>（7 文件）、<code>legacy</code>（4 文件）是<strong>一次性迁移工具</strong>，搬完就不需要了。</p>
+<blockquote class="quote"><strong>订正（2026-10-28）</strong>：原文写「零重复、零孤岛，一个都不用动」，是错的。<br>依据：意见表 4-7「不一定」；复核确认存在重复入口与一次性工具（见 <code>reply-to-review_2026-10-28.md</code> 4-7）。</blockquote>
 <h3>4.5 <code>docs/00_plan/</code>（16 个）—— 项目看板</h3>
 <p><strong>为什么存在</strong>：<code>coach/R60Login/n01.yml</code> 到 <code>n09.yml</code>，<strong>一个节点一个文件</strong>，记着这个节点做到第几步、签字人是谁、还有哪些没答的问题。<strong>这是"现在到哪了"的唯一真源。</strong> 你重新打开对话时，系统就是靠读这些文件知道你在哪的。</p>
 <p><strong>删了会怎样</strong>：系统失忆，你得从头说一遍。</p>
-<p><strong>一个问题</strong>：<code>tasks.md</code> 里 16 个任务<strong>全都还标着 pending</strong>，实际早做完了。新人打开会以为项目没开工。</p>
+<p><strong>一个容易误会的地方</strong>：<code>tasks.md</code> 里 <strong>23 个任务</strong>全都还标着 <code>pending</code>。这不是没做，是<strong>故意冻结的</strong>——<br>文件开头自己写着「本ファイルは更新しない。実施済み／未実施の区別は <code>reports/AC-selfcheck.md</code> と<br><code>DELIVERY_MEMO.md</code> を正とする」。它记的是<strong>建这套骨架这项工程</strong>的施工计划（2026-10-12，旧 Trae 时代），<br>不是「用骨架做客户项目」的待办。</p>
+<blockquote class="quote"><strong>订正（2026-10-28）</strong>：原文写「16 个任务」，实际是 23 个；并补充了它为什么全 pending。<br>依据：意见表 4-9。</blockquote>
 <h3>4.6 <code>docs/10~80_*/</code>（22 个）—— 文件柜</h3>
-<p><strong>为什么存在</strong>：8 个节点各自的成品放哪。每个目录里有两种东西：</p>
-<ul><li><strong>模板</strong>（<code>req-template.yaml</code>、<code>bd-template.yaml</code>…，共 8 个）—— 空白表格</li><li><strong>样板</strong>（<code>R-101-R60Area.yaml</code>、<code>F-042-R60Area.yaml</code>…，共 14 个）—— 填好的样子</li></ul>
+<p><strong>为什么存在</strong>：8 个节点各自的成品放哪。一共 <strong>19 个文件</strong>，分两种：</p>
+<ul><li><strong>模板 7 个</strong>（文件名都带 <code>-template</code>）：<code>req-template</code>、<code>bd-template</code>、<code>dd-template</code>、<code>tc-template</code>、</li></ul>
+<p><code>integration-template</code>、<code>release-template</code>、<code>impact-analysis-template</code> —— 空白表格</p>
+<ul><li><strong>填好的 12 个</strong>：R-101 系列样板 8 个（<code>R-101</code>、<code>F-042</code>、<code>D-043</code>、<code>E-001-E005</code>、<code>L-014</code>、<code>L-015</code>、</li></ul>
+<p><code>TC-001-TC-008</code>、<code>IT-001</code>）＋ 记录 4 个（<code>framework-record</code>、<code>operation-runbook</code>、<br><code>impact-BUG-002</code>、<code>impact-CR-004</code>）</p>
 <p><strong>删了会怎样</strong>：AI 不知道产物该长什么样。</p>
-<p><strong>问题</strong>：空格和样板混在同一个目录里，新人分不清哪个该照着填、哪个是别人填过的。<strong>建议给样板加前缀 <code>_sample-</code>，不用搬家。</strong></p>
+<p><strong>怎么分清哪个是空的、哪个是填过的</strong>：看文件名有没有 <code>template</code>。<strong>已经能分清，不需要改。</strong><br>（原文提议给样板加 <code>_sample-</code> 前缀——已撤回，见下方订正。）</p>
+<blockquote class="quote"><strong>订正（2026-10-28）</strong>：原文写「22 个文件：8 模板 + 14 样板」，实际是 <strong>19 个：7 模板 + 12 填好的</strong>。<br>同时撤回 <code>_sample-</code> 前缀提案——意见表 4-11「听不懂 别搞这么复杂」，且文件名本来就能区分。</blockquote>
 <h3>4.7 <code>docs/00_registry/ids.yml</code> —— 编号簿</h3>
 <p><strong>为什么存在</strong>：这是<strong>全仓所有编号的唯一出处</strong>。现在有 164 个：需求 2、功能 2、画面项目 77、数据 6、逻辑 10、错误 18、测试 29、结合测试 13、变更 5、缺陷 2。</p>
 <p><strong>为什么重要</strong>：规矩是"编号只能从这里领"。所以"这个 R-201 是不是真的"永远只有一个答案。</p>
 <p><strong>顺带一个问题</strong>：<code>_backup/</code> 下有 54 个 <code>.bak</code>，是每次发号时自动备份的，<strong>一天就攒了 1.7MB</strong>，而且被提交进了 git。这是纯垃圾。</p>
 <h3>4.8 <code>docs/90_knowledge/</code>（94 个）—— 知识库</h3>
 <p>这里面其实是<strong>两堆完全不同的东西</strong>：</p>
-<table class="tbl"><thead><tr><th style="text-align:left">堆</th><th style="text-align:left">文件</th><th style="text-align:left">是什么</th></tr></thead><tbody><tr><td style="text-align:left"><strong>方法论</strong>（15 个 + internal 2 个）</td><td style="text-align:left"><code>platform-map.md</code>、<code>ppt-deviation-register.md</code>、<code>answer-engine.md</code>、<code>repo-inventory.md</code> 等</td><td style="text-align:left">这套框架"为什么这么设计"的说明。<strong>核心是前三个</strong></td></tr><tr><td style="text-align:left"><strong>R60 旧案件知识</strong>（65 个）</td><td style="text-align:left"><code>legacy-r60/</code> 下的手引 10 本、画面卡 9 张、7 个模块的字段/API/逻辑 YAML、36 个 RAG 语料</td><td style="text-align:left"><strong>只对 R60 有用</strong>，是附赠层</td></tr></tbody></table>
-<p><strong>这是最容易误删的地方</strong>：方法论的 15 个是核心，<code>legacy-r60</code> 的 65 个是附赠。它们现在放在同一个目录下，看起来像一类东西。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">堆</th><th style="text-align:left">个数</th><th style="text-align:left">是什么</th></tr></thead><tbody><tr><td style="text-align:left"><strong>框架自己的说明</strong>（顶层 md 14 + <code>internal/</code> 2 + <code>review_diff_assets/</code> 12 = <strong>28</strong>）</td><td style="text-align:left">28</td><td style="text-align:left"><code>platform-map.md</code>、<code>ppt-deviation-register.md</code>、<code>answer-engine.md</code>、<code>ai-dev-playbook.md</code> 等（<strong>核心是前三个</strong>）；<code>internal/</code> 是 Harmony 5 门与 SDS2/SDS3 教训；<code>review_diff_assets/</code> 是踩坑登记簿</td></tr><tr><td style="text-align:left"><strong>R60 旧案件知识</strong>（<code>legacy-r60/</code>）</td><td style="text-align:left"><strong>65</strong></td><td style="text-align:left">手引 10 本、画面卡 9 张、7 个模块的字段/API/逻辑 YAML、36 个 RAG 语料</td></tr><tr><td style="text-align:left">生成物</td><td style="text-align:left">1</td><td style="text-align:left"><code>repo-inventory.zh.html</code></td></tr><tr><td style="text-align:left"><strong>合计</strong></td><td style="text-align:left"><strong>94</strong></td><td style="text-align:left"></td></tr></tbody></table>
+<p><strong>这是最容易误删的地方</strong>：28 个是框架自己的说明（<strong>不能删</strong>），<code>legacy-r60</code> 的 65 个是附赠（<strong>可以整块移走</strong>）。<br>它们现在放在同一个目录下，看起来像一类东西。</p>
+<blockquote class="quote"><strong>订正（2026-10-28）</strong>：原文写「方法论 15 个 + internal 2 个」与总数 94 对不上（加起来 82）。<br>实际是 14 + 2 + 12 + 65 + 1 = 94。依据：<code>git ls-files docs/90_knowledge</code> 实测。</blockquote>
 <h3>4.9 <code>tutorial/R60Login/</code>（111 个）—— 录像</h3>
 <p><strong>为什么存在</strong>：8 个节点每个目录里，文件是<strong>按固定顺序编号</strong>的：</p>
 <pre><code>00_输入模板.yaml          ← 这一步要吃进什么
@@ -269,9 +277,10 @@ table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
 <p><strong>所以"03 在哪"的问题</strong>：编号不连续，是因为节点 1 有两个 <code>02_</code>（回答核对 + 确认事项一览）、节点 3 没有 <code>03_</code>、节点 4~8 只有 <code>00/01/05</code>。<strong>这是长得丑，不是缺文件。</strong></p>
 <p><strong>这是全仓唯一能证明"框架跑得通"的东西。不能删。</strong></p>
 <p>里面还有 38 个真代码文件（<code>节点5_制造/backend/</code> 和 <code>frontend/</code>），以及跑测试留下的结果。</p>
-<h3>4.10 <code>reports/</code>（311 个）—— 质检报告与扫描件</h3>
-<p><strong>这里面混了 5 种完全不同的东西</strong>：</p>
-<table class="tbl"><thead><tr><th style="text-align:left">是什么</th><th style="text-align:left">数量</th><th style="text-align:left">该不该留</th></tr></thead><tbody><tr><td style="text-align:left"><strong>训练测量记录</strong>（<code>drill/R60Login/</code>，16 个：AI 版和人版的逐条对比、归因、答案键）</td><td style="text-align:left">16</td><td style="text-align:left"><strong>留</strong>——这是框架价值的唯一证据</td></tr><tr><td style="text-align:left"><strong>旧系统扫描件</strong>（<code>module-survey/</code> 234 个 + <code>legacy-raw/</code> 29 个）</td><td style="text-align:left">263</td><td style="text-align:left"><strong>可删</strong>——是 Excel 单元格倾倒，不是文章</td></tr><tr><td style="text-align:left"><strong>门禁原始输出</strong>（<code>trace_*.json</code>、<code>gate6_report.json</code> 等）</td><td style="text-align:left">8</td><td style="text-align:left">留 5 个 / 删 4 个（4 个没人引用）</td></tr><tr><td style="text-align:left"><strong>阶段记录</strong>（<code>AC-selfcheck.md</code>、<code>DELIVERY_MEMO.md</code>、<code>PHASE15-EXIT.md</code>）</td><td style="text-align:left">3</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><strong>别人的仓库报告</strong>（<code>survey/prj01-logistics-*</code>）</td><td style="text-align:left">2</td><td style="text-align:left">待定——那是另一个项目</td></tr></tbody></table>
+<h3>4.10 <code>reports/</code>（316 个）—— 质检报告与扫描件</h3>
+<p><strong>这里面混了 8 种完全不同的东西</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">是什么</th><th style="text-align:left">数量</th><th style="text-align:left">该不该留</th></tr></thead><tbody><tr><td style="text-align:left"><strong>旧系统扫描件</strong>（<code>module-survey/</code> 234 + <code>legacy-raw/</code> 29）</td><td style="text-align:left">263</td><td style="text-align:left"><strong>处置另议</strong>——是 Excel 单元格倾倒，不是文章；205 个含真实员工姓名</td></tr><tr><td style="text-align:left"><strong>训练测量记录</strong>（<code>drill/R60Login/</code>：AI 版与人版逐条对比、归因、答案键）</td><td style="text-align:left">16</td><td style="text-align:left"><strong>留</strong>——框架价值的唯一证据</td></tr><tr><td style="text-align:left"><strong>门禁原始输出</strong>（顶层 <code>trace_*.json</code>、<code>gate6_report.json</code>、<code>seal_before.json</code> 等）</td><td style="text-align:left">9</td><td style="text-align:left">留（<strong>可再生成</strong>，但删了就没法回溯当时跑过什么）</td></tr><tr><td style="text-align:left"><strong>阶段记录</strong>（<code>AC-selfcheck.md</code>、<code>DELIVERY_MEMO.md</code>、<code>PHASE15-EXIT.md</code>）</td><td style="text-align:left">3</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><strong>审计报告</strong>（<code>audit/</code>，含本文件与对应表）</td><td style="text-align:left">9</td><td style="text-align:left">交付后归档</td></tr><tr><td style="text-align:left"><strong>摄入记录</strong>（<code>ingest/</code>）</td><td style="text-align:left">7</td><td style="text-align:left">留（<code>tools/ingest</code> 的产出）</td></tr><tr><td style="text-align:left"><strong>单测覆盖率原始输出</strong>（<code>unit/</code>）</td><td style="text-align:left">6</td><td style="text-align:left">留（演练跑测试的产出）</td></tr><tr><td style="text-align:left"><strong>RAG 评测</strong>（<code>rag/</code>）</td><td style="text-align:left">1</td><td style="text-align:left">留（80 金题的结果，是 RAG 唯一证据）</td></tr><tr><td style="text-align:left"><strong>别人的仓库报告</strong>（<code>survey/</code>）</td><td style="text-align:left">2</td><td style="text-align:left">待定——那是另一个项目</td></tr></tbody></table>
+<blockquote class="quote"><strong>订正（2026-10-28）</strong>：原文写「混了 5 种」，漏了 ingest / unit / rag 三类；总数写 311（当时），<br>现已 316（多出的 5 个是审计文件）。条数实测自 <code>git ls-files reports</code>。</blockquote>
 <hr>
 </section>
 <section class="sec sec-plain" id="sec-6">
@@ -283,8 +292,9 @@ table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
 <p><strong>它是唯一走完 8 个节点、6 道门全过的实证。</strong> 扔了以后，你无法向任何人证明这套框架跑得通。</p>
 <p>而且它自己诚实记着 5 个污染源——这份诚实本身就是资产。</p>
 <h3>误解三："reports 里 300 个文件都是记录，都得留"</h3>
-<p><strong>274 个是原料，不是记录。</strong> 那些 <code>.txt</code> 是从旧 Excel 里倒出来的单元格（<code>r7 A:生産系共通マスタシステム | AF:内田</code>），人读不了，AI 也只能勉强读。</p>
-<p>而且其中 <strong>205 个文件含真实员工姓名，没有脱敏</strong>。这类东西放在知识库里，比放在代码库更危险。</p>
+<p><strong>263 个是原料，不是记录。</strong> 那些 <code>.txt</code> 是从旧 Excel 里倒出来的单元格（<code>r7 A:生産系共通マスタシステム | AF:内田</code>），人读不了，AI 也只能勉强读。</p>
+<p>而且其中 <strong>205 个文件含真实员工姓名，没有脱敏</strong>（263 个里只有 2 个是脱敏过的）。这类东西放在知识库里，比放在代码库更危险——知识库是<strong>检索即输出</strong>，一旦进去就会被当成可分发资产。</p>
+<blockquote class="quote"><strong>订正（2026-10-28）</strong>：原文写「274 个」，实际 <strong>263 个</strong>（<code>module-survey</code> 234 + <code>legacy-raw</code> 29）。</blockquote>
 <hr>
 </section>
 <section class="sec sec-plain" id="sec-7">
@@ -313,7 +323,7 @@ table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
 <p>我按你的问题重讲那一块，不用你重读全文。</p>
 </section>
 <div class="foot">
-  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>understand-the-repo_2026-10-28.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>understand-the-repo_2026-10-28.md</code>。来自人的意见请写进「指摘单／评审栏」。
 </div>
 </div>
 </body>
