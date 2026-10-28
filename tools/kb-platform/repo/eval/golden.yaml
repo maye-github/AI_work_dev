@@ -1,0 +1,51 @@
+# 検索品質のゴールデンセット（Phase 0）
+# 各ケース: 質問に対して、expect の doc_id が top_k 以内に含まれれば正解。
+
+- id: Q001
+  question: 在庫が不足したとき、受注はどうなるか
+  expect: [REQ-001, BS-001]
+  project: P-DEMO-001
+
+- id: Q002
+  question: 在庫不足を表すエラーコードは何番か
+  expect: [REQ-001, BS-001]
+
+- id: Q003
+  question: 引当の優先順位はどのような順で決まるか
+  expect: [REQ-001]
+
+- id: Q004
+  question: 同時接続数の非機能要件はいくつか
+  expect: [REQ-001]
+
+- id: Q005
+  question: ログインに連続して失敗するとどうなるか
+  expect: [REQ-001]
+
+- id: Q006
+  question: T_ALLOC テーブルの主キーはどのカラムか
+  expect: [DS-001]
+
+- id: Q007
+  question: 楽観ロックに使っているカラムは何か
+  expect: [DS-001]
+
+- id: Q008
+  question: E-1042 を返すのはどのようなときか
+  expect: [DS-001, BS-001]
+
+- id: Q009
+  question: 一覧検索画面が必ず持つべき4つの要素は何か
+  expect: [PAT-SCREEN-001]
+
+- id: Q010
+  question: 引当は英語で何と表記するか
+  expect: [STD-GLOSSARY-001]
+
+- id: Q011
+  question: 性能試験の合格基準は何秒以内か
+  expect: [TC-001]
+
+- id: Q012
+  question: 変数や関数の命名規則はどうなっているか
+  expect: [STD-CODING-001]

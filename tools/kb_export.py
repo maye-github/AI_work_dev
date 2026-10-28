@@ -161,8 +161,14 @@ def _quote(v: str) -> str:
 # 変換
 # --------------------------------------------------------------------------
 
-def build_entries(root: Path, source: str, project_id: str) -> list[dict]:
-    """ソース配下の `.md` を読み、kb-platform 用の 1 文書ずつに組み替える。"""
+def build_entries(root: Path, source: str, project_id: str, promote: bool = False) -> list[dict]:
+    """ソース配下の `.md` を読み、kb-platform 用の 1 文書ずつに組み替える。
+
+    `promote=True` のとき `draft` を `active` に上げる。**kb-platform の検索は
+    `status='active'` の文書しか返さない**（`kbkit/retrieval.py` の WHERE 句）。
+    すなわち `draft` のままでは**索引には入るが引けない**。
+    **`active` は承認の意味ではない**——「検索に載せてよい知識として扱う」という宣言である。
+    """
     src = root / source
     if not src.is_dir():
         raise FileNotFoundError(f"知識のソースがありません: {source}")
@@ -191,6 +197,10 @@ def build_entries(root: Path, source: str, project_id: str) -> list[dict]:
         status_raw = str(meta.get("status") or "draft").strip()
         sens = str(meta.get("sensitivity") or "internal").strip()
 
+        kb_status = STATUS_MAP.get(status_raw, "draft")
+        if promote and kb_status == "draft":
+            kb_status = "active"
+
         fm = {
             "doc_id": doc_id,
             "scope": "project",
@@ -198,7 +208,7 @@ def build_entries(root: Path, source: str, project_id: str) -> list[dict]:
             "title": _title_of(body, p.stem),
             "doc_type": _doc_type_of(rel_in_src),
             "version": str(meta.get("version") or "0.1.0"),
-            "status": STATUS_MAP.get(status_raw, "draft"),
+            "status": kb_status,
             "conf_level": CONF_MAP.get(sens, DEFAULT_CONF),
             "updated_at": _git_date(root, rel_posix) or "1970-01-01",
         }
@@ -318,6 +328,9 @@ def local_lint(repo_dir: Path) -> list[str]:
 
 def run_kb_lint(kb_path: Path, repo_dir: Path) -> tuple[int, str]:
     """kb-platform の `lint` を回す（読み取りのみ）。"""
+    # 相対パスのままだと cwd=kb_path と二重に解決されるので、必ず絶対化する
+    kb_path = kb_path.resolve()
+    repo_dir = repo_dir.resolve()
     run_py = kb_path / "run.py"
     if not run_py.is_file():
         return 2, f"kb-platform の run.py が見つかりません: {run_py}"
@@ -390,6 +403,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--source", default=DEFAULT_SOURCE, help=f"知識のソース（既定 {DEFAULT_SOURCE}）")
     ap.add_argument("--out", metavar="DIR", help="書き出し先。省略すると一覧を出すだけで書かない")
     ap.add_argument("--project-id", default="P-R60-001", help="kb-platform の案件 ID（既定 P-R60-001）")
+    ap.add_argument("--promote", action="store_true",
+                    help="draft を active に上げる（kb-platform の検索は active しか返さない）。"
+                         "**承認の意味ではない**——検索に載せてよい知識として扱う宣言")
     ap.add_argument("--kb", metavar="DIR",
                     help="kb-platform のルート。指定すると本家 lint を回す（numpy が必要）")
     ap.add_argument("--check", action="store_true",
@@ -404,7 +420,7 @@ def main(argv: list[str] | None = None) -> int:
     paths.reconfigure_stdout()
 
     try:
-        entries = build_entries(root, args.source, args.project_id)
+        entries = build_entries(root, args.source, args.project_id, promote=args.promote)
     except Exception as e:
         print(f"[kb_export] 読み取りに失敗しました: {e}", file=sys.stderr)
         return 1
@@ -413,6 +429,12 @@ def main(argv: list[str] | None = None) -> int:
     print()
     print(f"対象 {len(entries)} 本。")
     print()
+    if args.promote:
+        n_promoted = sum(1 for e in entries if e["fm"]["status"] == "active")
+        print(f"> ⚠ `--promote`：{n_promoted} 本を `active` として書き出します。")
+        print("> kb-platform の検索は `active` しか返さないため、`draft` のままでは引けません。")
+        print("> **これは承認ではありません**——「検索に載せてよい知識として扱う」という宣言です。")
+        print()
     print("| # | 出力先 | doc_id | doc_type | status | conf | updated_at |")
     print("|---|---|---|---|---|---|---|")
     for i, e in enumerate(entries, 1):

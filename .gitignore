@@ -82,6 +82,11 @@ build/
 docs/00_registry/_backup/
 # テスト実行の副産物（Node/Python のカバレッジ中間ファイル）
 tutorial/**/backend/.coverage
-# kb-platform 向け書き出し（`py -3 -m tools.kb_export --out reports/kb-export` で再生成できる。
-# 正本は docs/90_knowledge/ 側であり、ここに写しを溜めない）
-reports/kb-export/projects/
+# kb-platform の repo へ書き出した R60 知識は派生物（正本は docs/90_knowledge/）。
+# 索引（sqlite）は ingest で作り直せる
+tools/kb-platform/repo/projects/P-R60-001/
+tools/kb-platform/data/*.sqlite3
+tools/kb-platform/data/*.sqlite3-wal
+tools/kb-platform/data/*.sqlite3-shm
+tools/kb-platform/__pycache__/
+tools/kb-platform/**/__pycache__/
