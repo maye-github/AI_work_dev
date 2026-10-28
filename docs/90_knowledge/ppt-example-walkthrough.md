@@ -64,7 +64,7 @@ PPT S21–S23 の成果物例は `F-042` / `L-014` / `TC-003` という ID を�
 > `doc/02_INPUT/` の資料を読んで、業務フローと用語を抽出し、曖昧点・矛盾点・前提不足を Q-ID で列挙してください。
 > 要件を構造化シートにし、ID は `docs/00_registry/ids.yml` で **R-ID を発号**してから `docs/10_requirements/` に置いてください。
 
-**成果物**：`docs/10_requirements/R-101-R60Area.yaml`
+**成果物**：`docs/_samples/10_requirements/R-101-R60Area.yaml`
 
 ```yaml
 id: R-101
@@ -103,7 +103,7 @@ $ py -3 -m tools.trace_check --strict --only-check id-chain
 > R-101 から機能一覧・画面一覧を起こし、入出力一覧に **I-ID を付与**（型・桁・必須・由来要件 ID）してください。
 > 非機能要件と制約のチェックリストを適用し、`docs/20_basic_design/` に置いてください。
 
-**成果物**：`docs/20_basic_design/F-042-R60Area.yaml`
+**成果物**：`docs/_samples/20_basic_design/F-042-R60Area.yaml`
 
 **PPT S21 のサンプルとの対比**（`req_ids: [R-101, R-102]` と `item_id: I-201 / name: 出荷数` が PPT の例）
 
@@ -215,7 +215,7 @@ F-042 は `I-206` という ID でしか参照しない。**同じ情報を二�
 > **正常 3 / 境界 2 / 異常 3** の比率で TC を作ってください。各 TC に `design_ids` と `req_ids` を必ず付けてください。
 > （`trans-cosmos-ai-node6-unit-test` サブエージェントに任せると比率と観点技法が強制される）
 
-**成果物**：`docs/50_unit_test/TC-001-TC-008-R60Area.yaml`
+**成果物**：`docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml`
 
 **PPT S23 のサンプルとの対比**（PPT の `case_id: TC-003 / design_id: D-043 / req_id: R-101 / viewpoint: 境界値 / precondition: 在庫なし / input: 出荷数 = 1 / expected: E-003 警告を表示 / coverage: {req: 100%, viewpoint: 94%}`）
 
@@ -253,7 +253,7 @@ TC count 8 | all have design_ids: True
 **Claude Code への依頼**
 > R60Area の 7 接口（init → search → initEdit → getPlcNm → edit → delete → download）で IT-001 を作ってください。A/B 比較の断言対象は 3 主キー＋業務項目としてください。
 
-**成果物**：`docs/60_integration_test/IT-001-R60Area-e2e.yaml`
+**成果物**：`docs/_samples/60_integration_test/IT-001-R60Area-e2e.yaml`
 
 ```yaml
 api_sequence:   # 7 步骤
@@ -307,8 +307,8 @@ $ py -3 -m tools.trace_check --strict --gate 6
 
 | 日 | 工程 | 成果物（実ファイル） | 人のゲート | 結果 |
 |---|------|-------------------|-----------|------|
-| D1 | 要件理解 | `docs/10_requirements/R-101-R60Area.yaml` | G1 要件合意 | ✅ 野号ゼロ |
-| D2 | 基本設計 | `docs/20_basic_design/F-042-R60Area.yaml` | G2 設計評審 | ✅ 56 I-ID / 7 テーブル |
+| D1 | 要件理解 | `docs/_samples/10_requirements/R-101-R60Area.yaml` | G1 要件合意 | ✅ 野号ゼロ |
+| D2 | 基本設計 | `docs/_samples/20_basic_design/F-042-R60Area.yaml` | G2 設計評審 | ✅ 56 I-ID / 7 テーブル |
 | D3 | 詳細設計 | `docs/30_detail_design/` 4 ファイル | G2 設計評審 | ✅ 単一ソース grep == 1 |
 | D4 | 製造 | 実装 ＋ 設計-コード対応表 | G3 コードレビュー | ✅ 禁止事項 5 条 |
 | D5 | 単体テスト | `docs/50_unit_test/TC-001-TC-008-*.yaml` | G4 合否判定 | ✅ 3/2/3・出典あり |
@@ -340,9 +340,9 @@ $ py -3 -m tools.masking.mask_demo --self-test
 
 | PPT のスライド | PPT のサンプル | 本骨架の対応物 | 形状の一致 |
 |---------------|---------------|--------------|-----------|
-| S21 基本設計書 | `F-042` + `io_list[I-201]` + `open_issues[Q-007]` | `docs/20_basic_design/F-042-R60Area.yaml` | ✅ 機能 ID・入出力 ID。**未確定事項のみ不一致** — PPT は `Q-007` を持つが、本骨架の F-042 は `open_issues: []`（Q-ID 未発号。§3 の表を参照） |
-| S22 詳細設計書 | `L-014` + `steps[S1: cond/then/else]` + `errors[E-001]` | `docs/30_detail_design/L-014-R60Area-search.yaml` | ✅ ロジック ID・段階・エラー |
-| S23 テスト仕様書 | `TC-003` + `design_id/req_id` + `coverage` | `docs/50_unit_test/TC-001-TC-008-R60Area.yaml` | ✅ ケース ID・出典 ID・観点 |
+| S21 基本設計書 | `F-042` + `io_list[I-201]` + `open_issues[Q-007]` | `docs/_samples/20_basic_design/F-042-R60Area.yaml` | ✅ 機能 ID・入出力 ID。**未確定事項のみ不一致** — PPT は `Q-007` を持つが、本骨架の F-042 は `open_issues: []`（Q-ID 未発号。§3 の表を参照） |
+| S22 詳細設計書 | `L-014` + `steps[S1: cond/then/else]` + `errors[E-001]` | `docs/_samples/30_detail_design/L-014-R60Area-search.yaml` | ✅ ロジック ID・段階・エラー |
+| S23 テスト仕様書 | `TC-003` + `design_id/req_id` + `coverage` | `docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml` | ✅ ケース ID・出典 ID・観点 |
 | S19 成果物マップ | 工程×成果物×形態×レビュア | `docs/90_knowledge/ai-dev-playbook.md` §4 | ✅ |
 | S20 成果物 6 原則 | 構造化 / ID 付与 / 入出力明示 / 単一ソース / 二重形態 / 前提明示 | gate1・gate3・gate5 が機械検査 ＋ 人がレビュー | ✅ |
 | S7 端到端走査 | D1–D7 | **本書** | ✅ |

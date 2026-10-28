@@ -49,10 +49,10 @@ version: 0.1.0
 - **合格サイン**：front-matter に 7 キー全部が存在し、`status` が `{draft,open,baselined,changed,done,void}` のいずれか。
 
 ### 4. F-042 を F-043 に複製し、I-ID 参照を 3 箇所変更する
-- **作業内容**：`docs/20_basic_design/F-042-R60Area.yaml` を F-043 として複製し、`input_ids` の I-ID 参照を 3 箇所だけ変更する（要求 ID の追随）。ID 定義の重複書きは禁止（他工程は R-ID/I-ID 引用に留める）。
+- **作業内容**：`docs/_samples/20_basic_design/F-042-R60Area.yaml` を F-043 として複製し、`input_ids` の I-ID 参照を 3 箇所だけ変更する（要求 ID の追随）。ID 定義の重複書きは禁止（他工程は R-ID/I-ID 引用に留める）。
 - **実行コマンド**：
   ```
-  cp docs/20_basic_design/F-042-R60Area.yaml docs/20_basic_design/F-043-<Module>.yaml
+  cp docs/_samples/20_basic_design/F-042-R60Area.yaml docs/20_basic_design/F-043-<Module>.yaml
   py -3 -c "t=open('docs/20_basic_design/F-043-<Module>.yaml',encoding='utf-8').read();print(t.count('I-'))"
   ```
 - **予定時間（分）**：10

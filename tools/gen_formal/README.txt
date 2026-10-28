@@ -55,7 +55,7 @@ gen_formal — 機読成果物 → 日文正式 Excel の二重化ツール
 
 【単一ソース原則（NFR-1）】
   列名の唯一の発号元は docs/00_registry/ids.yml の I-ID。
-  物理列名は docs/30_detail_design/D-043-R60Area.yaml が存在すればそちらを優先する。
+  物理列名は docs/_samples/30_detail_design/D-043-R60Area.yaml が存在すればそちらを優先する。
   日文正式 Excel を手で編集してはならない。必ず機読源 → 変換で生成する。
 
 【Phase2 でやること】

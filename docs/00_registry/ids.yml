@@ -28,7 +28,7 @@ ids:
     status: baselined
     name: "R60Areaマスタ検索登録修正削除"
     description: "エリアマスタ（R60_AREA_M_TBL）の検索・新規登録・複製・修正・論理削除・CSVダウンロード"
-    used_by: docs/10_requirements/R-101-R60Area.yaml
+    used_by: docs/_samples/10_requirements/R-101-R60Area.yaml
 
   # ---------- F: 機能仕様 ----------
   F-042:
@@ -36,7 +36,7 @@ ids:
     name: "R60Area全画面機能"
     r_id: R-101
     description: "一覧検索画面 + 登録修正複製ダイアログの 2 画面構成"
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
 
   # ---------- I: 画面項目（56 件 = R60_AREA_M_TBL 56 列相当）----------
   I-201:
@@ -44,337 +44,337 @@ ids:
     name: cmpCd
     jp: 会社コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-202:
     status: baselined
     name: jigCd
     jp: 事業場コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-203:
     status: baselined
     name: araCd
     jp: エリアコード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-204:
     status: baselined
     name: araNm
     jp: エリア名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-205:
     status: baselined
     name: araRnm
     jp: エリア略名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-206:
     status: baselined
     name: ukhPlcCd
     jp: 受払場所コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-207:
     status: baselined
     name: ukhKeijJigCd
     jp: 受払計上事業場コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-208:
     status: baselined
     name: ukhKeijBsyCd
     jp: 受払計上部署コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-209:
     status: baselined
     name: saimKeijJigCd
     jp: 債務計上事業場コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-210:
     status: baselined
     name: saimKeijBsyCd
     jp: 債務計上部署コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-211:
     status: baselined
     name: saiknKeijJigCd
     jp: 債権計上事業場コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-212:
     status: baselined
     name: saiknKeijBsyCd
     jp: 債権計上部署コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-213:
     status: baselined
     name: jidHarSynFlg
     jp: 自動発生同期フラグ
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-214:
     status: baselined
     name: shrAnsyTdkNm
     jp: 共有回答先名称
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-215:
     status: baselined
     name: idoDfltPlcCdGzr
     jp: 異動デフォルト場所コード（元帳）
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-216:
     status: baselined
     name: idoDfltPlcCdHsh
     jp: 異動デフォルト場所コード（補助）
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-217:
     status: baselined
     name: sychKbiCmpCd
     jp: 接替区分会社コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-218:
     status: baselined
     name: sychKbiJigCd
     jp: 接替区分事業場コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-219:
     status: baselined
     name: sychKbiUkhKeijJigCd
     jp: 接替区分受払計上事業場コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-220:
     status: baselined
     name: sychKbiUkhKeijBsyCd
     jp: 接替区分受払計上部署コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-221:
     status: baselined
     name: sychKbiUkhSaimJigCd
     jp: 接替区分受払債務事業場コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-222:
     status: baselined
     name: sychKbiUkhSaimBsyCd
     jp: 接替区分受払債務部署コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-223:
     status: baselined
     name: sychKbiUkhSaiknJigCd
     jp: 接替区分受払債権事業場コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-224:
     status: baselined
     name: sychKbiUkhSaiknBsyCd
     jp: 接替区分受払債権部署コード
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-225:
     status: baselined
     name: sendSts
     jp: 送信ステータス
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-226:
     status: baselined
     name: delFlg
     jp: 削除フラグ
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-227:
     status: baselined
     name: sendKbn
     jp: 送信区分
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-228:
     status: baselined
     name: ksnKbn
     jp: 改竄区分
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-229:
     status: baselined
     name: ksnKbnStfId
     jp: 改竄区分者ID
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-230:
     status: baselined
     name: regStfId
     jp: 登録者ID
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-231:
     status: baselined
     name: regDat
     jp: 登録日時
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-232:
     status: baselined
     name: ksnStfId
     jp: 改竄者ID
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-233:
     status: baselined
     name: ksnDat
     jp: 改竄日時
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-234:
     status: baselined
     name: revNo
     jp: リビジョン番号
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-235:
     status: baselined
     name: cmpNm
     jp: 会社名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-236:
     status: baselined
     name: jigNm
     jp: 事業場名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-237:
     status: baselined
     name: ukhPlcNm
     jp: 受払場所名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-238:
     status: baselined
     name: ukhKeijJigNm
     jp: 受払計上事業場名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-239:
     status: baselined
     name: ukhKeijBsyNm
     jp: 受払計上部署名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-240:
     status: baselined
     name: saimKeijJigNm
     jp: 債務計上事業場名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-241:
     status: baselined
     name: saimKeijBsyNm
     jp: 債務計上部署名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-242:
     status: baselined
     name: saiknKeijJigNm
     jp: 債権計上事業場名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-243:
     status: baselined
     name: saiknKeijBsyNm
     jp: 債権計上部署名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-244:
     status: baselined
     name: idoDfltPlcNmGzr
     jp: 異動デフォルト場所名（元帳）
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-245:
     status: baselined
     name: idoDfltPlcNmHsh
     jp: 異動デフォルト場所名（補助）
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-246:
     status: baselined
     name: sychKbiCmpNm
     jp: 接替区分会社名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-247:
     status: baselined
     name: sychKbiJigNm
     jp: 接替区分事業場名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-248:
     status: baselined
     name: sychKbiUkhKeijJigNm
     jp: 接替区分受払計上事業場名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-249:
     status: baselined
     name: sychKbiUkhKeijBsyNm
     jp: 接替区分受払計上部署名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-250:
     status: baselined
     name: sychKbiUkhSaimJigNm
     jp: 接替区分受払債務事業場名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-251:
     status: baselined
     name: sychKbiUkhSaimBsyNm
     jp: 接替区分受払債務部署名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-252:
     status: baselined
     name: sychKbiUkhSaiknJigNm
     jp: 接替区分受払債権事業場名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-253:
     status: baselined
     name: sychKbiUkhSaiknBsyNm
     jp: 接替区分受払債権部署名
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-254:
     status: baselined
     name: delStatus
     jp: 削除ステータス
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-255:
     status: baselined
     name: jigHyjSeq
     jp: 事業場表示順
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
   I-256:
     status: baselined
     name: regSts
     jp: 登録ステータス
     f_id: F-042
-    used_by: docs/20_basic_design/F-042-R60Area.yaml
+    used_by: docs/_samples/20_basic_design/F-042-R60Area.yaml
 
   # ---------- D: データモデル / DML ----------
   D-043:
@@ -382,7 +382,7 @@ ids:
     name: "R60Area詳細設計（DML定義）"
     f_id: F-042
     description: "R60_AREA_M_TBL に対する SELECT/INSERT/UPDATE の物理設計"
-    used_by: docs/30_detail_design/D-043-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/D-043-R60Area.yaml
 
   # ---------- L: 業務ロジック ----------
   L-014:
@@ -391,14 +391,14 @@ ids:
     d_id: D-043
     file: R60AreaController.py
     lines: "1499-1647"
-    used_by: docs/30_detail_design/L-014-R60Area-search.yaml
+    used_by: docs/_samples/30_detail_design/L-014-R60Area-search.yaml
   L-015:
     status: baselined
     name: "initEdit/edit/delete 業務（排他+参照+重複）"
     d_id: D-043
     file: R60AreaController.py
     lines: "1713-2915"
-    used_by: docs/30_detail_design/L-015-R60Area-edit.yaml
+    used_by: docs/_samples/30_detail_design/L-015-R60Area-edit.yaml
 
   # ---------- E: エラー・イベント ----------
   E-001:
@@ -406,51 +406,51 @@ ids:
     error_id: R60W0010
     jp: 検索結果0件
     l_id: L-014
-    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/E-001-E005-R60Area.yaml
   E-002:
     status: baselined
     error_id: R60W0006
     jp: 排他エラー（KSN_DAT不一致）
     l_id: L-015
-    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/E-001-E005-R60Area.yaml
   E-003:
     status: baselined
     error_id: R60W0014
     jp: キー重複エラー
     l_id: L-015
-    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/E-001-E005-R60Area.yaml
   E-004:
     status: baselined
     error_id: R60W0024
     jp: 被参照エラー（削除不可）
     l_id: L-015
-    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/E-001-E005-R60Area.yaml
   E-005:
     status: baselined
     error_id: R60E0025
     jp: システムエラー
     l_id: L-015
-    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/E-001-E005-R60Area.yaml
   E-006:
     status: baselined
     error_id: R60W0033
     flg: "1"
     jp: ロケーション未登録（原材料）
     l_id: L-015
-    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/E-001-E005-R60Area.yaml
   E-007:
     status: baselined
     error_id: R60W0033
     flg: "2"
     jp: ロケーション未登録（半製品）
     l_id: L-015
-    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/E-001-E005-R60Area.yaml
   E-008:
     status: baselined
     error_id: R60A0039-0040
     jp: 削除確認メッセージ
     l_id: L-015
-    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+    used_by: docs/_samples/30_detail_design/E-001-E005-R60Area.yaml
 
   # ---------- TC: テストケース ----------
   TC-001:
@@ -460,7 +460,7 @@ ids:
     r_id: R-101
     d_id: D-043
     l_id: L-014
-    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+    used_by: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
   TC-002:
     status: open
     name: "新規登録"
@@ -468,7 +468,7 @@ ids:
     r_id: R-101
     d_id: D-043
     l_id: L-015
-    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+    used_by: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
   TC-003:
     status: open
     name: "既存修正"
@@ -476,7 +476,7 @@ ids:
     r_id: R-101
     d_id: D-043
     l_id: L-015
-    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+    used_by: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
   TC-004:
     status: open
     name: "検索0件"
@@ -485,7 +485,7 @@ ids:
     d_id: D-043
     l_id: L-014
     e_id: E-001
-    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+    used_by: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
   TC-005:
     status: open
     name: "KSN_DAT不一致排他"
@@ -494,7 +494,7 @@ ids:
     d_id: D-043
     l_id: L-015
     e_id: E-002
-    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+    used_by: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
   TC-006:
     status: open
     name: "重複キー登録"
@@ -503,7 +503,7 @@ ids:
     d_id: D-043
     l_id: L-015
     e_id: E-003
-    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+    used_by: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
   TC-007:
     status: open
     name: "被参照DEL_FLG=1削除"
@@ -512,7 +512,7 @@ ids:
     d_id: D-043
     l_id: L-015
     e_id: E-004
-    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+    used_by: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
   TC-008:
     status: open
     name: "ロケーション未登録"
@@ -521,7 +521,7 @@ ids:
     d_id: D-043
     l_id: L-015
     e_id: E-006
-    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+    used_by: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
   TC-201:
     status: open
     name: 初期表示の正常系（候補あり・初期値設定）
@@ -656,7 +656,7 @@ ids:
     status: open
     name: "初期 Phase1 申請"
     description: "Phase1 骨架導入に伴う変更要求（承認待ち）"
-    used_by: CONTRIBUTING.md
+    used_by: .claude/rules/05-commit-messages.md
   CR-002:
     status: open
     origin_key: 错误文案回传给前端的响应项（节点2 §7.2）
@@ -1003,7 +1003,7 @@ ids:
     name: R60Area 結合テスト（API 貫通・E2E）
     origin_key: R60Area 結合テスト E2E
     r_id: R-101
-    used_by: docs/60_integration_test/IT-001-R60Area-e2e.yaml
+    used_by: docs/_samples/60_integration_test/IT-001-R60Area-e2e.yaml
   IT-201:
     status: open
     name: 初期表示の E2E（Session Cookie を発行しない）

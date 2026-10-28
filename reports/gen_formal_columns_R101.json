@@ -60,6 +60,6 @@
     "JIG_HYJ_SEQ",
     "REG_STS"
   ],
-  "source": "docs/00_registry/ids.yml (I-ID) / docs/30_detail_design/D-043-R60Area.yaml (physical)",
+  "source": "docs/00_registry/ids.yml (I-ID) / docs/_samples/30_detail_design/D-043-R60Area.yaml (physical)",
   "phase": "Phase1 dry-run only - 実 .xlsx は生成しない"
 }

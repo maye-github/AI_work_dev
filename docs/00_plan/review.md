@@ -24,9 +24,9 @@
   head -10 CLAUDE.md | grep -c "落地篇 30 页"   # == 1
   head -10 CLAUDE.md | grep -c "7 条红线"       # == 1
   grep -c "^/.*@" CODEOWNERS            # >= 7 ブロック
-  for f in CLAUDE.md AGENTS.md ROADMAP_3PHASE.md CONTRIBUTING.md CODEOWNERS .github/workflows/ai-gate.yml; do test -f "$f" && echo "OK $f"; done
+  for f in CLAUDE.md 使用手册.md docs/00_plan/roles.md docs/00_plan/roadmap-3phase.md CODEOWNERS .github/workflows/ai-gate.yml; do test -f "$f" && echo "OK $f"; done
   ```
-- **合格条件**: `.claude/rules/` の md が 6 本以上、CLAUDE.md の頭 10 行に 2 キーワード、CODEOWNERS が 7 ブロック以上、6 根级ファイルがすべて存在。
+- **合格条件**: `.claude/rules/` の md が 6 本以上、CLAUDE.md の頭 10 行に 2 キーワード、CODEOWNERS が 7 ブロック以上、6 本の入口文書がすべて存在（2026-10-28: AGENTS→`docs/00_plan/roles.md`、ROADMAP→`docs/00_plan/roadmap-3phase.md`、CONTRIBUTING→`rules/05`）。
 - **Evidence**: `reports/skeleton-files.txt`
 - **Result**: **_PASS_**（実装時に `reports/skeleton-files.txt` で確認済み。ただし独立再実行が必要）
 
@@ -42,7 +42,7 @@
   py -3 -c "import json;d=json.load(open('reports/trace_R101.json',encoding='utf-8'));print(d['chain_complete'], d['orphan_ids'], d['stats']['field_count'])"
   py -3 -c "
   import yaml,collections
-  d=yaml.safe_load(open('docs/50_unit_test/TC-001-TC-008-R60Area.yaml',encoding='utf-8'))
+  d=yaml.safe_load(open('docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml',encoding='utf-8'))
   print(collections.Counter(t['category'] for t in d['test_cases']))"
   ```
 - **合格条件**: Exit 0 / `chain_complete=true` / `orphan_ids=[]` / `field_count=56` / TC 分類比 (正常 3, 境界 2, 異常 3) / F-042 の `db_tables_used`==7 かつ `common_functions_used`>=10。
@@ -119,12 +119,12 @@
   t=open('docs/90_knowledge/platform-map.md',encoding='utf-8').read()
   for n in ['利用層','編成層','能力層','知識層','データ・コンテキスト層','統制・ガバナンス層','基盤層']: print(n, t.count(n))"
   py -3 -c "
-  import re;t=open('ROADMAP_3PHASE.md',encoding='utf-8').read()
+  import re;t=open('docs/00_plan/roadmap-3phase.md',encoding='utf-8').read()
   print('PPT refs', t.count('PPT 第'))
   print('owner/date/formula', t.count('2026-10-31'))"
   ```
 - **合格条件**: 7 層すべてが正しい名称で出現し各層の「本次新建」>=2（合計 >=14）、ROADMAP が Phase1=16 / Phase2=12 / Phase3=8 件、Phase2・3 の各件に「PPT 第 Sxx 页」、Phase1 の各件に负责人位・予定日・受入式。
-- **Evidence**: `docs/90_knowledge/platform-map.md`, `ROADMAP_3PHASE.md`
+- **Evidence**: `docs/90_knowledge/platform-map.md`, `docs/00_plan/roadmap-3phase.md`
 - **Result**: **_PASS_**（実測: 7 層すべて出現、本次新建 計 19 件、PPT 参照 27 箇所。ただし独立再実行が必要）
 
 ## CP-U-1: 开球周審査差分資産の構造完全度

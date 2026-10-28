@@ -48,11 +48,27 @@ stack:
 # ---------------------------------------------------------------------------
 # 2. 案件固有の禁止事項・技術定数（★ここに再記述しない — NFR-1 単一ソース）
 # ---------------------------------------------------------------------------
-# 禁① 禁②（R60Common.ts / r60util.py / BaseCamelModel の改変禁止）と、
-# 案件固有の技術定数（当日鍵＝桁変換＋日付加算・R60_DECRYPTION_FNC・NLS_DATE_FORMAT 等）は
-# 以下が唯一真源である。本ファイルは値を複製しない（二重定義を作らない）。
-prohibitions_source: "CLAUDE.md §2（禁止事項 5 条）"
-tech_constants_source: ".claude/rules/00-project-global.md §1〜§9"
+# 2026-10-28 の断舍離で、案件固有の値は CLAUDE.md / .claude/rules/00 から本ファイルへ移した。
+# これ以降、禁① 禁② と技術定数（当日鍵・R60_DECRYPTION_FNC・NLS_DATE_FORMAT・ROWID 等）の
+# 唯一真源は本ファイルである。骨架側は値を複製せず、本ファイルを指す（NFR-1 単一ソース）。
+prohibitions:
+  - id: 禁①
+    text: "既存 R60Common.ts（54 関数の唯一真源）を改変しない。並行新版（parallel 版）の作成禁止。AI はコメントでマッピングするのみ。"
+  - id: 禁②
+    text: "BaseCamelModel の model_config（alias_generator / populate_by_name / serialize_by_alias / extra）を変更しない。"
+prohibitions_source: "本ファイル §2（案件固有の ①②）。全案件共通の 禁③④⑤（野号禁止・trace_check 跳过禁止・機密外投禁止）は CLAUDE.md §2 が唯一真源。"
+tech_constants:
+  encryption:
+    method: "桁変換＋当日 yyyymmdd 加算（AES-256-ECB ではない）"
+    decrypt_function: R60_DECRYPTION_FNC
+    detail_source: ".claude/rules/01-security-redlines.md §5・§12（L3 機密の定義）"
+  nls_date_format: "RR-MM-DD"
+  primevue_select: "bindLabelClickListener は no-op（空実装）。ラベルクリックによる意図しない展開を抑止する"
+  blob_response: "HTTP 応答が Blob の場合はインターセプタ層で JSON へ変換する"
+  pagination: "Oracle 検索一覧は ROWID 方式を原則。OFFSET-FETCH は必要時のみ"
+  parallel_version_ban: "R60Common.ts 54 関数・r60util.py 31 クラスを唯一真源とし、並行新版の作成・分岐を禁止"
+  phase1_production_code: "Phase1 期間中は既存 src/・app/routers の生産コードを変更しない（migration 案件のみ）"
+tech_constants_source: "本ファイル §3（値の唯一真源）。骨架側（CLAUDE.md・.claude/rules/00）は値を持たず、本ファイルを指す。"
 
 # ---------------------------------------------------------------------------
 # 3. 本案件で接ぐ既存資産の在処（中身は書かない。上記 source を参照）
@@ -64,8 +80,8 @@ backend_util_root: "api/app/utils/"
 # ---------------------------------------------------------------------------
 # 4. 上流（本案件の要求メタ）
 # ---------------------------------------------------------------------------
-upstream_requirement: "docs/10_requirements/R-101-R60Area.yaml"
-requirement_context: "docs/01_context/R-101-R60Area.md"
+upstream_requirement: "docs/_samples/10_requirements/R-101-R60Area.yaml"
+requirement_context: "docs/_samples/01_context/R-101-R60Area.md"
 ingest_manifest: "docs/00_registry/ingest-manifest.yml"
 
 note: >-

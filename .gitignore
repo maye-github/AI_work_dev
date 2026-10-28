@@ -1,92 +1,55 @@
 # ============================================================
-# R60 AI 全流程骨架 — .gitignore
+# .gitignore — 这套骨架自身（2026-10-28 断舍离后重整）
 # ------------------------------------------------------------
-# 方針:
-#   - Claude Code の設定（.claude/rules, skills, agents, settings.json）は
-#     プロジェクトの生きた設定なので **コミットする**。
-#   - 骨架の成果物（docs/, tools/, reports/）も **入库する**（2026-10-28 変更）。
-#     旧方針（AI_FULL_LIFECYCLE=1 のときだけ -f）は、commit 0 件を招き
-#     紅线⑥「trace_check なき commit 禁止」を空文化させたため廃止した。
-#   - .github/ とルート補助 md（AGENTS/CODEOWNERS/CONTRIBUTING/ROADMAP）は引続き対象外。
+# 方针只有一条：**制度与成果物入库，派生物与一次性原料不入库。**
+# 旧的「按环境变量 AI_FULL_LIFECYCLE 决定入不入库」已于 2026-10-28 废止
+# （那个开关让 commit 变成 0 件，红线⑥失去对象）。
+# 骨架被 copy 到客户案件时，去留在**那个案件**的 .gitignore 里定。
 # ============================================================
 
-# ---- Claude Code 設定（コミット対象）--------------------------------
-# 個人専用のローカル上書きのみ除外する
+# ---- Claude Code 个人设置（共享设置入库，个人覆盖不入库）----
 .claude/settings.local.json
 .claude/**/__pycache__/
 
-# ============================================================
-# 骨架本体（2026-10-28 起：docs/ tools/ reports/ を既定で入库）
-# ------------------------------------------------------------
-# 旧方針「AI_FULL_LIFECYCLE=1 のときだけ -f で強制 add」は**廃止**した。
-# 理由：このリポジトリは**骨架そのもの**であり、客户プロジェクトではない。
-#       NFR-5「無侵入」は「骨架を客户案件へ持ち込むとき」の制約であって、
-#       骨架自身の版管理を止める理由にはならない。
-#       （旧方針のままでは commit が 0 件となり、紅线⑥が対象を持たなかった。）
-# 骨架を客户プロジェクトへ copy する場合の去留は、**その案件の .gitignore** が決める。
-# ============================================================
-
-# 旧 Trae 資産のアーカイブ置き場（2026-10-26 に中身を削除。今後も作らない想定だが、
-# 誤って復活させたときにコミットしないための規則として残す）
-archive/*
-
-# .github workflow は placeholder（内網では GitLab/Jenkins 側で組み直す）
-.github/*
-
-# ルート直下の補助文書（人向け。骨架本体の入库対象外。必要になったら個別に外す）
-AGENTS.md
-CODEOWNERS
-CONTRIBUTING.md
-ROADMAP_3PHASE.md
-
-# 計画文書のバックアップ
-docs/00_plan/*.bak
-
-# Stop フックが毎ターン再生成する目視用 Excel（生成物。手で編集しない＝版管理しない）
-reports/_auto/
-
-# ---- 機密（絶対にコミットしない）--------------------------------------
-# 脱敏辞書の実値（example はコミットする＝下の否定パターンで除外解除）
+# ---- 机密：绝对不入库 -------------------------------------
+# 实值版只在本地存在；example 版入库（下面的否定规则解除忽略）
 tools/masking/masking_dict.json
 tools/masking/masking_dict.local.json
 !tools/masking/masking_dict.example.json
-
-# gate6 ローカル固有機密パターンの実値（example のみコミット）
 tools/trace_check/secret_patterns.local.json
 
-# ============================================================
-# 入库手順（骨架成果物をコミットしたい場合）:
-#   PowerShell: $env:AI_FULL_LIFECYCLE=1; git add -f docs tools reports .github .claude
-#   bash      : AI_FULL_LIFECYCLE=1 git add -f docs tools reports .github .claude
-# ============================================================
+# ---- 派生物：可由源码/语料重建，不入库 ----------------------
+build/                                        # RAG 索引
+reports/_auto/                                # Stop 钩子每轮重画的预览 Excel
+tools/kb-platform/data/*.sqlite3              # kb-platform 索引
+tools/kb-platform/data/*.sqlite3-wal
+tools/kb-platform/data/*.sqlite3-shm
+tools/kb-platform/repo/projects/P-R60-001/    # kb_export 的导出件（正本在 docs/90_knowledge/legacy-r60/）
+docs/00_registry/_backup/                     # registry.py 每次发号的自动备份
+tutorial/**/backend/.coverage
 
-# ---- 既存プロジェクト共通 ignore --------------------------------------
+# ---- 一次性原料：2026-10-28 已删除，防止再长回来 -------------
+# （原有内容在 tag keep/before-cleanup-2026-10-28 里；
+#   重抽方法见 docs/90_knowledge/legacy-r60/_raw-extracts-note.md）
+reports/module-survey/*/design/
+reports/module-survey/*/test/
+reports/legacy-raw/
+reports/ingest/*/
+
+# ---- 归档与通用杂项 ----------------------------------------
+archive/*
+docs/00_plan/*.bak
 __pycache__/
 *.pyc
 *.pyo
 node_modules/
 dist/
-# RAG 索引は語料から再生成できる（語料 JSONL は docs/ 側で管理する）
-build/
 .env
 .env.*
 .idea/
 *.log
-
-# VSCode: 拡張推薦は共有する（Claude Code 拡張の推奨）
 .vscode/*
 !.vscode/extensions.json
 
-# ---- 2026-10-28 断舍离：防止噪音再长出来 ----
-# 発号時の自動バックアップ（tools/registry.py が生成）。履歴は git で足りるため追跡しない
-docs/00_registry/_backup/
-# テスト実行の副産物（Node/Python のカバレッジ中間ファイル）
-tutorial/**/backend/.coverage
-# kb-platform の repo へ書き出した R60 知識は派生物（正本は docs/90_knowledge/）。
-# 索引（sqlite）は ingest で作り直せる
-tools/kb-platform/repo/projects/P-R60-001/
-tools/kb-platform/data/*.sqlite3
-tools/kb-platform/data/*.sqlite3-wal
-tools/kb-platform/data/*.sqlite3-shm
-tools/kb-platform/__pycache__/
-tools/kb-platform/**/__pycache__/
+# 断舍离清单的生成器（一次性，不入库；成果物 html/txt 入库）
+reports/audit/_gen/

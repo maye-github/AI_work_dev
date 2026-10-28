@@ -1,0 +1,31 @@
+# ============================================================
+# trans-cosmos-ai AI 全流程骨組 - AI ゲート（占位 Placeholder）不具合
+# ------------------------------------------------------------
+# ⚠ 本ファイルは占位（placeholder）です。実際の runner は設定していません。
+#    - 本リポジトリは GitHub Actions を本番運用していない（内網・オフライン前提）。
+#    - Phase1 はローカル実行のみ想定（`py -3 -m tools.trace_check` を手元で実行）。
+#      本 YAML は ubuntu-latest 前提のため、ここだけは `python -m tools.trace_check` と表記する。
+#    - 内網の GitLab CI を使う場合は本 YAML の中身を .gitlab-ci.yml へ、
+#      Jenkins を使う場合は Jenkinsfile へコピーして流用してください（要件は同一）。
+# ============================================================
+name: ai-gate
+
+on: pull_request
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      # step 1: ソース取得
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # step 2: Python 環境準備（フェーズ1のユーザはローカルで実行）
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # step 3: トレーサビリティ門禁（gate6）。ローカルのみ前提のため失敗を許容。
+      - name: Trace Check (gate 6)
+        run: python -m tools.trace_check --strict --gate 6 2>&1 || echo "Phase1 local run only"

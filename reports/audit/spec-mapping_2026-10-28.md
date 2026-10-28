@@ -74,7 +74,7 @@
 |---|---|---|
 | AI-1 读需求书，提取业务流程与用语 | `.claude/skills/requirement-interrogator/` | ✅ |
 | AI-2 检测暧昧/矛盾/前提不足，产确认事项一览 | 同上。**这是骨架最强的一项**：51 个审查视角，来自 177 件真实 QA 票的抽取；`tutorial/R60Login/节点1_需求/02_确认事项一覧.md` 是实例 | ✅ |
-| AI-3 转成带 ID 的结构化要件表 | `docs/10_requirements/R-101-R60Area.yaml` + `ids.yml` 发号 | ✅ |
+| AI-3 转成带 ID 的结构化要件表 | `docs/_samples/10_requirements/R-101-R60Area.yaml` + `ids.yml` 发号 | ✅ |
 | AI-4 过去案件 RAG 检索 | `tools/rag/`（SQLite FTS5 + 日文 n-gram，不用模型）。**有实测**：`reports/rag/eval-2026-10-19.json`，80 道金题，hit@5 = 1.0（按模块过滤）/ 0.8625（不过滤），MRR 0.90 | 🔶 |
 | AI-5 范围与影响范围初期估算 | ❌ 无。`tools/impact` 是**变更后**的倒查，不是**开工前**的估算 | ❌ |
 | 成果物：要件结构化表 / 确认事项一览 / 用语词典 / 要件 ID 一览 / 范围估算 | 前四项 ✅（用语词典 = `glossary.yml` 50 条）；范围估算 ❌ | 🔶 |
@@ -87,7 +87,7 @@
 
 | 规格书要求 | 本文件夹 | 状态 |
 |---|---|---|
-| AI-1 由要件 ID 生成功能一览 / 画面一览 | `docs/20_basic_design/F-042-R60Area.yaml`、`bd-template.yaml` | ✅ |
+| AI-1 由要件 ID 生成功能一览 / 画面一览 | `docs/_samples/20_basic_design/F-042-R60Area.yaml`、`bd-template.yaml` | ✅ |
 | AI-2 架构方案与依赖关系 | 🔶 只有功能切分，没有架构图 | 🔶 |
 | AI-3 入出力一览（项目 ID / 型 / 桁 / 必须 / 由来要件 ID） | ✅ **I-201..I-256 共 56 个画面项目**，每项带 `req_ids` | ✅ |
 | AI-4 非功能与制约检查清单 | 🔶 模板里有 `non_functional` 字段，但没有 checklist 本体 | 🔶 |

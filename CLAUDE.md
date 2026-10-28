@@ -42,7 +42,8 @@ Claude Code が 8 工程（要件理解・基本設計・詳細設計・框架�
 > 2026-10-28 并入 `使用手册.md`，那个文件不再单独存在。）**本文件（CLAUDE.md）是给 AI 与治理看的
 > 常时约束，不是给第一次上手的人看的**。新人不必先读懂本文件。
 >
-> `AGENTS.md` は Claude Code が自動ロードしない（`CLAUDE.md` が存在する場合）。人向けの役割定義書として残す。
+> 人向けの役割定義書は `docs/00_plan/roles.md`（旧 `AGENTS.md`。2026-10-28 に移設・入庫）。
+> Claude Code はこれを自動ロードしない。要点は `使用手册.md` の「角色与分工」にある。
 
 ---
 
@@ -60,18 +61,17 @@ Claude Code が 8 工程（要件理解・基本設計・詳細設計・框架�
 
 ---
 
-## 2. 禁止事項 5 条（案件固有 / 現行案件: R60）（実装プロンプトへ必ず含める）
+## 2. 禁止事項（全案件共通 3 条 ＋ 案件固有 2 条）
 
-> **禁①② は `migration` 案件固有**：既存資産（`R60Common.ts` / `BaseCamelModel`）を持つ案件に対する制約である。
-> `migration` 案件は案件プロファイル（`docs/01_context/case-profile-<案件>.yaml`）側で実資産名を差し替える。
-> **既定の `greenfield` 案件では禁①② は適用対象が存在しない**（改変すべき既存資産が無いため）。
-> **禁③④⑤ は全案件共通**（ID 単一ソース・工程順序・機密）。
+> **禁③④⑤ は全案件共通**（ID 単一ソース・工程順序・機密）。ここが唯一真源である。
+> **禁①② は `migration` 案件固有**（既存資産を改変しない）。既定の `greenfield` では適用対象が無い。
+> R60 の実値（`R60Common.ts` 54 関数・`BaseCamelModel` の 4 行）は
+> **案件プロファイル `docs/01_context/case-profile-R60.yaml` §2 が唯一真源**。ここには書かない。
 
-- **禁①**：既存 `R60Common.ts`（54 関数の唯一真源）を改変しない。並行新版（parallel 版）の作成禁止。AI はコメントでマッピングするのみ。
-- **禁②**：`BaseCamelModel` の `model_config`（`alias_generator` / `populate_by_name` / `serialize_by_alias` / `extra`）を変更しない。
 - **禁③**：`ids.yml` 未登録の **野号**（飛び番・自作 ID）を引入しない。
 - **禁④**：`trace_check --strict` を跳过しない。
 - **禁⑤**：マスク未処理の敏感値を外抛しない（`PWD_1` / `IP_1` / `TBL_1` 等へ占位化）。
+- **禁①／禁②**：案件プロファイル §2 を参照（`migration` のみ）。
 
 ---
 
@@ -93,21 +93,21 @@ Claude Code が 8 工程（要件理解・基本設計・詳細設計・框架�
 
 ## 4. 設計成果物の位置（R60Area 貫通例）
 
-- 検索ロジック **L-014**：`docs/30_detail_design/L-014-R60Area-search.yaml`
+- 検索ロジック **L-014**：`docs/_samples/30_detail_design/L-014-R60Area-search.yaml`
   → 実装対応 `R60AreaController.py:1499-1647`（総件数 COUNT + OFFSET/FETCH ページング、`ALLOWED_SORT_FIELDS` 白名単）。
-- 編集ロジック **L-015**：`docs/30_detail_design/L-015-R60Area-edit.yaml`
+- 編集ロジック **L-015**：`docs/_samples/30_detail_design/L-015-R60Area-edit.yaml`
   → 実装対応 `R60AreaController.py:1713-2915`（排他 + 被参照 + 重複 + ロケ確認 + REG_STS 判定 + 緊急配信）。
-- データモデル **D-043**：`docs/30_detail_design/D-043-R60Area.yaml`（`R60_AREA_M_TBL` の SELECT/INSERT/UPDATE、項目名の単一ソース）。
-- エラー **E-001..E-008**：`docs/30_detail_design/E-001-E005-R60Area.yaml`。
-- 要求・基本設計：`docs/10_requirements/R-101-R60Area.yaml` / `docs/20_basic_design/F-042-R60Area.yaml`。
+- データモデル **D-043**：`docs/_samples/30_detail_design/D-043-R60Area.yaml`（`R60_AREA_M_TBL` の SELECT/INSERT/UPDATE、項目名の単一ソース）。
+- エラー **E-001..E-008**：`docs/_samples/30_detail_design/E-001-E005-R60Area.yaml`。
+- 要求・基本設計：`docs/_samples/10_requirements/R-101-R60Area.yaml` / `docs/_samples/20_basic_design/F-042-R60Area.yaml`。
 
 ---
 
 ## 5. Claude Code への依頼テンプレート（自然言語・CLI フラグではない）
 
 ```
-docs/00_registry/ids.yml、docs/30_detail_design/L-014-R60Area-search.yaml、
-docs/30_detail_design/L-015-R60Area-edit.yaml を読んでください。
+docs/00_registry/ids.yml、docs/_samples/30_detail_design/L-014-R60Area-search.yaml、
+docs/_samples/30_detail_design/L-015-R60Area-edit.yaml を読んでください。
 
 D-043 として R60AreaController の search / edit エンドポイントを実装します。
 R60AreaService.ts の 7 メソッドと R60Area.vue onMounted のパターンに合わせ、

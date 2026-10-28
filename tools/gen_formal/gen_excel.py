@@ -3,7 +3,7 @@
 
 単一ソース（NFR-1）:
   発番元 = docs/00_registry/ids.yml
-  詳細定義元 = docs/30_detail_design/D-043-R60Area.yaml（存在すれば物理名を優先取得）
+  詳細定義元 = docs/_samples/30_detail_design/D-043-R60Area.yaml（存在すれば物理名を優先取得）
 
 使い方:
   python -m tools.gen_formal.gen_excel --dry-run --module R-101
@@ -102,7 +102,7 @@ def dry_run(module: str = "R-101", root: Path | None = None) -> dict:
         "field_count": len(columns),
         "output_columns": out_name,
         "columns": columns,
-        "source": "docs/00_registry/ids.yml (I-ID) / docs/30_detail_design/D-043-R60Area.yaml (physical)",
+        "source": "docs/00_registry/ids.yml (I-ID) / docs/_samples/30_detail_design/D-043-R60Area.yaml (physical)",
         "phase": "Phase1 dry-run only - 実 .xlsx は生成しない",
     }
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -18,7 +18,7 @@
 | 3 | `code-from-design-trans-cosmos-ai` Skill＋`CLAUDE.md`/`AGENTS.md` | `.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md`（4 ステップ）／`CLAUDE.md`／`AGENTS.md`（6 役割 RACI） | 完了 |
 | 4 | レジストリ 3 YAML＋Git 運用文書 | `docs/00_registry/{ids,glossary,traceability}.yml`／`CODEOWNERS`（8 ブロック）／`CONTRIBUTING.md`／`.github/workflows/ai-gate.yml` | 完了 |
 | 5 | 8 工程 YAML テンプレート | `docs/10_requirements`〜`docs/80_operation` の 8 ファイル | 完了 |
-| 6 | R-101 / F-042 / D-043 成果物 3 份 | `docs/10_requirements/R-101-R60Area.yaml` ほか | 完了 |
+| 6 | R-101 / F-042 / D-043 成果物 3 份 | `docs/_samples/10_requirements/R-101-R60Area.yaml` ほか | 完了 |
 | 7 | L-014/L-015・E-001〜E-008・TC-001〜TC-008 | `docs/30_detail_design/` 4 ファイル＋`docs/50_unit_test/`＋`docs/60_integration_test/` | 完了 |
 | 8 | 开球周審査差分資産 3 モジュール＋R60Area 10 条 | `docs/90_knowledge/review_diff_assets/` 一式＋`SOP-review-diff.md` | 完了 |
 | 9 | `tools/trace_check/` 6 重門番 | gate1〜gate6 実装。`--strict/--gate/--only-check/--report` 対応 | 完了 |

@@ -1,0 +1,63 @@
+---
+id: R-101
+type: requirement
+req_ids:
+- R-101
+status: baselined
+sensitivity: internal
+owner: SE-Upstream
+version: 0.1.0
+title: 朝日ビール 調達生産 エリアマスタ（R60Area）検索・登録・修正・削除
+module: R60Area
+background:
+- id: BG-1
+  summary: 調達生産領域の基幹共通マスタとして、拠点と在庫の受払・計上基準となるエリア情報を一元管理する必要がある。
+  source: docs/_samples/01_context/R-101-R60Area.md
+- id: BG-2
+  summary: 対象テーブルは R60_AREA_M_TBL（物理 56 項目）。利用者はマスタ管理者および各事業場の登録担当。
+  source: docs/00_registry/ids.yml
+- id: BG-3
+  summary: レコード一意性は 会社コード＋事業場コード＋エリアコード の三鍵で担保する。
+  source: docs/00_registry/ids.yml
+- id: BG-4
+  summary: 更新系は 改竄日時 と リビジョン番号 による楽観ロックで多重更新を防止する。
+  source: docs/_samples/30_detail_design/L-015-R60Area-edit.yaml
+- id: BG-5
+  summary: 一覧検索は OFFSET-FETCH 方式を基礎とし ROWID を併用したページング、および CSV ダウンロードに対応する。
+  source: docs/_samples/30_detail_design/L-014-R60Area-search.yaml
+business_rules:
+- id: BR-1
+  rule: 登録ステータス（REG_STS）は 15 項目すべてが NotEmpty の場合に REG_STS_ON、それ以外は REG_STS_OFF とする。
+  type: 区分判定
+- id: BR-2
+  rule: 集中購買の 会社コード＋事業場コード は concatWithComma で連結して格納する。
+  type: 値編集
+- id: BR-3
+  rule: 移動デフォルトロケーションが ロケーションマスタ未登録 の場合、error_flg=1（原材料）／error_flg=2（半製品）を返却する。
+  type: 参照
+- id: BR-4
+  rule: 更新・削除の排他制御は 改竄日時 不一致時にエラーコード R60W0006 を返却する。
+  type: 排他
+- id: BR-5
+  rule: エラー応答は 被参照削除 R60W0024／検索0件 R60W0010／キー重複 R60W0014／システムエラー R60E0025／削除確認 R60A0039-0040 に従う。
+  type: 参照
+non_goals:
+- エリアマスタ以外のマスタ（会社・事業場・ロケーション・部署）の新規登録・変更機能は対象外。
+- 物理削除（DELETE 文による行削除）は対象外。削除は論理削除（削除フラグ=1）のみ。
+- バッチ・外部システム連携による一括データ投入は対象外。
+stakeholders:
+- role: 発注者 / 日方
+  name: 調達生産 業務主管
+  responsibility: 要求範囲および受入条件の合意と承認。
+- role: 業務責任者
+  name: マスタ管理担当
+  responsibility: 業務ルール（登録ステータス判定・排他運用・削除運用）の確認。
+- role: SE / AI 推進
+  name: AI-SE
+  responsibility: 要求から設計・実装・テストへの橋渡しとトレーサビリティ維持。
+acceptance_summary:
+- target: 一覧検索・新規登録・修正・論理削除・CSVダウンロードが仕様どおり動作する。
+  evidence: docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml
+- target: フロントから API・DB までの一連の処理が貫通し、A/B 比較で一致する。
+  evidence: docs/_samples/60_integration_test/IT-001-R60Area-e2e.yaml
+open_issues: []

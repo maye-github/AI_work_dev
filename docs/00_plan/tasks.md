@@ -1,5 +1,10 @@
 # AI 全流程开发步骤正式落地（朝日ビール R60 共通マスタ实战化） - Implementation Plan
 
+> **★状態（2026-10-28 追記）**: 本文件は**建設記録**である。ここに並ぶタスクは**すべて 2026-10 に落地済み**で、
+> 受入の判定は `reports/AC-selfcheck.md`（全緑）と `py -3 -m tools.trace_check --strict`（Exit 0）で行う。
+> 下の `- [ ]` は**原稿のまま残している**（完了後に一括で書き換えると、当時の作業順序の記録が失われるため）。
+> **「未着手の計画」と読まないこと。** 現在の計画は `docs/00_plan/spec.md` と `使用手册.md` の「分期」にある。
+
 > **⚠ 訂正注記（2026-10-12 追記）** — 本文件は旧 Trae 期の実施計画書である。計画時点の記述を
 > 歴史的記録として残しつつ、**実際と食い違う箇所のみ**以下を訂正した。混同すると誤った場所に
 > 資産を作る／存在しないファイルを探すため、訂正箇所を先に列挙する。
@@ -79,7 +84,7 @@
   - `CODEOWNERS`：分 11 块（当初計画は 7 块。実物は `.claude/agents/`・`.claude/settings.json`・`docs/00_plan/` を追加して 11 块になった。`.claude/rules/` = AI推進担当 / `.claude/skills/`・`.claude/agents/` = SE+PG / `.claude/settings.json` = AI推進担当 / `docs/10_requirements/` = 上流 SE / `docs/20_basic_design/`・`docs/30_detail_design/` = 設計 PG / `docs/00_plan/` = 上流 SE / `tools/` = AI 推進 + PG / `docs/90_knowledge/` = 全員 / `.github/workflows/` = Git管理者）
   - `CONTRIBUTING.md`：分支模型（req/R-xxx 集成分支 + R-xxx/01-req 到 07-release 七层子分支）·工作流 8 工程 S9-S17 日数概算·7 种 commit 完整样例 3 条·Tag 命名 baseline/R-xxx/basic-v1.0 + 对应验收·baseline 後变更走 CR-xxx 流程
   - `.github/workflows/ai-gate.yml`：占位空 workflow（on: pull_request → runs-on: ubuntu-latest → 3 steps：checkout / setup-python / run: python -m tools.trace_check --strict --gate 6 2>&1 || echo "Phase1 local run only" ）；不配置实际 runner，注释写「用户可按需复制到内网 GitLab/Jenkinsfile」
-  - `docs/01_context/R-101-R60Area.md`：R-101 需求背景 5 条（朝日ビール調達生産/エリアマスタ 56 項目/ cmpCd+jigCd+araCd 三键/排他 ksn_dat+rev_no/検索 OFFSET-FETCH ROWID ページング）
+  - `docs/_samples/01_context/R-101-R60Area.md`：R-101 需求背景 5 条（朝日ビール調達生産/エリアマスタ 56 項目/ cmpCd+jigCd+araCd 三键/排他 ksn_dat+rev_no/検索 OFFSET-FETCH ROWID ページング）
 - **Acceptance Criteria Addressed**: AC-1, AC-2, FR-1, FR-6, NFR-1, NFR-3
 - **Test Requirements**:
   - `rule` TR-4.1: ids.yml 中前缀计数：R>=1 Q>=0 F>=1 I>=56 D>=1 L>=2 E>=5 TC>=8 CR>=1 BUG>=1，I 前缀条目 == 56，`python -c "yaml.safe_load(open(x))['ids'] | len([i for i in ids if i.startswith('I-')])"` == 56
@@ -111,9 +116,9 @@
 - **Priority**: high
 - **Depends On**: Task 4 (ids.yml), Task 5 (templates)
 - **Description**:
-  - `docs/10_requirements/R-101-R60Area.yaml`：用 req-template.yaml 填充，背景 5 条（cmpCd,jigCd,araCd 3 键/56 項目/排他 ksn_dat rev_no/検索 CSV ダウンロード/モード 1/2/3 新規複製修正）；business_rules 5 条（REG_STS 設定=15項目 NotEmpty→REG_STS_ON，否则 OFF/集中購買 cmpCd+jigCd concatWithComma 规则/ロケ未登録 error_flg 1 原材料 2 半製品/排他 ksn_dat 不一致 R60W0006/被参照削除 R60W0024）
-  - `docs/20_basic_design/F-042-R60Area.yaml`：用 bd-template.yaml 填，function_overview=2 画面（一覧検索 + 登録修正複製ダイアログ）/ screen_list=R60Area.vue + R60AreaEdit.vue / input_ids=I-201..I-256（列表形式 56 ID 引用 ids.yml 不重定义）/ output_ids=同 I 一覧（同じ field_count 等于 56）/ db_tables_used=R60_AREA_M_TBL,R60_COMPANY_M_TBL,R60_JIG_M_TBL,R60_UKH_PLC_M_TBL,R60_HIYO_KEIJ_BSY_M_TBL,R60_CODE_MES_M_TBL,R60_PLC_M_TBL 共 7 テーブル / common_functions_used=R60Common 至少 10 条（subCheckSubmit/resetErrors/showErrorAndFocus/byteCheck/subCheckKanaByte/chkHanEngNum3/subCheckAlphabetNumber/subListBtnDisabled/subDownload/showMessageDialog/subInitSubmitFlg/spreadResults 12 条） / error_ids_ref=E-001..E-005 + R60W0033 error_flg 1/2 两个
-  - `docs/30_detail_design/D-043-R60Area.yaml`：用 dd-template.yaml 填，logic_ids 两条 L-014, L-015；L-014 description=検索处理 OFFSET-FETCH ROWID（含 ALLOWED_SORT_FIELDS={CMP_CD,JIG_CD,ARA_CD} 白名单 + 其余走 HYJ_SEQ 排序），sql_location=R60AreaController.py L1499-L1647；L-015 description=initEdit/edit/delete 三件套 排他+重複+被参照+REG_STS 設定，sql_location=R60AreaController.py L1713-L2915；エラー分岐表 8 行（E-001~E-005 + R60W0033×2 + R60W0010 検索 0 件）；境界値表 10 行（cmpCd 最小 4 桁・jigCd split ',' 件数 2 チェック・araCd 先頭 % ワイルドカード不可・REG_STS 15 项 empty チェック・SEND_STS=9 緊急配信・DEL_FLG 切り替え時被参照・ロケ存在チェック count=0・排他 KSN_DAT 不一致・REV_NO int+1 溢れ・KSN_DAT フォーマット YYYY/MM/DD HH24:MI:SS）
+  - `docs/_samples/10_requirements/R-101-R60Area.yaml`：用 req-template.yaml 填充，背景 5 条（cmpCd,jigCd,araCd 3 键/56 項目/排他 ksn_dat rev_no/検索 CSV ダウンロード/モード 1/2/3 新規複製修正）；business_rules 5 条（REG_STS 設定=15項目 NotEmpty→REG_STS_ON，否则 OFF/集中購買 cmpCd+jigCd concatWithComma 规则/ロケ未登録 error_flg 1 原材料 2 半製品/排他 ksn_dat 不一致 R60W0006/被参照削除 R60W0024）
+  - `docs/_samples/20_basic_design/F-042-R60Area.yaml`：用 bd-template.yaml 填，function_overview=2 画面（一覧検索 + 登録修正複製ダイアログ）/ screen_list=R60Area.vue + R60AreaEdit.vue / input_ids=I-201..I-256（列表形式 56 ID 引用 ids.yml 不重定义）/ output_ids=同 I 一覧（同じ field_count 等于 56）/ db_tables_used=R60_AREA_M_TBL,R60_COMPANY_M_TBL,R60_JIG_M_TBL,R60_UKH_PLC_M_TBL,R60_HIYO_KEIJ_BSY_M_TBL,R60_CODE_MES_M_TBL,R60_PLC_M_TBL 共 7 テーブル / common_functions_used=R60Common 至少 10 条（subCheckSubmit/resetErrors/showErrorAndFocus/byteCheck/subCheckKanaByte/chkHanEngNum3/subCheckAlphabetNumber/subListBtnDisabled/subDownload/showMessageDialog/subInitSubmitFlg/spreadResults 12 条） / error_ids_ref=E-001..E-005 + R60W0033 error_flg 1/2 两个
+  - `docs/_samples/30_detail_design/D-043-R60Area.yaml`：用 dd-template.yaml 填，logic_ids 两条 L-014, L-015；L-014 description=検索处理 OFFSET-FETCH ROWID（含 ALLOWED_SORT_FIELDS={CMP_CD,JIG_CD,ARA_CD} 白名单 + 其余走 HYJ_SEQ 排序），sql_location=R60AreaController.py L1499-L1647；L-015 description=initEdit/edit/delete 三件套 排他+重複+被参照+REG_STS 設定，sql_location=R60AreaController.py L1713-L2915；エラー分岐表 8 行（E-001~E-005 + R60W0033×2 + R60W0010 検索 0 件）；境界値表 10 行（cmpCd 最小 4 桁・jigCd split ',' 件数 2 チェック・araCd 先頭 % ワイルドカード不可・REG_STS 15 项 empty チェック・SEND_STS=9 緊急配信・DEL_FLG 切り替え時被参照・ロケ存在チェック count=0・排他 KSN_DAT 不一致・REV_NO int+1 溢れ・KSN_DAT フォーマット YYYY/MM/DD HH24:MI:SS）
 - **Acceptance Criteria Addressed**: AC-2, AC-3, FR-2, NFR-1
 - **Test Requirements**:
   - `rule` TR-6.1: `py -3 -m tools.trace_check --only-check id-chain --root R-101` Exit 0，I-ID 数统计 = 56
@@ -125,11 +130,11 @@
 - **Priority**: high
 - **Depends On**: Task 6
 - **Description**:
-  - `docs/30_detail_design/L-014-R60Area-search.yaml`：7 字段 front-matter，body 记述 5 步骤（chk_onl_flg→WHERE 条件组み立て（cmpCd exact / jigCd split[1] / araCd LIKE prefix 且 escape '\' / DEL_FLG filter）→ count(*) ページ計算→select_column dynamic 取得→OFFSET-FETCH+ROWID sort→56 item assignment）；每条步骤对应实际代码行行号范围（L1430..L1647 从实际 Controller 记录）
-  - `docs/30_detail_design/L-015-R60Area-edit.yaml`：7 字段，body 记述 8 步骤（mode 1/2 INSERT 前重複→mode 3 UPDATE 前 排他→被参照 DEL_FLG=1 時参照→ロケーション 2 件存在→set_reg_sts 15 项目判定→INSERT VALUES 42 列绑定 / UPDATE SET 32 列绑定 / 削除 UPDATE DEL_FLG=1→SEND_STS=9 緊急配信→conn.commit()）；每条行号
-  - `docs/30_detail_design/E-001-E005-R60Area.yaml`：7 字段，表形式列（eid/error_id/level/発生箇所/condition/msg_template_placeholder/recovery_action/关联 R-ID/关联 TC-ID），至少 8 行（E-001:R60W0010/E-002:R60W0006/E-003:R60W0014/E-004:R60W0024/E-005:R60E0025/E-006:R60W0033 flg1/E-007:R60W0033 flg2/E-008:R60A0039-0040 確認）
-  - `docs/50_unit_test/TC-001-TC-008-R60Area.yaml`：用 tc-template 展开 8 条 TC，TC-001 通常検索（正常）/TC-002 新規登録（正常）/TC-003 既存修正（正常）/TC-004 0 件検索（境界）/TC-005 KSN_DAT 不一致排他（境界）/TC-006 重複キー登録（異常，E-003）/TC-007 被参照 DEL_FLG=1 削除（異常，E-004）/TC-008 ロケーション未登録 idoDfltPlcCdGzr（異常，E-006）；每条 TC 必带 design_ids=[D-043,L-xxx] + req_ids=[R-101] + preconditions + input_spec 全字段表 + expected_output error_id 列
-  - `docs/60_integration_test/IT-001-R60Area-e2e.yaml`：7 字段，API シーケンス（/R60Area/init → /R60Area/search → /R60Area/initEdit mode=1 → /R60Area/edit mode=1 → /R60Area/initEdit mode=3 → /R60Area/edit mode=3 → /R60Area/delete → /R60Area/download）8 接口順；A/B 比較断言列表 cmp_cd/jig_cd/ara_cd 3 键 + 32 业务字段一致性；A/B Reports 目录指向实际 doc/03_AI/AB_Reports/reports/R60Area/summary.md 路径
+  - `docs/_samples/30_detail_design/L-014-R60Area-search.yaml`：7 字段 front-matter，body 记述 5 步骤（chk_onl_flg→WHERE 条件组み立て（cmpCd exact / jigCd split[1] / araCd LIKE prefix 且 escape '\' / DEL_FLG filter）→ count(*) ページ計算→select_column dynamic 取得→OFFSET-FETCH+ROWID sort→56 item assignment）；每条步骤对应实际代码行行号范围（L1430..L1647 从实际 Controller 记录）
+  - `docs/_samples/30_detail_design/L-015-R60Area-edit.yaml`：7 字段，body 记述 8 步骤（mode 1/2 INSERT 前重複→mode 3 UPDATE 前 排他→被参照 DEL_FLG=1 時参照→ロケーション 2 件存在→set_reg_sts 15 项目判定→INSERT VALUES 42 列绑定 / UPDATE SET 32 列绑定 / 削除 UPDATE DEL_FLG=1→SEND_STS=9 緊急配信→conn.commit()）；每条行号
+  - `docs/_samples/30_detail_design/E-001-E005-R60Area.yaml`：7 字段，表形式列（eid/error_id/level/発生箇所/condition/msg_template_placeholder/recovery_action/关联 R-ID/关联 TC-ID），至少 8 行（E-001:R60W0010/E-002:R60W0006/E-003:R60W0014/E-004:R60W0024/E-005:R60E0025/E-006:R60W0033 flg1/E-007:R60W0033 flg2/E-008:R60A0039-0040 確認）
+  - `docs/_samples/50_unit_test/TC-001-TC-008-R60Area.yaml`：用 tc-template 展开 8 条 TC，TC-001 通常検索（正常）/TC-002 新規登録（正常）/TC-003 既存修正（正常）/TC-004 0 件検索（境界）/TC-005 KSN_DAT 不一致排他（境界）/TC-006 重複キー登録（異常，E-003）/TC-007 被参照 DEL_FLG=1 削除（異常，E-004）/TC-008 ロケーション未登録 idoDfltPlcCdGzr（異常，E-006）；每条 TC 必带 design_ids=[D-043,L-xxx] + req_ids=[R-101] + preconditions + input_spec 全字段表 + expected_output error_id 列
+  - `docs/_samples/60_integration_test/IT-001-R60Area-e2e.yaml`：7 字段，API シーケンス（/R60Area/init → /R60Area/search → /R60Area/initEdit mode=1 → /R60Area/edit mode=1 → /R60Area/initEdit mode=3 → /R60Area/edit mode=3 → /R60Area/delete → /R60Area/download）8 接口順；A/B 比較断言列表 cmp_cd/jig_cd/ara_cd 3 键 + 32 业务字段一致性；A/B Reports 目录指向实际 doc/03_AI/AB_Reports/reports/R60Area/summary.md 路径
 - **Acceptance Criteria Addressed**: AC-2, FR-2, NFR-3
 - **Test Requirements**:
   - `rule` TR-7.1: trace_check 双向闭环：TC-001..008 design_ids 列出的 L-ID/D-ID 实际存在于 ids.yml 且 L-ID 反向能回到 I-ID
@@ -174,7 +179,7 @@
 - **Description**:
   - 目录 `tools/gen_formal/__init__.py` + `gen_excel.py` + `templates/` 空模板目录
   - 实现 dry-run：`py -3 -m tools.gen_formal.gen_excel --dry-run --module R-101` 从 ids.yml I-201..I-256（56 个）→ 输出 JSON 行 `[gen_formal] field_count=56 | output_columns=ara_cmp_list_56_items.csv`，并把列名列表写入 `reports/gen_formal_columns_R101.json`（真实 Excel 生成留 Phase2，dry-run 仅验证列数对应）
-  - 列名映射表硬编码但注明「单一源：docs/30_detail_design/D-043-R60Area.yaml 定义」（引用 NFR-1）
+  - 列名映射表硬编码但注明「单一源：docs/_samples/30_detail_design/D-043-R60Area.yaml 定义」（引用 NFR-1）
   - `README.txt` 简短说明：Phase1 仅 dry-run；Phase2 接入 openpyxl 或实际客户模板后替换 dry-run 逻辑，不允许手改日文 Excel
 - **Acceptance Criteria Addressed**: AC-3, FR-3, NFR-1
 - **Test Requirements**:

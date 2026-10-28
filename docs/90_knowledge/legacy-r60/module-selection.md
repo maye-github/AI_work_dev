@@ -211,6 +211,6 @@ AB レポートは 404 を「端点不存在」と表示するが、**それは�
 
 - 機械集計：`reports/module-survey/design-sheets.tsv`・`impl-size.json`・`ab-status.json`
 - 調査票（13 枚）：`reports/module-survey/scores/*.yaml`
-- 抽出テキスト：`reports/module-survey/<module>/design/*.txt`・`test/*.txt`
+- 抽出テキスト：**2026-10-28 に削除**（一度きりの材料のため）。取り戻し方は `_raw-extracts-note.md` を参照
 - 調査担当：`.claude/agents/legacy-module-surveyor.md`
 - A/B レポート原典：`D:/AI_work/doc/03_AI/AB_Reports/reports/<module>/summary.md`（**読み取りのみ**）

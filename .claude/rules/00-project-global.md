@@ -16,30 +16,26 @@ version: 0.2.0
 > 保持する。第二のツールは存在しない。
 
 ## 1. 暗号化方式は案件ごとに確定する（AES-256-ECB は骨架の既定ではない）
-**Summary**: ログイン認証・暗号化項目の**方式は骨架が一律に固定しない**。`migration` は案件プロファイル
-（`docs/01_context/case-profile-<案件>.yaml`）が与える既存方式、`greenfield` は工程 04 で人が承認した
-設計が方式を定める。復号は**案件が指定する復号関数**を必ず使用する（R60 は `R60_DECRYPTION_FNC`）。
-- **R60 実例（`migration`）**: AES-256-ECB **ではない**。既存設計書が定める「桁変換＋当日 `yyyymmdd` 加算」の方式
-  （詳細は案件の設計成果物を単一ソースとする）。復号は `R60_DECRYPTION_FNC`。
-- **AES-256-ECB を採用する案件**は、その旨を案件プロファイル／承認済み設計に明記する。
-  骨架の既定として主張してはならない（本項の旧版がそう書いていたのは誤り。2026-10-20 是正）。
-- 参照: spec.md Constraints Technical 3（同じ一般化を行う）
+**Summary**: ログイン認証・暗号化項目の**方式は骨架が一律に固定しない**。`migration` は案件プロファイル（`docs/01_context/case-profile-<案件>.yaml`）が与える既存方式、`greenfield` は工程 04 で人が承認した設計が方式を定める。復号は**案件が指定する復号関数**を必ず使用する。
+- **案件の実値は案件プロファイルが唯一真源**（R60 は `case-profile-R60.yaml` §3 `tech_constants.encryption`）。
+- **AES-256-ECB を骨架の既定として主張してはならない**（2026-10-20 是正）。採用する案件は案件プロファイルに明記する。
+- 参照: spec.md Constraints Technical 3／案件プロファイル
 
 ## 2. Oracle NLS_DATE_FORMAT = 'RR-MM-DD'
-**Summary**: Oracleセッション・SQL全般で NLS_DATE_FORMAT は固定 'RR-MM-DD' を使用、変更禁止。
-- 参照: spec.md Constraints Technical 3
+**Summary**: Oracle セッション・SQL 全般の NLS_DATE_FORMAT は**案件固有の値**である。R60 は `'RR-MM-DD'` 固定。値の唯一真源は案件プロファイル（`case-profile-R60.yaml` §3 `tech_constants.nls_date_format`）。
+- 参照: spec.md Constraints Technical 3／案件プロファイル
 
 ## 3. PrimeVue Select bindLabelClickListener → no-op
-**Summary**: PrimeVue Select コンポーネントの bindLabelClickListener は no-op（空実装）とし、ラベルクリックによる意図しない展開抑止。
-- 参照: spec.md Constraints Technical 1
+**Summary**: PrimeVue Select の `bindLabelClickListener` は **no-op（空実装）** とし、ラベルクリックによる意図しない展開を抑止する。Vue3＋PrimeVue を採用する案件の規約であり、値は案件プロファイル（`tech_constants.primevue_select`）。
+- 参照: spec.md Constraints Technical 1／案件プロファイル
 
 ## 4. Blob 応答インターセプタ → JSON 変換
-**Summary**: HTTP応答が Blob 型の場合、インターセプタ層で自動的に JSON にパースする処理を必ず挿入。
-- 参照: spec.md Constraints Technical 1（Vue3+PrimeVue 栈既定挙動）
+**Summary**: HTTP 応答が Blob 型の場合は、インターセプタ層で自動的に JSON へパースする処理を必ず挿入する（案件プロファイル `tech_constants.blob_response`）。
+- 参照: spec.md Constraints Technical 1／案件プロファイル
 
 ## 5. ページネーション推奨 ROWID
-**Summary**: Oracle 検索一覧のページング処理は原則 ROWID 方式を採用、OFFSET-FETCH は doc/01 の報告書に基づき必要時のみ使用。
-- 参照: spec.md Constraints Technical 2
+**Summary**: Oracle 検索一覧のページングは原則 ROWID 方式。OFFSET-FETCH は必要時の例外（案件プロファイル `tech_constants.pagination`）。
+- 参照: spec.md Constraints Technical 2／案件プロファイル
 
 ## 6. 野号厳禁（必ず ids.yml 登録）
 **Summary**: R-ID/F-ID/I-ID/D-ID/L-ID/E-ID/TC-ID 等の全 ID は docs/00_registry/ids.yml が唯一発番口、未登録番号（野号）は trace_check で Exit 1。
@@ -50,9 +46,8 @@ version: 0.2.0
 - 参照: spec.md Constraints Technical 5 / FR-6
 
 ## 8. parallel 新版 R60Common / r60util 禁止（`migration` 案件固有）
-**Summary**: **`build_mode: migration` の案件に限る**。既存 R60Common.ts 54 関数・r60util.py 31 クラスを唯一真源とし、並行新版の作成・分岐を禁止。Claude Code はスキル実行時に既存関数へコメントでマッピングする。
-**既定の `greenfield` 案件では適用対象が無い**（再利用すべき既存資産が存在しない）。共通部品は本案件で新規定義し、以降それ自体が唯一真源となる。
-- 参照: spec.md Constraints Technical 4
+**Summary**: **`migration` 案件固有。** 既存共通部品（R60 は `R60Common.ts` 54 関数・`r60util.py` 31 クラス）を唯一真源とし、並行新版の作成・分岐を禁止する。実値は案件プロファイル §2 禁①。既定の `greenfield` では適用対象が無い。
+- 参照: spec.md Constraints Technical 4／案件プロファイル
 
 ## 9. trace_check 必実行・スキップ禁止
 **Summary**: commit 前・Push 前に `py -3 -m tools.trace_check --strict` を必ず実行、--skip オプションによる門隙突破を禁止。
@@ -60,9 +55,8 @@ version: 0.2.0
 - **コマンド表記**: ローカル（Windows／社内網）は `py -3 -m tools.xxx`、CI（ubuntu-latest）は `python -m tools.xxx`。裸の `python` は Windows で Microsoft Store のスタブに解決される場合があり起動しない。
 
 ## 10. Phase1 ベースライン src/app/routers 生産コード不触（`migration` 案件固有）
-**Summary**: **既存の生産コードを持つ案件（`migration`）に限る**。Phase1 期間中は既存の src/ ・ app/routers 生産コード一切変更禁止、新規 assets（.claude/ / docs/ / tools/）のみ操作。
-**`greenfield` 案件では「既存生産コード」が存在しない**ため、本項は空条件である（工程 05 で作るコードは本項の対象ではなく、通常のレビューゲートに従う）。
-- 参照: spec.md Non-Goals 1 / NFR-5
+**Summary**: **`migration` 案件固有。** Phase1 期間中は既存生産コード（R60 は `src/`・`app/routers`）を変更しない。`greenfield` では対象が存在しないため空条件。実値は案件プロファイル §3 `tech_constants.phase1_production_code`。
+- 参照: spec.md Non-Goals 1／案件プロファイル
 
 ## 11. 成果物の二重化は単一ソース厳守、顧客の赤字は「受控回流」で受ける
 **Summary**: 機読源（`.md` + `.yaml`）が唯一の真源。人向けの日文正式 Excel / Word / HTML ビューは

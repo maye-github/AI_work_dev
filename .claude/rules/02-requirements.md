@@ -309,7 +309,7 @@ version: 0.1.0
 | `.md` | 先頭の `---` と、本文直前の `---` の**二重区切りで囲む** | `parse_front_matter()` が手で `---` を探して前後を切り分ける |
 | `.yaml` / `.yml` | **先頭の `---` 1 本のみ。収尾の `---` を書いてはならない** | `Repo._load()` は**裸の `yaml.safe_load()`**（単一ドキュメント前提）。2 本目の `---` は「第二の文書」と解釈され `ComposerError: expected a single document in the stream` を送出する。文書全体の最上位キーが front-matter と見なされる |
 
-- 正例: `docs/10_requirements/R-101-R60Area.yaml`、`docs/01_context/case-profile-R60.yaml`（いずれも収尾 `---` なし）。
+- 正例: `docs/_samples/10_requirements/R-101-R60Area.yaml`、`docs/01_context/case-profile-R60.yaml`（いずれも収尾 `---` なし）。
 - **症状の出方**: gate4 と gate6 は PASS のままなので「**6 門中 4 門 FAIL**」となり、「規約違反が 4 つある」と誤診しやすい。実際は**物理書式 1 件の単一原因**である。
 - **原因の特定手順**: `--strict` の既定出力には原因ファイルが出ない。`py -3 -m tools.trace_check --strict --report <path.json>` を取り、`stats.error` のメッセージを読むこと。当て推量で複数ファイルを触ると被害を広げる。
 - 記録: `docs/90_knowledge/review_diff_assets/_skeleton/review_comments.md` **RC-SK-01**。

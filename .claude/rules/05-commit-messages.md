@@ -127,3 +127,13 @@ Co-Authored-By: <tool-name> <noreply@example.com>
 - [ ] `Review: <reviewer>` 行がある
 - [ ] 末尾に `Co-Authored-By:` トレーラーがある（実值は環境側で設定）
 - [ ] `py -3 -m tools.trace_check --strict` が `Exit 0`（Push 前にも再実行）
+
+---
+
+## 7. ブランチ・レビューの運用（旧 `CONTRIBUTING.md` の取込・2026-10-28）
+
+- **作業ブランチ**: `feat/<R-ID>-<短い説明>`。`main` へは**人の承認後**にマージする（紅线③）。
+- **Tag** は §4 の 2 系統のみ（`baseline/R-xxx`・`basic-vX.Y`）。上書き・再利用は禁止。
+- **レビューは差分で行う**（`git diff`）。「全部書き直した」は差分レビューを無効化するので避ける。
+- **空コミットで門番を迂回しない**（紅线⑥）。`--skip` も同じ。
+- 旧文書の全文は git 履歴にある: `git show keep/before-cleanup-2026-10-28:CONTRIBUTING.md`。

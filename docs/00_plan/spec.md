@@ -41,7 +41,7 @@
 4. **参考案例实绩**（已学）：R60/JET 自身 22 API × 25% 削減 + SDS3 月 45 元/人 + SDS2 品質 86%↑ + Harmony 70% 削減 + 访谈片 15/18 自动化，说明方法论可落地。
 
 ## Functional Requirements
-- **FR-1 标准骨架落地（§24 7 子目录规则 + §25 ids.yml）**：在 `D:\AI_work_dev` 根新建 `.claude/rules/`（6 份 rule 文档：project-global/req/design/test/commit-message/security）、`.claude/skills/code-from-design-trans-cosmos-ai/`（JET 版を再構成した 4 Skills）、`CLAUDE.md` + `AGENTS.md`、`docs/00_registry/ids.yml` + `glossary.yml` + `traceability.yml`、`docs/01_context/R-101-R60Area.md`、docs/10~99_inbound 标准目录。
+- **FR-1 标准骨架落地（§24 7 子目录规则 + §25 ids.yml）**：在 `D:\AI_work_dev` 根新建 `.claude/rules/`（6 份 rule 文档：project-global/req/design/test/commit-message/security）、`.claude/skills/code-from-design-trans-cosmos-ai/`（JET 版を再構成した 4 Skills）、`CLAUDE.md` + `AGENTS.md`、`docs/00_registry/ids.yml` + `glossary.yml` + `traceability.yml`、`docs/_samples/01_context/R-101-R60Area.md`、docs/10~99_inbound 标准目录。
 - **FR-2 8 大工程操作模板（落地篇工程篇 S9-17）**：docs/10_requirements/ 放 `req-template.yaml` 与 `R-101-R60Area 示例`；docs/20_basic_design/ 放 `bd-template.yaml` 与 F-042-I-201~256 示例；docs/30_detail_design/ 放 `dd-template.yaml` 与 L-014/L-015 例（含 SQL/エラー一覧/境界値）；docs/40_framework/ 放选型记录；docs/50_unit_test/ + 60_integration_test/ 放 `tc-template.yaml` TC-001+TC-002 例；docs/70_release/ 放 `release-template.md`。
 - **FR-3 成果物二重化（PPT S20-S24 成果物6原則 + 二重形态）**：tools/gen_formal/ 放 `gen_excel.py` + R60 日文 Excel 模板占位；tools/trace_check/ 实现 §25.4 CI 6 门闸中的 ①ID 合法②追溯完整③front-matter 七字段④生成一致（本地可 `py -3 -m tools.trace_check --strict` 直接跑）。
 - **FR-4 机密与脱敏分级清单（PPT S27-S28 选型順序第一条）**：`.claude/rules/01-security-redlines.md` + tools/masking/ 双向脱敏脚本 `mask_demo.py` + `masking_dict.example.json`（真实字典占位 .gitignore，词典不进 Git）。
