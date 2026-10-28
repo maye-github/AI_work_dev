@@ -1,8 +1,8 @@
-# AGENTS.md — AI Agent 角色一覧（trans-cosmos-ai AI 全流程骨架 / 既定: 從無到有の新規構築）
+# 角色一覧（旧 `AGENTS.md` → `docs/00_plan/roles.md`）— trans-cosmos-ai AI 全流程骨架 / 既定: 從無到有の新規構築
 
 本文件定义 trans-cosmos-ai 全流程中参与协作的 AI／人角色、各自职责边界、以及每个角色可直接复用的「启动 Prompt 模板」。**本文件の内部実行役割 8 つはすべて Claude Code が実行する**（工程内只有一个 AI 工具）。これに加えて、**社外の発注者である「日方顧客」を役割として併記する**（実行はせず、各ゲートで合意を与える主体）。人は各工程のレビュー・承認ゲート（要件合意・設計評審・合否判定・リリース判定）で拍板する。所有角色共用同一发号口 `docs/00_registry/ids.yml`。設計→製造パイプライン Skill `.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md`（Skill 名 `code-from-design-trans-cosmos-ai`）は **`build_mode: migration` 案件向け**である（既定の `greenfield`＝從無到有 では既存共通部品が無く、共通部品を本案件で新規定義するため発動しない）。機密点検・Review 独立検査・成果物還流・訓練対比・旧資産普查の 5 役割には専用サブエージェント（`.claude/agents/secret-auditor.md` / `.claude/agents/spec-reviewer.md` / `.claude/agents/deliverable-reviewer.md` / `.claude/agents/drill-comparator.md` / `.claude/agents/legacy-module-surveyor.md`）を割り当てる。**テスト設計には専用 agent を置かない** —— 工程 06 の実行体 `trans-cosmos-ai-node6-unit-test` が担う（比率と観点技法は `04-testing.md` が強制する）。訓練の入力（仮想需求書）は `.claude/skills/virtual-requirement-author/` が実在資産から倒推して作る（**8 工程の外側＝節点 0**。`build_mode: migration` では使わない）。分工红线参见根目录 `CLAUDE.md`：Claude Code が 8 工程すべてを実行し、人はレビュー・承認ゲートで拍板する。
 
-> **注記**：Claude Code は `CLAUDE.md` が存在する場合 `AGENTS.md` を自動ロードしない。本ファイルは人向けの役割定義ドキュメントとして維持する。
+> **注記（2026-10-28 移設）**：旧 `AGENTS.md` を `docs/00_plan/` へ移し、git 管理下に置いた。Claude Code は本ファイルを自動ロードしない（`CLAUDE.md` が優先）。要点は `使用手册.md` の「角色与分工」。
 
 ## 0. 角色总览
 

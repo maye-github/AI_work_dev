@@ -1168,6 +1168,125 @@ def self_test(verbose: bool = True) -> tuple[bool, list[str]]:
 
 
 # --------------------------------------------------------------------------
+# traceability.yml — ids.yml からの派生 ＋ 成果物由来の追加辺
+# --------------------------------------------------------------------------
+
+_TRACE_HEADER = """# ============================================================
+# trans-cosmos-ai AI 全流程骨架 - トレーサビリティ・マトリクス
+# 要件ID ⇄ 機能 ⇄ 画面項目 ⇄ 設計 ⇄ ロジック ⇄ エラー ⇄ テスト
+# ★本ファイルは `py -3 -m tools.registry trace --write` が描き直す（手で編集しない）。
+#   由来は 2 つ:
+#     (1) ids.yml の親リンク（唯一真源。id の親子はこちらが正）
+#     (2) 成果物で宣言された追加辺（例: エラー→テストケース。ids.yml は 1 親しか持てないため）
+#   (2) は本ファイルに残る。消したければ成果物側の design_ids を直す。
+# ============================================================
+"""
+
+
+def _ids_parent_edges(doc: dict) -> set[tuple[str, str]]:
+    """ids.yml の親リンクから (親, 子) の辺集合を作る。"""
+    edges: set[tuple[str, str]] = set()
+    for key, entry in (doc.get("ids") or {}).items():
+        if not isinstance(entry, dict):
+            continue
+        for k in PARENT_KEYS:
+            parent = entry.get(k)
+            if parent:
+                edges.add((str(parent), str(key)))
+    return edges
+
+
+def _edges_of(trace: dict) -> set[tuple[str, str]]:
+    return {
+        (str(a), str(b))
+        for a, bs in (trace.get("forward_links") or {}).items()
+        for b in (bs or [])
+    }
+
+
+def _write_trace(root: Path, meta: dict, edges: set[tuple[str, str]]) -> Path:
+    fwd: dict[str, list[str]] = {}
+    back: dict[str, list[str]] = {}
+    for a, b in edges:
+        fwd.setdefault(a, []).append(b)
+        back.setdefault(b, []).append(a)
+    nodes = sorted(set(fwd) | set(back))
+    body = [ _TRACE_HEADER, "meta:", ]
+    body.append("  roots: [%s]" % ", ".join(meta.get("roots") or []))
+    if meta.get("description"):
+        body.append("  description: %s" % _scalar(meta["description"]))
+    body.append("  version: %s" % _scalar(meta.get("version") or "0.1.0"))
+    body.append("  chain_exempt_prefixes: [%s]" % ", ".join(meta.get("chain_exempt_prefixes") or []))
+    body.append("  generated_by: tools/registry.py trace --write")
+    body.append("")
+    body.append("forward_links:")
+    for n in nodes:
+        kids = sorted(set(fwd.get(n) or []))
+        if not kids:
+            body.append("  %s: []" % n)
+        else:
+            body.append("  %s:" % n)
+            body.extend("    - %s" % k for k in kids)
+    body.append("")
+    body.append("back_links:")
+    for n in nodes:
+        parents = sorted(set(back.get(n) or []))
+        if not parents:
+            body.append("  %s: []" % n)
+        else:
+            body.append("  %s:" % n)
+            body.extend("    - %s" % k for k in parents)
+    target = traceability_path(root)
+    fd, tmp_name = tempfile.mkstemp(prefix="traceability.yml.tmp-", suffix=".part", dir=str(target.parent))
+    tmp = Path(tmp_name)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="") as fh:
+            fh.write("\n".join(body) + "\n")
+            fh.flush()
+            os.fsync(fh.fileno())
+        os.replace(tmp, target)
+    except BaseException:
+        tmp.unlink(missing_ok=True)
+        raise
+    return target
+
+
+def cmd_trace(root: Path, args) -> int:
+    """traceability.yml と ids.yml のずれを検査する（--write で足りない辺を補う）。"""
+    doc = load_registry(root)
+    trace = _load_trace(root)
+    ids_edges = _ids_parent_edges(doc)
+    cur_edges = _edges_of(trace)
+    missing = ids_edges - cur_edges          # 台帳にはあるが行列に無い＝要補写
+    extras = cur_edges - ids_edges           # 行列にだけある＝成果物由来の宣言辺
+    asym = []
+    fwd = {a: set(bs or []) for a, bs in (trace.get("forward_links") or {}).items()}
+    back = {a: set(bs or []) for a, bs in (trace.get("back_links") or {}).items()}
+    for a, bs in fwd.items():
+        for b in bs:
+            if a not in back.get(b, set()):
+                asym.append("%s->%s (back 欠落)" % (a, b))
+    print("[registry] trace: ids=%d 辺 / matrix=%d 辺 / 台帳のみ=%d / 行列のみ=%d / 非対称=%d"
+          % (len(ids_edges), len(cur_edges), len(missing), len(extras), len(asym)))
+    for a, b in sorted(missing)[:20]:
+        print("  台帳のみ: %s -> %s" % (a, b))
+    if len(missing) > 20:
+        print("  … 他 %d 件" % (len(missing) - 20))
+    for line in asym[:10]:
+        print("  非対称: %s" % line)
+    if args.write:
+        meta = trace.get("meta") or {"roots": ["R-101"], "chain_exempt_prefixes": ["Q", "CR", "BUG"]}
+        path = _write_trace(root, meta, cur_edges | ids_edges)
+        print("[registry] trace: 描き直しました -> %s（%d 辺）" % (rel(root, path), len(cur_edges | ids_edges)))
+        return 0
+    if missing or asym:
+        print("[registry] trace: ずれがあります。`registry trace --write` で補写できます。", file=sys.stderr)
+        return 1
+    print("[registry] trace: 一致（台帳の親リンクはすべて行列に入っています）")
+    return 0
+
+
+# --------------------------------------------------------------------------
 # CLI
 # --------------------------------------------------------------------------
 
@@ -1241,6 +1360,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--strict", action="store_true", help="阻塞があれば非ゼロ終了")
     p.add_argument("--json", nargs="?", const="-")
 
+    p = sub.add_parser("trace", help="traceability.yml と ids.yml のずれを検査する／補写する")
+    p.add_argument("--write", action="store_true", help="足りない辺を行列へ補写する（既存辺は消さない）")
+
     return ap
 
 
@@ -1273,6 +1395,7 @@ def main(argv: list[str] | None = None) -> int:
         "answer": cmd_answer,
         "verify": cmd_verify,
         "blockers": cmd_blockers,
+        "trace": cmd_trace,
     }[args.command]
     try:
         return handler(root, args)

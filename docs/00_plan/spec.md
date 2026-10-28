@@ -1,5 +1,12 @@
 # AI 全流程开发步骤正式落地（朝日ビール R60 共通マスタ实战化） - Product Requirements Document
 
+> **★状態（2026-10-28 追記）**: 本文件は**旧 Trae 期の計画文書**であり、現在の基準ではない。
+> - **いまの基準**は `AI全链路软件工程平台_实施规格书.md`（プラットフォーム像）と
+>   各節点の作業票（`.claude/skills/trans-cosmos-ai-lifecycle-coach/nodes/*.md`）。
+> - 本文中の `AGENTS.md` は `docs/00_plan/roles.md`、`ROADMAP_3PHASE.md` は `docs/00_plan/roadmap-3phase.md`、
+>   `CONTRIBUTING.md` は `.claude/rules/05-commit-messages.md` §7 に移設・統合済み（2026-10-28）。
+> - 受入の判定は `docs/00_plan/review.md`（CP）と `reports/AC-selfcheck.md` で行う。本文件の AC 記述は当時のものである。
+
 > **⚠ 訂正注記（2026-10-12 追記）** — 本文件は旧 Trae 期の計画文書であり、以下の点を訂正した。
 > 原文は「骨架を `D:\AI_work` 根に落とす」と書いていたが、**実際の骨架は `D:\AI_work_dev` にある**。
 > `D:\AI_work` は **R60/JET の歴史案件（参照元）** であり、落地先ではない。混同を避けるため

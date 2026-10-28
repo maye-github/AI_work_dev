@@ -5,6 +5,9 @@
 # 旧的「按环境变量 AI_FULL_LIFECYCLE 决定入不入库」已于 2026-10-28 废止
 # （那个开关让 commit 变成 0 件，红线⑥失去对象）。
 # 骨架被 copy 到客户案件时，去留在**那个案件**的 .gitignore 里定。
+#
+# ★注意：git 不支持行尾注释。理由一律写在**上一行**，
+#   规则行只写路径，否则整行会被当成模式，静默失效（2026-10-28 踩过）。
 # ============================================================
 
 # ---- Claude Code 个人设置（共享设置入库，个人覆盖不入库）----
@@ -19,18 +22,24 @@ tools/masking/masking_dict.local.json
 tools/trace_check/secret_patterns.local.json
 
 # ---- 派生物：可由源码/语料重建，不入库 ----------------------
-build/                                        # RAG 索引
-reports/_auto/                                # Stop 钩子每轮重画的预览 Excel
-tools/kb-platform/data/*.sqlite3              # kb-platform 索引
+# RAG 索引
+build/
+# Stop 钩子每轮重画的预览 Excel
+reports/_auto/
+# kb-platform 检索索引
+tools/kb-platform/data/*.sqlite3
 tools/kb-platform/data/*.sqlite3-wal
 tools/kb-platform/data/*.sqlite3-shm
-tools/kb-platform/repo/projects/P-R60-001/    # kb_export 的导出件（正本在 docs/90_knowledge/legacy-r60/）
-docs/00_registry/_backup/                     # registry.py 每次发号的自动备份
+# kb_export 的导出件（正本在 docs/90_knowledge/legacy-r60/）
+tools/kb-platform/repo/projects/P-R60-001/
+# registry.py 每次发号的自动备份
+docs/00_registry/_backup/
+# pytest 的覆盖率中间文件
 tutorial/**/backend/.coverage
 
 # ---- 一次性原料：2026-10-28 已删除，防止再长回来 -------------
-# （原有内容在 tag keep/before-cleanup-2026-10-28 里；
-#   重抽方法见 docs/90_knowledge/legacy-r60/_raw-extracts-note.md）
+# 原有内容在 tag keep/before-cleanup-2026-10-28；
+# 重抽方法见 docs/90_knowledge/legacy-r60/_raw-extracts-note.md
 reports/module-survey/*/design/
 reports/module-survey/*/test/
 reports/legacy-raw/

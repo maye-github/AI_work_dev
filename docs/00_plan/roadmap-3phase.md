@@ -53,7 +53,7 @@
 
 > **本条目は既知の未実装範囲を明示するものである。** 落地篇 PPT 第 S6 页の角色「統制・セキュリティ」は
 > **監査・権限設計まで含む**が、本骨架（Phase 1）が実装したのは **マスキングと機密走査まで**である。
-> この差は `AGENTS.md` §0 の注記と `docs/90_knowledge/ppt-deviation-register.md` §3 にも記録している。
+> この差は `docs/00_plan/roles.md` §0 の注記と `docs/90_knowledge/ppt-deviation-register.md` §3 にも記録している。
 
 ---
 
