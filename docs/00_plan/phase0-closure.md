@@ -35,7 +35,7 @@ version: 0.1.0
 | 1 | 8 工程 **0/8 承认** | `docs/00_plan/coach/R60Login/n01.yml`〜`n08.yml` 均为 `not_started` |
 | 2 | 节点 1 跑过多次，**从未承认** | `docs/90_knowledge/agent-run-record.md` §1 |
 | 3 | 节点 2〜8 **一次也没跑过** | 同上 |
-| 4 | 画面卡 **1/56** | `docs/90_knowledge/legacy-r60/screens/` 仅有 `R60Login.md` |
+| 4 | 画面卡 **1/56** | `docs/95_legacy/r60/screens/` 仅有 `R60Login.md` |
 | 5 | RAG / 模型网关 / 评测 / 成本台账 **均未实现** | `docs/90_knowledge/ppt-coverage-assessment.md` §4 |
 | 6 | 6 道门存在，但**没能拦住 2026-10-14 的 `build_mode` 误改** | `review_diff_assets/_skeleton/review_comments.md` RC-SK-03 |
 | 7 | R60Login 的虚拟需求书**部分来自实现** | `reports/drill/R60Login/provenance.yaml` 中多条 `source_kind: 実測` |
@@ -107,7 +107,7 @@ version: 0.1.0
 ## 7. 本阶段的完成判据
 
 - [ ] 本文件落盘，且未改动 `.claude/rules/` 与 `CLAUDE.md`
-- [ ] `docs/90_knowledge/legacy-r60/learning-plan-3modules.md` 落盘
+- [ ] `docs/95_legacy/r60/learning-plan-3modules.md` 落盘
 - [ ] 明确 3 模块资产路径与抽取目标
 - [ ] 明确 RAG 语料格式、评测指标、防答案泄漏规则
 - [ ] `py -3 -m tools.trace_check --strict` 退出码为 0
@@ -116,5 +116,5 @@ version: 0.1.0
 
 ## 8. 下一步
 
-按 `docs/90_knowledge/legacy-r60/learning-plan-3modules.md` 执行 **Week 1：R60Area 抽取**。
+按 `docs/95_legacy/r60/learning-plan-3modules.md` 执行 **Week 1：R60Area 抽取**。
 不先建模型网关，不先建流水线，不先补其余 55 张画面卡。

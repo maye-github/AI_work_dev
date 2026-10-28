@@ -1,7 +1,7 @@
 # freeze.yaml — 仮想需求書の凍結記録（R60Login / 試点 #0）
 #
 # 本ファイルは「要求書をいつ・誰が凍結したか」と、その時点の内容の指紋を記録する。
-# 凍結とは: ここから先、**節点2〜8 は実在資産（D:\AI_work / docs/90_knowledge/legacy-r60/）を
+# 凍結とは: ここから先、**節点2〜8 は実在資産（D:\AI_work / docs/95_legacy/r60/）を
 # 読み返さない**という宣言である。人版を読むのは事後の対比（drill-comparator）だけ。
 
 freeze_version: "1"
@@ -14,7 +14,7 @@ ledger_path: "reports/drill/R60Login/provenance.yaml"
 
 frozen_scope:
   - "D:/AI_work"
-  - "docs/90_knowledge/legacy-r60/"
+  - "docs/95_legacy/r60/"
 
 verify_command: >
   py -3 -c "import hashlib,pathlib;print(hashlib.sha256(pathlib.Path('tutorial/R60Login/节点1_需求/00_输入_客户需求书.md').read_bytes()).hexdigest())"

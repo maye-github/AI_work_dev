@@ -121,7 +121,7 @@
 **3. 依据**
 - 菜单按钮在调用 `/login` 后，以 `router.push({name:"MenuCommon", query:{stfKbn: form.memberType}})` 传递起動区分：`Front-end/src/views/R60Login.vue:291`。
 - 菜单画面读取该 query 并据起動区分切换菜单：`Front-end/src/views/MenuCommon.vue:87-89`、`:92-93`。
-- 服务端 `/login` 实际只读 `param.stf_cd`：`api/fastapi_oracle_pjt/app/routers/R60LoginController.py:324-355`（卡片 `docs/90_knowledge/legacy-r60/screens/R60Login.md` §6.3 已实测）。
+- 服务端 `/login` 实际只读 `param.stf_cd`：`api/fastapi_oracle_pjt/app/routers/R60LoginController.py:324-355`（卡片 `docs/95_legacy/r60/screens/R60Login.md` §6.3 已实测）。
 - 登录成功时 `gmnId` 由 `resolveRouteName` 解析、`kgnKbn` 写入 `userStore`：`R60Login.vue:300-312`、`:288`。
 
 **4. 证据等级 + 置信度**
@@ -146,7 +146,7 @@
 **3. 依据**
 - 客户设计书 `画面項目内容` 的 r33〜r91 共 **59 行**，每行是「画面ID＋画面名」（本次用 legacy 抽出逐行核对；含 `(SimN)` 版本）：`D:/AI_work/doc/02_INPUT/50.設計書/画面設計書/基刷_調達生産_マスタ_基本設計書(画面編)_89_R60Login_共通マスタログイン.xlsx`、シート `画面項目内容` r33〜r91。
 - 设计书正文没有「59 件」这句；59 是**行数统计**。
-- 前端硬编码的 fallback 是 **58 件**，比设计书少 1 件（`R60SziKirEvtReg` 系）；运行时以画面主数据表为准：`docs/90_knowledge/legacy-r60/screens/R60Login.md` §3.2。
+- 前端硬编码的 fallback 是 **58 件**，比设计书少 1 件（`R60SziKirEvtReg` 系）；运行时以画面主数据表为准：`docs/95_legacy/r60/screens/R60Login.md` §3.2。
 - 运行时候补由画面主数据（`DEL_FLG` 有效、按显示顺）决定，卡片 §3.2、§6.2。
 
 **4. 证据等级 + 置信度**

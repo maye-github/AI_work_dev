@@ -4,7 +4,7 @@
 - **对象画面**: R60Login（共通マスタログイン）
 - **对象节点**: 节点 1 ／ 8（需求理解）
 - **build_mode**: greenfield
-- **对比对方**: `D:/AI_work`（只读）— 画面设计书 `_89_R60Login_共通マスタログイン.xlsx`／内部用分析资料 `doc/01_内部用資料/R60Login_分析文档.md`／`Front-end/src/views/R60Login.vue`／`api/fastapi_oracle_pjt/app/routers/R60LoginController.py`／`Front-end/src/service/R60LoginService.ts`／索引 `docs/90_knowledge/legacy-r60/screens/R60Login.md`
+- **对比对方**: `D:/AI_work`（只读）— 画面设计书 `_89_R60Login_共通マスタログイン.xlsx`／内部用分析资料 `doc/01_内部用資料/R60Login_分析文档.md`／`Front-end/src/views/R60Login.vue`／`api/fastapi_oracle_pjt/app/routers/R60LoginController.py`／`Front-end/src/service/R60LoginService.ts`／索引 `docs/95_legacy/r60/screens/R60Login.md`
 - **冻结验证**:
 
   ```
@@ -134,7 +134,7 @@
 - **上游**: `tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md`（v1.0.2。以下略记为「上游」）
 - **对比对方**: **历史资产的工作目录**（只读）。对象是该画面基本设计书的**固定 8 sheet**
   （变更履历／画面概要／画面迁移图／画面布局／画面项目内容／事件一览／业务处理说明／Action），
-  以索引卡片 `docs/90_knowledge/legacy-r60/screens/R60Login.md` 的 `file:line` 为入口，必要时用
+  以索引卡片 `docs/95_legacy/r60/screens/R60Login.md` 的 `file:line` 为入口，必要时用
   `py -3 -m tools.legacy <文件> --sheet <sheet>` 抽取单元格。
   **依本次指示，本节不写实有文件名・绝对路径・实 IP・员工代码实值**，一律以角色名代替
   （节点 1 的节按当时的写法保留了实有名，本节不沿用该写法）。

@@ -14,7 +14,7 @@ version: 0.1.0
 >
 > **出所**：`D:\AI_work\doc\00_管理\【QA票】共通マスタ.xlsx`（項番 1〜177。オフショアが
 > **顧客の設計書を読んで実際に起票した質問**）／`オンサイト修正対応一覧.xlsx`（23 件）／
-> `doc/01_内部用資料/*.md`（33 本の調査報告）／`docs/90_knowledge/legacy-r60/08-deviations.md`（D-1〜D-25）／
+> `doc/01_内部用資料/*.md`（33 本の調査報告）／`docs/95_legacy/r60/08-deviations.md`（D-1〜D-25）／
 > `docs/90_knowledge/review_diff_assets/**/review_comments.md`（RC-*）。調査日 2026-10-16。
 >
 > **★レンズを追加するときの条件**：**実例（QA 票項番／`D-NN`／`RC-NN`／`file:line`）を伴うものだけ**。

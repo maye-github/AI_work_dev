@@ -11,7 +11,7 @@ import sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-OUT = "docs/90_knowledge/legacy-r60/chunks/R60User.jsonl"
+OUT = "docs/95_legacy/r60/chunks/R60User.jsonl"
 C = []
 
 
@@ -32,10 +32,10 @@ def add(chunk_id, artifact_type, title, source_path, source_locator, text, scope
     })
 
 
-SCREEN = "docs/90_knowledge/legacy-r60/screens/R60User.md"
-FIELDS = "docs/90_knowledge/legacy-r60/modules/R60User/01-fields.yaml"
-LOGIC = "docs/90_knowledge/legacy-r60/modules/R60User/03-logic.yaml"
-REVIEW = "docs/90_knowledge/legacy-r60/modules/R60User/06-review.yaml"
+SCREEN = "docs/95_legacy/r60/screens/R60User.md"
+FIELDS = "docs/95_legacy/r60/modules/R60User/01-fields.yaml"
+LOGIC = "docs/95_legacy/r60/modules/R60User/03-logic.yaml"
+REVIEW = "docs/95_legacy/r60/modules/R60User/06-review.yaml"
 DESIGN = "reports/module-survey/R60User/design"
 TEST_SRC = "reports/module-survey/R60User/test/00_単体ﾃｽﾄ仕様兼結果.txt"
 AB = "doc/03_AI/AB_Reports/reports/R60User/summary.md"

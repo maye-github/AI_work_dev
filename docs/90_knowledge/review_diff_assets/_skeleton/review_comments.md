@@ -245,7 +245,7 @@ version: 0.1.0
   `.claude/rules/02-requirements.md` §4.1（A/B/C の字母表＝「A は顧客が決める」）、
   `CLAUDE.md` §1 紅线③（人の評審ゲート無承認で次工程へ進まない）、
   `.claude/rules/06-knowledge-flywheel.md` §2（帰档の 5 問）・§4（記録の 4 点）・§6（まだ自動化できていないもの）、
-  `docs/90_knowledge/legacy-r60/09-ai-workflow.md` §7.1（帰因を省略して「AI が劣る」と結論しない）。
+  `docs/95_legacy/r60/09-ai-workflow.md` §7.1（帰因を省略して「AI が劣る」と結論しない）。
 
 ---
 

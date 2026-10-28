@@ -623,7 +623,7 @@ open_questions:
 | 影響面の逆引き（読むだけ・何も書かない） | `tools/impact.py` |
 | 台帳への書込み（発番・状態遷移・失効） | `tools/registry.py` |
 | 知識飛輪の 4 点（事象 / 影響 / 原因 / 対策） | `.claude/rules/06-knowledge-flywheel.md` §4 |
-| 過去の指摘の完成例（書式の見本） | `docs/90_knowledge/review_diff_assets/R60Area/review_comments.md` |
+| 過去の指摘の完成例（書式の見本） | `docs/95_legacy/r60/review_diff_assets/R60Area/review_comments.md` |
 | ID 台帳の唯一の書込み口（発号・状態遷移・阻塞・回答） | `tools/registry.py`（**人が実行する CLI**。コーチはコマンドを提示するだけ） |
 | 変更影響面（下流／上流／推奨の作り直し順） | `tools/impact.py`（読むだけ。何も書かない） |
 

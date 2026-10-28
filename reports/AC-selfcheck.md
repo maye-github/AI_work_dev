@@ -107,7 +107,7 @@ reports/trace_R101.json: chain_complete=True  orphan_ids=[]  stats.field_count=5
 ## AC-5: 开球周審査差分資産 SOP（rubric） — **PASS（5/5）**
 
 - **Type**: rubric（閾値 >= 4）
-- **Evidence**: `docs/90_knowledge/review_diff_assets/R60Area/review_comments.md` ほか
+- **Evidence**: `docs/95_legacy/r60/review_diff_assets/R60Area/review_comments.md` ほか
 
 | 評価軸 | 実測 | 判定 |
 |-------|------|------|

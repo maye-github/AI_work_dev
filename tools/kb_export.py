@@ -2,7 +2,7 @@
 
 なぜ必要か
 ----------
-実施規格書 §10.2 ② の「知識庫」は、本骨架では `docs/90_knowledge/` の `.md` 群でしかない。
+実施規格書 §10.2 ② の「知識庫」は、本骨架では `docs/90_knowledge/`（方法論）と `docs/95_legacy/`（旧案件知識）の `.md` 群でしかない。
 一方、社内には既に `D:\\AI_platform\\kb-platform`（front matter ＋ chunk ＋ 索引 ＋ 検索 API）がある。
 **同じ知識を二つの流儀で持つと、どちらが正か分からなくなる**（NFR-1）。
 
@@ -65,7 +65,7 @@ from . import paths
 
 # 対象は「歴史案件の消化後知識」。生の抽出物（reports/legacy-raw）は対象外
 # （案件が特定できる実データを含むため。01-security-redlines.md §10）。
-DEFAULT_SOURCE = "docs/90_knowledge/legacy-r60"
+DEFAULT_SOURCE = "docs/95_legacy/r60"
 
 # パスの形 → kb-platform の doc_type（pipeline.py の DOC_TYPES のいずれか）
 DOC_TYPE_BY_PATH: list[tuple[str, str]] = [

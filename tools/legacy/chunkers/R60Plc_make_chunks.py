@@ -7,7 +7,7 @@ import sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-OUT = "docs/90_knowledge/legacy-r60/chunks/R60Plc.jsonl"
+OUT = "docs/95_legacy/r60/chunks/R60Plc.jsonl"
 C = []
 
 
@@ -28,13 +28,13 @@ def add(chunk_id, artifact_type, title, source_path, source_locator, text, scope
     })
 
 
-SCREEN = "docs/90_knowledge/legacy-r60/screens/R60Plc.md"
-FIELDS = "docs/90_knowledge/legacy-r60/modules/R60Plc/01-fields.yaml"
-API = "docs/90_knowledge/legacy-r60/modules/R60Plc/02-api.yaml"
-LOGIC = "docs/90_knowledge/legacy-r60/modules/R60Plc/03-logic.yaml"
-ERRORS = "docs/90_knowledge/legacy-r60/modules/R60Plc/04-errors.yaml"
-TESTS = "docs/90_knowledge/legacy-r60/modules/R60Plc/05-tests.yaml"
-REVIEW = "docs/90_knowledge/legacy-r60/modules/R60Plc/06-review.yaml"
+SCREEN = "docs/95_legacy/r60/screens/R60Plc.md"
+FIELDS = "docs/95_legacy/r60/modules/R60Plc/01-fields.yaml"
+API = "docs/95_legacy/r60/modules/R60Plc/02-api.yaml"
+LOGIC = "docs/95_legacy/r60/modules/R60Plc/03-logic.yaml"
+ERRORS = "docs/95_legacy/r60/modules/R60Plc/04-errors.yaml"
+TESTS = "docs/95_legacy/r60/modules/R60Plc/05-tests.yaml"
+REVIEW = "docs/95_legacy/r60/modules/R60Plc/06-review.yaml"
 DESIGN = "reports/module-survey/R60Plc/design"
 TEST_SRC = "reports/module-survey/R60Plc/test/00_単体ﾃｽﾄ仕様兼結果.txt"
 AB = "doc/03_AI/AB_Reports/reports/R60Plc/summary.md"

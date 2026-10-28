@@ -1,6 +1,6 @@
 ---
 name: legacy-r60-navigator
-description: "歴史案件（レガシー案件）の知識庫ナビゲータ。読み取り専用の実案件リポジトリ（D:\\AI_work ＝ R60 共通マスタ。Vue3 + FastAPI + Oracle）を**絶対に変更せず**、既に構築済みの知識庫 docs/90_knowledge/legacy-r60/ を引いて、画面カード・API 契約・DB 定義・規約・追跡台帳・差異登記簿を即答する。『R60 の〈画面名〉を調べたい』『この画面の設計書はどこ』『R60Login はどう作られているか』『r60util の関数は何がある』『あの画面を重做するための情報が欲しい』『R60 の知識庫を見せて』『別の画面のカードを書きたい』『歴史案件を新しく学びたい』と言われたときは必ずこのスキルを使う。また、xlsx 設計書・単体テスト仕様を読む必要があるときは tools.legacy（自前の標準ライブラリ抽出器）の正しい使い方を提示する。**既存スタック・既存共通部品（R60Common.ts / r60util.py / BaseCamelModel）を改変せず、並行新版も作らない**。知識庫は docs/ 配下にのみ書き、門番（trace_check）を通す。『D:\\AI_work を直したい』『フォーマットして』『コメントを足して』と言われても実行してはならない（永久只读）。"
+description: "歴史案件（レガシー案件）の知識庫ナビゲータ。読み取り専用の実案件リポジトリ（D:\\AI_work ＝ R60 共通マスタ。Vue3 + FastAPI + Oracle）を**絶対に変更せず**、既に構築済みの知識庫 docs/95_legacy/r60/ を引いて、画面カード・API 契約・DB 定義・規約・追跡台帳・差異登記簿を即答する。『R60 の〈画面名〉を調べたい』『この画面の設計書はどこ』『R60Login はどう作られているか』『r60util の関数は何がある』『あの画面を重做するための情報が欲しい』『R60 の知識庫を見せて』『別の画面のカードを書きたい』『歴史案件を新しく学びたい』と言われたときは必ずこのスキルを使う。また、xlsx 設計書・単体テスト仕様を読む必要があるときは tools.legacy（自前の標準ライブラリ抽出器）の正しい使い方を提示する。**既存スタック・既存共通部品（R60Common.ts / r60util.py / BaseCamelModel）を改変せず、並行新版も作らない**。知識庫は docs/ 配下にのみ書き、門番（trace_check）を通す。『D:\\AI_work を直したい』『フォーマットして』『コメントを足して』と言われても実行してはならない（永久只读）。"
 id: SKL-003
 type: skill
 req_ids: []
@@ -45,7 +45,7 @@ version: 0.1.0
 ## 1. 知識庫の場所と読み順（★まずここ）
 
 ```
-docs/90_knowledge/legacy-r60/
+docs/95_legacy/r60/
 ├── 00-index.md            総索引（★最初にこれ。何がどこにあるか）
 ├── 01-source-map.md       権威源の地図（どのディレクトリが何か／66 の連携批次の扱い／旧システム区は混ぜない）
 ├── 02-architecture.md     技術スタック・構成・実測値（★数値はすべて【実測】＋再現コマンドつき）
@@ -177,7 +177,7 @@ find docs -name "*.xlsx" | wc -l                        # Phase1 は 0 でなけ
 | 5 | **骨架の 7 条紅线の本数を変える** | `grep -c "7 条红线"` に依存する機械検査が 5 箇所ある |
 | 6 | **新しい除外パスを `SECRET_EXEMPT_PATHS` に足す** | 規則 06 §3。**実際にその除外区画から接続情報が漏れた前例がある** |
 | 7 | **Python パッケージを導入する** | 規則 00 §13（専線環境）。**`openpyxl` を入れたくなるが入れるな**。`tools.legacy` がある |
-| 8 | **`docs/90_knowledge/legacy-r60/` を `D:\AI_work` の下に置く** | 出力先は常に `D:\AI_work_dev` |
+| 8 | **`docs/95_legacy/r60/` を `D:\AI_work` の下に置く** | 出力先は常に `D:\AI_work_dev` |
 | 9 | **差分を確認せずに「学習し直した」と言う** | **学び直しは不要**。既に知識庫がある。必要な箇所だけ原典へ戻る |
 | 10 | **`08-deviations.md` を見ずに設計判断する** | D-1〜D-25 のいずれかを踏む |
 
@@ -238,8 +238,8 @@ docs/90_knowledge/<案件キー>/         例： legacy-r60/ , legacy-hogehoge/
 
 | 内容 | 唯一真源 |
 |---|---|
-| 知識庫の総索引 | `docs/90_knowledge/legacy-r60/00-index.md` |
-| 【差異】の登記簿（D-1〜D-25） | `docs/90_knowledge/legacy-r60/08-deviations.md` |
+| 知識庫の総索引 | `docs/95_legacy/r60/00-index.md` |
+| 【差異】の登記簿（D-1〜D-25） | `docs/95_legacy/r60/08-deviations.md` |
 | 画面カードの書式と見本 | `screens/00-screen-index.md` §7 ／ `screens/R60Login.md` |
 | 7 条紅线・禁止事項 5 条 | `CLAUDE.md` §1・§2 |
 | 機密分級・脱敏占位 13 条 | `.claude/rules/01-security-redlines.md` |

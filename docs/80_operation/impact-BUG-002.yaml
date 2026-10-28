@@ -107,7 +107,7 @@ knowledge_entry:
   impact: "節点3（詳細設計）で落ち、節点5（製造）・節点6（単体テスト）・節点7（結合テスト）を素通りして節点8 で発見された。下流 14 件（設計・エラー・テスト）に波及する。"
   cause: "移送検査（規則 02 §9）が節点3・節点4・節点7 の出口で実行されていなかった。既存の門番 6 道は ID と字段しか見ないため、この種の欠落を捕まえられない。"
   countermeasure: "機械化は不可（『意味が移送されたか』は人が読む）。規則化する層は .claude/rules/02-requirements.md §9（既に在る規則の**実行**を節点の審査項目として必須化する）。新しい紅线は作らない。"
-  recorded_in: "docs/90_knowledge/review_diff_assets/R60Login/review_comments.md"
+  recorded_in: "docs/95_legacy/r60/review_diff_assets/R60Login/review_comments.md"
   appended: false
 
 open_issues:

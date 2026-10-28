@@ -168,16 +168,20 @@ def latest_rag_eval(root: Path) -> dict | None:
 
 
 def count_knowledge(root: Path) -> dict:
-    """知識の件数。`docs/90_knowledge/**` の `.md` を数える（生成物 `.html` は数えない）。
+    """知識の件数。`docs/90_knowledge/**` と `docs/95_legacy/**` の `.md` を数える。
+
+    2026-10-28 に R60 知識庫を `docs/95_legacy/` へ分けたため、両方を数える
+    （どちらも知識資産であることに変わりはない。生成物 `.html` は数えない）。
 
     chunk は**ファイル数ではなく行数**を数える。`.jsonl` は 1 行 1 chunk なので、
     ファイル数を出すと「7 本」と表示され、実際の知識量（数百）を桁で誤らせる。
     """
-    d = root / "docs" / "90_knowledge"
-    if not d.is_dir():
+    dirs = [root / "docs" / "90_knowledge", root / "docs" / "95_legacy"]
+    dirs = [d for d in dirs if d.is_dir()]
+    if not dirs:
         return {"md": 0, "chunk_files": 0, "chunks": 0}
-    md = list(d.rglob("*.md"))
-    chunk_files = list(d.rglob("*.jsonl"))
+    md = [p for d in dirs for p in d.rglob("*.md")]
+    chunk_files = [p for d in dirs for p in d.rglob("*.jsonl")]
     chunks = 0
     for p in chunk_files:
         try:

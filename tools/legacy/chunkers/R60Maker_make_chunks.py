@@ -7,7 +7,7 @@ import sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-OUT = "docs/90_knowledge/legacy-r60/chunks/R60Maker.jsonl"
+OUT = "docs/95_legacy/r60/chunks/R60Maker.jsonl"
 DESIGN = "reports/module-survey/R60Maker/design"
 TEST = "reports/module-survey/R60Maker/test"
 
@@ -336,7 +336,7 @@ add("R60Maker:test:decision-tables", "test", "登録 8 パターン・削除 4 �
 
 # ---------- review ----------
 add("R60Maker:review:deviations", "review", "R60Maker の主要な差異（D-MK-01〜13）",
-    "docs/90_knowledge/legacy-r60/modules/R60Maker/06-review.yaml", "deviations",
+    "docs/95_legacy/r60/modules/R60Maker/06-review.yaml", "deviations",
     "主要な差異。項目数は検索 33・マスタ 9 で骨架の 56 と不一致（D-MK-01）。"
     "download は SQL 文字列連結（D-MK-02）。delete/edit の応答に完了メッセージが無い（D-MK-03）。"
     "extra='ignore'（D-MK-04）。REG_STS の判定が設計書に無い（D-MK-05）。"

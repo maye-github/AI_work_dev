@@ -25,7 +25,7 @@ version: 1.0.0
 
 - `reports/module-survey/scores/*.yaml`（13 枚の調査票）… 教材モジュール選型の根拠
 - `reports/module-survey/design-sheets.tsv`・`impl-size.json`・`ab-status.json` … 機械集計の結果
-- チャンク生成器 6 本 → `tools/legacy/chunkers/<module>_make_chunks.py`（`docs/90_knowledge/legacy-r60/chunks/*.jsonl` を作り直せる唯一の手段）
+- チャンク生成器 6 本 → `tools/legacy/chunkers/<module>_make_chunks.py`（`docs/95_legacy/r60/chunks/*.jsonl` を作り直せる唯一の手段）
 
 ## 注意：`source_path` は削除前のパスを指したまま
 

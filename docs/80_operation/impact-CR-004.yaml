@@ -208,7 +208,7 @@ knowledge_entry:
   impact: "工程04 のルート規約確定時に検出。節点3〜7 は元から正しく使い分けており、下流へは波及していない。上流は v2.0.5 で 1 行訂正。"
   cause: "節点2 v2.0.0 の構成全面改訂で旧版の記述を §1 概要へ持ち込んだ際、同一文書内の §6・§7 と突き合わせる検査が無かった。gate1/3/5 は自然文の用語整合を見ず、規則 02 §9 の移送検査は節点間のみを対象とする。"
   countermeasure: "実装値（ルート・端点・固定文言・ステータス値）を各設計書の 1 表に集約し、本文は表を参照する形にすれば重複定義を grep で検出できる。規則化するなら `.claude/rules/02-requirements.md` §9 へ『同一文書内の実装値の一貫性』を 1 項追加（紅线は 7 条固定のため紅线にはしない）。**規則追加・検査追加は未実施**であり、本項は起案である。"
-  recorded_in: "docs/90_knowledge/review_diff_assets/R60Login/review_comments.md"
+  recorded_in: "docs/95_legacy/r60/review_diff_assets/R60Login/review_comments.md"
   appended: true
 
 # ── 未確定（人へ戻す問い。AI は裁定しない）────────────────────────────────

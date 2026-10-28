@@ -10,7 +10,7 @@ version: 0.1.0
 
 # R60 知識ベースの RAG 索引 — 構築・検索・評価
 
-> 対象：`docs/90_knowledge/legacy-r60/chunks/*.jsonl`（機読 chunk）と `eval/gold-qa.yaml`。
+> 対象：`docs/95_legacy/r60/chunks/*.jsonl`（機読 chunk）と `eval/gold-qa.yaml`。
 > 実装：`tools/rag/`（Python 標準ライブラリのみ）。
 > 設計方針の原典：`learning-plan-3modules.md` §6〜§7。
 > 本ファイルは**実装後の実測値**を記録する。計画値と異なる箇所はそのまま書く。
@@ -22,7 +22,7 @@ version: 0.1.0
 | 物 | 場所 | 役割 |
 |---|---|---|
 | chunk 生成 | `reports/module-survey/<module>/make_chunks.py` | 卡片 → JSONL。モジュールごとに 1 本 |
-| chunk 語料 | `docs/90_knowledge/legacy-r60/chunks/<module>.jsonl` | 機読・可審査。12 字段固定 |
+| chunk 語料 | `docs/95_legacy/r60/chunks/<module>.jsonl` | 機読・可審査。12 字段固定 |
 | 索引構築 | `tools/rag/loader.py` / `store.py` | JSONL を検証し SQLite を再生成 |
 | CLI | `tools/rag/__main__.py` | `build` / `query` / `eval` / `stats` |
 | 金標問答 | `eval/gold-qa.yaml` | 80 問（6 モジュール） |

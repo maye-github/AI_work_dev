@@ -21,7 +21,7 @@ REQUIRED_KEYS = {
     "version",
 }
 
-DEFAULT_CHUNKS_DIR = os.path.join("docs", "90_knowledge", "legacy-r60", "chunks")
+DEFAULT_CHUNKS_DIR = os.path.join("docs", "95_legacy", "r60", "chunks")
 
 
 class ChunkError(ValueError):

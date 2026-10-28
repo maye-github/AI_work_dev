@@ -58,7 +58,7 @@ version: 0.4.0
 | 物 | 場所 | 誰が読むか |
 |---|---|---|
 | 実在案件の実装（＝答案） | `D:/AI_work`（**永久に読取専用**） | 倒推のとき と `drill-comparator` **だけ** |
-| 歴史案件の知識庫 | `docs/90_knowledge/legacy-r60/` | 同上 |
+| 歴史案件の知識庫 | `docs/95_legacy/r60/` | 同上 |
 | 仮想需求書（**凍結済み**） | `tutorial/<案件>/节点1_需求/00_输入_客户需求书.md` | **節点1〜8** |
 | 倒推台帳・凍結記録 | `reports/drill/<module>/` | `drill-comparator` と次の画面を起こすとき |
 | 節点 2〜8 の産出 | `docs/20_`〜`docs/70_`・実装コード | 次工程 |
@@ -109,7 +109,7 @@ version: 0.4.0
 
 | # | 汚染源 | 内容 |
 |---|---|---|
-| 1 | 画面カード作成時 | `docs/90_knowledge/legacy-r60/screens/R60Login.md` を書く際に現行を読んでいる |
+| 1 | 画面カード作成時 | `docs/95_legacy/r60/screens/R60Login.md` を書く際に現行を読んでいる |
 | 2 | 2026-10-14 の事故 | `build_mode` が一時 `migration` へ書き換えられ、**実装から逆算した要求書**が作られた（2026-10-15 撤回。`tutorial/R60Login/节点1_需求/_archive-2026-10-14-migration版/`） |
 
 **したがって R60Login の対比データは跨画面の集計に算入しない**（記録はする）。

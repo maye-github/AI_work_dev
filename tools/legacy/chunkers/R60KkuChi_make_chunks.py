@@ -11,7 +11,7 @@ import sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-OUT = "docs/90_knowledge/legacy-r60/chunks/R60KkuChi.jsonl"
+OUT = "docs/95_legacy/r60/chunks/R60KkuChi.jsonl"
 C = []
 
 
@@ -32,10 +32,10 @@ def add(chunk_id, artifact_type, title, source_path, source_locator, text, scope
     })
 
 
-SCREEN = "docs/90_knowledge/legacy-r60/screens/R60KkuChi.md"
-FIELDS = "docs/90_knowledge/legacy-r60/modules/R60KkuChi/01-fields.yaml"
-LOGIC = "docs/90_knowledge/legacy-r60/modules/R60KkuChi/03-logic.yaml"
-REVIEW = "docs/90_knowledge/legacy-r60/modules/R60KkuChi/06-review.yaml"
+SCREEN = "docs/95_legacy/r60/screens/R60KkuChi.md"
+FIELDS = "docs/95_legacy/r60/modules/R60KkuChi/01-fields.yaml"
+LOGIC = "docs/95_legacy/r60/modules/R60KkuChi/03-logic.yaml"
+REVIEW = "docs/95_legacy/r60/modules/R60KkuChi/06-review.yaml"
 
 # ---------------------------------------------------------------- screen
 add("KKC-SCR-001", "screen", "R60KkuChi の位置づけと規模",

@@ -162,7 +162,7 @@ version: 0.1.0
 |---|---|
 | **観点（レンズ）の一覧** | `.claude/skills/requirement-interrogator/references/lenses.md` |
 | 実在案件の QA 票（**この技能の教材**） | `D:\AI_work\doc\00_管理\【QA票】共通マスタ.xlsx`（項番 1〜177）／`オンサイト修正対応一覧.xlsx`（23 件） |
-| 人が実際に見つけた「設計書 ↔ 実装」のズレ | `docs/90_knowledge/legacy-r60/08-deviations.md`（D-1〜D-25） |
+| 人が実際に見つけた「設計書 ↔ 実装」のズレ | `docs/95_legacy/r60/08-deviations.md`（D-1〜D-25） |
 | 審査差分（指摘の完成例） | `docs/90_knowledge/review_diff_assets/**/review_comments.md` |
 | 課題の起票と背景 | `docs/90_knowledge/requirement-review-capability.md` |
 | 要求書が無いときの入力作り | `.claude/skills/virtual-requirement-author/SKILL.md` |

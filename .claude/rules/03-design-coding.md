@@ -18,7 +18,10 @@ version: 0.1.0
 ---
 
 ## 2. `BaseCamelModel` の 4 行 `model_config` 固定写法（Pydantic v2）
-**Summary**: API 入出力の snake↔camel 変換は `BaseCamelModel` の `model_config` **4 行固定**で行う。この 4 行は改変禁止（CLAUDE.md 禁止事項②）。
+**Summary**: API 入出力の snake↔camel 変換は `BaseCamelModel` の `model_config` **4 行固定**で行う。
+下のコードは**骨架の推奨実装**（`greenfield` はこれをそのまま新規定義してよい）。
+**既に `BaseCamelModel` を持つ案件（`migration`）では、その 4 行を変えない**——
+禁止の実体は案件プロファイル（`docs/01_context/case-profile-<案件>.yaml` §2 禁②）にある。
 ```python
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
