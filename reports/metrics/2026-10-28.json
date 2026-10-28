@@ -1,0 +1,200 @@
+{
+  "base_date": "2026-10-28",
+  "spec_section": "实施规格书 §13.1（六大维度）",
+  "dimensions": {
+    "1_productivity": {
+      "measurable": false,
+      "reason": "工数の記録がリポジトリに無い。パイロットで人が記録する項目（規格書 §13 の注記）"
+    },
+    "2_quality": {
+      "measurable": "partial",
+      "review_records": 13,
+      "reason": "指摘の記録件数のみ。手戻り率・障害混入率は演習の対比記録（reports/drill）が要る"
+    },
+    "3_ai_usage": {
+      "measurable": "partial",
+      "commits": 9,
+      "with_ai_trailer": 9,
+      "ai_ratio": 1.0,
+      "by_type": {
+        "chore": 9
+      },
+      "reason": "AI 関与率のみ。生成物の採用率・修正率は人の記録が要る"
+    },
+    "4_coverage": {
+      "by_prefix": {
+        "BUG": 2,
+        "CR": 5,
+        "D": 6,
+        "E": 18,
+        "F": 2,
+        "I": 77,
+        "IT": 13,
+        "L": 10,
+        "R": 2,
+        "TC": 29
+      },
+      "total_ids": 164,
+      "parent_links": {
+        "R": {
+          "children": 43,
+          "resolved": 43
+        },
+        "F": {
+          "children": 91,
+          "resolved": 91
+        },
+        "D": {
+          "children": 10,
+          "resolved": 10
+        },
+        "L": {
+          "children": 26,
+          "resolved": 26
+        },
+        "E": {
+          "children": 5,
+          "resolved": 5
+        }
+      },
+      "coverage": {
+        "L": {
+          "total": 10,
+          "covered": 10,
+          "missing": []
+        },
+        "E": {
+          "total": 18,
+          "covered": 15,
+          "missing": [
+            "E-005",
+            "E-007",
+            "E-008"
+          ]
+        },
+        "I": {
+          "total": 77,
+          "referenced_by_tc": 25
+        }
+      },
+      "chain": {
+        "R→F": 43,
+        "F→I": 91,
+        "D→L": 10
+      },
+      "test_case_count": 28
+    },
+    "5_lead_time": {
+      "measurable": "partial",
+      "cases": [
+        {
+          "module": "R60Login",
+          "started_at": "2026-10-12",
+          "build_mode": "greenfield",
+          "case_kind": "tutorial",
+          "nodes": [
+            {
+              "node": 1,
+              "name": "要件理解",
+              "state": "approved",
+              "approved_at": "2026-10-21",
+              "days_from_start": 9,
+              "days_from_prev": 9
+            },
+            {
+              "node": 2,
+              "name": "基本設計",
+              "state": "approved",
+              "approved_at": "2026-10-27",
+              "days_from_start": 15,
+              "days_from_prev": 6
+            },
+            {
+              "node": 3,
+              "name": "詳細設計",
+              "state": "approved",
+              "approved_at": "2026-10-27",
+              "days_from_start": 15,
+              "days_from_prev": 0
+            },
+            {
+              "node": 4,
+              "name": "框架・環境構築",
+              "state": "approved",
+              "approved_at": "2026-10-23",
+              "days_from_start": 11,
+              "days_from_prev": -4
+            },
+            {
+              "node": 5,
+              "name": "製造",
+              "state": "approved",
+              "approved_at": "2026-10-26",
+              "days_from_start": 14,
+              "days_from_prev": 3
+            },
+            {
+              "node": 6,
+              "name": "単体テスト",
+              "state": "approved",
+              "approved_at": "2026-10-26",
+              "days_from_start": 14,
+              "days_from_prev": 0
+            },
+            {
+              "node": 7,
+              "name": "結合・総合テスト",
+              "state": "approved",
+              "approved_at": "2026-10-26",
+              "days_from_start": 14,
+              "days_from_prev": 0
+            },
+            {
+              "node": 8,
+              "name": "リリース・運用保守",
+              "state": "approved",
+              "approved_at": "2026-10-26",
+              "days_from_start": 14,
+              "days_from_prev": 0
+            },
+            {
+              "node": 9,
+              "name": "变更・指摘（旁路環）",
+              "state": null,
+              "approved_at": null,
+              "days_from_start": null,
+              "days_from_prev": null
+            }
+          ],
+          "total_days": 15
+        }
+      ],
+      "reason": "演習（coach 状態ファイルを持つ案件）のみ。実案件は approved_at を記録していない"
+    },
+    "6_knowledge": {
+      "measurable": true,
+      "knowledge_md": 50,
+      "chunk_files": 7,
+      "chunks": 344,
+      "rag": {
+        "eval_file": "reports/rag/eval-*.json（最新）",
+        "gold_count": 80,
+        "k": 5,
+        "filtered": {
+          "questions": 80,
+          "hit_at_k": 1.0,
+          "strict_hit_at_k": 1.0,
+          "mrr": 0.9015,
+          "unsupported_rate": 0.0
+        },
+        "unfiltered": {
+          "questions": 80,
+          "hit_at_k": 0.8625,
+          "strict_hit_at_k": 0.8625,
+          "mrr": 0.6452,
+          "unsupported_rate": 0.0
+        }
+      }
+    }
+  }
+}
