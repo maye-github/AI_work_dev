@@ -34,14 +34,16 @@
 
 使い方::
 
-    py -3 -m tools.kb_export                          # 何が書き出されるか一覧（書かない）
-    py -3 -m tools.kb_export --out reports/kb-export   # 実際に書き出す（ステージング）
-    py -3 -m tools.kb_export --out <dir> --kb D:/AI_platform/kb-platform
-                                                      # 書き出して kb-platform の lint を回す
+    py -3 -m tools.kb_export                        # 何が書き出されるか一覧（書かない）
+    py -3 -m tools.kb_export --out tools/kb-platform/repo --promote --check --kb tools/kb-platform
+                                                    # 本リポジトリ内の kb-platform へ書き出して検証
     py -3 -m tools.kb_export --self-test
 
-**`--kb` は lint を回すだけで、kb-platform の repo/ へは書き込まない。**
-書き込み先は `--out` で指定した場所だけである。`ingest` は人が判断してから実行する。
+書き出した後は `py -3 tools/kb-platform/run.py ingest` で索引を作る。
+
+**`--promote`** は `draft` を `active` に上げる。kb-platform の検索は `active` しか返さないため
+（`kbkit/retrieval.py` の WHERE 句）、付けないと**索引には入るが 1 件も引けない**。
+**これは承認の意味ではない**——「検索に載せてよい知識として扱う」という宣言である。
 
 終了コード: 0 = 成功／1 = 読み取り・書き出しの失敗／2 = 引数誤り／3 = lint が指摘を返した。
 
