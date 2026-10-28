@@ -33,7 +33,7 @@ try:
 except ImportError:  # pragma: no cover - 環境依存
     yaml = None
 
-from .aux import freeze_readiness_check, seal_check
+from .aux_checks import freeze_readiness_check, seal_check
 
 # --------------------------------------------------------------------------
 # 定数

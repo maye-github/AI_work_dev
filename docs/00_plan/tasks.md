@@ -412,9 +412,9 @@
     （`## CP` を増やさない。CP の本数に依存する機械検査を壊さない）。
 - **Acceptance Criteria Addressed**: AC-2 / AC-6
 - **Test Requirements**:
-  - `rule` TR-22.1: `tools/trace_check/aux.py` が実在し、`seal_check` / `freeze_readiness_check` /
+  - `rule` TR-22.1: `tools/trace_check/aux_checks.py` が実在し、`seal_check` / `freeze_readiness_check` /
     `discover_freeze_files` / `scan_seal_text` / `parse_disposition_table` を持つ。
-    `py -3 -m py_compile tools/trace_check/aux.py tools/trace_check/__init__.py` が Exit 0
+    `py -3 -m py_compile tools/trace_check/aux_checks.py tools/trace_check/__init__.py` が Exit 0
   - `rule` TR-22.2: **6 道の門は不変**。`grep -rn "gate7" tools/` が 0 件、
     `py -3 -m tools.trace_check --strict --report reports/trace_aux.json` が Exit 0 で、
     `stats.gates_run == 6` かつ `stats.aux_checks_run == 2`、`set(aux) == {"seal", "freeze"}`、

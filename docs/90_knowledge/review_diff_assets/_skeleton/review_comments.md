@@ -409,7 +409,7 @@ version: 0.1.0
     実パスと汚染の登記は `case.yml` に置く」を固定した。
   - **実施済み**: ① 成果物の冒頭を中性の記述に直し、参照先は `case.yml` の**汚染源 4** を指す形にした。
     ② `reference-design-book.md` §6 に禁止行として明記。③ 再実行で `seal_hits=0` を確認。
-- **関連**: `.claude/rules/00-project-global.md` §12、`tools/trace_check/aux.py`、
+- **関連**: `.claude/rules/00-project-global.md` §12、`tools/trace_check/aux_checks.py`、
   `docs/00_plan/coach/R60Login/case.yml`（汚染源 4）、RC-SK-01。
 
 ---
