@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>understand-the-repo_2026-10-28.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>understand-the-repo_2026-10-28.zh</h1>
+<div class="meta">
+  机读源: <code>understand-the-repo_2026-10-28.zh.md</code> ／
+  生成: 2026-10-28 10:25 ／
+  节 9・表 7
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>understand-the-repo_2026-10-28.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 一句话</a></li><li><a href="#sec-2">1. 打个比方：这就是一家外包公司的制度</a></li><li><a href="#sec-3">2. 它是怎么干活的：8 个节点，每个节点一次签收</a></li><li><a href="#sec-4">3. 一把钥匙：仓库里有 5 个&quot;世界&quot;</a></li><li><a href="#sec-5">4. 逐块说：为什么存在，删了会怎样</a></li><li><a href="#sec-6">5. 三个最容易误解的地方</a></li><li><a href="#sec-7">6. 自测：能答出这 8 题就算懂了</a></li><li><a href="#sec-8">7. 懂了之后，整理按这个顺序</a></li><li><a href="#sec-9">8. 如果你还卡着</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>读懂 D:\AI_work_dev</h1>
+<blockquote class="quote">这份文件的目标：让你能回答"这个东西我是要改、要删、还是留着"，而不是记不住 700 个文件名。<br><strong>看完大概 30 分钟。</strong> 不用一边看一边查文件。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 一句话</h2>
+<p><strong>这个文件夹不是一个软件，是四样东西叠在一起：</strong></p>
+<ol><li>一套<strong>给 AI 读的工作制度</strong>（什么不许做、每件事按几步做）</li><li>一套<strong>质检仪器</strong>（做完拿去验，不合格不放行）</li><li><strong>两个样例工程</strong>（一个是"照着填的样板"，一个是"真跑过一遍的录像"）</li><li><strong>一堆跑完留下的材料</strong>（旧系统扫描件、临时输出、自动备份）</li></ol>
+<p><strong>你的框架只有第 1、2 样。第 3、4 样是它们产出的东西。</strong></p>
+<p>所有"乱"的感觉，都来自这四样混在同一个根目录下，没有任何一处写清楚"哪部分是哪部分"。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 打个比方：这就是一家外包公司的制度</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">现实里的东西</th><th style="text-align:left">仓库里的东西</th><th style="text-align:left">数量</th></tr></thead><tbody><tr><td style="text-align:left">员工手册（不许做什么）</td><td style="text-align:left"><code>.claude/rules/</code> 7 本</td><td style="text-align:left">7</td></tr><tr><td style="text-align:left">岗位作业指导书（这活儿分几步，每步产出什么）</td><td style="text-align:left"><code>.claude/skills/</code> 5 个</td><td style="text-align:left">5</td></tr><tr><td style="text-align:left">外派专员（你点名，他在自己房间干完，只回你 15 行）</td><td style="text-align:left"><code>.claude/agents/</code> 14 个</td><td style="text-align:left">14</td></tr><tr><td style="text-align:left">质检仪 + 门禁</td><td style="text-align:left"><code>tools/trace_check</code> 的 6 道门</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">项目看板（现在到第几步、谁签的字）</td><td style="text-align:left"><code>docs/00_plan/coach/&lt;模块&gt;/n01~n09.yml</code></td><td style="text-align:left">11</td></tr><tr><td style="text-align:left">编号簿（所有单号的唯一出处）</td><td style="text-align:left"><code>docs/00_registry/ids.yml</code></td><td style="text-align:left">1</td></tr><tr><td style="text-align:left">文件柜（归档的正式文件）</td><td style="text-align:left"><code>docs/10~80_*/</code></td><td style="text-align:left">22</td></tr><tr><td style="text-align:left">质检报告 + 体检记录</td><td style="text-align:left"><code>reports/</code></td><td style="text-align:left">311</td></tr></tbody></table>
+<p><strong>关键区分</strong>：前六行是"制度"，是你要做的东西；后两行是"制度跑出来的纸"。纸是可以清掉的，制度不能。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 它是怎么干活的：8 个节点，每个节点一次签收</h2>
+<p>拿一件真事说：客户说"我要一个登录画面"。</p>
+<pre><code>客户需求书（一页纸）
+   │
+   ├─ ① 要件理解   提炼成编号 R-201；用 51 个视角审一遍，挑出&quot;它没说清的地方&quot;
+   │               → 出一份《确认事项一览》交给人回答
+   │               → ★ 人签字（n01.yml 里 approved_by = SE-001）才能往下走
+   │
+   ├─ ② 基本设计   从 R-201 展开：功能 F-201、画面项目 I-301~I-3xx
+   │               → ★ 人签字
+   │
+   ├─ ③ 详细设计   SQL、字段、边界值、错误 E-201~、逻辑 L-201
+   │               → ★ 人签字
+   │
+   ├─ ④ 框架构筑   用什么技术（这一条必须人拍板，叫&quot;红线④&quot;）
+   │               → ★ 人签字
+   │
+   ├─ ⑤ 制造       按设计写代码。设计里没写的，不许自己发挥
+   │               → ★ 人签字
+   │
+   ├─ ⑥ 单元测试   每个功能至少 8 个用例（正常3 / 边界2 / 异常3）
+   │               → ★ 人签字
+   │
+   ├─ ⑦ 结合测试   串起来跑
+   │               → ★ 人签字
+   │
+   └─ ⑧ 发布运维   上线 + 出问题怎么退回来
+                   → ★ 人签字</code></pre>
+<p><strong>全流程只有三条规矩</strong>（就是你说的"7 条红线"里最核心的三条）：</p>
+<ol><li><strong>上一步没签字，下一步不开工</strong></li><li><strong>每个产出物必须有编号，编号只能从 <code>ids.yml</code> 领</strong>（不许自己编）</li><li><strong>每次提交前必须跑 6 道门，跑不过不许提交</strong></li></ol>
+<p>其它四条红线都是这三条的具体化（不许跳门、不许外传机密、不许擅改技术栈、用例必须有出处）。</p>
+<p><strong>这就是整个框架。</strong> 剩下的 700 个文件都是为这三条规矩服务的。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 一把钥匙：仓库里有 5 个"世界"</h2>
+<p><strong>这一段是全篇最重要的。</strong> 你觉得乱，是因为同一个概念在五个世界里长得不一样。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">世界</th><th style="text-align:left">在哪</th><th style="text-align:left">是什么</th><th style="text-align:left">谁用</th><th style="text-align:left">能不能删</th></tr></thead><tbody><tr><td style="text-align:left"><strong>① 制度层</strong></td><td style="text-align:left"><code>.claude/</code> ＋ <code>tools/</code></td><td style="text-align:left">给 AI 的规矩和工具</td><td style="text-align:left">AI 每轮自动读</td><td style="text-align:left"><strong>不能</strong></td></tr><tr><td style="text-align:left"><strong>② 目标层</strong></td><td style="text-align:left">规格书 ＋ 使用手册 ＋ <code>CLAUDE.md</code></td><td style="text-align:left">给人看的目标与说明</td><td style="text-align:left">人</td><td style="text-align:left"><strong>不能</strong></td></tr><tr><td style="text-align:left"><strong>③ 样板层</strong></td><td style="text-align:left"><code>docs/10~80_</code>（编号 R-101 系列）</td><td style="text-align:left">一次真实案件的<strong>写法示范</strong></td><td style="text-align:left">人照着填</td><td style="text-align:left">不能，但可以加标记</td></tr><tr><td style="text-align:left"><strong>④ 演练层</strong></td><td style="text-align:left"><code>tutorial/R60Login</code>（编号 R-201）＋ <code>reports/drill</code></td><td style="text-align:left"><strong>真跑过一遍的录像</strong></td><td style="text-align:left">人（证明框架能跑）</td><td style="text-align:left"><strong>不能——这是唯一的实证</strong></td></tr><tr><td style="text-align:left"><strong>⑤ 附赠层</strong></td><td style="text-align:left"><code>docs/90_knowledge/legacy-r60</code> ＋ <code>reports/module-survey</code></td><td style="text-align:left">R60 旧系统的资料</td><td style="text-align:left">只对 R60 有用</td><td style="text-align:left"><strong>可以整块剥离</strong></td></tr></tbody></table>
+<h3>3.1 为什么有两套编号？R-101 和 R-201 是什么关系？</h3>
+<p>这是最容易卡住的地方，我直接说清楚：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">是谁写的</th><th style="text-align:left">写来干什么</th><th style="text-align:left">在哪</th></tr></thead><tbody><tr><td style="text-align:left"><strong>R-101 / F-042 / D-043 / L-014 / TC-001..008</strong></td><td style="text-align:left"><strong>骨架作者手写的</strong></td><td style="text-align:left">照着真实模块 R60Area 写的<strong>一份完整样板</strong>，让人知道模板该怎么填</td><td style="text-align:left"><code>docs/10_requirements/</code> … <code>docs/60_integration_test/</code></td></tr><tr><td style="text-align:left"><strong>R-201 / F-201 / I-301… / TC-201…</strong></td><td style="text-align:left"><strong>AI 在演练时写的</strong></td><td style="text-align:left">走一遍全流程，看它能不能跑通</td><td style="text-align:left"><code>tutorial/R60Login/</code></td></tr></tbody></table>
+<p><strong>两套编号不连续、前缀不同，是故意的</strong>——它们是两个不同的工程，混在一起会导致追溯链断掉。</p>
+<p>还有第三套：<code>R60Area</code>、<code>R60Login</code>、<code>R60Maker</code>…… 这些是<strong>旧系统的真实模块名</strong>，不是我们发的号，是客户系统里的名字。</p>
+<h3>3.2 演练那套是"假的"吗？</h3>
+<p>是<strong>虚拟的</strong>，但不是玩具。要说清楚：</p>
+<ul><li>客户需求书是<strong>倒推</strong>出来的——从 R60 的真实系统反推一份"客户当初可能这么写"的需求书</li><li>倒推只做这一步。要求书冻结之后，<strong>下游 8 个节点都不许再去看 R60 的代码</strong></li><li>这样才可能测出"AI 自己写，会和人类专家写的不一样在哪"</li></ul>
+<p><strong>而且仓库里诚实记着 5 个污染源</strong>（<code>docs/00_plan/coach/R60Login/case.yml</code> 的 notes 里）：<br>其中 3 个是中途被要求去参考了真实实现。所以这份录像<strong>证明的是"流程能跑通"，不是"AI 质量好"</strong>。</p>
+<p>这个区别很重要：如果有人拿它当"我们的 AI 有多强"的证据，那是错的。仓库自己写明了。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 逐块说：为什么存在，删了会怎样</h2>
+<h3>4.1 <code>.claude/rules/</code>（7 本，105KB）—— 员工手册</h3>
+<p><strong>为什么存在</strong>：AI 每轮对话开始时自动读这 7 本。里面写"不许做什么"：不许自己编编号、不许跳门、不许把机密发出去、不许改技术栈、成果物不许出现两种说法。</p>
+<p><strong>删了会怎样</strong>：AI 不知道规矩，会开始自己编编号、漏掉门禁、把机密写进文件。</p>
+<p><strong>唯一的问题</strong>：7 本加起来 105KB，加上 <code>CLAUDE.md</code> 的 12KB，<strong>每轮对话开头就有 117KB 的规矩</strong>。这就是为什么 AI 有时候抓不住重点——不是它不听话，是东西太多。<strong>这是将来要改的地方，不是要删的地方。</strong></p>
+<h3>4.2 <code>.claude/skills/</code>（5 个，18 个文件）—— 作业指导书</h3>
+<p><strong>为什么存在</strong>：rules 说"不许怎样"，skills 说"这件事按哪几步做"。最核心的是 <code>trans-cosmos-ai-lifecycle-coach</code>：你打 <code>/trans-cosmos-ai-lifecycle-coach</code>，它就自动算出"你上次停在哪一步"，然后出下一步的卡片。它的 9 个作业票在 <code>nodes/n01..n09.md</code>。</p>
+<p><strong>删了会怎样</strong>：8 个节点没有具体做法，只剩空规矩。</p>
+<p><strong>要注意的</strong>：<code>code-from-design-trans-cosmos-ai</code> 和 <code>legacy-r60-navigator</code> 这两个<strong>只对 R60 有意义</strong>。将来卖给别的客户，这两个是"附赠的"，不是"框架本身"。</p>
+<h3>4.3 <code>.claude/agents/</code>（14 个）—— 外派专员</h3>
+<p><strong>为什么存在</strong>：一个节点如果全都塞进主对话，上下文会爆掉。所以每个节点有一个专员：你把任务交给他，他在<strong>自己的房间</strong>里干，干完只回你 15 行结论。</p>
+<p><strong>删了会怎样</strong>：8 个节点全挤进主对话，做两三个节点上下文就满了。</p>
+<p><strong>一个必须知道的点</strong>：专员的"引用数"永远是 0。因为系统是靠<strong>描述</strong>自动匹配的，不是靠文件路径。<strong>所以不能因为"没人引用它"就删掉。</strong></p>
+<h3>4.4 <code>tools/</code>（41 个文件）—— 质检仪</h3>
+<p><strong>为什么存在</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">工具</th><th style="text-align:left">干什么</th><th style="text-align:left">什么时候用</th></tr></thead><tbody><tr><td style="text-align:left"><code>trace_check</code></td><td style="text-align:left"><strong>6 道门</strong>：编号对不对、追溯链断没断、字段齐不齐、命名对不对、机密有没有</td><td style="text-align:left">每次提交前</td></tr><tr><td style="text-align:left"><code>gen_view</code></td><td style="text-align:left">机读文件 → 中文网页（就是你现在看的这种）</td><td style="text-align:left">每个节点做完</td></tr><tr><td style="text-align:left"><code>gen_formal</code></td><td style="text-align:left">机读文件 → 日文正式 Excel</td><td style="text-align:left">自动（每轮结束）</td></tr><tr><td style="text-align:left"><code>registry</code></td><td style="text-align:left">发编号、判阻塞、作废</td><td style="text-align:left">人要新编号时</td></tr><tr><td style="text-align:left"><code>impact</code></td><td style="text-align:left">给一个编号，倒查上下游会影响谁</td><td style="text-align:left">客户提修改时</td></tr><tr><td style="text-align:left"><code>masking</code></td><td style="text-align:left">脱敏</td><td style="text-align:left">发给外部之前</td></tr><tr><td style="text-align:left"><code>rag</code></td><td style="text-align:left">在旧案件知识里搜</td><td style="text-align:left">查旧系统时</td></tr><tr><td style="text-align:left"><code>ingest</code> / <code>legacy</code></td><td style="text-align:left">把旧 Excel / 旧案件搬进来</td><td style="text-align:left">一次性</td></tr></tbody></table>
+<p><strong>这是全仓最干净的一块</strong>：41 个文件，零重复，零孤岛。<strong>一个都不用动。</strong></p>
+<h3>4.5 <code>docs/00_plan/</code>（16 个）—— 项目看板</h3>
+<p><strong>为什么存在</strong>：<code>coach/R60Login/n01.yml</code> 到 <code>n09.yml</code>，<strong>一个节点一个文件</strong>，记着这个节点做到第几步、签字人是谁、还有哪些没答的问题。<strong>这是"现在到哪了"的唯一真源。</strong> 你重新打开对话时，系统就是靠读这些文件知道你在哪的。</p>
+<p><strong>删了会怎样</strong>：系统失忆，你得从头说一遍。</p>
+<p><strong>一个问题</strong>：<code>tasks.md</code> 里 16 个任务<strong>全都还标着 pending</strong>，实际早做完了。新人打开会以为项目没开工。</p>
+<h3>4.6 <code>docs/10~80_*/</code>（22 个）—— 文件柜</h3>
+<p><strong>为什么存在</strong>：8 个节点各自的成品放哪。每个目录里有两种东西：</p>
+<ul><li><strong>模板</strong>（<code>req-template.yaml</code>、<code>bd-template.yaml</code>…，共 8 个）—— 空白表格</li><li><strong>样板</strong>（<code>R-101-R60Area.yaml</code>、<code>F-042-R60Area.yaml</code>…，共 14 个）—— 填好的样子</li></ul>
+<p><strong>删了会怎样</strong>：AI 不知道产物该长什么样。</p>
+<p><strong>问题</strong>：空格和样板混在同一个目录里，新人分不清哪个该照着填、哪个是别人填过的。<strong>建议给样板加前缀 <code>_sample-</code>，不用搬家。</strong></p>
+<h3>4.7 <code>docs/00_registry/ids.yml</code> —— 编号簿</h3>
+<p><strong>为什么存在</strong>：这是<strong>全仓所有编号的唯一出处</strong>。现在有 164 个：需求 2、功能 2、画面项目 77、数据 6、逻辑 10、错误 18、测试 29、结合测试 13、变更 5、缺陷 2。</p>
+<p><strong>为什么重要</strong>：规矩是"编号只能从这里领"。所以"这个 R-201 是不是真的"永远只有一个答案。</p>
+<p><strong>顺带一个问题</strong>：<code>_backup/</code> 下有 54 个 <code>.bak</code>，是每次发号时自动备份的，<strong>一天就攒了 1.7MB</strong>，而且被提交进了 git。这是纯垃圾。</p>
+<h3>4.8 <code>docs/90_knowledge/</code>（94 个）—— 知识库</h3>
+<p>这里面其实是<strong>两堆完全不同的东西</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">堆</th><th style="text-align:left">文件</th><th style="text-align:left">是什么</th></tr></thead><tbody><tr><td style="text-align:left"><strong>方法论</strong>（15 个 + internal 2 个）</td><td style="text-align:left"><code>platform-map.md</code>、<code>ppt-deviation-register.md</code>、<code>answer-engine.md</code>、<code>repo-inventory.md</code> 等</td><td style="text-align:left">这套框架"为什么这么设计"的说明。<strong>核心是前三个</strong></td></tr><tr><td style="text-align:left"><strong>R60 旧案件知识</strong>（65 个）</td><td style="text-align:left"><code>legacy-r60/</code> 下的手引 10 本、画面卡 9 张、7 个模块的字段/API/逻辑 YAML、36 个 RAG 语料</td><td style="text-align:left"><strong>只对 R60 有用</strong>，是附赠层</td></tr></tbody></table>
+<p><strong>这是最容易误删的地方</strong>：方法论的 15 个是核心，<code>legacy-r60</code> 的 65 个是附赠。它们现在放在同一个目录下，看起来像一类东西。</p>
+<h3>4.9 <code>tutorial/R60Login/</code>（111 个）—— 录像</h3>
+<p><strong>为什么存在</strong>：8 个节点每个目录里，文件是<strong>按固定顺序编号</strong>的：</p>
+<pre><code>00_输入模板.yaml          ← 这一步要吃进什么
+01_AI产出_xxx.md / .yaml  ← AI 写的初稿
+02_审查结果.md            ← 人看出什么问题
+04_AI产出_xxx_改修版.md   ← 改完的
+05_承認版_xxx.md          ← 人签字的最终版 ★</code></pre>
+<p><strong>所以"03 在哪"的问题</strong>：编号不连续，是因为节点 1 有两个 <code>02_</code>（回答核对 + 确认事项一览）、节点 3 没有 <code>03_</code>、节点 4~8 只有 <code>00/01/05</code>。<strong>这是长得丑，不是缺文件。</strong></p>
+<p><strong>这是全仓唯一能证明"框架跑得通"的东西。不能删。</strong></p>
+<p>里面还有 38 个真代码文件（<code>节点5_制造/backend/</code> 和 <code>frontend/</code>），以及跑测试留下的结果。</p>
+<h3>4.10 <code>reports/</code>（311 个）—— 质检报告与扫描件</h3>
+<p><strong>这里面混了 5 种完全不同的东西</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">是什么</th><th style="text-align:left">数量</th><th style="text-align:left">该不该留</th></tr></thead><tbody><tr><td style="text-align:left"><strong>训练测量记录</strong>（<code>drill/R60Login/</code>，16 个：AI 版和人版的逐条对比、归因、答案键）</td><td style="text-align:left">16</td><td style="text-align:left"><strong>留</strong>——这是框架价值的唯一证据</td></tr><tr><td style="text-align:left"><strong>旧系统扫描件</strong>（<code>module-survey/</code> 234 个 + <code>legacy-raw/</code> 29 个）</td><td style="text-align:left">263</td><td style="text-align:left"><strong>可删</strong>——是 Excel 单元格倾倒，不是文章</td></tr><tr><td style="text-align:left"><strong>门禁原始输出</strong>（<code>trace_*.json</code>、<code>gate6_report.json</code> 等）</td><td style="text-align:left">8</td><td style="text-align:left">留 5 个 / 删 4 个（4 个没人引用）</td></tr><tr><td style="text-align:left"><strong>阶段记录</strong>（<code>AC-selfcheck.md</code>、<code>DELIVERY_MEMO.md</code>、<code>PHASE15-EXIT.md</code>）</td><td style="text-align:left">3</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><strong>别人的仓库报告</strong>（<code>survey/prj01-logistics-*</code>）</td><td style="text-align:left">2</td><td style="text-align:left">待定——那是另一个项目</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 三个最容易误解的地方</h2>
+<h3>误解一："这是给客户用的产品"</h3>
+<p><strong>不是主力。</strong> 它的定位是<strong>内部骨架</strong>：AI 怎么按照制度干活。客户交付的是"用这套骨架做出来的项目文件"（像 <code>docs/10~80</code> 那样），不是骨架本身。</p>
+<p>所以骨架里带不带 R60 的旧资料，不影响交付能力——但影响你把它交给第二个客户时的干净程度。</p>
+<h3>误解二："tutorial 是教学玩具，可以扔"</h3>
+<p><strong>它是唯一走完 8 个节点、6 道门全过的实证。</strong> 扔了以后，你无法向任何人证明这套框架跑得通。</p>
+<p>而且它自己诚实记着 5 个污染源——这份诚实本身就是资产。</p>
+<h3>误解三："reports 里 300 个文件都是记录，都得留"</h3>
+<p><strong>274 个是原料，不是记录。</strong> 那些 <code>.txt</code> 是从旧 Excel 里倒出来的单元格（<code>r7 A:生産系共通マスタシステム | AF:内田</code>），人读不了，AI 也只能勉强读。</p>
+<p>而且其中 <strong>205 个文件含真实员工姓名，没有脱敏</strong>。这类东西放在知识库里，比放在代码库更危险。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 自测：能答出这 8 题就算懂了</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">问题</th><th style="text-align:left">答案</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">这个仓库是产品还是工具？</td><td style="text-align:left">内部骨架（工具），交付物是"用它做出来的项目文件"</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">700 个文件里，哪些是"制度"，哪些是"纸"？</td><td style="text-align:left">制度：<code>.claude/</code> 40 个 + <code>tools/</code> 41 个；纸：其余 620 个</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">R-101 和 R-201 什么区别？</td><td style="text-align:left">R-101 是手写的样板；R-201 是 AI 演练时写的</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">为什么编号不能自己填？</td><td style="text-align:left">编号只能从 <code>ids.yml</code> 领，否则追溯链断掉，第 6 道门会拦</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">8 个节点里，人必须做什么？</td><td style="text-align:left"><strong>签字</strong>。每一步没有人的编号，下一步不开工</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>n01.yml</code> 是干什么的？</td><td style="text-align:left">节点 1 的看板：做到第几步、谁签的字、还有哪些问题没答</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><code>legacy-r60</code> 和 <code>module-survey</code> 区别？</td><td style="text-align:left">前者是<strong>整理过的</strong>旧系统知识（22 本已脱敏 md）；后者是<strong>没整理的</strong>原始倾倒</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">哪些东西删了会打断追溯？</td><td style="text-align:left"><code>ids.yml</code>（编号簿）、<code>nNN.yml</code>（看板）、<code>tutorial/</code>（实证）、<code>docs/10~80</code>（样板）</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. 懂了之后，整理按这个顺序</h2>
+<p><strong>不要一次全动。</strong> 每一步都可以停下来看。</p>
+<h3>第一步：清不可逆为零的垃圾（10 分钟，风险 0）</h3>
+<ul><li>54 个自动备份 <code>.bak</code>（1.7MB）</li><li>1 个 <code>.coverage</code>（测试跑完的二进制）</li><li>4 个没人引用的临时 json</li><li>加上 <code>.gitignore</code> 规则，防止再长出来</li></ul>
+<p><strong>清完不变小多少，但目录里少 59 个噪音文件。</strong></p>
+<h3>第二步：把"附赠层"圈起来（半天）</h3>
+<p><code>legacy-r60</code> 的 65 个 + <code>module-survey</code> 的 234 个，标清楚它们是"R60 专属，不是框架"。<strong>先不搬，只标记。</strong> 因为搬动要改 30 多处引用。</p>
+<h3>第三步：合并说明文（1 小时）</h3>
+<p>五本合成三本：<code>CLAUDE.md</code>（AI 看）、<code>使用手册.md</code>（人看）、规格书（目标）。</p>
+<h3>第四步：才回头谈"接下来做什么"</h3>
+<p>清完脚手架，你再看"任意节点入口"那件事，判断会容易得多。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>8. 如果你还卡着</h2>
+<p>告诉我<strong>卡在哪一句</strong>就行，不用组织语言。比如：</p>
+<ul><li>"第 3 节那张五个世界的表，我还是分不清 ③ 和 ④"</li><li>"为什么要有两份 docs，不能合成一份吗"</li><li>"6 道门具体在拦什么，我举不出例子"</li><li>"R60 到底是什么，是我们的客户吗"</li></ul>
+<p>我按你的问题重讲那一块，不用你重读全文。</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>understand-the-repo_2026-10-28.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>
