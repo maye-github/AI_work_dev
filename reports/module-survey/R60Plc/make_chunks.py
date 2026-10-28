@@ -1,0 +1,552 @@
+# -*- coding: utf-8 -*-
+"""R60Plc knowledge cards -> RAG chunks (JSONL)."""
+import hashlib
+import io
+import json
+import sys
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+
+OUT = "docs/90_knowledge/legacy-r60/chunks/R60Plc.jsonl"
+C = []
+
+
+def add(chunk_id, artifact_type, title, source_path, source_locator, text, scope="teaching", ids=None):
+    C.append({
+        "chunk_id": chunk_id,
+        "module": "R60Plc",
+        "artifact_type": artifact_type,
+        "ids": ids or [],
+        "title": title,
+        "source_path": source_path,
+        "source_locator": source_locator,
+        "sensitivity": "internal",
+        "corpus_scope": scope,
+        "text": text,
+        "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "version": "0.1.0",
+    })
+
+
+SCREEN = "docs/90_knowledge/legacy-r60/screens/R60Plc.md"
+FIELDS = "docs/90_knowledge/legacy-r60/modules/R60Plc/01-fields.yaml"
+API = "docs/90_knowledge/legacy-r60/modules/R60Plc/02-api.yaml"
+LOGIC = "docs/90_knowledge/legacy-r60/modules/R60Plc/03-logic.yaml"
+ERRORS = "docs/90_knowledge/legacy-r60/modules/R60Plc/04-errors.yaml"
+TESTS = "docs/90_knowledge/legacy-r60/modules/R60Plc/05-tests.yaml"
+REVIEW = "docs/90_knowledge/legacy-r60/modules/R60Plc/06-review.yaml"
+DESIGN = "reports/module-survey/R60Plc/design"
+TEST_SRC = "reports/module-survey/R60Plc/test/00_単体ﾃｽﾄ仕様兼結果.txt"
+AB = "doc/03_AI/AB_Reports/reports/R60Plc/summary.md"
+CTRL = "api/fastapi_oracle_pjt/app/routers/R60PlcController.py"
+VIEW = "Front-end/src/views/R60Plc.vue"
+EDIT = "Front-end/src/components/R60PlcEdit.vue"
+
+# ---------------------------------------------------------------- screen
+add("PLC-SCR-001", "screen", "R60Plc の位置づけと規模",
+    SCREEN, "§1 識別情報 / §2 仕様要点",
+    "R60Plc はロケーションマスタメンテナンス画面で、教材モジュールの中等・第 1 推奨である。"
+    "検索一覧とマスタ項目モーダルを持ち、新規・複製・修正の 3 モード、テーブル 1 つ（R60_PLC_M_TBL、41 列）、"
+    "API 端点 6 つで構成される。簡単モジュール R60Ssk が更新専用なのに対し、本画面は INSERT・UPDATE・"
+    "論理削除の 3 種を持ち、排他・被参照・重複・条件付き必須（タンク）が揃う。"
+    "前提条件はなし、排他条件はあり、利用対象者は利用権限保持者、使用頻度は月次・随時である。")
+
+add("PLC-SCR-002", "screen", "検索画面の構成（65 項目）",
+    SCREEN, "§3.1 検索画面の構成",
+    "検索画面の番号行は No1〜No69 だが、見出し行 No1 / 7 / 21 / 65 を除くと実項目は 65 件である。"
+    "内訳はヘッダー 5、検索条件 10、条件ボタン 3、上ページャ 5、件数 1、一覧部 32（複製ボタン 1＋列 31）、"
+    "下ページャ 5、ボタン部 4。検索条件は会社・事業場・エリア・ロケーションコード・ロケーション名・"
+    "削除含む・ロケーショングループ・ロケーションタイプ・１頁件数・コード検索である。"
+    "コードは前方一致、名称は中間一致、その他は完全一致。削除含むが未チェックなら DEL_FLG=0 を条件に加える。"
+    "一覧のソート可能列は会社・事業場・ロケーションコードの 3 列だけである。")
+
+add("PLC-SCR-003", "screen", "マスタ項目モーダル（37 項目・3 モード）",
+    SCREEN, "§3.2 マスタ項目モーダル",
+    "マスタ項目シートの番号行は No1〜No40 で、見出し行 No1 / 3 / 37 を除くと実項目 37 件"
+    "（ヘッダー 1、マスタ項目 33、ボタン 3）。1 つのモーダルを mode 1=新規、2=複製、3=修正で切り替える。"
+    "新規・複製では削除ボタンが非活性、修正では削除ボタンが活性になるが、既に削除済みの行では非活性である。"
+    "登録ボタンは新規モードでは常に活性、それ以外は権限区分 Y の時だけ活性になる。"
+    "ロケーション属性区分がタンクの時は 6 項目が必須に加わる。")
+
+add("PLC-SCR-004", "screen", "イベント 24 件と API 対応",
+    SCREEN, "§4 イベント一覧",
+    "R60Plc の設計イベントは 24 件である。API を呼ぶのは 13 件で、初期表示、仕掛表示、表示、ページ移動、"
+    "ソート 3 種、複製、一覧リンク、ダウンロード、新規、削除、登録である。API を呼ばない 11 件は"
+    "フロント内の処理または別画面起動である。6 つの端点への集約は、init が初期表示、search が"
+    "仕掛表示・表示・ページ・ソート、initEdit が複製・リンク・新規、download がダウンロード、"
+    "delete が削除、edit が登録である。設計内でイベント番号が見出しと本文でずれる箇所があるため、"
+    "番号ではなくイベント名で照合する。")
+
+add("PLC-SCR-005", "screen", "業務処理の流れと判定順",
+    SCREEN, "§5 業務処理説明",
+    "検索では単項目チェックの後、WHERE を組み立て、同じ WHERE で COUNT(*) を取る。0 件は R60W0010、"
+    "上限超過は R60W0005。既定ソートは DEL_FLG, CMP_CD, JIG_CD, PLC_CD, ROWID。"
+    "登録・削除の判定順は、単項目 → 重複 → 排他 → 被参照 → 登録または削除である。"
+    "削除は排他、被参照、論理削除 UPDATE（DEL_FLG=1、SEND_STS=0、KSN_KBN=1、KSN_DAT=現在時刻、REV_NO+1）"
+    "の順に進む。登録は mode 1/2 が重複チェック後に INSERT 41 列、mode 3 が排他チェック後に UPDATE 33 列。"
+    "REG_STS は基本 18 項目が揃えば 1、タンク時はさらに 6 項目を加えて判定する。")
+
+add("PLC-SCR-006", "screen", "DB・テスト・A/B の概観",
+    SCREEN, "§7 DB / §10 テスト / §10.1 A/B",
+    "R60_PLC_M_TBL は 41 列で、業務キーは CMP_CD + JIG_CD + PLC_CD。INSERT は 41 列、"
+    "UPDATE と論理削除は 33 列で、物理削除はしない。単体テスト仕様は 635 項目、FP 24、バグ 0 で、"
+    "画面遷移 6、レイアウト 175、入力チェック 107、イベント 272、特殊 75 の内訳である。"
+    "A/B レポートは完全一致 0 件、構造一致 1 件（head）、未測定 2 件（modify / download）で、"
+    "実装一致の証拠は画面ヘッダの構造だけである。")
+
+# ---------------------------------------------------------------- field
+add("PLC-FLD-001", "field", "画面項目数の数え方（102 件）",
+    FIELDS, "item_counts",
+    "R60Plc の実画面項目は検索 65 件とマスタ項目 37 件の合計 102 件である。"
+    "検索シートの No 最大値は 69、マスタ項目シートは 40 だが、どちらも節見出し行を含む。"
+    "検索の見出し行は No1 / 7 / 21 / 65、マスタ項目は No1 / 3 / 37 である。"
+    "No の最大値で数えると 109 になり、実項目より 7 件多く見える。項目数は No の最大値ではなく、"
+    "見出し行を除いた実項目で数える。")
+
+add("PLC-FLD-002", "field", "検索条件 10 項目の仕様",
+    FIELDS, "search_conditions",
+    "R60Plc の検索条件は 10 項目。会社と事業場はドロップダウンで完全一致、初期値はログインユーザーの所属。"
+    "エリアは完全一致で初期値ブランク。ロケーションコードはテキストで前方一致、隣にコード検索ボタンがあり"
+    "入力支援画面 R60PlcSup を起動する。ロケーション名は中間一致。削除含むはチェックボックスで、"
+    "未チェックなら DEL_FLG=0 を条件に加える。ロケーショングループの value は CMP,JIG,GRP の複合、"
+    "ロケーションタイプは完全一致。１頁件数は情報ID 000000174 で、既定は個別項目名10='D' の行である。")
+
+add("PLC-FLD-003", "field", "一覧 31 列とソート可能列",
+    FIELDS, "result_columns",
+    "R60Plc の一覧は 31 列である。ソート可能なのは会社、事業場、ロケーション：コードの 3 列だけ。"
+    "列はキー（会社・事業場・エリア・コード）、名称（名称・略称）、分類（グループコード・名称、"
+    "タイプコード・名称、属性）、容量・深度（最大容量 L、最大容量 KG、最大深さ、開始検定深さ）、"
+    "管理フラグ（FIFO、後残管理、流量管理、検尺管理、検尺検定、検尺単位、実／仮区分タンク、"
+    "実／仮区分サイロ、複数品目、受入品目チェック、マイナス在庫、外貨受入、ALC別在庫管理、"
+    "補助材料投入可能、並び順区分）、状態（削除）に分かれる。")
+
+add("PLC-FLD-004", "field", "マスタ項目 33 件と編集可否",
+    FIELDS, "master_items",
+    "R60Plc のマスタ項目は 33 件。編集できるのはエリア、ロケーションコード（新規・複製のみ）、"
+    "名称、略称、ロケグループ、ロケタイプ、ロケ属性、最大容量 L、最大容量 KG、FIFO、後残管理、"
+    "流量管理、検尺管理、検尺検定、検尺単位、最大深さ、開始検定深さ、仮想タンク区分、仮想サイロ区分、"
+    "複数品目、受入品目チェック、マイナス在庫、外貨受入、ALC別在庫管理、補助材料投入可能、並び順区分。"
+    "会社と事業場は新規・複製ではドロップダウン、修正ではラベルである。削除チェックのエンティティは"
+    "設計ではエリアマスタと書かれるが、実装はロケーションマスタを更新する。")
+
+add("PLC-FLD-005", "field", "条件付き必須（タンクの 6 項目）",
+    FIELDS, "conditional_required",
+    "R60Plc ではロケーション属性区分がタンクの時、6 項目が必須に加わる。"
+    "検尺管理区分、検尺検定区分、検尺単位、最大深さ、開始検定深さ、仮想タンク区分である。"
+    "設計は同じ条件を箇所により『2:タンク』『02:タンク』と書くが、実装は plc_zks_kbn == '02' で判定する。"
+    "実装が '2' で判定するとタンク条件が外れ、6 項目の必須チェックが効かなくなる。")
+
+add("PLC-FLD-006", "field", "マスタ項目シートの設計誤り 3 件",
+    FIELDS, "design_defects_in_field_sheet",
+    "R60Plc のマスタ項目シートにはコピー＆ペースト由来の誤りが 3 件ある。"
+    "No8 エリアの初期値が『一覧で選択されたデータの事業場』と書かれ、エリアになっていない。"
+    "No24 開始検定深さの初期値が『一覧で選択されたデータの最大深さ』と書かれている。"
+    "No34 削除のエンティティが『エリアマスタ／論理削除フラグ』で、ロケーションマスタではない。"
+    "初期値と削除対象を取り違えると、別テーブルを更新する設計になるため、実装と突き合わせて読む必要がある。")
+
+add("PLC-FLD-007", "field", "DB モデル R60_PLC_M_TBL の 41 列",
+    FIELDS, "db_model / key_columns",
+    "R60_PLC_M_TBL はロケーションマスタで、実列は 41 列である。業務キーは CMP_CD（4 桁）、"
+    "JIG_CD（4 桁）、PLC_CD（8 桁）。PLC_CD は半角英数大文字と _ - ( ) のみ、8 桁以内。"
+    "PLC_NM は 24 桁、PLC_RNM は 16 桁。DEL_FLG は本画面の削除で 1 にする。"
+    "REG_STS は必須 18 項目とタンク時の 6 項目が揃えば 1。KSN_DAT は排他の比較対象、REV_NO は更新時 +1。"
+    "調査票は 42 カラムと記録するが、項目移送表の実列は 41 列である。")
+
+add("PLC-FLD-008", "field", "操作別の列数（INSERT 41 / UPDATE 33 / DELETE 33）",
+    FIELDS, "db_model.operation_flags",
+    "R60_PLC_M_TBL の操作別列数は、INSERT が 41 列、UPDATE が 33 列、DELETE が 33 列である。"
+    "削除は物理削除ではなく DEL_FLG=1 の UPDATE なので、削除の列数は更新と同じ 33 列になる。"
+    "更新対象は No4-30 の 27 列、No32 の DEL_FLG、No37-41 の 5 列で計 33 列。"
+    "No31 の SEND_KBN と No33-36 の登録系は更新対象外である。")
+
+add("PLC-FLD-009", "field", "キー列と排他・状態列",
+    FIELDS, "key_columns",
+    "R60Plc のキー列は CMP_CD、JIG_CD、PLC_CD の 3 つ。状態・排他に関わる列は、"
+    "DEL_FLG（論理削除）、REG_STS（登録ステータス）、KSN_DAT（更新時刻、排他の比較対象）、"
+    "REV_NO（リビジョン、更新時 +1）、SEND_STS（送信ステータス）、KSN_KBN（オンライン区分）である。"
+    "登録ステータスは基本 18 項目とタンク時の 6 項目で判定され、確定すると 1 になる。")
+
+add("PLC-FLD-010", "field", "廃止シートの内容は R60Maker の残骸",
+    FIELDS, "deprecated_sheet",
+    "R60Plc の設計書にある『廃止_画面項目内容(入力)』シートは、シート名に反して中身が R60Maker の項目である。"
+    "メーカーコード、メーカー日本語名、メーカーカナ名、緊急配信、削除など 19 件が並ぶ。"
+    "R60Plc の入力仕様として読んではならない。このシートは教材コーパスでは holdout とし、"
+    "検索対象に含めない。廃止シートの混入は設計書の衛生状態を示す事例である。",
+    scope="holdout")
+
+add("PLC-FLD-011", "field", "編集可・ラベル・条件付きの区分",
+    FIELDS, "master_items.editable / label_only",
+    "R60Plc のマスタ項目は、編集可・ラベルのみ・条件付き必須に分かれる。"
+    "ラベルのみなのは会社と事業場で、新規・複製ではドロップダウン、修正ではラベルになる。"
+    "ロケーションコードは新規・複製では編集できるが、修正では編集不可である。"
+    "条件付き必須はロケーション属性区分がタンクの時の 6 項目（検尺管理区分、検尺検定区分、検尺単位、"
+    "最大深さ、開始検定深さ、仮想タンク区分）。それ以外の名称・容量・管理フラグ類は常時編集できる。")
+
+add("PLC-FLD-012", "field", "項目カードの未確定事項",
+    FIELDS, "open_questions",
+    "R60Plc の項目カードで未確定なのは 2 点。第一に、ロケーション属性区分の選択肢値が 2 なのか 02 なのか。"
+    "設計内で表記が揺れ、実装は 02 で判定する。第二に、削除チェックボックスの対象テーブル。"
+    "設計はエリアマスタと書き、実装はロケーションマスタを更新する。どちらが正かは人が裁定する。")
+
+# ---------------------------------------------------------------- api
+add("PLC-API-001", "api", "API の共通規約と端点一覧",
+    API, "contract_conventions / endpoint_inventory",
+    "R60Plc の API は HTTP POST / JSON、base path は /api/R60Plc、要求は { params: {...} } の封筒に入れる。"
+    "wire は camelCase、内部は snake_case で、BaseCamelModel が変換する。"
+    "端点は init、search、download、initEdit、delete、edit の 6 つ。"
+    "全端点の先頭で r60util.chk_onl_flg() を呼ぶ。BaseCamelModel は extra='ignore' で、"
+    "骨架規則の extra='forbid' と異なる。調査票の endpoints=11 は API を呼ばないイベント数に一致し、"
+    "API を呼ぶイベントは 13 件である。")
+
+add("PLC-API-002", "api", "init 端点",
+    API, "endpoints[init]",
+    "POST /api/R60Plc/init は一覧画面の初期表示を担う。メッセージ 20 件と、会社・事業場・エリア・"
+    "ロケーショングループ・ロケーションタイプの 5 ドロップダウン、頁件数一覧を返す。"
+    "会社リストは会社マスタとエリアマスタを DEL_FLG=0 で結合し CMP_CD 昇順。"
+    "事業場の value は 'CMP_CD,JIG_CD'、エリアは 'CMP,JIG,ARA'、グループは 'CMP,JIG,GRP' の複合キー。"
+    "エリア・グループ・タイプは REG_STS=1 の確定データだけを返す。頁件数は情報ID 000000174。"
+    "R60W0013 は取得されるが使用箇所がない。")
+
+add("PLC-API-003", "api", "search 端点の要求パラメータ",
+    API, "endpoints[search].request",
+    "POST /api/R60Plc/search の要求パラメータは、cmpCd（完全一致）、jigCd（複合値の 2 番目）、"
+    "araCd（複合値の 3 番目）、plcCd（前方一致）、plcNm（中間一致）、plcGrpCd（複合値の 3 番目）、"
+    "plcTypCd（完全一致）、searchBtn（0=仕掛表示、1=表示）、delFlgInclude（0=削除を除く、1=含む）、"
+    "currentPage、pageLimit、sortField、sortOrder（1=昇順、-1=降順）である。"
+    "search は条件値を bind 変数で渡し、値の f-string 連結はしない。")
+
+add("PLC-API-004", "api", "search の挙動とソート",
+    API, "endpoints[search].behavior / sorting",
+    "R60Plc の search は、削除含むが 0 の時だけ DEL_FLG=0 を加える。仕掛表示（searchBtn=0）の時だけ "
+    "REG_STS=0 を加え、表示（searchBtn=1）では REG_STS を条件に加えない。"
+    "同じ WHERE で COUNT(*) を取り、0 件は R60W0010、上限超過は R60W0005。上限値は情報ID 000000024。"
+    "ソート許可は CMP_CD、JIG_CD、PLC_CD の 3 列。既定は DEL_FLG, CMP_CD, JIG_CD, PLC_CD, ROWID、"
+    "指定時は DEL_FLG, 指定列 ASC|DESC, ROWID となり副キーが落ちる。")
+
+add("PLC-API-005", "api", "download 端点",
+    API, "endpoints[download]",
+    "POST /api/R60Plc/download は直前の検索条件とソート順で CSV を返す。"
+    "要求は search と同じだが currentPage と pageLimit を除く。"
+    "ヘッダは R60_GET_SELECT_COLUMN_FNC('R60_PLC_M_TBL','H')、明細は同 'D'。"
+    "ファイル名は R60CsvUtil.get_csv_name() が返す。設計は情報ID 000000099 経由だが、"
+    "実装は共通 CSV ユーティリティに委譲する。WHERE 句を文字列連結で組み立てる点が search と異なる。")
+
+add("PLC-API-006", "api", "initEdit 端点（3 モード・17 ドロップダウン）",
+    API, "endpoints[initEdit]",
+    "POST /api/R60Plc/initEdit はマスタ項目モーダルを初期化する。mode 1=新規、2=複製、3=修正。"
+    "mode 2/3 は選択行の表示値・コード値・KSN_DAT・REV_NO・DEL_FLG を返す。"
+    "mode 1 は情報ID 295/296/297/299/300/301/302/303/420 の初期値だけを返す。"
+    "あわせて 17 種のドロップダウンを返す。情報ID は 119、117、158、159、123、124、125、121、120、"
+    "127、126、118、157、160、418、419。設計は 3 画面に分けるが、実装は 1 モーダルで切り替える。")
+
+add("PLC-API-007", "api", "delete 端点",
+    API, "endpoints[delete]",
+    "POST /api/R60Plc/delete は論理削除を行う。業務キーと全更新項目、ksnStfId、ksnDat、revNo を受け取る。"
+    "排他は KSN_KBN='1' かつ KSN_DAT 不一致なら R60W0006。次に R60_CHECK_PLC_INFO_FNC を呼び、"
+    "戻り値 1 なら R60W0024、null なら R60E0025。通過後、REG_STS を再判定し、DEL_FLG=1、SEND_STS=0、"
+    "KSN_KBN=1、REV_NO+1 で 33 列を UPDATE する。成功時は R60I0002 を返すが、画面は R60I0001 を表示する。")
+
+add("PLC-API-008", "api", "edit 端点（INSERT / UPDATE）",
+    API, "endpoints[edit]",
+    "POST /api/R60Plc/edit は mode 1/2 で INSERT、mode 3 で UPDATE を行う。"
+    "mode 1/2 は同一業務キーの存在で R60W0014 を返し、通過後に 41 列を INSERT する。"
+    "SEND_KBN=0、REV_NO=開始値。mode 3 は排他チェックを行い、削除チェック付きで登録する場合は"
+    "被参照チェックも行う。UPDATE は 33 列。成功時は R60I0001。"
+    "REG_STS は set_reg_sts() が 18 項目とタンク時の 6 項目で判定する。")
+
+add("PLC-API-009", "api", "イベントと端点の対応",
+    API, "event_to_endpoint_map",
+    "R60Plc の 24 イベントと端点の対応は次のとおり。init は初期表示。search は仕掛表示（No5）、"
+    "表示（No6）、ページ移動（No8）、ソート 3 種（No9-11）。initEdit は複製（No12）、"
+    "一覧リンク（No13）、新規（No17）。download はダウンロード（No16）。delete は削除（No23）。"
+    "edit は登録（No24）。会社・事業場・属性の変更、名称焦点喪失、戻る、業務終了はフロント内の処理で、"
+    "API を呼ばない。ロケーションコード検索は別画面 R60PlcSup を起動する。")
+
+# ---------------------------------------------------------------- logic
+add("PLC-LGC-001", "logic", "検索条件の組み立て（L-PL-01）",
+    LOGIC, "logics[L-PL-01]",
+    "R60Plc の検索条件は、会社・事業場・エリア・ロケーションコード・ロケーション名・ロケグループ・"
+    "ロケタイプを条件に加える。コードは前方一致、名称は中間一致、複合 value は分解して該当列に使う。"
+    "削除含むが 0 の時だけ DEL_FLG=0 を加える。仕掛表示（searchBtn=0）の時だけ REG_STS=0 を加え、"
+    "表示（searchBtn=1）では REG_STS を加えない。設計は表示で確定のみと書くが、実装は絞らない。"
+    "search は bind 変数を使う。")
+
+add("PLC-LGC-002", "logic", "件数取得と上限判定（L-PL-02）",
+    LOGIC, "logics[L-PL-02]",
+    "R60Plc の検索では、同じ WHERE で COUNT(*) を先に取得する。件数 0 は R60W0010、"
+    "上限超過は R60W0005。上限値は情報ID 000000024 から取得する。"
+    "上限超過時は data を空で返し、max_count を返して一覧を描画しない。")
+
+add("PLC-LGC-003", "logic", "一覧ソートの白名单（L-PL-03）",
+    LOGIC, "logics[L-PL-03]",
+    "R60Plc のソートは、既定が ORDER BY DEL_FLG, CMP_CD, JIG_CD, PLC_CD, ROWID。"
+    "ユーザー指定時は ORDER BY DEL_FLG, 許可列 ASC|DESC, ROWID。許可列は ALLOWED_SORT_FIELDS の "
+    "CMP_CD、JIG_CD、PLC_CD の 3 項目のみで、白名单外は既定ソートへフォールバックする。"
+    "指定時に副キーが落ちるため、同時刻・同値の行で並びが設計と変わりうる。")
+
+add("PLC-LGC-004", "logic", "CSV ダウンロード（L-PL-04）",
+    LOGIC, "logics[L-PL-04]",
+    "R60Plc のダウンロードは、直前の検索条件とソート順をそのまま使う。"
+    "CSV ヘッダは R60_GET_SELECT_COLUMN_FNC('R60_PLC_M_TBL','H')、明細は同 'D'。"
+    "ファイル名は R60CsvUtil.get_csv_name() が返す。WHERE 句を文字列連結で組み立てる点が search と異なる。")
+
+add("PLC-LGC-005", "logic", "初期表示ドロップダウン生成（L-PL-05）",
+    LOGIC, "logics[L-PL-05]",
+    "R60Plc の初期表示は 5 つのドロップダウンを生成する。会社は会社マスタ×エリアマスタ（双方 DEL_FLG=0）"
+    "を CMP_CD 昇順。事業場は事業場×エリア（双方 DEL_FLG=0、HYJ_SEQ NOT NULL）を HYJ_SEQ と value 昇順。"
+    "エリア・ロケグループ・ロケタイプは DEL_FLG=0 かつ REG_STS=1。"
+    "いずれも先頭に空選択肢を置き、value は複合キーをカンマ連結した文字列。"
+    "頁件数は情報ID 000000174 で、既定は個別項目名10='D'。")
+
+add("PLC-LGC-006", "logic", "新規モードの初期化（L-PL-06）",
+    LOGIC, "logics[L-PL-06]",
+    "R60Plc の新規モードでは、情報ID 295、296、297、299、300、301、302、303、420 から初期値を取得する。"
+    "会社と事業場はログインユーザーの所属を初期選択にする。ロケーションコード、名称、略称、容量等は空。"
+    "削除チェックは新規では表示しない。17 種のドロップダウンを返す。")
+
+add("PLC-LGC-007", "logic", "複製・修正モードの初期化（L-PL-07）",
+    LOGIC, "logics[L-PL-07]",
+    "R60Plc の複製（mode 2）と修正（mode 3）は、選択行を業務キーで読み込む。"
+    "表示値・コード値・KSN_DAT・REV_NO・DEL_FLG を返す。複製ではロケーションコードだけ空にし、"
+    "名称等は引き継ぐ。修正ではコードを編集不可にする。会社・事業場を変更すると、"
+    "エリアとロケグループのリストを再生成する。R60PlcCreate.vue と R60PlcCopy.vue は未参照で、"
+    "実際は R60PlcEdit.vue 1 本が 3 モードを担う。")
+
+add("PLC-LGC-008", "logic", "単項目入力チェック（L-PL-08）",
+    LOGIC, "logics[L-PL-08]",
+    "R60Plc の単項目チェックは 40 件。代表は、ロケーションコードが半角英数大文字と _ - ( ) のみで 8 桁以内"
+    "（R60W0128）、名称 24 桁・略称 16 桁以内（R60W0131）、容量・深さの数値範囲（R60W0121）、"
+    "新規・複製時の必須（R60W0009）、削除時の必須（R60W0015）、変更なし（R60W0016）、"
+    "変更破棄の確認（R60W0007）。エラー時は項目にフォーカスを戻す。名称の焦点喪失時に略称を自動転記する。")
+
+add("PLC-LGC-009", "logic", "項目間・DB 整合チェック（L-PL-09）",
+    LOGIC, "logics[L-PL-09]",
+    "R60Plc の項目間・DB 整合チェックは 7 種。検索 0 件 R60W0010、上限超過 R60W0005、"
+    "重複 R60W0014、排他 R60W0006、被参照 R60W0024、被参照チェック関数の null で R60E0025、"
+    "必須項目確認 R60A0041。判定順は単項目、重複、排他、被参照、登録または削除。"
+    "R60A0041 は確認ダイアログで、OK なら登録を続行する。")
+
+add("PLC-LGC-010", "logic", "重複チェック（L-PL-10）",
+    LOGIC, "logics[L-PL-10]",
+    "R60Plc の重複チェックは新規・複製時に行う。CMP_CD、JIG_CD、PLC_CD の 3 キーで既存行を検索し、"
+    "存在すれば R60W0014 を返す。実装は DEL_FLG を見ないため、削除済みのキーでも重複になる。"
+    "設計は削除済みを重複とみなすかを明記していない。")
+
+add("PLC-LGC-011", "logic", "排他チェック（L-PL-11）",
+    LOGIC, "logics[L-PL-11]",
+    "R60Plc の排他チェックは修正・削除時に行う。画面が保持する KSN_DAT と DB の KSN_DAT を比較し、"
+    "KSN_KBN='1' かつ不一致なら R60W0006 を返す。一致時は KSN_DAT を現在時刻で更新し、REV_NO を +1 する。"
+    "比較に使う KSN_DAT は initEdit の応答で取得した値であり、一覧の値ではない。")
+
+add("PLC-LGC-012", "logic", "被参照チェック（L-PL-12）",
+    LOGIC, "logics[L-PL-12]",
+    "R60Plc の被参照チェックは削除時と、修正で削除チェック付き登録を行う時に実行する。"
+    "R60_CHECK_PLC_INFO_FNC に業務キーを渡し、戻り値 1 なら R60W0024、null なら R60E0025。"
+    "判定順は排他、被参照、UPDATE の順である。")
+
+add("PLC-LGC-013", "logic", "論理削除（L-PL-13）",
+    LOGIC, "logics[L-PL-13]",
+    "R60Plc の削除は物理削除ではなく、DEL_FLG=1 の UPDATE である。同時に SEND_STS=0、"
+    "KSN_KBN='1'、KSN_DAT=現在時刻、REV_NO+1 を設定し、REG_STS を再判定する。更新列は 33 列。"
+    "成功時はバックエンドが R60I0002 を返すが、フロントは応答を表示せず R60I0001 を表示する。")
+
+add("PLC-LGC-014", "logic", "登録（L-PL-14）",
+    LOGIC, "logics[L-PL-14]",
+    "R60Plc の登録は mode 1/2 が INSERT、mode 3 が UPDATE。INSERT は 41 列、UPDATE は 33 列。"
+    "新規・複製は SEND_KBN=0、REV_NO=開始値。修正は REV_NO+1、KSN_DAT=現在時刻。"
+    "修正で削除チェックを外す場合も同じ UPDATE 経路を使う。登録系 5 列と SEND_KBN は UPDATE 対象外。"
+    "成功時は R60I0001 を返す。")
+
+add("PLC-LGC-015", "logic", "登録ステータス判定（L-PL-15）",
+    LOGIC, "logics[L-PL-15]",
+    "R60Plc の set_reg_sts は、基本 18 項目がすべて埋まっていれば REG_STS='1'、"
+    "そうでなければ '0' を設定する。ロケーション属性区分が '02'（タンク）の時は、"
+    "検尺管理区分、検尺検定区分、検尺単位、最大深さ、開始検定深さ、仮想タンク区分の 6 項目を"
+    "必須に加える。実装は plc_zks_kbn == '02' で判定する。")
+
+add("PLC-LGC-016", "logic", "ボタン活性制御（L-PL-16）",
+    LOGIC, "logics[L-PL-16]",
+    "R60Plc のボタン活性は、初期状態でダウンロードと新規が非活性、検索後に活性。"
+    "マスタ項目モーダルでは新規・複製で削除ボタンが非活性、修正で活性、ただし削除済みの行では非活性。"
+    "登録ボタンは新規モードでは常に活性、それ以外は権限区分 Y の時だけ活性。"
+    "コンポーネントのフラグ名は Enabled だが、実際は disabled 属性へバインドされており意味が反転している。")
+
+add("PLC-LGC-017", "logic", "確認・完了メッセージ（L-PL-17）",
+    LOGIC, "logics[L-PL-17]",
+    "R60Plc の確認・完了メッセージは、変更破棄 R60W0007、削除確認 R60A0004、登録確認 R60A0003、"
+    "必須項目確認 R60A0008、登録完了 R60I0001、削除完了 R60I0002。"
+    "R60I0002 は取得も返却もされるが、画面表示に到達しない。削除時も R60I0001 が表示される。")
+
+add("PLC-LGC-018", "logic", "状態定数（REG_STS / DEL_FLG / SEND_STS）",
+    LOGIC, "constants",
+    "R60Plc が使う状態定数は、REG_STS_ON='1'、REG_STS_OFF='0'、DEL_FLG_ON='1'、DEL_FLG_OFF='0'、"
+    "SEND_STS の初期値 '0'、KSN_KBN_ON='1'。REG_STS は登録ステータスで、必須項目が揃うと 1（確定）。"
+    "DEL_FLG は論理削除で、本画面の削除は 1 にする UPDATE。SEND_STS は送信ステータスで、"
+    "登録・削除時に 0（未送信）へ戻す。KSN_KBN はオンライン更新を示す 1 を設定する。")
+
+# ---------------------------------------------------------------- errors
+add("PLC-ERR-001", "error", "メッセージ一覧の概観",
+    ERRORS, "message_inventory",
+    "R60Plc は init で 20 件のメッセージを取得する。設計で使用されるのは 19 件で、"
+    "R60W0013 は未使用である。R60I0002 はバックエンドが返すが画面に表示されない。"
+    "種別は R60W が警告・入力チェック、R60A が確認ダイアログ、R60I が完了通知、R60E がシステムエラー。")
+
+add("PLC-ERR-002", "error", "単項目チェックのメッセージ",
+    ERRORS, "messages[R60W0128..R60W0016]",
+    "R60Plc の単項目チェックは、コード形式 R60W0128、名称・略称の桁数 R60W0131、"
+    "容量・深さの数値範囲 R60W0121、新規・複製時の必須 R60W0009、削除時の必須 R60W0015、"
+    "変更なし R60W0016、変更破棄の確認 R60W0007。エラー時は項目にフォーカスを戻して処理を中止する。")
+
+add("PLC-ERR-003", "error", "検索のメッセージ",
+    ERRORS, "messages[R60W0010 / R60W0005]",
+    "R60Plc の検索では、結果 0 件なら R60W0010、件数が上限を超えたら R60W0005 を返す。"
+    "上限値は情報ID 000000024 から取得する。上限超過時は一覧を描画しない。"
+    "どちらも警告であり、処理は検索結果の表示で止まる。")
+
+add("PLC-ERR-004", "error", "DB 整合チェックのメッセージ",
+    ERRORS, "messages[R60W0014 / R60W0006 / R60W0024 / R60E0025]",
+    "R60Plc の DB 整合チェックは、重複 R60W0014（3 キー既存）、排他 R60W0006（KSN_DAT 不一致）、"
+    "被参照 R60W0024（R60_CHECK_PLC_INFO_FNC が 1）、被参照チェック関数の異常 R60E0025（null）。"
+    "判定順は重複、排他、被参照で、通過した場合だけ登録・削除へ進む。")
+
+add("PLC-ERR-005", "error", "確認ダイアログ",
+    ERRORS, "messages[R60W0007 / R60A0004 / R60A0003 / R60A0008 / R60A0041]",
+    "R60Plc の確認ダイアログは、変更破棄 R60W0007、削除確認 R60A0004、登録確認 R60A0003、"
+    "必須項目確認 R60A0008、必須項目確認（登録続行）R60A0041。"
+    "キャンセルで処理を中止し、OK で続行する。")
+
+add("PLC-ERR-006", "error", "完了メッセージの不一致",
+    ERRORS, "messages[R60I0001 / R60I0002]",
+    "R60Plc の完了メッセージは R60I0001（登録しました。）と R60I0002（削除しました。）。"
+    "設計では登録は I0001、削除は I0002 だが、実装のフロントは削除成功時も I0001 を表示する。"
+    "バックエンド delete は I0002 を返しているが、画面が応答メッセージを使わないため到達しない。")
+
+add("PLC-ERR-007", "error", "未使用メッセージ R60W0013",
+    ERRORS, "messages[R60W0013]",
+    "R60W0013 は init の message_info に含めて取得されるが、設計 3 シートにもフロントにも"
+    "バックエンドにも使用箇所がない。どの操作を想定したメッセージかは設計から読み取れない。"
+    "メッセージ定義と画面挙動が一対一でない例である。")
+
+add("PLC-ERR-008", "error", "エラー処理の順序",
+    ERRORS, "error_flow",
+    "R60Plc のエラー処理は段階で分かれる。単項目チェックでは R60W0128、R60W0131、R60W0121、"
+    "R60W0009、R60W0015、R60W0016、R60W0007 を扱い、項目にフォーカスを戻して中止する。"
+    "検索では R60W0010、R60W0005 を扱い一覧を描画しない。登録前チェックでは R60W0014、R60W0006、"
+    "R60W0024、R60E0025、R60A0041 を扱い中止する。完了通知は R60I0001 と R60I0002。")
+
+# ---------------------------------------------------------------- tests
+add("PLC-TST-001", "test", "単体テスト仕様の全体",
+    TESTS, "summary",
+    "R60Plc の単体テスト仕様兼結果は 635 項目、FP 24、バグ 0。"
+    "テストレベルは画面単位の単体テストで、全件 OK で終了している。"
+    "FP 24 の定義は本文に無く、ファンクションポイントの実測値か工程別の管理値かは未確認である。")
+
+add("PLC-TST-002", "test", "テストの内訳",
+    TESTS, "breakdown",
+    "R60Plc の単体テスト 635 項目の内訳は、画面遷移 6、レイアウト 175（5 区分 23/44/36/36/36）、"
+    "入力チェック 107（6 区分 8/8/47/42/1/1）、イベント 272、特殊 75（5 区分 12/28/31/4/0）。"
+    "6 + 175 + 107 + 272 + 75 = 635。イベント系は設計 24 イベントに対して平均 11.3 件で、"
+    "押下・条件違い・異常系を細かく展開している。")
+
+add("PLC-TST-003", "test", "テストの網羅性に関する観察",
+    TESTS, "coverage_observations",
+    "R60Plc のテストは、入力チェック 107 件が設計 09 の 40 件と 10 の 7 件の合計 47 件の約 2.3 倍で、"
+    "正常・境界・異常を区別して展開していると読める。ただし R60PlcCreate.vue と R60PlcCopy.vue は"
+    "未参照のため画面遷移テストの対象外であり、R60I0002 は画面に出ないためメッセージ表示のテストで"
+    "検出されない。件数だけでは網羅性を語れない。")
+
+add("PLC-TST-004", "test", "A/B レポートは head のみ",
+    AB, "summary.md",
+    "R60Plc の A/B レポートは、完全一致 0 件、構造一致 1 件（head）、未測定 2 件（modify / download）。"
+    "差分比較は画面ヘッダの構造一致までで、修正・ダウンロードは測定していない。"
+    "したがって実装一致の証拠はヘッダ構造のみであり、登録・削除・ダウンロードを『実装が正解』と"
+    "みなしてはならない。")
+
+add("PLC-TST-005", "test", "テストデータの扱いと未確認事項",
+    TESTS, "test_data_policy / open_questions",
+    "R60Plc のテスト仕様書は実データを含むが、教材コーパスには転記せず、必要な場合は占位 COL_1 / VAL_1 で"
+    "参照する。未確認は、FP 24 の定義、結果欄が実施記録か期待値の転記か、イベント 272 件の"
+    "24 イベントへの配分である。")
+
+# ---------------------------------------------------------------- review
+add("PLC-REV-001", "review", "差異の全体像",
+    REVIEW, "finding_summary",
+    "R60Plc のレビュー差異は 16 件。内訳は設計内部 5、設計対実装 6、実装のみ 3、調査票・A/B 2。"
+    "重大度 high は D-PL-07（表示が REG_STS で絞らない）、D-PL-08（削除完了メッセージの不一致）、"
+    "D-PL-09（download の SQL 文字列連結）。medium はタンク判定、ソート副キー、extra=ignore、"
+    "未使用メッセージ、ボタンフラグ反転、死んだコンポーネント。")
+
+add("PLC-REV-002", "review", "数え方の差異（D-PL-01 / D-PL-02）",
+    REVIEW, "deviations[D-PL-01] / [D-PL-02]",
+    "D-PL-01 は画面項目数の数え方。検索 65 とマスタ 37 の合計 102 が実項目で、No 最大値の 69 と 40 は"
+    "見出し行を含む。No 最大値で数えると 109 になる。D-PL-02 は調査票の endpoints=11。"
+    "実際の API 端点は 6 で、24 イベントのうち API を呼ぶのは 13 件、呼ばないのが 11 件。"
+    "11 は後者に一致する。")
+
+add("PLC-REV-003", "review", "設計書の衛生状態（D-PL-03 / D-PL-04）",
+    REVIEW, "deviations[D-PL-03] / [D-PL-04]",
+    "D-PL-03 は業務処理説明のイベント番号が見出しと本文でずれること。見出しは複製 No12、"
+    "一覧リンク No13、新規 No17 だが、本文に No11、No12、No16 と書く箇所がある。"
+    "D-PL-04 は処理番号 (5) と (10) が 2 回ずつ現れ、処理順を番号で追えないこと。"
+    "設計を参照するときは番号ではなく処理名・イベント名を使う。")
+
+add("PLC-REV-004", "review", "マスタ項目シートの誤りとタンク表記（D-PL-05 / D-PL-06）",
+    REVIEW, "deviations[D-PL-05] / [D-PL-06]",
+    "D-PL-05 はマスタ項目シートのコピペ誤り 3 件。No8 エリアの初期値が事業場、No24 開始検定深さの"
+    "初期値が最大深さ、No34 削除のエンティティがエリアマスタになっている。"
+    "D-PL-06 はタンク判定の表記ゆれで、設計は 2 と 02 を混在させ、実装は 02 で判定する。"
+    "実装が 2 で判定するとタンク時の 6 項目必須が効かなくなる。")
+
+add("PLC-REV-005", "review", "表示ボタンが REG_STS で絞らない（D-PL-07）",
+    REVIEW, "deviations[D-PL-07]",
+    "D-PL-07 は設計と実装の重大な不一致。設計は表示ボタンで登録ステータスが確定のデータだけを"
+    "表示すると書くが、実装は search_btn=0（仕掛表示）の時だけ REG_STS=0 を加え、"
+    "search_btn=1（表示）では REG_STS を条件に加えない。そのため表示ボタンで未確定データも一覧に現れる。"
+    "どちらが正かは人が裁定する。")
+
+add("PLC-REV-006", "review", "削除完了メッセージの不一致（D-PL-08）",
+    REVIEW, "deviations[D-PL-08]",
+    "D-PL-08 は削除完了メッセージの不一致。バックエンド delete は成功時に R60I0002（削除しました。）を返すが、"
+    "フロントは応答メッセージを表示せず、常に R60I0001（登録しました。）を表示する。"
+    "設計は R60I0002 が正であり、実装の不具合候補である。削除したのに登録しましたと出るため、"
+    "利用者に誤解を与える。")
+
+add("PLC-REV-007", "review", "SQL とソートの差異（D-PL-09 / D-PL-10）",
+    REVIEW, "deviations[D-PL-09] / [D-PL-10]",
+    "D-PL-09 は download が WHERE 句を文字列連結で組み立てること。search は bind 変数を使っており、"
+    "同じ画面で SQL の組み立て方式が異なる。骨架の製造細則では bind 必須。"
+    "D-PL-10 は指定ソート時に副キーが落ちること。設計は DEL_FLG、CMP_CD、JIG_CD、PLC_CD の順を"
+    "既定にしており、指定時も副キーを保つと読めるが、実装は DEL_FLG、指定列、ROWID になる。")
+
+add("PLC-REV-008", "review", "実装構造の差異（D-PL-11 / D-PL-15 / D-PL-16）",
+    REVIEW, "deviations[D-PL-11] / [D-PL-15] / [D-PL-16]",
+    "D-PL-11 は Pydantic モデルが extra='ignore' を使うこと。骨架規則は extra='forbid' で、"
+    "定義外の入力が 422 にならず静黙無視される。D-PL-15 はボタン活性フラグの名前と意味が反転していること。"
+    "deleteBtnEnabled / registBtnEnabled は disabled にバインドされ、true が非活性を意味する。"
+    "D-PL-16 は R60PlcCreate.vue と R60PlcCopy.vue が未参照で、計 1,877 行の死んだコードが残っていること。")
+
+add("PLC-REV-009", "review", "メッセージとカラム数の差異（D-PL-12 / D-PL-14）",
+    REVIEW, "deviations[D-PL-12] / [D-PL-14]",
+    "D-PL-12 は R60W0013 が未使用のまま取得され、R60I0002 が画面に表示されないこと。"
+    "D-PL-14 は DB カラム数の不一致で、項目移送表の実列は 41 だが調査票は 42 と記録する。"
+    "カラム数で実装を照合すると 1 列余る。")
+
+add("PLC-REV-010", "review", "A/B は head のみ（D-PL-13）",
+    REVIEW, "deviations[D-PL-13]",
+    "D-PL-13 は A/B レポートが head のみの測定であること。完全一致 0 件、構造一致 1 件、"
+    "未測定 2 件（modify / download）。実装一致の証拠は検索画面のヘッダ構造だけであり、"
+    "登録・削除・ダウンロードは検証していない。RAG では A/B 未測定を明示し、実装一致と断定しない。")
+
+add("PLC-REV-011", "review", "教材としての再利用パターンと反パターン",
+    REVIEW, "teaching_notes",
+    "R60Plc から再利用できるパターンは、検索一覧とマスタ項目モーダルの 3 モード、"
+    "複合キーをカンマ連結したドロップダウン value、件数 0 と上限超過を検索結果として扱うこと、"
+    "排他・被参照・更新の判定順、論理削除と 33 列 UPDATE、REG_STS を必須項目の充足で判定する設計。"
+    "反パターンは、表示と確定の不一致、応答メッセージを無視した固定文言、search と download の"
+    "SQL 組み立て方式の違い、Enabled という名前で disabled を制御すること、死んだコンポーネントの放置。")
+
+with open(OUT, "w", encoding="utf-8", newline="\n") as f:
+    for c in C:
+        f.write(json.dumps(c, ensure_ascii=False, separators=(",", ":")) + "\n")
+
+print("wrote %d chunks -> %s" % (len(C), OUT))

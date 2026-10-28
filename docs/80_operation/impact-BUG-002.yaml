@@ -1,0 +1,119 @@
+---
+id: BUG-002
+type: impact_analysis
+req_ids: [R-201]
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ============================================================================
+# 影響分析レポート（BUG-002）
+# ============================================================================
+#
+# 本ファイルは docs/80_operation/impact-analysis-template.yaml に準拠する。
+# 産出者は実行体 trans-cosmos-ai-node9-change ではなく、コーチが
+# `py -3 -m tools.impact` の出力を転記して起案した（下記 §②に生出力を引用）。
+#
+# 番号: BUG-002 は台帳 docs/00_registry/ids.yml が発番済み
+#   （2026-10-27 `tools.registry alloc BUG --apply`。ユーザー発話
+#    「⑦ 那个 BUG 号你帮我发号」により発番を委任された）。
+#   本ファイルは番号を考案していない。BUG-001 は void 例であり再利用しない
+#   （.claude/rules/02-requirements.md §7）。
+#
+# 失効記録（mark-stale）は**実行していない**。人ゲートである（紅线③）。
+
+title: "ログイン試行 5 回／10 分ロックの未移送（節点2 承認済 → 節点3/5 未実装）"
+case_ref: "BUG-002"
+case_kind: bug
+raised_by: "社内レビュー"
+raised_at: "2026-10-27"
+summary: "節点2 承認版 §11 の「ログイン試行 5 回／10 分でロック、10 分後に自動解除」（区分 B 提案）が、節点3 詳細設計と節点5 製造へ移送されていない。承認版に書かれた機構が実装に存在しない状態。"
+
+# ── ② 影響面（`py -3 -m tools.impact L-203` の出力を転記）──────────────────
+#    BUG-002 自身を起点にすると下流は 0 件（要求・設計への辺しか持たないため）。
+#    実際に作り直しが要るのはログイン業務の設計 L-203 の下流であるため、
+#    L-203 を起点に取り直した。生出力（2026-10-27）:
+#      [impact] 対象: L-203（status=baselined）  方向=both  深さ=無制限
+#        ▼ 下流: 14 件  BUG-002 / CR-003 / E-201 / E-203 / E-205 / E-207 / E-208 /
+#                        TC-202 / TC-203 / TC-211 / TC-213 / TC-215 / TC-217 / TC-218
+#        ▲ 上流: 2 件   F-201 / R-201
+declared_scope:
+  upstream_trigger: "L-203"
+  downstream:
+    requirements: ["R-201"]
+    basic_design: ["F-201"]
+    screen_items: []
+    detail_design: ["L-203"]
+    errors: ["E-201", "E-203", "E-205", "E-207", "E-208"]
+    tests: ["TC-202", "TC-203", "TC-211", "TC-213", "TC-215", "TC-217", "TC-218"]
+  total_count: 14
+
+# ── ③ 回溯分析（★人が最終裁定する。下記は AI 案であり裁定ではない）────────
+#    判定の目安: 要件にはあるが設計に落ちていない → design（n02 または n03）
+#    本件は 節点1 #15 の B 提案 → 節点2 承認版 §11 line 719 に載る →
+#    節点3 詳細設計に移送されず → 節点5 に実装が無い。落ちたのは n03。
+root_cause_node: 3
+root_cause_class: design
+root_cause_note: |
+  要件（節点1 #15、区分 B の我方提案）と基本設計（節点2 承認版 §11 line 719）には
+  存在する。「ログイン試行回数の停止」は節点3 承認版に 0 行で、詳細設計へ移送されなかった。
+  したがって落ちた層は design（n03）である。
+  検出が節点8 まで遅れた原因は、移送検査（.claude/rules/02-requirements.md §9）が
+  **本番で最初に通しで行われたのが節点8 だった**ことにある。節点3 の出口で
+  「上流の表の各行が下流のどこに現れたか」を逐条で答える手順が実行されていない。
+  なお本条の裁定（戻し先 n03）はユーザー発話「都按方案」による承認済みであり、
+  root_cause_class の妥当性は設計評審で人が再確認する。
+
+# ── ④ 作り直し順（impact の「推奨の作り直し順」を転記）────────────────────
+redo_order:
+  - L-203
+  - BUG-002
+  - CR-003
+  - E-201
+  - E-203
+  - E-205
+  - E-207
+  - E-208
+  - TC-202
+  - TC-203
+  - TC-211
+  - TC-213
+  - TC-215
+  - TC-217
+  - TC-218
+
+# ── ⑤ 失効の記録（人が tools.registry で実行。コーチも実行体も代行しない）──
+stale_recorded:
+  command: 'py -3 -m tools.registry mark-stale L-203 --reason "ログイン試行回数ロックの未移送を追記する" --trigger F-201 --by <人>'
+  applied: false
+  cleared: []
+
+# ── ⑥ 回帰（作り直し後の再検証）────────────────────────────────────────────
+#    ★現時点で TC も IT も 1 本も実行していない（実行基盤は決まったが未実行）。
+#      「pending」は未実施の意であり、合格ではない。
+regression:
+  unit:
+    node: 6
+    result: pending
+  integration:
+    node: 7
+    result: pending
+  gate_result: pending
+
+# ── ⑦ 知識沈殿（.claude/rules/06-knowledge-flywheel.md §4 の 4 点）────────
+knowledge_entry:
+  symptom: "承認版の基本設計に書かれた機構（ログイン試行 5 回／10 分でロック）が、詳細設計と実装に存在しない。節点8 のリリース判定準備で発見された。"
+  impact: "節点3（詳細設計）で落ち、節点5（製造）・節点6（単体テスト）・節点7（結合テスト）を素通りして節点8 で発見された。下流 14 件（設計・エラー・テスト）に波及する。"
+  cause: "移送検査（規則 02 §9）が節点3・節点4・節点7 の出口で実行されていなかった。既存の門番 6 道は ID と字段しか見ないため、この種の欠落を捕まえられない。"
+  countermeasure: "機械化は不可（『意味が移送されたか』は人が読む）。規則化する層は .claude/rules/02-requirements.md §9（既に在る規則の**実行**を節点の審査項目として必須化する）。新しい紅线は作らない。"
+  recorded_in: "docs/90_knowledge/review_diff_assets/R60Login/review_comments.md"
+  appended: false
+
+open_issues:
+  - q_ref: ""
+    question: "`tools.impact L-203` が「宣言グラフ上で孤立した参照」を 5 件報告した（CR-004／D-201／IT-201／L-201／TC-201 が本文で L-203 を引用しているが追跡辺が無い）。辺を宣言するか、引用が依存でないなら引用を消すかは人が決める。本件の作り直し範囲には影響しない。"
+    status: open
+  - q_ref: ""
+    question: "節点3 §2.9 への追記（Session 破棄要求の失敗はサーバ運用ログに記録できない、という局限 1 文）を本件の n03 回帰に同梱する。同梱でよいか、別項として起票するかは人が決める（既定は同梱）。"
+    status: open

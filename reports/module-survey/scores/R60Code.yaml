@@ -1,0 +1,31 @@
+module: R60Code
+evidence_dir: reports/module-survey/R60Code
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_34_R60Code_コード値マスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_34_R60Code_コード値マスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 3
+  design_consistency: 4
+  impl_alignment: null
+  teachability: 5
+complexity:
+  level: simple
+  signals: {screens: 1, endpoints: 10, tables: 1, master_detail: false, upload: false, batch: false, sim: false, external: false}
+  note: "コード値マスタの単一画面（検索＋マスタ項目）、1テーブル、ABのaction10件。Sim4固有画面・主従・アップロード・外部連携なしで simple。"
+evidence:
+  - "sheet=業務処理説明; rows=512: イベント1〜15"
+  - "sheet=イベント一覧; row=13-29: 15イベント"
+  - "sheet=画面項目内容(検索): 74項目 / (マスタ項目): 49項目"
+  - "sheet=項目移送表(DB); row=13: R60_CODE_M_TBL の1テーブル"
+  - "sheet=業務処理説明; row=397: R60_CODE_MES_M_TBL（コード値マスタ明細）を参照するが、対応する項目移送表が無い"
+  - "design/ に単項目・項目間/DB整合チェックの txt が無い（原ブックの sheet 名は 入力チェック仕様(単項目) / 入力チェック(項目間・DB整合)）"
+  - "test/00_単体ﾃｽﾄ仕様兼結果; row=4: テスト項目数=416"
+  - "summary.md: ✅0 🔷0 ⚠️0 💥0 🚫8 ⏭️3（head/init/check/search/search/detail/copy/new が404）"
+  - "D:/AI_work/api/fastapi_oracle_pjt/app/main.py:40,124: R60CodeController を import し app.include_router で登録済み"
+  - "D:/AI_work/api/fastapi_oracle_pjt/app/routers/R60CodeController.py:25,1745,1898,2129,2155,2421,2672: prefix=/R60Code、/init・/search・/dataInit・/initEdit・/delete・/edit を持ち、AB の要求パスと一致する"
+  - "impl-size.json: R60Code view_lines=1715, router_lines=3137, service_lines=61"
+risks:
+  - "AB が全8端点404。ただし router は実在し main.py:124 で登録済みのため『実装欠落』ではなく『測定時に未公開』＝未測定。AB 再実測まで impl_alignment は null"
+  - "入力チェック系 sheet が抽出されていない（doc_completeness を3に減点）"
+  - "BPが明細テーブル R60_CODE_MES_M_TBL を更新するが項目移送表に定義が無い"
+  - "項目移送表に KEYID 列が無く、BPの明細更新条件（情報ID + KEYID）と突合できない"
+verdict: "simple の副教材（設計読解・コード値の考え方）。チェック sheet 欠落のため simple の主教材にはしない"

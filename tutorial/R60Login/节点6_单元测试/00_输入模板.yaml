@@ -1,0 +1,380 @@
+# =============================================================================
+# 节点6（单元测试）输入模板 —— 文件编号: IN-306
+# -----------------------------------------------------------------------------
+# 【本节点的输入来自上一节点的哪个文件】
+#   ① 节点3 承認版 詳細設計：05_承認版_详细设计书.md（L-201 / D-201 / E-20x）
+#   ② 节点5 制造的源代码（被测对象）
+#   测试用例必须能追回设计（design_ids）与需求（req_ids），且覆盖到每个 E-20x。
+#
+# 【你要填哪些字段】
+#   test_targets ……… 被测对象（函数/端点）及其对应 L-201
+#   test_viewpoints … 测试观点（按 正常 / 境界 / 異常 三类）
+#   test_cases ……… 用例骨架（编号 TC-201…），AI 在此基础补全
+#   coverage ………… 覆盖率目标
+#   fixtures ………… 测试数据（一律占位化，禁真实值）
+#   design_links …… 关联的 D/L/E 编号（红线⑤：出典なき TC 禁止）
+#   human_review_required  必须人拍板的点
+#
+# 【本节点 AI 会产出什么】
+#   单元测试用例集（TC-201…）：每条含 观点 / 前置条件 / 输入 / 期待值 / 断言规则 / design_ids。
+#
+# 【人必须审查什么】
+#   ① 用例有出典（每条都有 design_ids 与 req_ids，尤其覆盖 E-20x）；
+#   ② 正常/边界/异常配比够（建议 正常3 / 边界2 / 异常3）；
+#   ③ 断言打到「结果」而非「过程」；④ 测试数据无真实敏感值。
+#
+# 规则：键名一律 snake_case；camelCase 只在值里。
+# =============================================================================
+
+# ---------- 顶部 7 个固定字段 ----------
+id: IN-306
+type: node-input
+req_ids: [R-201]
+status: filled
+sensitivity: internal
+owner: AI-SE
+version: 0.2.0
+
+# =============================================================================
+# 正文 —— 待填
+# =============================================================================
+
+# 【输入来源】
+source_design:
+  file: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  version: "v1.0.2（baselined / SE-001 / 2026-10-23）"
+  logic_ids: [L-201, L-202, L-203, L-204, L-205, L-206, L-207, L-208]
+  data_ids: [D-201, D-202, D-203, D-204, D-205]
+  error_ids: [E-201, E-202, E-203, E-204, E-205, E-206, E-207, E-208, E-209, E-210]
+source_code:
+  - tutorial/R60Login/节点5_制造/backend/app/config.py
+  - tutorial/R60Login/节点5_制造/backend/app/schemas.py
+  - tutorial/R60Login/节点5_制造/backend/app/main.py
+  - tutorial/R60Login/节点5_制造/backend/app/repository/queries.py
+  - tutorial/R60Login/节点5_制造/backend/app/domain/availability.py
+  - tutorial/R60Login/节点5_制造/backend/app/domain/stf_cd_cipher.py
+  - tutorial/R60Login/节点5_制造/backend/app/domain/session_store.py
+  - tutorial/R60Login/节点5_制造/backend/app/api/init_api.py
+  - tutorial/R60Login/节点5_制造/backend/app/api/login_api.py
+  - tutorial/R60Login/节点5_制造/backend/app/api/generate_url_api.py
+  - tutorial/R60Login/节点5_制造/frontend/common/stfCdCipher.ts
+  - tutorial/R60Login/节点5_制造/frontend/common/submitGuard.ts
+  - tutorial/R60Login/节点5_制造/frontend/stores/sessionState.ts
+  - tutorial/R60Login/节点5_制造/frontend/services/loginApi.ts
+  - tutorial/R60Login/节点5_制造/frontend/views/LoginScreen.vue
+
+# 【被测对象】
+# 端点は 3 本のみ（設計 §1.3。4 本目を設けない）。
+test_targets:
+  - target: backend/app/api/init_api.py::init（/R60Login/init）
+    design_ids: [L-201, L-202, D-204, I-306, I-308, I-311, I-314]
+    notes: 稼働判定 → 画面候補取得 → 初期値設定。候補 0 件はエラーではない
+  - target: backend/app/api/login_api.py::login（/R60Login/login）
+    design_ids: [L-201, L-203, L-206, D-201, D-202, D-203, D-205, I-316, I-317]
+    notes: 稼働判定 → 復号 → 社員検証 → 情報取得 → Session 生成。メニューも本端点を共用
+  - target: backend/app/api/generate_url_api.py::generate_url（/R60Login/generateUrl）
+    design_ids: [L-201, L-205, L-206, I-310, I-313]
+    notes: 正規化 → 暗号化 → URL 組立 → 150 桁判定
+  - target: backend/app/domain/availability.py（稼働判定）
+    design_ids: [L-201, E-203, E-206]
+    notes: SQL-1 の結果を可否に落とす。403 の 2 件を担う
+  - target: backend/app/domain/stf_cd_cipher.py（暗号化・復号）
+    design_ids: [L-206, E-205]
+    notes: 算式は要求書 §10.3 の転記。日付は引数注入（端末時刻に依存しない）
+  - target: backend/app/domain/session_store.py（Session 保持）
+    design_ids: [L-203, L-208, I-316, I-317]
+    notes: idle 30 分／絶対 8 時間。単一プロセス前提（製造差異 #1・#14）
+  - target: frontend/services/loginApi.ts（3 端点の呼出）
+    design_ids: [L-201, L-202, L-203, L-205]
+    notes: 呼ぶのは 3 本のみ。他端点を足さない
+  - target: frontend/views/LoginScreen.vue（画面・入力チェック・遷移）
+    design_ids: [L-204, L-207, L-208, I-301, I-302, I-303, I-304, I-305, I-307, I-312]
+    notes: 入力チェックと暗号化は API より前。遷移の主体はクライアント
+
+# 【测试观点（三类配比）】
+# 比率の下限は 正常 3／境界 2／異常 3（規則 04 §2）。本件は E が 10 件あるため異常は 10 件。
+test_viewpoints:
+  normal:
+    - 初期表示が成立する（候補あり・初期値が入る）
+    - ログインが成立する（I-316・I-317 を取得し Session を生成）
+    - メニューから遷移できる（/login を共用・同一ウィンドウ）
+    - URL を出力できる（I-310 に表示）
+    - 閉じるで Session を破棄してから画面を閉じる
+  boundary:
+    - I-303 が 7 桁ちょうど（B-02）
+    - I-310 が 150 桁ちょうど（B-20）
+    - 暗号化算式の分割境界 5 桁（B-35）
+    - 画面候補 0 件（B-22。エラーではない）
+    - E-204 の連続失敗が 3 回ちょうど（B-30）
+  abnormal:
+    - E-201 該当なし（SQL-3 の 0 件）
+    - E-202 入力不正（7 桁固定・値域外）
+    - E-203 稼働不可（/login・/generateUrl）
+    - E-204 画面マスタ取得失敗
+    - E-205 復号失敗（不正な暗号化値・日跨ぎ）
+    - E-206 稼働不可（/init）
+    - E-207 /login の該当なし（応答形式）
+    - E-208 ログイン中の DB 障害
+    - E-209 /generateUrl の暗号化失敗・設定不備
+    - E-210 生成 URL が 151 桁
+
+# 【用例骨架（编号 TC-201…，AI 补全期待值/断言）】
+# ステップ1 では「番号・区分・観点・出典・前提」までを置く。
+# input_spec / expected_output / assertion_rules はステップ2 で AI が補完する。
+# 番号は教学号段（ids.yml 未登録）。実案件では人が TC を先に発号する（紅线①）。
+test_cases:
+  - test_id: TC-201
+    category: 正常
+    viewpoint: 初期表示の正常系（候補あり・初期値設定）
+    design_ids: [L-201, L-202, D-204, I-306, I-308, I-311, I-314]
+    req_ids: [R-201]
+    preconditions: 稼働中。画面マスタに有効行あり
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-202
+    category: 正常
+    viewpoint: ログイン成功（復号 → 社員検証 → 情報取得 → Session 生成）
+    design_ids: [L-201, L-203, L-206, D-201, D-202, D-203, D-205, I-316, I-317]
+    req_ids: [R-201]
+    preconditions: 稼働中。未削除の該当社員が 1 件
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-203
+    category: 正常
+    viewpoint: メニュー遷移（/login 共用・同一ウィンドウ）
+    design_ids: [L-203, L-204, I-309, I-304, I-307]
+    req_ids: [R-201]
+    preconditions: TC-202 が成立した直後
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-204
+    category: 正常
+    viewpoint: URL 出力の正常系（I-310 に表示）
+    design_ids: [L-201, L-205, L-206, I-310, I-313]
+    req_ids: [R-201]
+    preconditions: 稼働中
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-205
+    category: 正常
+    viewpoint: 閉じる（Session 破棄 → 画面を閉じる）
+    design_ids: [L-208, I-312, I-307]
+    req_ids: [R-201]
+    preconditions: Session 生成済み
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-206
+    category: 境界
+    viewpoint: I-303 が 7 桁ちょうど（B-02）
+    design_ids: [L-207, I-303]
+    req_ids: [R-201]
+    preconditions: 半角数字 7 桁
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-207
+    category: 境界
+    viewpoint: I-310 が 150 桁ちょうど（B-20。151 桁は TC-220）
+    design_ids: [L-205, I-310]
+    req_ids: [R-201]
+    preconditions: 組立後の URL が 150 桁
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-208
+    category: 境界
+    viewpoint: 暗号化算式の分割境界 5 桁（B-35。4 桁は B-34）
+    design_ids: [L-206, I-313]
+    req_ids: [R-201]
+    preconditions: 5 桁の社員コード
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-209
+    category: 境界
+    viewpoint: 画面候補 0 件（B-22。エラーにしない）
+    design_ids: [L-202, D-204, I-308, I-311, I-314]
+    req_ids: [R-201]
+    preconditions: 画面マスタに有効行が 0 件
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-210
+    category: 境界
+    viewpoint: E-204 の連続失敗が 3 回ちょうど（B-30。1〜2 回は B-29）
+    design_ids: [L-202, E-204, I-308, I-318, I-319]
+    req_ids: [R-201]
+    preconditions: 同一クライアントで連続失敗
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-211
+    category: 異常
+    viewpoint: E-201 社員マスタに未削除の該当行が無い
+    design_ids: [L-203, D-201, E-201, I-313, I-318]
+    req_ids: [R-201]
+    preconditions: SQL-3 が 0 件
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-212
+    category: 異常
+    viewpoint: E-202 入力不正（6 桁・8 桁・非数字・空欄）
+    design_ids: [L-207, E-202, I-303]
+    req_ids: [R-201]
+    preconditions: 7 桁固定に合致しない入力
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-213
+    category: 異常
+    viewpoint: E-203 稼働不可（HTTP 403・オンライン利用エラー画面）
+    design_ids: [L-201, E-203, I-320, I-318, I-319]
+    req_ids: [R-201]
+    preconditions: I-320 が無効
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-214
+    category: 異常
+    viewpoint: E-204 画面マスタ取得失敗（errorCode 2）
+    design_ids: [L-202, D-204, E-204, I-314, I-315, I-318, I-319]
+    req_ids: [R-201]
+    preconditions: SQL-2 が例外
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-215
+    category: 異常
+    viewpoint: E-205 復号失敗（不正な暗号化値）
+    design_ids: [L-203, L-206, E-205, I-313]
+    req_ids: [R-201]
+    preconditions: 復号不能な値
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-216
+    category: 異常
+    viewpoint: E-206 /init の稼働不可（HTTP 403）
+    design_ids: [L-201, E-206, I-314, I-315, I-318, I-319]
+    req_ids: [R-201]
+    preconditions: SQL-1 が不可
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-217
+    category: 異常
+    viewpoint: E-207 /login の該当なし（errorCode のみ返す応答形式）
+    design_ids: [L-203, E-207, I-318]
+    req_ids: [R-201]
+    preconditions: 該当なし
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-218
+    category: 異常
+    viewpoint: E-208 ログイン中の DB 障害（errorCode 2）
+    design_ids: [L-203, E-208, I-316, I-317, I-318, I-319]
+    req_ids: [R-201]
+    preconditions: SQL-4／SQL-5 が例外
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-219
+    category: 異常
+    viewpoint: E-209 /generateUrl の暗号化失敗・設定不備
+    design_ids: [L-205, L-206, E-209, I-303, I-310, I-318, I-319]
+    req_ids: [R-201]
+    preconditions: 暗号化不能・設定欠落
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+  - test_id: TC-220
+    category: 異常
+    viewpoint: E-210 生成 URL が 151 桁（B-21。切捨てない）
+    design_ids: [L-205, E-210, I-310]
+    req_ids: [R-201]
+    preconditions: 組立後の URL が 151 桁
+    input_spec: <AI 補完（ステップ2）>
+    expected_output: <AI 補完（ステップ2）>
+    assertion_rules: <AI 補完（ステップ2）>
+
+# 【製造差異から引き継ぐ観点（節点5 §6 #3 の 5 件）】
+# 受諾は「今は進める」であって「テストしなくてよい」ではない。
+residual_risks:
+  - risk: 複数インスタンス構成では Session が共有されない（製造差異 #1・#14）
+    covered_at: 節点7（IT。単体では観測できない）
+  - risk: Session 破棄の失敗がサーバ運用ログに残らない（製造差異 #2）
+    covered_at: 節点7（IT）
+  - risk: シミュレーション版が常に非シミュレーション版として扱われる（製造差異 #5）
+    covered_at: 節点7（IT。I-314 に gmn_kbn が無いため単体では判定不能）
+  - risk: 日跨ぎが E-205 ではなく E-201 になる（製造差異 #9・B-33）
+    covered_at: TC-215（E-205 の成立）＋節点7（差の受容を断言する IT）
+  - risk: 遷移先 URL の環境変数未設定で遷移しない（製造差異 #3・#4）
+    covered_at: 節点7（IT）
+
+# 【覆盖率目标】
+coverage:
+  line: 80%
+  branch: 100%（E-201〜E-210 の分岐と、稼働判定・復号・桁判定の境界を除かない）
+  note: 数値は到達目標であり、実測は工程07 で行う（本節点は設計まで）
+
+# 【测试数据（一律占位化）】
+fixtures:
+  - name: 有効社員（未削除）
+    stf_cd_placeholder: EMP_1
+    note: 社員マスタに 1 件・del_flg 未削除
+  - name: 削除済社員
+    stf_cd_placeholder: EMP_1
+    note: del_flg 削除済のみ（E-201 になること）
+  - name: 非存在社員
+    stf_cd_placeholder: EMP_1
+    note: 行なし（E-201 になること）
+  - name: 画面候補
+    gmn_id_placeholder: VAL_1
+    note: 0 件／1 件／同一 disp_order の複数行
+  - name: 稼働状態
+    value_placeholder: VAL_1
+    note: 稼働可／不可（E-203・E-206）
+
+# 【设计关联（红线⑤：出典なき TC 禁止）】
+# テンプレの例示は E-201〜E-206 の 6 件だったが、節点3 の実体は 10 件である。
+design_links:
+  - req_ids: [R-201]
+    logic_ids: [L-201, L-202, L-203, L-204, L-205, L-206, L-207, L-208]
+    data_ids: [D-201, D-202, D-203, D-204, D-205]
+    error_ids: [E-201, E-202, E-203, E-204, E-205, E-206, E-207, E-208, E-209, E-210]
+
+# 【人必须拍板的点】
+human_review_required:
+  - 每条 TC 都有 design_ids 与 req_ids（无出典用例=0）
+  - E-201〜E-210 每个错误至少被一条异常用例覆盖（★テンプレの例示は E-206 まで。実体は 10 件）
+  - 正常3／境界2／異常3 の比率を満たす（本件は 5／5／10）
+  - 断言打到结果而非过程
+  - 测试数据无真实敏感值（占位のみ）
+  - 境界値は「ちょうど」を突く（6 桁・8 桁は異常系 TC-212 側）
+  - 製造差異の残リスク 5 件の引き継ぎ先（residual_risks）が妥当か

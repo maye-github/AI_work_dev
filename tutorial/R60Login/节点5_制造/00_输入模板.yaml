@@ -1,0 +1,399 @@
+# =============================================================================
+# 节点5（制造 / 编码）输入模板 —— 文件编号: IN-305
+# -----------------------------------------------------------------------------
+# 【本节点的输入来自上一节点的哪个文件】
+#   节点3 承認版 詳細設計（L-201〜L-208 / D-201〜D-205 / SQL-1〜SQL-6 / E-201〜E-210）。
+#   详细设计是「唯一真源」。制造只做「把设计翻译成代码」，不做设计决策。
+#   技术栈・ルート規約・ログ・保持領域は节点4 承認版（05_承認版_框架构筑记录.md）が持つ。
+#
+# =============================================================================
+# ★★ 本节点铁律：设计不许改，只做实现 ★★
+#   - 允许：照 L-201〜L-208 / D-201〜D-205 写代码。
+#   - 禁止：新增设计里没有的字段、分支、接口、画面；禁止「顺手优化」逻辑；
+#           禁止改 SQL 语义；禁止自行决定设计中未定的事项（設計に未確定が残るなら実装せず、人に返す）。
+#   - 若发现设计有误：停下来 → 写进 open_questions / 反馈给人 → 回到节点3 改设计，
+#           绝不在制造阶段偷偷改。
+# =============================================================================
+#
+# 【本节点 AI 会产出什么】
+#   源代码（前端画面 / 接口层 / API の 3 層構成。具体的なファイル名・言語は
+#   工程04 で承認されたスタックに従う）と单元测试代码。
+#
+# 【人必须审查什么】
+#   ① 实现是否与设计一一对应（没有多、没有少）；② 禁止事項 5 条是否全守
+#      （**禁①禁② は migration のみ**。greenfield では適用対象が無いことを理解した上で判定する）；
+#   ③ trace_check --strict 是否 Exit 0；④ 有无未登记野号；⑤ 敏感值有无外投。
+#
+# 规则：键名一律 snake_case；camelCase（stfCd / gmnId）只在值里出现。
+#
+# ★★ このファイルの現在の状態（2026-10-23・進捗 1/4「テンプレートを埋める」完了）★★
+#   `build_mode: greenfield`（`docs/00_plan/coach/R60Login/case.yml`）。
+#   設計入力は節点3 承認版（L-201 / v1.0.0 / `baselined` / 2026-10-23 SE-001 承認）1 本のみ。
+#   スタック・ルート規約・ログ送出・保持領域は節点4 承認版（DOC-305 / v1.0.0 / `baselined`）から受ける。
+#   **本ファイルは上流の設計値を 1 つも変えない。**
+#   禁①禁② は `migration` 案件固有の条項であり、**本案件には適用対象が無い**
+#   （既存の共通関数資産・共通モデル基底が存在しない）。共通部品は本案件で新規定義する
+#   （05 §2.8 ステップ9・§8.5・§9）。**定義後はその新規定義が唯一真源**となる。
+#   `target_files` の配置は**提案**である（工程04 承認版はスタックとビルド手順までを定め、
+#   リポジトリ構成を定めていない → `open_questions` OQ-01）。
+#   未確定 6 件は `open_questions` に置き、本文の結論として書かない。
+#   実在の環境値（IP・ホスト名・接続文字列・社員コード）は一切書かない。占位のみ。
+# =============================================================================
+
+# ---------- 顶部 7 个固定字段 ----------
+id: IN-305
+type: node-input
+req_ids: [R-201]
+status: filled
+sensitivity: internal
+owner: AI-SE
+version: 0.3.0
+
+# =============================================================================
+# 正文
+# =============================================================================
+
+# 【输入来源】上一节点承認版（详细设计）＋ 工程04 承認版（スタック）
+source_design:
+  file: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  version: "1.0.2"
+  status: baselined
+  approved_by: "SE-001（2026-10-23 承認。承認記録は 05 §0.2 の SE・A 行。PG・B／テスター・C／PM・D は未承認）"
+  build_mode: greenfield
+  logic_ids: [L-201, L-202, L-203, L-204, L-205, L-206, L-207, L-208]
+  data_ids: [D-201, D-202, D-203, D-204, D-205]
+  error_ids: [E-201, E-202, E-203, E-204, E-205, E-206, E-207, E-208, E-209, E-210]
+  sql_id_range: "SQL-1..SQL-6（05 §5）"
+  boundary_id_range: "B-01..B-43（05 §7）"
+  item_id_range: "I-301..I-320（物理マッピングは 05 §4。業務定義は上流 §4・§7.2 が唯一）"
+  stack_source:
+    file: tutorial/R60Login/节点4_框架构筑/05_承認版_框架构筑记录.md
+    version: "1.0.0"
+    status: baselined
+    approved_by: "SE-001（2026-10-23。承認記録は 05 §0.2 の SE・A 行。PG・B／テスター・C／PM・D は未承認）"
+    notes: |
+      技術スタック・依存・ビルド・CI・ルート規約（画面 `/R60/{gmnId}`／API 接頭辞 `/R60Login/`）・
+      ログ送出・保持領域（localStorage `r60login.kgnKbn`）は工程04 が確定する。**本節点はこれを変えない**（紅线④）。
+      承認後のスタック変更は人の承認（変更環 CR）を要する。
+  notes: |
+    製造は**写経**である（`.claude/skills/trans-cosmos-ai-lifecycle-coach/nodes/n05-coding.md` §0）。
+    設計値を変えない・足さない。設計に誤り又は未確定を見つけたら、勝手に直さず**停止して人に返す**
+    （紅线②・`.claude/rules/02-requirements.md` §6.3）。本ファイルが挙げる `open_questions` 6 件は、
+    いずれも**設計又は工程04 に明文が無い**事項であり、裁定まで実装しない。
+
+# 【製造対象ファイル】
+#   パスは工程04 承認版のスタック構成に従う。ただし**工程04 はリポジトリ構成を定めていない**ため、
+#   以下は本節点の**提案**である（`OQ-01`）。`backend/app/main.py` だけは工程04 §5.1 の
+#   `uvicorn app.main:app` に由来する。確定するまで生成しない。
+#   ★演習の産出先は `tutorial/R60Login/节点5_制造/` の下のみ。`src/`・`app/routers` は触らない。
+target_files_layout: "提案（工程04 承認版にディレクトリ構成の記載が無い。OQ-01 の裁定まで生成しない）"
+target_files:
+  # ---- frontend（Vue 3 + `<script setup>` + TS strict + PrimeVue + Pinia。工程04 §1.1）----
+  - path: tutorial/R60Login/节点5_制造/frontend/views/LoginScreen.vue
+    role: "ログイン画面。I-301〜I-312 の表示・初期化（I-306/I-307/I-304）、候補 0 件時の非活性（I-308/I-311）、I-302 の 1 秒更新、確認ダイアログ、エラー区分による 4 画面への遷移"
+    design_ids: [L-204, L-207, L-208]
+  - path: tutorial/R60Login/节点5_制造/frontend/services/loginApi.ts
+    role: "接口サービス。`init` / `login` / `generateUrl` の 3 メソッド（3 端点への呼出）。フィールドは camelCase"
+    design_ids: [L-201, L-202, L-203, L-205]
+  - path: tutorial/R60Login/节点5_制造/frontend/common/submitGuard.ts
+    role: "二度送信防止の 3 部品（`subCheckSubmit` / `subSetSubmitFlg` / `subInitSubmitFlg`）を本案件で新規定義"
+    design_ids: [L-207]
+  - path: tutorial/R60Login/节点5_制造/frontend/common/stfCdCipher.ts
+    role: "クライアント側の暗号化（L-207 ステップ5 → L-206）。実装可否は OQ-02 の裁定待ち"
+    design_ids: [L-206, L-207]
+  - path: tutorial/R60Login/节点5_制造/frontend/stores/sessionState.ts
+    role: "「ログイン成立の有無」の保持（Pinia。工程04 §1.1）。L-208 ステップ2 の判定に用いる"
+    design_ids: [L-208]
+  # ---- backend（Python 3.12 + FastAPI + Pydantic v2 + SQLAlchemy Core text() + oracledb Thin。工程04 §1.2）----
+  - path: tutorial/R60Login/节点5_制造/backend/app/main.py
+    role: "FastAPI 起動・DI（設定・DB 接続・Session ストア）。工程04 §5.1 の `app.main:app`。**設定値は持たず環境変数／シークレットから起動時に読む**"
+    design_ids: [L-201]
+  - path: tutorial/R60Login/节点5_制造/backend/app/api/init_api.py
+    role: "`POST /R60Login/init` 端点（L-201 → L-202）"
+    design_ids: [L-201, L-202]
+  - path: tutorial/R60Login/节点5_制造/backend/app/api/login_api.py
+    role: "`POST /R60Login/login` 端点（L-201 → L-203。I-313 のみ使用）"
+    design_ids: [L-201, L-203]
+  - path: tutorial/R60Login/节点5_制造/backend/app/api/generate_url_api.py
+    role: "`POST /R60Login/generateUrl` 端点（L-201 → L-205。URL 組立と 150 桁判定はサーバ）"
+    design_ids: [L-201, L-205]
+  - path: tutorial/R60Login/节点5_制造/backend/app/domain/availability.py
+    role: "L-201 稼働判定（SQL-1。0 件・無効値・例外はすべて不可）"
+    design_ids: [L-201]
+  - path: tutorial/R60Login/节点5_制造/backend/app/domain/stf_cd_cipher.py
+    role: "L-206 暗号化・復号（サーバ側）。算式は 05 §2.7、日付は引数注入。実装可否は OQ-02 の裁定待ち"
+    design_ids: [L-203, L-205, L-206]
+  - path: tutorial/R60Login/节点5_制造/backend/app/repository/queries.py
+    role: "SQL-1〜SQL-5 の実行（`text()` ＋ `:name` バインド。SELECT のみ、DML なし）"
+    design_ids: [D-201, D-202, D-204, D-205]
+  - path: tutorial/R60Login/节点5_制造/backend/app/schemas.py
+    role: "`BaseCamelModel` を本案件で新規定義（`model_config` 4 行固定）し、3 端点の入出力モデルを派生させる。派生で `model_config` を再定義しない"
+    design_ids: [L-202, L-203, L-205]
+  - path: tutorial/R60Login/节点5_制造/backend/app/config.py
+    role: "設定の読込（DB 接続情報・URL 組立用 scheme/host/port/context・稼働フラグの共通キー・Session 失効秒数）。**値は持たない（方式のみ）**"
+    design_ids: [L-201, L-203, L-205]
+  # ---- 単体テストコード（産出の可否は OQ-04 の裁定待ち）----
+  - path: tutorial/R60Login/节点5_制造/backend/tests/
+    role: "サーバ単体テスト（pytest）。L-201／L-203／L-205／L-206 を対象。TC 番号は工程06 で人が発号する（05 §10.4）"
+    design_ids: [L-201, L-203, L-205, L-206]
+  - path: tutorial/R60Login/节点5_制造/frontend/tests/
+    role: "クライアント単体テスト（vitest run）。L-207（検査順・finally 解放）と L-204 を対象。同上"
+    design_ids: [L-204, L-207]
+
+# 【编码规范】
+#   ★greenfield（本演習）: 参照すべき既存コードが無い。したがって「規範」は
+#     ① 工程04 で承認された採用スタックの慣用、② 本節点で新規定義した共通部品、の 2 つになる。
+#     「既存の◯◯ファミリーに合わせる」という種類の指示は**出せない**（比較対象が存在しない）。
+coding_standards:
+  - "greenfield: 工程04 承認済みスタックの慣用に従う — Vue 3（Composition API ＋ `<script setup>`）＋ TypeScript（`strict`）＋ Vite ＋ PrimeVue ＋ Pinia（工程04 §1.1）"
+  - "greenfield: サーバは Python 3.12 ＋ FastAPI ＋ Pydantic v2 ＋ SQLAlchemy Core（`text()`。**ORM マッピングは作らない**）＋ oracledb（Thin）（工程04 §1.2）"
+  - "greenfield: 共通部品（`subCheckSubmit`／`subSetSubmitFlg`／`subInitSubmitFlg`、暗号化・復号の 1 本）は**本案件で新規定義**する。既存部品の存在を前提にしない。**定義後はその新定義が唯一真源**となり、以後みだりに変えない（05 §8.5・§9）"
+  - "greenfield: `BaseCamelModel` は本案件で新規定義し、`model_config` の 4 行（`alias_generator` / `populate_by_name` / `serialize_by_alias` / `extra`）を固定する。**派生モデルで `model_config` を再定義しない**（`.claude/rules/03-design-coding.md` §2・工程04 §4）"
+  - "命名は 3 層で分離する — 画面・接口（TS）は camelCase（`stfCd`／`gmnId`）、定義層・Python は snake_case（`stf_cd`／`gmn_id`）、DB 物理名は UPPER（`STF_CD`／`GMN_ID`）。**変換点は `BaseCamelModel` の 1 箇所だけ**。手書き変換を散在させない（規則 03 §4・工程04 §2.6）"
+  - "SQL は明示手書き。値は必ず `:name` の名前付きバインドで受け、**f-string 等で値を連結しない**。列名・表名を利用者入力から組み立てない。**SELECT のみ**（DML なし）（05 §5.1・工程04 §2.4・§2.5）"
+  - "本画面に**動的ソートは無い**（並びは `ORDER BY disp_order, gmn_id` の固定）。したがって `ALLOWED_SORT_FIELDS` 白名单は**適用対象が存在しない**。ソート機能の追加は設計変更（CR）（05 §5.1 #2・規則 03 §5）"
+  - "Oracle セッションの `NLS_DATE_FORMAT` は **`RR-MM-DD` 固定・変更禁止**（`.claude/rules/00-project-global.md` §2・工程04 §2.3）。日付・時刻を SQL に埋め込まない（05 §5.1 #4）"
+  - "冪等性: 現在時刻・乱数・UUID・順序不定の反復を出力へ埋め込まない。L-206 の日付は**引数として注入**し、テストで固定できるようにする（規則 03 §7.1・05 §2.7）"
+  - "1 画面 1 生成・端点 3 本を単位に分割して生成する（規則 03 §7.4・05 §1.3）。一括で全層を生成しない"
+  - "入力の正規化（**trim しない**・全角→半角・非 ASCII 除去）は **L-207 の 1 箇所だけ**で行う。他で再実装しない（05 §8.4）"
+  - "複雑判定に該当する製造物は設計者以外が diff を読む（状態遷移・外部連携を伴う L-203／L-205／L-208 が該当。規則 03 §7.2）"
+  - "ログは標準出力へ 1 行 1 JSON（構造化）。社員コードは中間 5 桁を `*`、氏名は出力しない。当日鍵・平文／暗号化前後の実値・Session 識別子を出さない（工程04 §6.2・05 §8.1・§9）"
+
+# 【接口签名（照设计写，不自行增改）】
+#   端点パス・フィールド名は 05 §2.3／§2.5／§2.6／§4.2 の転記。名称の無いものは `null` とし、
+#   実装で勝手に名付けない（design に無い名前を「仕様」にしない）。
+interfaces:
+  - name: "POST /R60Login/init"
+    side: server
+    params: "なし（利用者入力を用いない。05 §2.3）"
+    returns: |
+      errorCode（I-318）／errorDetailCode（I-319・異常時のみ）
+      pageList（I-314）: [{value: gmn_id, label: gmn_nm}]。有効行のみ・`disp_order` 昇順＋`gmn_id` 昇順
+      kbnList（I-315）: 2 件固定 [{value: "Y", label: "更新あり"}, {value: "N", label: "更新なし"}]
+    http: "200（業務・システム応答は errorCode で区分）／403（E-206 稼働不可・errorDetailCode=R60W0004）"
+    logic_ids: [L-201, L-202]
+    sql_ids: [SQL-1, SQL-2]
+    notes: "候補 0 件は**エラーではない**（errorCode=\"0\"）。クライアントが文言表示と I-308／I-311 非活性を行う（05 §2.3 ステップ6・B-22）"
+  - name: "POST /R60Login/login"
+    side: server
+    params: |
+      encryptedStfCd（I-313）のみを使用する。
+      stfKbn（I-304）／gmnId（I-306）／kgnKbn（I-307）は受信するが、**検証も保存もせず無視する**
+      （否定の限定句。「受け取らない」と読み替えない。05 §4.2・Q-212）。
+    returns: |
+      errorCode（I-318）／errorDetailCode（I-319）
+        ※ E-201／E-207 は errorCode="1" のみを返し、errorDetailCode を返さない（裁定 Q-235）
+      userInfo（I-316）: stfCd / stfNm / cmpCd / cmpNm / jigCd / jigNm の 6 項目
+      mngInfo（I-317）: scmpCd / sjigCd / jiKjoKsnFlg / taKjoKsnFlg / loginAcsKais の 5 項目
+      Session: **取得成功後に**サーバ側へ保持（I-316 の 6 ＋ I-317 の 5 ＝ 11 項目のみ）。
+      識別子のみ HttpOnly Cookie。idle 30 分／絶対 8 時間。保持先は OQ-05
+    http: "200／403（E-203 稼働不可・R60W0004）"
+    logic_ids: [L-201, L-203, L-206]
+    sql_ids: [SQL-1, SQL-3, SQL-4, SQL-5]
+    notes: "L-206 の実行場所（クライアント／サーバ）は OQ-02。取得前に Session を作らない（05 §2.4 ステップ6）"
+  - name: "POST /R60Login/generateUrl"
+    side: server
+    params: "stfCd（I-303・**平文**）／stfKbn（I-304）／gmnId（I-306）／kgnKbn（I-307）"
+    returns: |
+      errorCode（I-318）／errorDetailCode（I-319）／url（I-310）
+      url の形（05 §2.6）:
+        {scheme}://{host}:{port}/{context}/{route}?stfCd=VAL_1&stfKbn=VAL_1&gmnId=VAL_1&kgnKbn=VAL_1
+      パラメータ順は固定。UTF-8・パーセントエンコード不要。**組立と 150 桁判定はサーバ**が行う（裁定 Q-233）。
+      クライアントは応答をそのまま表示するだけ（組立し直さない・桁判定をやり直さない）
+    http: "200（業務・システム応答は errorCode で区分）／403（E-203 稼働不可）"
+    logic_ids: [L-201, L-205, L-206]
+    sql_ids: [SQL-1]
+    notes: "I-303 未入力は文字列 `\"NaN\"` を社員コードとして扱い、**暗号化せず** `stfCd=NaN` を載せる（裁定 Q-231・B-08）"
+  - name: "interface service: init() / login() / generateUrl()"
+    side: client
+    params: "上記 3 端点の要求項目と同じ（camelCase）"
+    returns: "上記 3 端点の応答と同じ（camelCase。`BaseCamelModel` が snake↔camel を変換する）"
+    logic_ids: [L-201, L-202, L-203, L-205]
+    notes: "メソッド名は端点名に由来する。サービス層のクラス名・ファイル名は設計に無い（OQ-01）"
+  - name: "subCheckSubmit"
+    side: client
+    params: "なし"
+    returns: "続行可否（送信中なら「続行不可」）"
+    logic_ids: [L-207]
+    notes: "本案件で新規定義する（05 §2.8 ステップ1・§8.5・裁定 Q-221）"
+  - name: "subSetSubmitFlg"
+    side: client
+    params: "なし"
+    returns: "なし（フラグ ON）"
+    logic_ids: [L-207]
+    notes: "API 呼出の直前に ON（05 §2.8 ステップ8）"
+  - name: "subInitSubmitFlg"
+    side: client
+    params: "なし"
+    returns: "なし（フラグ OFF）"
+    logic_ids: [L-207]
+    notes: "`finally` で必ず実行する（成功・失敗・例外のいずれでも。05 §2.8 ステップ9）"
+  - name: null
+    side: client
+    params: "I-303 の文字列"
+    returns: "正規化後の文字列（半角数字のみ。trim しない・全角／非 ASCII は除去）"
+    logic_ids: [L-207]
+    notes: "設計は「正規化は L-207 の 1 箇所で行う」とのみ定め、**関数名を定めていない**（05 §2.8 ステップ2・§8.4）。名前は実装で決める（設計値にしない）"
+  - name: null
+    side: client_and_server
+    params: "平文社員コード又は暗号化文字列＋当日の日付（JST・引数注入）"
+    returns: "暗号化文字列又は平文社員コード。失敗は例外（E-205／E-209）"
+    logic_ids: [L-203, L-205, L-206, L-207]
+    notes: "算式は 05 §2.7（+1・5 桁目で分割・2 桁目以降ゼロ埋め・yyyymmdd 加算・`_` 連結・復号は逆順）。**AES-256-ECB ではない**。クライアント／サーバの別と日付の取得元は OQ-02"
+  - name: null
+    side: client
+    params: "I-306（gmnId）／I-304（stfKbn）／I-307（kgnKbn・保持領域）／Session 識別子（Cookie）"
+    returns: "遷移（新規ウィンドウ／タブ。ブロック時は同一ウィンドウ）"
+    logic_ids: [L-204]
+    notes: "ルートは `/R60/{gmnId}`、シミュレーション版の区分はクエリ `gmnKbn`。遷移 URL のクエリ順は `stfKbn`→`gmnKbn`、**`kgnKbn` は載せない**（工程04 §6.1・05 §2.5）。関数名は設計に無い"
+  - name: null
+    side: client
+    params: "なし（ログイン成立の有無をクライアントが保持している）"
+    returns: "なし（確認 → 破棄要求 → 画面を閉じる）"
+    logic_ids: [L-208]
+    notes: "破棄要求の相手 API の仕様が未確定（OQ-06）。ログイン成立前は要求しない（05 §2.9 ステップ2）"
+
+# 【提交约束】
+commit_rules:
+  branch: "feature/D-201-R60Login（演習は git 管理外のため実 branch は作らず、様式のみ記録する）"
+  commit_types_used: [feat, test, fix]
+  format: "7 種様式（req / design / feat / test / fix / rel / chore）のいずれか 1 つで始め、本文に Trace / AI / Review の三段、末尾に Co-Authored-By 行を置く（`.claude/rules/05-commit-messages.md` §2・§3・§5）"
+  trace_line: |
+    1 コミット = 1 生成単位。Trace は F-201 → D-201 → その単位が使う L-ID。
+      /init        : Trace:F-201->D-201->L-201,L-202
+      /login       : Trace:F-201->D-201->L-201,L-203,L-206
+      /generateUrl : Trace:F-201->D-201->L-201,L-205,L-206
+      画面・共通部品 : Trace:F-201->D-201->L-204,L-207,L-208
+    D-201〜D-205 は read のみであり、単独のコミット単位を作らない。
+  ai_line: "AI: trans-cosmos-ai-node5-coding@v0.1（演習。`code-from-design-trans-cosmos-ai` は R-101 専用・ids.yml 事前登録必須のため使わない）"
+  review_line: "Review: <人の拍板者識別子>（**AI を書かない**。人の拍板が無いうちはコミットしない＝紅线③。本案件の拍板者は SE-001）"
+  attribution: "Co-Authored-By: Claude Code <noreply@anthropic.com>"
+  gate_before_commit: "`py -3 -m tools.trace_check --strict` が Exit 0。**`--skip` による門隙突破を禁止**（禁④・紅线⑥）"
+  notes: |
+    種別の使い分け: 源コードは `feat`、単体テストコードは `test`、レビュー指摘の是正は `fix`。
+    `design`（設計の確定）は本節点では使わない（設計は節点3 で確定済み）。
+
+# ---------------------------------------------------------------------------
+# ★ 禁止事项 5 条（制造提示词必须原样包含）
+#   以下 5 条は `CLAUDE.md` §2 の**原文**である（案件固有）。1 条も言い換えない。
+#   ★禁①禁② は **migration 案件固有**（改変すべき既存資産＝既存の共通関数資産・共通モデル基底を
+#     持つ案件に限る）。**本案件は greenfield であり、適用対象が存在しない。**
+#     代わりに働くのは「本節点で新規定義した共通部品・共通モデル基底を、以後みだりに変えない」である。
+#   ★禁③④⑤ は全案件共通。本案件でも有効。
+#   注: 原文に現れる資産名は**禁止条項の文言**であり、本案件の入力・依存ではない
+#       （本案件にその資産は存在しない）。
+# ---------------------------------------------------------------------------
+prohibitions:
+  - rule_id: ban_1
+    applies_to: "migration のみ（**本案件は greenfield のため適用対象が無い**）"
+    text: "禁①：既存 `R60Common.ts`（54 関数の唯一真源）を改変しない。並行新版（parallel 版）の作成禁止。AI はコメントでマッピングするのみ。"
+    not_applicable_reason: "既存の共通関数資産が存在しない（從無到有）。呼ぶ先が無い。代わりに、必要な共通部品（二度送信 3 部品・暗号化 1 本・正規化）を**本案件で新規定義**し、定義後はそれを唯一真源とする（05 §2.8 ステップ9・§8.5・§9）"
+  - rule_id: ban_2
+    applies_to: "migration のみ（**本案件は greenfield のため適用対象が無い**）"
+    text: "禁②：`BaseCamelModel` の `model_config`（`alias_generator` / `populate_by_name` / `serialize_by_alias` / `extra`）を変更しない。"
+    not_applicable_reason: "改変すべき既存の共通モデル基底が存在しない。**本案件で `model_config` 4 行固定の `BaseCamelModel` を新規定義**し、以降はその新定義に改変禁止が働く（規則 03 §2・工程04 §4。派生モデルで再定義しない）"
+  - rule_id: ban_3
+    applies_to: "全案件共通（本案件でも有効）"
+    text: "禁③：`ids.yml` 未登録の **野号**（飛び番・自作 ID）を引入しない。"
+    not_applicable_reason: null
+  - rule_id: ban_4
+    applies_to: "全案件共通（本案件でも有効）"
+    text: "禁④：`trace_check --strict` を跳过しない。"
+    not_applicable_reason: null
+  - rule_id: ban_5
+    applies_to: "全案件共通（本案件でも有効）"
+    text: "禁⑤：マスク未処理の敏感値を外抛しない（`PWD_1` / `IP_1` / `TBL_1` 等へ占位化）。"
+    not_applicable_reason: null
+
+# 【验收条件】
+acceptance:
+  - "`py -3 -m tools.trace_check --strict` → Exit 0（`chain_complete=true`・`orphan_ids=[]`）。`--skip` は禁止（禁④）。演習の教学号段は gate1〜3 の走査対象外であり、この合格は「門番を実行した」ことの記録である（`docs/00_plan/coach/R60Login/case.yml`）"
+  - "`py -3 -m tools.trace_check --strict --only-check secrets` → ヒット 0（禁⑤）"
+  - "`py -3 -m tools.trace_check --strict --only-check seal` → 実在資産の識別子（物理名・実装ファイル名・共通部品名）を引用していない（`reports/drill/R60Login/seal_patterns.local.json`）"
+  - "実装が L-201〜L-208／D-201〜D-205／E-201〜E-210／I-301〜I-320／SQL-1〜SQL-6 に**一一対応**し、設計に無い処理・項目・端点・分岐を足していない（無多無少）"
+  - "`BaseCamelModel` は `model_config` 4 行固定で**新規定義**され、派生モデルで再定義されていない。接口は camelCase・定義層は snake_case（gate5）"
+  - "SQL は SELECT のみ・`:name` バインドのみ。f-string などによる値の連結が無く、列名・表名を入力から組み立てていない（05 §5.1）"
+  - "L-206 の日付が**引数注入**であり、同一入力＋同一日付から同一出力になる（現在時刻・乱数・UUID を埋め込んでいない。規則 03 §7.1）"
+  - "単体テストコードが存在し実行できる（`pytest` / `vitest run`）。**テスト 0 件を緑と読まない**（工程04 §5.2）。※ 産出の可否は OQ-04"
+  - "生成物は `tutorial/R60Login/节点5_制造/` の下のみ。`src/`・`app/routers` の生産コードに触れていない"
+  - "敏感値は占位のみ（`PWD_1` / `IP_1` / `PORT_1` / `TBL_1` / `SID_1`）。実値・実接続情報・実在社員コードが無い"
+
+# 【人必须拍板的点】
+human_review_required:
+  - "実装が設計（L-201〜L-208／D-201〜D-205／E-201〜E-210／I-301〜I-320／SQL-1〜SQL-6）に**厳密に対応**しているか（無多無少・自行决策なし）。とくに**限定句**（`/login` は I-313 のみ使用・I-307 は URL に載せない・150 桁は切捨てない）と**符号系**（画面 `Y`/`N`・内部 `1`/`0`・フラグ列 `0`/`1` と `'Y'`/`'N'`）"
+  - "設計に誤り又は未確定を見つけたとき、**実装で辻褄を合わせず停止してノード3 へ戻した**か（紅线②）。本ファイルの `open_questions` 6 件は裁定まで実装していないか"
+  - "禁止事項 5 条を全守しているか。**greenfield のため禁①禁②は適用対象が無く**、代わりに「新規定義した共通部品・`BaseCamelModel` の 4 行をみだりに変えていない」を見る。禁③④⑤は実質判定する"
+  - "`py -3 -m tools.trace_check --strict` が Exit 0 か（`--skip` で通していないか）。`--only-check secrets` と `--only-check seal` の実出力を確認したか"
+  - "野号が無いか（教学号段の R-201／F-201／I-301…／L-201／D-201／E-201…／TC-201… を `ids.yml` へ登録していないこと。登録は人が行う＝紅线①）"
+  - "敏感値の占位・マスク（ログの社員コード中間 5 桁 `*`・氏名非出力・当日鍵と Session 識別子の非出力）が守られているか"
+  - "`open_questions` 6 件（配置／暗号化の実装場所と日付／エラー文言の取得主体／テストコードの時期／Session 保持先／破棄 API）の裁定。とくに **OQ-02 と OQ-03 は設計の矛盾候補**であり、ノード3 へ戻すか否かを人が決める"
+
+# 【未决事项】
+#   設計又は工程04 に明文が無い事項のみ。`answer` / `answered_by` は**人が埋める欄**である。
+#   AI は値を入れない（紅线③）。裁定までは該当箇所を実装しない。
+open_questions:
+  - ref: OQ-01
+    text: "生成物の配置（`frontend/` と `backend/` の分割、ディレクトリ名・ファイル名）。工程04 承認版は技術スタック・依存・ビルド手順までは定めるが、リポジトリ構成を定めていない。"
+    block: "`target_files` の全エントリ／ステップ2 の生成そのもの"
+    answer_status: "AI 案（人未裁定・C 相当）"
+    answer: "`tutorial/R60Login/节点5_制造/` の下に `frontend/` と `backend/` の 2 本を置く（本ファイルの `target_files` のとおり）。工程04 承認版にリポジトリ構成の記載が無いための暫定であり、人の裁定で変わりうる。"
+    answered_by: ""
+    notes: |
+      本ファイルの `target_files` は**提案**である（`backend/app/main.py` のみ工程04 §5.1 の
+      `uvicorn app.main:app` に由来する）。工程04 の産出漏れとして扱い、
+      ① ノード4 へ戻して構成を確定するか、② 本提案で進めるかを人が決める（紅线③）。
+      確定までコードを生成しない。
+  - ref: OQ-02
+    text: "L-206（暗号化・復号）の実装場所と、暗号化に使う「当日の日付（JST）」の取得元。設計は L-206 を『1 本に統合』（05 §2.7・§8.3）としつつ、呼出元に L-207（**クライアント**）を含む（05 §2.7 呼出元）。一方 05 §8.4 は『当日鍵の日付判定は JST。端末時刻が JST でなくても当日鍵の判定には影響しない』とする。"
+    block: "L-206／L-207 ステップ5（I-313 の生成）／L-203 ステップ2（復号）／I-313"
+    answer_status: "設計で解消（v1.0.1）"
+    answer: "節点3 承認版 v1.0.1 で確定した（§0.5 ①）。日付の権威はサーバ（上流 Q-216）。L-206 は日付を引数で受け取る。サーバ（L-203・L-205）は自らの JST 日付、クライアント（L-207）は `/init` 応答の HTTP `Date` ヘッダとの差分で補正した JST 日付を渡す。"
+    answered_by: "SE-001（承認版 v1.0.1／v1.0.2 の承認による）"
+    notes: |
+      **設計の矛盾候補**（本節点では裁定しない・紅线②）。クライアントで暗号化する以上、
+      クライアントが日付を持つ必要がある。端末が JST でない場合に自端末の日付を使うと、
+      サーバ（JST）での復号が E-205 で失敗しうる。05 §8.4 の「影響しない」は、
+      日付をサーバだけが決める場合にしか成り立たない。
+      考えられる選択肢（いずれも設計に明文が無い）: ① 日付をサーバから受け取る（端点の追加＝設計変更）／
+      ② クライアントで JST 換算して日付を求める。**採否は人が決め、必要ならノード3 へ戻す。**
+  - ref: OQ-03
+    text: "エラー文言（I-319 → メッセージ管理情報の `msg_txt`）の取得主体。設計は『文言はクライアントが SQL-6 で引く』（05 §3.7・§5.7・§5.8 の利用端点「（クライアント）」）と書くが、ブラウザから DB へ SQL は実行できない。端点は 3 本で固定され（05 §1.3）、文言取得の端点が無い。"
+    block: "E-201／E-202／E-203／E-204／E-205／E-208／E-210 の利用者向け文面／I-319／SQL-6"
+    answer_status: "設計で解消（v1.0.2）"
+    answer: "節点3 承認版 v1.0.2 で確定した（§0.5 ②・§5.7）。SQL-6 はサーバのみが実行し、取得した文言をエラー応答の `I-321` に載せて返す。端点は 3 本のまま。`/login` の該当なし（E-201／E-207）は `errorCode` のみを返し、文言はクライアントが固定表示する。0 件時は汎用のシステムエラー文言＋運用ログ記録。"
+    answered_by: "SE-001（承認版 v1.0.2 の承認による）"
+    notes: |
+      **設計の記述矛盾候補**。考えられる選択肢（いずれも設計に明文が無い）:
+      ① 各応答に文言を含める／② 文言取得の端点を追加する（3 端点固定に反する＝設計変更）／
+      ③ 文言をクライアントの静的資源に持つ（「実体はメッセージ管理情報」という 05 §6.2 の前提に反する）。
+      **裁定まで文言表示を実装しない。** なお SQL-6 の 0 件時の代替表示も上流に規定が無い（05 §5.7）。
+  - ref: OQ-04
+    text: "単体テストコードを本節点で生成するか。本節点の入出力契約は「ソースコード＋単体テストコード」を産出物とする（`nodes/n05-coding.md` §3 ステップ2・§4）が、規則 04 §9.3 は『① TC 設計を確定 → ② 人の承認 → ③ テストコード生成』の順を要求し、TC 番号は工程06 で人が発号する（05 §10.4）。"
+    block: "本節点の産出範囲／工程06 の TC 発号／`design_ids` の持ち方"
+    answer_status: "AI 案（人未裁定・C 相当）"
+    answer: "本節点では単体テストコードを生成しない（規則 04 §9.3 の順序＝TC 設計 → 人の承認 → テストコード生成。TC 番号は工程06 で人が発号する）。本節点の産出はソースコードのみとする。"
+    answered_by: ""
+    notes: |
+      TC 番号が未発号のままテストコードを書くと、`design_ids` を持つ TC が存在しないテストコードになり、
+      紅线⑤（出典なきテストケース禁止）の趣旨に触れうる。裁定まで、テストコードは生成しない
+      （又は設計 ID をコメントに持つ雛形に留める）。工程06 との分担は人が決める。
+  - ref: OQ-05
+    text: "サーバ側 Session の保持先（プロセス内メモリ／外部ストア）と、複数インスタンス間の共有方式。工程04 承認版 §7 前提3 は『Session をサーバ側に保持できること』を前提とし、保持先は冗長化構成に依存するとする。"
+    block: "L-203 ステップ6（Session 生成）／L-208／05 §8.2 の水準（idle 30 分・絶対 8 時間・11 項目）"
+    answer_status: "AI 案（人未裁定・C 相当）"
+    answer: "本演習は単一プロセスで動かすため、サーバ側 Session はプロセス内メモリに保持する。多インスタンス構成へ移す場合は外部ストアへ差し替えることをコードのコメントに明記する（設計 05 §8.2 の水準は変えない）。"
+    answered_by: ""
+    notes: |
+      工程04 の前提が未確定である（工程04 §7 前提3。仮想答案は人未確認）。プロセス内メモリで実装すると、
+      複数インスタンス構成で Session が共有されず 05 §8.2 の水準を満たさない。
+      単一プロセス前提を置いてよいかを含め、人が決める。**確定まで L-203 ステップ6 を実装しない。**
+  - ref: OQ-06
+    text: "Session 破棄要求の相手（API の URL・方式・認証・応答形式）。L-208 ステップ3 は『顧客の共通基盤の Session 管理機能へ、閉じる前に破棄を要求する』（裁定 Q-232）とし、工程04 §7 前提2 はその相手の存在を前提にする。工程04 `open_questions` OQ-02 の仮想答案は『そのような API は存在しない』とする（人未確認）。"
+    block: "L-208 ステップ3・4・5（破棄要求・成否にかかわらず閉じる・失敗時 1 件記録）"
+    answer_status: "AI 案（人未裁定）"
+    answer: "設計 L-208 ステップ3〜5 のまま実装する。破棄要求の接続先は設定値として外部化し、未設定なら要求は失敗として扱い、設計どおり 1 件記録して閉じる（設計に無い分岐は足さない）。相手の実仕様は顧客確認待ち（A）。"
+    answered_by: ""
+    notes: |
+      相手が存在しない場合、L-208 は「自分の Session を破棄する」読み替えになり、
+      **設計変更（CR）**である（工程04 §7 前提2）。**確定まで L-208 を実装しない**
+      （実装で辻褄を合わせない＝紅线②）。

@@ -1,0 +1,82 @@
+# ============================================================
+# テンプレート: 要求定義 / 需求定义模板
+# 工程: docs/10_requirements/  （落地篇 工程篇 S9-10 要求→設計）
+# 使い方: 本ファイルを R-xxx-<Module>.yaml に複製し <...> を実値へ置換する。
+# 単一ソース則: 「要求の定義」はここ 1 箇所のみ。他工程は R-ID 引用に留める（NFR-1）。
+# 二重の形態: 本 YAML = 機読源。日文正式版は tools/gen_formal で自動生成（手改め禁止）。
+# ============================================================
+
+# ---- front-matter（7 字段固定・全テンプレート共通）----
+id: TPL-001
+type: requirement
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ---- body ----
+title: "<要求タイトル / 需求标题>"
+module: "<対象モジュール名 例: <Module名>>"
+
+# 背景・目的: なぜこの要求が必要か。散文にせず 3 項目で構造化する。
+background:
+  - id: BG-1
+    summary: "<事業上の課題・背景（migration では現行業務の課題、greenfield では新規に解決したい課題）>"
+    source: "<根拠資料パス or Q-ID>"
+  - id: BG-2
+    summary: "<対象データ・規模・利用者>"
+    source: "<根拠資料パス or Q-ID>"
+  - id: BG-3
+    summary: "<関連する既存資産（あれば。greenfield では空でよい）／関連する他要求>"
+    source: "<根拠資料パス or Q-ID>"
+
+# 業務ルール: 実装が従うべき規則。ID を付与し BD/DD/TC から引用可能にする。5 項目。
+business_rules:
+  - id: BR-1
+    rule: "<規則1>"
+    type: "<必須チェック / 排他 / 参照 / 採番 / 区分判定>"
+  - id: BR-2
+    rule: "<規則2>"
+    type: "<必須チェック / 排他 / 参照 / 採番 / 区分判定>"
+  - id: BR-3
+    rule: "<規則3>"
+    type: "<必須チェック / 排他 / 参照 / 採番 / 区分判定>"
+  - id: BR-4
+    rule: "<規則4>"
+    type: "<必須チェック / 排他 / 参照 / 採番 / 区分判定>"
+  - id: BR-5
+    rule: "<規則5>"
+    type: "<必須チェック / 排他 / 参照 / 採番 / 区分判定>"
+
+# 非目標: 本要求で「やらないこと」を明示。スコープ膨張を防ぐ。3 項目。
+non_goals:
+  - "<対象外1>"
+  - "<対象外2>"
+  - "<対象外3>"
+
+# ステークホルダー: 合意・確認・承認の宛先。3 項目。
+stakeholders:
+  - role: "<発注者 / 日方>"
+    name: "<担当名 or 役割>"
+    responsibility: "<合意・承認事項>"
+  - role: "<業務責任者>"
+    name: "<担当名 or 役割>"
+    responsibility: "<業務観点の確認事項>"
+  - role: "<SE / AI 推進>"
+    name: "<担当名 or 役割>"
+    responsibility: "<設計・実装への橋渡し>"
+
+# 受入要約: 合格判定の要約のみ。詳細ケースは TC 側に委ねる（二重定義を避ける）。
+acceptance_summary:
+  - target: "<受入条件の要約>"
+    evidence: "<証跡の所在>"
+  - target: "<受入条件の要約>"
+    evidence: "<証跡の所在>"
+
+# 未確定事項: 前提を明示し、確認票 Q-ID へリンクする（前提の明示原則）。
+open_issues:
+  - q_id: "<Q-xxx>"
+    question: "<未確定の問い>"
+    impact: "<影響範囲>"
+    status: open

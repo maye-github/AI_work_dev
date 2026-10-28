@@ -1,0 +1,73 @@
+# ============================================================
+# trans-cosmos-ai AI 全流程骨組 - 中日英 三語用語集（Glossary）
+# 唯一用語真源（NFR-1 単一ソース）。正式日文版 Excel/Word は
+# tools/gen_formal が本ファイルから自動生成する（手改め禁止）。
+# 参照: ids.yml（ID 発号本） / traceability.yml（追溯マトリクス）
+# ============================================================
+meta:
+  version: 0.1.0
+  description: "trans-cosmos-ai 骨架 中日英三語核心用語集：業務概念 + 技術規約 + 開発工程語（≥30 語）"
+
+terms:
+  # ---------- 業務概念（ドメイン）----------
+  - {ja: エリアマスタ, zh: 区域主数据, en: Area Master, note: "R60_AREA_M_TBL、cmpCd+jigCd+araCd 三鍵で一意。R-101 の対象" }
+  - {ja: エリアコード, zh: 区域代码, en: Area Code, note: "araCd（I-203）。三鍵の最下位キー" }
+  - {ja: 会社コード, zh: 公司代码, en: Company Code, note: "cmpCd（I-201）。三鍵の先頭キー" }
+  - {ja: 事業場, zh: 事业场（工厂/事业所）, en: Business Site, note: "jigCd（I-202）。調達生産の拠点単位" }
+  - {ja: 計上部署, zh: 计账部门, en: Accounting Department, note: "受払・債務・債権の計上先部署（bsyCd）" }
+  - {ja: ロケーション, zh: 库位/储位, en: Location, note: "E-006/E-007 ロケーション未登録判定の対象。plcCd" }
+  - {ja: 送信ステータス, zh: 发送状态, en: Send Status, note: "sendSts（I-225）。連携送信の進捗状態" }
+  - {ja: 緊急配信, zh: 紧急配发, en: Emergency Distribution, note: "sendSts='9' をトリガとする最優先配信モード" }
+  - {ja: 改竄区分, zh: 篡改区分, en: Tamper Classification, note: "ksnKbn（I-228）。改竄の種別を表す区分値" }
+  - {ja: 改竄者ID, zh: 篡改者ID, en: Tamper Staff ID, note: "ksnStfId（I-232）。最終改竄実行者" }
+  - {ja: 改竄日時, zh: 篡改时间, en: Tamper Timestamp, note: "ksnDat（I-233）。排他制御の比較キー" }
+  - {ja: 削除フラグ, zh: 删除标记, en: Delete Flag, note: "delFlg（I-226）。1=論理削除済。被参照チェックに使用" }
+  - {ja: 論理削除, zh: 逻辑删除, en: Logical Delete, note: "物理 DELETE せずフラグ/ステータスで無効化する方式" }
+  - {ja: リビジョン番号, zh: 修订号（版本号）, en: Revision Number, note: "revNo（I-234）。更新毎に int+1、排他の補助キー" }
+
+  # ---------- 技術規約（アーキテクチャ）----------
+  - {ja: 排他制御, zh: 乐观锁, en: Optimistic Lock, note: "ksnDat + revNo の不一致を R60W0006 で検知（E-002）" }
+  - {ja: 被参照チェック, zh: 引用检查, en: Referential Check, note: "削除前に他テーブル参照を確認。不可なら R60W0024（E-004）" }
+  - {ja: ROWIDページング, zh: ROWID 分页, en: ROWID Paging, note: "推奨ページング方式。OFFSET-FETCH は必要時のみ（rule 5）" }
+  - {ja: 当日鍵（yyyymmdd）, zh: 当日密钥（yyyymmdd）, en: Daily Key (yyyymmdd), note: "R60 は AES-256-ECB ではなく「桁変換＋当日 yyyymmdd 加算」。復号は R60_DECRYPTION_FNC" }
+  - {ja: NLS_DATE_FORMAT, zh: NLS 日期格式, en: NLS_DATE_FORMAT, note: "Oracle セッション固定値 'RR-MM-DD'。変更禁止（rule 2）" }
+  - {ja: BaseCamelModel, zh: 基础驼峰模型, en: Base Camel Model, note: "Pydantic snake↔camel alias_generator 共通基底クラス" }
+
+  # ---------- 画面・UI ----------
+  - {ja: 一覧画面, zh: 列表画面, en: List Screen, note: "R60Area.vue。検索条件＋結果グリッドの 2 画面構成の片側" }
+  - {ja: ダイアログ, zh: 对话框, en: Dialog, note: "R60AreaEdit.vue。登録・修正・複製の共通モーダル" }
+  - {ja: 画面項目, zh: 画面项目, en: Screen Item, note: "I-201〜I-256（56 件）。R60_AREA_M_TBL 列と 1:1 対応" }
+  - {ja: 検索条件, zh: 检索条件, en: Search Criteria, note: "検索入力群。前方一致 % ワイルドカード制約あり" }
+  - {ja: 複製, zh: 复制, en: Duplicate, note: "既存レコードを雛形に新規作成する操作（mode 3）" }
+  - {ja: 必須項目, zh: 必填项, en: Mandatory Item, note: "REG_STS 判定対象の 15 項目。NotEmpty で ON" }
+
+  # ---------- テスト設計 ----------
+  - {ja: 境界値, zh: 边界值, en: Boundary Value, note: "境界値分析。桁数・件数・溢れの上下限を検証" }
+  - {ja: 同値分割, zh: 等价类划分, en: Equivalence Partitioning, note: "入力域を有効/無効クラスに分割する観点設計手法" }
+  - {ja: デシジョンテーブル, zh: 判定表, en: Decision Table, note: "複数条件分岐の組合せを網羅するテスト設計技法" }
+  - {ja: テストケース, zh: 测试用例, en: Test Case, note: "TC-001〜TC-008。正常3/境界2/異常3 の比率基準" }
+  - {ja: 回帰テスト, zh: 回归测试, en: Regression Test, note: "変更後の既存機能影響確認。baseline 後 CR で必実施" }
+
+  # ---------- 開発工程・管理 ----------
+  - {ja: 要件ID, zh: 需求ID, en: Requirement ID, note: "R-ID。ids.yml が唯一発番口。野号は gate1 で Exit 1" }
+  - {ja: 基本設計書, zh: 基本设计书, en: Basic Design Document, note: "F-042 等。画面構成・I/O 一覧を定義" }
+  - {ja: 詳細設計書, zh: 详细设计书, en: Detail Design Document, note: "D-043 等。SQL・エラー分岐・境界値を定義" }
+  - {ja: 単体テスト仕様書, zh: 单元测试规格书, en: Unit Test Specification, note: "docs/50_unit_test。TC と design_ids を結ぶ" }
+  - {ja: 結合テスト仕様書, zh: 结合测试规格书, en: Integration Test Specification, note: "docs/60_integration_test。API 連鎖とトランザクション境界" }
+  - {ja: トレーサビリティ, zh: 追溯性, en: Traceability, note: "要件⇄設計⇄コード⇄テストの双方向閉ループ（TR-4.2）" }
+  - {ja: 成果物, zh: 交付物, en: Deliverable, note: "機読源(.md/YAML)→日文正式版の二重形態。単一ソース原則" }
+  # ---------- 工程横断概念（二重化・回流）----------
+  - {ja: 成果物の二重化, zh: 成果物双重化, en: Dual Deliverable, note: "機読源 ⇄ 日文正式版。出典 落地篇 S24・S20／v1 S7「双轨制」。定義は docs/90_knowledge/dual-deliverable.md" }
+  - {ja: 機読源, zh: 机读源, en: Machine-Readable Source, note: "Markdown ＋ YAML front matter。唯一の真源。AI が直接読み書きする" }
+  - {ja: 日文正式版, zh: 日文正式版, en: Japanese Formal Deliverable, note: "Excel/Word。顧客提出・検収の対象。機読源から自動生成し手改め禁止" }
+  - {ja: 受控回流, zh: 受控回流, en: Controlled Reflux, note: "正文読取専用＋指摘シート。双向回路（逆変換）は NFR-1 違反で禁止（規則 00 §11）" }
+  - {ja: 審査差分資産, zh: 评审差分资产, en: Review Diff Asset, note: "審査前/後スナップショット＋5 テンプレート指摘。本骨架の追加要素。「二重化」とは別概念" }
+  - {ja: 変更要求, zh: 变更请求, en: Change Request, note: "CR-ID。baseline 後の変更は CR-xxx 経由・status→changed" }
+  - {ja: 不具合, zh: 缺陷, en: Bug, note: "BUG-ID。void 作废标记は番号再利用禁止" }
+  - {ja: 発番, zh: 发号, en: ID Assignment, note: "3桁起步・連番・不使用番号の再利用禁止（void で明示無効化）" }
+  - {ja: 単一ソース, zh: 单一数据源, en: Single Source of Truth, note: "同一フィールドは 1 箇所のみ定義。他は参照のみ" }
+  - {ja: 確認票, zh: 确认票（QA票）, en: QA Ticket, note: "Q-ID。上流の確認事項・質問票。status=open→done" }
+
+  # ---------- セキュリティ ----------
+  - {ja: 機密マスキング, zh: 机密脱敏, en: Confidentiality Masking, note: "L3 禁止外投項目を TBL_1/PWD_1 等の占位に置換" }
+  - {ja: 占位化, zh: 占位化, en: Placeholdering, note: "実値を PWD_xxxx/DOM_1 等へ置換する脱敏操作" }

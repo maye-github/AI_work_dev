@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05_承認版_制造记录.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>05_承認版_制造记录.zh</h1>
+<div class="meta">
+  机读源: <code>05_承認版_制造记录.zh.md</code> ／
+  生成: 2026-10-27 15:03 ／
+  节 7・表 4
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>05_承認版_制造记录.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">1. 承认记录</a></li><li><a href="#sec-2">2. 产物清单（15 个文件・2,061 行）</a></li><li><a href="#sec-3">3. 门番的执行结果（原始输出）</a> <span class="chip chip-io">项目定义</span></li><li><a href="#sec-4">4. 与设计的差异</a></li><li><a href="#sec-5">5. commit 消息格式（规则 05・7 种中的 `feat`）</a> <span class="chip chip-br">业务规则</span></li><li><a href="#sec-6">6. 需要人处理的遗留事项</a></li><li><a href="#sec-7">7. 修订履历</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: D-201<br>defines: D-201..D-205 / L-201..L-208（製造記録が覆う対象）<br>type: coding-record<br>req_ids: [R-201]<br>status: baselined<br>sensitivity: internal<br>owner: AI-PG<br>version: 1.0.0</p>
+<hr>
+<h1>05 制造记录（承认版）— 共通マスタ　ログイン（R60Login）</h1>
+<blockquote class="quote"><strong>本文档把节点5（制造）的产出汇总成一页。</strong> 代码本体不贴在这里<br>（<code>tutorial/R60Login/节点5_制造/</code> 下的实际文件才是唯一实体）。<br>输入是节点3 承认版 <code>05_承認版_详细设计书.md</code> v1.0.2（<code>baselined</code>・2026-10-23 / SE-001）。<br><strong>设计一个字都没有改动。</strong> 设计里没写、由代码侧补的部分，已逐条登记在<br><code>06_設計との差異.md</code> 的 15 行里。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>1. 承认记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">版本</th><th style="text-align:left">日期</th><th style="text-align:left">承认者角色</th><th style="text-align:left">承认状态</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left">0.1.0</td><td style="text-align:left">2026-10-26</td><td style="text-align:left">SE・A（代码评审）</td><td style="text-align:left"><strong>未承认</strong></td><td style="text-align:left">本文档写出时的状态。承认栏由人填写</td></tr><tr><td style="text-align:left">0.1.1</td><td style="text-align:left">2026-10-26</td><td style="text-align:left">SE・A（代码评审）</td><td style="text-align:left"><strong>未承认</strong></td><td style="text-align:left">仅更新 §3・§3.1・§6 的 ID 登记现状。承认状态不变</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-10-26</td><td style="text-align:left">SE・A / SE-001（代码评审）</td><td style="text-align:left"><strong>已承认</strong></td><td style="text-align:left">见下方注记。<code>approved_by: [SE-001]</code> 已记入 <code>n05.yml</code></td></tr></tbody></table>
+<blockquote class="quote"><strong>只有人能填这一栏（红线③）。</strong> AI 不改写本表的「承认状态」。<br>承认完成后，把 <code>status</code> 升为 <code>baselined</code>，并在 <code>docs/00_plan/coach/R60Login/n05.yml</code> 里记录 <code>approved_by</code>。<br><strong>1.0.0 的承认，是本人明确指示下由我方代记的。</strong> 发言原文：「1.我承认了、你帮我签」。<br>承认者是 SE-001（本人）。<strong>不是 AI 自己承认，而是本人承认、我方代填。</strong><br>同时 6 件阻塞项已作为 C 裁定记入 <code>n05.yml</code>（本人的「2.都行」是<strong>对方式的选定</strong>，<br>不是逐字读完 6 件文面之后的承认。文面由我方撰写）。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>2. 产物清单（15 个文件・2,061 行）</h2>
+<p>全部位于 <code>tutorial/R60Login/节点5_制造/</code> 下。<strong>没有触碰任何既有的 <code>src/</code> 或 <code>app/routers</code></strong><br>（<code>build_mode: greenfield</code>，本来也不存在这些对象）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">文件</th><th style="text-align:left">行</th><th style="text-align:left">对应设计 ID</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>backend/app/config.py</code></td><td style="text-align:left">89</td><td style="text-align:left">L-201・L-203・L-205</td><td style="text-align:left">只有环境变量，不含实际值</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>backend/app/schemas.py</code></td><td style="text-align:left">113</td><td style="text-align:left">L-202・L-203・L-205</td><td style="text-align:left">输入输出 11 项（I-316・I-317 等）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>backend/app/main.py</code></td><td style="text-align:left">103</td><td style="text-align:left">L-201</td><td style="text-align:left">只注册 3 个端点</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><code>backend/app/repository/queries.py</code></td><td style="text-align:left">152</td><td style="text-align:left">D-201〜D-205・SQL-1〜SQL-6・E-201〜E-210</td><td style="text-align:left">值全部走绑定变量；排序列走白名单</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>backend/app/domain/availability.py</code></td><td style="text-align:left">38</td><td style="text-align:left">L-201・E-203・E-206</td><td style="text-align:left">稼动判定</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>backend/app/domain/stf_cd_cipher.py</code></td><td style="text-align:left">111</td><td style="text-align:left">L-203・L-205・L-206・E-205</td><td style="text-align:left">算式照抄需求书 §10.3；日期由参数注入</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><code>backend/app/domain/session_store.py</code></td><td style="text-align:left">84</td><td style="text-align:left">L-203 步骤6・§8.2・I-316・I-317</td><td style="text-align:left"><strong>新增</strong>（差异 #1・#14）</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left"><code>backend/app/api/init_api.py</code></td><td style="text-align:left">140</td><td style="text-align:left">L-201・L-202・E-204・E-206</td><td style="text-align:left"><code>/R60Login/init</code></td></tr><tr><td style="text-align:left">9</td><td style="text-align:left"><code>backend/app/api/login_api.py</code></td><td style="text-align:left">187</td><td style="text-align:left">L-201・L-203・E-201・E-203・E-205・E-207・E-208</td><td style="text-align:left"><code>/R60Login/login</code></td></tr><tr><td style="text-align:left">10</td><td style="text-align:left"><code>backend/app/api/generate_url_api.py</code></td><td style="text-align:left">148</td><td style="text-align:left">L-201・L-205・L-206・E-202・E-203・E-209・E-210</td><td style="text-align:left"><code>/R60Login/generateUrl</code></td></tr><tr><td style="text-align:left">11</td><td style="text-align:left"><code>frontend/common/stfCdCipher.ts</code></td><td style="text-align:left">134</td><td style="text-align:left">L-206・L-207</td><td style="text-align:left">与服务端同一算式（保证确定性）</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left"><code>frontend/common/submitGuard.ts</code></td><td style="text-align:left">29</td><td style="text-align:left">L-207</td><td style="text-align:left">防重复提交</td></tr><tr><td style="text-align:left">13</td><td style="text-align:left"><code>frontend/stores/sessionState.ts</code></td><td style="text-align:left">42</td><td style="text-align:left">L-208</td><td style="text-align:left">保持区</td></tr><tr><td style="text-align:left">14</td><td style="text-align:left"><code>frontend/services/loginApi.ts</code></td><td style="text-align:left">144</td><td style="text-align:left">L-201・L-202・L-203・L-205</td><td style="text-align:left">只调用 3 个端点</td></tr><tr><td style="text-align:left">15</td><td style="text-align:left"><code>frontend/views/LoginScreen.vue</code></td><td style="text-align:left">547</td><td style="text-align:left">L-204・L-207・L-208・I-301〜I-312・E-202・E-205・E-207</td><td style="text-align:left">画面</td></tr></tbody></table>
+<p><strong>没有生成的东西</strong>：<code>tests/</code>（单元测试代码）。<br>按规则 04 §9.3 的顺序（TC 设计 → 人承认 → 生成测试代码），TC 在节点6 发号并设计。</p>
+<hr>
+</section>
+<section class="sec sec-io" id="sec-3">
+<h2>3. 门番的执行结果（原始输出） <span class="chip chip-io">项目定义</span></h2>
+<p>命令与实际输出并记（规则 02 §10）。</p>
+<pre><code>$ py -3 -m tools.trace_check --strict
+[trace_check] gate1=PASS gate2=PASS gate3=PASS gate4=PASS gate5=PASS gate6=PASS
+               seal=PASS freeze=PASS | total_ids=124 orphans=0 field_count=76 seal_hits=0
+EXIT 0
+
+$ py -3 -m tools.trace_check --strict --only-check secrets
+[trace_check] gate6=PASS | total_ids=124 orphans=0 field_count=0 seal_hits=0
+EXIT 0
+
+$ py -3 -m tools.trace_check --strict --only-check seal
+[trace_check] seal=PASS | total_ids=124 orphans=0 field_count=0 seal_hits=0
+EXIT 0</code></pre>
+<h3>3.1 「门番通过」意味着什么（不夸大）</h3>
+<ul><li><strong>本节点的 ID 已经登记完毕</strong>（见 §6 #2）。<code>R-201</code>・<code>F-201</code>・<code>I-301〜I-320</code>・</li></ul>
+<p><code>D-201〜D-205</code>・<code>L-201〜L-208</code>・<code>E-201〜E-210</code> 共 <strong>45 件</strong>已登记到 <code>docs/00_registry/ids.yml</code>，<br>并在 <code>docs/00_registry/traceability.yml</code> 里连好了链路（<code>R-201 → F-201 → {D / I / L} → E</code>）。<br>登记前后，<code>total_ids</code> 由 79 变为 124，<code>orphans</code> 由 45 变为 0。</p>
+<ul><li><strong>但不要把 gate1 的 PASS 当作「已登记」的证据。</strong> gate1 的扫描范围只有 <code>docs/</code> 和 <code>.claude/</code></li></ul>
+<p>（<code>tools/trace_check/__init__.py:244</code> 的 <code>iter_docs</code>），<strong><code>tutorial/</code> 本来就在扫描范围之外</strong>。<br>真正证明登记的是 <code>ids.yml</code> 里的条目本身，以及 <code>gate2</code> 的 <code>orphans=0</code>。</p>
+<ul><li>不变条件由我方另行确认：路由只有 <code>/R60Login/{init,login,generateUrl}</code> 这 <strong>3 条</strong>，</li></ul>
+<p>没有 <code>tests/</code> 目录，指向外部既有案件资产的描述 0 处，实际值（连接信息、员工代码、主机名）0 处。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>4. 与设计的差异</h2>
+<p><code>06_設計との差異.md</code> 共 15 行。<strong>E1（需求书・已承认设计的明文）2 行，E4（本节点自行决定）13 行</strong>。</p>
+<p>针对 E4 的 13 行，同书 §3 汇总了需要人判断的<strong>剩余风险 5 件</strong>。<br><strong>2026-10-26 用户（SE-001）以发言「接受」受诺了这 5 件</strong>（口头受诺，不是签名栏）。<br>受诺的内容是「设计不动，差异通过该登记表移交给后续节点」。</p>
+<hr>
+</section>
+<section class="sec sec-br" id="sec-5">
+<h2>5. commit 消息格式（规则 05・7 种中的 <code>feat</code>） <span class="chip chip-br">业务规则</span></h2>
+<p>本仓库是演练用，不实际 commit（按规则 05 §10 的演练条）。<strong>只记录格式。</strong></p>
+<pre><code>feat: D-201〜D-205 R60Login の init/login/generateUrl を詳細設計 v1.0.2 から製造
+
+Trace: R-201-&gt;F-201-&gt;L-201..L-208-&gt;D-201..D-205
+AI: trans-cosmos-ai-node5-coding@v0.1
+Review: SE-001
+
+Co-Authored-By: Claude Code &lt;noreply@anthropic.com&gt;</code></pre>
+<ul><li><code>Review:</code> 是<strong>人的拍板者</strong>（SE-001）。<strong>承认完成之前不做这个 commit</strong>——</li></ul>
+<p>本文档 <code>status</code> 还是 <code>draft</code> 期间，上面的消息只是「预定」，不是实绩。</p>
+<ul><li>真实案件（处于 git 管理下）按此格式实际 commit，并把 <code>Co-Authored-By</code> 行放在末尾。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>6. 需要人处理的遗留事项</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">遗留事项</th><th style="text-align:left">谁来做</th><th style="text-align:left">理由</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">~~填写本文档 §1 的承认栏~~ → <strong>2026-10-26 完成</strong>（v1.0.0）</td><td style="text-align:left">人（本人指示下由 AI 代记）</td><td style="text-align:left">红线③的原则是「承认由人做」。本人明示「1.我承认了、你帮我签」，因此只代填了这一栏</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">~~在 <code>ids.yml</code> 里发号~~ → <strong>2026-10-26 完成</strong>（45 件）</td><td style="text-align:left">人（按用户指示由 AI 代行）</td><td style="text-align:left">红线①的原则是「发号由人做」。这次是<strong>把设计书已经在用的号码载入登记簿</strong>，不是发明新号，因此依据用户的明确指示（发言「然后在 ids.yml 里发号你就帮我做了吧」）代行。<strong>号码是否正确由人复核</strong>（见 §7）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">把剩余风险 5 件落成节点6（TC）・节点7（IT）的观测点</td><td style="text-align:left">人（承认观测点）</td><td style="text-align:left">受诺是「现在可以先走」，不等于「不用测试」</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">确认 <code>ids.yml</code> 里登记的 45 件的<strong>名称与说明</strong></td><td style="text-align:left">人</td><td style="text-align:left">机器只能看「ID 在不在」。名称与设计书不一致时门番照样通过（规则 02 §10）</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>7. 修订履历</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">版本</th><th style="text-align:left">日期</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">0.1.0</td><td style="text-align:left">2026-10-26</td><td style="text-align:left">初版。15 个文件 2,061 行的制造记录。<code>status: draft</code>（待承认）</td></tr><tr><td style="text-align:left">0.1.1</td><td style="text-align:left">2026-10-26</td><td style="text-align:left">反映 ID 登记（45 件）。§3 的门番输出改为重新执行的值（<code>total_ids=124</code>／<code>field_count=76</code>），§3.1 的「未登记」表述改为现状，§6 #2 改为完成。新增 §6 #4（名称确认）。<strong>承认状态不变</strong></td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-10-26</td><td style="text-align:left">节点5 承认。承认者为 SE-001（本人明确指示，由 AI 代记）。同时把 6 件阻塞项定为 C 裁定（记入 <code>n05.yml</code>）。<code>status: baselined</code></td></tr></tbody></table>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>05_承認版_制造记录.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

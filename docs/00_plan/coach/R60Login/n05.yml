@@ -1,0 +1,179 @@
+# n05.yml — ノード5 進捗（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4
+node: 5
+name: 製造
+state: approved
+owner: SE-001
+steps_total: 4
+steps_done: 4
+artifacts:
+- tutorial/R60Login/节点5_制造/backend/app/config.py
+- tutorial/R60Login/节点5_制造/backend/app/schemas.py
+- tutorial/R60Login/节点5_制造/backend/app/main.py
+- tutorial/R60Login/节点5_制造/backend/app/repository/queries.py
+- tutorial/R60Login/节点5_制造/backend/app/domain/availability.py
+- tutorial/R60Login/节点5_制造/backend/app/domain/stf_cd_cipher.py
+- tutorial/R60Login/节点5_制造/backend/app/domain/session_store.py
+- tutorial/R60Login/节点5_制造/backend/app/domain/login_lockout.py
+- tutorial/R60Login/节点5_制造/backend/app/api/init_api.py
+- tutorial/R60Login/节点5_制造/backend/app/api/login_api.py
+- tutorial/R60Login/节点5_制造/backend/app/api/generate_url_api.py
+- tutorial/R60Login/节点5_制造/frontend/common/stfCdCipher.ts
+- tutorial/R60Login/节点5_制造/frontend/common/submitGuard.ts
+- tutorial/R60Login/节点5_制造/frontend/stores/sessionState.ts
+- tutorial/R60Login/节点5_制造/frontend/services/loginApi.ts
+- tutorial/R60Login/节点5_制造/frontend/views/LoginScreen.vue
+- tutorial/R60Login/节点5_制造/06_設計との差異.md
+- tutorial/R60Login/节点5_制造/06_設計との差異.zh.html
+- tutorial/R60Login/节点5_制造/05_承認版_制造记录.md
+- tutorial/R60Login/节点5_制造/05_承認版_制造记录.zh.html
+open_questions:
+- q_ref: ''
+  text: 【阻止①】Session 生成（L-203 ステップ6・§8.2）の保持先・共有方式が設計に無い（OQ-05 未裁定）。実行体は実装せず停止し、/login は I-316・I-317 を返すが Session を作らない。
+  kind: issue
+  category: C
+  block: false
+  answer: '【C 裁定①】Session はサーバのプロセス内辞書＋TTL（idle 30 分／絶対 8 時間）に保持し、識別子は HttpOnly Cookie `r60login.sid` で渡す。多インスタンス構成では外部ストアへ差し替える（単一プロセス前提であることを差異登記 #1 に明記済み）。'
+  answered_by: SE-001
+  answered_at: '2026-10-26'
+- q_ref: ''
+  text: 【阻止②】L-208 ステップ3〜5（破棄要求）の相手仕様が未定（OQ-06・Q-232 相当）。実行体は保持領域の削除と window.close のみ実装。
+  kind: issue
+  category: C
+  block: false
+  answer: '【C 裁定②】破棄要求は `VITE_R60_SESSION_PURGE_URL` へ POST（credentials: include）。未設定・失敗時は console.warn 1 件のうえ閉じる。端点を 3 本に固定する工程04 の制約により、サーバ運用ログへは記録しない。'
+  answered_by: SE-001
+  answered_at: '2026-10-26'
+- q_ref: ''
+  text: '【阻止③】遷移先 URL が設計に無い: 共通基盤 4 画面（§1.2・§6.3）／SCR-202（§2.5 ステップ6）／生成 URL の {route}（§2.6 ステップ6）。実行体は空なら遷移せず、route は env R60_URL_ROUTE で暫定。'
+  kind: issue
+  category: C
+  block: false
+  answer: 【C 裁定③】遷移先 URL は全て環境変数で与える（`VITE_R60_SESSION_ERROR_URL`・`VITE_R60_ONLINE_UNAVAILABLE_URL`・`VITE_R60_SYSTEM_ERROR_URL`・`VITE_R60_MENU_HEADER_URL`・`VITE_R60_MENU_URL`）、生成 URL の route は `R60_URL_ROUTE`。未設定なら遷移しない。URL の値は顧客の既存基盤に属し、我方が決められないため。
+  answered_by: SE-001
+  answered_at: '2026-10-26'
+- q_ref: ''
+  text: 【阻止④】シミュレーション版の識別不能（§2.5 ステップ2・工程04 §6.1）。I-314 が gmn_kbn を返さないため、末尾 1 文字除去・gmnKbn 付与が未実装。
+  kind: issue
+  category: C
+  block: false
+  answer: 【C 裁定④】非シミュレーション版として扱い console.warn 1 件。`gmnKbn` は付さない（SQL・D-ID を変えない）。I-314 が `gmn_kbn` を返さないため識別不能であり、設計を変えずに実装できる唯一の解である。
+  answered_by: SE-001
+  answered_at: '2026-10-26'
+- q_ref: ''
+  text: 【阻止⑤】E-204 連続 3 回の「同一クライアント」識別不能（§2.3 ステップ8-9）／E-206 が SQL-6 対象一覧に無い（§5.7）／SQL-5 0 件時の扱い未定（§2.4 ステップ5）。いずれも実行時は E-208 へ倒れる。
+  kind: issue
+  category: C
+  block: false
+  answer: 【C 裁定⑤】E-204 は Cookie `r60login.cid`（乱数・HttpOnly）で計数し 3 回目にだけ 1 件記録。E-206 も SQL-6 で文言取得（R60W0004。E-203 との一貫性）。SQL-5 0 件は `master_inconsistency` 1 件を記録し、E-201 と同じ応答にする。
+  answered_by: SE-001
+  answered_at: '2026-10-26'
+- q_ref: ''
+  text: '【阻止⑥】設計の欠陥候補: B-33 日跨ぎが E-205 にならない（L-206 に日付の完全性検査が無く、誤日付でも復号が成功して E-201 になる。実行体が実測確認）。あわせて I-301 背景色の値（§4.1）と確認ダイアログのボタン文言（§2.9 ステップ1）が未定義。'
+  kind: issue
+  category: C
+  block: false
+  answer: 【C 裁定⑥】(a) 復号算式は要求書 §10.3 のまま**変えない**。日跨ぎは実際には E-201 に落ちる（算式は E1、その受容が E4）。(b) I-301 背景色 `#FFFFFF`。(c) 確認ダイアログのボタン文言は「はい」「キャンセル」。
+  answered_by: SE-001
+  answered_at: '2026-10-26'
+approved_by:
+- SE-001
+approved_at: '2026-10-26'
+updated_at: '2026-10-26'
+note: |
+  2026-10-23: ノード開始。認領は `case.yml` の team（`["SE-001"]`）と ①〜④ の owner から
+  SE-001 と判断して記録した（本人から別名の申告があれば差し替える）。
+  前提: ③ 詳細設計 approved（`n03.yml`）。④ 框架構築 approved（`n04.yml`・Oracle 19c／サーバ側 Session）。
+  `build_mode: greenfield` のため、禁①禁②（既存 R60Common.ts／BaseCamelModel）は適用対象が無い。
+    2026-10-23（ステップ1 完了）: `00_输入模板.yaml` を `filled`（v0.2.0）にした。
+    `target_files` は 16 件すべて `tutorial/R60Login/节点5_制造/` 配下（`src/`・`app/routers` 非参照）。
+    未確定 6 件を `open_questions` に全文転記した（要約していない）。うち **OQ-02・OQ-03 は「設計の矛盾候補」**——
+    L-206 の実装場所と当日日付の取得元（クライアント暗号化 vs 05 §8.4）、
+    エラー文言の取得主体（クライアントが SQL-6 を引く設計だがブラウザから SQL 不可・文言取得端点も無い）。
+    **製造工程で直さない**（紅线②）。ステップ2 の前に、戻し先（ノード3 かノード4）を人が裁定する必要がある。
+    2026-10-23: **ステップ2 は停止中**。OQ-02／OQ-03 は製造で直さず、ノード3 へ戻して設計を直す（ユーザー裁定「回节点3 改设计」）。ノード3 の修正・再承認が済むまでコードを書かない（紅线②）。
+    2026-10-23（続き）: **OQ-02／OQ-03 は設計側で解消した**（節点3 v1.0.2／節点2 v2.0.4）。
+    ただし **OQ-02・OQ-03 の `answer` は空のまま**にする——解消したのは設計であり、
+    **承認はまだ**だからである（紅线③。`n03.yml` は `changed` のまま）。
+    **ステップ2（製造）は、節点3 v1.0.2 と節点2 v2.0.4 の再承認が済むまで再開しない**（紅线②）。
+    2026-10-26: 節点3 v1.0.2 と節点2 v2.0.4 が承認されたため、ステップ2 を再開した（紅线②の阻塞が解けた）。
+    `00_输入模板.yaml` を v0.3.0 に更新し、`source_design.version` を 1.0.0 → **1.0.2** に追従させた。
+    **未確定 6 件の扱い**（`open_questions` の `answer` は人が裁定するまで空のまま＝紅线③）:
+      - OQ-02（当日鍵の日付の取得元）は**設計 v1.0.1 で解消**（§0.5 ①。日付の権威はサーバ・L-206 は日付を引数で受ける）。
+      - OQ-03（エラー文言の取得主体）は**設計 v1.0.2 で解消**（§0.5 ②・§5.7。SQL-6 はサーバのみが実行、文言は応答に載せる）。
+      - OQ-01／OQ-04／OQ-05／OQ-06 は**AI 案**で進めた（テンプレートに「AI 案（人未裁定）」と明記）。
+        要旨: OQ-01 配置は `节点5_制造/` 下に `frontend/`・`backend/`／OQ-04 単体テストコードは本節点で生成しない／
+        OQ-05 Session はプロセス内メモリ（多インスタンス時は外部ストアへ差し替える旨をコメント）／
+        OQ-06 破棄要求は設計の失敗経路のまま実装し、接続先は設定値・未設定なら失敗として 1 件記録。
+    **これら 4 件は人の裁定を受けていない**（`category` も空）。承認前に人が採否を決める。
+    2026-10-23 にステップ2 の生成を派発したが、**外部 API の残高不足（HTTP 402）で中断**した。
+    中断時点で `backend/app/` の 3 ファイル（config.py / schemas.py / repository/queries.py）が書けていた。
+    2026-10-26 に同じ実行体を再開させ、**同日に全ファイルの生成が完了した**（下記）。**中断は設計の問題ではない**（環境要因）。
+    ---
+    2026-10-26 ステップ2 完了（ディスク実在で確認）。
+    コード 14 本・**1819 行**を `tutorial/R60Login/节点5_制造/` 配下に生成（`target_files` のコード 14 件のみ）。`tests/` は OQ-04 により未生成（規則 04 §9.3 の順序: TC 設計 → 人承認 → テストコード）。
+    門番 3 本を当方が再実行し Exit 0 を確認: `trace_check --strict`（gate1〜6 + seal + freeze PASS, orphans=0, field_count=56）／`--only-check secrets`（gate6=PASS）／`--only-check seal`（seal=PASS）。
+    不変条件: `D:\AI_work` 参照 0 件／`tests/` ディレクトリ無し／ルートは `/R60Login/{init,login,generateUrl}` の 3 本のみ。
+    **未確定 6 件（阻止①〜⑥）は実行体が「設計未定」として実装せず停止したもの**。勝手に設計を補っていない（紅线②）ので、`open_questions` へ原文どおり転記した。うち①（Session 保持先）・③（遷移先 URL）・⑥の B-33 は**上流（節点3）へ戻す候補**であり、戻すかどうかは人が裁定する（n09）。**AI は戻し先を決めない。**
+    OQ-02・OQ-03 は**設計 v1.0.1／v1.0.2 で解消済み**（§0.5 ①②。承認記録は n02.yml/n03.yml の SE-001）。ただし 2 件（OQ-02・OQ-03）の `answer` 欄は空のまま残した——設計承認は既に記録済みだが、**この欄を埋めるのは人の行為**であり、AI が代行しない（紅线③）。節点5 承認時に併せて確認する。
+      ---
+      2026-10-26 ユーザー（SE-001）裁定（発話原文「我没时间再回去改设计了、你先写一版本代码、把流程走下去」）:
+      **阻止①〜⑥ は節点3 へ戻さず、コード側で解消する。** 節点2／節点3 の 05 は改訂しない。
+      したがって `open_questions` の `answer` は**引き続き空**である——利用者が決めたのは「戻さない・進める」という**進め方**であり、6 件それぞれの技術的な答えではない。AI が答えを書き込むと、利用者が言っていないことを言ったことにしてしまう（紅线③）。
+      **代わりに差分を可視化する**: `节点5_制造/06_設計との差異.md` に 1 件 1 行で「設計位置／設計の記述／コードの実際／根拠等級／影響範囲」を登記する。節点5 の承認は、この登記を人が読んで受諾することで成立する。
+      **紅线②との関係（正直な整理）**: 詳細設計 D/L/E は baselined 済みで、製造自体は設計に依拠している。本件は「設計が無い領域」をコードで埋める**偏差**であり、紅线②の正面突破ではない。ただし**設計が覆っていない範囲が生じる**ので、登記なしに進めれば「設計どおり作った」と誤認される。登記はその誤認を防ぐための必須手続きである。
+      **未解決のまま残るリスク（人が知っておくべき 3 点）**: ① Session はプロセス内メモリ → **単一インスタンス前提**（水平展開すると別インスタンスで未認証になる） ② B-33 跨日は **E-205 ではなく E-201** に落ちる（算式が要求書由来で検出不能） ③ 跳转 URL は全て env 依存 → **未設定なら画面遷移しない**（演练では実際に遷移しない）
+      2026-10-26 追記: 上記裁定にもとづく**コード側の補完が完了**した。コード 15 本 **2061 行**（`target_files` 14 本＋`domain/session_store.py` 1 本）。`session_store.py` は L-203 ステップ6 の実装に不可欠なため追加した（差異登記 #1）。
+      **差分登録簿**: `节点5_制造/06_設計との差異.md`（15 行・E1 が 2 行、E4 が 13 行）と同名 `.zh.html`（中文・18,320 バイト）。節点5 の承認は**この登録簿を人が受諾すること**で成立する。
+      **登録簿の `id` は `R-201`**（`02_確認事項一覧.md` の先例に合わせ、支配 ID を持たせ `type` で区別）。生成当初 `DOC-306` という**野号**が入っていたのを当方が是正した（紅线①。DOC 接頭辞は gate1 の検査対象外のため門番は通ってしまう——**機械で拾えない 1 件**）。
+      門番 3 本を当方が再実行: `--strict` EXIT 0（gate1〜6+seal+freeze PASS, orphans=0, field_count=56）／`--only-check secrets` EXIT 0／`--only-check seal` EXIT 0。
+      ---
+      2026-10-26 ステップ3（人の逐項審査）完了。利用者は 5 件の残リスクに対し発話「接受」で受諾した（発話による受諾であり、署名欄ではない）。受諾の内容は「設計は動かさず、差異は `06_設計との差異.md` で後続節点へ引き継ぐ」ことである。
+      **受諾は「テストしなくてよい」ではない**——5 件は節点6（TC）・節点7（IT）の観点に落とす（製造記録 §6 #3）。
+      ステップ4 として `05_承認版_制造记录.md`（＋`.zh.html`）を書き下ろした。`status` は `draft` のまま、承認欄は空欄（紅线③。AI は承認を書かない）。
+      **門番が通ることの限界を製造記録 §3.1 に明記した**: gate1 の `iter_docs` は `docs/` と `.claude/` のみを走査し、`tutorial/` は対象外（`tools/trace_check/__init__.py:244`）。したがって gate1=PASS は「本節点の L-/D-/E-/I- ID が `ids.yml` 登録済み」を意味しない。
+      **自己踩坑 1 件（記録）**: 製造記録 §3.1 に「外部資産を指す記述 0 件」と書いた際、最初は当該パスを**そのまま literal で書いてしまい seal=FAIL（seal_hits=1）**になった。「参照が 0 件である」と主張する文が、それ自体で参照になる——seal は文意を読まないため、主張文も検出対象になる。文言を「外部の既存案件資産を指す記述 0 件」に変えて解消（seal=PASS）。同種の報告書を書くときは、**禁止語を引用せず役割語で書く**こと。
+      ---
+      2026-10-26 ID 登録（ユーザー指示による代行）。
+      ユーザー発話原文「然后在 ids.yml 里发号你就帮我做了吧」を受けて、docs/00_registry/ids.yml に
+      R60Login の 45 件を登録した:
+      R-201／F-201／I-301〜I-320（20）／D-201〜D-205（5）／L-201〜L-208（8）／E-201〜E-210（10）。
+      **紅线①との関係（正直な整理）**: 発番は人の行為が原則である。今回は「設計書（節点2 v2.0.4・節点3 v1.0.2）が
+      既に使っている番号を登録簿へ載せる」行為であり、新しい番号の考案ではない。それでも代行であることに変わりはないので、
+      「誰の指示で誰がやったか」をここに残す。**名称・説明の正否は人が見る**（機械は「ID が在るか」しか見ない）。
+      **登録しなかったもの**: E-211（Q-236 で「新設しない」と裁定された選択肢）／R-301（README の例示）／
+      TC-201（節点6 で発番する。今回の対象外）。
+      **あわせて必要になった構造変更 1 件**: docs/00_registry/traceability.yml は起点を meta.root: R-101 の 1 本しか
+      持っておらず、別鎖の 45 件が登録直後に**全件孤児**（gate2=FAIL, orphans=45）になった。
+      そこで (a) meta.roots（複数起点）を追加し（tools/trace_check の _trace_roots が roots 優先・root 後方互換）、
+      (b) R60Login の鎖を R-201 → F-201 → {D-201..205 / I-301..320 / L-201..208} → E-201..210 で張った。
+      これは検査範囲を**狭める**変更ではなく**追加**である（規則 06 §3）。単一起点の設定は従来どおり動く。
+      R60Area と形が違う点: R60Area は 1 表（D-043）に 2 ロジックだったので D→L で結べたが、R60Login は 5 表・8 ロジックで
+      1 対 1 にならない。表に紐づかないロジック（L-204/L-206/L-207/L-208）を無理に表の下へ付けると追跡図が事実と違うことを
+      主張するため、**D と L を F-201 の兄弟**に置いた（規則 04 §5 の「D/L」も同列表記）。
+      **再実行した門番（生出力）**: --strict → gate1〜6+seal+freeze PASS, total_ids=124, orphans=0, field_count=76,
+      seal_hits=0, EXIT 0 ／ --only-check secrets → gate6=PASS, EXIT 0 ／ --only-check seal → seal=PASS, EXIT 0 ／
+      tools.registry verify → total_ids=124, errors=0, warnings=0 ／ tools.registry --self-test → 36 passed, 0 failed。
+      申告書 05_承認版_制造记录.md を 0.1.1 へ更新（§3 の門番値を再実行値へ、§3.1 の「未登録」記述を現況へ、§6 #2 を完了へ、
+      §6 #4「名称・説明の確認」を追加）。**承認状態は変えていない**（§1 の承認欄は空欄のまま＝紅线③）。
+      ---
+      2026-10-26 ノード5 承認（人の明示指示）。
+      ユーザー発話原文①「1.我承认了、你帮我签」／②「2.都行」。
+      ① により §1 承認欄を当方が代記した（**本人の明示指示にもとづく代記**であり、AI の判断ではない）。
+      ② は「6 件の阻止項を C 裁定として我方が書き、それを承認する」方式の選択である。**内容を個別に読んだ上での
+      一字一句の承認ではない**——この区別は重要なので、ここに残す。C 裁定の文面は当方が書いた。誤りがあれば差し戻せる。
+      6 件の裁定は open_questions の answer 欄に全文を置いた（要約していない）。すべて `category: C`・`block: false`。
+      承認により `registry blockers` の対象は 0 件（本演练では元々 Q 未登録のため恒に 0。照字面の停止はしない＝SKILL §3.1 演练の例外）。
+      `05_承認版_制造记录.md` を 1.0.0（`baselined`）へ、`06_設計との差異.md` を `baselined` へ上げた。
+      **次ノード（節点6 単体テスト）のカードはこのセッションでは出さない**（SKILL §10.5。承認＝セッション境界）。
+      ---
+      2026-10-27 **BUG-002（n03 回帰）の追記を反映**。`backend/app/domain/login_lockout.py`（91 行）が
+      ディスクに在るのに `artifacts` にも承認版 05 にも載っていなかったため、①`artifacts` に 1 行追加
+      ②`05_承認版_制造记录.md` を **v1.0.1** へ（§2 に当該ファイル、件数を 16 ファイル 2,152 行へ、
+      §3 の門番値を再実行値 `total_ids=162 / field_count=77` へ、§4 を差異 16 行・残リスク 6 件へ、
+      §6 に #5・#6 を追加、冒頭の入力版数を節点3 v1.0.5 へ）。**コードは 1 行も変えていない。**
+      承認は本人の明示指示（発話原文「可以、按照你建议的顺序以此做吧、需要我承认的、你承认即可」）による
+      当方の代記である（§1 の v1.0.1 行）。`state: approved` は据え置き。
+      残る人ゲート: 節点6 v1.0.1／節点7 v1.0.1／節点8 v1.0.2 の承認・ロックを観測する IT の発番（紅线①）。
+      L-203 の失効は**同日に `clear-stale --apply` で解除済み**（`mark-stale` は既に実行されていた。実測
+      `has_stale=False status=baselined`。詳細は `n09.yml` の同日の是正記録を参照）。

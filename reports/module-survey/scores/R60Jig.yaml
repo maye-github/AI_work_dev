@@ -1,0 +1,37 @@
+module: R60Jig
+evidence_dir: reports/module-survey/R60Jig
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_04_R60Jig_事業場マスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_04_R60Jig_事業場マスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 3
+  impl_alignment: 3
+  teachability: 3
+complexity:
+  level: medium
+  signals: {screens: 1, endpoints: 8, tables: 2, master_detail: false, upload: false, batch: false, sim: false, external: false}
+  note: "単一画面＋修正モーダルだが、更新対象が事業場マスタと事業場購入品目有償品区分紐付けマスタの2表あり、medium の条件（テーブル2〜3）に該当する。"
+evidence:
+  - "sheet=概要; row=12-36: 画面ID=R60Jig、前提=3Gからのデータ受信完了、排他条件あり、利用者は利用権限保持者のみ"
+  - "sheet=イベント一覧; row=14-28: イベントNo.1〜14（初期表示・表示・仕掛表示・検索条件表示・戻る・業務終了・ダウンロード・一覧リンク・登録・戻る・支給単価マスタ連携・会社/事業場（支給単価Ｍ用）変更・仕入先検索）"
+  - "sheet=業務処理説明; row=45: 業務処理説明では「No2=仕掛表示、No3=表示」と記載され、イベント一覧のNo2=表示/No3=仕掛表示と入れ替わっている"
+  - "sheet=画面項目間・DB整合チェック; row=15: 検索結果の上限は50件（##1＝50、超過はR60W0005）"
+  - "sheet=画面項目内容(検索); row=15-71: 検索画面はNo.1〜57の57項目（検索条件・ソート・結果一覧）"
+  - "sheet=画面項目内容(マスタ項目); row=16-47: マスタ項目はNo.1〜32の32項目（事業場略称/出荷場所/表示順/デフォルト受払場所/支給単価マスタ連携/有償品区分/回収・支払条件/保管費/事業場区分等）"
+  - "sheet=画面単項目チェック; row=16-21: チェックはNo.1〜6の6件（変更なし、事業場略称10Byte、出荷場所コード4桁、表示順0〜9999、保管費範囲）。検索条件部のチェックは空欄"
+  - "sheet=画面項目間・DB整合チェック; row=14-17: チェックはNo.2/3/5/6の4件（HIT0件、上限50件、同時更新、出荷場所コード存在）"
+  - "sheet=項目移送表(DB); row=13-49: 更新対象1は R60_JIG_M_TBL（35カラム）"
+  - "sheet=項目移送表(DB)2; row=13-33: 更新対象2は R60_JIG_KON_YUSO_HIMO_M_TBL（19カラム）"
+  - "reports/module-survey/R60Jig/test/00_単体ﾃｽﾄ仕様兼結果.txt:3-5: テスト項目数 実績243、FP 16"
+  - "D:/AI_work/doc/03_AI/AB_Reports/reports/R60Jig/summary.md:16-25: ✅3 🔷2 ⚠️1 💥0 🚫0、⏭️2（modify/download は SKIP）。⚠️は detail の SQL行=1/API行=0（row=23）"
+  - "reports/module-survey/impl-size.json: R60Jig view_lines=1210 / router_lines=1820 / service_lines=42"
+  - "sheet=画面項目内容(検索); row=54: 事業場（支給単価Ｍ用）のエンティティ項目名が「開始検事業場コード（支給単価Ｍ用）定深さ」と破損している"
+  - "sheet=業務処理説明; row=227: 事業場マスタ.会社コード IN ('0093'(飲料社), '0452'(カルピス社)) という顧客固有の会社コードが条件に直書きされている"
+  - "sheet=業務処理説明; row=277-282: 支給単価Ｍ用の会社が「0093(アサヒ飲料株式会社)」「0452(カルピス株式会社)」の場合分けで処理が分岐する"
+risks:
+  - "AB の detail で SQL行=1/API行=0 の不一致。modify/download も SKIP のため更新系は未測定（impl_alignment=3 の理由）"
+  - "イベント一覧と業務処理説明でNo2/No3の対応が入れ替わっており、教材の時系列説明が食い違う"
+  - "画面項目内容(検索) row=54 の項目名が破損しており、項目対応表としてそのまま使えない"
+  - "更新が2表にまたがり、支給単価Ｍ用の会社コードが顧客固有値（'0093'/'0452'）で直書きされている"
+  - "抽出対象外シート（画面遷移図・画面レイアウト・業務処理補足説明）は未確認"
+verdict: "medium 教材として可（No2/No3 の番号ずれと項目名破損の修正が前提）"

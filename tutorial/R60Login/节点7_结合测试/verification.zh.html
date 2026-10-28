@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stage_verification.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>stage_verification.zh</h1>
+<div class="meta">
+  机读源: <code>stage_verification.zh.md</code> ／
+  生成: 2026-10-27 15:07 ／
+  节 7・表 4
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>stage_verification.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 本文档的定位</a></li><li><a href="#sec-2">1. 判定的方法</a></li><li><a href="#sec-3">2. 业务规则 32 条的达成判定</a> <span class="chip chip-br">业务规则</span></li><li><a href="#sec-4">3. 事件 5 件的达成判定</a></li><li><a href="#sec-5">4. 异常处理 9 件的达成判定</a> <span class="chip chip-err">异常</span></li><li><a href="#sec-6">5. 本节点的对象外（不悄悄丢弃）</a></li><li><a href="#sec-7">6. 填写与更新的规约</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: IT-201<br>defines: IT-201..IT-211（11 件。バンドル文書のため先頭 ID を id に置く）<br>type: testing<br>req_ids: [R-201]<br>status: open<br>sensitivity: internal<br>owner: AI-SE<br>version: 0.1.0</p>
+<hr>
+<h1>验收标准达成判定表 — 共通マスタ　ログイン（R60Login）</h1>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 本文档的定位</h2>
+<p><strong>不做 A/B 比较（greenfield・规则 04 §7.1）。</strong> 因为不存在可供比较的旧版，所以不设健康度分数与阈值，也不创建 <code>doc/03_AI/AB_Reports/reports/&lt;モジュール&gt;/summary.md</code>。本文档是把「已批准的验收标准能否在集成・综合测试中被观测到」一对一对应起来的记录。IT 的设计由 <code>tutorial/R60Login/节点7_结合测试/01_AI产出_结合测试规格书.md</code>（v0.1.0）持有。验收标准的出处是 <code>tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md</code>（v1.0.4・<code>baselined</code>）的 §3 业务规则 32 条、§5 事件 5 件、§8 异常处理 9 件，以及 <code>tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md</code>（v2.0.4・<code>baselined</code>）。</p>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 判定的方法</h2>
+<ul><li><strong>期望值的出处只有已批准的上游。</strong> 不使用旧版的实测值、推测值、过去案件的值。设计与实现不一致的地方（节点5 <code>06_設計との差異.md</code> 的 #1・#2・#5・#9），<strong>写出设计的期望，记录实测，由人裁决差异是否可接受</strong>。</li><li>观测的事实限于以下 6 种：<strong>① HTTP 状态 ② <code>errorCode</code>／<code>errorDetailCode</code> 的有无与值 ③ Set-Cookie 的有无与属性 ④ 迁移目标 URL 与迁移方式（新窗口／新标签页还是同一窗口） ⑤ 画面的显示值 ⑥ 运行日志的件数与项目</strong>。不落入这 6 种的标准（性能、使用者属性等）在 §5 作为对象外列出。</li><li><strong>计量以「命令＋实际输出」记录</strong>（规则 02 §10）。不只写「已确认」「没有问题」。</li><li><strong>判定栏由人填写。</strong> 本书的判定栏全部为「未实施」。<strong>AI 不宣告合格与否</strong>（红线③）。执行本身尚未实施，本书只到设计为止。</li></ul>
+</section>
+<section class="sec sec-br" id="sec-3">
+<h2>2. 业务规则 32 条的达成判定 <span class="chip chip-br">业务规则</span></h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">标准（需求 §3 的摘要）</th><th style="text-align:left">观测的 IT / TC</th><th style="text-align:left">期望</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left">01</td><td style="text-align:left">本画面不更新业务数据。仅参照与画面迁移</td><td style="text-align:left">IT-201〜IT-211 全体＋规格书 §7</td><td style="text-align:left">对象 5 张表的件数・更新时间前后不变。<code>SELECT</code> 以外的 DML 为 0 条</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">02</td><td style="text-align:left">不需要排他控制、被参照检查、重复检查</td><td style="text-align:left">IT-211（错误响应的全部种类）</td><td style="text-align:left">E-201〜E-210 的任何响应中都没有排他・被参照・重复的分支</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">03</td><td style="text-align:left">使用对象为持有使用权限者。但不用于登录可否</td><td style="text-align:left">IT-202（<code>Y</code>）・IT-211（<code>N</code>）</td><td style="text-align:left">権限区分 <code>Y</code>／<code>N</code> 双方都能登录成立，且可否没有差别</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">04</td><td style="text-align:left">用于可否的只有员工编号的存在与未删除</td><td style="text-align:left">IT-202（成立）・TC-211（不存在／已删除时不成立）</td><td style="text-align:left">成立・不成立的分支能由这 1 个条件说明</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">05</td><td style="text-align:left">所属・权限・有效期限不用于可否</td><td style="text-align:left">IT-211（B-14／B-15）</td><td style="text-align:left">権限区分 <code>Y</code>／<code>N</code> 在可否上没有差别（有效期限见 §5(a)）</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">06</td><td style="text-align:left">员工编号加密后发送，服务器侧解密并确认存在</td><td style="text-align:left">IT-202・IT-204</td><td style="text-align:left"><code>/login</code> 的请求正文为加密值，<code>/generateUrl</code> 的请求正文为明文。解密后存在确认成立</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">07</td><td style="text-align:left">能确认时，把公司・事业场・姓名等保存到 Session，使后续画面可参照</td><td style="text-align:left">IT-202</td><td style="text-align:left">返回 <code>userInfo</code> 6 项＋<code>mngInfo</code> 5 项，发行 HttpOnly 的标识符 Cookie。响应正文中不含标识符（后续画面的参照见 §5(a)）</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">08</td><td style="text-align:left">ユーザーＩＤ为必填且半角 7 位</td><td style="text-align:left">IT-211（B-05／B-07）・TC-212</td><td style="text-align:left">规范化后 7 位成立，其余情况不产生 <code>/login</code> 的请求</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">09</td><td style="text-align:left">位数・字符种类不正时，与不存在的员工编号同样处理</td><td style="text-align:left">IT-211（B-05／B-07／B-40）・TC-212</td><td style="text-align:left">显示文案与迁移目标与 E-201 相同</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">起動区分不改变可否。用途只有迁移 URL 的 <code>stfKbn</code> 与菜单交接这 2 个</td><td style="text-align:left">IT-202・IT-203・IT-211（B-09〜B-12）</td><td style="text-align:left"><code>stfKbn</code> 的值出现在迁移 URL 与菜单迁移的查询中，可否不变</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">画面候选从画面主数据取得，全公司共通。初始值为首个</td><td style="text-align:left">IT-201</td><td style="text-align:left"><code>pageList</code> 与主数据的有效行一致，I-306 的初始值为首个候选项</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">候选中包含同一画面的模拟版</td><td style="text-align:left">IT-210</td><td style="text-align:left">候选清单中出现模拟版</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">13</td><td style="text-align:left">権限区分为有更新／无更新。初始值为有更新。交接给迁移目标</td><td style="text-align:left">IT-201・IT-202</td><td style="text-align:left">I-307 的初始值为 <code>Y</code>，保持区域 <code>r60login.kgnKbn</code> 被设定，且不载入 URL（迁移目标中的使用见 §5(a)）</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">14</td><td style="text-align:left">登录成功时打开所选的画面，并把権限区分交接给迁移目标</td><td style="text-align:left">IT-202</td><td style="text-align:left">迁移目标 URL 为 <code>/R60/{gmnId}?stfKbn=…</code>，権限区分在保持区域中</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">15</td><td style="text-align:left">按下菜单时迁移到菜单画面，并交接起動区分</td><td style="text-align:left">IT-203</td><td style="text-align:left">在同一窗口迁移，查询仅为 <code>stfKbn</code></td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">16</td><td style="text-align:left">迁移目标的特定・迁移方式依敝公司标准规约</td><td style="text-align:left">IT-202・IT-203</td><td style="text-align:left">登录＝新窗口／新标签页（不可时同一窗口）、菜单＝同一窗口（节点4 §6.1）</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">17</td><td style="text-align:left">用 URL 输出按钮生成含加密员工编号的 URL，并显示在「URL」栏</td><td style="text-align:left">IT-204</td><td style="text-align:left">响应 <code>url</code> 中含加密值，与 I-310 的显示值一致</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">18</td><td style="text-align:left">URL 参数的排列与值按指定</td><td style="text-align:left">IT-204・TC-204</td><td style="text-align:left">顺序为 <code>stfCd</code>→<code>stfKbn</code>→<code>gmnId</code>→<code>kgnKbn</code>，且不被编码</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">19</td><td style="text-align:left">在线使用未被许可的状态下不允许登录，作为业务错误</td><td style="text-align:left">IT-206</td><td style="text-align:left"><code>/init</code> 为 403・<code>1</code>／<code>R60W0004</code>，迁移到在线使用错误画面，登录不成立</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">20</td><td style="text-align:left">API 为 3 个端点，全部 POST，路径为 <code>/R60Login/&lt;name&gt;</code></td><td style="text-align:left">IT-201・IT-202・IT-203・IT-204</td><td style="text-align:left">网络上出现的 path 仅 3 条，且全部为 POST。菜单不调用第 4 个</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">21</td><td style="text-align:left"><code>/init</code> 不持有输入，返回候选与権限区分候选。前处理中有运行状态检查</td><td style="text-align:left">IT-201・IT-206</td><td style="text-align:left">无请求参数返回 <code>pageList</code>・<code>kbnList</code>，不可运行时为 403</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">22</td><td style="text-align:left"><code>/login</code> 接收已加密的员工编号，进行解密・存在确认，并返回公司・事业场・姓名等</td><td style="text-align:left">IT-202</td><td style="text-align:left"><code>errorCode="0"</code> 且返回 <code>userInfo</code>・<code>mngInfo</code></td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">23</td><td style="text-align:left"><code>/login</code> 无相应时返回 <code>{"errorCode":"1"}</code>。不返回其他字段</td><td style="text-align:left">IT-211（B-42 的响应形式）・TC-217</td><td style="text-align:left">响应 JSON 的键仅为 <code>errorCode</code></td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">24</td><td style="text-align:left"><code>/generateUrl</code> 接收明文员工编号，服务器侧加密后返回 URL</td><td style="text-align:left">IT-204</td><td style="text-align:left">请求正文为明文，响应 <code>url</code> 中含加密值</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">25</td><td style="text-align:left"><code>stfCd</code> 的处理在两个端点相反</td><td style="text-align:left">IT-202・IT-204</td><td style="text-align:left"><code>/login</code> 接收已加密值，<code>/generateUrl</code> 接收明文</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">26</td><td style="text-align:left">员工编号未输入时，<code>/generateUrl</code> 把 <code>"NaN"</code> 当作员工编号处理</td><td style="text-align:left">IT-204（B-08）</td><td style="text-align:left">空栏时 <code>errorCode="0"</code>，<code>url</code> 的员工编号位置为 <code>NaN</code></td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">27</td><td style="text-align:left">加密以当日日期为密钥材料，仅当日内有效。解密在服务器侧</td><td style="text-align:left">IT-202（B-32）・IT-207（B-33）</td><td style="text-align:left">同一日解密成立。跨日的响应记录设计的期望（E-205）与实测，由人裁决差异</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">28</td><td style="text-align:left">必须与 URL 形式兼容。方式与密钥的运用依我方提案</td><td style="text-align:left">IT-204</td><td style="text-align:left">组装 URL 的形状与设计 §7.9 一致，满足需求 §3 规则 18 的指定顺序</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">29</td><td style="text-align:left">能区分正常／业务错误／系统错误</td><td style="text-align:left">IT-206・IT-207・IT-211</td><td style="text-align:left">通过 <code>errorCode</code> <code>0</code>／<code>1</code>／<code>2</code> 与 HTTP 403 的组合可识别 3 个类别</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">30</td><td style="text-align:left">菜单头与 Session 错误画面是调用（不新建）</td><td style="text-align:left">IT-203・IT-206・IT-211</td><td style="text-align:left">迁移目标是共通基盘既有画面的 URL</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">31</td><td style="text-align:left">画面主数据的内容另行提供。本画面只取得并显示</td><td style="text-align:left">IT-201・IT-211（B-25）</td><td style="text-align:left">显示内容为主数据的原值，不把件数当作固定值</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">32</td><td style="text-align:left">支持的浏览器・画面分辨率・同时使用数・性能依敝公司标准</td><td style="text-align:left">§5(a)</td><td style="text-align:left">验收标准中没有数值，故本节点不观测</td><td style="text-align:left">对象外</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 事件 5 件的达成判定</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">事件（需求 §5）</th><th style="text-align:left">观测的 IT</th><th style="text-align:left">期望</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">初始显示（标题・画面候选・権限区分候选・初始值）</td><td style="text-align:left">IT-201</td><td style="text-align:left"><code>/init</code> 的响应落到画面的 6 处初始值上</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">登录按钮点击（进行判定，成功时打开所选画面）</td><td style="text-align:left">IT-202</td><td style="text-align:left">加密→<code>/login</code>→Session→新窗口／新标签页迁移连续成立</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">菜单按钮点击（迁移到菜单画面）</td><td style="text-align:left">IT-203</td><td style="text-align:left">共用 <code>/login</code>，在同一窗口迁移</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">URL 输出按钮点击（生成迁移用 URL 并显示在 URL 栏）</td><td style="text-align:left">IT-204</td><td style="text-align:left">响应 <code>url</code> 显示在 I-310 上，且不用于迁移</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">关闭按钮点击（确认后关闭画面）</td><td style="text-align:left">IT-205・IT-208</td><td style="text-align:left">按破弃请求→<code>window.close()</code> 的顺序关闭，不出现追加提示</td><td style="text-align:left">未实施</td></tr></tbody></table>
+</section>
+<section class="sec sec-err" id="sec-5">
+<h2>4. 异常处理 9 件的达成判定 <span class="chip chip-err">异常</span></h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">事象（需求 §8）</th><th style="text-align:left">观测的 IT / TC</th><th style="text-align:left">期望</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left">E-01</td><td style="text-align:left">员工不存在</td><td style="text-align:left">IT-211（B-28／B-42）・TC-211</td><td style="text-align:left">仅 <code>errorCode="1"</code>。迁移到 Session 错误画面</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">E-02</td><td style="text-align:left">ユーザーＩＤ的位数・字符种类不正</td><td style="text-align:left">IT-211（B-05／B-07）・TC-212</td><td style="text-align:left">与 E-01 相同处理（同一文面・同一迁移目标）</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">E-03</td><td style="text-align:left">在线使用未被许可</td><td style="text-align:left">IT-206</td><td style="text-align:left">403・<code>1</code>／<code>R60W0004</code>。在线使用错误画面</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">E-04</td><td style="text-align:left">画面主数据的取得失败</td><td style="text-align:left">TC-214（由单元测试担保）</td><td style="text-align:left"><code>2</code>／<code>R60E9999</code>。系统错误画面（迁移目标的观测见 §5(b)）</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">E-05</td><td style="text-align:left">解密失败（非法的加密员工编号）</td><td style="text-align:left">TC-215・IT-207</td><td style="text-align:left"><code>1</code>／<code>R60W0003</code>。Session 错误画面（跨日的实测差异见 §5(b)）</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">E-06</td><td style="text-align:left">初始显示的运行状态检查不可</td><td style="text-align:left">IT-206</td><td style="text-align:left">403・<code>1</code>／<code>R60W0004</code>。不返回候选</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">E-07</td><td style="text-align:left"><code>/login</code> 无相应</td><td style="text-align:left">TC-217・IT-211</td><td style="text-align:left">响应仅为 <code>errorCode</code>。不返回其他字段</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">E-08</td><td style="text-align:left">登录处理中的 DB 故障等</td><td style="text-align:left">TC-218（由单元测试担保）</td><td style="text-align:left"><code>2</code>／<code>R60E9999</code>。使用者文案中不出现内部信息（迁移目标见 §5(b)）</td><td style="text-align:left">未实施</td></tr><tr><td style="text-align:left">E-09</td><td style="text-align:left"><code>/generateUrl</code> 的加密失败・设定不全</td><td style="text-align:left">TC-219（由单元测试担保）</td><td style="text-align:left"><code>2</code>／<code>R60E9999</code>。不返回 <code>url</code>（迁移目标见 §5(b)）</td><td style="text-align:left">未实施</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 本节点的对象外（不悄悄丢弃）</h2>
+<p>带理由列出无法观测的条款。分为 <strong>(a) 结构上无法观测</strong> 与 <strong>(b) 以本节点的手段无法观测、等待 §8 的确定</strong>。(b) 不是「对象外」而是「未观测」，手段确定后回到 IT。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">类别</th><th style="text-align:left">对象外・未观测的内容</th><th style="text-align:left">理由</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">(a)</td><td style="text-align:left">需求 §3 规则 05 的「有效期限」</td><td style="text-align:left">员工主数据中没有有效期限列（节点3 D-201），观测对象不存在</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">(a)</td><td style="text-align:left">需求 §3 规则 07 的「后续画面可参照」</td><td style="text-align:left">SCR-202 的主体在本画面范围外（节点3 §1.2）。在 IT-202 中观测到 Session 的发行与 11 项的返回为止（部分观测）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">(a)</td><td style="text-align:left">需求 §3 规则 13 的「迁移目标业务画面中能否更新操作」</td><td style="text-align:left">同上。不制作迁移目标的业务画面</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">(a)</td><td style="text-align:left">需求 §3 规则 30 的迁移目标画面本身的显示内容</td><td style="text-align:left">4 个画面由客户的共通基盘提供（不新建）。观测的只是迁移目标 URL 为止</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">(a)</td><td style="text-align:left">需求 §3 规则 32 的浏览器・分辨率・同时使用数・性能</td><td style="text-align:left">验收标准中没有数值（Q-219 未确定），测定是案件环境的职责（规则 04 §9.1）</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">(a)</td><td style="text-align:left">输出的翻译・文案的妥当性</td><td style="text-align:left">文案的唯一定义是需求 §9.1，只观测显示字符串的一致（不判定文案的优劣）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">(b)</td><td style="text-align:left">E-04／E-08／E-09 的「到达系统错误画面」</td><td style="text-align:left">注入异常的手段未确定（规格书 §8 #1・#6）。TC 只担保到响应形式为止</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">(b)</td><td style="text-align:left">IT-207（跨日）的实施</td><td style="text-align:left">推进服务器时刻的手段未确定（规格书 §8 #11）。确定之前为「未观测」</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">(b)</td><td style="text-align:left">IT-209（多实例）的完全判定</td><td style="text-align:left">本画面的 3 个端点不参照 Session。需要共通基盘中持有 Session 参照的画面侧的观测（部分观测）</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">(b)</td><td style="text-align:left">需求 §3 规则 01・02 的「DML 0 条」的直接确认</td><td style="text-align:left">发出 SQL 的记录手段未确定（规格书 §8 #6）。确定之前用 5 张表的件数・更新时间前后比较代替</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">(b)</td><td style="text-align:left">所有伴随画面操作的 IT（IT-201〜IT-205・IT-210・IT-211）的实施</td><td style="text-align:left">已批准的栈中没有浏览器操作的手段（规格书 §8 #3・#4）。对栈的追加属于工程04 的批准事项（红线④）</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 填写与更新的规约</h2>
+<ul><li><strong>判定栏</strong>由人按 <code>未実施</code> → <code>充足</code>／<code>不充足</code>／<code>未观测</code> 之一填写。「未实施」与「未观测」要区分（前者是有手段但未执行，后者是手段未确定）。</li><li>不充足的行要<strong>并列写出实测值与差分</strong>。差异若属设计侧问题则转到变更环（<code>CR</code>），若属实现侧则转到 <code>BUG</code>。<strong>不在本书中修改设计</strong>（红线②）。</li><li>由节点5 差异 #1・#2・#5・#9 引起的差异，<strong>是否接受由人裁决</strong>。在裁决出来之前保持「不充足」。</li><li>行的追加・排序自由。<strong>标准的编号（规则 01〜32・事件 1〜5・E-01〜E-09）不得改动</strong>（是比对的键）。</li></ul>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>stage_verification.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

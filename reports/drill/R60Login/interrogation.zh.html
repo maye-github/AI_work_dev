@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>interrogation</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>interrogation</h1>
+<div class="meta">
+  机读源: <code>interrogation.md</code> ／
+  生成: 2026-10-19 18:14 ／
+  节 2・表 2
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>interrogation.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">小結 1：内部矛盾として特に強いもの</a></li><li><a href="#sec-2">小結 2：要求書が参照しているが未提供の資料</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>R60Login 要求書 確認事項一覧（独立審査）</h1>
+<ul><li>本一覧は「確認すべき点の候補」であり、問題の断定ではない。</li><li>Q-ID は振っていない（発番は人の仕事）。</li><li>回答はしていない（顧客または裁定する人の仕事）。</li></ul>
+<p><strong>審査対象</strong>: <code>tutorial/R60Login/节点1_需求/00_输入_客户需求书.md</code>（v2.0 / 2025-09-12）<br><strong>審査方法</strong>: <code>requirement-interrogator</code> SKILL の 3 段（機械突合 → レンズ → 業務含意）。実装コード・既存の指摘一覧・アーカイブは参照していない。</p>
+<p><strong>記入欄の選択肢（人が記入）</strong>: ①要求書に書き戻す ／ ②未確定事項に残す ／ ③対象外<br><strong>区分の素案</strong>: A＝顧客が決める（顧客しか持たない資料・事実）／B＝我方が提案し顧客が承認／C＝我方内部で決定。あくまで素案であり、確定は人が行う。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">何が（1文）</th><th style="text-align:left">なぜ気づいたか（lens/手法）</th><th style="text-align:left">根拠（要求書の節・行）</th><th style="text-align:left">区分素案 A/B/C</th><th style="text-align:left">影響する工程</th><th style="text-align:left">振り分け欄（人が記入）</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">「利用対象者」を §3.1 では「利用権限保持者のみ」とし、§3.4 ではログイン可否の判定に所属・権限・有効期限を用いないとしており、どちらが正か。</td><td style="text-align:left">L-14（内部矛盾）／同一条件の全文突合（1-2）</td><td style="text-align:left">§3.1（48行）／§3.4（94-95行）</td><td style="text-align:left">A</td><td style="text-align:left">要件・基本設計・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">「メニュー」イベントが §4.1 の対応表では <code>/login</code> に対応し、直後の注記では「端点を持たない」とされている。</td><td style="text-align:left">L-02（文書内突合）／L-03（申告値の実測）</td><td style="text-align:left">§4.1 表 #2（158行）／§4.1 注（161行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>/login</code> は <code>stfCd</code>・<code>stfKbn</code>・<code>gmnId</code>・<code>kgnKbn</code> の4つを受けるが、§4.3 の処理で使うのは <code>stfCd</code> だけで、残り3つが未使用である。</td><td style="text-align:left">L-17（送っているのに使っていない）／L-15（明示分岐は効くか）</td><td style="text-align:left">§4.3 Request（178行）／処理（180行）／§3.4（94行）</td><td style="text-align:left">B</td><td style="text-align:left">詳細設計・製造・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">暗号化方式を「貴方の提案」としつつ、他システムも同じ URL を組み立てるため互換必須としており、方式を自由に選べない。</td><td style="text-align:left">L-02（文書内突合）／L-04（別途提供・標準規約の拾い上げ）</td><td style="text-align:left">§4.5（204-205行）／§3.6（115行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>/login</code> は画面側で暗号化した <code>stfCd</code> を受け、<code>/generateUrl</code> は平文を受けてサーバ側で暗号化するとしており、暗号化の主体が2経路に分かれている。</td><td style="text-align:left">L-27（共通部品の二重実装）／L-17</td><td style="text-align:left">§4.3（179行）／§4.4（190-191行）／§4.5（202-204行）</td><td style="text-align:left">B</td><td style="text-align:left">基本設計・詳細設計・製造</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">システム日時を「弊社標準規約による（§3.8）」とするが、§3.8 には日時に関する標準が無く、時刻の取得元（サーバ／端末）も書かれていない。</td><td style="text-align:left">L-25（標準仕様参照の指す先）／L-04／L-29（環境依存）</td><td style="text-align:left">§3.2 #2（60行）／§3.8（135-147行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計・製造</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">エラー区分・エラーコード体系を §3.8 が §5 に委ね、§5 が §3.8 の標準規約に委ねており、参照が循環して実体が無い。</td><td style="text-align:left">L-02（文書内突合）／L-04</td><td style="text-align:left">§3.8（139-140行）／§5（209行）</td><td style="text-align:left">A</td><td style="text-align:left">要件・基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">前提条件を「なし」とするが、画面候補は画面マスタ、ログイン判定は社員マスタの存在に依存している。</td><td style="text-align:left">L-02／前提条件と外部依存の突合（1-2）</td><td style="text-align:left">§3.1（51行）／§3.2 #6（64行）／§3.4（92行）</td><td style="text-align:left">B</td><td style="text-align:left">要件・基本設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">画面タイトルの固定値は「共通マスタ　ログイン」（全角空白入り）だが、文書名は「共通マスタログイン」で一致しない。</td><td style="text-align:left">L-02（同一項目名の突合）／L-07（表示書式）</td><td style="text-align:left">§3.2 #1（59行）／表題（1行）／§1（26行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・製造・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">URL 欄は生成 URL の表示欄でありながら利用者が直接編集でき、編集値が何に使われるか・画面選択との優先関係が書かれていない。</td><td style="text-align:left">L-05（条件・例外の解釈）／L-17</td><td style="text-align:left">§3.2 #10（68行）／§3.3 #4（87行）／§3.5（106行）</td><td style="text-align:left">B</td><td style="text-align:left">基本設計・詳細設計・製造</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">URL の入力上限を150文字とするが、暗号化後の社員コード長が定義されておらず、生成 URL が上限を超えるか判定できない。</td><td style="text-align:left">L-02（同一数値の突合）／L-08（境界値）</td><td style="text-align:left">§3.2 #10（68行）／§3.6（118行）／§4.4（192行）</td><td style="text-align:left">B</td><td style="text-align:left">設計・製造・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">12</td><td style="text-align:left"><code>/generateUrl</code> は社員コード未入力時に「<code>"NaN"</code> を社員コードとして扱う」とするが、ログイン側の必須・半角7桁チェックとの関係が書かれていない。</td><td style="text-align:left">L-05（例外記述の解釈）／1-2 同一条件の突合</td><td style="text-align:left">§4.4 注（198行）／§3.4 入力チェック（101-102行）</td><td style="text-align:left">A</td><td style="text-align:left">要件・詳細設計・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">13</td><td style="text-align:left">ログイン成功時は「選択された画面を開く」とするが、<code>/login</code> の応答に遷移先 URL が無く、遷移方式も未提供の標準規約任せで、遷移経路が閉じない。</td><td style="text-align:left">L-04／L-17／L-26（実装されている≠使われている）</td><td style="text-align:left">§3.5（106-109行）／§4.3 応答（181行）／§3.8（145行）</td><td style="text-align:left">B</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">14</td><td style="text-align:left">権限区分は遷移先へ引き継ぎ更新可否に用いるとするが、<code>/login</code> は <code>kgnKbn</code> を使わず、遷移先での判定主体・サーバ検証の有無も書かれていない。</td><td style="text-align:left">L-35（認可は API 側で）／L-17</td><td style="text-align:left">§3.2 #7（65行）／§3.5（106行）／§4.3（178-182行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計・結合テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">15</td><td style="text-align:left">Session に保存する「会社・事業場・氏名等」の「等」が不明で、<code>/login</code> 応答の <code>userInfo</code>／<code>mngInfo</code> の中身も定義されていない。</td><td style="text-align:left">L-09（派生値・名称取得の対応）／L-04</td><td style="text-align:left">§3.4（97行）／§4.3（181行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">16</td><td style="text-align:left">「閉じる」で本画面を閉じる方法（<code>window.close</code> の可否、遷移方式との関係）が書かれていない。</td><td style="text-align:left">L-25／L-05</td><td style="text-align:left">§3.3 #5（88行）／§3.8（145行）</td><td style="text-align:left">B</td><td style="text-align:left">詳細設計・製造</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">17</td><td style="text-align:left">「閉じる」または画面離脱時に Session を破棄するかが書かれておらず、共用端末でログイン状態が残る可能性がある。</td><td style="text-align:left">L-16（暗黙の前提・共用端末）／L-21（セッションの切れ）</td><td style="text-align:left">§3.3 #5（88行）／§3.4（97行）</td><td style="text-align:left">B</td><td style="text-align:left">要件・基本設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">18</td><td style="text-align:left">画面マスタが0件または取得失敗のとき、初期値「先頭の候補」とログイン可否をどうするかが書かれていない。</td><td style="text-align:left">L-08（0件・NULL の分岐）</td><td style="text-align:left">§3.2 #6（64行）／§4.2（169-170行）／§5（216行）</td><td style="text-align:left">B</td><td style="text-align:left">基本設計・詳細設計・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">19</td><td style="text-align:left"><code>/init</code> は <code>kbnList</code> を返すが、§3.2 #7／§3.6 では権限区分は2値固定であり、マスタ駆動か固定かの整合が取れていない。</td><td style="text-align:left">L-02／L-28（同一フィールドの符号系）</td><td style="text-align:left">§4.2（171行）／§3.2 #7（65行）／§3.6（126行）</td><td style="text-align:left">B</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">20</td><td style="text-align:left">画面候補に「シミュレーション版」が混在するが、現場でどちらを選ぶべきか・区別表示や除外の要否が書かれていない。</td><td style="text-align:left">L-19（誤操作・誤選択）</td><td style="text-align:left">§3.2 注（76行）</td><td style="text-align:left">A</td><td style="text-align:left">要件・基本設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">21</td><td style="text-align:left">画面候補は利用者ごとに絞り込まないと明記され、権限のない画面も選べるが、選択した場合の挙動が書かれていない。</td><td style="text-align:left">L-19／L-20（権限区分×操作の網羅）</td><td style="text-align:left">§3.2 #6（64行）／§3.1（48行）／§3.4（95行）</td><td style="text-align:left">B</td><td style="text-align:left">要件・基本設計・結合テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">22</td><td style="text-align:left">権限区分の初期値が「更新あり」であり、選び忘れると更新権限のまま遷移する運用リスクがある。</td><td style="text-align:left">L-18（既定値の妥当性）</td><td style="text-align:left">§3.2 #7（65行）</td><td style="text-align:left">B</td><td style="text-align:left">要件・基本設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">23</td><td style="text-align:left">起動区分はテキストボックスで初期値「3」だが、1／2／3 以外や空白を入力した場合のチェックが書かれていない。</td><td style="text-align:left">L-05／L-06（必須・活性の判定基準）</td><td style="text-align:left">§3.2 #4（62行）／§3.4（101行）</td><td style="text-align:left">B</td><td style="text-align:left">基本設計・詳細設計・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">24</td><td style="text-align:left"><code>/generateUrl</code> の処理には社員の存在確認が無く、存在しない社員コードでも URL を生成できる。</td><td style="text-align:left">L-08／L-17</td><td style="text-align:left">§4.4 処理（191行）／§3.4（92-99行）／§5（213行）</td><td style="text-align:left">B</td><td style="text-align:left">要件・詳細設計・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">25</td><td style="text-align:left">当日の日付を鍵材料とするため、出力した遷移 URL は翌日には復号できなくなる。他システム連携での URL 有効期限の合意が書かれていない。</td><td style="text-align:left">L-29（環境依存・当日鍵）／L-16</td><td style="text-align:left">§4.5（202行）／§3.6（115行）</td><td style="text-align:left">B</td><td style="text-align:left">要件・基本設計・運用</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">26</td><td style="text-align:left">暗号化された社員コードをクエリ文字列に載せるが、URL エンコードや使用可能文字の規定が無い。</td><td style="text-align:left">L-07（表示書式・整形）</td><td style="text-align:left">§3.6（118行）／§4.4（192行）</td><td style="text-align:left">B</td><td style="text-align:left">詳細設計・製造・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">27</td><td style="text-align:left">ログイン・URL出力などのボタンが非同期 API を呼ぶが、二重送信の扱いが書かれていない。</td><td style="text-align:left">L-31（非同期の多重実行）</td><td style="text-align:left">§3.3（85-87行）／§4.1（151行）</td><td style="text-align:left">B</td><td style="text-align:left">基本設計・詳細設計・製造</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">28</td><td style="text-align:left">入力チェック不正・社員不存在・復号失敗を「セッションエラー画面へ遷移」としているが、その意図と画面の役割が書かれていない。</td><td style="text-align:left">L-34（エラー種別ごとの画面遷移）／L-05</td><td style="text-align:left">§3.4（99-102行）／§5（213-217行）／§3.8（141-142行）</td><td style="text-align:left">A</td><td style="text-align:left">要件・基本設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">29</td><td style="text-align:left">社員コードを「半角7桁」とするが、数字のみか英数字か、先頭ゼロを許すかが書かれていない。</td><td style="text-align:left">L-40（桁・全半角の正規化）／L-07</td><td style="text-align:left">§3.2 #3（61行）／§3.4（101行）</td><td style="text-align:left">A</td><td style="text-align:left">要件・詳細設計・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">30</td><td style="text-align:left">標準規約（エラー応答・メッセージ・ログの形式、エラーコード体系）が未提供である。</td><td style="text-align:left">L-04（別途提供・標準規約の拾い上げ）</td><td style="text-align:left">§3.8（139-140行）／§5（209行）</td><td style="text-align:left">A</td><td style="text-align:left">要件・基本設計・詳細設計・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">31</td><td style="text-align:left">画面マスタの内容（候補一覧・画面 ID・並び順）が「別途提供」とされているが未提供である。</td><td style="text-align:left">L-04</td><td style="text-align:left">§3.8（143-144行）／§3.2 注（75-76行）／§4.2（170行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計・製造・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">32</td><td style="text-align:left">メニューヘッダおよび Session エラー画面の仕様・呼出方法が未提供である。</td><td style="text-align:left">L-04／L-46（共通部品変更の波及範囲）</td><td style="text-align:left">§2（38行）／§3.8（141-142行）／§3.4（99行）／§5（213,217行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">33</td><td style="text-align:left">画面遷移の方式（同一ウィンドウ／別ウィンドウ／新規タブ）が未提供である。</td><td style="text-align:left">L-04</td><td style="text-align:left">§3.5（109行）／§3.8（145行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">34</td><td style="text-align:left">非機能（対応ブラウザ・画面解像度・同時利用数・性能）が未提供である。</td><td style="text-align:left">L-04</td><td style="text-align:left">§3.8（146行）</td><td style="text-align:left">A</td><td style="text-align:left">要件・基本設計・結合テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">35</td><td style="text-align:left">稼働状態（オンライン利用の許可）の判定方式が未提供である。</td><td style="text-align:left">L-04</td><td style="text-align:left">§3.7（132-133行）／§3.8（135-147行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">36</td><td style="text-align:left">「閉じる」の確認メッセージ文面が標準規約任せで未提供である。</td><td style="text-align:left">L-04</td><td style="text-align:left">§3.3 #5（88行）</td><td style="text-align:left">A</td><td style="text-align:left">詳細設計・製造・単体テスト</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">37</td><td style="text-align:left">メニュー画面（遷移先）の所在・仕様が未提供で、クライアント側遷移の実現方法が定まらない。</td><td style="text-align:left">L-04／L-26</td><td style="text-align:left">§3.3 #3（86行）／§3.5（107行）／§4.1 注（161行）</td><td style="text-align:left">A</td><td style="text-align:left">基本設計・詳細設計</td><td style="text-align:left"></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>小結 1：内部矛盾として特に強いもの</h2>
+<p>要求書の複数箇所を並べると噛み合わないもの。断定ではなく、どちらが正かを確認する候補である。</p>
+<ol><li><strong>利用対象者の矛盾</strong>（#1）— §3.1「利用権限保持者のみ」と §3.4「社員コードの存在だけで判定、権限は見ない」。</li><li><strong>メニューイベントの端点</strong>（#2）— §4.1 表は <code>/login</code> に対応付け、同節の注記は「端点を持たない」とする。</li><li><strong><code>/login</code> の未使用パラメータ</strong>（#3）— 4つ受けて処理で使うのは <code>stfCd</code> のみ。</li><li><strong>暗号方式の提案と他システム互換</strong>（#4）— 「貴方の提案」と「他システムが同じ URL を組み立てる」が両立しない。</li><li><strong>暗号化の主体が2経路</strong>（#5）— <code>/login</code> は画面側、<code>/generateUrl</code> はサーバ側。</li><li><strong>システム日時の委譲先が空</strong>（#6）— §3.2 #2 が §3.8 に委ねるが、§3.8 に日時標準が無い。</li><li><strong>エラー区分の循環参照</strong>（#7）— §3.8 → §5 → §3.8 で実体に到達しない。</li><li><strong>前提条件「なし」とマスタ依存</strong>（#8）— 画面マスタ・社員マスタに依存している。</li><li><strong>画面タイトルの固定値</strong>（#9）— 「共通マスタ　ログイン」（全角空白）と文書名「共通マスタログイン」。</li><li><strong>URL 150文字上限と暗号化長</strong>（#11）— 生成 URL の長さを判定する材料が無い。</li><li><strong><code>"NaN"</code> の扱いと入力チェック</strong>（#12）— 未入力を社員コードとして扱う一方、ログイン側は必須・半角7桁。</li><li><strong>権限区分の引継ぎと未使用</strong>（#14）— 遷移先で使うとしながら <code>/login</code> は <code>kgnKbn</code> を使わない。</li></ol>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>小結 2：要求書が参照しているが未提供の資料</h2>
+<p>「弊社標準に従う」「別途提供」「共通部品」として委譲されているが、現時点で手元に無い入力。提供元・提供時期の確認が必要である。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">未提供資料</th><th style="text-align:left">要求書の参照箇所</th><th style="text-align:left">対応する確認事項</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">標準規約（エラー応答・メッセージ・ログの形式、エラーコード体系）</td><td style="text-align:left">§3.8（139-140行）／§5（209行）</td><td style="text-align:left">#30</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">画面マスタの内容（候補一覧・画面 ID・並び順）</td><td style="text-align:left">§3.8（143-144行）／§3.2 注（75-76行）</td><td style="text-align:left">#31</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">メニューヘッダ共通部品の仕様・呼出方法</td><td style="text-align:left">§2（38行）／§3.8（141-142行）</td><td style="text-align:left">#32</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">Session エラー画面の仕様・呼出方法</td><td style="text-align:left">§3.8（141-142行）／§3.4（99行）／§5（213,217行）</td><td style="text-align:left">#32</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">画面遷移方式（同一ウィンドウ／別ウィンドウ／新規タブ）</td><td style="text-align:left">§3.5（109行）／§3.8（145行）</td><td style="text-align:left">#33</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">非機能基準（対応ブラウザ・画面解像度・同時利用数・性能）</td><td style="text-align:left">§3.8（146行）</td><td style="text-align:left">#34</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">稼働状態（オンライン利用の許可）の判定方式</td><td style="text-align:left">§3.7（132-133行）</td><td style="text-align:left">#35</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">閉じる確認メッセージの文面</td><td style="text-align:left">§3.3 #5（88行）</td><td style="text-align:left">#36</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">メニュー画面（遷移先）の所在・仕様</td><td style="text-align:left">§3.3 #3（86行）／§3.5（107行）</td><td style="text-align:left">#37</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">他システムが本 URL を組み立てる際の暗号化方式・パラメータ仕様（既存仕様）</td><td style="text-align:left">§3.6（115行）／§4.5（204行）</td><td style="text-align:left">#4</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">システム日時の標準（時刻源・24時間制の別を含む）</td><td style="text-align:left">§3.2 #2（60行）／§3.8（147行）</td><td style="text-align:left">#6</td></tr></tbody></table>
+<blockquote class="quote">合計 <strong>11 件</strong>。うち #4・#6 は「内部矛盾」と「未提供資料」の両方に現れる（矛盾の根本原因が未提供入力にあるため）。</blockquote>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>interrogation.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

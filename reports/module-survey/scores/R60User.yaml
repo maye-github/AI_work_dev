@@ -1,0 +1,37 @@
+module: R60User
+evidence_dir: reports/module-survey/R60User
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_01_R60User_ユーザーマスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_01_R60User_ユーザーマスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 4
+  impl_alignment: 3
+  teachability: 3
+complexity:
+  level: simple
+  signals: {screens: 1, endpoints: 7, tables: 1, master_detail: false, upload: false, batch: false, sim: false, external: false}
+  note: "単一画面＋修正モーダル、更新対象はユーザマスタ1表、AB actionId は7件で構造は simple。ただし自工/他工・帳票権限などの業務ルールは重い。"
+evidence:
+  - "sheet=概要; row=12-37: 画面ID=R60User、前提=IDM/3Gからのデータ受信完了、排他条件あり、利用者は利用権限保持者のみ"
+  - "sheet=イベント一覧; row=14-27: イベントNo.2〜15（No.1/No.12は見出し）。初期表示・会社変更・組織ユニット検索・表示・ページ・ソート・一覧リンク・経理用会社変更・戻る・登録"
+  - "sheet=業務処理説明; row=228-242: 自工・他工判別処理（ログインユーザの所属会社/事業場と画面の経理用会社/事業場を比較）"
+  - "sheet=業務処理説明; row=245-266: 権限区分・自工更新フラグ・他工更新フラグによるボタン活性制御"
+  - "sheet=業務処理説明; row=297-302: 緊急配信チェックオン時、役割・帳票共有グループ・帳票参照・帳票権限・ユーザタイプの必須選択チェック"
+  - "sheet=業務処理説明; row=77-88: 組織ユニット名称は部署マスタの「正式名称」を取得して設定"
+  - "sheet=画面項目内容(検索); row=15-60: 検索画面はNo.1〜46の46項目（検索条件は会社・組織ユニット・社員コード・発令日・1頁件数）"
+  - "sheet=画面項目内容(マスタ項目); row=16-38: マスタ項目はNo.1〜23の23項目、うち役割・帳票共有グループ・帳票参照・帳票権限・ユーザタイプが緊急配信時の必須対象"
+  - "sheet=画面単項目チェック; row=14-26: チェックはNo.2〜14の13件（No.1/No.5は見出し）。組織ユニット8桁、社員コード8桁、メール2の@、緊急配信時必須、変更なし、破棄確認"
+  - "sheet=画面項目間・DB整合チェック; row=15-19: チェックはNo.2/3/5/6の4件（HIT0件、上限3000件、経理用会社/事業場セット、排他）"
+  - "sheet=項目移送表(DB); row=13-42: 更新対象は R60_USER_M_TBL 1表（28カラム、主キー STF_CD）"
+  - "reports/module-survey/R60User/test/00_単体ﾃｽﾄ仕様兼結果.txt:3-5: テスト項目数 実績199、FP 12"
+  - "D:/AI_work/doc/03_AI/AB_Reports/reports/R60User/summary.md:16-24: ✅2 🔷3 ⚠️1 💥0 🚫0、⏭️1（modify は SKIP）。⚠️は search の col[?] sql=5≠api=1（row=22）"
+  - "reports/module-survey/impl-size.json: R60User view_lines=975 / router_lines=1471 / service_lines=39"
+  - "sheet=画面項目内容(検索); row=25: 組織ユニット名称のエンティティが 部署マスタ.組織ユニット（8桁）となっており、業務処理説明の「正式名称」取得と食い違う"
+  - "sheet=画面項目内容(マスタ項目); row=28: 経理用事業場のリストキーは「会社コード + ',' + 事業場コード」だが、sheet=項目移送表(DB); row=24 の S_JIG_CD は4桁で対応が不明確"
+risks:
+  - "AB の search で列不一致1件（sql=5≠api=1）。modify も SKIP のため更新系は未測定（impl_alignment=3 の理由）"
+  - "組織ユニット名称の取得元が、画面項目内容(検索) row=25 と業務処理説明 row=77-88 で食い違う"
+  - "経理用事業場のリストキー（会社+事業場の複合）と移送先 S_JIG_CD（4桁）の対応が不明確"
+  - "操作モードは修正のみ（新規・複製・削除のボタンは非活性）で、モード分岐の教材にはならない"
+  - "抽出対象外シート（画面遷移図・画面レイアウト・業務処理補足説明）は未確認"
+verdict: "simple 教材として可（次点。権限・帳票系の補足が必要）"

@@ -1,0 +1,135 @@
+# sheet: 【別紙】削除機能  rows=163 cols=39 mode=sparse
+r1	A:4-11-1ケース
+r3	B:■概要
+r4	C:・事前準備データ：エリアマスタ
+r5	C:・修正画面で表示、画面値変更なし、削除ボタン押下
+r6	C:・更新後のエリアマスタデータ値確認
+r8	B:■テストデータ
+r9	C:エリアマスタ
+r10	C:会社コード | D:事業場コード | E:エリアコード | F:エリア日本語名称 | G:エリア略称 | H:受払場所コード | I:受払計上事業場コード | J:受払計上部署コード | K:債務計上事業場コード | L:債務計上部署コード | M:債権計上事業場コード | N:債権計上部署コード | O:自動払出承認フラグ | P:支払案内書に表示する届先名 | Q:移動デフォルトロケーション（原材料） | R:移動デフォルトロケーション（半製品） | S:集中購買会社コード | T:集中購買事業場コード | U:集中購買受払計上事業場コード | V:集中購買受払計上部署コード | W:集中購買債務計上事業場コード | X:集中購買債務計上部署コード | Y:集中購買債権計上事業場コード | Z:集中購買債権計上部署コード | AA:登録ステータス | AB:送信ステータス | AC:送信区分 | AD:論理削除フラグ | AE:登録区分 | AF:登録者ＩＤ | AG:登録時刻 | AH:登録プログラムＩＤ | AI:更新区分 | AJ:更新者ＩＤ | AK:更新時刻 | AL:更新プログラムＩＤ | AM:リビジョン
+r11	C:CMP_CD | D:JIG_CD | E:ARA_CD | F:ARA_NM | G:ARA_RNM | H:UKH_PLC_CD | I:UKH_KEIJ_JIG_CD | J:UKH_KEIJ_BSY_CD | K:SAIM_KEIJ_JIG_CD | L:SAIM_KEIJ_BSY_CD | M:SAIKN_KEIJ_JIG_CD | N:SAIKN_KEIJ_BSY_CD | O:JID_HAR_SYN_FLG | P:SHR_ANSY_TDK_NM | Q:IDO_DFLT_PLC_CD_GZR | R:IDO_DFLT_PLC_CD_HSH | S:SYCH_KBI_CMP_CD | T:SYCH_KBI_JIG_CD | U:SYCH_KBI_UKH_KEIJ_JIG_CD | V:SYCH_KBI_UKH_KEIJ_BSY_CD | W:SYCH_KBI_UKH_SAIM_JIG_CD | X:SYCH_KBI_UKH_SAIM_BSY_CD | Y:SYCH_KBI_UKH_SAIKN_JIG_CD | Z:SYCH_KBI_UKH_SAIKN_BSY_CD | AA:REG_STS | AB:SEND_STS | AC:SEND_KBN | AD:DEL_FLG | AE:REG_KBN | AF:REG_STF_ID | AG:REG_DAT | AH:REG_PGM_ID | AI:KSN_KBN | AJ:KSN_STF_ID | AK:KSN_DAT | AL:KSN_PGM_ID | AM:REV_NO
+r12	C:0001 | D:P020 | E:464621 | F:AB福工Ｂ１列0243-33-4115. | G:Ｂ１資材置場 | H:P02A | I:P020 | J:P020521 | K:P020 | L:P020521 | M:P020 | N:P020011 | O:0 | P:Ｂ１資材置場 | Q:PMHB1 | AA:1 | AB:1 | AC:1 | AD:0 | AI:1 | AJ:NAiS | AK:39670.406944444447 | AL:NAiS | AM:2
+r15	B:■画面入力
+r16	C:緊急配信 | F:※変更なし※
+r17	C:削除 | F:※変更なし※
+r18	C:その他画面項目 | F:※変更なし※
+r20	B:■更新結果
+r21	C:エリアマスタ
+r22	C:会社コード | D:事業場コード | E:エリアコード | F:エリア日本語名称 | G:エリア略称 | H:受払場所コード | I:受払計上事業場コード | J:受払計上部署コード | K:債務計上事業場コード | L:債務計上部署コード | M:債権計上事業場コード | N:債権計上部署コード | O:自動払出承認フラグ | P:支払案内書に表示する届先名 | Q:移動デフォルトロケーション（原材料） | R:移動デフォルトロケーション（半製品） | S:集中購買会社コード | T:集中購買事業場コード | U:集中購買受払計上事業場コード | V:集中購買受払計上部署コード | W:集中購買債務計上事業場コード | X:集中購買債務計上部署コード | Y:集中購買債権計上事業場コード | Z:集中購買債権計上部署コード | AA:登録ステータス | AB:送信ステータス | AC:送信区分 | AD:論理削除フラグ | AE:登録区分 | AF:登録者ＩＤ | AG:登録時刻 | AH:登録プログラムＩＤ | AI:更新区分 | AJ:更新者ＩＤ | AK:更新時刻 | AL:更新プログラムＩＤ | AM:リビジョン
+r23	C:CMP_CD | D:JIG_CD | E:ARA_CD | F:ARA_NM | G:ARA_RNM | H:UKH_PLC_CD | I:UKH_KEIJ_JIG_CD | J:UKH_KEIJ_BSY_CD | K:SAIM_KEIJ_JIG_CD | L:SAIM_KEIJ_BSY_CD | M:SAIKN_KEIJ_JIG_CD | N:SAIKN_KEIJ_BSY_CD | O:JID_HAR_SYN_FLG | P:SHR_ANSY_TDK_NM | Q:IDO_DFLT_PLC_CD_GZR | R:IDO_DFLT_PLC_CD_HSH | S:SYCH_KBI_CMP_CD | T:SYCH_KBI_JIG_CD | U:SYCH_KBI_UKH_KEIJ_JIG_CD | V:SYCH_KBI_UKH_KEIJ_BSY_CD | W:SYCH_KBI_UKH_SAIM_JIG_CD | X:SYCH_KBI_UKH_SAIM_BSY_CD | Y:SYCH_KBI_UKH_SAIKN_JIG_CD | Z:SYCH_KBI_UKH_SAIKN_BSY_CD | AA:REG_STS | AB:SEND_STS | AC:SEND_KBN | AD:DEL_FLG | AE:REG_KBN | AF:REG_STF_ID | AG:REG_DAT | AH:REG_PGM_ID | AI:KSN_KBN | AJ:KSN_STF_ID | AK:KSN_DAT | AL:KSN_PGM_ID | AM:REV_NO
+r24	C:0001 | D:P020 | E:464621 | F:AB福工Ｂ１列0243-33-4115. | G:Ｂ１資材置場 | H:P02A | I:P020 | J:P020521 | K:P020 | L:P020521 | M:P020 | N:P020011 | O:0 | P:Ｂ１資材置場 | Q:PMHB1 | AA:1 | AB:1 | AC:1 | AD:1 | AI:1 | AJ:ログインユーザーID | AK:システム時刻 | AL:R60Area | AM:3
+r27	A:4-11-2ケース
+r29	B:■概要
+r30	C:・事前準備データ：エリアマスタ
+r31	C:・修正画面で表示、画面値の緊急送信のみがチェックオンへ変更、削除ボタン押下
+r32	C:・更新後のエリアマスタデータ値確認
+r34	B:■テストデータ
+r35	C:エリアマスタ
+r36	C:会社コード | D:事業場コード | E:エリアコード | F:エリア日本語名称 | G:エリア略称 | H:受払場所コード | I:受払計上事業場コード | J:受払計上部署コード | K:債務計上事業場コード | L:債務計上部署コード | M:債権計上事業場コード | N:債権計上部署コード | O:自動払出承認フラグ | P:支払案内書に表示する届先名 | Q:移動デフォルトロケーション（原材料） | R:移動デフォルトロケーション（半製品） | S:集中購買会社コード | T:集中購買事業場コード | U:集中購買受払計上事業場コード | V:集中購買受払計上部署コード | W:集中購買債務計上事業場コード | X:集中購買債務計上部署コード | Y:集中購買債権計上事業場コード | Z:集中購買債権計上部署コード | AA:登録ステータス | AB:送信ステータス | AC:送信区分 | AD:論理削除フラグ | AE:登録区分 | AF:登録者ＩＤ | AG:登録時刻 | AH:登録プログラムＩＤ | AI:更新区分 | AJ:更新者ＩＤ | AK:更新時刻 | AL:更新プログラムＩＤ | AM:リビジョン
+r37	C:CMP_CD | D:JIG_CD | E:ARA_CD | F:ARA_NM | G:ARA_RNM | H:UKH_PLC_CD | I:UKH_KEIJ_JIG_CD | J:UKH_KEIJ_BSY_CD | K:SAIM_KEIJ_JIG_CD | L:SAIM_KEIJ_BSY_CD | M:SAIKN_KEIJ_JIG_CD | N:SAIKN_KEIJ_BSY_CD | O:JID_HAR_SYN_FLG | P:SHR_ANSY_TDK_NM | Q:IDO_DFLT_PLC_CD_GZR | R:IDO_DFLT_PLC_CD_HSH | S:SYCH_KBI_CMP_CD | T:SYCH_KBI_JIG_CD | U:SYCH_KBI_UKH_KEIJ_JIG_CD | V:SYCH_KBI_UKH_KEIJ_BSY_CD | W:SYCH_KBI_UKH_SAIM_JIG_CD | X:SYCH_KBI_UKH_SAIM_BSY_CD | Y:SYCH_KBI_UKH_SAIKN_JIG_CD | Z:SYCH_KBI_UKH_SAIKN_BSY_CD | AA:REG_STS | AB:SEND_STS | AC:SEND_KBN | AD:DEL_FLG | AE:REG_KBN | AF:REG_STF_ID | AG:REG_DAT | AH:REG_PGM_ID | AI:KSN_KBN | AJ:KSN_STF_ID | AK:KSN_DAT | AL:KSN_PGM_ID | AM:REV_NO
+r38	C:0001 | D:P020 | E:464621 | F:AB福工Ｂ１列0243-33-4115. | G:Ｂ１資材置場 | H:P02A | I:P020 | J:P020521 | K:P020 | L:P020521 | M:P020 | N:P020011 | O:0 | P:Ｂ１資材置場 | Q:PMHB1 | AA:1 | AB:1 | AC:1 | AD:0 | AI:1 | AJ:NAiS | AK:39670.406944444447 | AL:NAiS | AM:2
+r42	B:■画面入力
+r43	C:緊急配信 | E:チェックオン
+r44	C:削除 | E:※変更なし※
+r45	C:その他画面項目 | E:※変更なし※
+r47	B:■更新結果
+r48	C:エリアマスタ
+r49	C:会社コード | D:事業場コード | E:エリアコード | F:エリア日本語名称 | G:エリア略称 | H:受払場所コード | I:受払計上事業場コード | J:受払計上部署コード | K:債務計上事業場コード | L:債務計上部署コード | M:債権計上事業場コード | N:債権計上部署コード | O:自動払出承認フラグ | P:支払案内書に表示する届先名 | Q:移動デフォルトロケーション（原材料） | R:移動デフォルトロケーション（半製品） | S:集中購買会社コード | T:集中購買事業場コード | U:集中購買受払計上事業場コード | V:集中購買受払計上部署コード | W:集中購買債務計上事業場コード | X:集中購買債務計上部署コード | Y:集中購買債権計上事業場コード | Z:集中購買債権計上部署コード | AA:登録ステータス | AB:送信ステータス | AC:送信区分 | AD:論理削除フラグ | AE:登録区分 | AF:登録者ＩＤ | AG:登録時刻 | AH:登録プログラムＩＤ | AI:更新区分 | AJ:更新者ＩＤ | AK:更新時刻 | AL:更新プログラムＩＤ | AM:リビジョン
+r50	C:CMP_CD | D:JIG_CD | E:ARA_CD | F:ARA_NM | G:ARA_RNM | H:UKH_PLC_CD | I:UKH_KEIJ_JIG_CD | J:UKH_KEIJ_BSY_CD | K:SAIM_KEIJ_JIG_CD | L:SAIM_KEIJ_BSY_CD | M:SAIKN_KEIJ_JIG_CD | N:SAIKN_KEIJ_BSY_CD | O:JID_HAR_SYN_FLG | P:SHR_ANSY_TDK_NM | Q:IDO_DFLT_PLC_CD_GZR | R:IDO_DFLT_PLC_CD_HSH | S:SYCH_KBI_CMP_CD | T:SYCH_KBI_JIG_CD | U:SYCH_KBI_UKH_KEIJ_JIG_CD | V:SYCH_KBI_UKH_KEIJ_BSY_CD | W:SYCH_KBI_UKH_SAIM_JIG_CD | X:SYCH_KBI_UKH_SAIM_BSY_CD | Y:SYCH_KBI_UKH_SAIKN_JIG_CD | Z:SYCH_KBI_UKH_SAIKN_BSY_CD | AA:REG_STS | AB:SEND_STS | AC:SEND_KBN | AD:DEL_FLG | AE:REG_KBN | AF:REG_STF_ID | AG:REG_DAT | AH:REG_PGM_ID | AI:KSN_KBN | AJ:KSN_STF_ID | AK:KSN_DAT | AL:KSN_PGM_ID | AM:REV_NO
+r51	C:0001 | D:P020 | E:464621 | F:AB福工Ｂ１列0243-33-4115. | G:Ｂ１資材置場 | H:P02A | I:P020 | J:P020521 | K:P020 | L:P020521 | M:P020 | N:P020011 | O:0 | P:Ｂ１資材置場 | Q:PMHB1 | AA:1 | AB:9 | AC:1 | AD:1 | AI:1 | AJ:ログインユーザーID | AK:システム時刻 | AL:R60Area | AM:3
+r53	C:「緊急配信対象マスタ登録処理パッケージ実行処理」が呼び出されること
+r54	C:・ログ出力
+r55	C:「緊急配信対象マスタ登録処理パッケージ実行処理」の呼び出し
+r56	C:引数
+r57	C:マスタファイルＩＤ | D:社員コード | E:アプリケーションＩＤ
+r58	C:R60_AREA_M_TBL | D:ログインユーザID | E:R60Area
+r62	A:4-11-3ケース
+r64	B:■概要
+r65	C:・事前準備データ：エリアマスタ
+r66	C:・修正画面で表示、項目値を変更し、削除ボタン押下
+r67	C:・更新後のエリアマスタデータ値確認
+r69	B:■テストデータ
+r70	C:エリアマスタ
+r71	C:会社コード | D:事業場コード | E:エリアコード | F:エリア日本語名称 | G:エリア略称 | H:受払場所コード | I:受払計上事業場コード | J:受払計上部署コード | K:債務計上事業場コード | L:債務計上部署コード | M:債権計上事業場コード | N:債権計上部署コード | O:自動払出承認フラグ | P:支払案内書に表示する届先名 | Q:移動デフォルトロケーション（原材料） | R:移動デフォルトロケーション（半製品） | S:集中購買会社コード | T:集中購買事業場コード | U:集中購買受払計上事業場コード | V:集中購買受払計上部署コード | W:集中購買債務計上事業場コード | X:集中購買債務計上部署コード | Y:集中購買債権計上事業場コード | Z:集中購買債権計上部署コード | AA:登録ステータス | AB:送信ステータス | AC:送信区分 | AD:論理削除フラグ | AE:登録区分 | AF:登録者ＩＤ | AG:登録時刻 | AH:登録プログラムＩＤ | AI:更新区分 | AJ:更新者ＩＤ | AK:更新時刻 | AL:更新プログラムＩＤ | AM:リビジョン
+r72	C:CMP_CD | D:JIG_CD | E:ARA_CD | F:ARA_NM | G:ARA_RNM | H:UKH_PLC_CD | I:UKH_KEIJ_JIG_CD | J:UKH_KEIJ_BSY_CD | K:SAIM_KEIJ_JIG_CD | L:SAIM_KEIJ_BSY_CD | M:SAIKN_KEIJ_JIG_CD | N:SAIKN_KEIJ_BSY_CD | O:JID_HAR_SYN_FLG | P:SHR_ANSY_TDK_NM | Q:IDO_DFLT_PLC_CD_GZR | R:IDO_DFLT_PLC_CD_HSH | S:SYCH_KBI_CMP_CD | T:SYCH_KBI_JIG_CD | U:SYCH_KBI_UKH_KEIJ_JIG_CD | V:SYCH_KBI_UKH_KEIJ_BSY_CD | W:SYCH_KBI_UKH_SAIM_JIG_CD | X:SYCH_KBI_UKH_SAIM_BSY_CD | Y:SYCH_KBI_UKH_SAIKN_JIG_CD | Z:SYCH_KBI_UKH_SAIKN_BSY_CD | AA:REG_STS | AB:SEND_STS | AC:SEND_KBN | AD:DEL_FLG | AE:REG_KBN | AF:REG_STF_ID | AG:REG_DAT | AH:REG_PGM_ID | AI:KSN_KBN | AJ:KSN_STF_ID | AK:KSN_DAT | AL:KSN_PGM_ID | AM:REV_NO
+r73	C:0001 | D:P020 | E:464621 | F:AB福工Ｂ１列0243-33-4115. | G:Ｂ１資材置場 | H:P02A | I:P020 | J:P020521 | K:P020 | L:P020521 | M:P020 | N:P020011 | O:0 | P:Ｂ１資材置場 | Q:PMHB1 | AA:1 | AB:1 | AC:1 | AD:0 | AI:1 | AJ:NAiS | AK:39670.406944444447 | AL:NAiS | AM:2
+r76	B:■画面入力
+r77	C:会社 | E:アサヒビール株式会社
+r78	C:事業場 | E:福島工場
+r79	C:エリアコード | E:464621
+r80	C:エリア名 | E:テストAB福工Ｂ１列
+r81	C:エリア略称 | E:テストAB福工
+r82	C:受払場所 | E:福島工場
+r83	C:受払計上事業場 | E:福島工場
+r84	C:受払計上部署 | E:福工 Ｃ－２
+r85	C:債務計上事業場 | E:福島工場
+r86	C:債務計上部署 | E:福工 Ｃ－２
+r87	C:債権計上事業場 | E:福島工場
+r88	C:債権計上部署 | E:福工 Ｃ－２
+r89	C:自動払出承認フラグ | E:自動払出承認する
+r90	C:支払案内書に表示する届先名 | E:Ｃ１資材置場
+r91	C:移動デフォルトロケーション(原材料) | E:PMHC2
+r92	C:移動デフォルトロケーション(半製品) | E:PMHC2
+r93	C:集中購買会社 | E:アサヒビール株式会社
+r94	C:集中購買事業場 | E:福島工場
+r95	C:集中購買受払計上事業場 | E:福島工場
+r96	C:集中購買受払計上部署 | E:福島工場共通
+r97	C:集中購買債務計上事業場 | E:福島工場
+r98	C:集中購買債務計上部署 | E:福島工場共通
+r99	C:集中購買債権計上事業場 | E:福島工場
+r100	C:集中購買債権計上部署 | E:福工 B－１
+r101	C:緊急配信 | E:※変更なし※
+r102	C:削除 | E:※変更なし※
+r104	B:■更新結果
+r105	C:エリアマスタ
+r106	C:会社コード | D:事業場コード | E:エリアコード | F:エリア日本語名称 | G:エリア略称 | H:受払場所コード | I:受払計上事業場コード | J:受払計上部署コード | K:債務計上事業場コード | L:債務計上部署コード | M:債権計上事業場コード | N:債権計上部署コード | O:自動払出承認フラグ | P:支払案内書に表示する届先名 | Q:移動デフォルトロケーション（原材料） | R:移動デフォルトロケーション（半製品） | S:集中購買会社コード | T:集中購買事業場コード | U:集中購買受払計上事業場コード | V:集中購買受払計上部署コード | W:集中購買債務計上事業場コード | X:集中購買債務計上部署コード | Y:集中購買債権計上事業場コード | Z:集中購買債権計上部署コード | AA:登録ステータス | AB:送信ステータス | AC:送信区分 | AD:論理削除フラグ | AE:登録区分 | AF:登録者ＩＤ | AG:登録時刻 | AH:登録プログラムＩＤ | AI:更新区分 | AJ:更新者ＩＤ | AK:更新時刻 | AL:更新プログラムＩＤ | AM:リビジョン
+r107	C:CMP_CD | D:JIG_CD | E:ARA_CD | F:ARA_NM | G:ARA_RNM | H:UKH_PLC_CD | I:UKH_KEIJ_JIG_CD | J:UKH_KEIJ_BSY_CD | K:SAIM_KEIJ_JIG_CD | L:SAIM_KEIJ_BSY_CD | M:SAIKN_KEIJ_JIG_CD | N:SAIKN_KEIJ_BSY_CD | O:JID_HAR_SYN_FLG | P:SHR_ANSY_TDK_NM | Q:IDO_DFLT_PLC_CD_GZR | R:IDO_DFLT_PLC_CD_HSH | S:SYCH_KBI_CMP_CD | T:SYCH_KBI_JIG_CD | U:SYCH_KBI_UKH_KEIJ_JIG_CD | V:SYCH_KBI_UKH_KEIJ_BSY_CD | W:SYCH_KBI_UKH_SAIM_JIG_CD | X:SYCH_KBI_UKH_SAIM_BSY_CD | Y:SYCH_KBI_UKH_SAIKN_JIG_CD | Z:SYCH_KBI_UKH_SAIKN_BSY_CD | AA:REG_STS | AB:SEND_STS | AC:SEND_KBN | AD:DEL_FLG | AE:REG_KBN | AF:REG_STF_ID | AG:REG_DAT | AH:REG_PGM_ID | AI:KSN_KBN | AJ:KSN_STF_ID | AK:KSN_DAT | AL:KSN_PGM_ID | AM:REV_NO
+r108	C:0001 | D:P020 | E:464621 | F:テストAB福工Ｂ１列 | G:テストAB福工 | H:P02A | I:P020 | J:P020532 | K:P020 | L:P020532 | M:P020 | N:P020532 | O:1 | P:Ｃ１資材置場 | Q:PMHC2 | R:PMHC2 | S:0001 | T:P020 | U:P020 | V:P020011 | W:P020 | X:P020011 | Y:P020 | Z:P020521 | AA:1 | AB:1 | AC:1 | AD:1 | AI:1 | AJ:ログインユーザーID | AK:システム時刻 | AL:R60Area | AM:3
+r111	A:4-11-4ケース
+r113	B:■概要
+r114	C:・事前準備データ：エリアマスタ
+r115	C:・修正画面で表示、項目値を入力し、緊急配信チェックオン、削除ボタン押下
+r116	C:・更新後のエリアマスタデータ値確認
+r118	B:■テストデータ
+r119	C:エリアマスタ
+r120	C:会社コード | D:事業場コード | E:エリアコード | F:エリア日本語名称 | G:エリア略称 | H:受払場所コード | I:受払計上事業場コード | J:受払計上部署コード | K:債務計上事業場コード | L:債務計上部署コード | M:債権計上事業場コード | N:債権計上部署コード | O:自動払出承認フラグ | P:支払案内書に表示する届先名 | Q:移動デフォルトロケーション（原材料） | R:移動デフォルトロケーション（半製品） | S:集中購買会社コード | T:集中購買事業場コード | U:集中購買受払計上事業場コード | V:集中購買受払計上部署コード | W:集中購買債務計上事業場コード | X:集中購買債務計上部署コード | Y:集中購買債権計上事業場コード | Z:集中購買債権計上部署コード | AA:登録ステータス | AB:送信ステータス | AC:送信区分 | AD:論理削除フラグ | AE:登録区分 | AF:登録者ＩＤ | AG:登録時刻 | AH:登録プログラムＩＤ | AI:更新区分 | AJ:更新者ＩＤ | AK:更新時刻 | AL:更新プログラムＩＤ | AM:リビジョン
+r121	C:CMP_CD | D:JIG_CD | E:ARA_CD | F:ARA_NM | G:ARA_RNM | H:UKH_PLC_CD | I:UKH_KEIJ_JIG_CD | J:UKH_KEIJ_BSY_CD | K:SAIM_KEIJ_JIG_CD | L:SAIM_KEIJ_BSY_CD | M:SAIKN_KEIJ_JIG_CD | N:SAIKN_KEIJ_BSY_CD | O:JID_HAR_SYN_FLG | P:SHR_ANSY_TDK_NM | Q:IDO_DFLT_PLC_CD_GZR | R:IDO_DFLT_PLC_CD_HSH | S:SYCH_KBI_CMP_CD | T:SYCH_KBI_JIG_CD | U:SYCH_KBI_UKH_KEIJ_JIG_CD | V:SYCH_KBI_UKH_KEIJ_BSY_CD | W:SYCH_KBI_UKH_SAIM_JIG_CD | X:SYCH_KBI_UKH_SAIM_BSY_CD | Y:SYCH_KBI_UKH_SAIKN_JIG_CD | Z:SYCH_KBI_UKH_SAIKN_BSY_CD | AA:REG_STS | AB:SEND_STS | AC:SEND_KBN | AD:DEL_FLG | AE:REG_KBN | AF:REG_STF_ID | AG:REG_DAT | AH:REG_PGM_ID | AI:KSN_KBN | AJ:KSN_STF_ID | AK:KSN_DAT | AL:KSN_PGM_ID | AM:REV_NO
+r122	C:0001 | D:P020 | E:464621 | F:AB福工Ｂ１列0243-33-4115. | G:Ｂ１資材置場 | H:P02A | I:P020 | J:P020521 | K:P020 | L:P020521 | M:P020 | N:P020011 | O:0 | P:Ｂ１資材置場 | Q:PMHB1 | AA:1 | AB:1 | AC:1 | AD:0 | AI:1 | AJ:NAiS | AK:39670.406944444447 | AL:NAiS | AM:2
+r124	B:■画面入力
+r125	C:会社 | E:アサヒビール株式会社
+r126	C:事業場 | E:福島工場
+r127	C:エリアコード | E:464621
+r128	C:エリア名 | E:テストAB福工Ｂ１列
+r129	C:エリア略称 | E:テストAB福工
+r130	C:受払場所 | E:福島工場
+r131	C:受払計上事業場 | E:福島工場
+r132	C:受払計上部署 | E:福工 Ｃ－２
+r133	C:債務計上事業場 | E:福島工場
+r134	C:債務計上部署 | E:福工 Ｃ－２
+r135	C:債権計上事業場 | E:福島工場
+r136	C:債権計上部署 | E:福工 Ｃ－２
+r137	C:自動払出承認フラグ | E:自動払出承認する
+r138	C:支払案内書に表示する届先名 | E:Ｃ１資材置場
+r139	C:移動デフォルトロケーション(原材料) | E:PMHC2
+r140	C:移動デフォルトロケーション(半製品) | E:PMHC2
+r141	C:集中購買会社 | E:アサヒビール株式会社
+r142	C:集中購買事業場 | E:福島工場
+r143	C:集中購買受払計上事業場 | E:福島工場
+r144	C:集中購買受払計上部署 | E:福島工場共通
+r145	C:集中購買債務計上事業場 | E:福島工場
+r146	C:集中購買債務計上部署 | E:福島工場共通
+r147	C:集中購買債権計上事業場 | E:福島工場
+r148	C:集中購買債権計上部署 | E:福工 B－１
+r149	C:緊急配信 | E:チェックオン
+r150	C:削除 | E:※変更なし※
+r152	B:■更新結果
+r153	C:エリアマスタ
+r154	C:会社コード | D:事業場コード | E:エリアコード | F:エリア日本語名称 | G:エリア略称 | H:受払場所コード | I:受払計上事業場コード | J:受払計上部署コード | K:債務計上事業場コード | L:債務計上部署コード | M:債権計上事業場コード | N:債権計上部署コード | O:自動払出承認フラグ | P:支払案内書に表示する届先名 | Q:移動デフォルトロケーション（原材料） | R:移動デフォルトロケーション（半製品） | S:集中購買会社コード | T:集中購買事業場コード | U:集中購買受払計上事業場コード | V:集中購買受払計上部署コード | W:集中購買債務計上事業場コード | X:集中購買債務計上部署コード | Y:集中購買債権計上事業場コード | Z:集中購買債権計上部署コード | AA:登録ステータス | AB:送信ステータス | AC:送信区分 | AD:論理削除フラグ | AE:登録区分 | AF:登録者ＩＤ | AG:登録時刻 | AH:登録プログラムＩＤ | AI:更新区分 | AJ:更新者ＩＤ | AK:更新時刻 | AL:更新プログラムＩＤ | AM:リビジョン
+r155	C:CMP_CD | D:JIG_CD | E:ARA_CD | F:ARA_NM | G:ARA_RNM | H:UKH_PLC_CD | I:UKH_KEIJ_JIG_CD | J:UKH_KEIJ_BSY_CD | K:SAIM_KEIJ_JIG_CD | L:SAIM_KEIJ_BSY_CD | M:SAIKN_KEIJ_JIG_CD | N:SAIKN_KEIJ_BSY_CD | O:JID_HAR_SYN_FLG | P:SHR_ANSY_TDK_NM | Q:IDO_DFLT_PLC_CD_GZR | R:IDO_DFLT_PLC_CD_HSH | S:SYCH_KBI_CMP_CD | T:SYCH_KBI_JIG_CD | U:SYCH_KBI_UKH_KEIJ_JIG_CD | V:SYCH_KBI_UKH_KEIJ_BSY_CD | W:SYCH_KBI_UKH_SAIM_JIG_CD | X:SYCH_KBI_UKH_SAIM_BSY_CD | Y:SYCH_KBI_UKH_SAIKN_JIG_CD | Z:SYCH_KBI_UKH_SAIKN_BSY_CD | AA:REG_STS | AB:SEND_STS | AC:SEND_KBN | AD:DEL_FLG | AE:REG_KBN | AF:REG_STF_ID | AG:REG_DAT | AH:REG_PGM_ID | AI:KSN_KBN | AJ:KSN_STF_ID | AK:KSN_DAT | AL:KSN_PGM_ID | AM:REV_NO
+r156	C:0001 | D:P020 | E:464621 | F:テストAB福工Ｂ１列 | G:テストAB福工 | H:P02A | I:P020 | J:P020532 | K:P020 | L:P020532 | M:P020 | N:P020532 | O:1 | P:Ｃ１資材置場 | Q:PMHC2 | R:PMHC2 | S:0001 | T:P020 | U:P020 | V:P020011 | W:P020 | X:P020011 | Y:P020 | Z:P020521 | AA:1 | AB:9 | AC:1 | AD:1 | AI:1 | AJ:ログインユーザーID | AK:システム時刻 | AL:R60Area | AM:3
+r158	C:「緊急配信対象マスタ登録処理パッケージ実行処理」が呼び出されること
+r159	C:・ログ出力
+r160	C:「緊急配信対象マスタ登録処理パッケージ実行処理」の呼び出し
+r161	C:引数
+r162	C:マスタファイルＩＤ | D:社員コード | E:アプリケーションＩＤ
+r163	C:R60_AREA_M_TBL | D:ログインユーザID | E:R60Area

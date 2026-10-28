@@ -1,0 +1,236 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60AREA-ERRORS
+type: knowledge
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60Area
+artifact_type: error-card
+
+source:
+  single_item_checks: reports/legacy-raw/R60Area/design/09_画面単項目チェック.txt
+  db_checks: reports/legacy-raw/R60Area/design/10_画面項目間・DB整合チェック.txt
+  other_messages: reports/legacy-raw/R60Area/design/11_その他メッセージ.txt
+  backend_controller: api/fastapi_oracle_pjt/app/routers/R60AreaController.py
+
+message_id_convention:
+  W: "警告（処理中断。背景色赤・フォーカスセット・アラートのいずれか）"
+  A: "確認（Yes/No。No なら処理中断）"
+  I: "情報（処理完了の通知）"
+  E: "異常（ファンクション等の想定外エラー）"
+
+messages:
+  - message_id: R60W0005
+    type: W
+    trigger: "検索 HIT 件数が上限件数を超過"
+    text: "検索結果件数が上限値を超えました。（上限値=##1件、HIT件数=##2件）検索条件を再設定して下さい。"
+    params: { "##1": 上限件数, "##2": "3001 以上の自然数" }
+    action: "アラート表示 / 明細部を非表示"
+    design_locator: "10_画面項目間・DB整合チェック r15"
+    implementation_locator: "R60AreaController.py:1489-1498"
+  - message_id: R60W0006
+    type: W
+    trigger: "修正・削除時に KSN_DAT が一致しない（他端末更新）"
+    text: "他の端末からデータが既に更新されています。"
+    action: "アラート表示。処理中断"
+    design_locator: "10_画面項目間・DB整合チェック r34"
+    implementation_locator: "R60AreaController.py:2149-2153 / 2616-2620"
+  - message_id: R60W0007
+    type: W
+    trigger: "マスタ項目画面で値変更ありのまま戻るボタン押下"
+    text: "編集内容が未登録です。破棄して良いですか？"
+    action: "ダイアログ表示"
+    design_locator: "09_画面単項目チェック r16"
+    implementation_locator: "Front-end 側"
+  - message_id: R60W0009
+    type: W
+    trigger: "新規・複製で会社・事業場・エリアコードが未入力"
+    text: "必須項目が未入力です。"
+    action: "背景色を赤"
+    design_locator: "09_画面単項目チェック r18-r20"
+    implementation_locator: "Front-end 側"
+  - message_id: R60W0010
+    type: W
+    trigger: "検索結果が 0 件"
+    text: "対象データが存在しませんでした。"
+    action: "アラート表示 / 明細部を非表示"
+    design_locator: "10_画面項目間・DB整合チェック r14"
+    implementation_locator: "R60AreaController.py:1485-1486"
+  - message_id: R60W0012
+    type: W
+    trigger: "緊急配信チェック ON で必須 13 項目のいずれかが未入力"
+    text: "緊急配信をするには、必須項目を指定する必要があります。"
+    action: "背景色を赤"
+    design_locator: "09_画面単項目チェック r21-r33"
+    implementation_locator: "Front-end 側"
+    required_fields:
+      - ARA_NM
+      - ARA_RNM
+      - UKH_PLC_CD
+      - UKH_KEIJ_JIG_CD
+      - UKH_KEIJ_BSY_CD
+      - SAIM_KEIJ_JIG_CD
+      - SAIM_KEIJ_BSY_CD
+      - SAIKN_KEIJ_JIG_CD
+      - SAIKN_KEIJ_BSY_CD
+      - JID_HAR_SYN_FLG
+      - SHR_ANSY_TDK_NM
+      - IDO_DFLT_PLC_CD_GZR
+      - IDO_DFLT_PLC_CD_HSH
+  - message_id: R60W0014
+    type: W
+    trigger: "新規・複製で同一キー（CMP_CD, JIG_CD, ARA_CD）が存在"
+    text: "既に同一データが存在します。"
+    action: "アラート表示 / 会社・事業場・エリアコードの背景色を赤"
+    design_locator: "10_画面項目間・DB整合チェック r17"
+    implementation_locator: "R60AreaController.py:2440-2451"
+  - message_id: R60W0015
+    type: W
+    trigger: "削除時（または緊急配信 OFF で登録時）に必須 13 項目のいずれかが未入力"
+    text: "データを削除する際には、必須項目を入力しておく必要があります。"
+    action: "背景色を赤"
+    design_locator: "09_画面単項目チェック r34-r46"
+    implementation_locator: "Front-end 側"
+  - message_id: R60W0016
+    type: W
+    trigger: "登録ボタン押下で全項目に変更なし"
+    text: "データが変更されていないため、登録を行いません。"
+    action: "ダイアログ表示"
+    design_locator: "09_画面単項目チェック r17"
+    implementation_locator: "Front-end 側"
+  - message_id: R60W0024
+    type: W
+    trigger: "削除対象が他マスタから参照されている（R60_Check_Area_Info_FNC の戻り値 '1'）"
+    text: "このデータは他のマスタで参照されているため削除できません。"
+    action: "アラート表示"
+    design_locator: "10_画面項目間・DB整合チェック r32"
+    implementation_locator: "R60AreaController.py:2146 / 2705"
+  - message_id: R60W0033
+    type: W
+    trigger: "移動デフォルトロケーションがロケーションマスタに未登録"
+    text: "指定された##1＝の組合せは##2に存在しません。"
+    params:
+      "##1": "会社・事業場・移動デフォルトロケーション（原材料/半製品）"
+      "##2": "ロケーションマスタ"
+    action: "背景色を赤 / フォーカスセット"
+    design_locator: "10_画面項目間・DB整合チェック r30-r31"
+    implementation_locator: "R60AreaController.py:2201 / 2517 / 2685"
+  - message_id: R60W0103
+    type: W
+    trigger: "エリアコードが半角英数字以外、または 7 文字超過"
+    text: "##1は半角英数字##2文字以内で入力して下さい。"
+    params: { "##1": "エリアコード", "##2": 7 }
+    action: "背景色を赤 / フォーカスセット"
+    design_locator: "09_画面単項目チェック r14 / r47"
+    implementation_locator: "Front-end 側"
+  - message_id: R60W0118
+    type: W
+    trigger: "支払案内書に表示する届先名が半角混在 25 文字超過"
+    text: "##1は全角##2文字以内で入力して下さい。"
+    params: { "##1": "支払案内書に表示する届先名", "##2": 25 }
+    action: "背景色を赤 / フォーカスセット"
+    design_locator: "09_画面単項目チェック r50"
+    implementation_locator: "Front-end 側"
+  - message_id: R60W0128
+    type: W
+    trigger: "移動デフォルトロケーションが半角英数大文字・指定記号以外、または 8 文字超過"
+    text: "##1は半角英数大文字と記号（##2）##3文字以内で入力して下さい。"
+    params:
+      "##1": "移動デフォルトロケーション（原材料/半製品）"
+      "##2": "'_','-','(',')'"
+      "##3": 8
+    action: "背景色を赤 / フォーカスセット"
+    design_locator: "09_画面単項目チェック r51-r52"
+    implementation_locator: "Front-end 側"
+  - message_id: R60W0131
+    type: W
+    trigger: "エリア名が 30Byte 超過、またはエリア略称が 16Byte 超過"
+    text: "##1は半角##2文字以内で入力して下さい。（全角使用可）"
+    params:
+      "##1": "エリア名 / エリア略称"
+      "##2": "30 / 16"
+    action: "背景色を赤 / フォーカスセット"
+    design_locator: "09_画面単項目チェック r48-r49"
+    implementation_locator: "Front-end 側"
+  - message_id: R60A0003
+    type: A
+    trigger: "登録ボタン押下（チェック通過後）"
+    text: "登録しますか？"
+    action: "確認ダイアログ。No なら処理中断"
+    design_locator: "11_その他メッセージ r16"
+    implementation_locator: "Front-end 側"
+  - message_id: R60A0004
+    type: A
+    trigger: "削除ボタン押下（チェック通過後）"
+    text: "削除しますか？"
+    action: "確認ダイアログ。No なら処理中断"
+    design_locator: "11_その他メッセージ r18"
+    implementation_locator: "Front-end 側"
+  - message_id: R60A0008
+    type: A
+    trigger: "業務終了ボタン押下"
+    text: "業務終了しますか？"
+    action: "確認ダイアログ"
+    design_locator: "11_その他メッセージ r14"
+    implementation_locator: "標準仕様"
+  - message_id: R60A0039
+    type: A
+    trigger: "登録時、各計上事業場（受払・債務・債権・集中購買系）が事業場と異なる"
+    text: "##1が##2と異なっていますが登録しますか？"
+    params: { "##1": "各計上事業場", "##2": "現在設定中の事業場" }
+    action: "確認ダイアログ。No なら処理中断"
+    design_locator: "10_画面項目間・DB整合チェック r18-r23"
+    implementation_locator: "R60AreaController.py:2453-2489（コメントアウト）"
+    implementation_status: not_implemented
+  - message_id: R60A0040
+    type: A
+    trigger: "削除時、各計上事業場（受払・債務・債権・集中購買系）が事業場と異なる"
+    text: "##1が##2と異なっていますが削除しますか？"
+    params: { "##1": "各計上事業場", "##2": "現在設定中の事業場" }
+    action: "確認ダイアログ。No なら処理中断"
+    design_locator: "10_画面項目間・DB整合チェック r24-r29"
+    implementation_locator: "R60AreaController.py:2155-2191（コメントアウト）"
+    implementation_status: not_implemented
+  - message_id: R60I0001
+    type: I
+    trigger: "登録処理完了後"
+    text: "登録しました。"
+    action: "情報ダイアログ"
+    design_locator: "11_その他メッセージ r17"
+    implementation_locator: "Front-end 側"
+  - message_id: R60I0002
+    type: I
+    trigger: "削除処理完了後"
+    text: "削除しました。"
+    action: "情報ダイアログ"
+    design_locator: "11_その他メッセージ r19"
+    implementation_locator: "Front-end 側"
+  - message_id: R60E0025
+    type: E
+    trigger: "R60_Check_Area_Info_FNC が想定外エラー（戻り値 null）"
+    text: "削除可否チェックファンクションでエラーが発生しました。"
+    action: "アラート表示。処理中断"
+    design_locator: "10_画面項目間・DB整合チェック r33"
+    implementation_locator: "R60AreaController.py:2143-2144 / 2702-2703"
+
+exception_cases:
+  - name: SessionException
+    trigger: "セッション情報が存在しない"
+    behavior: "セッションエラー画面へ遷移"
+    design_locator: "14_業務処理説明 r14-r16"
+  - name: OnlineException
+    trigger: "オンライン利用可否フラグが NG"
+    behavior: "オンライン制御エラー画面へ遷移"
+    design_locator: "14_業務処理説明 r18-r20"
+  - name: システム例外
+    trigger: "SQLException / DB エラー / 想定外 Exception"
+    behavior: "ロールバックし、システムエラー画面へ遷移"
+    design_locator: "12_イベント一覧 例外処理列"
+
+counts:
+  total_message_ids: 23
+  by_type: { W: 15, A: 5, I: 2, E: 1 }
+  not_implemented: [R60A0039, R60A0040]

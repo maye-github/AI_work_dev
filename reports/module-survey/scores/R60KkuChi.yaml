@@ -1,0 +1,28 @@
+module: R60KkuChi
+evidence_dir: reports/module-survey/R60KkuChi
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_28_R60KkuChi_規格値マスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_28_R60KkuChi_規格値マスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 5
+  impl_alignment: null
+  teachability: 3
+complexity:
+  level: complex
+  signals: {screens: 12, endpoints: 18, tables: 1, master_detail: false, upload: false, batch: false, sim: false, external: false}
+  note: "P1..P12の12画面バリエーションで complex。ただし複雑さは業務ルールの深さではなくパターン反復。端点はイベント一覧からの推計18【推測】。"
+evidence:
+  - "sheet=業務処理説明; rows=832: イベント1〜39"
+  - "sheet=画面項目内容(検索 P1..P12) / 画面項目内容(マスタ項目 P1..P12): 12パターン×2"
+  - "sheet=画面項目内容(キー項目); row=23: 管理項目の個別項目名1 IN ('0010'..'0120')"
+  - "sheet=業務処理説明; row=61-73: 0010→P1 … 0120→P12 の対応が一致"
+  - "sheet=項目移送表(DB); row=13: R60_KKU_CHI_M_TBL の1テーブル"
+  - "test/00_単体ﾃｽﾄ仕様兼結果; row=4: テスト項目数=2869"
+  - "AB_Reports/reports/R60KkuChi/ は存在しない（未測定）"
+  - "impl-size.json: R60KkuChi view_lines=3893, router_lines=3096, service_lines=79"
+risks:
+  - "P1-P12の12パターンが検索・マスタの両方に展開され、同一ルールの反復が多い"
+  - "キーパターンコードごとの必須/入力チェックがBPに列挙されており、1パターンでも漏れると教材の正解が崩れる"
+  - "ABレポートが無く未測定（impl_alignment=null）"
+  - "R60_Get_Plc_Typ_Infomation_FNC の綴り（Infomation）が設計書内で統一されているか未確認"
+verdict: "保留（complexだが複雑さはP1-P12のパターン反復。medium教材または『仕様の網羅性』教材向き）"

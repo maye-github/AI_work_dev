@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>README</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>README</h1>
+<div class="meta">
+  机读源: <code>README.md</code> ／
+  生成: 2026-10-22 14:13 ／
+  节 10・表 11
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>README.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 30 秒看懂这套流程</a></li><li><a href="#sec-2">1. 四条铁律</a></li><li><a href="#sec-3">2. 你手上的文件（清点）</a></li><li><a href="#sec-4">3. 8 个节点地图</a></li><li><a href="#sec-5">4. 8 节点手顺</a></li><li><a href="#sec-6">5. 节点 3〜8 的审查清单在哪？</a></li><li><a href="#sec-7">6. 命令速查 + 三条禁区</a></li><li><a href="#sec-8">7. 常用问答</a></li><li><a href="#sec-9">8. 这套流程到底省了什么</a></li><li><a href="#sec-10">9. 完成标准（8 节点全部做完时，你应该有）</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>R60Login 全流程演练 —— 手顺 + 指南</h1>
+<blockquote class="quote"><strong>这份文件是干什么的</strong>：让你亲手把「AI 全流程开发」的 <strong>8 个节点</strong>从头走一遍。<br><strong>重要：本目录不含任何「成品答案」。</strong> 所有 AI 产出（<code>01_AI产出_*</code> / <code>04_改修版</code> / <code>05_承認版</code>）<br>都<strong>要你自己跑出来</strong>。你手上拿到的是<strong>输入物</strong>（客户需求书、输入模板）和<strong>审查资料</strong><br>（你在这里审查、组内审查意见）——成品一律空白。<br><strong>为什么这样设计</strong>：看别人做好的答案学不会。你必须自己经历一次「AI 出初稿 → 你挑错 → 改 →<br>承认」，才知道哪里会出错、哪里非你不可。<br><strong>读法</strong>：不用理解方法论。<strong>沿编号顺序做，复制提示词，检查结果。</strong><br>想读得更舒服：<code>py -3 -m tools.gen_view tutorial/R60Login/README.md</code> → 生成同目录 <code>README.zh.html</code>（可 Ctrl+P 存 PDF）。</blockquote>
+<blockquote class="quote">### ★ 更省事的做法：让 Claude Code 带你走（推荐）<br>不用自己翻这份文件。对 Claude Code 说一句 <strong><code>/trans-cosmos-ai-lifecycle-coach</code></strong><br>（或者说「开始 trans-cosmos-ai 流程」「继续演练」「我现在在哪」），它就会：<br>1. 读 <code>docs/00_plan/coach/&lt;模块&gt;/</code> —— <strong>它记得你走到第几个节点第几步，也记得谁在做哪个节点</strong><br>2. <strong>一次只告诉你要做的这一步</strong>（不会一口气甩 8 个节点给你）<br>3. 每步给你 6 样东西：<strong>这一步归谁做</strong> → 打开哪个文件 → <strong>粘贴哪段提示词</strong> → 产出什么文件 → 检查什么 → 怎么承认<br>4. 你做完说 <code>继续</code>，它替你验（文件真的生成了吗？门禁过了吗？）再放你进下一步<br>5. 没承认就不让你往下走（上一节点的承认版 = 下一节点的输入，跳过 = 输入是假的）<br>卡住了就说 <strong><code>卡住了</code></strong>，它会把这<strong>同一步</strong>拆得更细重讲一遍。想回头看进度就说 <strong><code>状态</code></strong>。<br>3-5 个人一起做时，说 <strong><code>谁在做</code></strong> 看分工、说 <strong><code>交接</code></strong> 拿一张交接卡（换人或对话太长时用）。<br><strong>这份 README 是它的打印版。</strong> 两者若有不一致，<strong>以 <code>/trans-cosmos-ai-lifecycle-coach</code> 为准</strong>。<br><strong>它为什么「流程走长了也不忘事」</strong>：干活的部分（读上游文件、写初稿）交给<strong>独立的执行体</strong><br>（<code>trans-cosmos-ai-node1-requirements</code> 〜 <code>trans-cosmos-ai-node8-release-ops</code>，共 8 个 agent）在<strong>各自独立的上下文</strong>里完成，<br>只把一份短报告交回来。所以主对话不会被节点 3 的设计书、节点 5 的代码撑爆。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 30 秒看懂这套流程</h2>
+<pre><code>你给 AI 一份「输入」  →  AI 产出「初稿」  →  你逐项审查挑错  →  组内提意见
+                                                                  ↓
+                        下一节点的「输入」  ←  承认版  ←  你承认  ←  AI 按意见改出「改修版」</code></pre>
+<p><strong>AI 负责「把散乱变整齐」，人负责「判断整齐得对不对」。</strong> 这条循环连做 8 次，就是软件开发的<br>全流程。编号（<code>R-201 → F-201 → I-301… / L-201 / D-201 → TC-201…</code>）是串起整条链的钩子。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 四条铁律</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">铁律</th><th style="text-align:left">意思</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>AI 出初稿，人拍板</strong></td><td style="text-align:left">Claude 生成的东西<strong>永远只是草稿</strong>。你不点头，它不能进下一步</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>每个节点都要你审查</strong></td><td style="text-align:left">不是走过场。每个节点有一份「你在这里审查」资料，照着逐项打勾</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>编号是整条链的钩子</strong></td><td style="text-align:left">不许自己乱编号。教学号段是 <code>R-201 / F-201 / I-301… / L-201 / D-201 / E-201… / TC-201…</code></td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>审查意见也能喂给 AI</strong></td><td style="text-align:left">组员写的意见<strong>直接复制给 Claude</strong>，它帮你改，比你手改快得多</td></tr></tbody></table>
+<blockquote class="quote"><strong>编号要不要登记？</strong> 真实项目要（登记在 <code>docs/00_registry/ids.yml</code>，否则门禁拦你）。<br><strong>本演练不用</strong>——<code>R-201</code> 是教学号段，故意不登记。门禁的 gate1〜3 只扫 <code>docs/</code> 和 <code>.claude/</code>，<br><strong>不扫 <code>tutorial/</code></strong>，所以演练<strong>不会污染正式编号本</strong>。<br>但 gate6（机密扫描）<strong>会扫 <code>tutorial/</code></strong>——所以<strong>任何真实敏感值都不许写进来</strong>（见第 6 节）。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 你手上的文件（清点）</h2>
+<h3>节点 1（需求理解）<code>节点1_需求/</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">是什么</th><th style="text-align:left">你拿它做什么</th></tr></thead><tbody><tr><td style="text-align:left"><a href="节点1_需求/00_输入_客户需求书.md">00_输入_客户需求书.md</a></td><td style="text-align:left"><strong>虚拟需求书</strong>（実在案件の資産から倒推した、教学用の顧客要求書）。<strong>已冻结</strong>（sha256 は <code>reports/drill/R60Login/freeze.yaml</code>）。<strong>意図的に書いていない事項が数件ある</strong>——何が無いかは書いていない</td><td style="text-align:left">丢给 AI（手顺 4.1 第 2 步）</td></tr><tr><td style="text-align:left"><a href="节点1_需求/01_AI产出_需求结构化表.md">01_AI产出_需求结构化表.md</a> · <code>.yaml</code></td><td style="text-align:left">AI 初稿。<code>.yaml</code> 是机读版</td><td style="text-align:left">过程物，留作证据</td></tr><tr><td style="text-align:left"><a href="节点1_需求/02_確認事項一覧.md">02_確認事項一覧.md</a></td><td style="text-align:left"><strong>你的审查清单 + 回答栏</strong>（v0.5.4）。A＝顧客が決める ／ B＝我方が提案し顧客が承認する ／ C＝我方内部で決定する。由 <code>02_你在这里审查.md</code>（已归档）演化而来</td><td style="text-align:left">第 4 步逐项打勾 · 在这里写回答</td></tr><tr><td style="text-align:left"><a href="节点1_需求/02_回答受領チェック.md">02_回答受領チェック.md</a></td><td style="text-align:left">回答回来后的「受領 → 突合 → 裁定 → 反映」记录</td><td style="text-align:left">别的节点沿用这个做法</td></tr><tr><td style="text-align:left"><a href="节点1_需求/03_客户確認依頼書（AB類）.md">03_客户確認依頼書（AB類）.md</a> · <code>.pdf</code></td><td style="text-align:left"><strong>给客户的确认依頼书</strong>（A/B 分类，带填写栏）。日文，<strong>只交付 PDF</strong></td><td style="text-align:left">读一遍，理解「怎么向客户提问」</td></tr><tr><td style="text-align:left"><a href="节点1_需求/03_技術者検討課題（C類）.md">03_技術者検討課題（C類）.md</a> · <code>.pdf</code></td><td style="text-align:left"><strong>社内</strong>的 C 类裁定表（我方自己决定的事项）。中文，<strong>只保留 PDF</strong></td><td style="text-align:left">社内定稿用，不给客户</td></tr><tr><td style="text-align:left"><a href="节点1_需求/04_承認版_需求结构化表.md">04_承認版_需求结构化表.md</a></td><td style="text-align:left"><strong>承认版 v1.0.4</strong>（<code>baselined</code>・SE-001 已承认）</td><td style="text-align:left"><strong>节点 2 的输入</strong></td></tr></tbody></table>
+<h3>节点 2（基本设计）<code>节点2_基本设计/</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">是什么</th><th style="text-align:left">你拿它做什么</th></tr></thead><tbody><tr><td style="text-align:left"><a href="节点2_基本设计/00_输入模板.yaml">00_输入模板.yaml</a></td><td style="text-align:left"><strong>填空模板</strong>。空着的那份</td><td style="text-align:left">自己填时用（选 A 时 AI 照它代填）</td></tr><tr><td style="text-align:left"><a href="节点2_基本设计/01_输入_已填写.yaml">01_输入_已填写.yaml</a></td><td style="text-align:left"><strong>本次的输入</strong>（v0.1.2。上游＝节点1 <strong>v1.0.4</strong>）</td><td style="text-align:left">第 2 步交给 AI</td></tr><tr><td style="text-align:left"><a href="节点2_基本设计/01_AI产出_基本设计书.md">01_AI产出_基本设计书.md</a></td><td style="text-align:left">AI 初稿（<code>status: draft</code>）</td><td style="text-align:left">第 3 步的审查对象</td></tr><tr><td style="text-align:left"><a href="节点2_基本设计/02_你在这里审查.md">02_你在这里审查.md</a></td><td style="text-align:left">你的审查清单（六节，含教学提示）</td><td style="text-align:left">第 3 步逐项打勾</td></tr><tr><td style="text-align:left"><a href="节点2_基本设计/02_审查结果.md">02_审查结果.md</a></td><td style="text-align:left">审查记录（逐项判断・订正・理由）</td><td style="text-align:left">第 4 步的依据</td></tr><tr><td style="text-align:left"><a href="节点2_基本设计/03_组内审查意见.md">03_组内审查意见.md</a></td><td style="text-align:left">组员提的 6 条意见（意见-01〜06）</td><td style="text-align:left">第 4 步整份丢给 AI</td></tr><tr><td style="text-align:left"><a href="节点2_基本设计/04_AI产出_基本设计书_改修版.md">04_AI产出_基本设计书_改修版.md</a></td><td style="text-align:left">改修版（v0.2.0）</td><td style="text-align:left">第 5 步的底稿</td></tr><tr><td style="text-align:left"><a href="节点2_基本设计/05_承認版_基本设计书.md">05_承認版_基本设计书.md</a></td><td style="text-align:left"><strong>承认版 v2.0.2</strong>（<code>baselined</code>・<strong>SE-001 已于 2026-10-22 在 §0.2 的 SE・A 行签字承认</strong>。其余 3 行仍未承认）</td><td style="text-align:left"><strong>节点 3 的输入</strong></td></tr></tbody></table>
+<blockquote class="quote">教学样例 <code>00_输入模板_已填写示例.yaml</code> 已于 2026-10-21 退避到<br><code>节点2_基本设计/_archive-2026-10-21-教学样例退避/</code>。它<strong>不是本次输入</strong>——原因见 4.2 的 ①C。<br>节点 2 原有的本层 <code>README.md</code> 也已于 2026-10-21 合并到本节（4.2），归档在<br><code>节点2_基本设计/_archive-2026-10-21-导航合并/</code>。<strong>本页是唯一的导航。</strong></blockquote>
+<h3>节点 3〜8 —— 一个节点一个文件夹</h3>
+<p>和节点 1、2 一样，<strong>每个节点有自己的文件夹</strong>，输入模板放在该文件夹里，名为 <code>00_输入模板.yaml</code>。<br>本页不设子 README：<strong>这一页就是唯一的导航</strong>（与节点 2 的处置相同）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">文件夹</th><th style="text-align:left">输入模板</th><th style="text-align:left">对应节点</th></tr></thead><tbody><tr><td style="text-align:left"><code>节点3_详细设计/</code></td><td style="text-align:left"><a href="节点3_详细设计/00_输入模板.yaml">00_输入模板.yaml</a></td><td style="text-align:left">③ 详细设计</td></tr><tr><td style="text-align:left"><code>节点4_框架构筑/</code></td><td style="text-align:left"><a href="节点4_框架构筑/00_输入模板.yaml">00_输入模板.yaml</a></td><td style="text-align:left">④ 框架・环境构筑</td></tr><tr><td style="text-align:left"><code>节点5_制造/</code></td><td style="text-align:left"><a href="节点5_制造/00_输入模板.yaml">00_输入模板.yaml</a></td><td style="text-align:left">⑤ 制造（编码）</td></tr><tr><td style="text-align:left"><code>节点6_单元测试/</code></td><td style="text-align:left"><a href="节点6_单元测试/00_输入模板.yaml">00_输入模板.yaml</a></td><td style="text-align:left">⑥ 单元测试</td></tr><tr><td style="text-align:left"><code>节点7_结合测试/</code></td><td style="text-align:left"><a href="节点7_结合测试/00_输入模板.yaml">00_输入模板.yaml</a></td><td style="text-align:left">⑦ 结合・综合测试</td></tr><tr><td style="text-align:left"><code>节点8_发布运维/</code></td><td style="text-align:left"><a href="节点8_发布运维/00_输入模板.yaml">00_输入模板.yaml</a></td><td style="text-align:left">⑧ 发布・运用保守</td></tr></tbody></table>
+<blockquote class="quote">6 份模板的总览表与数据流图已合并进本页第 2 节（上表）与第 3 节（数据流）。<br>原 <code>节点3-8_输入模板/README.md</code> 已于 2026-10-22 删除——它的内容都在这两节里，<br>而节点 1、2 的文件夹里都没有子 README，保留它会让「哪个是正式导航」变得含糊。</blockquote>
+<blockquote class="quote warn">⚠️ <strong>节点 3〜8 没有「你在这里审查.md」</strong>（只有节点 1、2 有）。<br><strong>这不影响你做</strong>——每份模板的<strong>顶部注释【人必须审查什么】和末尾 <code>human_review_required</code> 就是该节点的审查清单</strong>。<br>详见第 5 节。</blockquote>
+<blockquote class="quote"><strong>每份 <code>.md</code> 怎么读</strong>：<code>.md</code> 是<strong>日文机读源</strong>，同名 <code>.zh.html</code> 是<strong>中文阅读版</strong><br>（<code>py -3 -m tools.gen_view …</code> 生成，<strong>绝不手改</strong>，也<strong>不生成日文 <code>.html</code></strong>）。<br>例外：<code>03_客户確認依頼書（AB類）</code> 与 <code>03_技術者検討課題（C類）</code> <strong>只保留 PDF</strong>（前者交客户，后者社内用）。<br>唯一真源：<code>.claude/rules/00-project-global.md</code> §12.1。</blockquote>
+<h3>一个节点会产生的文件（你要亲手造出来的）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">序号</th><th style="text-align:left">文件</th><th style="text-align:left">谁生成</th></tr></thead><tbody><tr><td style="text-align:left"><code>00_输入*</code></td><td style="text-align:left">输入（客户需求书／输入模板）</td><td style="text-align:left">已有（节点 3〜8 是模板，需你填）</td></tr><tr><td style="text-align:left"><code>01_AI产出_*</code></td><td style="text-align:left"><strong>AI 初稿</strong></td><td style="text-align:left">你让 Claude 生成</td></tr><tr><td style="text-align:left"><code>02_*</code></td><td style="text-align:left">审查清单／审查记录</td><td style="text-align:left">节点 2 是 <code>02_你在这里审查.md</code>；节点 1 是 <code>02_確認事項一覧.md</code>；节点 3〜8 用模板里的 <code>human_review_required</code></td></tr><tr><td style="text-align:left"><code>03_组内审查意见.md</code></td><td style="text-align:left">组内意见</td><td style="text-align:left">节点 2 已有；节点 1 的 <code>03_</code> 是对客／社内的确认文书；节点 3〜8 由你写（照 6 节格式）</td></tr><tr><td style="text-align:left"><code>04_AI产出_*_改修版</code></td><td style="text-align:left"><strong>改修版</strong></td><td style="text-align:left">你把 <code>03</code> 丢给 AI 生成</td></tr><tr><td style="text-align:left"><code>05_承認版_*</code></td><td style="text-align:left"><strong>承认版</strong></td><td style="text-align:left">你整理 + 人签字（下一步的输入）</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 8 个节点地图</h2>
+<pre><code>节点1 需求理解 → 节点2 基本设计 → 节点3 详细设计 → 节点4 框架构筑
+                                                        ↓
+节点8 发布运维 ← 节点7 结合测试 ← 节点6 单元测试 ← 节点5 制造(编码)</code></pre>
+<p>数据怎么往前流（一条链）：</p>
+<pre><code>节点1 需求理解
+   └─ 04_承認版_需求结构化表.md ──┐
+                                  ▼
+节点2 基本设计  IN-201  01_输入_已填写（结构见 00_输入模板）
+   └─ 05_承認版_基本设计书.md（F-201 / I-301… / E-201…）──┐
+                                                          ▼
+节点3 详细设计  IN-303 ─► 05_承認版_详细设计书.md（L-201 / D-201 / SQL）
+   └──────────────────────────────┬───────────────────────┐
+                                   ▼（设计）                ▼（设计）
+节点4 框架构筑  IN-304        节点5 制造  IN-305 ─► 源代码 + 单元测试代码
+                                   │
+                                   ▼（代码）
+                              节点6 单元测试  IN-306 ─► TC-201…
+                                   │
+                                   ▼（测试结果）
+                              节点7 结合・综合测试  IN-307 ─► E2E / A/B
+                                   │
+                                   ▼（合否）
+                              节点8 发布・运用保守  IN-308 ─► 发布/回滚/手册</code></pre>
+<p><strong>规律：每个节点的输出 = 下一节点的输入。</strong> 上一节点没承认，下一步就是空中楼阁。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 8 节点手顺</h2>
+<blockquote class="quote">每个节点的做法都固定 5 小节：**① 打开什么 → ② 复制这段给 Claude → ③ 产出什么 →<br>④ 逐项检查什么 → ⑤ 承认**。</blockquote>
+<hr>
+<h3>4.1 节点 1 · 需求理解</h3>
+<p><strong>① 打开什么</strong><br><a href="节点1_需求/00_输入_客户需求书.md"><code>节点1_需求/00_输入_客户需求书.md</code></a> —— 先读懂「原始需求有多乱」。</p>
+<blockquote class="quote">它有 <strong>6 处暧昧点</strong>：①加密在前端还是后端 ②没输入社員コード时怎么办 ③失败几次锁定<br>④Session 超时多久 ⑤密码策略完全没提 ⑥多事業場用户默认用哪个。<br>这些地方就是 AI 要帮你揪出来的。这一步你不用做任何事，<strong>看懂"乱"在哪</strong>就行。</blockquote>
+<p><strong>② 复制这段给 Claude</strong></p>
+<pre><code>请阅读 tutorial/R60Login/节点1_需求/00_输入_客户需求书.md
+
+把它整理成「需求结构化表」，要求：
+1. 给需求一个编号 R-201
+2. 拆成：背景 / 業務規則 / 輸入項 / 輸出項 / 異常処理 / 不做的事(Non-Goals)
+3. 客户写得含糊、矛盾、缺失的地方，全部列成「待確認事項」，编号 Q-201、Q-202…
+4. 用表格，不要大段文字
+5. 同时输出一份 YAML 机读版（键名一律 snake_case）
+
+输出到 tutorial/R60Login/节点1_需求/：
+  - 01_AI产出_需求结构化表.md   （给人看）
+  - 01_AI产出_需求结构化表.yaml （给机器看，后续节点都吃这个）</code></pre>
+<blockquote class="quote warn">⚠️ <strong>不要说</strong>「用 <code>code-from-design-trans-cosmos-ai</code> 技能处理」。那个技能是 <strong>R60Area（R-101）</strong> 的<br>设计→制造流水线专用的，而且要求 R-ID 已登记在 <code>ids.yml</code>。本教程的 <code>R-201</code> 是教学号段、<br><strong>没登记</strong>，一执行就会在第一步被拒收。节点 1 请用上面这段提示词。</blockquote>
+<p><strong>③ 产出什么</strong>：<code>01_AI产出_需求结构化表.md</code> + <code>.yaml</code><br>重点看两处：①散乱需求是不是变成条目清晰的表？②<strong>待確認事項（Q-201…）列出来了吗</strong>——这就是 AI 替你省的脑力。</p>
+<p><strong>④ 检查什么</strong>：打开 <a href="节点1_需求/02_你在这里审查.md"><code>02_你在这里审查.md</code></a>，逐项打勾。核心三件事：</p>
+<ul><li class="task"><span class="box">☐</span>待确认事项里，<strong>哪些要问客户，哪些我们自己拍板</strong>？（AI 不敢替你决定）</li><li class="task"><span class="box">☐</span>有没有<strong>客户没说但我们必须做的事</strong>？（AI 只看得到纸上写的）</li><li class="task"><span class="box">☐</span>编号 <code>R-201</code> 是不是合规的？（不能自己乱编号）</li></ul>
+<blockquote class="quote warn">⚠️ <strong>这一步不能跳。</strong> 需求理解错了，后面 7 个节点全部白做。</blockquote>
+<p><strong>⑤ 承认版（人拍板）</strong></p>
+<pre><code>请读 01_AI产出_需求结构化表（.md/.yaml）／02_確認事項一覧.md，
+整理为承认版 04_承認版_需求结构化表.md：
+1. §11 待確認事項の各項に、02 の「区分」「回答」「裁定」を反映する。
+   分類は 02 に人が書いた値を用いる。AI 素案は別欄に残す。
+   02 で空欄の項目があれば、整理せずに止めて報告する（勝手に埋めない）。
+2. 顶部加「承認記録」表（版本 / 日期 / 承認者役割 / 承認状態 / 備考），
+   承認者用角色＋代号表示（SE・A / PG・B / テスター・C / PM・D 四行）
+3. front-matter の status を baselined、version を 1.0.0</code></pre>
+<p><strong>✅ 节点 1 完成</strong> → <code>04_承認版_需求结构化表.md</code> 就是<strong>节点 2 的输入</strong>。</p>
+<hr>
+<h3>4.2 节点 2 · 基本设计</h3>
+<p>节点 2 与节点 1 最大的区别：<strong>用一份填空模板开始，而不是从零描述</strong>。</p>
+<p><strong>① 先选「输入模板谁来填」</strong>（<strong>这一步必须先问，不能默认用教学样例</strong>）：</p>
+<ul><li><strong>A（推荐）AI 代填</strong>：AI 从 <code>04_承認版_需求结构化表.md</code> 转记上游事实，设计字段标为 <strong>AI 素案</strong>，</li></ul>
+<p>产出 <code>01_输入_已填写.yaml</code>。你逐项审。</p>
+<ul><li><strong>B 自己填</strong>：打开 <a href="节点2_基本设计/00_输入模板.yaml"><code>00_输入模板.yaml</code></a> 逐栏填，产出 <code>01_输入_已填写.yaml</code>。</li><li><strong>C 用教学样例</strong>（<strong>本次不可选</strong>）：样例已于 2026-10-21 退避到</li></ul>
+<p><a href="节点2_基本设计/_archive-2026-10-21-教学样例退避/"><code>_archive-2026-10-21-教学样例退避/</code></a>。<br>它是<strong>教学侧预先写好的样例，不是本次节点 1 的产物</strong>；实际输入 <code>01_输入_已填写.yaml</code> 已经存在，<br>再拿样例就是拿旧裁定覆盖承认版（例如旧的「最大 7 桁」）。只有在<strong>从头重跑</strong>时才取回。</p>
+<blockquote class="quote">选 A 时，复制这段给 Claude：<br>```<br>请读 tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md 与<br>tutorial/R60Login/节点2_基本设计/00_输入模板.yaml，<br>产出 tutorial/R60Login/节点2_基本设计/01_输入_已填写.yaml：<br>1. 上游事实（source_requirement / req_ids / 未决 Q / 制約）逐条转记，标出 Q 编号<br>2. 设计字段（画面・入出力・表・共通部品・エラー）作为「AI 素案」明确标注<br>3. 不确定的填 null 并放入 open_questions；不写真实敏感值<br>4. 教学样例在 _archive-2026-10-21-教学样例退避/，不要拿它当输入<br>```</blockquote>
+<p><strong>② 复制这段给 Claude</strong></p>
+<pre><code>请阅读以下两份文件，产出节点2 基本设计书：
+- 上一节点的承认版：tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md
+- 本节点的输入：tutorial/R60Login/节点2_基本设计/01_输入_已填写.yaml（教学样例已退避，不要使用）
+
+输出 tutorial/R60Login/节点2_基本设计/01_AI产出_基本设计书.md（功能编号 F-201），要求：
+1. F-201 必须挂在 R-201 之下，功能名与承认版需求一致
+2. 画面一览：SCR-201 / SCR-202（标注各自责任边界）
+3. 入出力一覧 I-301…：每项写 項目ID / 名称 / 型 / 桁 / 必須 / 由来要件ID
+4. 処理概要：写成「条件 + 分岐」，不要大段自然文
+5. エラー一覧 E-201…：代码 / メッセージ / 条件 / 処理
+6. 第 8 节「未確定事項・確認事項一覧」：把节点1 承认版里的未確定事項结论搬全（Q-xxx は节点1 で採番される。**件数は事前に決まらない**），
+   已定的写明结论与依据，未定的继续挂着
+7. 敏感值一律占位（EMP_0001 / VAL_1 / IP_1 / PWD_1），不写任何真实值</code></pre>
+<p><strong>③ 产出什么</strong>：<code>01_AI产出_基本设计书.md</code>（F-201 / I-301… / E-201…）</p>
+<p><strong>④ 检查什么</strong>：打开 <a href="节点2_基本设计/02_你在这里审查.md"><code>02_你在这里审查.md</code></a>，共六节。最容易出事的三处：</p>
+<ul><li class="task"><span class="box">☐</span><strong>★ 逐项对照节点 1 的承认版</strong>：输入项、Q-201〜Q-219 的结论，是否都搬全了？</li></ul>
+<blockquote class="quote"><strong>教学提示（真实发生过的坑）</strong>：AI 一开始<strong>就漏掉了节点 1 已经明确写入的 §5「貴方に新規設計していただく項目」7 项</strong><br>（见 <code>03_组内审查意见.md</code> 的 RV-201-04）。<strong>上一节点的承认版就是本节点的输入，漏项是衔接事故。</strong><br>这也是为什么每个节点的输入模板第一项永远是 <code>source_requirement</code>。</blockquote>
+<ul><li class="task"><span class="box">☐</span><strong>稼働停止时の振る舞いが「稼働停止であることが分かる専用の提示」になっているか</strong>，而不是普通错误页</li></ul>
+<p>（客户只写了「明確なメッセージを提示」，<strong>具体怎么呈现是我方设计＝C 類</strong>。AI 常把它简化成通用错误）</p>
+<ul><li class="task"><span class="box">☐</span><strong>E-203 的提示文面不泄露「用户是否存在」</strong>（AI 默认会写「该用户不存在」——这就是泄露）</li><li class="task"><span class="box">☐</span><strong>上流已有的「起動区分 <code>stfKbn</code>（I-304）」有没有被漏掉</strong>——这属于<strong>交接事故</strong>，不是设计失误，后面很难发现（看下面的出口命令）</li><li class="task"><span class="box">☐</span><strong>「AI 素案」有没有被当成确定值</strong>：设计字段一律进 <code>open_questions</code>，由人裁定</li><li class="task"><span class="box">☐</span><strong>SCR-201 / SCR-202 的責任分界</strong>是否各自写明（不写清，后面会互相推诿）</li></ul>
+<p><strong>出口检查</strong>（第 5 步之后跑，把<strong>命令和实际输出</strong>都记下来，不要只写「已确认」）：</p>
+<pre><code>py -3 -m tools.trace_check --strict --gate 1
+py -3 -m tools.trace_check --strict --only-check seal
+grep -c &quot;起動区分\|stfKbn&quot; tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md   # 0 就是漏了</code></pre>
+<p><strong>⑤ 组内意见 → 改修 → 承认</strong></p>
+<pre><code>请根据 tutorial/R60Login/节点2_基本设计/03_组内审查意见.md 的意见（意见-01〜06），
+修改 01_AI产出_基本设计书.md，输出 04_AI产出_基本设计书_改修版.md
+
+要求：开头用表格列出「意见编号 → 改了什么」。</code></pre>
+<pre><code>请把 04_AI产出_基本设计书_改修版.md 整理为承认版 05_承認版_基本设计书.md：
+顶部加「承認記録」表（版本 / 日期 / 承認者役割 / 承認状態 / 備考），
+front-matter 的 status 改为 baselined。</code></pre>
+<p><strong>✅ 节点 2 完成</strong> → <code>05_承認版_基本设计书.md</code> 是<strong>节点 3 的输入</strong>。</p>
+<hr>
+<h3>4.3 节点 3 · 详细设计</h3>
+<p><strong>① 打开什么</strong>：<a href="节点3_详细设计/00_输入模板.yaml"><code>节点3_详细设计/00_输入模板.yaml</code></a>。<br>顶部注释写清了 4 件事：<strong>输入来自哪个文件 / 你填哪些字段 / AI 产出什么 / 人必须审查什么</strong>。</p>
+<p>先做：把节点 2 的承认版内容照模板字段填进去（<code>&lt;尖括号&gt;</code> 替换掉；不确定的填 <code>null</code> 并记进<br><code>open_questions</code>），<code>status</code> 从 <code>draft</code> 改成 <code>filled</code>。</p>
+<p><strong>② 复制这段给 Claude</strong></p>
+<pre><code>请阅读：
+- 上一节点承认版：tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+- 本节点输入：tutorial/R60Login/节点3_详细设计/00_输入模板.yaml（已填）
+
+产出 tutorial/R60Login/节点3_详细设计/01_AI产出_详细设计书.md，要求：
+1. 逻辑设计 L-201…：每条 = 一个可独立实现/测试的处理单位（逻辑ID / 名称 / 处理步骤 / 分岐条件）
+2. 数据模型 D-201…：含物理表名、要读写的列、访问方式
+3. 项目定义：对应 I-301…，逐项写 物理名 / 論理名 / 型 / 桁 / 初期値 / 編集仕様
+4. SQL 模板：值一律用 :BIND 占位（**実値を埋め込まない**）
+5. エラー分岐表：每个 E-201… 的触发条件与迁移目标
+6. 境界値表：桁数・件数・上限下限
+7. 凡逐条追不回 F-201 的，不要写进来
+
+约束：詳細設計は基本設計の範囲を超えない。本案は greenfield（從無到有）なので、
+**物理表名は本节点で確定する**（勝手に「それらしい名前」を発明しない）。
+既存スタックは存在せず、スタックは工程04 で提案し人が承認する（紅線④）。
+**顧客が決める事項（A 類）を当方が先に埋めない**（节点1 の審査清単 §四 と同じ違反を繰り返さない）。</code></pre>
+<p><strong>③ 产出什么</strong>：<code>01_AI产出_详细设计书.md</code>（L-201 / D-201 / I-301… / SQL / E-201… / 境界値）</p>
+<p><strong>④ 检查什么</strong>（= 模板顶部【人必须审查什么】）：</p>
+<ul><li class="task"><span class="box">☐</span>① 处理流程与既有系统一致</li><li class="task"><span class="box">☐</span>② SQL 的列名／类型／条件与<strong>真实表结构</strong>一致</li><li class="task"><span class="box">☐</span>③ 错误分支与<strong>迁移目标</strong>正确</li><li class="task"><span class="box">☐</span>④ ID 命名合规、<strong>无野号</strong></li><li class="task"><span class="box">☐</span>⑤ 是否真的<strong>逐条追得回 F-201</strong></li></ul>
+<p><strong>⑤ 组内意见 → 改修 → 承认</strong>：同前两节点。组内意见<strong>你自己写</strong>（照 <a href="节点2_基本设计/03_组内审查意见.md"><code>节点2_基本设计/03_组内审查意见.md</code></a><br>的「指摘者角色 + 指摘 + 希望怎么改」三段式），生成 <code>04</code> → <code>05</code>。</p>
+<p><strong>✅ 节点 3 完成</strong> → <code>05_承認版_详细设计书.md</code> 是<strong>节点 4 和节点 5 的输入</strong>。</p>
+<hr>
+<h3>4.4 节点 4 · 框架・环境构筑</h3>
+<p><strong>① 打开什么</strong>：<a href="节点4_框架构筑/00_输入模板.yaml"><code>节点4_框架构筑/00_输入模板.yaml</code></a>。<br>要填：<code>tech_stack</code> / <code>env_list</code> / <code>dependencies</code> / <code>build_settings</code> / <code>cicd</code>。</p>
+<p><strong>② 复制这段给 Claude</strong></p>
+<pre><code>请阅读 tutorial/R60Login/节点4_框架构筑/00_输入模板.yaml（已填）与
+节点3 的承认版 05_承認版_详细设计书.md，
+
+产出 tutorial/R60Login/节点4_框架构筑/01_AI产出_框架构筑记录.md，要求：
+1. 技术选型记录：**本案是 greenfield なので、ここが選型の本体**。
+   採用候補（前端 / 接口 / DB / 基盤）と**それぞれの根拠**を書き、**人が承認するまで「確定」と書かない**（紅線④）。
+   要求書 2 章に技術の言及がある場合は、それが「必須の制約」か「参考情報」かは、节点1 の未確定事項で確認する。
+   （migration 案件の場合は逆に、案件プロファイルが与える既存スタックを**記録するだけ**で置換禁止）
+2. 环境配置清单：环境名 / 用途 / 取得方式（密钥只写「从哪里取」，绝对不写值）
+3. 依赖清单：库名 / 版本 / 用途
+4. 构建与 CI 草案（本地门禁 → CI 常设门禁的迁移思路）
+5. 一律不写真实主机名/IP/口令/桶名/租户名（用 IP_1 / PWD_1 / BUCKET_1 / DOM_1 占位）</code></pre>
+<p><strong>③ 产出什么</strong>：<code>01_AI产出_框架构筑记录.md</code></p>
+<p><strong>④ 检查什么</strong>：</p>
+<ul><li class="task"><span class="box">☐</span>① <strong>技术选型の根拠が本案の要求にある</strong>（红线④。greenfield なので「既有栈と同じ」は根拠にならない）</li></ul>
+<p>／ migration の場合は<strong>既有栈から置換されていない</strong></p>
+<ul><li class="task"><span class="box">☐</span>①' <strong><code>approved_by</code> に人の识别子が入っている</strong>（空なら次の节点へ進めない。紅線③④）</li><li class="task"><span class="box">☐</span>② <strong>无真实环境值</strong>（IP / 口令 / 桶名 / 租户）</li><li class="task"><span class="box">☐</span>③ <strong>密钥只写取得方式</strong>，不写值</li><li class="task"><span class="box">☐</span>④ <code>trace_check</code> 门禁仍在（没被「优化」掉）</li></ul>
+<p><strong>⑤ 承认</strong> → <code>05_承認版_框架构筑记录.md</code></p>
+<hr>
+<h3>4.5 节点 5 · 制造（编码）★ 特别当心</h3>
+<p><strong>① 打开什么</strong>：<a href="节点5_制造/00_输入模板.yaml"><code>节点5_制造/00_输入模板.yaml</code></a>。<br>要填：<code>target_files</code> / <code>interfaces</code> / <code>commit_rules</code> / <code>prohibitions</code>。</p>
+<blockquote class="quote warn">⚠️ <strong>节点 5 是唯一会「动代码」的节点</strong>，模板里额外写死了两件事：<br><strong>设计不许改，只做实现</strong>；<strong>禁止事项 5 条</strong>（案件固有）。</blockquote>
+<p><strong>② 复制这段给 Claude</strong>（<strong>5 条禁止事项必须原样写进提示词</strong>）</p>
+<pre><code>请阅读 tutorial/R60Login/节点5_制造/00_输入模板.yaml（已填）与
+节点3 的承认版 05_承認版_详细设计书.md。
+
+按详细设计生成源代码与单元测试代码，输出到 tutorial/R60Login/节点5_制造/。
+
+守ること:
+- 設計（L-201 / D-201 / E-201…）は変更しない。実装のみ。
+  設計に誤りを見つけたら、勝手に直さず停止して報告し、ノード3 に戻る。
+- 禁止事項 5 条:
+  1. （migration のみ）既存の共通関数資産（唯一真源）を改変しない。並行新版も作らない。呼出のみ。
+     ★本案は greenfield なので適用対象が無い。代わりに、**本案件で新規定義した共通部品を以後みだりに変えない**。
+  2. （migration のみ）共通モデル基底の入出力変換設定（4 行）を変更しない。
+     ★本案ではこの基底自体を**本案件で新規定義する**。
+  3. ids.yml 未登録の野号を引入しない。
+  4. trace_check --strict を跳过しない。
+  5. 未マスクの敏感値を外抛しない（PWD_1 / IP_1 / TBL_1 等へ占位化）。</code></pre>
+<p><strong>③ 产出什么</strong>：源代码 + 单元测试代码</p>
+<p><strong>④ 检查什么</strong>：</p>
+<ul><li class="task"><span class="box">☐</span>① <strong>设计不许改，只做实现</strong>——发现设计有误，<strong>停下反馈、回节点 3 改设计</strong>，绝不在制造阶段偷偷改</li><li class="task"><span class="box">☐</span>② <strong>禁止事项 5 条全部遵守</strong></li><li class="task"><span class="box">☐</span>③ <code>py -3 -m tools.trace_check --strict</code> → Exit 0</li></ul>
+<p><strong>⑤ 承认</strong> → <code>05_承認版_制造记录.md</code>（含改了哪些文件的清单）</p>
+<hr>
+<h3>4.6 节点 6 · 单元测试</h3>
+<p><strong>① 打开什么</strong>：<a href="节点6_单元测试/00_输入模板.yaml"><code>节点6_单元测试/00_输入模板.yaml</code></a>。<br>要填：<code>test_targets</code> / <code>test_viewpoints</code> / <code>test_cases</code>（TC-201…）/ <code>design_links</code>。</p>
+<p><strong>② 复制这段给 Claude</strong></p>
+<pre><code>请阅读节点3 的承认版 05_承認版_详细设计书.md 与节点5 的代码，
+
+设计单元测试用例，输出 tutorial/R60Login/节点6_单元测试/01_AI产出_测试用例集.md，要求：
+1. 用三个技法：同値分割 / 境界値 / デシジョンテーブル
+2. 比率强制：正常 3 件 + 境界 2 件 + 異常 3 件 = 最低 8 件
+3. 每条 TC 必须写 出典: design_ids（L-201 / D-201 / E-201…）+ req_ids（R-201）
+4. 异常系必须覆盖 E-201… 每个至少 1 条
+5. 输入值不写真实值（用 COL_1 / VAL_1 占位）</code></pre>
+<p><strong>③ 产出什么</strong>：<code>01_AI产出_测试用例集.md</code>（TC-201…）</p>
+<p><strong>④ 检查什么</strong>：</p>
+<ul><li class="task"><span class="box">☐</span>① 每条 TC 都有<strong>出典</strong>（<code>design_ids</code> + <code>req_ids</code>）——没出典的 TC 是废品</li><li class="task"><span class="box">☐</span>② 正常/边界/异常<strong>配比达标</strong></li><li class="task"><span class="box">☐</span>③ 覆盖到 E-201…（每个错误码至少 1 条）</li></ul>
+<p><strong>⑤ 承认</strong> → <code>05_承認版_测试用例集.md</code></p>
+<hr>
+<h3>4.7 节点 7 · 结合・综合测试</h3>
+<p><strong>① 打开什么</strong>：<a href="节点7_结合测试/00_输入模板.yaml"><code>节点7_结合测试/00_输入模板.yaml</code></a>。<br>要填：<code>api_sequence</code> / <code>e2e_scenarios</code> / <code>acceptance_verification</code>。<br>（<code>ab_comparison</code> は <strong>migration 案件のみ</strong>。本案は greenfield なので使わない。）<br>输入来自节点 6 结果 + 节点 5 代码 + 节点 2 基本设计。</p>
+<p><strong>② 复制这段给 Claude</strong></p>
+<pre><code>请阅读节点6 的测试结果、节点5 的代码、节点2 的承认版基本设计书，
+
+产出 tutorial/R60Login/节点7_结合测试/01_AI产出_结合测试规格书.md，要求：
+1. API シーケンス：调用顺序、输入输出、事务边界
+2. E2E シナリオ：从打开登录画面到跳转到目标业务画面的端到端贯通
+3. 受入基準の充足判定：节点1 承認版の受入条件 6 件を、E2E で観測できる事象に対応づけて合否を判定する
+   ★本案は greenfield なので A/B 比較（旧版との一致比較）は行わない。
+     期待値の出所は「承認済みの R-201 / F-201 の受入基準」であり、判定は一致比較ではなく充足判定になる。
+     記録先は verification.md（A/B の summary.md は流用しない）。
+4. 断言清单引用既有报告路径，不复制其数值（单一ソース原則）</code></pre>
+<p><strong>③ 产出什么</strong>：<code>01_AI产出_结合测试规格书.md</code></p>
+<p><strong>④ 检查什么</strong>：</p>
+<ul><li class="task"><span class="box">☐</span>① <strong>端到端贯通</strong>（不是"每个接口单独过了"就算）</li><li class="task"><span class="box">☐</span>② <strong>期待值の出所が正しい</strong>（greenfield＝承認版の受入基準／migration＝旧版の実測値）</li><li class="task"><span class="box">☐</span>③ <strong>事务边界无意外写入</strong></li></ul>
+<p><strong>⑤ 承认</strong> → <code>05_承認版_结合测试规格书.md</code></p>
+<hr>
+<h3>4.8 节点 8 · 发布・运用保守</h3>
+<p><strong>① 打开什么</strong>：<a href="节点8_发布运维/00_输入模板.yaml"><code>节点8_发布运维/00_输入模板.yaml</code></a>。<br>要填：<code>release_plan</code> / <code>rollback_plan</code> / <code>monitoring</code> / <code>handover</code>。输入来自节点 7 结果。</p>
+<p><strong>② 复制这段给 Claude</strong></p>
+<pre><code>请阅读节点7 的结合测试结果，
+
+产出 tutorial/R60Login/节点8_发布运维/01_AI产出_发布手顺书.md，要求：
+1. 发布步骤书（顺序、确认点、责任人役割）
+2. 切戻し（回滚）步骤 —— 必须可执行、可演练
+3. 运用监视项（看什么指标、阈值多少）
+4. 引継资料（保守担当需要知道的）
+5. 不写任何真实环境值/口令/主机名（占位化）</code></pre>
+<p><strong>③ 产出什么</strong>：<code>01_AI产出_发布手顺书.md</code></p>
+<p><strong>④ 检查什么</strong>：</p>
+<ul><li class="task"><span class="box">☐</span>① <strong>发布判定由人做</strong>（AI 只出草案，不替你签字）</li><li class="task"><span class="box">☐</span>② <strong>回滚可执行且已演练</strong>（没演练过的回滚步骤等于没有）</li><li class="task"><span class="box">☐</span>③ 手册<strong>无敏感值</strong></li></ul>
+<p><strong>⑤ 承认</strong> → <code>05_承認版_发布手顺书.md</code> → <strong>8 节点全部完成</strong> 🎉</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 节点 3〜8 的审查清单在哪？</h2>
+<p>节点 1、2 有独立的 <code>02_你在这里审查.md</code>。<strong>节点 3〜8 没有</strong>（只有输入模板）。所以：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">你要的审查清单</th><th style="text-align:left">去这里找</th></tr></thead><tbody><tr><td style="text-align:left">「人必须审查什么」4〜5 条</td><td style="text-align:left"><strong>每份输入模板的顶部注释</strong> ——「【人必须审查什么】」那一段</td></tr><tr><td style="text-align:left">逐条可打勾的清单</td><td style="text-align:left"><strong>模板末尾的 <code>human_review_required:</code></strong> —— 那就是清单本体</td></tr><tr><td style="text-align:left">三条贯穿全程的硬规则</td><td style="text-align:left"><strong>本节下方</strong>（「三条贯穿始终的硬规则」表）</td></tr><tr><td style="text-align:left">节点 5 的特别注意</td><td style="text-align:left"><strong>本页 4.5 节点 5</strong>（设计不许改 + 禁止事项 5 条）</td></tr></tbody></table>
+<p><strong>三条贯穿始终的硬规则</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">规则</th><th style="text-align:left">说明</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>键名一律 snake_case</strong></td><td style="text-align:left">YAML 的键只能是小写+下划线；<code>stfCd</code> / <code>gmnId</code> 这类 camelCase 只允许出现在「值」里</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>不写真实敏感值</strong></td><td style="text-align:left">员工号用 <code>EMP_0001</code>、值用 <code>VAL_1</code>、IP 用 <code>IP_1</code>、口令用 <code>PWD_1</code>、表名用 <code>TBL_1</code></td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>人是责任主体</strong></td><td style="text-align:left">模板末尾的 <code>human_review_required</code> 就是「AI 不能替你拍板」的清单，逐条确认后才能走</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 命令速查 + 三条禁区</h2>
+<h3>对 Claude Code 说的话（不用敲命令）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">你说</th><th style="text-align:left">它做</th></tr></thead><tbody><tr><td style="text-align:left"><code>/trans-cosmos-ai-lifecycle-coach</code></td><td style="text-align:left">开始 / 继续，回到你上次的位置</td></tr><tr><td style="text-align:left"><code>继续</code> / <code>下一步</code></td><td style="text-align:left">只推进<strong>一步</strong></td></tr><tr><td style="text-align:left"><code>卡住了</code> / <code>不会</code></td><td style="text-align:left">把<strong>这一步</strong>拆得更细重讲</td></tr><tr><td style="text-align:left"><code>状态</code> / <code>我在哪</code></td><td style="text-align:left">显示 8 节点进度表（多模块时显示<strong>模块 × 节点</strong>看板）</td></tr><tr><td style="text-align:left"><code>检查</code></td><td style="text-align:left">跑本节点的门禁命令并报告结果</td></tr><tr><td style="text-align:left"><code>审查</code></td><td style="text-align:left">把本节点检查清单<strong>一项一项</strong>问你</td></tr><tr><td style="text-align:left"><code>承认</code></td><td style="text-align:left">记录你的承认，然后才放你进下一节点</td></tr><tr><td style="text-align:left"><code>谁在做</code></td><td style="text-align:left">看 8 个节点各归谁（3-5 人并行时用）</td></tr><tr><td style="text-align:left"><code>我是&lt;你的名字&gt;</code></td><td style="text-align:left">登记你是谁，之后你负责的节点才认你这个 owner</td></tr><tr><td style="text-align:left"><code>换人</code></td><td style="text-align:left">接管别人名下的节点（会问你原因并留一行记录）</td></tr><tr><td style="text-align:left"><code>交接</code></td><td style="text-align:left">输出<strong>交接卡</strong>并写 <code>handoff.md</code>——换人、或对话太长要重开时用</td></tr><tr><td style="text-align:left"><code>模块&lt;R-102&gt;</code></td><td style="text-align:left">切到另一个模块的工作区（多模块并行时用）</td></tr></tbody></table>
+<h3>随时可以跑的命令</h3>
+<pre><code># 追溯门禁：全 PASS 就说明编号链条没断
+py -3 -m tools.trace_check --strict
+
+# 把任何 .md 变成人看得舒服的 HTML（Ctrl+P 可存 PDF）
+py -3 -m tools.gen_view tutorial/R60Login/README.md</code></pre>
+<h3>四条禁区</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">不许做</th><th style="text-align:left">为什么</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>不许写真实敏感值进 tutorial/</strong>（IP、口令、真实桶名/租户、真实员工号姓名）</td><td style="text-align:left">gate6 会扫 <code>tutorial/</code>，一命中就是泄漏</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>不许说「用 code-from-design-trans-cosmos-ai 技能」处理教程节点</strong></td><td style="text-align:left">那个技能要 <code>R-101</code> 且 ID 必须已登记；<code>R-201</code> 是教学号段，第一步就被拒收</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>不许跳过「承认」直接进下一节点</strong></td><td style="text-align:left">上一节点的承认版 = 下一节点的输入；跳过 = 输入是假的</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>不许改别人名下的节点</strong>（多人在做时）</td><td style="text-align:left">本仓库没有 git，覆盖 = 对方的工作直接消失。要接手先说 <code>换人</code></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. 常用问答</h2>
+<p><strong>Q. 我可以不用这份教程，直接做我自己的需求吗？</strong><br>可以。把 <a href="节点1_需求/00_输入_客户需求书.md"><code>节点1_需求/00_输入_客户需求书.md</code></a> 换成你的真实需求书，<br>后面的步骤一模一样。<strong>只需换编号</strong>（例如 <code>R-301</code>）。</p>
+<p><strong>Q. 那以前给客户交的 Excel 呢？</strong><br><code>01_AI产出_需求结构化表.md</code> <strong>就是那份 Excel 的内核</strong>——以前你手写 Excel，现在 AI 生成这张表。<br>要变成客户收的日文 Excel，用 <code>py -3 -m tools.gen_formal.gen_excel --dry-run --module R-101</code>。<br><strong>目前只做 dry-run（校验列数对不对），还没有真的吐 .xlsx</strong>——那要等客户提供正式模板（属 Phase 2）。<br>关键原则：<strong>只维护这一份机读源，Excel 由它生成，绝不两头手改。</strong></p>
+<p><strong>Q. 客户习惯直接在 Excel 上用红笔改，怎么办？</strong><br><strong>不要禁止，改成「受控回流」——把客户的手引到一个安全的出口。</strong><br>做法：<strong>正文只读，另附一张「指摘シート／レビュー欄」</strong>，客户只在那一栏写意见（每行带<strong>行番号</strong>或<br><strong>R-ID</strong> 引用），AI 只读那一栏 → 改机读源 → 重新生成。</p>
+<pre><code> 机读源 .md/.yaml（唯一真源）
+        │ ① 生成（单向，只读）
+        ▼
+ 日文 Excel 正文（客户不改正文）
+        │ ② 客户只在另附的「指摘シート」里写意见（每行带 行番号 / R-ID）
+        ▼
+ 指摘シート（意见回线，独立文件）
+        │ ③ AI 只读这一栏
+        ▼
+ 改机读源 → 重新生成 Excel（回到 ①）</code></pre>
+<p>本目录的 <a href="节点1_需求/客户確認依頼書.md"><code>节点1_需求/客户確認依頼書.md</code></a> 就是这个思路的<strong>实物样板</strong><br>（A=客户决定 / B=我方暂定前提的确认 / C=验收条件，全部都带填写栏）。</p>
+<blockquote class="quote warn">⚠️ <strong>不要</strong>做的是：客户红笔改完 Excel → 直接把那份改过的 Excel 丢给 AI「转成 .md」。<br>那正是本流程明令禁止的<strong>双向回路</strong>（依据 <code>docs/00_plan/spec.md</code> FR-3「严格单一数据源，禁手改日文版」）。</blockquote>
+<p><strong>Q. 怎么知道我做对了？</strong><br>每个节点的「你在这里审查 / 模板的 human_review_required」就是验收清单。<br>另外随时跑 <code>py -3 -m tools.trace_check --strict</code>，全 PASS 说明编号链条没断。</p>
+<p><strong>Q. 「承认」是口头说说吗？</strong><br>不是。承认版文件顶部有「承認記録」表格，写清版本 / 日期 / 承认者。以后出问题能追溯到谁在什么时候点头的。</p>
+<p><strong>Q. 组内审查意见一定要用这个格式吗？</strong><br>不一定，但<strong>建议</strong>用「指摘者 + 问题 + 希望怎么改」三段式——AI 读结构化意见改得最准。<br>参照 <a href="节点2_基本设计/03_组内审查意见.md"><code>节点2_基本设计/03_组内审查意见.md</code></a>。</p>
+<p><strong>Q. 我觉得某个节点没必要做。</strong><br>可以跳过，但要知道代价。比如跳过节点 3（详细设计），AI 在做节点 5（编码）时会<strong>自己去猜处理逻辑</strong>——<br><strong>猜错了你更难发现</strong>。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>8. 这套流程到底省了什么</h2>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left">以前</th><th style="text-align:left">现在</th></tr></thead><tbody><tr><td style="text-align:left">写文档</td><td style="text-align:left">人工写 Excel/Word</td><td style="text-align:left">AI 出初稿，你只改</td></tr><tr><td style="text-align:left">审查意见落实</td><td style="text-align:left">人对着意见逐条改</td><td style="text-align:left">意见喂给 AI，一句话改完</td></tr><tr><td style="text-align:left">找人问需求细节</td><td style="text-align:left">口头问、邮件问</td><td style="text-align:left">AI 先列出「待确认事项」，你只挑重点问</td></tr><tr><td style="text-align:left">追溯「这条代码对应哪个需求」</td><td style="text-align:left">翻文档找</td><td style="text-align:left">编号串起来，一条命令查到底</td></tr></tbody></table>
+<p><strong>你省下的是「写字」的时间；你把时间花在「判断」上</strong>——判断需求对不对、设计合不合理、测试够不够、<br>能不能上线。<strong>这才是这套东西的意义。</strong></p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-10">
+<h2>9. 完成标准（8 节点全部做完时，你应该有）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">节点</th><th style="text-align:left">承认版文件</th></tr></thead><tbody><tr><td style="text-align:left">① 需求理解</td><td style="text-align:left"><code>节点1_需求/04_承認版_需求结构化表.md</code></td></tr><tr><td style="text-align:left">② 基本设计</td><td style="text-align:left"><code>节点2_基本设计/05_承認版_基本设计书.md</code></td></tr><tr><td style="text-align:left">③ 详细设计</td><td style="text-align:left"><code>节点3_详细设计/05_承認版_详细设计书.md</code></td></tr><tr><td style="text-align:left">④ 框架构筑</td><td style="text-align:left"><code>节点4_框架构筑/05_承認版_框架构筑记录.md</code></td></tr><tr><td style="text-align:left">⑤ 制造</td><td style="text-align:left"><code>节点5_制造/05_承認版_制造记录.md</code></td></tr><tr><td style="text-align:left">⑥ 单元测试</td><td style="text-align:left"><code>节点6_单元测试/05_承認版_测试用例集.md</code></td></tr><tr><td style="text-align:left">⑦ 结合测试</td><td style="text-align:left"><code>节点7_结合测试/05_承認版_结合测试规格书.md</code></td></tr><tr><td style="text-align:left">⑧ 发布运维</td><td style="text-align:left"><code>节点8_发布运维/05_承認版_发布手顺书.md</code></td></tr></tbody></table>
+<p>外加每节点的 <code>01</code>（初稿）/ <code>04</code>（改修版）。<strong>全部靠你自己跑出来——本目录不提供答案。</strong></p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>README.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

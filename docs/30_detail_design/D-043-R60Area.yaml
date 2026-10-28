@@ -1,0 +1,270 @@
+---
+id: D-043
+type: detail_design
+req_ids:
+- R-101
+status: baselined
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+title: R60Area 詳細設計（DML 定義）
+design_id: D-043
+function_id: F-042
+logic_ids:
+- logic_id: L-014
+  name: search 業務（検索ロジック）
+  description: 一覧検索の WHERE 組み立て・総件数取得・ページング・56 項目マッピング。
+  sql_location: R60AreaController.py L1499-L1647
+  steps:
+  - online 利用可否チェック（chk_onl_flg）
+  - WHERE 組み立て（会社コード完全一致／事業場コード分割／エリアコード前方一致／削除フラグ）
+  - COUNT(*) による総件数とページング境界
+  - select_column 動的取得と OFFSET-FETCH + ROWID ソート
+  - 56 項目マッピング
+- logic_id: L-015
+  name: initEdit/edit/delete 業務（排他+参照+重複）
+  description: 登録・修正・複製・論理削除の重複／排他／被参照チェックと DML 実行。
+  sql_location: R60AreaController.py L1713-L2915
+  steps:
+  - mode1/mode2 登録前キー重複チェック
+  - mode3 修正前 排他チェック
+  - 削除フラグ=1 時の被参照チェック
+  - ロケーション 2 件存在チェック
+  - set_reg_sts 15 項目判定
+  - INSERT / UPDATE / 論理削除 DML 実行
+  - 緊急配信（SEND_STS=9）
+  - conn.commit()
+error_branch_table:
+- error_id: E-001
+  condition: 検索結果が 0 件
+  msg_placeholder: MSG_R60W0010
+  next_action: 一覧を 0 件表示し再検索を促す（画面復帰）
+- error_id: E-002
+  condition: 更新・削除時に 改竄日時 が不一致（排他）
+  msg_placeholder: MSG_R60W0006
+  next_action: エラー表示後、最新データの再読込を促す
+- error_id: E-003
+  condition: 新規・複製時に三鍵が既存レコードと重複
+  msg_placeholder: MSG_R60W0014
+  next_action: キー項目へフォーカス移動
+- error_id: E-004
+  condition: 削除対象が他機能から被参照
+  msg_placeholder: MSG_R60W0024
+  next_action: 削除を中止し一覧へ復帰
+- error_id: E-005
+  condition: システムエラー（内部例外・判定不能）
+  msg_placeholder: MSG_R60E0025
+  next_action: トランザクションをロールバックし画面復帰
+- error_id: E-006
+  condition: 原材料ロケーションが未登録（error_flg=1）
+  msg_placeholder: MSG_R60W0033
+  next_action: ロケーション項目へフォーカス移動
+- error_id: E-007
+  condition: 半製品ロケーションが未登録（error_flg=2）
+  msg_placeholder: MSG_R60W0033
+  next_action: ロケーション項目へフォーカス移動
+- error_id: E-008
+  condition: 削除確認（論理削除の実行確認）
+  msg_placeholder: MSG_R60A0039-0040
+  next_action: 確認ダイアログを表示（OK／キャンセル）
+boundary_value_table:
+- item: エリアコード（前方一致）
+  boundary: 未入力（空）
+  expected: 条件に含めず全件対象
+- item: エリアコード（前方一致）
+  boundary: 最小 1 桁
+  expected: 前方一致でヒット
+- item: エリアコード（前方一致）
+  boundary: 最大桁ちょうど
+  expected: 桁内なら有効
+- item: エリアコード（前方一致）
+  boundary: 最大桁＋1（桁溢れ）
+  expected: 入力エラー（桁超過）
+- item: 事業場コード（複数指定）
+  boundary: カンマ区切り 2 件
+  expected: split 後の要素を採用
+- item: 事業場コード（複数指定）
+  boundary: カンマなし単一
+  expected: 完全一致で検索
+- item: 現在ページ番号
+  boundary: 0 以下
+  expected: 1 に補正
+- item: 現在ページ番号
+  boundary: 総ページ数を超過
+  expected: 最終ページに補正
+- item: 1 頁件数
+  boundary: '0'
+  expected: 全ページ数=1 に補正
+- item: 検索件数
+  boundary: 総件数 0 件
+  expected: R60W0010（E-001）を返却
+io_definitions:
+- item_id: I-201
+  jp_name: 会社コード
+  column_name: CMP_CD
+- item_id: I-202
+  jp_name: 事業場コード
+  column_name: JIG_CD
+- item_id: I-203
+  jp_name: エリアコード
+  column_name: ARA_CD
+- item_id: I-204
+  jp_name: エリア名
+  column_name: ARA_NM
+- item_id: I-205
+  jp_name: エリア略名
+  column_name: ARA_RNM
+- item_id: I-206
+  jp_name: 受払場所コード
+  column_name: UKH_PLC_CD
+- item_id: I-207
+  jp_name: 受払計上事業場コード
+  column_name: UKH_KEIJ_JIG_CD
+- item_id: I-208
+  jp_name: 受払計上部署コード
+  column_name: UKH_KEIJ_BSY_CD
+- item_id: I-209
+  jp_name: 債務計上事業場コード
+  column_name: SAIM_KEIJ_JIG_CD
+- item_id: I-210
+  jp_name: 債務計上部署コード
+  column_name: SAIM_KEIJ_BSY_CD
+- item_id: I-211
+  jp_name: 債権計上事業場コード
+  column_name: SAIKN_KEIJ_JIG_CD
+- item_id: I-212
+  jp_name: 債権計上部署コード
+  column_name: SAIKN_KEIJ_BSY_CD
+- item_id: I-213
+  jp_name: 自動発生同期フラグ
+  column_name: JID_HAR_SYN_FLG
+- item_id: I-214
+  jp_name: 共有回答先名称
+  column_name: SHR_ANSY_TDK_NM
+- item_id: I-215
+  jp_name: 異動デフォルト場所コード（元帳）
+  column_name: IDO_DFLT_PLC_CD_GZR
+- item_id: I-216
+  jp_name: 異動デフォルト場所コード（補助）
+  column_name: IDO_DFLT_PLC_CD_HSH
+- item_id: I-217
+  jp_name: 接替区分会社コード
+  column_name: SYCH_KBI_CMP_CD
+- item_id: I-218
+  jp_name: 接替区分事業場コード
+  column_name: SYCH_KBI_JIG_CD
+- item_id: I-219
+  jp_name: 接替区分受払計上事業場コード
+  column_name: SYCH_KBI_UKH_KEIJ_JIG_CD
+- item_id: I-220
+  jp_name: 接替区分受払計上部署コード
+  column_name: SYCH_KBI_UKH_KEIJ_BSY_CD
+- item_id: I-221
+  jp_name: 接替区分受払債務事業場コード
+  column_name: SYCH_KBI_UKH_SAIM_JIG_CD
+- item_id: I-222
+  jp_name: 接替区分受払債務部署コード
+  column_name: SYCH_KBI_UKH_SAIM_BSY_CD
+- item_id: I-223
+  jp_name: 接替区分受払債権事業場コード
+  column_name: SYCH_KBI_UKH_SAIKN_JIG_CD
+- item_id: I-224
+  jp_name: 接替区分受払債権部署コード
+  column_name: SYCH_KBI_UKH_SAIKN_BSY_CD
+- item_id: I-225
+  jp_name: 送信ステータス
+  column_name: SEND_STS
+- item_id: I-226
+  jp_name: 削除フラグ
+  column_name: DEL_FLG
+- item_id: I-227
+  jp_name: 送信区分
+  column_name: SEND_KBN
+- item_id: I-228
+  jp_name: 改竄区分
+  column_name: KSN_KBN
+- item_id: I-229
+  jp_name: 改竄区分者ID
+  column_name: KSN_KBN_STF_ID
+- item_id: I-230
+  jp_name: 登録者ID
+  column_name: REG_STF_ID
+- item_id: I-231
+  jp_name: 登録日時
+  column_name: REG_DAT
+- item_id: I-232
+  jp_name: 改竄者ID
+  column_name: KSN_STF_ID
+- item_id: I-233
+  jp_name: 改竄日時
+  column_name: KSN_DAT
+- item_id: I-234
+  jp_name: リビジョン番号
+  column_name: REV_NO
+- item_id: I-235
+  jp_name: 会社名
+  column_name: CMP_NM
+- item_id: I-236
+  jp_name: 事業場名
+  column_name: JIG_NM
+- item_id: I-237
+  jp_name: 受払場所名
+  column_name: UKH_PLC_NM
+- item_id: I-238
+  jp_name: 受払計上事業場名
+  column_name: UKH_KEIJ_JIG_NM
+- item_id: I-239
+  jp_name: 受払計上部署名
+  column_name: UKH_KEIJ_BSY_NM
+- item_id: I-240
+  jp_name: 債務計上事業場名
+  column_name: SAIM_KEIJ_JIG_NM
+- item_id: I-241
+  jp_name: 債務計上部署名
+  column_name: SAIM_KEIJ_BSY_NM
+- item_id: I-242
+  jp_name: 債権計上事業場名
+  column_name: SAIKN_KEIJ_JIG_NM
+- item_id: I-243
+  jp_name: 債権計上部署名
+  column_name: SAIKN_KEIJ_BSY_NM
+- item_id: I-244
+  jp_name: 異動デフォルト場所名（元帳）
+  column_name: IDO_DFLT_PLC_NM_GZR
+- item_id: I-245
+  jp_name: 異動デフォルト場所名（補助）
+  column_name: IDO_DFLT_PLC_NM_HSH
+- item_id: I-246
+  jp_name: 接替区分会社名
+  column_name: SYCH_KBI_CMP_NM
+- item_id: I-247
+  jp_name: 接替区分事業場名
+  column_name: SYCH_KBI_JIG_NM
+- item_id: I-248
+  jp_name: 接替区分受払計上事業場名
+  column_name: SYCH_KBI_UKH_KEIJ_JIG_NM
+- item_id: I-249
+  jp_name: 接替区分受払計上部署名
+  column_name: SYCH_KBI_UKH_KEIJ_BSY_NM
+- item_id: I-250
+  jp_name: 接替区分受払債務事業場名
+  column_name: SYCH_KBI_UKH_SAIM_JIG_NM
+- item_id: I-251
+  jp_name: 接替区分受払債務部署名
+  column_name: SYCH_KBI_UKH_SAIM_BSY_NM
+- item_id: I-252
+  jp_name: 接替区分受払債権事業場名
+  column_name: SYCH_KBI_UKH_SAIKN_JIG_NM
+- item_id: I-253
+  jp_name: 接替区分受払債権部署名
+  column_name: SYCH_KBI_UKH_SAIKN_BSY_NM
+- item_id: I-254
+  jp_name: 削除ステータス
+  column_name: DEL_STATUS
+- item_id: I-255
+  jp_name: 事業場表示順
+  column_name: JIG_HYJ_SEQ
+- item_id: I-256
+  jp_name: 登録ステータス
+  column_name: REG_STS
+open_issues: []

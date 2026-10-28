@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>comparison.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>comparison.zh</h1>
+<div class="meta">
+  机读源: <code>comparison.zh.md</code> ／
+  生成: 2026-10-21 14:18 ／
+  节 3・表 5
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>comparison.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">节点 1 ／ 8 　需求理解</a></li><li><a href="#sec-2">框架的改善提案（3 件）</a></li><li><a href="#sec-3">节点 2 ／ 8 　基本设计</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>R60Login 训练对比报告（drill-comparator）</h1>
+<ul><li><strong>执行日</strong>: 2026-10-20</li><li><strong>对象画面</strong>: R60Login（共通マスタログイン）</li><li><strong>对象节点</strong>: 节点 1 ／ 8（需求理解）</li><li><strong>build_mode</strong>: greenfield</li><li><strong>对比对方</strong>: <code>D:/AI_work</code>（只读）— 画面设计书 <code>_89_R60Login_共通マスタログイン.xlsx</code>／内部用分析资料 <code>doc/01_内部用資料/R60Login_分析文档.md</code>／<code>Front-end/src/views/R60Login.vue</code>／<code>api/fastapi_oracle_pjt/app/routers/R60LoginController.py</code>／<code>Front-end/src/service/R60LoginService.ts</code>／索引 <code>docs/90_knowledge/legacy-r60/screens/R60Login.md</code></li><li><strong>冻结验证</strong>:</li></ul>
+<pre><code>  py -3 -c &quot;import hashlib,pathlib;print(hashlib.sha256(pathlib.Path(&#x27;tutorial/R60Login/节点1_需求/00_输入_客户需求书.md&#x27;).read_bytes()).hexdigest())&quot;
+  → 9f48cde220a51189efe90ae72dc6ac1555a2add7a4514f7ef3294ec80e59dba1</code></pre>
+<p>结果：<strong>一致</strong>（与 <code>freeze.yaml</code> 的 <code>book_sha256</code> 相同。冻结后需求书未被改写）</p>
+<ul><li><strong>封印检查（seal grep）</strong>:</li></ul>
+<pre><code>  grep -rn &quot;AI_work&quot; tutorial/R60Login/节点1_需求/*.md                      → 4 行 / 2 文件
+  grep -rnE &quot;&lt;实有资产标识：控制器名|Vue 文件名|物理表名|共通部品名&gt;&quot; 0[1-4]_*.md → 16 行 / 3 文件</code></pre>
+<p>结果：<strong>命中</strong>（<code>02_確認事項一覧</code> 8 行＋<code>04_承認版</code> 7 行＋<code>02_回答受領チェック</code> 1 行、实有路径 4 行）。<br><strong><code>01_AI产出_需求结构化表</code> 与 <code>03_客户確認依頼書（AB類）</code> 为 0 行。</strong> 模式本身为实有标识，依 gate6 要求不在本报告中复写。</p>
+<blockquote class="quote">本文件自本节起创建（此前 <code>comparison.md</code> 不存在）。本节不覆盖任何既有节。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>节点 1 ／ 8 　需求理解</h2>
+<blockquote class="quote"><strong>★污染声明（必读，2026-10-20）</strong>：本节点含<strong>污染源 3</strong>（<code>docs/00_plan/coach/R60Login/case.yml</code>）。<br>隔离会话读取 <code>D:/AI_work</code> 的设计书・分析资料・实现，作成参考答案 <code>reports/drill/R60Login/answer-key.md</code>；<br>同日由用户「一括采用」，19 件转记进 <code>02_確認事項一覧.md</code> 与 <code>n01.yml</code> 的 <code>open_questions</code>。<br><strong>因此本节点的「作答」大体源自人版</strong>：本节的对比不是「AI 独立与人版分岐」的测量，而是<strong>流程贯通后的回照</strong>。<br>依据 <code>case.yml</code>：<strong>本节数字一律不计入跨画面汇总</strong>（记录照做，汇总排除）。<br><strong>读法上的两个约束</strong>：<br>① <code>A3</code>（需求书没有而补上了）的多数<strong>不是 AI 单独的过度</strong>，而是污染源 3 的直接结果——不可读作「AI 比人差」；<br>② <code>A2＝0</code> 同样受污染保护（答案已由答案键提供），<strong>不可读作「AI 读需求书的能力已达标」</strong>。<br>真测量从第 2 个画面（未读画面）开始。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">观察点</th><th style="text-align:left">AI 版</th><th style="text-align:left">人版</th><th style="text-align:left">差</th><th style="text-align:left">归因</th><th style="text-align:left">依据（file:line / 命令）</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">画面项目数</td><td style="text-align:left">12 项（未增删）</td><td style="text-align:left">设计书 12 项</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし）</td><td style="text-align:left"><code>04</code> §4（12 行）／卡片 §3</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">事件数</td><td style="text-align:left">5 事件</td><td style="text-align:left">设计书 5 事件</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし）</td><td style="text-align:left"><code>04</code> §5／卡片 §4</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">API 端点数</td><td style="text-align:left">3 端点（无 menu 专用端点）</td><td style="text-align:left">实现 4 端点，其中 menu 前端未调用</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版历史负担：死端点，D-23）</td><td style="text-align:left"><code>R60LoginController.py:280,324,390,421</code>／<code>R60LoginService.ts:4-23</code>／卡片 §6.5</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">起动区分是否改变登录判定</td><td style="text-align:left">「不改变」；用途仅 ①URL 参数 ②菜单传递</td><td style="text-align:left">设计书事件 2 写「按区分 3 分支」（人版实现亦未实现，D-20）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A1</strong>（需求书未持有该信息，AI 不补为妥当）</td><td style="text-align:left"><code>04</code> §3 规则 10／<code>00_输入</code> §3.2 #4、§4.1／卡片 §4（D-20）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">权限区分的符号体系</td><td style="text-align:left">统一为「内部 1/0、URL 上 Y/N」</td><td style="text-align:left">三套并存（设计书仅写「更新有／无」；前端初值 Y/N；<code>/init</code> 返回 1/0 后上書き）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版负担，D-25）</td><td style="text-align:left"><code>R60Login.vue:201,239,288</code>／卡片 §3（D-25）</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">加密实现的重数</td><td style="text-align:left">「加密处理统合为共通函数 1 本」</td><td style="text-align:left">TS 与 Python 双重实现（同一算法两处）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版负担，D-24。AI 侧正しくても差が出る）</td><td style="text-align:left"><code>utils.ts:401,421</code>／<code>R60LoginController.py:447</code>／卡片 §12.1（D-24）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">加密方式的记述深度</td><td style="text-align:left">写到「逐位 +1／2 位以下零填充／4 位超分割／按当日 yyyymmdd 相加／<code>_</code> 连接」</td><td style="text-align:left">需求书只写到「加密后发送、服务器端复号」</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（需求书没有而补上了；污染源 3）</td><td style="text-align:left"><code>04</code> §11.2 Q-201／<code>00_输入</code> §4.5／<code>02</code> 第 50 行</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">物理表名・结合条件</td><td style="text-align:left">直接写社员表／画面表的物理名与固定 ID 的结合条件</td><td style="text-align:left">需求书只有「画面主数据／社员主数据」的<strong>角色名</strong></td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（污染源 3）</td><td style="text-align:left"><code>02</code> 第 57,60,79,80 行／<code>04</code> §11.2 Q-208・Q-211</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">权限区分的内部值 1/0</td><td style="text-align:left">定为内部值 1/0</td><td style="text-align:left">需求书 §4.2 只写「与 kgnKbn 同符号」（即 Y/N）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（污染源 3：取自人版 <code>/init</code> 应答）</td><td style="text-align:left"><code>04</code> §11.3 #19／<code>00_输入</code> §4.2／<code>R60LoginController.py</code> init 应答</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">用户 ID 的位数</td><td style="text-align:left">「半角数字・<strong>最大 7 位</strong>（非 7 位固定）」</td><td style="text-align:left">需求书 §3.2 #3・§3.4 明确「半角 7 位」（人版 input 为 <code>maxlength=7</code>）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（把原文明确条件放宽；且与本书 §4 #3 自相矛盾）</td><td style="text-align:left"><code>04</code> §11.2 Q-210 vs §4 #3／<code>00_输入</code> §3.2 #3／<code>R60Login.vue:14</code></td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">Session 的保持场所</td><td style="text-align:left">服务器侧保持＋HttpOnly Cookie</td><td style="text-align:left">人版新实现把登录信息<strong>永续存进 localStorage</strong>，无失效处理</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版负担：偏离需求书「存 Session」）</td><td style="text-align:left"><code>stores/index.ts:13,50</code>／卡片 §12.1（D-25 同域）／<code>04</code> §11.2 Q-205</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">Session 的期限</td><td style="text-align:left">idle 30 分・<strong>绝对 8 小时</strong>・「关闭」时废弃</td><td style="text-align:left">需求书未定；人版实现无期限；旧版读设定值（实值不在资产里）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（8h 与「关闭废弃」无出处；AI 自身标为 E4）</td><td style="text-align:left"><code>04</code> §11.2 Q-205／<code>02</code> 第 376 行／<code>分析文档.md:287</code></td></tr><tr><td style="text-align:left">13</td><td style="text-align:left">登录试行限制</td><td style="text-align:left">5 次／10 分锁定，10 分后自动解除</td><td style="text-align:left">需求书・设计书・单测・实现<strong>均无</strong>；代码无锁定处理</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（无出处的具体值；AI 自身标为 E4）</td><td style="text-align:left"><code>04</code> §11.2 Q-215／<code>02</code> 第 64 行／<code>R60LoginController.py:324-385</code></td></tr><tr><td style="text-align:left">14</td><td style="text-align:left">错误码体系</td><td style="text-align:left">0/1/2 之外再提案 <code>R60W0001..0004</code>・<code>R60E9999</code></td><td style="text-align:left">需求书只要求「能区分正常／业务／系统」；人版应答只有 0/1</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（需求书没有；具体码为 E4 提案）</td><td style="text-align:left"><code>04</code> §11.2 Q-206／<code>00_输入</code> §5／<code>R60LoginController.py:52,356</code></td></tr><tr><td style="text-align:left">15</td><td style="text-align:left">稼働不可时的 HTTP 状态</td><td style="text-align:left">明记「HTTP 403」</td><td style="text-align:left">需求书只写「业务错误」；人版以例外转错误画面</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（需求书没有；状态码为当方追加）</td><td style="text-align:left"><code>04</code> §11.2 Q-207／<code>00_输入</code> §3.7／<code>R60LoginController.py:285,329</code></td></tr><tr><td style="text-align:left">16</td><td style="text-align:left">「关闭」确认文言</td><td style="text-align:left">「画面を終了してよろしいですか？」</td><td style="text-align:left">需求书写「按标准规约」；<strong>人版实现文言与之逐字相同</strong></td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（需求书没有；与人版一字不差＝污染源 3 的指纹）</td><td style="text-align:left"><code>04</code> §11.2 Q-218／<code>R60Login.vue:378</code>／<code>00_输入</code> §3.3 #5</td></tr><tr><td style="text-align:left">17</td><td style="text-align:left">画面标题固定值</td><td style="text-align:left">「共通マスタ　ログイン」（含全角空白）</td><td style="text-align:left">人版用 HTML 实体 <code>&amp;nbsp;</code>（并夹半角空白）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版实现与设计书固定值不一致）</td><td style="text-align:left"><code>R60Login.vue:4</code>／卡片 §3 #1</td></tr><tr><td style="text-align:left">18</td><td style="text-align:left">日志中的社员码</td><td style="text-align:left">提案遮罩、姓名不输出</td><td style="text-align:left">人版分析资料里以 <code>stf:</code> 形式<strong>原值输出</strong>到访问日志</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版负担；AI 侧正しくても差が出る）</td><td style="text-align:left"><code>分析文档.md:138-139,214-215</code>／<code>04</code> §12 #9</td></tr><tr><td style="text-align:left">19</td><td style="text-align:left">标题背景色</td><td style="text-align:left">未纳入（人版决定 HD-04：不言及）</td><td style="text-align:left">设计书写「背景色项目：消息」；实现为 CSS 固定值（D-22）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A1</strong>（需求书没有，AI 不补为妥当）</td><td style="text-align:left"><code>04</code> §4 #1／<code>provenance.yaml</code> HD-04／卡片 §12.1（D-22）</td></tr><tr><td style="text-align:left">20</td><td style="text-align:left">画面候补的一览表</td><td style="text-align:left">不列挙（只写「从主数据取得」）</td><td style="text-align:left">设计书 <code>画面項目内容</code> r33〜r91 有 59 行一览</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A1</strong>（需求书没有；HD-02 决定不写）</td><td style="text-align:left"><code>provenance.yaml</code> HD-02／卡片 §3.2</td></tr><tr><td style="text-align:left">21</td><td style="text-align:left">旧 Struts 的业务处理说明</td><td style="text-align:left">未纳入</td><td style="text-align:left">设计书 <code>業務処理説明</code> 为旧 Java 规格（D-19）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A1</strong>（需求书没有；本就不是新系统规格）</td><td style="text-align:left">卡片 §5（D-19）／<code>04</code> 无对应节</td></tr><tr><td style="text-align:left">22</td><td style="text-align:left">候补件数的处理</td><td style="text-align:left">「r33〜r91 的 59 行（行数合计），不固定为画面数」</td><td style="text-align:left">设计书 59／前端 fallback 58／权威为 DB 表</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし。AI 的保留态度与人版判断同向）</td><td style="text-align:left"><code>02</code> 第 60 行／卡片 §3.2</td></tr><tr><td style="text-align:left">23</td><td style="text-align:left">需求书 §4.1 表与注记的矛盾</td><td style="text-align:left">作为 Q-202 提出（未擅自择一）</td><td style="text-align:left">设计书本身只写「菜单按钮→向菜单画面迁移」，不涉端点</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>R</strong>（需求书缺陷。AI 正确缺口化）</td><td style="text-align:left"><code>00_输入</code> §4.1 第 158・161 行／<code>04</code> §11.2 Q-202</td></tr><tr><td style="text-align:left">24</td><td style="text-align:left">§4.5「方式由贵方提案」与 §3.6「必须互換」的矛盾</td><td style="text-align:left">作为 Q-201 提出</td><td style="text-align:left">—</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>R</strong>（需求书缺陷）</td><td style="text-align:left"><code>00_输入</code> §4.5 第 204-205 行・§3.6 第 115 行</td></tr><tr><td style="text-align:left">25</td><td style="text-align:left">标准规约・主数据的实体的缺失</td><td style="text-align:left">Q-206／Q-207／Q-211／Q-219 一并缺口化</td><td style="text-align:left">人版只有旧系统惯例，无标准规约实体</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>R</strong>（需求书缺陷：把实体全部外委）</td><td style="text-align:left"><code>00_输入</code> §3.8 第 135-147 行／<code>02</code> 第 78-92 行</td></tr><tr><td style="text-align:left">26</td><td style="text-align:left">下游成果物引用实有资产</td><td style="text-align:left"><code>02</code>・<code>04</code> 写入物理表名・前端文件名・共通部品名</td><td style="text-align:left">—</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A3</strong>（需求书没有而补上了；封印漏れ）</td><td style="text-align:left">上记 seal grep（16 行／3 文件＋4 行／2 文件）</td></tr><tr><td style="text-align:left">27</td><td style="text-align:left">封印是否由门番自动拦截</td><td style="text-align:left">只靠本节的事后手动 grep，<code>trace_check</code> 无对应 gate</td><td style="text-align:left">—</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>G2</strong>（该拦的放过了：无自动门番）</td><td style="text-align:left"><code>py -3 -m tools.trace_check --strict</code> 不检查实有资产引用</td></tr></tbody></table>
+<h3>归因件数（本节 24 件；另 3 行为「差なし」）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">记号</th><th style="text-align:right">件数</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left"><strong>R</strong> 需求书缺陷</td><td style="text-align:right">3</td><td style="text-align:left">#23 #24 #25。AI 均正确缺口化，非 AI 责任</td></tr><tr><td style="text-align:left"><strong>A1</strong> 需求书没有所以落了</td><td style="text-align:right">4</td><td style="text-align:left">#4 #19 #20 #21。AI 判断妥当</td></tr><tr><td style="text-align:left"><strong>A2</strong> 需求书有却没读到</td><td style="text-align:right"><strong>0</strong></td><td style="text-align:left">机械核对未发现。<strong>受污染保护，见上方读法②</strong></td></tr><tr><td style="text-align:left"><strong>A3</strong> 需求书没有却补上了</td><td style="text-align:right">10</td><td style="text-align:left">#7〜#16 #26。其中 9 件源自污染源 3，1 件（#26）为流程漏れ</td></tr><tr><td style="text-align:left"><strong>G1</strong> 门番误报</td><td style="text-align:right">0</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left"><strong>G2</strong> 门番漏报</td><td style="text-align:right">1</td><td style="text-align:left">#27。封印无自动门番</td></tr><tr><td style="text-align:left"><strong>D</strong> 骨架规则与实物冲突</td><td style="text-align:right">0</td><td style="text-align:left">D-20/23/24/25 已在人版侧登记，本节无新登记项</td></tr><tr><td style="text-align:left"><strong>H</strong> 人版历史负担</td><td style="text-align:right">6</td><td style="text-align:left">#3 #5 #6 #11 #17 #18。<strong>不写入改善提案</strong></td></tr></tbody></table>
+<blockquote class="quote"><strong>A3 的读法</strong>：#7〜#16 不是 AI 在无污染条件下会自行补上的内容。它们的共同形状是<br>「需求书只给角色名／只给方向，答案键给了物理名・具体值・逐字文言」。<br>因此这 10 件是<strong>污染源 3 的测量值</strong>，不是「AI 过度补全」的能力结论。<br>可对照的旁证：<code>04</code> §11.2 的 Q-205・Q-213・Q-215 里，AI 自己打了「<strong>測定（歴史資産・2026-10-20）</strong>」<br>的标记——<strong>下游成果物内已经出现「溯源于人版」的记述</strong>，这与封印检查命中的 20 行是同一现象。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>框架的改善提案（3 件）</h2>
+<ol><li><strong>把封印检查做成门番（对 G2）</strong></li></ol>
+<p>现状：冻结后的封印验证只是<strong>事后手动 grep</strong>（本节即由人工执行），<code>tools/trace_check</code> 没有对应 gate，<br>因此 <code>02</code>／<code>04</code> 里 20 行实有资产引用一路通到了承认版。<br>提案：在 <code>trace_check</code> <strong>追加</strong>一道 gate（依 <code>rules/06</code> §3「只追加、不缩小」），<br>扫描 <code>tutorial/&lt;案件&gt;/</code> 与 <code>reports/drill/</code> 的下游成果物，命中「实有物理名・实有控制器／视图名・实有绝对路径」<br>即 Exit 1，并输出「哪一行、属哪个节点」。<strong>不得</strong>新增 <code>SECRET_EXEMPT_PATHS</code>。<br>验收：对本次的 3 个文件复跑应命中 20 行，对 <code>01</code>／<code>03</code> 应为 0 行。</p>
+<ol><li><strong>在 <code>02_確認事項一覧.md</code> 增设「出典等级」列（对 A3）</strong></li></ol>
+<p>现状：<code>E4</code>（我方提案、无出处）只写在回答正文的括弧里。一旦转记到承认版 <code>04</code>，<br><strong>等级信息在表格层消失</strong>（本次 #12 #13 #14 #15 即如此）。读者只能靠逐字读长文才能分辨「事实」与「提案值」。<br>提案：在 02 的 §1／§2／§4 各表增加 1 列「出典等级（E1〜E4）」，机械可判：<br><strong>E4 的行不得写成陈述句，必须是「提案＋请批准」或「内部决定＋理由」</strong>。<br>这同时把 <code>rules/02</code> §4.1「改了分类就要改写答案形态」从人的注意力移到表格结构上。<br>附带效果：#10（半角 7 位→最大 7 位）这类<strong>改写原文明确条件</strong>的行，会因等级栏强制标注而暴露。</p>
+<ol><li><strong>冻结前加一道「表与注记一致性」检查（对 R）</strong></li></ol>
+<p>现状：本节点 3 件 R 全部来自需求书自身的缺陷（§4.1 表↔注记、§4.5↔§3.6、§3.8 全体外委）。<br>AI 都正确缺口化了，但<strong>出题侧的缺陷被计入了「节点 1 的产出量」</strong>，使缺口数与文档欠缺程度混在一起<br>（<code>README.md</code> 坑 2 已记录同一现象：补 §3.8 后缺口掉 54%）。<br>提案：冻结前跑一次「内部矛盾检查」——同一端点／同一参数在<strong>表与注记</strong>、<strong>两节之间</strong>的表述是否一致；<br>不一致则<strong>先改写需求书再冻结</strong>（<code>requirement-interrogator</code> 的 L 系列已有检出力）。<br>验收指标：节点 1 的 R 件数应为 0；若不为 0，需在 <code>freeze.yaml</code> 的 <code>revision_history</code> 留下处置理由。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>节点 2 ／ 8 　基本设计</h2>
+<blockquote class="quote"><strong>本节是补记</strong>（2026-10-21，节点 2 于同日由 SE-001 承认后作的事后对比）。<br><strong>节点 1 的节未作任何改动</strong>；<code>README.md</code> 等其他文件亦未改动。<br>上面第 94 行的 <code>## 框架的改善提案（3 件）</code> <strong>属于节点 1</strong>；本节的提案在文末的 <code>### 框架的改善提案（对节点 2・3 件）</code>。</blockquote>
+<ul><li><strong>执行日</strong>: 2026-10-21</li><li><strong>对象画面</strong>: R60Login（共通マスタログイン）</li><li><strong>对象节点</strong>: 节点 2 ／ 8（基本设计）</li><li><strong>build_mode</strong>: greenfield</li><li><strong>AI 版</strong>: <code>tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md</code>（v1.0.1，<code>status: baselined</code>）</li><li><strong>过程参考</strong>: 同目录 <code>01_AI产出_基本设计书.md</code>（初稿）／<code>04_AI产出_基本设计书_改修版.md</code>（v0.2.0）／<code>02_审查结果.md</code>（22 项审查记录）／<code>01_输入_已填写.yaml</code></li><li><strong>上游</strong>: <code>tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md</code>（v1.0.2。以下略记为「上游」）</li><li><strong>对比对方</strong>: <strong>历史资产的工作目录</strong>（只读）。对象是该画面基本设计书的<strong>固定 8 sheet</strong></li></ul>
+<p>（变更履历／画面概要／画面迁移图／画面布局／画面项目内容／事件一览／业务处理说明／Action），<br>以索引卡片 <code>docs/90_knowledge/legacy-r60/screens/R60Login.md</code> 的 <code>file:line</code> 为入口，必要时用<br><code>py -3 -m tools.legacy &lt;文件&gt; --sheet &lt;sheet&gt;</code> 抽取单元格。<br><strong>依本次指示，本节不写实有文件名・绝对路径・实 IP・员工代码实值</strong>，一律以角色名代替<br>（节点 1 的节按当时的写法保留了实有名，本节不沿用该写法）。</p>
+<ul><li><strong>冻结验证</strong>:</li></ul>
+<pre><code>  py -3 -c &quot;import hashlib,pathlib;print(hashlib.sha256(pathlib.Path(&#x27;tutorial/R60Login/节点1_需求/00_输入_客户需求书.md&#x27;).read_bytes()).hexdigest())&quot;
+  → 9f48cde220a51189efe90ae72dc6ac1555a2add7a4514f7ef3294ec80e59dba1</code></pre>
+<p>结果：<strong>一致</strong>（与 <code>freeze.yaml</code> 的 <code>book_sha256</code> 同值。冻结后需求书未被改写）。</p>
+<ul><li><strong>封印检查（seal grep）</strong>:</li></ul>
+<pre><code>  py -3 -m tools.trace_check --strict --only-check seal
+  → [trace_check] seal=PASS | total_ids=79 orphans=0 field_count=0 seal_hits=0        (EXIT=0)
+
+  grep -rn &quot;AI_work&quot; tutorial/R60Login/节点2_基本设计/                                → 0 行
+  按 seal_patterns.local.json 的 3 个模式独立复扫（该目录 10 个 md/yaml 文件）        → 命中 0 行 / 0 文件</code></pre>
+<p>结果：<strong>空</strong>。节点 1 的第 27 行（G2：封印无自动门番、当时命中 20 行）<strong>已由节点 1 的提案 1 修复</strong>，<br>本节复跑 <code>seal_hits=0</code>。模式本身是实有标识，按 gate6 要求不在本报告复写。</p>
+<blockquote class="quote"><strong>★污染声明（必读）</strong>：本节点属<strong>试点 #0</strong>，污染<strong>仍在</strong>，只是形态变了。<br>节点 1 的 Q-201〜Q-219 结论来自读取历史资产作成的答案键（污染源 3），节点 2 把这 19 件<strong>整批转记</strong><br>（<code>05</code> §8.1），所以在这里「AI 与人版一致」<strong>不是独立收敛的证据</strong>。<br>节点 2 自身也留下了指纹：<code>05</code> §6.2 把二度送信防止的 3 个共通函数写成「本案新规定义」，<br>而这三个名字与人版实现的共通函数<strong>同名</strong>（名称在本报告不复写）。名字只可能来自答案键，不可能从需求书推出来。<br><strong>因此本节的数字一律不计入跨画面汇总</strong>。噪声方向：一致被高估、差分被低估（尤其 <code>A2</code>）。<br>可用的读法是：<strong><code>A2</code> 与 <code>G2</code> 是本节的硬发现</strong>（有具体出处、可机械复核）；<code>H</code> 是人版侧的对照；<br><code>A1</code> 是需求书的边界；<code>R</code> 本节为 0（但文末提案 3 指出一处即将在节点 3 复发的 R 候选）。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">观察点</th><th style="text-align:left">AI 版</th><th style="text-align:left">人版</th><th style="text-align:left">差</th><th style="text-align:left">归因</th><th style="text-align:left">依据（file:line / 命令）</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">基本设计书的样式（章节与图）</td><td style="text-align:left">功能单位 12 节（§1〜§12），无画面迁移图・画面布局</td><td style="text-align:left">画面单位固定 8 sheet（迁移图・布局・项目内容・事件・业务处理说明・Action 等）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>D</strong>（骨架的产出契约与实物样式冲突。<strong>新登记候选</strong>，号码由登记者在 <code>08-deviations.md</code> 中分配，本节不编号）</td><td style="text-align:left"><code>05</code>:81-637（§1〜§12）／卡片 §1:31／<code>02_审查结果</code> #21</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">利用对象者</td><td style="text-align:left">「用员工代码识别的利用者（登录可否不使用所属・权限・有效期）」——<strong>引了 §1-7，却丢了「仅限持有利用权限者」</strong>；项目名也从「利用対象者」改成「利用者」</td><td style="text-align:left">画面概要：利用対象者＝「利用権限保持者のみ」</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A2</strong> ★（引了出处却没搬内容）</td><td style="text-align:left"><code>05</code>:91／上游:67,97／卡片 §2:52／<code>grep -rn "利用権限保持者" 节点2_基本设计/*.md</code> → 0 行</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">权限区分的符号系（内部值）</td><td style="text-align:left">只写 <code>Y</code>／<code>N</code>（项目值、URL 参数）</td><td style="text-align:left">上游 §11.3 #19 明定「2 值固定（内部值 <code>1/0</code>、URL 上 <code>Y/N</code>）」；人版设计书只写「更新有／无」，实现取回 <code>1/0</code> 后再转回 <code>Y/N</code>（D-25）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A2</strong> ★（人版三套并存＝<code>H</code>，已计于节点 1 #5；<strong>丢内部值是 <code>A2</code></strong>，两者不互相抵消）</td><td style="text-align:left"><code>05</code>:151,453／上游:144,567／卡片 §3:76／<code>grep "内部値|1/0"</code> → 0 行</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">生成 URL 的路径形状</td><td style="text-align:left"><code>{scheme}://{host}:{port}/{context}/{route}</code>，<code>route</code> 用 Q-223 的画面路由</td><td style="text-align:left">上游 §7.2 的 generateUrl 应答是<strong>旧 JSP 的固定路径</strong>（规则 18：「别的系统也组装这个 URL 跳过来」）；人版实现同形</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A2</strong> ★（把上游给的路径形状换成自己的路由。<strong>两者用途不同</strong>：一个给别的系统拼，一个给本系统跳）</td><td style="text-align:left"><code>05</code>:309,317／上游:112,223／<code>grep "index.jsp|Pages/"</code> → 0 行（路径字面不复写）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">用户 ID 的必须性</td><td style="text-align:left">I-303 必须 ○（登录时）</td><td style="text-align:left">设计书 12 项的必须栏<strong>全为 <code>−</code></strong>（含用户 ID）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版设计书与上游 §4 #3 不一致）</td><td style="text-align:left"><code>05</code>:147,332／上游:140／卡片 §3:72</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">画面标题的出所</td><td style="text-align:left">固定标签（I-301）</td><td style="text-align:left">设计书一处写实体＝消息管理情报／消息（Var 200），一处写「固定值」，<strong>自相矛盾</strong>；实现为固定值＋CSS 固定色（D-22）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（D-22）</td><td style="text-align:left"><code>05</code>:145／卡片 §3:70</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">画面标题的背景色</td><td style="text-align:left">未记载</td><td style="text-align:left">设计书「背景色项目：消息」；实现为 CSS 固定值（D-22）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A1</strong>（上游未持有；<code>provenance.yaml</code> HD-04 决定不言及）</td><td style="text-align:left"><code>provenance.yaml</code> HD-04／卡片 §3:70</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">画面项目的实体／项目名</td><td style="text-align:left">只写逻辑名，物理对应推到工程 03</td><td style="text-align:left">设计书逐项给出实体名・项目名</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A1</strong>（上游以角色名给出）</td><td style="text-align:left"><code>05</code>:141-151,354-362／卡片 §3:86-91</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">事件 2 的登录判定</td><td style="text-align:left">「起动区分不改变登录可否」，且明禁按值分支</td><td style="text-align:left">设计书事件 2＝「按员工区分 1／2／3 三分支」；实现也未实现（D-20）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版设计书与上游规则 10 背离）</td><td style="text-align:left"><code>05</code>:268-269／上游:104,141／卡片 §4:146,156</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">事件 1 的记述粒度</td><td style="text-align:left">稼働判定 → <code>init</code> → 候补设定，异常 5 分支</td><td style="text-align:left">旧 Struts 的 4 步（含「标题背景色设定」）（D-19）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（业务处理说明是旧 Java 规格）</td><td style="text-align:left"><code>05</code>:249-261／卡片 §5:173-180</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">稼働停止的处置</td><td style="text-align:left">3 个处理开头都判稼働；不可＝HTTP 403＋专用画面（E-203／E-206）</td><td style="text-align:left">设计书<strong>无稼働判定</strong>（事件 1 的例外只写「想定外」）；实现 4 端点全部判定</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版设计书落后于实现）</td><td style="text-align:left"><code>05</code>:234-247／卡片 §8.2:413</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">URL 的生成元</td><td style="text-align:left">scheme／host／port／context 全部环境设定</td><td style="text-align:left">设计书写 <code>&lt;host&gt;:&lt;port&gt;</code> 占位；实现把主机写死</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版实现硬编码）</td><td style="text-align:left"><code>05</code>:309／卡片 §5:222-224</td></tr><tr><td style="text-align:left">13</td><td style="text-align:left">事件与端点的对应</td><td style="text-align:left">3 端点；菜单与登录共用，无专用端点</td><td style="text-align:left">设计书无端点章；实现 4 端点，其中菜单端点前端不调用（D-23）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（D-20／D-23 死端点）</td><td style="text-align:left"><code>05</code> §4.1:197／§5.4:294／卡片 §4:157</td></tr><tr><td style="text-align:left">14</td><td style="text-align:left">错误一览</td><td style="text-align:left">E-201〜E-210（10 件：条件・代码・文面・去向；§7.3 与上游 E-01〜E-09 逐项对应）</td><td style="text-align:left">设计书 8 sheet <strong>无错误一览</strong>，错误只见于事件 1 的例外与实现</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>H</strong>（人版设计书没有这一章）</td><td style="text-align:left"><code>05</code>:396-437／卡片 §1:31</td></tr><tr><td style="text-align:left">15</td><td style="text-align:left">旧 Struts Action 规格</td><td style="text-align:left">未纳入</td><td style="text-align:left">Action sheet（按动作 ID 分支、旧签名）（D-19）</td><td style="text-align:left">1 件</td><td style="text-align:left"><strong>A1</strong>（上游未持有；且非新系统规格）</td><td style="text-align:left">卡片 §5.1:233-256</td></tr><tr><td style="text-align:left">16</td><td style="text-align:left">机械判定的记录精度</td><td style="text-align:left"><code>02_审查结果</code> #10 记「全文 <strong>0 处</strong> Vue／FastAPI／Oracle…」</td><td style="text-align:left">—</td><td style="text-align:left">—</td><td style="text-align:left"><strong>G2</strong>（门番漏报：记录说 0，实测有 <strong>1 行</strong>。<strong>实质结论仍成立</strong>，因为那一行是否定句「本文に無い」）</td><td style="text-align:left"><code>05</code>:74／<code>grep -nE "Vue|FastAPI|Oracle|…"</code> → 1 行</td></tr><tr><td style="text-align:left">17</td><td style="text-align:left">上游各栏 → 下游的移送检查</td><td style="text-align:left">—</td><td style="text-align:left">—</td><td style="text-align:left">—</td><td style="text-align:left"><strong>G2</strong>（该拦的放过：<strong>3 件 <code>A2</code> 全落在「非 Q 栏」的盲区</strong>，没有一道门番会注意到）</td><td style="text-align:left"><code>02_审查结果</code> #4 只查 Q-201〜219 与 I-301〜312／#3 只数 12 项／出口命令只 <code>grep -c "起動区分|stfKbn"</code> ＝ 19</td></tr></tbody></table>
+<h3>归因件数（本节 17 件；另 8 行为「差なし・承继」）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">记号</th><th style="text-align:right">件数</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left"><strong>R</strong> 需求书缺陷</td><td style="text-align:right">0</td><td style="text-align:left">本节没有新的 R。文末提案 3 指出的 1 件是<strong>下一节点的 R 候选</strong>，尚未发生</td></tr><tr><td style="text-align:left"><strong>A1</strong> 需求书没有所以落了</td><td style="text-align:right">3</td><td style="text-align:left">#7 #8 #15。AI 判断妥当</td></tr><tr><td style="text-align:left"><strong>A2</strong> 需求书有却没读到</td><td style="text-align:right"><strong>3</strong></td><td style="text-align:left">#2 #3 #4。<strong>本节的硬发现</strong>，三处都可机械复核</td></tr><tr><td style="text-align:left"><strong>A3</strong> 需求书没有却补上了</td><td style="text-align:right">0</td><td style="text-align:left">初稿的 A3 形状（物理名・具体值）在节点 2 已基本消失（见下「物理表名」一行）</td></tr><tr><td style="text-align:left"><strong>G1</strong> 门番误报</td><td style="text-align:right">0</td><td style="text-align:left">未观测到「正确的被弹回」</td></tr><tr><td style="text-align:left"><strong>G2</strong> 门番漏报</td><td style="text-align:right">2</td><td style="text-align:left">#16 记录与实测不符／#17 移送检查的盲区</td></tr><tr><td style="text-align:left"><strong>D</strong> 骨架规则与实物冲突</td><td style="text-align:right">1</td><td style="text-align:left">#1。<strong>新登记候选</strong>（样式冲突），登记动作不在本节执行</td></tr><tr><td style="text-align:left"><strong>H</strong> 人版历史负担</td><td style="text-align:right">8</td><td style="text-align:left">#5 #6 #9 #10 #11 #12 #13 #14。<strong>不写入改善提案</strong></td></tr></tbody></table>
+<blockquote class="quote"><strong><code>A2</code> 的形状（本节的结论）</strong>：三件落掉的都不是「值」，而是<strong>挂在值上的限定与形状</strong>——<br>一个限定句（仅限持有权限者）、一个内部表示（内部值 <code>1/0</code>）、一个路径形状（给别的系统用的旧路径）。<br><strong>AI 抄走了值，丢掉了「这个值在什么范围内成立」。</strong> 这不是知识不足，是<strong>搬运时的粒度</strong>问题，<br>所以下面的提案针对的是搬运的检查，不是「让 AI 再多读几遍」。<br>旁证：<code>05</code> §6.1「画面主数据」的取得条件里也没有上游 §4 #6／规则 11 的「全社共通、不按利用者筛选」，<br>只是行为上恰好没有筛选（见下「差なし」最后一行）——<strong>同一个落法，只是这次没造成差</strong>。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">观察点</th><th style="text-align:left">AI 版</th><th style="text-align:left">人版</th><th style="text-align:left">差</th><th style="text-align:left">归因</th><th style="text-align:left">依据</th></tr></thead><tbody><tr><td style="text-align:left">—</td><td style="text-align:left">画面项目 12 项的 1:1</td><td style="text-align:left">I-301〜I-312 与上游 §4 的 12 行一一对应，无增删</td><td style="text-align:left">设计书 12 项</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし）</td><td style="text-align:left"><code>05</code>:141-157,171／上游 §4 12 行／卡片 §3:83</td></tr><tr><td style="text-align:left">—</td><td style="text-align:left">事件 5 件</td><td style="text-align:left">5（初期表示／登录／菜单／URL 输出／关闭）</td><td style="text-align:left">设计书 5 件</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし）</td><td style="text-align:left"><code>05</code> §5.2〜§5.6／卡片 §4:145-149</td></tr><tr><td style="text-align:left">—</td><td style="text-align:left">初期值 3 项</td><td style="text-align:left">画面＝首候补／权限区分＝更新有 <code>Y</code>／起动区分＝<code>3</code></td><td style="text-align:left">设计书同（首候补的具体画面名不同，权威在画面主数据）</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし）</td><td style="text-align:left"><code>05</code>:258／卡片 §3:73,75,76</td></tr><tr><td style="text-align:left">—</td><td style="text-align:left">关闭的确认文言</td><td style="text-align:left">「画面を終了してよろしいですか？」</td><td style="text-align:left">设计书同文</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし。<strong>逐字相同＝污染的指纹</strong>，不是独立收敛）</td><td style="text-align:left"><code>05</code>:324／卡片 §5:229</td></tr><tr><td style="text-align:left">—</td><td style="text-align:left">URL 项目 150／120</td><td style="text-align:left">受付 150・显示 120・超过 150 报错不截断</td><td style="text-align:left">设计书「输入上限 150・显示幅 120」；实现同</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし。超长时的处置是节点 1 的 C 裁定）</td><td style="text-align:left"><code>05</code>:310-311／上游:147／卡片 §3:79</td></tr><tr><td style="text-align:left">—</td><td style="text-align:left">画面候补的一览表</td><td style="text-align:left">不列举（只写「从画面主数据取得」）</td><td style="text-align:left">设计书列 59 行</td><td style="text-align:left">—</td><td style="text-align:left">—（<strong>已计于节点 1 #20</strong>，本节不重复计数）</td><td style="text-align:left"><code>provenance.yaml</code> HD-02／卡片 §3.2</td></tr><tr><td style="text-align:left">—</td><td style="text-align:left">物理表名</td><td style="text-align:left">只写逻辑名，物理名推到工程 03</td><td style="text-align:left">设计书写实体名</td><td style="text-align:left">—</td><td style="text-align:left">—（<strong>相对节点 1 #8 是改善</strong>：节点 2 的封印 0 命中）</td><td style="text-align:left"><code>05</code>:354-365／seal 复扫 0 行</td></tr><tr><td style="text-align:left">—</td><td style="text-align:left">规则 11「全社共通・不按利用者筛选」</td><td style="text-align:left">无明文复述；但取得条件里没有利用者条件，<strong>行为上满足</strong></td><td style="text-align:left">设计书列全社的行</td><td style="text-align:left">—</td><td style="text-align:left">—（差なし。<strong>与 <code>A2</code> 同一落法</strong>：限定句被丢掉，这次没造成差）</td><td style="text-align:left"><code>05</code>:361／上游:105,143</td></tr></tbody></table>
+<h3>框架的改善提案（对节点 2・3 件）</h3>
+<blockquote class="quote">记号沿用上表。<strong><code>H</code> 不作提案</strong>（那是人版侧的事）。<br>节点 1 的 3 件提案里，第 1 件（封印做成门番）与第 2 件（02 增设出典等级列）<strong>在节点 2 已生效</strong><br>（<code>--only-check seal</code> PASS、<code>02</code> 有等级列），本节不重复提出。</blockquote>
+<ol><li><strong>对 <code>A2</code>（同时补上 <code>G2</code> 的盲区）：输入侧与出口侧各加一道「上游栏位」检查。</strong></li></ol>
+<p>现状：3 件 <code>A2</code> <strong>全部落在「非 Q 栏」</strong>。22 项审查里，看 Q 的只有 #4，数项目数的只有 #3，<br>出口命令只 grep 一个词（<code>起動区分</code>）。<strong>没有一道门番会注意到「上游表里的一格没有出现在下游」</strong>，<br>而这一格恰恰是限定句、内部表示、路径形状这类<strong>最容易被搬运丢掉</strong>的东西。<br>提案：(a) <code>01_输入_已填写.yaml</code> 增设「上游栏位」槽，把上游 §1 的每一行与 §11.3 的每一条<br><strong>逐格抄入</strong>（现状只抄了字段值，限定句在抄的阶段就没了）；<br>(b) 出口加一道机械检查：上游 §1 各行的「项目名称」与 §11.3 各条的编号，必须在 <code>05</code> 内<br><strong>以原词出现至少一次</strong>，缺则 Exit 1 并列出缺项。<br>验收：本节回放应命中 3 件（另 1 件「规则 11」行为充实但明文缺，作提示级）；人版 22 项审查应 0 件。<br><strong>这同时补上节点 1 留下的 <code>G2</code> 盲区</strong>——封印只查「实有资产」，不查「上游栏位」。</p>
+<ol><li><strong>对 <code>G2</code>（含 <code>G1</code>）：机械判定的结论必须连同命令与实输出一起记录。</strong></li></ol>
+<p>现状：<code>02_审查结果</code> #10 记「全文 0 处」，实测有 1 行（否定句）。<strong>结论没错，记录与实测不一致</strong>。<br>下一个读者若信这个 0，就会把这一行当成漏检，或反过来把真命中当成 0 ——<strong>门番的账本失真比门番缺席更难发现</strong>。<br>提案：<code>02_审查结果.md</code> 的机械项一律写「命令＋实际输出」（节点 1 的本报告就是这么写的），<br>输出贴进单元格，<strong>不允许只写「0 处」</strong>。可复用 <code>trace_check</code> 的子检查（如 <code>--only-check stack</code>）<br>输出命中行号，由人判定「否定句／断言句」。<br>验收：本节 #10 应记为「1 行、否定句」而不是「0 处」。</p>
+<ol><li><strong>对 <code>R</code>：加密算式的 2 个附加条件应在节点 3 之前退回节点 1（按 Q-224／Q-225 的先例）。</strong></li></ol>
+<p>现状：加密算式有 <strong>2 个条件只存在于人版实现</strong>（具体内容本报告不复写；卡片 §12.2 已登记为「未确认」）。<br>上游 Q-201 的结论搬了主算式，但<strong>不含这 2 个条件</strong>；<code>05</code> 也照此转记。<br>节点 3 一旦按现文写详细设计，AI 只能二选一：<strong>漏掉</strong>（则与旧系统不兼容，且要到结合测试才发现），<br>或<strong>从实现里补</strong>（则越过封印，污染进入节点 3）。<br>提案：节点 3 开始前，把这 2 个条件作为 <strong><code>R</code> 类退回节点 1 修订</strong>（与 Q-224／Q-225 同形），<br>写进 §11.3 或 Q-201 的结论里；若顾客不提供，则<strong>明确记为「未提供」</strong>，由节点 3 缺口化并发 Q 编号。<br>验收：节点 3 的输入中，这 2 个条件要么有出处，要么有未决标记，<strong>不得两者皆无</strong>。</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>comparison.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

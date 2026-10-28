@@ -1,0 +1,916 @@
+{
+  "project_key": "JET-R60",
+  "repo": "api",
+  "root": "D:/AI_work",
+  "traversal": {
+    "include_suffixes": [
+      ".py",
+      ".vue",
+      ".ts",
+      ".md",
+      ".yaml",
+      ".yml",
+      ".json",
+      ".sql",
+      ".txt"
+    ],
+    "exclude_dirs": [
+      ".git",
+      "node_modules",
+      "__pycache__",
+      ".venv",
+      "venv",
+      "dist",
+      "build"
+    ],
+    "max_scan_bytes": 524288
+  },
+  "counts": {
+    "files": 111,
+    "blocked": 1,
+    "bytes": 5628529
+  },
+  "files": [
+    {
+      "rel": "fastapi_oracle_pjt/app/__init__.py",
+      "size": 0,
+      "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/auth/__init__.py",
+      "size": 0,
+      "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/auth/auth.py",
+      "size": 938,
+      "sha1": "95f3b91ad241734d20323e39ed925c27d6479adf",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/common/__init__.py",
+      "size": 0,
+      "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/common/models/error_models.py",
+      "size": 989,
+      "sha1": "a9eeba3f03d976f482379e9879471f0c364086e1",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/common/r60_online_error.py",
+      "size": 1939,
+      "sha1": "7d52af8a97ebf13d5334f1130411f49b1b0601a5",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/common/r60_online_exception.py",
+      "size": 193,
+      "sha1": "19416b69ed436eaa55230714129596d68c9c33e6",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/common/r60_session_error.py",
+      "size": 511,
+      "sha1": "88282d8a2f2dc39b2b8ddbd3151c548185a2b958",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/common/r60_system_error.py",
+      "size": 1248,
+      "sha1": "bf4a626e17c0dfa4b82667a2321e28e087deb9a5",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/config.py",
+      "size": 490,
+      "sha1": "bfc2f5eb1537c597123d605e0cf6293186d07785",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/dbsession.py",
+      "size": 2143,
+      "sha1": "37789a13c9b61e9ba5c654fdcd5dc50b53343153",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/main.py",
+      "size": 8258,
+      "sha1": "0f6aa90b52c4cd9342e54abe57e3cfbf323fd894",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/models/models.py",
+      "size": 245,
+      "sha1": "4d564dd7f0b942841b7c17fe8c7c5f4fd2a2cb87",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/models/r60_sim_info_model.py",
+      "size": 3864,
+      "sha1": "8f47f933c3e5bb2687cc40eaf36e85d92c173b67",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/__init__.py",
+      "size": 0,
+      "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/default.py",
+      "size": 342,
+      "sha1": "3812dfbc34eb40e304ce689cf322fea2b7a1dbbc",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60AreaController.py",
+      "size": 108624,
+      "sha1": "16914c4334d1358c0afe5e288a20842a692e81d9",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60CalenderController.py",
+      "size": 27212,
+      "sha1": "c730f81596ce213d7fafb32b10a08c77e36583e5",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60ChotSkSupController.py",
+      "size": 15517,
+      "sha1": "93dcd56dce01a74cbacd9b831dfd3c81906b18a2",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60CodeController.py",
+      "size": 113440,
+      "sha1": "bc57b59f9f7dc473d39841801434a4ccdb7bac03",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60CodeMesController.py",
+      "size": 94978,
+      "sha1": "e520e1aa7001629e764f15b265cc0c76d33ef61b",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60CommonController.py",
+      "size": 2010,
+      "sha1": "d81064925f17d89d9f53f7dbdaa0c3ed317c86b3",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60CSVDownloadController.py",
+      "size": 11553,
+      "sha1": "10dda9046c8bd482d3408dea1245c5374138fd3c",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60DCController.py",
+      "size": 91412,
+      "sha1": "291a62285efda99c82d8d4d58bfba01410a27b73",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60GzrSirTkController.py",
+      "size": 187166,
+      "sha1": "5001a7d7c6c044184f140f5fdef8f1a133b01269",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60GzrSkyTkSelfController.py",
+      "size": 59105,
+      "sha1": "d6f9cca8a371944a9d93cec39e6a47368cd2d221",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60HanyController.py",
+      "size": 104580,
+      "sha1": "243d02ab0a7cc92e50b1dd438572a63a30bf00f3",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60HanyMesController.py",
+      "size": 81680,
+      "sha1": "b58ecba03a96ac3ba9388cd0443b29a4c228567b",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60HshChaChk2Controller.py",
+      "size": 58682,
+      "sha1": "309c06b1d446dbbddb9cf5384f700da6db52a2d6",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60HshController.py",
+      "size": 125753,
+      "sha1": "edb77fdacdc5e5ccfccabfc0451686982ccac325",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60HshSupController.py",
+      "size": 20956,
+      "sha1": "8de3ca6905466f76611dc56516d972296fa51981",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60IktController.py",
+      "size": 533125,
+      "sha1": "0faf42e3dd1a69e0efc43181c82c8520c0ecb06d",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60ItemController.py",
+      "size": 333081,
+      "sha1": "00e175a740da8bbe084cd20e162a13e7d8473151",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60ItemMultiController.py",
+      "size": 443985,
+      "sha1": "328edd9d975bf9974895aa155d2c2c2ea2d0104f",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60ItemSupController.py",
+      "size": 25542,
+      "sha1": "6cc7cb84fe3ecc3a45dd9ec694a7e869bd47f4ea",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60JigController.py",
+      "size": 60976,
+      "sha1": "e20cd1ef50d4c295df75668a58c398e34f4673b1",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KkuChiController.py",
+      "size": 102312,
+      "sha1": "a6b4fbe8e93eded54d744810b84e0513c93a6018",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KkuChiCopyController.py",
+      "size": 43877,
+      "sha1": "0a4e970b828429a5e5ba696ac8d1b35a7af61d2c",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KojoSesModelController.py",
+      "size": 150862,
+      "sha1": "619ce85bcdf63a6567d31b509ada69fce0044c6a",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KojoSesModelSupController.py",
+      "size": 13735,
+      "sha1": "5d92dcedfd010cb227594bf4fa5a2c595c555196",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KonHmkController.py",
+      "size": 184067,
+      "sha1": "aab8a5cfac32943de934a1429e70cccfb51a46e1",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KonHmkCopyController.py",
+      "size": 20853,
+      "sha1": "5e4eb7036707638a824ac77aaba99ff6c99e8aad",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KonHmkMultiController.py",
+      "size": 198193,
+      "sha1": "65f0e121f79b108ec52838c29a0846226a135f90",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KonHmkSirController.py",
+      "size": 445380,
+      "sha1": "680744d66252ea8d19199ff9ae691e2f4ba8970f",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60KonHmkSupController.py",
+      "size": 18170,
+      "sha1": "badb6320f2a4bc8d9f1cb27bfe6fe8688c28a43e",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60ListTypeSupController.py",
+      "size": 9246,
+      "sha1": "297dd593a900fed2736decd2bcd61b7e68314b9a",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60ListTypeSupItemController.py",
+      "size": 8774,
+      "sha1": "2727614c5f2552140c21c0b69e189a2288d7a725",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60LoginController.py",
+      "size": 16882,
+      "sha1": "5269cf0ffdbeac924224a73bc6e0fe3c3dbe2a40",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60MakerController.py",
+      "size": 43470,
+      "sha1": "5d1595934ff0326fb65d974cba7921ca3a1291d4",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60PackGiftController.py",
+      "size": 36625,
+      "sha1": "0e604fc42533410c6b44b6e14ef522385a2099be",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60PlcController.py",
+      "size": 109116,
+      "sha1": "8dbaf8ca546be9adaf55d5c7f145323594f19b47",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60PlcSupController.py",
+      "size": 17371,
+      "sha1": "f2bedebf8222c0372dcba6423a92f4f8e4aad31a",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60PlcUkiKnrController.py",
+      "size": 102407,
+      "sha1": "cce6513ee38f8fb81be07aa1193d24a1ff5ff443",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60ServerJobRefController.py",
+      "size": 8790,
+      "sha1": "ed8a27765773beda97395612dbb17faf8713afe0",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SesModelController.py",
+      "size": 227660,
+      "sha1": "5b271a781e7c089604b37f6c18219e84b8075261",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SezKnoItemController.py",
+      "size": 77180,
+      "sha1": "6a5e52c3ba81cb8b09f7738a01342c6a5f31940e",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SezKnoItemMultiController.py",
+      "size": 104609,
+      "sha1": "b73e8c90e56c9bc3137990f00c0eeed6eddfda02",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SezRetController.py",
+      "size": 86500,
+      "sha1": "bed3881da5a1b79e95b44cbe99d0231c1894e3e9",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SikKgoController.py",
+      "size": 174861,
+      "sha1": "67408dcc65a733d6a2b20810586c7e678ab1b541",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SikKgoHanController.py",
+      "size": 51964,
+      "sha1": "196508e92b935ae53f7bef8598dc48d97cbd688d",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SikKgoProController.py",
+      "size": 47721,
+      "sha1": "d3b27e3202668cf63415221709c2ea550118b9ba",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SikKgoSupController.py",
+      "size": 11496,
+      "sha1": "535ddde9292c6f04dd39794fd8436ad9508e5826",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SirController.py",
+      "size": 74416,
+      "sha1": "cd658f3f00f815d7d831a1bdca8fe2d2f337dbdc",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SirKytnController.py",
+      "size": 50069,
+      "sha1": "567c1c06a1abfb7b62de9cad9676767c45a8fc41",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SirSupController.py",
+      "size": 8341,
+      "sha1": "79f456f8f6763f44f6c3a229a0d32b55198dc2f2",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SirSziChaController.py",
+      "size": 47005,
+      "sha1": "ada3c93c5b592be6edc77d28eadb799065a32ab5",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SntSsiController.py",
+      "size": 76951,
+      "sha1": "56d2c97518863e1bd9f7c99e7fa1e2359dd90841",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SskController.py",
+      "size": 28587,
+      "sha1": "2d64f04aa8de40461b548437070d71b89c49ce46",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60SziKirEvtRegController.py",
+      "size": 255470,
+      "sha1": "858d143c2ff9af38f1c16d73da821a919039e521",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60UserController.py",
+      "size": 48265,
+      "sha1": "79dcea03bfe4fb1595bd237cf7da3d4ff330da94",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/routers/R60YokMesController.py",
+      "size": 73555,
+      "sha1": "9ff78d486172af4f8399f1d136f3165073741899",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/script/sqs_connect.py",
+      "size": 813,
+      "sha1": "e370f9deeecd25c5dfa734c32ac2ea3b1cb3430d",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/script/sqs_receiver.py",
+      "size": 2394,
+      "sha1": "2a1853fb78b69d188003dc6e01a6fe1dde7ce999",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/__init__.py",
+      "size": 0,
+      "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60authority_mng_bean.py",
+      "size": 1733,
+      "sha1": "c05426b7063fac176fa61869215ba7edd3b931a0",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60check_utility.py",
+      "size": 16284,
+      "sha1": "c9fe81a100faef0cecbe18df34135843d9eba28b",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60const.py",
+      "size": 4671,
+      "sha1": "73317f5a689c0948175190163d1f91c155fe356f",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60csv_download.py",
+      "size": 1944,
+      "sha1": "d0f93120944643de649686d38039da099a15c987",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60csv_utils.py",
+      "size": 12598,
+      "sha1": "717d7b6290f7c915b250f80c79d60ce8a5e6ab11",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60emergency_send_ctl_bean.py",
+      "size": 1216,
+      "sha1": "c2a9e0dd8b916f770b77ec33c41625430aaa39ef",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60emergency_send_ctl_pkg.py",
+      "size": 1464,
+      "sha1": "7eb9d29dfb7406b58c2d648f729a7a226d50f083",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60get_plc_uki_knr_seq_pkg.py",
+      "size": 1976,
+      "sha1": "0ae303f88ae025ae774efdb1027e74c02fcac456",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60get_select_column.py",
+      "size": 885,
+      "sha1": "5b49a4dd4426ce286dc2c3fae8838616fd05fdf6",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l270b.py",
+      "size": 2018,
+      "sha1": "e4164303328e21580f743dd324919ead6eb85cc9",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l550b_bean.py",
+      "size": 1212,
+      "sha1": "c52dcaea9bb88b9a8f8817fdcfd43d11967657ca",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l550b_pkg.py",
+      "size": 1501,
+      "sha1": "3ec9a699a76a94c21d2577e929577f3482ae1987",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l610b.py",
+      "size": 2155,
+      "sha1": "62f40af5cf33d04791c03def4294b263d62848ef",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l620b.py",
+      "size": 2136,
+      "sha1": "551c0ed38d7745e396c505cba0c0c254b00b87b8",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l630b.py",
+      "size": 2133,
+      "sha1": "29019c6ce783add115b7b89ff1b6818575857748",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l640b.py",
+      "size": 2906,
+      "sha1": "63333224678b87e1dec48acc768f165d5bfd5576",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l790b.py",
+      "size": 2727,
+      "sha1": "93f3096a48cb1f05ad3dbe6bed095bd522aa68db",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l820b.py",
+      "size": 2142,
+      "sha1": "b3079051bc7cfa11c7ffc047864513425175a6f1",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l830b.py",
+      "size": 2142,
+      "sha1": "59ccbf28f350a045215464806c4bb6b41917f885",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l860b.py",
+      "size": 2393,
+      "sha1": "3c4e6206df6ebf5edac3f78577b0a49a5a42db36",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l870b.py",
+      "size": 2310,
+      "sha1": "87d30f098a3406ac1977ff55609ac1374be44ae2",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l880b.py",
+      "size": 2030,
+      "sha1": "2c4c1298a60a8ec39330a08fae48e46777b7c1ba",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l890b.py",
+      "size": 2994,
+      "sha1": "b75c66cf1c6b2f7be35ab26619d13400e4a24346",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l900b.py",
+      "size": 2107,
+      "sha1": "0646bf1d652fe9c6e2b59afa636d0b814b1d759f",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l910b.py",
+      "size": 2155,
+      "sha1": "6c3dbde3cb7da2a41e7b1c23695deea30945a0e6",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l930b.py",
+      "size": 1539,
+      "sha1": "509b6f71f75020ae6dfb8dbcc84682c047337d1a",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l940b.py",
+      "size": 1558,
+      "sha1": "182d0be2201d2c9c603202e76ac0b598a42dc0e4",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60l960b.py",
+      "size": 2406,
+      "sha1": "2b1d2ed6c3798554a579bc29b207d9a4fdbbaf7d",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60number_utility.py",
+      "size": 2228,
+      "sha1": "27b910189df519216bb2df262529573b61fa8bbf",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60referred_chk_bean.py",
+      "size": 1143,
+      "sha1": "40aeff9b6c5d16fa703d0cdfead7486efaba61f3",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60sim_util.py",
+      "size": 23160,
+      "sha1": "a9756ef087245948f01893b841defde4044d22d3",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60string_util.py",
+      "size": 4436,
+      "sha1": "64f5a81eee8677c15ad2959670011426a5626a1d",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60util.py",
+      "size": 10842,
+      "sha1": "7879981c6ad16cc10ed4566e2bfd4460125ff5e6",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/app/utils/r60yok_cd_tbl_access.py",
+      "size": 1569,
+      "sha1": "696f2a8abc76bd9357c8045fa60e7d0f48ee7fa2",
+      "kind": "python"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/README.txt",
+      "size": 681,
+      "sha1": "ba93830ff99a61e49709a02fed8b297a3f793bf2",
+      "kind": "text"
+    },
+    {
+      "rel": "fastapi_oracle_pjt/requirements.txt",
+      "size": 196,
+      "sha1": "87a365a0936a46b49e933097e932ffa42fd79210",
+      "kind": "text"
+    },
+    {
+      "rel": "README.txt",
+      "size": 2415,
+      "sha1": "6d3e1a8b62e5027f98d0c79f63dcbc98243f7f92",
+      "kind": "text"
+    }
+  ],
+  "module_asset_map": {
+    "R60Area": [
+      "fastapi_oracle_pjt/app/routers/R60AreaController.py"
+    ],
+    "R60Calender": [
+      "fastapi_oracle_pjt/app/routers/R60CalenderController.py"
+    ],
+    "R60ChotSkSup": [
+      "fastapi_oracle_pjt/app/routers/R60ChotSkSupController.py"
+    ],
+    "R60Code": [
+      "fastapi_oracle_pjt/app/routers/R60CodeController.py"
+    ],
+    "R60CodeMes": [
+      "fastapi_oracle_pjt/app/routers/R60CodeMesController.py"
+    ],
+    "R60DC": [
+      "fastapi_oracle_pjt/app/routers/R60DCController.py"
+    ],
+    "R60GzrSirTk": [
+      "fastapi_oracle_pjt/app/routers/R60GzrSirTkController.py"
+    ],
+    "R60GzrSkyTkSelf": [
+      "fastapi_oracle_pjt/app/routers/R60GzrSkyTkSelfController.py"
+    ],
+    "R60Hany": [
+      "fastapi_oracle_pjt/app/routers/R60HanyController.py"
+    ],
+    "R60HanyMes": [
+      "fastapi_oracle_pjt/app/routers/R60HanyMesController.py"
+    ],
+    "R60Hsh": [
+      "fastapi_oracle_pjt/app/routers/R60HshController.py"
+    ],
+    "R60HshChaChk2": [
+      "fastapi_oracle_pjt/app/routers/R60HshChaChk2Controller.py"
+    ],
+    "R60HshSup": [
+      "fastapi_oracle_pjt/app/routers/R60HshSupController.py"
+    ],
+    "R60Ikt": [
+      "fastapi_oracle_pjt/app/routers/R60IktController.py"
+    ],
+    "R60Item": [
+      "fastapi_oracle_pjt/app/routers/R60ItemController.py"
+    ],
+    "R60ItemMulti": [
+      "fastapi_oracle_pjt/app/routers/R60ItemMultiController.py"
+    ],
+    "R60ItemSup": [
+      "fastapi_oracle_pjt/app/routers/R60ItemSupController.py"
+    ],
+    "R60Jig": [
+      "fastapi_oracle_pjt/app/routers/R60JigController.py"
+    ],
+    "R60KkuChi": [
+      "fastapi_oracle_pjt/app/routers/R60KkuChiController.py"
+    ],
+    "R60KkuChiCopy": [
+      "fastapi_oracle_pjt/app/routers/R60KkuChiCopyController.py"
+    ],
+    "R60KojoSesModel": [
+      "fastapi_oracle_pjt/app/routers/R60KojoSesModelController.py"
+    ],
+    "R60KojoSesModelSup": [
+      "fastapi_oracle_pjt/app/routers/R60KojoSesModelSupController.py"
+    ],
+    "R60KonHmk": [
+      "fastapi_oracle_pjt/app/routers/R60KonHmkController.py"
+    ],
+    "R60KonHmkCopy": [
+      "fastapi_oracle_pjt/app/routers/R60KonHmkCopyController.py"
+    ],
+    "R60KonHmkMulti": [
+      "fastapi_oracle_pjt/app/routers/R60KonHmkMultiController.py"
+    ],
+    "R60KonHmkSir": [
+      "fastapi_oracle_pjt/app/routers/R60KonHmkSirController.py"
+    ],
+    "R60KonHmkSup": [
+      "fastapi_oracle_pjt/app/routers/R60KonHmkSupController.py"
+    ],
+    "R60ListTypeSup": [
+      "fastapi_oracle_pjt/app/routers/R60ListTypeSupController.py"
+    ],
+    "R60ListTypeSupItem": [
+      "fastapi_oracle_pjt/app/routers/R60ListTypeSupItemController.py"
+    ],
+    "R60Maker": [
+      "fastapi_oracle_pjt/app/routers/R60MakerController.py"
+    ],
+    "R60PackGift": [
+      "fastapi_oracle_pjt/app/routers/R60PackGiftController.py"
+    ],
+    "R60Plc": [
+      "fastapi_oracle_pjt/app/routers/R60PlcController.py"
+    ],
+    "R60PlcSup": [
+      "fastapi_oracle_pjt/app/routers/R60PlcSupController.py"
+    ],
+    "R60PlcUkiKnr": [
+      "fastapi_oracle_pjt/app/routers/R60PlcUkiKnrController.py"
+    ],
+    "R60SesModel": [
+      "fastapi_oracle_pjt/app/routers/R60SesModelController.py"
+    ],
+    "R60SezKnoItem": [
+      "fastapi_oracle_pjt/app/routers/R60SezKnoItemController.py"
+    ],
+    "R60SezKnoItemMulti": [
+      "fastapi_oracle_pjt/app/routers/R60SezKnoItemMultiController.py"
+    ],
+    "R60SezRet": [
+      "fastapi_oracle_pjt/app/routers/R60SezRetController.py"
+    ],
+    "R60SikKgo": [
+      "fastapi_oracle_pjt/app/routers/R60SikKgoController.py"
+    ],
+    "R60SikKgoHan": [
+      "fastapi_oracle_pjt/app/routers/R60SikKgoHanController.py"
+    ],
+    "R60SikKgoPro": [
+      "fastapi_oracle_pjt/app/routers/R60SikKgoProController.py"
+    ],
+    "R60SikKgoSup": [
+      "fastapi_oracle_pjt/app/routers/R60SikKgoSupController.py"
+    ],
+    "R60Sir": [
+      "fastapi_oracle_pjt/app/routers/R60SirController.py"
+    ],
+    "R60SirKytn": [
+      "fastapi_oracle_pjt/app/routers/R60SirKytnController.py"
+    ],
+    "R60SirSup": [
+      "fastapi_oracle_pjt/app/routers/R60SirSupController.py"
+    ],
+    "R60SirSziCha": [
+      "fastapi_oracle_pjt/app/routers/R60SirSziChaController.py"
+    ],
+    "R60SntSsi": [
+      "fastapi_oracle_pjt/app/routers/R60SntSsiController.py"
+    ],
+    "R60Ssk": [
+      "fastapi_oracle_pjt/app/routers/R60SskController.py"
+    ],
+    "R60SziKirEvtReg": [
+      "fastapi_oracle_pjt/app/routers/R60SziKirEvtRegController.py"
+    ],
+    "R60YokMes": [
+      "fastapi_oracle_pjt/app/routers/R60YokMesController.py"
+    ],
+    "_unassigned": [
+      "README.txt",
+      "fastapi_oracle_pjt/README.txt",
+      "fastapi_oracle_pjt/app/__init__.py",
+      "fastapi_oracle_pjt/app/auth/__init__.py",
+      "fastapi_oracle_pjt/app/auth/auth.py",
+      "fastapi_oracle_pjt/app/common/__init__.py",
+      "fastapi_oracle_pjt/app/common/models/error_models.py",
+      "fastapi_oracle_pjt/app/common/r60_online_error.py",
+      "fastapi_oracle_pjt/app/common/r60_online_exception.py",
+      "fastapi_oracle_pjt/app/common/r60_session_error.py",
+      "fastapi_oracle_pjt/app/common/r60_system_error.py",
+      "fastapi_oracle_pjt/app/config.py",
+      "fastapi_oracle_pjt/app/dbsession.py",
+      "fastapi_oracle_pjt/app/main.py",
+      "fastapi_oracle_pjt/app/models/models.py",
+      "fastapi_oracle_pjt/app/models/r60_sim_info_model.py",
+      "fastapi_oracle_pjt/app/routers/R60CSVDownloadController.py",
+      "fastapi_oracle_pjt/app/routers/R60CommonController.py",
+      "fastapi_oracle_pjt/app/routers/R60LoginController.py",
+      "fastapi_oracle_pjt/app/routers/R60ServerJobRefController.py",
+      "fastapi_oracle_pjt/app/routers/R60UserController.py",
+      "fastapi_oracle_pjt/app/routers/__init__.py",
+      "fastapi_oracle_pjt/app/routers/default.py",
+      "fastapi_oracle_pjt/app/script/sqs_connect.py",
+      "fastapi_oracle_pjt/app/script/sqs_receiver.py",
+      "fastapi_oracle_pjt/app/utils/__init__.py",
+      "fastapi_oracle_pjt/app/utils/r60authority_mng_bean.py",
+      "fastapi_oracle_pjt/app/utils/r60check_utility.py",
+      "fastapi_oracle_pjt/app/utils/r60const.py",
+      "fastapi_oracle_pjt/app/utils/r60csv_download.py",
+      "fastapi_oracle_pjt/app/utils/r60csv_utils.py",
+      "fastapi_oracle_pjt/app/utils/r60emergency_send_ctl_bean.py",
+      "fastapi_oracle_pjt/app/utils/r60emergency_send_ctl_pkg.py",
+      "fastapi_oracle_pjt/app/utils/r60get_plc_uki_knr_seq_pkg.py",
+      "fastapi_oracle_pjt/app/utils/r60get_select_column.py",
+      "fastapi_oracle_pjt/app/utils/r60l270b.py",
+      "fastapi_oracle_pjt/app/utils/r60l550b_bean.py",
+      "fastapi_oracle_pjt/app/utils/r60l550b_pkg.py",
+      "fastapi_oracle_pjt/app/utils/r60l610b.py",
+      "fastapi_oracle_pjt/app/utils/r60l620b.py",
+      "fastapi_oracle_pjt/app/utils/r60l630b.py",
+      "fastapi_oracle_pjt/app/utils/r60l640b.py",
+      "fastapi_oracle_pjt/app/utils/r60l790b.py",
+      "fastapi_oracle_pjt/app/utils/r60l820b.py",
+      "fastapi_oracle_pjt/app/utils/r60l830b.py",
+      "fastapi_oracle_pjt/app/utils/r60l860b.py",
+      "fastapi_oracle_pjt/app/utils/r60l870b.py",
+      "fastapi_oracle_pjt/app/utils/r60l880b.py",
+      "fastapi_oracle_pjt/app/utils/r60l890b.py",
+      "fastapi_oracle_pjt/app/utils/r60l900b.py",
+      "fastapi_oracle_pjt/app/utils/r60l910b.py",
+      "fastapi_oracle_pjt/app/utils/r60l930b.py",
+      "fastapi_oracle_pjt/app/utils/r60l940b.py",
+      "fastapi_oracle_pjt/app/utils/r60l960b.py",
+      "fastapi_oracle_pjt/app/utils/r60number_utility.py",
+      "fastapi_oracle_pjt/app/utils/r60referred_chk_bean.py",
+      "fastapi_oracle_pjt/app/utils/r60sim_util.py",
+      "fastapi_oracle_pjt/app/utils/r60string_util.py",
+      "fastapi_oracle_pjt/app/utils/r60util.py",
+      "fastapi_oracle_pjt/app/utils/r60yok_cd_tbl_access.py",
+      "fastapi_oracle_pjt/requirements.txt"
+    ]
+  }
+}

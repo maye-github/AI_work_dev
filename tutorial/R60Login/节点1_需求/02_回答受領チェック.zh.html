@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02_回答受領チェック.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>02_回答受領チェック.zh</h1>
+<div class="meta">
+  机读源: <code>02_回答受領チェック.zh.md</code> ／
+  生成: 2026-10-20 17:19 ／
+  节 9・表 14
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>02_回答受領チェック.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 接收记录</a></li><li><a href="#sec-2">1. 比对汇总</a></li><li><a href="#sec-3">2. 差异（需要确认）</a> <span class="chip chip-ask">★ 待拍板</span></li><li><a href="#sec-4">3. AI 补充（回答文件中没有记述的内容）</a></li><li><a href="#sec-5">4. 未接收・多余</a></li><li><a href="#sec-6">5. 人的裁决栏</a></li><li><a href="#sec-7">6. 反映记录（在裁决之后书写）</a></li><li><a href="#sec-8">7. 本次比对中了解到的事（对程序的反映）</a></li><li><a href="#sec-9">8. 相关成果物</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: R-201-ANSWER-CHECK<br>type: answer-reconciliation<br>req_ids: [R-201]<br>status: open<br>sensitivity: internal<br>owner: SE-001<br>version: 0.3.1</p>
+<hr>
+<h1>02 回答接收核对（R60Login / 节点1 需求理解）</h1>
+<blockquote class="quote"><strong>本文件是比对记录，并非回答本身。</strong> 回答的正文是 <code>02_確認事項一覧.md</code>。<br>本文件只记录「接收了哪份回答、何时、从谁处接收、与 02 在何处不同」（NFR-1。<br>不在此处重新定义回答）。程序的唯一真源是 <code>.claude/rules/02-requirements.md</code> §4.2。<br><strong>它是与 <code>02_確認事項一覧.md</code> 相互独立的文件</strong>（不为比对而改写 02 的回答栏）。<br><strong>0.3.1（2026-10-20）仅替换表述</strong>：将实现文件名、绝对路径、画面名的别名，替换为角色名及<br>内部台账参照（共 5 处）。<strong>接收记录、比对结果、裁决的内容均未改变。</strong><br>理由：为不在下游成果物中保留封印检查（<code>py -3 -m tools.trace_check --only-check seal</code>）所针对的实际资产名。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 接收记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">接收日</th><th style="text-align:left">回答文件</th><th style="text-align:left">格式</th><th style="text-align:left">接收者</th><th style="text-align:left">比对的 02 版本</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">2026-10-20</td><td style="text-align:left"><code>reports/drill/R60Login/answer-key.md</code></td><td style="text-align:left">Markdown（表）</td><td style="text-align:left">SE-001</td><td style="text-align:left">0.4.0</td><td style="text-align:left"><strong>已裁决・已反映至 02 v0.5.0</strong></td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">2026-10-20</td><td style="text-align:left"><code>reports/drill/R60Login/human-answer-sim.md</code></td><td style="text-align:left">Markdown（表）</td><td style="text-align:left">SE-001（AI 派发）</td><td style="text-align:left">0.4.0</td><td style="text-align:left"><strong>第二次接收・已采纳于裁决（8 项的反证）</strong></td></tr></tbody></table>
+<blockquote class="quote"><strong>第二次接收的定位</strong>：第 2 行并非对 02 整体的重新回答，而是仅对 <strong>§2／§3 的 8 项</strong>，<br>从历史资产的工作目录（只读。实际路径由内部台账管理）重新倒推得出的<strong>第二意见</strong>。其目的是<br>确认「回答文件中的具体值是否有出处」，<strong>并非追加接收回答</strong>（§2.1）。<br>这同样<strong>不是客户回答，而是 AI 的模拟</strong>，裁决由人做出。</blockquote>
+<ul><li><strong>回答的性质</strong>：这是<strong>虚拟答案</strong>。它由隔离会话根据历史资产的工作目录（只读）中的设计书、单体测试规格、实现生成，</li></ul>
+<p><strong>并非客户的正式回答</strong>。在演练中用作客户回答的替身，但在实际项目中，<br><strong>A 要替换为客户回答、B 要替换为客户批准</strong>。</p>
+<ul><li><strong>接收的经过</strong>：2026-10-20，依据用户指示（「都帮我合理回答了吧」），将其一次性采纳到 02。</li></ul>
+<p><strong>当时尚不存在本比对的步骤</strong>（本文件为事后补作）。因此下述差异<br>属于<strong>追溯检出的结果</strong>，并非为了重做当时的采纳。</p>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 比对汇总</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">类别</th><th style="text-align:right">件数</th><th style="text-align:left">含义</th></tr></thead><tbody><tr><td style="text-align:left">一致</td><td style="text-align:right">63</td><td style="text-align:left">回答文件的内容已反映到 02（A／B／C 的形态转换视为一致）</td></tr><tr><td style="text-align:left"><strong>存在差异</strong></td><td style="text-align:right"><strong>5</strong></td><td style="text-align:left">内容不同／02 遗漏／判断分歧（§2）</td></tr><tr><td style="text-align:left">仅记录（改善）</td><td style="text-align:right">1</td><td style="text-align:left">02 将依据的等级从 E2 改为 E1（无需修正・仅记录）（§2 D-06）</td></tr><tr><td style="text-align:left">未接收</td><td style="text-align:right">0</td><td style="text-align:left">02 中有回答，但回答文件中无对应行</td></tr><tr><td style="text-align:left">多余</td><td style="text-align:right">0</td><td style="text-align:left">回答文件中有，但 02 无对应行</td></tr><tr><td style="text-align:left"><strong>AI 补充</strong></td><td style="text-align:right"><strong>2</strong></td><td style="text-align:left">回答文件中无记述、由 02 补充的内容（§3）</td></tr><tr><td style="text-align:left"><strong>合计（接收 71 行）</strong></td><td style="text-align:right"><strong>71</strong></td><td style="text-align:left">§1 未确定事项 19 ＋ §2 客户未提及 15 ＋ §4 独立审查 37</td></tr></tbody></table>
+<blockquote class="quote"><strong>机械比对的局限</strong>：上表的「一致」，是确认了<strong>数值・代码・专有名词存在于 02 中</strong>、<br>以及文面相似度之后的结论。<strong>并不保证语义一致。</strong> 语义上的出入，<br>只有下面 §2 中人阅读后挑出的部分。<strong>不得写成「机械一致＝内容一致」。</strong></blockquote>
+</section>
+<section class="sec sec-ask" id="sec-3">
+<h2>2. 差异（需要确认） <span class="chip chip-ask">★ 待拍板</span></h2>
+<h3>D-01　Q-205　Session 的销毁与有效期限</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">02 的回答</td><td style="text-align:left">idle 30 分钟・<strong>绝对 8 小时</strong>后失效，并在画面的「关闭」时销毁</td></tr><tr><td style="text-align:left">回答文件 §1</td><td style="text-align:left">idle 30 分钟・允许多重登录・<strong>「登出不在处理范围内」</strong>（无<strong>绝对 8 小时</strong>与<strong>关闭时销毁</strong>的记载）</td></tr><tr><td style="text-align:left">回答文件 §6</td><td style="text-align:left"><strong>「绝对 8 小时」「关闭时销毁」</strong>（与 02 一致）</td></tr><tr><td style="text-align:left">差异的性质</td><td style="text-align:left"><strong>回答文件内部的记述差异</strong>。「登出功能不在处理范围内」与「关闭时销毁」可以并存，但<strong>8 小时的绝对期限</strong>从 §1 中读不出来</td></tr><tr><td style="text-align:left">提案</td><td style="text-align:left">采用 §6 的具体值（维持 02 的现状）。但在对客提案中，要把「登出功能不在处理范围内」与「关闭时销毁」<strong>分开书写</strong>（不写成同一件事）</td></tr></tbody></table>
+<h3>D-02　Q-215　登录尝试限制</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">02 的回答</td><td style="text-align:left"><strong>5 次／10 分钟内锁定</strong>，10 分钟后自动解除</td></tr><tr><td style="text-align:left">回答文件 §1</td><td style="text-align:left"><strong>「尝试限制属于共通基盤」</strong>（具体值不由我方决定）</td></tr><tr><td style="text-align:left">回答文件 §6</td><td style="text-align:left"><strong>「登录 5 回/10 分锁定」</strong>（与 02 一致）</td></tr><tr><td style="text-align:left">差异的性质</td><td style="text-align:left"><strong>回答文件内部的不一致</strong></td></tr><tr><td style="text-align:left">提案</td><td style="text-align:left">采用 5 次／10 分钟。不过 §1 的「交由共通基盤负责」<strong>涉及客户的管控</strong>，因此在实际项目中要作为 B 类取得客户批准（02 已按 B 类附批准请求，二者是一致的）</td></tr></tbody></table>
+<h3>D-03　Q-213　生成的 URL 超过 150 个字符时</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">02 的回答</td><td style="text-align:left">超过 150 个字符时<strong>不截断而报错</strong></td></tr><tr><td style="text-align:left">回答文件</td><td style="text-align:left">生成的 URL <strong>实测约 70〜90 个字符</strong>，未满 150，<strong>无需截断</strong>。<strong>即使超过也不截断，保留全长</strong></td></tr><tr><td style="text-align:left">差异的性质</td><td style="text-align:left"><strong>实质性差异</strong>（超过时的处理在「报错」与「保留全长」之间存在不同）。此外 02 丢掉了实测值 70〜90，弱化为「预计可容纳」</td></tr><tr><td style="text-align:left">提案</td><td style="text-align:left">采用<strong>超过时报错</strong>（保留全长与画面的受理上限 150 相矛盾）。不过 02 的「预计」依据较弱，因此<strong>要在 02 中写 1 行不采用实测值的理由（E2 不能作为 greenfield 的依据）</strong></td></tr></tbody></table>
+<h3>D-04　Q-212　<code>stfKbn</code> 的用途在 02 中丢失了</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">02 的回答</td><td style="text-align:left">服务器只使用 <code>stfCd</code>。其他参数忽略。跳转使用 <code>gmnId</code>，权限保持使用 <code>kgnKbn</code> → 客户端</td></tr><tr><td style="text-align:left">回答文件</td><td style="text-align:left">相同＋<strong><code>stfKbn</code> 用于メニュー画面（原文为日文的画面名，按原文实现）的 query</strong>（客户端侧）</td></tr><tr><td style="text-align:left">差异的性质</td><td style="text-align:left"><strong>02 的遗漏</strong>（丢了一个事实）</td></tr><tr><td style="text-align:left">提案</td><td style="text-align:left">在 02 中补记「<code>stfKbn</code> → メニュー画面 的 query」。<strong>这会影响节点2 的画面项目</strong>（跳转时传递的参数）</td></tr></tbody></table>
+<h3>D-05　Q-211　「设计书中有 59 件」的依据等级</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">02 的回答</td><td style="text-align:left">「设计书中<strong>有 59 件候选清单</strong>」</td></tr><tr><td style="text-align:left">回答文件</td><td style="text-align:left">同文。出处是<strong>人版设计书（E2）</strong></td></tr><tr><td style="text-align:left">差异的性质</td><td style="text-align:left"><strong>在 greenfield 中 E2 不能作为依据</strong>（<code>docs/90_knowledge/answer-engine.md</code> §3.2）。02 §7 中虽有注记，但<strong>它仍作为事实留在回答栏里</strong></td></tr><tr><td style="text-align:left">提案</td><td style="text-align:left">要将「59 件」明示为<strong>模拟值</strong>，或者不写件数、弱化为「有效的画面主数据全件」。<strong>节点2 制作画面一览时，不要以 59 件为前提</strong></td></tr></tbody></table>
+<h3>D-06　（仅记录・无需修正）Q-214　依据的替换</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">回答文件</td><td style="text-align:left">依据是<strong>单体测试 3-4-7／3-4-9 的期待值（E2）</strong></td></tr><tr><td style="text-align:left">02 的回答</td><td style="text-align:left">将依据替换为<strong>需求书 §4.4 的注记（E1）</strong></td></tr><tr><td style="text-align:left">差异的性质</td><td style="text-align:left"><strong>有意的改善</strong>。greenfield 中不使用 E2，因此是正确的</td></tr><tr><td style="text-align:left">措施</td><td style="text-align:left">无。本行是对「已替换」这一事实的记录</td></tr></tbody></table>
+<h3>2.1 基于第二次接收（从历史资产倒推）的重新判定</h3>
+<blockquote class="quote">对象仅为 §2／§3 的 8 项。以下概括 <code>reports/drill/R60Login/human-answer-sim.md</code> 的结论。<br><strong>这不是裁决。</strong> 采纳与否由人在 §5 决定（<strong>已于 2026-10-20 以「按建议全采」裁决完毕</strong>）。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">02 的现行回答</th><th style="text-align:left">回答文件</th><th style="text-align:left">第二次接收（历史资产）</th><th style="text-align:left">判定建议</th></tr></thead><tbody><tr><td style="text-align:left">D-01</td><td style="text-align:left">idle 30 分钟・绝对 8 小时・「关闭」时销毁</td><td style="text-align:left">§1 仅为 idle 30 分钟・登出不在处理范围内，§6 中有 8 小时・关闭时销毁</td><td style="text-align:left"><strong>30 分钟依据薄弱（E2）</strong>（旧版依赖设定值，实际值不明）、<strong>8 小时・关闭时销毁在任何资产中都不存在（E4）</strong>。新实现为 localStorage 持久化・无失效</td><td style="text-align:left"><strong>两者均保留（B 提案）</strong>＋在 02 中加 1 行测量值（旧版依赖设定／新实现为持久化）</td></tr><tr><td style="text-align:left">D-02</td><td style="text-align:left">5 次／10 分钟锁定</td><td style="text-align:left">§1 为「共通基盤」、§6 中有 5 次／10 分钟</td><td style="text-align:left"><strong>代码与需求书中都没有次数限制・锁定・解除的实现</strong>。5 次／10 分钟同样属于 E4</td><td style="text-align:left"><strong>两者均保留（B 提案）</strong>。将 5／10 明记为提案值，并写明无依据</td></tr><tr><td style="text-align:left">D-03</td><td style="text-align:left">超过 150 时不截断而报错</td><td style="text-align:left">超过时也不截断，保留全长</td><td style="text-align:left">150 是<strong>输入栏的上限</strong>。实测 <strong>86〜87 个字符</strong>。实现中<strong>没有长度检查・既不截断也不报错</strong></td><td style="text-align:left"><strong>采用 02（报错）</strong>＋补记实测值与「报错属于 C 裁决」</td></tr><tr><td style="text-align:left">D-04</td><td style="text-align:left"><code>stfKbn</code> 的用途丢失</td><td style="text-align:left"><code>stfKbn</code> → メニュー画面 的 query</td><td style="text-align:left"><strong>已确认</strong>（ログイン画面の実装:291、メニュー画面の実装:87-89）</td><td style="text-align:left"><strong>采用回答文件</strong>（在 02 中补记 1 行）</td></tr><tr><td style="text-align:left">D-05</td><td style="text-align:left">设计书中有 59 件</td><td style="text-align:left">同文</td><td style="text-align:left">设计书 <code>画面項目内容</code> 的 r33〜r91 为 <strong>59 行</strong>。但「59 件」<strong>是行数统计，并非正文的明文</strong>。前端的 fallback 为 58 件</td><td style="text-align:left"><strong>折中</strong>：将表述限定为「r33〜r91 的 59 行（行数统计）」</td></tr><tr><td style="text-align:left">D-06</td><td style="text-align:left">依据替换为需求书 §4.4（E1）</td><td style="text-align:left">依据是单体测试 3-4-7／3-4-9（E2）</td><td style="text-align:left">单体测试的期待值 <code>stfCd=NaN</code> 与需求书 §4.4 的明文，<strong>两者均已确认</strong></td><td style="text-align:left"><strong>仅记录</strong>（02 的替换是正确的）</td></tr><tr><td style="text-align:left">S-01</td><td style="text-align:left">权限授予为异动生效日・剥夺为当日之内（AI 合理方案）</td><td style="text-align:left">「未提供 → 客户确认」</td><td style="text-align:left"><strong>代码与需求书均无法判定</strong></td><td style="text-align:left"><strong>退回 A 类</strong>（在实际项目中向客户确认）</td></tr><tr><td style="text-align:left">S-02</td><td style="text-align:left">v2.0 为冻结版・无改订・哈希 <code>HASH_1</code>（AI 合理方案）</td><td style="text-align:left">「未确认 → 客户确认」</td><td style="text-align:left"><strong>v2.0（2025/09/12）已以 E1 确认</strong>。冻结・哈希・改订预定<strong>无法判定</strong></td><td style="text-align:left"><strong>仅采用版本号，冻结・哈希退回 A 类</strong></td></tr></tbody></table>
+<blockquote class="quote"><strong>第二次接收最大的收获</strong>：回答文件 §6 的具体值（<strong>绝对 8 小时</strong>・<strong>5 次／10 分钟</strong>），在<br>需求书・设计书・单体测试・实现中<strong>均无出处</strong>。§6 并非「回答」，而是<strong>当时的推测</strong>。<br>因此 D-01／D-02 的正确处理不是「在 02 与回答文件之间采哪一个」，<br>而是<strong>「两者都无出处，故作为 B 提案取得客户批准」</strong>。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. AI 补充（回答文件中没有记述的内容）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">02 的项目</th><th style="text-align:left">02 补充的内容</th><th style="text-align:left">回答文件侧的记述</th><th style="text-align:left">处理</th></tr></thead><tbody><tr><td style="text-align:left">S-01</td><td style="text-align:left">§2 未提及 #12 权限的授予・剥夺</td><td style="text-align:left">授予为人事异动的生效日，剥夺为退职・异动的当日之内，并由权限管理表管理</td><td style="text-align:left">「授予・剥夺的实务<strong>未提供 → 客户确认</strong>」</td><td style="text-align:left"><strong>AI 合理方案</strong>。实际项目中退回 A 类（由客户决定）</td></tr><tr><td style="text-align:left">S-02</td><td style="text-align:left">§2 未提及 #14 需求书的版本管理</td><td style="text-align:left">v2.0 为最新且<strong>为冻结版</strong>，此后无改订预定。哈希为 <code>HASH_1</code></td><td style="text-align:left">「冻结哈希・此后的改订预定<strong>未确认 → 客户确认</strong>」</td><td style="text-align:left"><strong>AI 合理方案</strong>。实际项目中退回 A 类</td></tr></tbody></table>
+<blockquote class="quote"><strong>Q-206／Q-205／Q-215／Q-217／Q-219 并非 AI 补充。</strong> 因为回答文件的 §6（回答补充节）中<br>写有具体值，02 只是采用了它。<strong>若只读 §1 的要点，会看起来像是「补充」</strong>，所以<br>接收时<strong>必须通读 §1〜§6 的全部内容</strong>（本次实测）。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 未接收・多余</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">类别</th><th style="text-align:right">件数</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">未接收</td><td style="text-align:right">0</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">多余</td><td style="text-align:right">0</td><td style="text-align:left">—</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 人的裁决栏</h2>
+<p><strong>「采用对象」</strong>栏中填写「02」「回答文件」「两者都修正」「保留（维持未回答）」之一。<br><strong>AI 不填写此栏。</strong> 差异的采纳与否属于业务判断（<code>rules/02</code> §4.2 第 3 段）。</p>
+<blockquote class="quote"><strong>2026-10-20 裁决</strong>：用户明确指示「<strong>按建议全采</strong>」。以下为该裁决的<strong>转录</strong>，<br>并非 AI 自行决定采纳与否。判定建议见 §2.1。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">差异</th><th style="text-align:left">采用对象</th><th style="text-align:left">修正内容（1 行）</th><th style="text-align:left">裁决者</th><th style="text-align:left">日期</th></tr></thead><tbody><tr><td style="text-align:left">D-01</td><td style="text-align:left">Q-205 销毁・期限</td><td style="text-align:left">两者都修正（作为 B 提案提交客户批准）</td><td style="text-align:left">在 02 中补记 1 行测量值（旧版依赖设定／新实现为 localStorage 持久化・无失效），以及「30 分钟依据薄弱（E2），8 小时・关闭时销毁为无出处的 E4」。在 AB 提案-01 的依据中补记该值系我方方案</td><td style="text-align:left">SE-001</td><td style="text-align:left">2026-10-20</td></tr><tr><td style="text-align:left">D-02</td><td style="text-align:left">Q-215 尝试限制</td><td style="text-align:left">两者都修正（作为 B 提案提交客户批准）</td><td style="text-align:left">将 5 次／10 分钟明记为我方提案值，并补记无出处（E4）。同时记录实现中没有限制处理。在 AB 提案-19 的依据中补记同旨</td><td style="text-align:left">SE-001</td><td style="text-align:left">2026-10-20</td></tr><tr><td style="text-align:left">D-03</td><td style="text-align:left">Q-213 超过时</td><td style="text-align:left">02</td><td style="text-align:left">补记实测 86〜87 个字符、旧实现中无长度检查。明记「超过 150 即报错」属于 C 裁决，并非客户要求的明文。将 C-09 的「保留全长」修改为「报错」</td><td style="text-align:left">SE-001</td><td style="text-align:left">2026-10-20</td></tr><tr><td style="text-align:left">D-04</td><td style="text-align:left">Q-212 <code>stfKbn</code></td><td style="text-align:left">回答文件</td><td style="text-align:left">在 02 与 C-08 中补记「<code>stfKbn</code> → メニュー画面 的查询」</td><td style="text-align:left">SE-001</td><td style="text-align:left">2026-10-20</td></tr><tr><td style="text-align:left">D-05</td><td style="text-align:left">Q-211 59 件</td><td style="text-align:left">两者都修正</td><td style="text-align:left">将「59 件」限定为「设计书 <code>画面項目内容</code> r33〜r91 的 59 行（行数统计）」。§2 #2・§4 #31 也统一为同一表述</td><td style="text-align:left">SE-001</td><td style="text-align:left">2026-10-20</td></tr><tr><td style="text-align:left">D-06</td><td style="text-align:left">Q-214 依据</td><td style="text-align:left">02（维持现状）</td><td style="text-align:left">仅记录。替换为需求书 §4.4（E1）是正确的。02 不做变更</td><td style="text-align:left">SE-001</td><td style="text-align:left">2026-10-20</td></tr><tr><td style="text-align:left">S-01</td><td style="text-align:left">未提及 #12</td><td style="text-align:left">回答文件（退回 A 类）</td><td style="text-align:left">类别 B→A。改写为提问形式，并明示为 AI 暂定方案。删除 AB 的提案-24，作为询问并入确认-08（批准事项 14→13 件）</td><td style="text-align:left">SE-001</td><td style="text-align:left">2026-10-20</td></tr><tr><td style="text-align:left">S-02</td><td style="text-align:left">未提及 #14</td><td style="text-align:left">两者都修正</td><td style="text-align:left">仅版本号 v2.0（2025/09/12）作为 E1 采用。冻结的有无・改订预定・哈希退回 A 类。将 AB 确认-15 修改为提问形式</td><td style="text-align:left">SE-001</td><td style="text-align:left">2026-10-20</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 反映记录（在裁决之后书写）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">反映日</th><th style="text-align:left">反映者</th><th style="text-align:left">反映的行</th><th style="text-align:left">02 的版本</th></tr></thead><tbody><tr><td style="text-align:left">2026-10-20</td><td style="text-align:left">SE-001（AI 转录）</td><td style="text-align:left">将 D-01〜D-06・S-01・S-02 的全部 8 件反映到 <code>02_確認事項一覧.md</code>。将 AB 改版为 v2.3、C 改版为 v2.1</td><td style="text-align:left">0.5.0</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. 本次比对中了解到的事（对程序的反映）</h2>
+<ol><li><strong>只读回答文件的 §1 会出错。</strong> 具体值在 §6 中，有时与 §1 的要点不一致</li></ol>
+<p>（D-01・D-02）。</p>
+<ol><li><strong>02 并未照抄回答文件。</strong> 既有丢失的事实（D-04），也有添加的解释（D-05）。</li></ol>
+<p><strong>要双向查看。</strong></p>
+<ol><li><strong>「一致」无法由机械判定。</strong> 数值・代码的存在确认可以由机械完成，但文意要由人阅读。</li><li>因此将 <strong>接收 → 比对 → 人的裁决 → 反映</strong> 作为节点1 的正式步骤（步骤 3／4），</li></ol>
+<p>并将程序规定于 <code>rules/02</code> §4.2。<strong>不得在没有比对记录的情况下制作批准版（<code>04_承認版_需求结构化表.md</code>）。</strong></p>
+<ol><li><strong>对回答文件中的「具体值」也要确认出处。</strong> D-01 的「绝对 8 小时」与 D-02 的「5 次／10 分钟」，</li></ol>
+<p>经第二次接收查明<strong>在任何资产中都没有出处</strong>（E4 的推测）。<strong>写了值不等于就是回答。</strong><br>看到具体值时，要确认一次<strong>该值位于需求书・设计书・单体测试・实现的何处</strong>。</p>
+<ol><li><strong>裁决不会止于 02 之内。</strong> 同一裁决还会波及到对客媒体（<code>03_客户確認依頼書（AB類）</code>）与</li></ol>
+<p>内部媒体（<code>03_技術者検討課題（C類）</code>）。类别由 B→A 变化后，<strong>文的种类会变化</strong><br>（提案→提问），因此要比对 03 的<strong>件数・类别・措辞</strong>，并重新生成 PDF。<br>本次因 S-01 的 B→A，批准事项由 14→13 件；D-03 使 C-09 的裁决文发生了变化。</p>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>8. 相关成果物</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">什么</th><th style="text-align:left">何处</th></tr></thead><tbody><tr><td style="text-align:left">回答的正文</td><td style="text-align:left"><code>tutorial/R60Login/节点1_需求/02_確認事項一覧.md</code></td></tr><tr><td style="text-align:left">接收的回答文件</td><td style="text-align:left"><code>reports/drill/R60Login/answer-key.md</code></td></tr><tr><td style="text-align:left">第二次接收（从历史资产倒推）</td><td style="text-align:left"><code>reports/drill/R60Login/human-answer-sim.md</code></td></tr><tr><td style="text-align:left">程序的唯一真源</td><td style="text-align:left"><code>.claude/rules/02-requirements.md</code> §4.2</td></tr><tr><td style="text-align:left">节点1 的作业票（步骤 3／4）</td><td style="text-align:left"><code>.claude/skills/trans-cosmos-ai-lifecycle-coach/nodes/n01-requirements.md</code></td></tr></tbody></table>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>02_回答受領チェック.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

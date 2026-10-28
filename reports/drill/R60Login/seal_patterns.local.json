@@ -1,0 +1,21 @@
+{
+  "_comment": "ローカル専用。実在の物理名を含むためコミットしない（reports/* は .gitignore 済み）。",
+  "schema_version": "1",
+  "patterns": [
+    {
+      "label": "物理テーブル名・DBオブジェクト名",
+      "kind": "identifier",
+      "regex": "R60_[A-Z_]+_(?:TBL|FNC)"
+    },
+    {
+      "label": "画面実装ファイル名",
+      "kind": "identifier",
+      "regex": "R60Login\\.vue|MenuCommon\\.vue"
+    },
+    {
+      "label": "共通部品名",
+      "kind": "identifier",
+      "regex": "AppHeader"
+    }
+  ]
+}

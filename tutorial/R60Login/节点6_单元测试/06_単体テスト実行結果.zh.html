@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06_単体テスト実行結果.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>06_単体テスト実行結果.zh</h1>
+<div class="meta">
+  机读源: <code>06_単体テスト実行結果.zh.md</code> ／
+  生成: 2026-10-27 15:57 ／
+  节 5・表 4
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>06_単体テスト実行結果.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">1. 执行环境</a></li><li><a href="#sec-2">2. 执行命令与实际输出</a> <span class="chip chip-io">项目定义</span></li><li><a href="#sec-3">3. 按 TC 的结果</a></li><li><a href="#sec-4">4. 未执行与未达成（如实说明）</a></li><li><a href="#sec-5">5. 交给下一工程（节点 7）</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>06 单元测试执行结果 — 共通主数据　登录（R60Login）</h1>
+<blockquote class="quote"><strong>本文件是执行记录，不是合格判定。</strong> 合格与否由人来判定（红线③、规则 04 §9.4）。<br>本文件里不写「合格」。可以写的只有<strong>实际执行的命令和它真实的输出</strong>（规则 02 §10）。<br>输入是 <code>05_承認版_测试用例集.md</code>（v1.0.1、共 21 条）和节点 5 的生产代码<br>（<code>tutorial/R60Login/节点5_制造/backend/</code>、<code>frontend/</code>）。<strong>设计没有改动。</strong><br>测试代码放在生产代码之外（<code>backend/tests/</code>、<code>frontend/tests/</code>），没有为了测试往产品代码里加分支。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>1. 执行环境</h2>
+<p>执行日期：<strong>2026-10-27</strong>。执行机：Windows 11 Pro 10.0.26100。<strong>不连接 Oracle</strong>（数据库在边界处替换，见 §2.1）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">类别</th><th style="text-align:left">版本</th><th style="text-align:left">获取命令</th></tr></thead><tbody><tr><td style="text-align:left">Python</td><td style="text-align:left"><code>Python 3.14.3</code></td><td style="text-align:left"><code>py -3 --version</code></td></tr><tr><td style="text-align:left">pytest</td><td style="text-align:left"><code>pytest 9.1.1</code></td><td style="text-align:left"><code>py -3 -m pytest --version</code></td></tr><tr><td style="text-align:left">pytest-cov / coverage</td><td style="text-align:left"><code>7.1.0</code> / <code>7.17.0</code></td><td style="text-align:left"><code>py -3 -m pip list</code></td></tr><tr><td style="text-align:left">FastAPI / Starlette</td><td style="text-align:left"><code>0.162.0</code> / <code>1.10.0</code></td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left">Pydantic / SQLAlchemy / httpx / oracledb</td><td style="text-align:left"><code>2.14.1</code> / <code>2.1.6</code> / <code>0.28.1</code> / <code>26.0.1</code></td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left">ruff</td><td style="text-align:left"><code>ruff 0.17.3</code></td><td style="text-align:left"><code>py -3 -m ruff --version</code></td></tr><tr><td style="text-align:left">Node / npm</td><td style="text-align:left"><code>v22.20.0</code> / <code>10.9.3</code></td><td style="text-align:left"><code>node -v</code> / <code>npm -v</code></td></tr><tr><td style="text-align:left">vitest / @vue/test-utils / vue / jsdom</td><td style="text-align:left"><code>5.0.5</code> / <code>2.5.1</code> / <code>3.5.44</code> / <code>29.1.1</code></td><td style="text-align:left"><code>frontend/package.json</code></td></tr><tr><td style="text-align:left">primevue / pinia</td><td style="text-align:left"><code>5.0.4</code> / <code>4.1.0</code></td><td style="text-align:left">同上</td></tr></tbody></table>
+<blockquote class="quote"><strong>环境变量里没有放真实值。</strong> 连接信息、当日密钥、跳转目标 URL 一律用占位符（<code>TBL_1</code> / <code>PWD_1</code> / <code>IP_1</code> / <code>SID_1</code> / <code>VAL_1</code>）给出（禁令⑤）。<br>依赖是在本节安装的（按 C 类指示办理）。只装了<strong>执行测试所必需的东西</strong>，产品的依赖构成没有改变。</blockquote>
+</section>
+<section class="sec sec-io" id="sec-2">
+<h2>2. 执行命令与实际输出 <span class="chip chip-io">项目定义</span></h2>
+<h3>2.1 后端（pytest）</h3>
+<pre><code>cd tutorial/R60Login/节点5_制造/backend
+py -3 -m pytest -q --cov=app --cov-branch --cov-report=term-missing \
+  --cov-report=json:D:/AI_work_dev/reports/unit/R60Login/coverage.json</code></pre>
+<p>实际输出（末尾部分，之前只有 <code>.</code> 的进度点）：</p>
+<pre><code>=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.3-final-0 _______________
+
+Name                          Stmts   Miss Branch BrPart  Cover   Missing
+-------------------------------------------------------------------------
+app\api\generate_url_api.py      59      0     18      0   100%
+app\api\init_api.py              51      0      6      1    98%   72-&gt;82
+app\api\login_api.py             68      0     16      0   100%
+app\config.py                    40      0      2      0   100%
+app\domain\availability.py       14      0      2      0   100%
+app\domain\login_lockout.py      47      0      6      0   100%
+app\domain\session_store.py      47      0     10      0   100%
+app\domain\stf_cd_cipher.py      50      1     20      1    97%   101
+app\main.py                      75      4      6      1    94%   84-&gt;89, 102-106
+app\repository\queries.py        44      0      2      0   100%
+app\schemas.py                   49      0      0      0   100%
+-------------------------------------------------------------------------
+TOTAL                           544      5     88      3    99%
+Coverage JSON written to file D:/AI_work_dev/reports/unit/R60Login/coverage.json
+145 passed, 1 warning in 9.01s</code></pre>
+<p>警告 1 条（Starlette 的 <code>TestClient</code> 相关的弃用提示）。<strong>不是产品代码的警告。</strong></p>
+<h3>2.2 前端（vitest）</h3>
+<pre><code>cd tutorial/R60Login/节点5_制造/frontend
+npx vitest run --coverage</code></pre>
+<p>实际输出（末尾部分）：</p>
+<pre><code> Test Files  5 passed (5)
+      Tests  95 passed (95)
+
+ % Coverage report from v8
+------------------|---------|----------|---------|---------|--------------------
+File              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+------------------|---------|----------|---------|---------|--------------------
+All files         |   96.21 |    82.95 |    98.3 |   96.12 |
+ common           |   96.66 |    93.33 |     100 |   96.42 |
+  stfCdCipher.ts  |   96.42 |    93.33 |     100 |   96.15 | 91,103
+ services         |     100 |    83.33 |     100 |     100 |
+  loginApi.ts     |     100 |    83.33 |     100 |     100 | 123
+ views            |   95.58 |    80.71 |   96.87 |   95.52 |
+  LoginScreen.vue |   95.58 |    80.71 |   96.87 |   95.52 | ...226-232,262,498
+------------------|---------|----------|---------|---------|--------------------
+Statements   : 96.21% ( 280/291 )
+Branches     : 82.95% ( 146/176 )
+Functions    : 98.3% ( 58/59 )
+Lines        : 96.12% ( 273/284 )</code></pre>
+<p>（原始输出保存到 <code>reports/unit/R60Login/frontend_run.txt</code>，只去掉了 ANSI 颜色码。）<br>（<code>stores/sessionState.ts</code> 各项都是 <code>100%</code>，所以没出现在上面的摘录里。实测值在<br><code>reports/unit/R60Login/frontend-coverage/coverage-summary.json</code> 中有 8 行记录，8 项全部命中。）</p>
+<h3>2.3 静态检查（ruff）</h3>
+<pre><code>cd tutorial/R60Login/节点5_制造/backend
+py -3 -m ruff check .</code></pre>
+<p>实际输出（汇总行）：</p>
+<pre><code>Found 24 errors.
+[*] 19 fixable with `--fix` (1 unsafe fix available with `--fix --unsafe-fixes`).</code></pre>
+<p>明细（由 <code>py -3 -m ruff check . --output-format=concise</code> 的实际输出统计）：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">规则</th><th style="text-align:left">件数</th><th style="text-align:left">位置</th><th style="text-align:left">性质</th></tr></thead><tbody><tr><td style="text-align:left"><code>RUF100</code></td><td style="text-align:left">6</td><td style="text-align:left"><code>tests/conftest.py</code></td><td style="text-align:left">多余的 <code>noqa</code>（<code>E402</code> 本就被禁用）</td></tr><tr><td style="text-align:left"><code>I001</code></td><td style="text-align:left">6</td><td style="text-align:left"><code>app/api/*</code>、<code>tests/*</code></td><td style="text-align:left">import 排序</td></tr><tr><td style="text-align:left"><code>BLE001</code></td><td style="text-align:left">4</td><td style="text-align:left"><code>init_api.py:113</code>、<code>login_api.py:192</code>、<code>availability.py:27</code>、<code>queries.py:144</code></td><td style="text-align:left">过宽的 <code>except Exception</code>（<strong>按设计的防御</strong>，见 §4.3）</td></tr><tr><td style="text-align:left"><code>UP037</code></td><td style="text-align:left">3</td><td style="text-align:left"><code>config.py:67</code>、<code>tests/conftest.py</code></td><td style="text-align:left">类型注解的引号</td></tr><tr><td style="text-align:left"><code>UP035</code></td><td style="text-align:left">2</td><td style="text-align:left"><code>main.py:22</code>、<code>tests/conftest.py:16</code></td><td style="text-align:left">从 <code>collections.abc</code> 导入</td></tr><tr><td style="text-align:left"><code>UP017</code> / <code>SIM117</code> / <code>PYI034</code></td><td style="text-align:left">各 1</td><td style="text-align:left"><code>tests/test_stf_cd_cipher.py</code>、<code>tests/test_main_lifespan.py</code>、<code>tests/conftest.py</code></td><td style="text-align:left">写法</td></tr></tbody></table>
+<p><strong>这 24 条没有修。</strong> 理由写在 §4.2（不悄悄改）。</p>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>3. 按 TC 的结果</h2>
+<p>21 条 TC 各自的测试<strong>都存在、都执行过、失败数为 0</strong>。但这不是合格判定（红线③）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">TC</th><th style="text-align:left">区分</th><th style="text-align:left">主要测试（文件::函数）</th><th style="text-align:left">执行结果</th></tr></thead><tbody><tr><td style="text-align:left">TC-201</td><td style="text-align:left">正常</td><td style="text-align:left"><code>test_init_api.py::test_tc201_*</code>（4 件）</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-202</td><td style="text-align:left">正常</td><td style="text-align:left"><code>test_login_api.py::test_tc202_*</code>（3 件）</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-203</td><td style="text-align:left">正常</td><td style="text-align:left"><code>loginScreen.test.ts</code>「跳转目标是 <code>/R60/{gmnId}?stfKbn=…</code>」「菜单共用 <code>/login</code>」「同一窗口内跳转」</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-204</td><td style="text-align:left">正常</td><td style="text-align:left"><code>test_generate_url_api.py::test_tc204_*</code>（3 件）</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-205</td><td style="text-align:left">正常</td><td style="text-align:left"><code>loginScreen.test.ts</code>「画面结束（L-208・TC-205）」4 件</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-206</td><td style="text-align:left">正常</td><td style="text-align:left"><code>test_stf_cd_cipher.py::test_tc206_seven_digits_stay_within_seventeen_characters</code>、<code>test_round_trip_returns_the_original</code>、<code>test_encryption_is_deterministic</code>／<code>stfCdCipher.test.ts</code>「7 桁は 5 桁目で分割」</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-207</td><td style="text-align:left">边界</td><td style="text-align:left"><code>test_generate_url_api.py::test_tc207_exactly_150_characters_is_accepted</code></td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-208</td><td style="text-align:left">边界</td><td style="text-align:left"><code>test_stf_cd_cipher.py::test_tc208_*</code>（3 件）、<code>test_nine_carries_into_ten_without_carrying_to_the_next_digit</code>／<code>stfCdCipher.test.ts</code>「4 桁以下は分割しない」「各桁が 9 のとき」</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-209</td><td style="text-align:left">边界</td><td style="text-align:left"><code>test_init_api.py::test_tc209_zero_candidates_is_not_an_error</code>／<code>loginScreen.test.ts</code>「0 件不是错误」「0 件时 I-308／I-311 置灰」</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-210</td><td style="text-align:left">边界</td><td style="text-align:left"><code>test_init_api.py::test_tc210_*</code>（2 件）</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-211</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_login_api.py::test_tc211_no_matching_employee_returns_error_code_only</code></td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-212</td><td style="text-align:left">异常</td><td style="text-align:left"><code>loginScreen.test.ts</code> 的 E-202 组 6 件（6 位、8 位、含非数字、空、前后有空格、启动区分越界）</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-213</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_login_api.py::test_tc213_unavailable_returns_403_before_decryption</code></td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-214</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_init_api.py::test_tc214_*</code>（2 件）</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-215</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_login_api.py::test_tc215_*</code>（2 件）</td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-216</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_init_api.py::test_tc216_unavailable_returns_403_and_skips_sql_2</code></td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-217</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_login_api.py::test_tc217_response_has_no_extra_keys</code></td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-218</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_login_api.py::test_tc218_db_failure_returns_error_code_2</code></td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-219</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_generate_url_api.py::test_tc219_encryption_failure_returns_error_code_2</code></td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-220</td><td style="text-align:left">异常</td><td style="text-align:left"><code>test_generate_url_api.py::test_tc220_151_characters_is_rejected_without_truncation</code></td><td style="text-align:left">失败 0</td></tr><tr><td style="text-align:left">TC-221</td><td style="text-align:left">边界</td><td style="text-align:left"><code>test_login_api.py::test_tc221_*</code>（5 件）、<code>test_login_lockout.py</code>（B-44／B-45／B-46 共 9 件）</td><td style="text-align:left">失败 0</td></tr></tbody></table>
+<p><strong>TC-221 是在 <code>05_承認版_测试用例集.md</code> v1.0.1 里新加的 1 条，其批准（签字）还没有拿到。</strong><br>所以上表的「失败 0」是<strong>执行事实</strong>，不是包含 TC-221 在内的 21 条的<strong>合格判定</strong>。</p>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>4. 未执行与未达成（如实说明）</h2>
+<h3>4.1 没有执行的内容</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">对象</th><th style="text-align:left">状态</th><th style="text-align:left">理由</th></tr></thead><tbody><tr><td style="text-align:left">E2E（Playwright 等真实浏览器测试）</td><td style="text-align:left"><strong>未执行</strong></td><td style="text-align:left">前端以组件形式存在（<code>views/</code>、<code>services/</code>、<code>common/</code>、<code>stores/</code>），<strong>没有应用启动配置（<code>index.html</code>、Vite 入口、真实服务端）</strong>。页面跳转和 Session Cookie 的往返，只有和服务端结合才成立，这是<strong>节点 7（结合测试）的范围</strong>（§5.7）。在本节点即便装了浏览器，也没有可启动的对象。</td></tr><tr><td style="text-align:left">连接真实 Oracle</td><td style="text-align:left"><strong>未执行</strong></td><td style="text-align:left">单元测试在数据库边界处替换（§2.1）。真实数据库的行为（NLS 是否生效、排他、溢出）放到节点 7 看。</td></tr><tr><td style="text-align:left"><code>main.py:102-106</code>（<code>ALTER SESSION</code> 监听器本体）</td><td style="text-align:left"><strong>未执行</strong></td><td style="text-align:left">执行需要<strong>真实连接</strong>。假的连接不会触发 <code>connect</code> 事件。</td></tr><tr><td style="text-align:left">覆盖率 100%（分支）</td><td style="text-align:left"><strong>未达成</strong></td><td style="text-align:left">见下面 §4.3 和 <code>07_カバレッジレポート.md</code>。</td></tr></tbody></table>
+<h3>4.2 为什么不修 ruff 的 24 条</h3>
+<ul><li><strong>本仓库没有 lint 配置</strong>（找了 <code>pyproject.toml</code>／<code>ruff.toml</code>／<code>.ruff.toml</code>，都没有）。所以本次执行的规则集是 <strong>ruff 的默认规则</strong>，「把这套规则当作质量门」这个<strong>决定还没有人做过</strong>。</li><li><code>--fix</code> 能机械地修掉 19 条，但<strong>在规则是否采用还没定的时候就改代码</strong>，等于在制造侧擅自加进设计里没有的改动（红线②的宗旨）。</li><li><strong>是否采用属于工程 04（框架）的 C 类</strong>。提案已作为 1 条写进 <code>docs/00_plan/coach/R60Login/n06.yml</code> 的 <code>open_questions</code>（「是否采用 ruff 默认规则集并执行 <code>--fix</code>」）。</li><li>4 条 <code>BLE001</code>（过宽的 <code>except</code>）是<strong>按设计的防御</strong>（E-204／E-208 回落到通用文案、SQL-6 失败时的回落）。按规则删掉 <code>except Exception</code>，<strong>设计的行为就会改变</strong>。</li></ul>
+<h3>4.3 分支为什么不是 100%</h3>
+<p><code>07_カバレッジレポート.md</code> §4 里，对未覆盖的部分（后端 5 行・3 分支／前端 11 行・30 分支）<strong>逐条</strong>写了原因。<br><strong>没有为了让「覆盖不到的分支」消失去改产品代码</strong>（不为测试弯折产品）。</p>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>5. 交给下一工程（节点 7）</h2>
+<ol><li><strong>E2E 没有执行。</strong> 结合测试里要设计经由真实服务端和 Cookie 的 3 个端点往返。</li><li><strong>B-33（跨日）实测与设计不一致。</strong> 加密时的日期和解密时的日期不同，也不会抛异常，而是<strong>按另一个员工代码</strong>解出来（已把实测结果固定在该测试用例里）。设计预期的是 E-205。这个差异怎么处理（改设计，还是在 IT 里吸收）由<strong>人决定</strong>（<code>docs/00_plan/coach/R60Login/n09.yml</code>）。</li><li><strong>未验证的观照点</strong>：边界值表 B-05、B-07〜B-19 的一部分，因为要保持 20 条 TC 的构成不变，没有落成 TC（和 <code>01_AI产出_测试用例集.md</code> 末尾的说明相同）。在节点 7 的业务场景里补。</li><li><strong>实测值</strong>：后端 145 件、前端 95 件，失败 0。行覆盖率后端 99%／前端 96.12%。</li></ol>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>06_単体テスト実行結果.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,333 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60KKUCHI-REVIEW
+type: knowledge
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60KkuChi
+artifact_type: review-findings
+
+scope:
+  design_sheets: 01, 06, 07-18, 20-31, 34, 35, 36, 37
+  frontend: "R60KkuChi.vue / R60KkuChiEdit.vue / R60KkuChiCopy.vue / R60KkuChiService.ts / R60KkuChiCopyService.ts"
+  backend: "R60KkuChiController.py / R60KkuChiCopyController.py"
+  tests: "00_単体ﾃｽﾄ仕様兼結果.txt / 01_1.画面遷移.txt"
+  ab_report: "なし（doc/03_AI/AB_Reports/reports/R60KkuChi/ 不在）"
+
+finding_summary:
+  total: 18
+  survey_or_ab: 2
+  design_internal: 3
+  design_vs_implementation: 0
+  implementation_only: 13
+  severity:
+    high: [D-KK-09]
+    medium: [D-KK-02, D-KK-15, D-KK-19]
+    low: [D-KK-01, D-KK-03, D-KK-04, D-KK-05, D-KK-06, D-KK-07, D-KK-10, D-KK-11, D-KK-12, D-KK-13, D-KK-14, D-KK-16, D-KK-17, D-KK-18]
+
+deviations:
+  - id: D-KK-01
+    title: キー項目の物理位置（KEY_KMK_1〜6 の何番目か）が設計に無い
+    category: design_internal
+    severity: low
+    finding: >-
+      設計はパターンごとに「意味を持つキー」の一覧（会社・事業場・半製品…）を与えるが、
+      KEY_KMK_1〜6 の物理位置への詰め方は与えない。実装の build_where が唯一の対応表になっている。
+    evidence:
+      - "36_業務処理説明 r45-r60: 意味的対応のみ"
+      - "R60KkuChiController.py:2749-2790: パターンごとの詰め替え"
+      - "37_項目移送表(DB) r17-r22: KEY_KMK_1〜6 は汎用列名"
+    impact: >-
+      設計だけでは DB のキー値を再現できない。移行時に実装を読まないと一致しない。
+    treatment: "設計の欠落として登記。移行時は詰め替え表を詳細設計へ明記する。"
+
+  - id: D-KK-02
+    title: 端点に単項目・変更なしチェックが無い（画面側のみ）
+    category: implementation_only
+    severity: medium
+    finding: >-
+      設計は登録時にパターン別の必須・桁・形式チェック（R60W0009/W0103/W0129/W0121）と
+      変更なしチェック（R60W0016）を要求する。実装はこれらを画面（R60KkuChiEdit.vue）で行い、
+      サーバーの /edit は受け取った値をそのまま INSERT/UPDATE する。
+    evidence:
+      - "36_業務処理説明 r541-r705: 単項目チェックと変更なしチェック"
+      - "R60KkuChiEdit.vue:2560-2830: 画面側のチェック実装"
+      - "R60KkuChiController.py:2410-2692: 端点に単項目チェックが無い"
+    impact: >-
+      API を直接呼ぶと、桁超過・必須漏れ・形式違反の値が保存される。
+      画面の防御は認証境界ではない。
+    treatment: "R60User D-US-06 と同じ論点。移行時はサーバー側へ寄せる。"
+
+  - id: D-KK-03
+    title: 事業場の複合値（会社コード,事業場コード）の分解規則が本文に無い
+    category: design_internal
+    severity: low
+    finding: >-
+      検索・マスタの事業場は複合値で持ち、保存時は KEY_KMK_2 に事業場コードのみを入れる。
+      設計の画面項目には複合値の定義があるが、保存時の分解規則は本文に明記されていない。
+    evidence:
+      - "07_画面項目内容(検索_P1) r17: リスト値項目=会社コード + ',' + 事業所コード"
+      - "R60KkuChiController.py:3090-3099: comma_split(param, index)"
+    impact: "実装ごとに分解規則がぶれる余地がある。"
+    treatment: "設計の欠落として登記。詳細設計で分解規則を明記する。"
+
+  - id: D-KK-04
+    title: 権限判定の共通関数①〜④の実体が抽出資産に無い
+    category: design_internal
+    severity: low
+    finding: >-
+      登録・削除ボタンの活性は、パターンに応じて権限判定の共通関数①〜④を呼ぶとだけ設計に書かれる。
+      関数の定義（別紙）は抽出済み資産に含まれない。
+    evidence:
+      - "36_業務処理説明 r300 / r339 / r377 / r378: 共通関数①〜④の参照のみ"
+      - "35_イベント一覧: 権限処理の詳細なし"
+    impact: "ボタン活性の正しさを設計だけでは検証できない。"
+    treatment: "【未確認】として残す。別紙の所在を確認する。"
+
+  - id: D-KK-05
+    title: 排他チェックで行が存在しない場合も W0006 を返す
+    category: implementation_only
+    severity: low
+    finding: >-
+      設計は「更新時刻が一致しない、かつ更新区分がオンライン」を排他エラーとする。
+      実装は取得結果が None（行なし）の場合も R60W0006 を返す。
+    evidence:
+      - "36_業務処理説明 r509-r528 / r796-r800"
+      - "R60KkuChiController.py:2350-2353 / 2675-2678"
+    impact: "他者による物理削除と排他競合が同じメッセージになる。"
+    treatment: "実装判断として登記。設計に『行なし』の扱いを追記する。"
+
+  - id: D-KK-06
+    title: 削除済の行を再度削除できる（サーバー側）
+    category: implementation_only
+    severity: low
+    finding: >-
+      設計は削除済データの場合に削除ボタンを非活性とする。
+      サーバーの /delete は DEL_FLG の現在値を確認せず、再度 del_flg=1 で更新する。
+    evidence:
+      - "36_業務処理説明 r377: 削除済は非活性"
+      - "R60KkuChiController.py:2337-2409: DEL_FLG の事前確認なし"
+    impact: "API 直接呼び出しで REV_NO と更新時刻だけが進む。"
+    treatment: "実装の事実として登記。サーバー側の事前確認を移行時に検討する。"
+
+  - id: D-KK-07
+    title: 削除時の単項目チェックがサーバーに無い
+    category: implementation_only
+    severity: low
+    finding: >-
+      設計の削除イベントは、確認メッセージの前に規格値 5 項目の単項目チェック（R60W0121）を行う。
+      サーバーの /delete は単項目チェックを行わない（画面側のみ）。
+    evidence:
+      - "36_業務処理説明 r481-r501"
+      - "R60KkuChiController.py:2337-2409"
+    impact: "不正な規格値でも削除が成立する。"
+    treatment: "D-KK-02 と同じ系統。移行時はサーバー側へ寄せる。"
+
+  - id: D-KK-09
+    title: 検索 WHERE を f-string 連結で組み立てる（SQL 注入余地）
+    category: implementation_only
+    severity: high
+    finding: >-
+      build_where は画面から渡された文字列（会社・事業場・半製品・受払区分など）を
+      f-string で WHERE 句へ直接埋め込む。バインド変数を使っていない。
+      その WHERE を COUNT と一覧取得の両方で text() に連結する。
+    evidence:
+      - "R60KkuChiController.py:2714-2716: KNR_KMK_CD = '{knr_kmk_cd}'"
+      - "R60KkuChiController.py:2749-2753: KEY_KMK_N = '{value}' / LIKE '{value}%'"
+      - "R60KkuChiController.py:1980-1988: COUNT で where を連結"
+      - "R60KkuChiController.py:2033-2040: SELECT で where を連結"
+    impact: >-
+      認証済み利用者が細工した検索条件で任意の SQL 断片を注入できる。
+      参照系のため情報漏洩・条件回避（削除済データの露出など）につながる。
+    treatment: >-
+      実装の事実として登記。greenfield では必ずバインド変数を使う。
+      移行時は /search の改修を必須条件とする。
+
+  - id: D-KK-10
+    title: page_limit の下限・上限を検証しない
+    category: implementation_only
+    severity: low
+    finding: >-
+      page_limit は文字列で受け取り int() 変換するが、0 以下・過大値・負値を検証しない。
+      0 の場合は all_page=1 になるが、offset 計算と FETCH FIRST 0 がそのまま SQL に入る。
+    evidence:
+      - "R60KkuChiController.py:1974: int(payload.params.page_limit, 10)"
+      - "R60KkuChiController.py:2006-2011: 丸めは current_page のみ"
+      - "R60KkuChiController.py:2036-2038: OFFSET/FETCH に直接埋め込み"
+    impact: "負値・0 で SQL エラー、過大値で全件取得に近い負荷。"
+    treatment: "実装の事実として登記。移行時に下限・上限を定義する。"
+
+  - id: D-KK-11
+    title: 未知の mode で何も書かずに成功応答
+    category: implementation_only
+    severity: low
+    finding: >-
+      /edit は mode が '1'/'2' でも '3' でもない場合、存在チェック・更新のどれも行わず、
+      commit して error_code='0' を返す。
+    evidence:
+      - "R60KkuChiController.py:2441-2691: mode 1/2 と 3 の分岐のみ"
+      - "R60KkuChiController.py:2685-2691: 共通の commit と成功応答"
+    impact: "呼び出し側の mode 誤りが成功として扱われる。"
+    treatment: "実装の事実として登記。移行時は未知 mode を 4xx にする。"
+
+  - id: D-KK-12
+    title: 修正 API が DEL_FLG をクライアント入力から書く
+    category: implementation_only
+    severity: low
+    finding: >-
+      /edit の mode 3 は update() を呼び、DEL_FLG を payload.params.del_flg から保存する。
+      画面は削除チェックボックスの値（通常 0）を送るが、API を直接呼ぶと 1 を送って
+      修正操作で論理削除できる。
+    evidence:
+      - "R60KkuChiController.py:2956: del_flg = params.del_flg"
+      - "R60KkuChiController.py:3005: update_params['DEL_FLG'] = del_flg"
+      - "37_項目移送表(DB) r37: 更新列に DEL_FLG（画面値）"
+    impact: "削除権限の無い利用者が修正権限だけで削除できる可能性がある。"
+    treatment: >-
+      設計 37 も DEL_FLG を画面値として更新対象にしており、実装は設計に忠実である。
+      危険性は設計自体に由来するため、移行時は設計側で見直す。"
+
+  - id: D-KK-13
+    title: 登録者・更新者 ID をクライアントから受け取る
+    category: implementation_only
+    severity: low
+    finding: >-
+      REG_STF_ID・KSN_STF_ID は payload.params.stf_id をそのまま保存する。
+      端点はセッションからログインユーザーを解決しない。
+    evidence:
+      - "R60KkuChiController.py:2622-2623 / 3000-3001"
+    impact: "API を直接呼ぶと登録者・更新者を詐称できる。"
+    treatment: "R60User D-US-15 と同じ。greenfield ではセッションから解決する。"
+
+  - id: D-KK-14
+    title: 被参照チェック関数を定義しているが未使用
+    category: implementation_only
+    severity: low
+    finding: >-
+      referred_check は R60_Check_Hany_Info_FNC を呼ぶ実装を持つが、コントローラ内に呼び出しが無い。
+      設計の削除イベントにも被参照チェックは無い（排他のみ）。
+    evidence:
+      - "R60KkuChiController.py:3075-3089: 定義"
+      - "R60KkuChiController.py: grep で呼び出し 0 件"
+      - "36_業務処理説明 r479-r537: 被参照チェックの記述なし"
+    impact: "死んだコード。読み手に『被参照を見ている』と誤解させる。"
+    treatment: "実装の事実として登記。移行時は削除するか、設計に被参照要件を足す。"
+
+  - id: D-KK-15
+    title: 一括コピー画面の追加と、9 個・3,795 行の未使用 component
+    category: implementation_only
+    severity: medium
+    finding: >-
+      設計は複製を同一画面のモード 2 として定義する。実装には加えて
+      別ルート /R60KkuChiCopy（規格値マスタ一括コピー）と専用 controller / service がある。
+      さらに Copy001-003・Create001-003・Edit001-003 の 9 component（計 3,795 行）が
+      どこからも参照されていない。
+    evidence:
+      - "src/router/index.ts:24-27: /R60KkuChiCopy"
+      - "R60KkuChiCopy.vue: 3,480 行 / R60KkuChiCopyService.ts: 6 メソッド"
+      - "9 component の参照件数 0（grep）"
+      - "R60KkuChi.vue:3421-3455: 同一画面の複製（mode 2）も存在"
+    impact: >-
+      複製の実装が 2 系統ある。どちらが正か設計からは決まらない。
+      死んだコード 3,795 行がレビューと検索のノイズになる。
+    treatment: >-
+      実装の事実として登記。移行時は同一画面の複製（設計どおり）を正とし、
+      一括コピーは別モジュールとして要件を立て直すか、削除する。"
+
+  - id: D-KK-16
+    title: Service の getSikKgo に対応する端点が無い
+    category: implementation_only
+    severity: low
+    finding: >-
+      R60KkuChiService.ts は /R60KkuChi/getSikKgo を呼ぶメソッドを持つが、
+      R60KkuChiController.py に当該端点が無い（Copy 側にはある）。画面もこのメソッドを呼ばない。
+    evidence:
+      - "R60KkuChiService.ts:44-52: getSikKgo"
+      - "R60KkuChiController.py: 8 端点のみ"
+      - "R60KkuChiCopyController.py:1128: getSikKgo は Copy 側に存在"
+      - "R60KkuChi.vue: 呼び出し 0 件（仕込記号は入力支援画面で解決）"
+    impact: "呼べば 404 になる死んだメソッド。"
+    treatment: "実装の事実として登記。移行時は削除する。"
+
+  - id: D-KK-17
+    title: INSERT が列名なしの 32 値
+    category: implementation_only
+    severity: low
+    finding: >-
+      登録は INSERT INTO R60_KKU_CHI_M_TBL VALUES (...) で 32 値を並べる。
+      列名を書かないため、テーブル定義の列順変更に追随できない。
+    evidence:
+      - "R60KkuChiController.py:2567-2600"
+      - "37_項目移送表(DB): 32 列"
+    impact: "列追加・入替時に、エラーにならず値がずれて保存される危険がある。"
+    treatment: "実装の事実として登記。移行時は列名を明記する。"
+
+  - id: D-KK-18
+    title: 調査票の endpoints=18 は推定で、実装は 8
+    category: survey
+    severity: low
+    finding: >-
+      scores/R60KkuChi.yaml は endpoints=18 と記録する。実装の @router.post は 8、
+      Service メソッドは 9（うち 1 つは端点なし）。18 は推定値である。
+    evidence:
+      - "scores/R60KkuChi.yaml: endpoints=18"
+      - "R60KkuChiController.py: 8 端点（init/search/download/initEdit/getHshNm/getUkhKbn/delete/edit）"
+      - "R60KkuChiService.ts: 9 メソッド"
+    impact: "複雑度スコアの端点シグナルが過大に見える。"
+    treatment: "本カードは実測 8 を採る。調査票は推定と実測を区別して記録する。"
+
+  - id: D-KK-19
+    title: A/B レポートが無い
+    category: survey
+    severity: medium
+    finding: >-
+      本モジュールには A/B レポート（doc/03_AI/AB_Reports/reports/R60KkuChi/summary.md）が無い。
+      したがって新旧比較の健康度・一致性は参照できない。
+    evidence:
+      - "doc/03_AI/AB_Reports/reports/ 配下に R60KkuChi が無い"
+      - "scores/R60KkuChi.yaml: AB 欠落を記録"
+    impact: >-
+      複雑度は高いが、実装一致の計測値が無い。教材としては『設計と実装の静的対比』に留まる。
+    treatment: >-
+      A/B の再測定対象。それまでは本カードの差異（静的対比）を正とする。
+
+design_internal_inconsistencies:
+  - "キー項目の物理位置が設計に無い（D-KK-01）"
+  - "事業場複合値の分解規則が本文に無い（D-KK-03）"
+  - "権限判定の共通関数①〜④の定義が別紙で未抽出（D-KK-04）"
+  - "画面区分のチェックボックスは抽出で記号が落ちており、印の有無が未確認。"
+
+teaching_notes:
+  reusable_patterns:
+    - "12 パターンを 1 画面で受ける：管理項目コード → キー構成 → 表示項目のデータ駆動切替"
+    - "取得列を DB 関数（R60_GET_SELECT_COLUMN_FNC）で切り替える"
+    - "14 ソート列を KEY_KMK_1〜6 の白名单に写像する"
+    - "項目 → 管理項目 → 検索画面の 3 段連動"
+    - "登録・更新・削除で列集合を移送表に固定する"
+    - "排他 → DB 存在 → キー存在 → 書込み の順序"
+    - "error_flg でフォーカス対象を画面へ伝える"
+    - "確認・完了メッセージを画面が messageInfo から表示する"
+  anti_patterns:
+    - "検索 WHERE の f-string 連結（D-KK-09）"
+    - "サーバーに検証が無い登録・更新（D-KK-02 / D-KK-07）"
+    - "未知 mode の成功応答（D-KK-11）"
+    - "page_limit の未検証（D-KK-10）"
+    - "列名なし INSERT（D-KK-17）"
+    - "死んだ関数・メソッド・component（D-KK-14 / D-KK-16 / D-KK-15）"
+    - "複製の二重実装（D-KK-15）"
+  positive_contrast:
+    - "12 パターンを 12 実装にしない設計判断"
+    - "削除が更新と同じ 17 列を書く点（37 の (削除) 列と一致）"
+    - "排他の比較条件が設計と一致"
+    - "キー存在チェックの条件が設計と一致"
+    - "変更なしチェックが設計どおり画面側にある"
+
+open_questions:
+  - "D-KK-02: 単項目チェックをサーバーへ寄せるか。"
+  - "D-KK-09: 検索 WHERE のバインド化を移行必須条件にするか。"
+  - "D-KK-12: 修正 API で DEL_FLG を書ける状態を許容するか。"
+  - "D-KK-15: 一括コピー画面を本画面の一部とみなすか、別モジュールとみなすか。"
+  - "D-KK-19: A/B を再測定するか。"

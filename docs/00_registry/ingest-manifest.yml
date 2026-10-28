@@ -1,0 +1,141 @@
+# ============================================================
+# trans-cosmos-ai AI 全流程骨組 - 歴史案件 取入マニフェスト
+# 唯一の取入入力源（NFR-1 単一ソース）。tools/ingest は本ファイルだけを読む。
+# 参照: ids.yml（発号本） / traceability.yml（追跡） / glossary.yml（用語）
+#
+# 位置づけ:
+#   本ファイルは「どの歴史案件を、どの範囲で、どう安全に取り込むか」を定める。
+#   取入の**出力**は reports/ingest/<project_key>/ に機器生成され、人手で編集しない。
+#   本ファイルは人が編集する唯一の入力であり、変更は人ゲート（G-B 取入規格評審）を通す。
+#
+#   ★適用範囲: 取入は build_mode: migration の案件に限る（既存システム・旧設計書を持つ案件）。
+#     骨架の既定である build_mode: greenfield（從無到有）では取り込むべき歴史資産が存在しないため、
+#     本ファイルを使わない。機構コード（tools/ingest）は読取専用のままでよく、モードで挙動を変えない。
+#
+# 鍵名の制約（重要）:
+#   gate1 は front-matter の `id` / `*_id` / `*_ids` / `ids` という鍵を「ID 宣言」とみなす。
+#   本ファイルは docs/00_registry 配下のため gate1 の走査対象外だが、
+#   将来の移動に備えて当該の鍵名は使わない（`project_key` 等で代用する）。
+# ============================================================
+
+schema_version: "1"
+
+description: >-
+  歴史案件（既存の対日開発プロジェクト）から設計資産・規約・用語を取入れるための
+  唯一のマニフェスト。tools/ingest が本ファイルを検証し、走査 → 機密遮断 →
+  棚卸し → 発号候補生成 の順に処理する。
+
+# 取入成果物の出力先（本リポジトリ相対）。機器生成・手編集禁止。
+output_root: reports/ingest
+
+# ------------------------------------------------------------
+# 機密遮断（最重要・機械的阻断）
+# ------------------------------------------------------------
+# 歴史案件の git 追跡下に .env 等が残っている事例が実測されている
+# （2026-10-12 実測: api / doc / Front-end の 3 仓库で 7 路径が追跡下。
+#   値は読まず、路径のみを検出する）。
+# 下記 glob に一致する路径は **入力から除外** し、secret_evidence.json に記録する。
+# 除外した理由と路径は残す（「読まなかった」ことの証跡）。
+secret_block_globs:
+  - "**/.env"
+  - "**/.env.*"
+  - "**/*.pem"
+  - "**/*.key"
+  - "**/id_rsa*"
+
+# 非追跡・非遮断のテキストは、trace_check の scan_text() と同じ規格で走査する。
+# 規格を二重実装しない（片方だけ更新されると走査漏れが生じるため）。
+secret_scan_reuses: tools.trace_check.scan_text
+
+# ------------------------------------------------------------
+# 取入対象プロジェクト
+# ------------------------------------------------------------
+projects:
+
+  - project_key: JET-R60
+    kind: historical_project
+    root: "D:/AI_work"
+    relation: "参照元。要件源ではない（要件源は PPT 2 份のみ。ppt-deviation-register.md §0）"
+    read_only: true
+    note: >-
+      初回案件 R60 の実装資産。本骨架にとっての「歴史案件第 1 号」。
+      取入は常に読み取り専用であり、本マニフェストの実行は当該プロジェクトを一切変更しない。
+
+    repos:
+      - { name: api,       path: "api",       role: backend }
+      - { name: doc,       path: "doc",       role: design_docs }
+      - { name: front-end, path: "Front-end", role: frontend }
+
+    # 業務モジュールの範囲。
+    # expected_count は計画上の予定数であり、**確定値ではない**。
+    # 権威ある一覧は取入実走（Phase 2）の inventory 結果と人ゲート G-B2（発号承認）で確定する。
+    # ここに 34 件の名前を手書きしない — まだ実測していない名前を書けば出典の捏造になる。
+    module_scope:
+      # ⚠ 2026-10-12 訂正: 旧値 32 は **出所の誤読**であった。
+      # 要件源 PPT 2 份に独立した「32」は 0 箇所。SDS3 PPT の「32」はスライド番号であって数量ではない。
+      # → 計画に「JET 全 32 モジュール」と書かれていたのは、頁番号を数量と読み違えたものと推定される。
+      # JET PPT slide 8 の実記載は「AI 適用済み API 数: 22 本（全 34 本のうち 64.7%）」＝ 全 34 本。
+      # 出所の唯一の定義は docs/90_knowledge/ppt-deviation-register.md §2 の訂正注記。
+      expected_count: 34
+      expected_count_source: "JETプロジェクトにおけるAI活用シナリオ.pptx slide 8（全 34 本の API、うち AI 適用 22 本）"
+      # 「モジュール」と「API」は同一の数え方ではないため、確定は人ゲートに委ねる。
+      expected_count_caveat: "PGM 名で併合した対象数の予定値。確定は G-B2（発号承認）。API 数 ≠ モジュール数であり、実測で差が出た場合は実測を正とする"
+      discovery: "routers/R60*Controller.py と views/R60*.vue を PGM 名で併合し、共通系（Common/CSVDownload/Login/User/ServerJobRef）を除く"
+      measured_reference:
+        routers_total: 57
+        vue_components_total: 153
+        measured_at: "2026-10-12"
+      confirm_gate: "G-B2 発号承認"
+
+    traversal:
+      include_suffixes: [".py", ".vue", ".ts", ".md", ".yaml", ".yml", ".json", ".sql", ".txt"]
+      exclude_dirs: [".git", "node_modules", "__pycache__", ".venv", "venv", "dist", "build"]
+      # 巨大バイナリを内容走査しない（棚卸しでは size のみ記録する）
+      max_scan_bytes: 524288
+
+# ------------------------------------------------------------
+# 取入成果物の規格（機器生成。人手編集禁止）
+# ------------------------------------------------------------
+outputs:
+  - { file: inventory.json,        content: "全ファイル棚卸し（path/size/sha1/kind）。**内容は読まない**" }
+  - { file: secret_evidence.json,  content: "遮断した機密路径の証跡。**路径のみ、値は書かない**" }
+  - { file: module_asset_map.yml,  content: "業務モジュール ⇄ 資産 の対応表" }
+  - { file: id_candidates.yml,     content: "発号候補。全行 approved: false で生成される" }
+
+# ------------------------------------------------------------
+# 発号の責任境界（红线①③の機械化）
+# ------------------------------------------------------------
+issuance:
+  auto_write_registry: false
+  note: >-
+    取入ツールは ids.yml を**絶対に自動で書かない**。
+    書き込めるのは `tools/ingest id-apply` サブコマンドのみであり、
+    かつ人が approved: true と記入した行だけを書く。
+  apply_command: "py -3 -m tools.ingest id-apply --manifest docs/00_registry/ingest-manifest.yml"
+  human_gate: "G-B2 発号承認"
+
+# ------------------------------------------------------------
+# Phase 3 用: 発号ブロック予約（本ファイルでは宣言のみ。適用は Phase 3.1 の G-D1）
+# ------------------------------------------------------------
+# ids.yml の `prefix_blocks:` として適用する予定値。1 モジュールあたりの予約幅。
+# I-ID は合計 1800+ 件になる見込みのため、一度に発号しない（每回最大 3 モジュール）。
+prefix_plan:
+  status: not_applied
+  apply_gate: "G-D1 ブロック配分承認"
+  block_width:
+    R: 1
+    I: 100
+    L: 10
+    E: 20
+    TC: 30
+  note: >-
+    R60Area が I-201..256 を使用済み。次モジュールは I-301 から開始する。
+    gate1 は ids.yml の `ids:` 内に宣言された ID のみを検証するため、
+    ブロック予約による連番の空隙は野号と判定されない。
+
+# ------------------------------------------------------------
+# 未確定事項（open_issues）
+# ------------------------------------------------------------
+open_issues:
+  - "業務モジュールの権威一覧（Phase 2 の inventory 実走 + G-B2 で確定。予定値 34 は API 数からの推定であり確定値ではない）"
+  - "review_diff_assets の before/after 抽出手順（Phase 2.4）"

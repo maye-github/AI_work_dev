@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02_你在这里审查</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>02_你在这里审查</h1>
+<div class="meta">
+  机读源: <code>02_你在这里审查.md</code> ／
+  生成: 2026-10-21 12:17 ／
+  节 6・表 0
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>02_你在这里审查.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">一、需求追溯（缺一项链条就断）</a></li><li><a href="#sec-2">二、业务正确性（AI 最容易想当然的地方）</a></li><li><a href="#sec-3">三、红线合规（碰了就是废品）</a></li><li><a href="#sec-4">四、非机能要求</a></li><li><a href="#sec-5">五、未确定事项的处置</a></li><li><a href="#sec-6">六、承认前最后一眼</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>节点2 你在这里审查 —— 基本设计审查清单</h1>
+<blockquote class="quote">你（人）在本节点必须亲自确认下面每一项。<strong>打勾之前，不要进行下一步。</strong><br>AI 出的是草稿，责任在你。以下每一项后面都写了「为什么必须人看」——这些正是 AI 判断不了、<br>或者判断错代价最大的地方。<br><strong>本节点是 greenfield（從無到有）案件。</strong> 没有旧设计书可对照，也没有既有资产可复用。<br>因此本清单里<strong>没有「去核对旧资料」这一项</strong> —— 判断依据只有两个：<br><strong>① 节点1 的承認版（客户承认过的要求）／② 你自己对业务与工程边界的判断。</strong></blockquote>
+<p>审查对象：<code>01_AI产出_基本设计书.md</code><br>对照输入：<code>01_输入_已填写.yaml</code>、<code>节点1_需求/04_承認版_需求结构化表.md</code></p>
+<blockquote class="quote">注：教学样例 <code>00_输入模板_已填写示例.yaml</code> 已于 2026-10-21 退避到<br><code>_archive-2026-10-21-教学样例退避/</code>，<strong>不是本次的对照输入</strong>。审查时只看上面这两份。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>一、需求追溯（缺一项链条就断）</h2>
+<ul><li class="task"><span class="box">☐</span><strong>F-201 确实挂在 R-201 之下</strong>，功能名称与需求一致。</li><li>为什么必须人看：AI 会「顺手」补一个看似合理的功能名，但名字一旦和承认版需求对不上，</li></ul>
+<p>追溯链就是假的。这是 <code>trace_check --strict</code> 唯一查不出、只能靠人判的地方。</p>
+<ul><li class="task"><span class="box">☐</span><strong>画面 SCR-201 / SCR-202 的划分</strong>与你的理解一致。</li><li>为什么必须人看：SCR-202（遷移先）到底算本机能的责任，还是别家的画面，AI 分不清。</li></ul>
+<p>分错了，后面的工作量估算、测试范围全错。</p>
+<ul><li class="task"><span class="box">☐</span><strong>入出力项目 I-301〜I-312 没有遗漏任何一个真实字段</strong>（承认版 §4 为 12 项）。</li><li>为什么必须人看：AI 只会照着你给的模板补全，模板里没写的它不会知道。</li></ul>
+<p>漏一个 Session 项目，登录后整站都可能拿不到该字段。</p>
+<ul><li class="task"><span class="box">☐</span><strong>★ 逐项对照节点1 的承認版</strong>（<code>../节点1_需求/04_承認版_需求结构化表.md</code>）：输入项、以及 Q-201〜Q-219 的结论，是否都搬全了？</li></ul>
+<blockquote class="quote"><strong>教学提示（真实发生过的坑）</strong>：本教程里 AI 一开始<strong>就漏掉了节点1 已明确列入的 §5「貴方に新規設計していただく項目」7 项</strong><br>（見 <code>03_组内审查意见.md</code> 的 RV-201-04）。上一节点的承認版就是本节点的输入，<strong>漏项是衔接事故</strong>。<br>这就是为什么每个节点的输入模板第一项永远是 <code>source_requirement</code>。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>二、业务正确性（AI 最容易想当然的地方）</h2>
+<ul><li class="task"><span class="box">☐</span><strong>处理流程的 6 个步骤顺序</strong>正确（稼働チェック→復号→社員検証→社員情報取得→Session 生成→遷移先の解決）。</li><li>为什么必须人看：顺序错了（比如先查社員再检查稼働）会导致安全或性能问题，AI 不会察觉。</li><li class="task"><span class="box">☐</span><strong>E-203 的提示文面不会泄露「社員が存在するか」</strong>。</li><li>为什么必须人看：这是安全问题，不是格式问题。AI 默认会写「該当社員が存在しません」——这就泄露了信息。</li><li class="task"><span class="box">☐</span><strong>稼働停止時の振る舞い</strong>（ログインさせず明確に提示）が、节点1 BR-201-01 どおりになっているか。</li><li>为什么必须人看：客户只写了「明確なメッセージを提示」，<strong>具体是什么画面・什么文面是我方设计</strong>。AI 常把它简化成一个通用错误。</li><li class="task"><span class="box">☐</span><strong><code>kgnKbn</code>（権限区分）与画面访问控制的对应关系正确</strong>。</li><li>为什么必须人看：权限错配是致命缺陷，且很难在测试中被发现（测试账号往往权限正常）。</li><li class="task"><span class="box">☐</span><strong>起動区分 <code>stfKbn</code> 的扱い</strong>が节点1 承認版（§3 規則 10・Q-210・Q-204・Q-212）と一致しているか。</li></ul>
+<p>并且「含める」后的<strong>必须性</strong>，是否作为未确定事项建在 §8.4-1（而不是被 AI 自行补齐）。</p>
+<ul><li>为什么必须人看：规则 10 明写「起動区分<strong>不改变</strong>ログイン可否」，这条若漏掉，</li></ul>
+<p>后工程很容易对 <code>stfKbn</code> 加认证分支。必须性上游无明文，不能默认「必须」或「任意」。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>三、红线合规（碰了就是废品）</h2>
+<ul><li class="task"><span class="box">☐</span><strong>没有在工程02 的时点把技术栈确定下来</strong>（紅線④）。</li><li>为什么必须人看：greenfield では<strong>採用スタックは工程04 で当方が提案し人が承認する</strong>。</li></ul>
+<p>本節点で「Vue3 + FastAPI + Oracle で作る」と書き切ってしまうと、<strong>人が承認する前に確定させたこと</strong>になる。<br>AI は要求書に技術の言及があると、つい確定させてしまう（节点1 Q-212 がまさにこの論点）。</p>
+<ul><li class="task"><span class="box">☐</span><strong>没有把「既存の共通関数」を前提にした設計</strong>になっていないか。</li><li>为什么必须人看：greenfield には<strong>既存資産が無い</strong>。AI は学習した典型的な案件に引きずられ、</li></ul>
+<p>「既存の共通部品を呼ぶ」前提で書いてしまう。本案件では<strong>新規定義する候補</strong>として扱う。</p>
+<ul><li class="task"><span class="box">☐</span><strong>没有引入 <code>ids.yml</code> 未登记的野号</strong>（禁③）。教学号段只用 R-201/F-201/I-301…/E-201…。</li><li>为什么必须人看：野号会被门禁 Exit 1 拦下，且污染正式编号本。</li><li class="task"><span class="box">☐</span><strong>文中没有任何真实敏感值</strong>（IP、口令、真实桶名/租户、真实员工号姓名）。</li><li>为什么必须人看：AI 可能从上下文里「猜」出看似真实的值。对外发文件前必须人来核。</li><li>注意：<strong>暗号鍵の値は絶対に書かない</strong>（規約は「アルゴリズム」まで。鍵の実値は禁止外投＝一級の機密）。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>四、非机能要求</h2>
+<ul><li class="task"><span class="box">☐</span><strong>性能目标</strong>对你们场景合理（要求書に数値の指定があればそれに従う。<strong>無ければ当方提案＝B 類</strong>）。</li><li class="task"><span class="box">☐</span><strong>Session 超時（<code>Q-205</code>）</strong>：<strong>暫定値を置いていないか</strong>を確認する。</li><li>为什么必须人看：节点1 RV-201-02 の指摘どおり、<strong>顧客が決める事項を当方が先に埋めてはいけない</strong>。</li></ul>
+<p>「30 分で先行」と書いてあれば、それは指摘対象（<code>03_组内审查意见.md</code> の 意见-02）。<br>→ 允许的写法是「值来自 Q-205 的 B 提案」并标「B 承認待ち」；<strong>不允许</strong>没有出处的数字。</p>
+<ul><li class="task"><span class="box">☐</span><strong>安全要求</strong>（ログに敏感値を出さない、メッセージが存在性を漏らさない）确实被写进设计。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>五、未确定事项的处置</h2>
+<ul><li class="task"><span class="box">☐</span><strong><code>Q-220</code>〜<code>Q-222</code> 每一条</strong>（外加节点1 遗留的 <code>Q-201</code> / <code>Q-203</code> / <code>Q-204</code> / <code>Q-205</code> / <code>Q-206</code> / <code>Q-207</code> / <code>Q-208</code> / <code>Q-210</code> / <code>Q-211</code> / <code>Q-212</code>），你判断：哪些要问顾客、哪些我们自己拍板？</li><li>为什么必须人看：AI 不敢替客户做决定。把「该问的」和「能自己定的」分开（A／B／C），是这一节点最重要的产出。</li><li>字母表与节点1 完全一致：<strong>A＝顧客が決める ／ B＝我方が提案し顧客が承認する ／ C＝我方内部で決定する</strong>。</li><li class="task"><span class="box">☐</span><strong>没有「AI 假装已经确定」的事项</strong>——凡是没定的，都必须出现在第 8 节。</li><li>为什么必须人看：AI 有「把不确定说成确定」的倾向，这是最危险的失败模式（节点1 RV-201-02 就是这么发生的）。</li><li class="task"><span class="box">☐</span><strong>Q 编号没有跨节点撞号</strong>：节点1 は Q-201〜Q-219、<strong>节点2 の新規は Q-220 以降</strong>。持ち越した未決は<strong>同番号のまま</strong>追跡しているか。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>六、承认前最后一眼</h2>
+<ul><li class="task"><span class="box">☐</span>组内审查意见（<code>03_组内审查意见.md</code>）已全部落实。</li><li class="task"><span class="box">☐</span>改修版（<code>04_AI产出_基本设计书_改修版.md</code>）开头有「意见→改动」对照表，且每条都对得上。</li><li class="task"><span class="box">☐</span>承认版（<code>05_承認版_基本设计书.md</code>）填写了承认记录（版本 / 日期 / 承认者）。</li></ul>
+<p>全部打勾 → <strong>节点2 完成</strong>，<code>05_承認版_基本设计书.md</code> 即成为<strong>节点3（详细设计）的输入</strong>。</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>02_你在这里审查.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

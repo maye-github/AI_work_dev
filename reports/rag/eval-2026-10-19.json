@@ -1,0 +1,3450 @@
+{
+  "generated_on": "2026-10-19",
+  "scope": "teaching",
+  "index": "D:\\AI_work_dev\\build\\rag\\r60-teaching.sqlite",
+  "gold": "eval/gold-qa.yaml",
+  "k": 5,
+  "gold_count": 80,
+  "filtered_by_module": {
+    "questions": 80,
+    "hit_at_k": 1.0,
+    "strict_hit_at_k": 1.0,
+    "mrr": 0.9015,
+    "unsupported_rate": 0.0
+  },
+  "unfiltered": {
+    "questions": 80,
+    "hit_at_k": 0.8625,
+    "strict_hit_at_k": 0.8625,
+    "mrr": 0.6452,
+    "unsupported_rate": 0.0
+  },
+  "by_module": {
+    "R60KkuChi": {
+      "questions": 10,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 0.875,
+      "unsupported_rate": 0.0
+    },
+    "R60Maker": {
+      "questions": 15,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 0.8333,
+      "unsupported_rate": 0.0
+    },
+    "R60Plc": {
+      "questions": 15,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 0.8244,
+      "unsupported_rate": 0.0
+    },
+    "R60SesModel": {
+      "questions": 15,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 0.9667,
+      "unsupported_rate": 0.0
+    },
+    "R60Ssk": {
+      "questions": 15,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 0.9333,
+      "unsupported_rate": 0.0
+    },
+    "R60User": {
+      "questions": 10,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 1.0,
+      "unsupported_rate": 0.0
+    }
+  },
+  "by_type": {
+    "cross": {
+      "questions": 11,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 0.9545,
+      "unsupported_rate": 0.0
+    },
+    "fact": {
+      "questions": 35,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 0.9024,
+      "unsupported_rate": 0.0
+    },
+    "rule": {
+      "questions": 34,
+      "hit_at_k": 1.0,
+      "strict_hit_at_k": 1.0,
+      "mrr": 0.8833,
+      "unsupported_rate": 0.0
+    }
+  },
+  "questions": [
+    {
+      "qid": "GQ-SSK-001",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の前提条件と、画面が持つ操作の範囲は？",
+      "expected": [
+        "R60Ssk:screen:overview"
+      ],
+      "got": [
+        "R60Ssk:screen:overview",
+        "R60Ssk:review:update-only",
+        "R60Ssk:test:transition",
+        "R60Ssk:screen:master-items",
+        "R60Ssk:screen:search-items"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-002",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の検索画面は実項目で何件、内訳はどうなっている？",
+      "expected": [
+        "R60Ssk:screen:search-items"
+      ],
+      "got": [
+        "R60Ssk:screen:search-items",
+        "R60Ssk:screen:master-items",
+        "R60Ssk:review:update-only",
+        "R60Ssk:field:update-only",
+        "R60Ssk:error:unused"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-003",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk のマスタ項目画面はどの操作モードで、編集できる項目は？",
+      "expected": [
+        "R60Ssk:screen:master-items"
+      ],
+      "got": [
+        "R60Ssk:screen:master-items",
+        "R60Ssk:logic:row-link",
+        "R60Ssk:api:init-edit",
+        "R60Ssk:field:update-only",
+        "R60Ssk:field:ssk-unit"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-004",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の API 端点はいくつで、どのような共通規約か？",
+      "expected": [
+        "R60Ssk:api:conventions"
+      ],
+      "got": [
+        "R60Ssk:api:conventions",
+        "R60Ssk:api:event-map",
+        "R60Ssk:api:download",
+        "R60Ssk:api:edit",
+        "R60Ssk:api:init"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-005",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の検索で許可されるソート項目は？",
+      "expected": [
+        "R60Ssk:logic:sort-page"
+      ],
+      "got": [
+        "R60Ssk:logic:sort-page",
+        "R60Ssk:screen:search-items",
+        "R60Ssk:review:sort-ambiguity",
+        "R60Ssk:logic:display",
+        "R60Ssk:logic:unit-search"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-006",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の登録時に、変更なしと片方だけ入力のチェックはどう判定する？",
+      "expected": [
+        "R60Ssk:logic:register-checks"
+      ],
+      "got": [
+        "R60Ssk:logic:register-checks",
+        "R60Ssk:error:register",
+        "R60Ssk:error:search-items",
+        "R60Ssk:error:search-db",
+        "R60Ssk:logic:exclusive"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-007",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の登録ステータス REG_STS は何を条件に 0 または 1 になる？",
+      "expected": [
+        "R60Ssk:logic:reg-sts"
+      ],
+      "got": [
+        "R60Ssk:field:reg-sts",
+        "R60Ssk:logic:reg-sts",
+        "R60Ssk:field:send-sts",
+        "R60Ssk:field:jig-ssk-unit",
+        "R60Ssk:logic:register-update"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-008",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の排他チェックはどの条件で R60W0006 を返す？",
+      "expected": [
+        "R60Ssk:logic:exclusive"
+      ],
+      "got": [
+        "R60Ssk:logic:exclusive",
+        "R60Ssk:error:search-items",
+        "R60Ssk:api:edit",
+        "R60Ssk:field:audit",
+        "R60Ssk:screen:overview"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-009",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk は新規作成を行う画面か？",
+      "expected": [
+        "R60Ssk:screen:overview"
+      ],
+      "got": [
+        "R60Ssk:screen:overview",
+        "R60Ssk:field:update-only",
+        "R60Ssk:review:update-only",
+        "R60Ssk:logic:display",
+        "R60Ssk:screen:master-items"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-010",
+      "module": "R60Ssk",
+      "type": "cross",
+      "question": "R60Ssk の download は search と比べて SQL の組み方がどう違う？",
+      "expected": [
+        "R60Ssk:review:security"
+      ],
+      "got": [
+        "R60Ssk:review:security",
+        "R60Ssk:api:download",
+        "R60Ssk:test:ab",
+        "R60Ssk:api:conventions",
+        "R60Ssk:api:event-map"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-011",
+      "module": "R60Ssk",
+      "type": "cross",
+      "question": "R60Ssk の A/B レポートは更新系の一致を測れているか？",
+      "expected": [
+        "R60Ssk:test:ab"
+      ],
+      "got": [
+        "R60Ssk:test:ab",
+        "R60Ssk:api:event-map",
+        "R60Ssk:logic:back-discard",
+        "R60Ssk:error:exceptions",
+        "R60Ssk:error:register"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-012",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の設計イベントは何件か？",
+      "expected": [
+        "R60Ssk:screen:events"
+      ],
+      "got": [
+        "R60Ssk:api:event-map",
+        "R60Ssk:screen:events",
+        "R60Ssk:review:teaching",
+        "R60Ssk:review:update-only",
+        "R60Ssk:error:exceptions"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-013",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の検索条件はどの項目が前方一致・中間一致か？",
+      "expected": [
+        "R60Ssk:screen:search-items"
+      ],
+      "got": [
+        "R60Ssk:screen:search-items",
+        "R60Ssk:api:search",
+        "R60Ssk:error:search-items",
+        "R60Ssk:logic:display",
+        "R60Ssk:field:sei-nm"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-014",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk のマスタ項目画面のボタン初期状態は？",
+      "expected": [
+        "R60Ssk:screen:master-items"
+      ],
+      "got": [
+        "R60Ssk:screen:master-items",
+        "R60Ssk:logic:permission",
+        "R60Ssk:field:update-only",
+        "R60Ssk:review:update-only",
+        "R60Ssk:test:transition"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-015",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の全 API 端点が先頭で必ず行うチェックは？",
+      "expected": [
+        "R60Ssk:api:conventions"
+      ],
+      "got": [
+        "R60Ssk:api:conventions",
+        "R60Ssk:api:event-map",
+        "R60Ssk:api:edit",
+        "R60Ssk:api:download",
+        "R60Ssk:api:init"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-001",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User の位置づけ・テーブル・操作モードは？",
+      "expected": [
+        "USR-SCR-001"
+      ],
+      "got": [
+        "USR-SCR-001",
+        "USR-REV-002",
+        "USR-SCR-003",
+        "USR-FLD-003",
+        "USR-LGC-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-002",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User の検索画面は実項目で何件、ソート可能な列はいくつ？",
+      "expected": [
+        "USR-SCR-002"
+      ],
+      "got": [
+        "USR-SCR-002",
+        "USR-LGC-002",
+        "USR-REV-002",
+        "USR-FLD-001",
+        "USR-SCR-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-003",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User のマスタ項目モーダルは何項目で、編集できるのはどの項目？",
+      "expected": [
+        "USR-SCR-003"
+      ],
+      "got": [
+        "USR-SCR-003",
+        "USR-LGC-003",
+        "USR-FLD-001",
+        "USR-SCR-001",
+        "USR-SCR-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-004",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User の設計イベントは何件か？",
+      "expected": [
+        "USR-SCR-004"
+      ],
+      "got": [
+        "USR-SCR-004",
+        "USR-REV-002",
+        "USR-REV-005",
+        "USR-REV-004",
+        "USR-LGC-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-005",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User のドロップダウンはいくつで、その選択肢はどこから取得する？",
+      "expected": [
+        "USR-FLD-002"
+      ],
+      "got": [
+        "USR-FLD-002",
+        "USR-LGC-001",
+        "USR-SCR-004",
+        "USR-LGC-003",
+        "USR-REV-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-006",
+      "module": "R60User",
+      "type": "rule",
+      "question": "R60User のテーブルは何列で、更新するのは何列、主キーは？",
+      "expected": [
+        "USR-FLD-003"
+      ],
+      "got": [
+        "USR-FLD-003",
+        "USR-SCR-001",
+        "USR-LGC-006",
+        "USR-LGC-003",
+        "USR-REV-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-007",
+      "module": "R60User",
+      "type": "rule",
+      "question": "R60User の検索で許可されるソート列と、既定ソートは？",
+      "expected": [
+        "USR-LGC-002"
+      ],
+      "got": [
+        "USR-LGC-002",
+        "USR-SCR-002",
+        "USR-FLD-001",
+        "USR-REV-002",
+        "USR-SCR-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-008",
+      "module": "R60User",
+      "type": "rule",
+      "question": "R60User の自工／他工判別と登録ボタンの活性制御は？",
+      "expected": [
+        "USR-LGC-004"
+      ],
+      "got": [
+        "USR-LGC-004",
+        "USR-SCR-003",
+        "USR-SCR-004",
+        "USR-REV-005",
+        "USR-REV-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-009",
+      "module": "R60User",
+      "type": "rule",
+      "question": "R60User の緊急配信はいつ実行され、引数は？",
+      "expected": [
+        "USR-LGC-006"
+      ],
+      "got": [
+        "USR-LGC-006",
+        "USR-REV-006",
+        "USR-LGC-005",
+        "USR-REV-003",
+        "USR-REV-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-010",
+      "module": "R60User",
+      "type": "cross",
+      "question": "R60User で未知の更新エラーが起きたとき画面はどう振る舞う？",
+      "expected": [
+        "USR-REV-001"
+      ],
+      "got": [
+        "USR-REV-001",
+        "USR-REV-005",
+        "USR-LGC-003",
+        "USR-LGC-001",
+        "USR-FLD-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-001",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc の位置づけ・テーブル・API 端点は？",
+      "expected": [
+        "PLC-SCR-001"
+      ],
+      "got": [
+        "PLC-SCR-001",
+        "PLC-API-001",
+        "PLC-SCR-004",
+        "PLC-API-009",
+        "PLC-API-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-002",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc の検索画面は実項目で何件、ソート可能な列は？",
+      "expected": [
+        "PLC-SCR-002"
+      ],
+      "got": [
+        "PLC-SCR-002",
+        "PLC-FLD-003",
+        "PLC-REV-010",
+        "PLC-FLD-001",
+        "PLC-REV-007"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-003",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc のマスタ項目モーダルは実項目何件で、モードごとの削除ボタンは？",
+      "expected": [
+        "PLC-SCR-003"
+      ],
+      "got": [
+        "PLC-SCR-003",
+        "PLC-LGC-016",
+        "PLC-API-006",
+        "PLC-SCR-001",
+        "PLC-REV-011"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-004",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc の設計イベントは何件で、API を呼ぶのは何件？",
+      "expected": [
+        "PLC-SCR-004"
+      ],
+      "got": [
+        "PLC-SCR-004",
+        "PLC-API-001",
+        "PLC-API-009",
+        "PLC-REV-002",
+        "PLC-REV-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-005",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc でロケーション属性区分がタンクのとき、必須に加わる 6 項目は？",
+      "expected": [
+        "PLC-FLD-005"
+      ],
+      "got": [
+        "PLC-FLD-005",
+        "PLC-SCR-003",
+        "PLC-FLD-011",
+        "PLC-LGC-015",
+        "PLC-FLD-012"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-006",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc のテーブルは何列で、操作別の列数は？",
+      "expected": [
+        "PLC-FLD-008"
+      ],
+      "got": [
+        "PLC-FLD-008",
+        "PLC-FLD-006",
+        "PLC-FLD-012",
+        "PLC-SCR-001",
+        "PLC-LGC-015"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-007",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc の業務キーと桁数は？",
+      "expected": [
+        "PLC-FLD-007"
+      ],
+      "got": [
+        "PLC-API-007",
+        "PLC-API-008",
+        "PLC-FLD-007",
+        "PLC-LGC-007",
+        "PLC-LGC-012"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-008",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の検索で、仕掛表示と表示は REG_STS をどう扱う？",
+      "expected": [
+        "PLC-LGC-001"
+      ],
+      "got": [
+        "PLC-REV-005",
+        "PLC-LGC-018",
+        "PLC-LGC-001",
+        "PLC-API-004",
+        "PLC-LGC-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-009",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc のソート許可項目と既定ソートは？",
+      "expected": [
+        "PLC-LGC-003"
+      ],
+      "got": [
+        "PLC-API-004",
+        "PLC-LGC-003",
+        "PLC-SCR-005",
+        "PLC-REV-007",
+        "PLC-FLD-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-010",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の重複チェックはどのキーで、削除済みはどう扱う？",
+      "expected": [
+        "PLC-LGC-010"
+      ],
+      "got": [
+        "PLC-LGC-010",
+        "PLC-SCR-005",
+        "PLC-ERR-004",
+        "PLC-LGC-009",
+        "PLC-LGC-012"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-011",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の排他チェックはどの値で比較し、成功時に何を更新する？",
+      "expected": [
+        "PLC-LGC-011"
+      ],
+      "got": [
+        "PLC-LGC-011",
+        "PLC-API-008",
+        "PLC-SCR-005",
+        "PLC-FLD-004",
+        "PLC-FLD-012"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-012",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の被参照チェックはいつ、何を呼ぶ？",
+      "expected": [
+        "PLC-LGC-012"
+      ],
+      "got": [
+        "PLC-LGC-012",
+        "PLC-ERR-004",
+        "PLC-LGC-009",
+        "PLC-API-008",
+        "PLC-ERR-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-013",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の削除は物理削除か？何を設定する？",
+      "expected": [
+        "PLC-LGC-013"
+      ],
+      "got": [
+        "PLC-LGC-013",
+        "PLC-LGC-018",
+        "PLC-FLD-008",
+        "PLC-SCR-006",
+        "PLC-SCR-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-014",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の REG_STS 判定は何項目で、タンク時はどう変わる？",
+      "expected": [
+        "PLC-LGC-015"
+      ],
+      "got": [
+        "PLC-REV-005",
+        "PLC-LGC-018",
+        "PLC-SCR-005",
+        "PLC-FLD-009",
+        "PLC-LGC-015"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 5,
+      "rr": 0.2,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-015",
+      "module": "R60Plc",
+      "type": "cross",
+      "question": "R60Plc の表示ボタンは設計どおり REG_STS で絞っているか？",
+      "expected": [
+        "PLC-REV-005"
+      ],
+      "got": [
+        "PLC-REV-005",
+        "PLC-LGC-018",
+        "PLC-LGC-015",
+        "PLC-REV-001",
+        "PLC-REV-008"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-001",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の前提条件・排他条件・画面区分は？",
+      "expected": [
+        "R60Maker:screen:overview"
+      ],
+      "got": [
+        "R60Maker:review:deviations",
+        "R60Maker:screen:overview",
+        "R60Maker:logic:delete-sequence",
+        "R60Maker:screen:search-items",
+        "R60Maker:api:delete"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-002",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の検索画面は実項目で何件、検索条件は？",
+      "expected": [
+        "R60Maker:screen:search-items"
+      ],
+      "got": [
+        "R60Maker:screen:search-items",
+        "R60Maker:logic:search-conditions",
+        "R60Maker:field:reg-sts",
+        "R60Maker:test:summary",
+        "R60Maker:error:single-item"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-003",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の設計イベントは何件か？",
+      "expected": [
+        "R60Maker:screen:events"
+      ],
+      "got": [
+        "R60Maker:api:event-mapping",
+        "R60Maker:screen:events",
+        "R60Maker:review:deviations",
+        "R60Maker:test:decision-tables",
+        "R60Maker:test:summary"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-004",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の API 共通規約で、骨架規則と異なる点は？",
+      "expected": [
+        "R60Maker:api:conventions"
+      ],
+      "got": [
+        "R60Maker:api:conventions",
+        "R60Maker:api:initEdit",
+        "R60Maker:api:delete",
+        "R60Maker:api:download",
+        "R60Maker:api:edit"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-005",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の検索で許可されるソート項目とページング方式は？",
+      "expected": [
+        "R60Maker:api:search-sort-paging"
+      ],
+      "got": [
+        "R60Maker:api:search-sort-paging",
+        "R60Maker:api:search",
+        "R60Maker:screen:search-items",
+        "R60Maker:api:download",
+        "R60Maker:logic:search-conditions"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-006",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の initEdit は mode ごとに何を引き継ぐ？",
+      "expected": [
+        "R60Maker:api:initEdit"
+      ],
+      "got": [
+        "R60Maker:api:initEdit",
+        "R60Maker:api:event-mapping",
+        "R60Maker:api:mode-values",
+        "R60Maker:api:edit",
+        "R60Maker:api:init"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-007",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の削除は物理削除か？",
+      "expected": [
+        "R60Maker:api:delete"
+      ],
+      "got": [
+        "R60Maker:field:del-flg",
+        "R60Maker:api:delete",
+        "R60Maker:test:decision-tables",
+        "R60Maker:logic:delete-sequence",
+        "R60Maker:logic:edit-mode"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-008",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の edit 端点はどのモードを扱う？",
+      "expected": [
+        "R60Maker:api:edit"
+      ],
+      "got": [
+        "R60Maker:api:initEdit",
+        "R60Maker:api:edit",
+        "R60Maker:review:unused-components",
+        "R60Maker:logic:copy-mode",
+        "R60Maker:logic:edit-mode"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-009",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の緊急配信は何を引数に呼ぶ？",
+      "expected": [
+        "R60Maker:logic:emergency-send"
+      ],
+      "got": [
+        "R60Maker:logic:emergency-send",
+        "R60Maker:field:send-sts",
+        "R60Maker:api:delete",
+        "R60Maker:test:decision-tables",
+        "R60Maker:logic:delete-sequence"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-010",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の REG_STS は何を条件に決まる？設計書に書かれているか？",
+      "expected": [
+        "R60Maker:logic:reg-sts-rule"
+      ],
+      "got": [
+        "R60Maker:field:reg-sts",
+        "R60Maker:logic:reg-sts-rule",
+        "R60Maker:logic:search-conditions",
+        "R60Maker:review:deviations",
+        "R60Maker:api:delete"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-011",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の単項目チェックは何件か？",
+      "expected": [
+        "R60Maker:error:single-item"
+      ],
+      "got": [
+        "R60Maker:error:single-item",
+        "R60Maker:error:front-vs-back",
+        "R60Maker:test:viewpoint",
+        "R60Maker:error:db-integrity",
+        "R60Maker:field:del-flg"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-012",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker が使うメッセージは何件で、内訳は？",
+      "expected": [
+        "R60Maker:error:messages"
+      ],
+      "got": [
+        "R60Maker:error:messages",
+        "R60Maker:api:delete",
+        "R60Maker:api:init",
+        "R60Maker:error:front-vs-back",
+        "R60Maker:logic:count-limit"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-013",
+      "module": "R60Maker",
+      "type": "cross",
+      "question": "R60Maker でバックエンドが error_id で返すのはどのチェックか？",
+      "expected": [
+        "R60Maker:error:front-vs-back"
+      ],
+      "got": [
+        "R60Maker:error:front-vs-back",
+        "R60Maker:api:delete",
+        "R60Maker:api:edit",
+        "R60Maker:api:search",
+        "R60Maker:error:db-integrity"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-014",
+      "module": "R60Maker",
+      "type": "cross",
+      "question": "R60Maker の主要な差異 D-MK-01〜13 には何がある？",
+      "expected": [
+        "R60Maker:review:deviations"
+      ],
+      "got": [
+        "R60Maker:review:deviations",
+        "R60Maker:screen:events",
+        "R60Maker:error:messages",
+        "R60Maker:error:single-item",
+        "R60Maker:error:front-vs-back"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-015",
+      "module": "R60Maker",
+      "type": "cross",
+      "question": "R60Maker の A/B レポートが全端点 404 なのはなぜ？",
+      "expected": [
+        "R60Maker:review:ab-404"
+      ],
+      "got": [
+        "R60Maker:review:ab-404",
+        "R60Maker:review:deviations",
+        "R60Maker:api:search-sort-paging",
+        "R60Maker:api:conventions",
+        "R60Maker:api:download"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-001",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の構成（画面・テーブル・API・テスト）は？",
+      "expected": [
+        "SES-SCR-001"
+      ],
+      "got": [
+        "SES-SCR-008",
+        "SES-SCR-001",
+        "SES-FLD-006",
+        "SES-FLD-009",
+        "SES-REV-008"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-002",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の検索一覧は実項目で何件、ソート可能な列は？",
+      "expected": [
+        "SES-SCR-002"
+      ],
+      "got": [
+        "SES-SCR-002",
+        "SES-FLD-003",
+        "SES-SCR-001",
+        "SES-TST-002",
+        "SES-REV-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-003",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の明細一覧は実項目何件で、子コードはどう扱う？",
+      "expected": [
+        "SES-SCR-003"
+      ],
+      "got": [
+        "SES-SCR-003",
+        "SES-LGC-014",
+        "SES-FLD-003",
+        "SES-SCR-005",
+        "SES-SCR-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-004",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の設計イベントは何件で、API を呼ぶのは何件？",
+      "expected": [
+        "SES-SCR-006"
+      ],
+      "got": [
+        "SES-SCR-006",
+        "SES-SCR-001",
+        "SES-API-012",
+        "SES-TST-004",
+        "SES-API-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-005",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の API 端点はいくつで、共通規約は？",
+      "expected": [
+        "SES-API-001"
+      ],
+      "got": [
+        "SES-API-001",
+        "SES-SCR-006",
+        "SES-REV-008",
+        "SES-API-011",
+        "SES-API-012"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-006",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の明細系 API searchChild・initEditChild・getKonHmk は何をする？",
+      "expected": [
+        "SES-API-009"
+      ],
+      "got": [
+        "SES-API-009",
+        "SES-API-001",
+        "SES-SCR-006",
+        "SES-API-012",
+        "SES-API-010"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-007",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel が使う 6 テーブルと列数は？",
+      "expected": [
+        "SES-FLD-006"
+      ],
+      "got": [
+        "SES-FLD-006",
+        "SES-FLD-009",
+        "SES-REV-007",
+        "SES-LGC-010",
+        "SES-SCR-008"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-008",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の半製品マスタは 62 列だが、ダミー登録で INSERT するのは何列？",
+      "expected": [
+        "SES-FLD-007"
+      ],
+      "got": [
+        "SES-FLD-007",
+        "SES-LGC-010",
+        "SES-SCR-008",
+        "SES-FLD-006",
+        "SES-API-007"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-009",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の工場生産モデル判定はどのテーブルとコードを使う？",
+      "expected": [
+        "SES-LGC-005"
+      ],
+      "got": [
+        "SES-LGC-005",
+        "SES-FLD-006",
+        "SES-FLD-009",
+        "SES-SCR-008",
+        "SES-LGC-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-010",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の購入品目・半製品からの生産モデル逆引きはどう実装されている？",
+      "expected": [
+        "SES-LGC-006"
+      ],
+      "got": [
+        "SES-LGC-006",
+        "SES-LGC-005",
+        "SES-REV-004",
+        "SES-LGC-002",
+        "SES-FLD-009"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-011",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の半製品コード自動採番とダミー登録の規則は？",
+      "expected": [
+        "SES-LGC-010"
+      ],
+      "got": [
+        "SES-LGC-010",
+        "SES-SCR-004",
+        "SES-FLD-007",
+        "SES-FLD-004",
+        "SES-LGC-024"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-012",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の排他制御は親子でどう行う？",
+      "expected": [
+        "SES-LGC-018"
+      ],
+      "got": [
+        "SES-LGC-018",
+        "SES-REV-010",
+        "SES-LGC-023",
+        "SES-LGC-024",
+        "SES-ERR-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-013",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の被参照・復活・イベント参照チェックは？",
+      "expected": [
+        "SES-LGC-019"
+      ],
+      "got": [
+        "SES-LGC-019",
+        "SES-LGC-021",
+        "SES-SCR-007",
+        "SES-API-007",
+        "SES-API-010"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-014",
+      "module": "R60SesModel",
+      "type": "cross",
+      "question": "R60SesModel の SQL 文字列連結の危険箇所は？",
+      "expected": [
+        "SES-REV-005"
+      ],
+      "got": [
+        "SES-REV-005",
+        "SES-REV-001",
+        "SES-API-004",
+        "SES-LGC-006",
+        "SES-REV-010"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-015",
+      "module": "R60SesModel",
+      "type": "cross",
+      "question": "R60SesModel に A/B レポートはあるか？",
+      "expected": [
+        "SES-REV-009"
+      ],
+      "got": [
+        "SES-REV-009",
+        "SES-REV-001",
+        "SES-SCR-008",
+        "SES-TST-005",
+        "SES-FLD-011"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-001",
+      "module": "R60KkuChi",
+      "type": "fact",
+      "question": "R60KkuChi の位置づけと 12 キーパターンの意味は？",
+      "expected": [
+        "KKC-SCR-001"
+      ],
+      "got": [
+        "KKC-SCR-001",
+        "KKC-FLD-001",
+        "KKC-FLD-002",
+        "KKC-LGC-001",
+        "KKC-SCR-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-002",
+      "module": "R60KkuChi",
+      "type": "fact",
+      "question": "R60KkuChi の設計イベントは何件で、中心となる連動は？",
+      "expected": [
+        "KKC-SCR-003"
+      ],
+      "got": [
+        "KKC-SCR-003",
+        "KKC-LGC-004",
+        "KKC-REV-003",
+        "KKC-SCR-001",
+        "KKC-SCR-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-003",
+      "module": "R60KkuChi",
+      "type": "fact",
+      "question": "R60KkuChi の API 端点はいくつ、DB は何列？",
+      "expected": [
+        "KKC-SCR-004"
+      ],
+      "got": [
+        "KKC-SCR-004",
+        "KKC-LGC-005",
+        "KKC-FLD-004",
+        "KKC-LGC-004",
+        "KKC-REV-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-004",
+      "module": "R60KkuChi",
+      "type": "fact",
+      "question": "管理項目 0010 と 0070 のキー構成は？",
+      "expected": [
+        "KKC-FLD-001"
+      ],
+      "got": [
+        "KKC-FLD-002",
+        "KKC-LGC-001",
+        "KKC-SCR-001",
+        "KKC-FLD-001",
+        "KKC-LGC-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 4,
+      "rr": 0.25,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-005",
+      "module": "R60KkuChi",
+      "type": "rule",
+      "question": "R60KkuChi の登録時の固定値は？",
+      "expected": [
+        "KKC-FLD-004"
+      ],
+      "got": [
+        "KKC-FLD-004",
+        "KKC-LGC-006",
+        "KKC-SCR-004",
+        "KKC-REV-006",
+        "KKC-REV-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-006",
+      "module": "R60KkuChi",
+      "type": "rule",
+      "question": "R60KkuChi の検索 WHERE はどう組み立てられ、何が問題か？",
+      "expected": [
+        "KKC-LGC-002"
+      ],
+      "got": [
+        "KKC-LGC-002",
+        "KKC-REV-001",
+        "KKC-REV-005",
+        "KKC-FLD-001",
+        "KKC-LGC-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-007",
+      "module": "R60KkuChi",
+      "type": "rule",
+      "question": "R60KkuChi の件数・上限・ページング・ソートは？",
+      "expected": [
+        "KKC-LGC-003"
+      ],
+      "got": [
+        "KKC-LGC-003",
+        "KKC-SCR-005",
+        "KKC-SCR-003",
+        "KKC-FLD-003",
+        "KKC-REV-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-008",
+      "module": "R60KkuChi",
+      "type": "rule",
+      "question": "R60KkuChi の単項目チェックと変更なしチェックはどこで行う？",
+      "expected": [
+        "KKC-LGC-004"
+      ],
+      "got": [
+        "KKC-LGC-004",
+        "KKC-REV-002",
+        "KKC-REV-005",
+        "KKC-LGC-006",
+        "KKC-LGC-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-009",
+      "module": "R60KkuChi",
+      "type": "cross",
+      "question": "R60KkuChi の最も重大な差異は？",
+      "expected": [
+        "KKC-REV-001"
+      ],
+      "got": [
+        "KKC-LGC-002",
+        "KKC-REV-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-010",
+      "module": "R60KkuChi",
+      "type": "cross",
+      "question": "R60KkuChi の死んだコードと複製の二重実装には何がある？",
+      "expected": [
+        "KKC-REV-003"
+      ],
+      "got": [
+        "KKC-REV-003",
+        "KKC-REV-005",
+        "KKC-SCR-001",
+        "KKC-LGC-004",
+        "KKC-SCR-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    }
+  ],
+  "unfiltered_questions": [
+    {
+      "qid": "GQ-SSK-001",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の前提条件と、画面が持つ操作の範囲は？",
+      "expected": [
+        "R60Ssk:screen:overview"
+      ],
+      "got": [
+        "R60Ssk:screen:overview",
+        "R60Area:screen:overview",
+        "R60Maker:screen:overview",
+        "KKC-SCR-001",
+        "USR-SCR-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-002",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の検索画面は実項目で何件、内訳はどうなっている？",
+      "expected": [
+        "R60Ssk:screen:search-items"
+      ],
+      "got": [
+        "R60Ssk:screen:search-items",
+        "PLC-SCR-002",
+        "R60Maker:screen:search-items",
+        "USR-SCR-002",
+        "R60Area:screen:search-list"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-003",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk のマスタ項目画面はどの操作モードで、編集できる項目は？",
+      "expected": [
+        "R60Ssk:screen:master-items"
+      ],
+      "got": [
+        "R60Ssk:screen:master-items",
+        "R60Maker:screen:master-items",
+        "SES-FLD-004",
+        "SES-FLD-005",
+        "R60Area:screen:master-panel"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-004",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の API 端点はいくつで、どのような共通規約か？",
+      "expected": [
+        "R60Ssk:api:conventions"
+      ],
+      "got": [
+        "PLC-API-001",
+        "SES-API-001",
+        "R60Ssk:api:conventions",
+        "R60Maker:api:conventions",
+        "KKC-SCR-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-005",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の検索で許可されるソート項目は？",
+      "expected": [
+        "R60Ssk:logic:sort-page"
+      ],
+      "got": [
+        "R60Area:convention:sort-whitelist",
+        "R60Maker:api:search-sort-paging",
+        "R60Ssk:logic:sort-page",
+        "USR-LGC-002",
+        "R60Area:logic:search-sort"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-006",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の登録時に、変更なしと片方だけ入力のチェックはどう判定する？",
+      "expected": [
+        "R60Ssk:logic:register-checks"
+      ],
+      "got": [
+        "R60Ssk:logic:register-checks",
+        "R60Ssk:error:register",
+        "KKC-LGC-004",
+        "R60Area:logic:edit-validation-order",
+        "USR-LGC-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-007",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の登録ステータス REG_STS は何を条件に 0 または 1 になる？",
+      "expected": [
+        "R60Ssk:logic:reg-sts"
+      ],
+      "got": [
+        "R60Maker:field:reg-sts",
+        "R60Ssk:field:reg-sts",
+        "R60Ssk:logic:reg-sts",
+        "R60Area:logic:reg-sts",
+        "PLC-LGC-015"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-008",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の排他チェックはどの条件で R60W0006 を返す？",
+      "expected": [
+        "R60Ssk:logic:exclusive"
+      ],
+      "got": [
+        "R60Ssk:logic:exclusive",
+        "PLC-LGC-011",
+        "R60Area:logic:exclusive",
+        "KKC-LGC-005",
+        "R60Ssk:error:search-items"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-009",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk は新規作成を行う画面か？",
+      "expected": [
+        "R60Ssk:screen:overview"
+      ],
+      "got": [
+        "R60Ssk:screen:overview",
+        "R60Ssk:field:update-only",
+        "R60Ssk:review:update-only",
+        "USR-SCR-001",
+        "R60Area:field:key-cmp-cd"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-010",
+      "module": "R60Ssk",
+      "type": "cross",
+      "question": "R60Ssk の download は search と比べて SQL の組み方がどう違う？",
+      "expected": [
+        "R60Ssk:review:security"
+      ],
+      "got": [
+        "R60Ssk:review:security",
+        "R60Maker:api:download",
+        "PLC-API-005",
+        "SES-API-004",
+        "R60Ssk:api:download"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-011",
+      "module": "R60Ssk",
+      "type": "cross",
+      "question": "R60Ssk の A/B レポートは更新系の一致を測れているか？",
+      "expected": [
+        "R60Ssk:test:ab"
+      ],
+      "got": [
+        "USR-REV-006",
+        "R60Ssk:test:ab",
+        "R60Maker:review:ab-404",
+        "SES-REV-009",
+        "PLC-TST-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-012",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の設計イベントは何件か？",
+      "expected": [
+        "R60Ssk:screen:events"
+      ],
+      "got": [
+        "PLC-SCR-004",
+        "SES-SCR-006",
+        "SES-SCR-001",
+        "SES-TST-004",
+        "KKC-SCR-003"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-013",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk の検索条件はどの項目が前方一致・中間一致か？",
+      "expected": [
+        "R60Ssk:screen:search-items"
+      ],
+      "got": [
+        "PLC-FLD-002",
+        "SES-FLD-002",
+        "R60Maker:logic:search-conditions",
+        "PLC-LGC-001",
+        "SES-LGC-002"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-014",
+      "module": "R60Ssk",
+      "type": "fact",
+      "question": "R60Ssk のマスタ項目画面のボタン初期状態は？",
+      "expected": [
+        "R60Ssk:screen:master-items"
+      ],
+      "got": [
+        "R60Area:screen:master-panel",
+        "R60Ssk:screen:master-items",
+        "R60Maker:screen:master-items",
+        "PLC-LGC-016",
+        "R60Ssk:logic:permission"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SSK-015",
+      "module": "R60Ssk",
+      "type": "rule",
+      "question": "R60Ssk の全 API 端点が先頭で必ず行うチェックは？",
+      "expected": [
+        "R60Ssk:api:conventions"
+      ],
+      "got": [
+        "KKC-SCR-004",
+        "PLC-API-001",
+        "SES-API-001",
+        "R60Ssk:api:conventions",
+        "R60Area:api:init"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 4,
+      "rr": 0.25,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-001",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User の位置づけ・テーブル・操作モードは？",
+      "expected": [
+        "USR-SCR-001"
+      ],
+      "got": [
+        "USR-SCR-001",
+        "KKC-SCR-001",
+        "PLC-SCR-001",
+        "SES-SCR-001",
+        "USR-REV-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-002",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User の検索画面は実項目で何件、ソート可能な列はいくつ？",
+      "expected": [
+        "USR-SCR-002"
+      ],
+      "got": [
+        "USR-SCR-002",
+        "R60Ssk:screen:search-items",
+        "PLC-SCR-002",
+        "SES-FLD-003",
+        "PLC-FLD-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-003",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User のマスタ項目モーダルは何項目で、編集できるのはどの項目？",
+      "expected": [
+        "USR-SCR-003"
+      ],
+      "got": [
+        "SES-SCR-004",
+        "SES-SCR-005",
+        "USR-SCR-003",
+        "PLC-SCR-003",
+        "USR-LGC-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-004",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User の設計イベントは何件か？",
+      "expected": [
+        "USR-SCR-004"
+      ],
+      "got": [
+        "PLC-SCR-004",
+        "SES-SCR-006",
+        "SES-SCR-001",
+        "SES-TST-004",
+        "KKC-SCR-003"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-005",
+      "module": "R60User",
+      "type": "fact",
+      "question": "R60User のドロップダウンはいくつで、その選択肢はどこから取得する？",
+      "expected": [
+        "USR-FLD-002"
+      ],
+      "got": [
+        "PLC-LGC-005",
+        "PLC-API-006",
+        "R60Area:logic:dropdown-linkage",
+        "R60Ssk:logic:acct-company-change",
+        "R60Ssk:logic:company-change"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-006",
+      "module": "R60User",
+      "type": "rule",
+      "question": "R60User のテーブルは何列で、更新するのは何列、主キーは？",
+      "expected": [
+        "USR-FLD-003"
+      ],
+      "got": [
+        "USR-FLD-003",
+        "SES-FLD-009",
+        "R60Area:test:decision-tables",
+        "SES-FLD-006",
+        "PLC-FLD-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-007",
+      "module": "R60User",
+      "type": "rule",
+      "question": "R60User の検索で許可されるソート列と、既定ソートは？",
+      "expected": [
+        "USR-LGC-002"
+      ],
+      "got": [
+        "R60Area:logic:search-sort",
+        "USR-LGC-002",
+        "R60Ssk:review:sort-ambiguity",
+        "R60Ssk:logic:sort-page",
+        "R60Area:field:del-flg"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-008",
+      "module": "R60User",
+      "type": "rule",
+      "question": "R60User の自工／他工判別と登録ボタンの活性制御は？",
+      "expected": [
+        "USR-LGC-004"
+      ],
+      "got": [
+        "USR-LGC-004",
+        "PLC-LGC-016",
+        "SES-LGC-023",
+        "R60Ssk:logic:permission",
+        "R60Area:test:permission-matrix"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-009",
+      "module": "R60User",
+      "type": "rule",
+      "question": "R60User の緊急配信はいつ実行され、引数は？",
+      "expected": [
+        "USR-LGC-006"
+      ],
+      "got": [
+        "USR-LGC-006",
+        "R60Maker:logic:emergency-send",
+        "R60Area:logic:emergency-send",
+        "R60Area:field:send-sts",
+        "R60Maker:field:send-sts"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-USR-010",
+      "module": "R60User",
+      "type": "cross",
+      "question": "R60User で未知の更新エラーが起きたとき画面はどう振る舞う？",
+      "expected": [
+        "USR-REV-001"
+      ],
+      "got": [
+        "USR-REV-001",
+        "USR-REV-005",
+        "PLC-ERR-008",
+        "KKC-LGC-006",
+        "R60Area:screen:overview"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-001",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc の位置づけ・テーブル・API 端点は？",
+      "expected": [
+        "PLC-SCR-001"
+      ],
+      "got": [
+        "PLC-SCR-001",
+        "SES-SCR-001",
+        "USR-SCR-001",
+        "KKC-SCR-001",
+        "PLC-API-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-002",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc の検索画面は実項目で何件、ソート可能な列は？",
+      "expected": [
+        "PLC-SCR-002"
+      ],
+      "got": [
+        "USR-SCR-002",
+        "R60Ssk:screen:search-items",
+        "PLC-SCR-002",
+        "SES-FLD-003",
+        "PLC-FLD-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-003",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc のマスタ項目モーダルは実項目何件で、モードごとの削除ボタンは？",
+      "expected": [
+        "PLC-SCR-003"
+      ],
+      "got": [
+        "PLC-SCR-003",
+        "USR-SCR-003",
+        "SES-SCR-004",
+        "SES-SCR-005",
+        "USR-LGC-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-004",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc の設計イベントは何件で、API を呼ぶのは何件？",
+      "expected": [
+        "PLC-SCR-004"
+      ],
+      "got": [
+        "PLC-SCR-004",
+        "SES-SCR-006",
+        "USR-SCR-004",
+        "R60Ssk:api:event-map",
+        "PLC-API-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-005",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc でロケーション属性区分がタンクのとき、必須に加わる 6 項目は？",
+      "expected": [
+        "PLC-FLD-005"
+      ],
+      "got": [
+        "PLC-FLD-005",
+        "PLC-SCR-003",
+        "PLC-FLD-011",
+        "PLC-LGC-015",
+        "PLC-FLD-012"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-006",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc のテーブルは何列で、操作別の列数は？",
+      "expected": [
+        "PLC-FLD-008"
+      ],
+      "got": [
+        "SES-FLD-009",
+        "PLC-FLD-008",
+        "SES-FLD-006",
+        "R60Area:test:decision-tables",
+        "SES-REV-010"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-007",
+      "module": "R60Plc",
+      "type": "fact",
+      "question": "R60Plc の業務キーと桁数は？",
+      "expected": [
+        "PLC-FLD-007"
+      ],
+      "got": [
+        "R60Ssk:field:cmp-cd",
+        "R60Ssk:field:ssk-unit",
+        "PLC-API-007",
+        "PLC-API-008",
+        "PLC-FLD-007"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 5,
+      "rr": 0.2,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-008",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の検索で、仕掛表示と表示は REG_STS をどう扱う？",
+      "expected": [
+        "PLC-LGC-001"
+      ],
+      "got": [
+        "R60Area:test:search",
+        "PLC-REV-005",
+        "R60Maker:field:reg-sts",
+        "R60Maker:api:search",
+        "PLC-LGC-018"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-009",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc のソート許可項目と既定ソートは？",
+      "expected": [
+        "PLC-LGC-003"
+      ],
+      "got": [
+        "R60Ssk:logic:sort-page",
+        "R60Ssk:review:sort-ambiguity",
+        "R60Ssk:api:search",
+        "PLC-API-004",
+        "R60Area:logic:search-sort"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-010",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の重複チェックはどのキーで、削除済みはどう扱う？",
+      "expected": [
+        "PLC-LGC-010"
+      ],
+      "got": [
+        "PLC-LGC-010",
+        "SES-LGC-021",
+        "R60Area:error:duplicate-key",
+        "KKC-LGC-005",
+        "R60Maker:api:edit"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-011",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の排他チェックはどの値で比較し、成功時に何を更新する？",
+      "expected": [
+        "PLC-LGC-011"
+      ],
+      "got": [
+        "PLC-LGC-011",
+        "R60Ssk:logic:exclusive",
+        "R60Area:logic:exclusive",
+        "SES-LGC-012",
+        "PLC-API-008"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-012",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の被参照チェックはいつ、何を呼ぶ？",
+      "expected": [
+        "PLC-LGC-012"
+      ],
+      "got": [
+        "R60Area:logic:referential",
+        "PLC-LGC-012",
+        "SES-LGC-019",
+        "R60Maker:error:db-integrity",
+        "PLC-ERR-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-013",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の削除は物理削除か？何を設定する？",
+      "expected": [
+        "PLC-LGC-013"
+      ],
+      "got": [
+        "R60Area:logic:logical-delete",
+        "PLC-LGC-013",
+        "R60Area:api:delete",
+        "R60Area:field:del-flg",
+        "R60Maker:field:del-flg"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-014",
+      "module": "R60Plc",
+      "type": "rule",
+      "question": "R60Plc の REG_STS 判定は何項目で、タンク時はどう変わる？",
+      "expected": [
+        "PLC-LGC-015"
+      ],
+      "got": [
+        "USR-LGC-006",
+        "R60Area:logic:reg-sts",
+        "R60Maker:field:reg-sts",
+        "SES-LGC-024",
+        "R60Maker:logic:reg-sts-rule"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-PLC-015",
+      "module": "R60Plc",
+      "type": "cross",
+      "question": "R60Plc の表示ボタンは設計どおり REG_STS で絞っているか？",
+      "expected": [
+        "PLC-REV-005"
+      ],
+      "got": [
+        "PLC-REV-005",
+        "R60Maker:field:reg-sts",
+        "R60Ssk:field:reg-sts",
+        "R60Ssk:logic:reg-sts",
+        "USR-LGC-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-001",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の前提条件・排他条件・画面区分は？",
+      "expected": [
+        "R60Maker:screen:overview"
+      ],
+      "got": [
+        "R60Ssk:screen:overview",
+        "R60Maker:review:deviations",
+        "R60Area:screen:overview",
+        "R60Maker:screen:overview",
+        "KKC-SCR-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 4,
+      "rr": 0.25,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-002",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の検索画面は実項目で何件、検索条件は？",
+      "expected": [
+        "R60Maker:screen:search-items"
+      ],
+      "got": [
+        "R60Ssk:screen:search-items",
+        "PLC-SCR-002",
+        "R60Maker:screen:search-items",
+        "USR-SCR-002",
+        "R60Area:screen:search-list"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-003",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の設計イベントは何件か？",
+      "expected": [
+        "R60Maker:screen:events"
+      ],
+      "got": [
+        "PLC-SCR-004",
+        "SES-SCR-006",
+        "SES-SCR-001",
+        "SES-TST-004",
+        "KKC-SCR-003"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-004",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の API 共通規約で、骨架規則と異なる点は？",
+      "expected": [
+        "R60Maker:api:conventions"
+      ],
+      "got": [
+        "PLC-API-001",
+        "R60Maker:api:conventions",
+        "R60Ssk:api:conventions",
+        "SES-API-001",
+        "R60Ssk:api:event-map"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-005",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の検索で許可されるソート項目とページング方式は？",
+      "expected": [
+        "R60Maker:api:search-sort-paging"
+      ],
+      "got": [
+        "R60Area:logic:search-paging",
+        "R60Maker:api:search-sort-paging",
+        "USR-LGC-002",
+        "SES-REV-006",
+        "KKC-LGC-003"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-006",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の initEdit は mode ごとに何を引き継ぐ？",
+      "expected": [
+        "R60Maker:api:initEdit"
+      ],
+      "got": [
+        "R60Maker:api:initEdit",
+        "SES-API-006",
+        "SES-API-009",
+        "PLC-API-006",
+        "R60Area:api:init-edit"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-007",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の削除は物理削除か？",
+      "expected": [
+        "R60Maker:api:delete"
+      ],
+      "got": [
+        "R60Area:logic:logical-delete",
+        "PLC-LGC-013",
+        "R60Area:api:delete",
+        "R60Area:field:del-flg",
+        "R60Maker:field:del-flg"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-008",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の edit 端点はどのモードを扱う？",
+      "expected": [
+        "R60Maker:api:edit"
+      ],
+      "got": [
+        "PLC-API-006",
+        "SES-API-006",
+        "R60Maker:api:initEdit",
+        "PLC-API-008",
+        "SES-API-007"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-009",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の緊急配信は何を引数に呼ぶ？",
+      "expected": [
+        "R60Maker:logic:emergency-send"
+      ],
+      "got": [
+        "USR-LGC-006",
+        "R60Area:logic:emergency-send",
+        "R60Area:field:send-sts",
+        "R60Maker:logic:emergency-send",
+        "R60Maker:field:send-sts"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 4,
+      "rr": 0.25,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-010",
+      "module": "R60Maker",
+      "type": "rule",
+      "question": "R60Maker の REG_STS は何を条件に決まる？設計書に書かれているか？",
+      "expected": [
+        "R60Maker:logic:reg-sts-rule"
+      ],
+      "got": [
+        "R60Maker:field:reg-sts",
+        "R60Maker:logic:reg-sts-rule",
+        "R60Ssk:field:reg-sts",
+        "R60Ssk:logic:reg-sts",
+        "PLC-REV-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-011",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker の単項目チェックは何件か？",
+      "expected": [
+        "R60Maker:error:single-item"
+      ],
+      "got": [
+        "PLC-ERR-002",
+        "R60Maker:error:single-item",
+        "SES-LGC-020",
+        "KKC-LGC-004",
+        "R60Ssk:error:search-items"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-012",
+      "module": "R60Maker",
+      "type": "fact",
+      "question": "R60Maker が使うメッセージは何件で、内訳は？",
+      "expected": [
+        "R60Maker:error:messages"
+      ],
+      "got": [
+        "R60Area:error:message-inventory",
+        "R60Maker:error:messages",
+        "KKC-LGC-006",
+        "PLC-ERR-001",
+        "PLC-ERR-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-013",
+      "module": "R60Maker",
+      "type": "cross",
+      "question": "R60Maker でバックエンドが error_id で返すのはどのチェックか？",
+      "expected": [
+        "R60Maker:error:front-vs-back"
+      ],
+      "got": [
+        "R60Maker:error:front-vs-back",
+        "R60Ssk:error:register",
+        "KKC-LGC-005",
+        "SES-ERR-007",
+        "R60Maker:api:delete"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-014",
+      "module": "R60Maker",
+      "type": "cross",
+      "question": "R60Maker の主要な差異 D-MK-01〜13 には何がある？",
+      "expected": [
+        "R60Maker:review:deviations"
+      ],
+      "got": [
+        "R60Maker:review:deviations",
+        "R60Ssk:review:deviations",
+        "R60Area:error:required-13",
+        "R60Ssk:error:search-items",
+        "PLC-ERR-007"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-MK-015",
+      "module": "R60Maker",
+      "type": "cross",
+      "question": "R60Maker の A/B レポートが全端点 404 なのはなぜ？",
+      "expected": [
+        "R60Maker:review:ab-404"
+      ],
+      "got": [
+        "R60Maker:review:ab-404",
+        "PLC-TST-004",
+        "R60Area:review:ab-report",
+        "R60Ssk:test:ab",
+        "SES-REV-009"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-001",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の構成（画面・テーブル・API・テスト）は？",
+      "expected": [
+        "SES-SCR-001"
+      ],
+      "got": [
+        "SES-SCR-008",
+        "R60Area:test:decision-tables",
+        "PLC-SCR-006",
+        "SES-SCR-001",
+        "R60Maker:test:viewpoint"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 4,
+      "rr": 0.25,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-002",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の検索一覧は実項目で何件、ソート可能な列は？",
+      "expected": [
+        "SES-SCR-002"
+      ],
+      "got": [
+        "SES-SCR-002",
+        "SES-FLD-003",
+        "PLC-FLD-003",
+        "USR-SCR-002",
+        "R60Ssk:screen:search-items"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-003",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の明細一覧は実項目何件で、子コードはどう扱う？",
+      "expected": [
+        "SES-SCR-003"
+      ],
+      "got": [
+        "SES-SCR-003",
+        "SES-LGC-014",
+        "SES-FLD-003",
+        "R60Ssk:screen:search-items",
+        "SES-SCR-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-004",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の設計イベントは何件で、API を呼ぶのは何件？",
+      "expected": [
+        "SES-SCR-006"
+      ],
+      "got": [
+        "PLC-SCR-004",
+        "SES-SCR-006",
+        "USR-SCR-004",
+        "R60Ssk:api:event-map",
+        "PLC-API-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-005",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の API 端点はいくつで、共通規約は？",
+      "expected": [
+        "SES-API-001"
+      ],
+      "got": [
+        "PLC-API-001",
+        "SES-API-001",
+        "R60Ssk:api:conventions",
+        "R60Maker:api:conventions",
+        "KKC-SCR-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-006",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の明細系 API searchChild・initEditChild・getKonHmk は何をする？",
+      "expected": [
+        "SES-API-009"
+      ],
+      "got": [
+        "SES-API-009",
+        "SES-API-001",
+        "SES-SCR-006",
+        "SES-API-012",
+        "SES-API-010"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-007",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel が使う 6 テーブルと列数は？",
+      "expected": [
+        "SES-FLD-006"
+      ],
+      "got": [
+        "SES-FLD-006",
+        "SES-FLD-009",
+        "R60Area:test:decision-tables",
+        "SES-REV-007",
+        "SES-LGC-010"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-008",
+      "module": "R60SesModel",
+      "type": "fact",
+      "question": "R60SesModel の半製品マスタは 62 列だが、ダミー登録で INSERT するのは何列？",
+      "expected": [
+        "SES-FLD-007"
+      ],
+      "got": [
+        "SES-FLD-007",
+        "SES-LGC-010",
+        "SES-SCR-008",
+        "PLC-API-008",
+        "SES-FLD-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-009",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の工場生産モデル判定はどのテーブルとコードを使う？",
+      "expected": [
+        "SES-LGC-005"
+      ],
+      "got": [
+        "SES-LGC-005",
+        "SES-FLD-006",
+        "SES-FLD-009",
+        "SES-SCR-008",
+        "SES-LGC-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-010",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の購入品目・半製品からの生産モデル逆引きはどう実装されている？",
+      "expected": [
+        "SES-LGC-006"
+      ],
+      "got": [
+        "SES-LGC-006",
+        "SES-LGC-005",
+        "R60Area:error:a0039-a0040",
+        "SES-REV-004",
+        "SES-LGC-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-011",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の半製品コード自動採番とダミー登録の規則は？",
+      "expected": [
+        "SES-LGC-010"
+      ],
+      "got": [
+        "SES-LGC-010",
+        "SES-FLD-007",
+        "SES-SCR-004",
+        "SES-FLD-004",
+        "SES-LGC-024"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-012",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の排他制御は親子でどう行う？",
+      "expected": [
+        "SES-LGC-018"
+      ],
+      "got": [
+        "R60Area:field:ksn-dat",
+        "SES-LGC-018",
+        "R60Maker:field:audit-columns",
+        "SES-REV-010",
+        "R60Area:screen:overview"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-013",
+      "module": "R60SesModel",
+      "type": "rule",
+      "question": "R60SesModel の被参照・復活・イベント参照チェックは？",
+      "expected": [
+        "SES-LGC-019"
+      ],
+      "got": [
+        "SES-LGC-019",
+        "PLC-LGC-012",
+        "R60Area:logic:referential",
+        "SES-LGC-021",
+        "SES-SCR-007"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-014",
+      "module": "R60SesModel",
+      "type": "cross",
+      "question": "R60SesModel の SQL 文字列連結の危険箇所は？",
+      "expected": [
+        "SES-REV-005"
+      ],
+      "got": [
+        "R60Area:review:download-sql",
+        "SES-REV-005",
+        "R60Ssk:review:security",
+        "PLC-REV-007",
+        "PLC-REV-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 2,
+      "rr": 0.5,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-SES-015",
+      "module": "R60SesModel",
+      "type": "cross",
+      "question": "R60SesModel に A/B レポートはあるか？",
+      "expected": [
+        "SES-REV-009"
+      ],
+      "got": [
+        "R60Area:review:ab-report",
+        "R60Maker:review:ab-404",
+        "SES-REV-009",
+        "USR-REV-006",
+        "PLC-TST-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-001",
+      "module": "R60KkuChi",
+      "type": "fact",
+      "question": "R60KkuChi の位置づけと 12 キーパターンの意味は？",
+      "expected": [
+        "KKC-SCR-001"
+      ],
+      "got": [
+        "KKC-SCR-001",
+        "KKC-FLD-001",
+        "SES-SCR-001",
+        "PLC-SCR-001",
+        "USR-SCR-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-002",
+      "module": "R60KkuChi",
+      "type": "fact",
+      "question": "R60KkuChi の設計イベントは何件で、中心となる連動は？",
+      "expected": [
+        "KKC-SCR-003"
+      ],
+      "got": [
+        "PLC-SCR-004",
+        "SES-SCR-006",
+        "KKC-SCR-003",
+        "SES-SCR-001",
+        "SES-TST-004"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 3,
+      "rr": 0.3333333333333333,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-003",
+      "module": "R60KkuChi",
+      "type": "fact",
+      "question": "R60KkuChi の API 端点はいくつ、DB は何列？",
+      "expected": [
+        "KKC-SCR-004"
+      ],
+      "got": [
+        "KKC-SCR-004",
+        "PLC-API-001",
+        "SES-API-001",
+        "R60Ssk:api:conventions",
+        "R60Ssk:api:event-map"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-004",
+      "module": "R60KkuChi",
+      "type": "fact",
+      "question": "管理項目 0010 と 0070 のキー構成は？",
+      "expected": [
+        "KKC-FLD-001"
+      ],
+      "got": [
+        "KKC-FLD-002",
+        "KKC-LGC-001",
+        "KKC-SCR-001",
+        "KKC-FLD-001",
+        "KKC-REV-005"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 4,
+      "rr": 0.25,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-005",
+      "module": "R60KkuChi",
+      "type": "rule",
+      "question": "R60KkuChi の登録時の固定値は？",
+      "expected": [
+        "KKC-FLD-004"
+      ],
+      "got": [
+        "KKC-FLD-004",
+        "R60Ssk:error:register",
+        "R60Ssk:logic:register-checks",
+        "USR-SCR-003",
+        "KKC-LGC-006"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-006",
+      "module": "R60KkuChi",
+      "type": "rule",
+      "question": "R60KkuChi の検索 WHERE はどう組み立てられ、何が問題か？",
+      "expected": [
+        "KKC-LGC-002"
+      ],
+      "got": [
+        "KKC-LGC-002",
+        "KKC-REV-001",
+        "R60Area:logic:search-where",
+        "R60Maker:logic:search-conditions",
+        "PLC-LGC-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-007",
+      "module": "R60KkuChi",
+      "type": "rule",
+      "question": "R60KkuChi の件数・上限・ページング・ソートは？",
+      "expected": [
+        "KKC-LGC-003"
+      ],
+      "got": [
+        "KKC-LGC-003",
+        "USR-LGC-002",
+        "SES-REV-006",
+        "R60Maker:api:search-sort-paging",
+        "R60Area:logic:search-paging"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-008",
+      "module": "R60KkuChi",
+      "type": "rule",
+      "question": "R60KkuChi の単項目チェックと変更なしチェックはどこで行う？",
+      "expected": [
+        "KKC-LGC-004"
+      ],
+      "got": [
+        "KKC-LGC-004",
+        "PLC-ERR-002",
+        "R60Maker:error:single-item",
+        "SES-LGC-020",
+        "KKC-REV-002"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-009",
+      "module": "R60KkuChi",
+      "type": "cross",
+      "question": "R60KkuChi の最も重大な差異は？",
+      "expected": [
+        "KKC-REV-001"
+      ],
+      "got": [
+        "KKC-LGC-002",
+        "R60Maker:review:deviations",
+        "R60Ssk:review:deviations",
+        "PLC-REV-005",
+        "USR-REV-001"
+      ],
+      "hit": false,
+      "strict_hit": false,
+      "first_rank": null,
+      "rr": 0.0,
+      "unsupported": false
+    },
+    {
+      "qid": "GQ-KKC-010",
+      "module": "R60KkuChi",
+      "type": "cross",
+      "question": "R60KkuChi の死んだコードと複製の二重実装には何がある？",
+      "expected": [
+        "KKC-REV-003"
+      ],
+      "got": [
+        "KKC-REV-003",
+        "USR-REV-002",
+        "KKC-REV-005",
+        "PLC-REV-008",
+        "SES-REV-001"
+      ],
+      "hit": true,
+      "strict_hit": true,
+      "first_rank": 1,
+      "rr": 1.0,
+      "unsupported": false
+    }
+  ]
+}

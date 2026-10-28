@@ -1,0 +1,290 @@
+[
+ {
+  "module": "R60Area",
+  "ok": 0,
+  "struct": 2,
+  "warn": 2,
+  "crash": 3,
+  "noendpoint": 0,
+  "skip": 2
+ },
+ {
+  "module": "R60Code",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 8,
+  "skip": 3
+ },
+ {
+  "module": "R60CodeMes",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 6,
+  "skip": 3
+ },
+ {
+  "module": "R60DC",
+  "ok": 3,
+  "struct": 3,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 3
+ },
+ {
+  "module": "R60Hany",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 8,
+  "skip": 2
+ },
+ {
+  "module": "R60HanyMes",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 8,
+  "skip": 2
+ },
+ {
+  "module": "R60Hsh",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 8,
+  "skip": 3
+ },
+ {
+  "module": "R60HshChaChk2",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 1,
+  "skip": 2
+ },
+ {
+  "module": "R60Item",
+  "ok": 1,
+  "struct": 0,
+  "warn": 2,
+  "crash": 4,
+  "noendpoint": 0,
+  "skip": 3
+ },
+ {
+  "module": "R60ItemMulti",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 2,
+  "skip": 3
+ },
+ {
+  "module": "R60Jig",
+  "ok": 3,
+  "struct": 2,
+  "warn": 1,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 2
+ },
+ {
+  "module": "R60KonHmk",
+  "ok": 3,
+  "struct": 2,
+  "warn": 3,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 3
+ },
+ {
+  "module": "R60KonHmkCopy",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 2,
+  "noendpoint": 2,
+  "skip": 0
+ },
+ {
+  "module": "R60KonHmkMulti",
+  "ok": 0,
+  "struct": 2,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 2
+ },
+ {
+  "module": "R60KonHmkSir",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 8,
+  "skip": 2
+ },
+ {
+  "module": "R60Login",
+  "ok": 0,
+  "struct": 1,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 0
+ },
+ {
+  "module": "R60Maker",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 8,
+  "skip": 2
+ },
+ {
+  "module": "R60Plc",
+  "ok": 0,
+  "struct": 1,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 2
+ },
+ {
+  "module": "R60PlcUkiKnr",
+  "ok": 2,
+  "struct": 3,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 1
+ },
+ {
+  "module": "R60SezKnoItem",
+  "ok": 0,
+  "struct": 2,
+  "warn": 0,
+  "crash": 6,
+  "noendpoint": 0,
+  "skip": 3
+ },
+ {
+  "module": "R60SezKnoItemMulti",
+  "ok": 0,
+  "struct": 2,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 3
+ },
+ {
+  "module": "R60SezRet",
+  "ok": 2,
+  "struct": 2,
+  "warn": 4,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 3
+ },
+ {
+  "module": "R60SikKgo",
+  "ok": 3,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 5,
+  "skip": 2
+ },
+ {
+  "module": "R60SikKgoHan",
+  "ok": 0,
+  "struct": 1,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 2
+ },
+ {
+  "module": "R60SikKgoPro",
+  "ok": 0,
+  "struct": 1,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 2
+ },
+ {
+  "module": "R60Sir",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 6,
+  "skip": 2
+ },
+ {
+  "module": "R60SirKytn",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 8,
+  "skip": 2
+ },
+ {
+  "module": "R60SirSziCha",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 5,
+  "skip": 2
+ },
+ {
+  "module": "R60SntSsi",
+  "ok": 3,
+  "struct": 5,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 3
+ },
+ {
+  "module": "R60Ssk",
+  "ok": 3,
+  "struct": 3,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 2
+ },
+ {
+  "module": "R60User",
+  "ok": 2,
+  "struct": 3,
+  "warn": 1,
+  "crash": 0,
+  "noendpoint": 0,
+  "skip": 1
+ },
+ {
+  "module": "R60YokMes",
+  "ok": 0,
+  "struct": 0,
+  "warn": 0,
+  "crash": 0,
+  "noendpoint": 8,
+  "skip": 2
+ }
+]

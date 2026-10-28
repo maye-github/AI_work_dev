@@ -1,0 +1,358 @@
+{
+  "root": "D:\\AI_work_dev",
+  "gates": [],
+  "results": {},
+  "aux": {
+    "seal": {
+      "pass": false,
+      "status": "FAIL",
+      "stats": {
+        "modules": 1,
+        "hit_lines": 22,
+        "hits": 22,
+        "identifier_skipped": 0
+      },
+      "hits": [
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_回答受領チェック.md",
+          "line": 26,
+          "module": "R60Login",
+          "kind": "path",
+          "label": "D:/AI_work"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_回答受領チェック.md",
+          "line": 30,
+          "module": "R60Login",
+          "kind": "path",
+          "label": "D:/AI_work"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_回答受領チェック.md",
+          "line": 121,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 14,
+          "module": "R60Login",
+          "kind": "path",
+          "label": "D:/AI_work"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 50,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 57,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 60,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 61,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 79,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 80,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 82,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "共通部品名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 345,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "共通部品名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 414,
+          "module": "R60Login",
+          "kind": "path",
+          "label": "D:/AI_work"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 328,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 412,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 448,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 460,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 576,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 577,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 579,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "共通部品名"
+        },
+        {
+          "file": "tutorial/R60Login/节点2_基本设计/00_输入模板.yaml",
+          "line": 57,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        },
+        {
+          "file": "tutorial/R60Login/节点3-8_输入模板/节点7_输入模板.yaml",
+          "line": 82,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        }
+      ],
+      "problems": [],
+      "id": "aux:seal",
+      "label": "封印検査（補助）"
+    }
+  },
+  "aux_checks": [
+    {
+      "pass": false,
+      "status": "FAIL",
+      "stats": {
+        "modules": 1,
+        "hit_lines": 22,
+        "hits": 22,
+        "identifier_skipped": 0
+      },
+      "hits": [
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_回答受領チェック.md",
+          "line": 26,
+          "module": "R60Login",
+          "kind": "path",
+          "label": "D:/AI_work"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_回答受領チェック.md",
+          "line": 30,
+          "module": "R60Login",
+          "kind": "path",
+          "label": "D:/AI_work"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_回答受領チェック.md",
+          "line": 121,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 14,
+          "module": "R60Login",
+          "kind": "path",
+          "label": "D:/AI_work"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 50,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 57,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 60,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 61,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 79,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 80,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 82,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "共通部品名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 345,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "共通部品名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "line": 414,
+          "module": "R60Login",
+          "kind": "path",
+          "label": "D:/AI_work"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 328,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 412,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 448,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 460,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 576,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 577,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "物理テーブル名・DBオブジェクト名"
+        },
+        {
+          "file": "tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md",
+          "line": 579,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "共通部品名"
+        },
+        {
+          "file": "tutorial/R60Login/节点2_基本设计/00_输入模板.yaml",
+          "line": 57,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        },
+        {
+          "file": "tutorial/R60Login/节点3-8_输入模板/节点7_输入模板.yaml",
+          "line": 82,
+          "module": "R60Login",
+          "kind": "identifier",
+          "label": "画面実装ファイル名"
+        }
+      ],
+      "problems": [],
+      "id": "aux:seal",
+      "label": "封印検査（補助）"
+    }
+  ],
+  "all_pass": false,
+  "chain_complete": false,
+  "orphan_ids": [],
+  "stats": {
+    "field_count": 0,
+    "gates_run": 0,
+    "gates_pass": 0,
+    "aux_checks_run": 1,
+    "aux_checks_pass": 0,
+    "aux_checks_skipped": 0
+  }
+}

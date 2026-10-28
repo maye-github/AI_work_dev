@@ -1,0 +1,163 @@
+{
+  "root": "D:\\AI_work_dev",
+  "gates": [
+    {
+      "pass": true,
+      "stats": {
+        "declared_ids": 77,
+        "registered_ids": 79,
+        "wild_ids": 0,
+        "void_used": 0
+      },
+      "wild_ids": [],
+      "void_used": [],
+      "id": "gate1",
+      "label": "ID 合法性（野号検出）"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "nodes": 77,
+        "edges": 85,
+        "unreachable": 0,
+        "asymmetric": 0,
+        "orphans": 0,
+        "leaves": 8,
+        "leaves_not_returning": 0,
+        "tc_design_id_gaps": 0
+      },
+      "unreachable_ids": [],
+      "asymmetric": [],
+      "orphan_ids": [],
+      "back_unreachable": [],
+      "design_id_gaps": [],
+      "chain_complete": true,
+      "id": "gate2",
+      "label": "追跡双方向閉ループ"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "checked": 87,
+        "problems": 0
+      },
+      "problems": [],
+      "id": "gate3",
+      "label": "front-matter 7 字段"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "expected_field_count": 56,
+        "generated_field_count": 56
+      },
+      "detail": "gen_formal.columns=56",
+      "id": "gate4",
+      "label": "生成物一致"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "violations": 0
+      },
+      "violations": [],
+      "id": "gate5",
+      "label": "命名分区"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "scanned_files": 247,
+        "patterns": 10,
+        "hits": 0
+      },
+      "hits": [],
+      "id": "gate6",
+      "label": "機密ゼロヒット"
+    }
+  ],
+  "results": {
+    "gate1": {
+      "pass": true,
+      "stats": {
+        "declared_ids": 77,
+        "registered_ids": 79,
+        "wild_ids": 0,
+        "void_used": 0
+      },
+      "wild_ids": [],
+      "void_used": [],
+      "id": "gate1",
+      "label": "ID 合法性（野号検出）"
+    },
+    "gate2": {
+      "pass": true,
+      "stats": {
+        "nodes": 77,
+        "edges": 85,
+        "unreachable": 0,
+        "asymmetric": 0,
+        "orphans": 0,
+        "leaves": 8,
+        "leaves_not_returning": 0,
+        "tc_design_id_gaps": 0
+      },
+      "unreachable_ids": [],
+      "asymmetric": [],
+      "orphan_ids": [],
+      "back_unreachable": [],
+      "design_id_gaps": [],
+      "chain_complete": true,
+      "id": "gate2",
+      "label": "追跡双方向閉ループ"
+    },
+    "gate3": {
+      "pass": true,
+      "stats": {
+        "checked": 87,
+        "problems": 0
+      },
+      "problems": [],
+      "id": "gate3",
+      "label": "front-matter 7 字段"
+    },
+    "gate4": {
+      "pass": true,
+      "stats": {
+        "expected_field_count": 56,
+        "generated_field_count": 56
+      },
+      "detail": "gen_formal.columns=56",
+      "id": "gate4",
+      "label": "生成物一致"
+    },
+    "gate5": {
+      "pass": true,
+      "stats": {
+        "violations": 0
+      },
+      "violations": [],
+      "id": "gate5",
+      "label": "命名分区"
+    },
+    "gate6": {
+      "pass": true,
+      "stats": {
+        "scanned_files": 247,
+        "patterns": 10,
+        "hits": 0
+      },
+      "hits": [],
+      "id": "gate6",
+      "label": "機密ゼロヒット"
+    }
+  },
+  "all_pass": true,
+  "chain_complete": true,
+  "orphan_ids": [],
+  "stats": {
+    "field_count": 56,
+    "gates_run": 6,
+    "gates_pass": 6
+  }
+}

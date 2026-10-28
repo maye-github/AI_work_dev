@@ -1,0 +1,70 @@
+# ============================================================
+# テンプレート: 技術選型記録 / 技术选型记录
+# 工程: docs/40_framework/  （落地篇 平台篇 S28 選型順序）
+# 使い方: 本ファイルを <Project>-framework-record.yaml に複製し実値へ置換する。
+# 選型 6 順序: 機密 → 成果物 → 工具 → AI サービス → KPI → 移行スクリプト（この順で必ず検討）。
+# 版数則: 実値は package.json / requirements.txt から必ず読み出す（推測記載禁止）。
+# ============================================================
+
+# ---- front-matter（7 字段固定・全テンプレート共通）----
+id: TPL-004
+type: framework_record
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ---- body ----
+title: "<技術選型記録タイトル>"
+
+# 選型の検討順序（この順序を厳守。前段の結論が後段を拘束する）。
+selection_order:
+  - step: 1
+    name: "機密"
+    check: "<機密区分 → 外部モデル可否の判断>"
+  - step: 2
+    name: "成果物"
+    check: "<成果物の二重形態（機読源 → 日文正式版）の要否>"
+  - step: 3
+    name: "工具"
+    check: "migration=既存工具（IDE / CLI / CI）の把握 / greenfield=採用予定工具の提案（人が承認する）"
+  - step: 4
+    name: "AI サービス"
+    check: "<使用可能な AI サービスと制約（内網 / 外部可否）>"
+  - step: 5
+    name: "KPI"
+    check: "<効果測定指標の定義>"
+  - step: 6
+    name: "移行スクリプト"
+    check: "migration=既存資産の移行・自動化スクリプト / greenfield=初期環境構築・自動化スクリプトの整備"
+
+# スタック一覧: 版数は必ず実ファイルから読み出す（<read from ...> の指示に従う）。
+#   migration: 案件プロファイルが与える既存スタックを記録する（下記は例）。
+#   greenfield: 本工程で我方が提案し、人が承認した採用スタックを記入する（承認前は status を確定にしない）。
+# 重要: スタックは同時に「一箇所」でのみ宣言する。案件プロファイルが負う場合（migration）はここで再定義せず参照に留める。
+stack:
+  - component: Vue
+    version: "<read from package.json>"
+    version_source: "package.json"
+  - component: PrimeVue
+    version: "<read from package.json>"
+    version_source: "package.json"
+  - component: FastAPI
+    version: "<read from requirements.txt>"
+    version_source: "requirements.txt"
+  - component: Oracle
+    version: "<read from requirements.txt / DB version>"
+    version_source: "requirements.txt / DB"
+  - component: Auth0
+    version: "<read from package.json (@auth0/...) / settings>"
+    version_source: "package.json / settings"
+  - component: S3
+    version: "<read from requirements.txt (boto3) / service no version>"
+    version_source: "requirements.txt"
+
+# 未確定事項: 確認票 Q-ID へリンク
+open_issues:
+  - q_id: "<Q-xxx>"
+    question: "<未確定の問い（例: 版数の実測タイミング）>"
+    status: open

@@ -1,0 +1,70 @@
+# ============================================================
+# テンプレート: 基本設計 / 基本设计模板
+# 工程: docs/20_basic_design/  （落地篇 工程篇 S11-12 基本設計）
+# 使い方: 本ファイルを F-xxx-<Module>.yaml に複製し <...> を実値へ置換する。
+# 入出力明示則: 入力 I-ID / 出力 I-ID / 参照 E-ID を必ず列挙する。
+# 単一ソース則: 画面項目の定義は ids.yml（I-ID）+ DD 側のみ。ここは ID 引用に徹する。
+# ============================================================
+
+# ---- front-matter（7 字段固定・全テンプレート共通）----
+id: TPL-002
+type: basic_design
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ---- body ----
+title: "<基本設計タイトル>"
+function_id: "<F-xxx>"
+
+# 機能概要: 対象機能を簡潔に。画面数・モードを構造化して示す。
+function_overview:
+  summary: "<機能の概要>"
+  screen_count: "<画面数>"
+  modes: ["<mode1>", "<mode2>", "<mode3>"]
+
+# 画面一覧: 画面 ID と実装ファイルの対応（Vue3 <script setup>）。
+screen_list:
+  - screen_id: "<SCR-01>"
+    file: "<views/<ScreenName>.vue>"
+    role: "<一覧検索 / 登録修正ダイアログ>"
+  - screen_id: "<SCR-02>"
+    file: "<components/<ScreenNameEdit>.vue>"
+    role: "<登録修正複製ダイアログ>"
+
+# 入力項目 ID 一覧（ids.yml の I-ID を引用。ここで再定義しない）
+input_ids:
+  - "<I-xxx>"
+  - "<I-xxx>"
+  - "<I-xxx>"
+
+# 出力項目 ID 一覧（同上。入力と同数になる場合は同 ID を列挙）
+output_ids:
+  - "<I-xxx>"
+  - "<I-xxx>"
+  - "<I-xxx>"
+
+# 参照 DB テーブル一覧（物理名。定義は DD 側）
+db_tables_used:
+  - "<R60_XXX_M_TBL>"
+  - "<R60_CODE_MES_M_TBL>"
+
+# 共通機能の引用一覧。
+#   migration: 案件プロファイルが再利用資産（例: R60Common.ts）を宣言している場合、実装は既存共通関数を呼ぶ（parallel 版禁止）。
+#   greenfield: 呼ぶ先の既存共通関数は無い。工程 04 で共通部品を一覧化し、工程 05 で本案件の資産として新規定義する。
+#              工程 02 の時点では「この画面が共通化を要する処理」を列挙するところまで（関数名は未確定でよい）。
+common_functions_used:
+  - "<共通関数名 or 共通化を要する処理（未確定なら null 可）>"
+
+# 参照エラー ID 一覧（ids.yml の E-ID を引用）
+error_ids_ref:
+  - "<E-xxx>"
+  - "<E-xxx>"
+
+# 未確定事項: 確認票 Q-ID へリンク
+open_issues:
+  - q_id: "<Q-xxx>"
+    question: "<未確定の問い>"
+    status: open

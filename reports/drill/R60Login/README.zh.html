@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>README.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>README.zh</h1>
+<div class="meta">
+  机读源: <code>README.zh.md</code> ／
+  生成: 2026-10-26 14:36 ／
+  节 4・表 3
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>README.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">1. 这个目录里有什么</a></li><li><a href="#sec-2">2. 试点 #0 的污染（数据不进跨画面汇总）</a></li><li><a href="#sec-3">3. 已知的坑（★这里是为了不再重复讲）</a></li><li><a href="#sec-4">4. 未决事项（留着，不用现在决定）</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>R60Login 训练目录 —— 这是什么、以及「已知的坑」都在这一页</h1>
+<blockquote class="quote"><strong>本目录不是案件交付物。</strong> 它是<strong>测量这套 AI 全链路框架能不能用</strong>的训练用文件。<br>读者只有训练者本人（中文）。<strong>客户不看这里的东西。</strong><br>这份 README 的唯一目的：<strong>把散在对话里的「已知问题」集中到一处</strong>，<br>让它们不再需要在每一步重讲一遍。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>1. 这个目录里有什么</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">是什么</th><th style="text-align:left">谁生成</th></tr></thead><tbody><tr><td style="text-align:left"><code>provenance.yaml</code></td><td style="text-align:left"><strong>倒推台账</strong>。虚拟需求书每一条要求「来自实有资产的哪里」（<code>文書</code>/<code>実測</code>/<code>差異</code>/<code>未確認</code> + <code>file:line</code>）</td><td style="text-align:left"><code>virtual-requirement-author</code> skill</td></tr><tr><td style="text-align:left"><code>freeze.yaml</code></td><td style="text-align:left"><strong>冻结记录</strong>。需求书的 sha256、冻结人、以及<strong>改订历史</strong></td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left"><code>comparison.md</code></td><td style="text-align:left"><strong>训练报告</strong>。逐节点对比 AI 版与人版，按归因分类记差异</td><td style="text-align:left"><code>drill-comparator</code> agent</td></tr><tr><td style="text-align:left">本文件</td><td style="text-align:left">已知问题清单</td><td style="text-align:left">人</td></tr></tbody></table>
+<blockquote class="quote"><strong>本目录的文件不含任何真实敏感值</strong>（<code>reports/**</code> 是门番 gate6 的扫描对象）。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>2. 试点 #0 的污染（数据不进跨画面汇总）</h2>
+<p>R60Login 是<strong>第 0 号试点</strong>，不是第一个测量样本。原因：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">污染源</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">画面卡作成时</td><td style="text-align:left">写 <code>docs/90_knowledge/legacy-r60/screens/R60Login.md</code> 时读过现行実装</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">2026-10-14 的事故</td><td style="text-align:left"><code>build_mode</code> 一度被误改成 <code>migration</code>，并<strong>从実装逆算</strong>出过一版需求书（已撤回。归档先 <code>_archive-2026-10-14-migration版/</code> は <strong>2026-10-26 に削除</strong>）</td></tr></tbody></table>
+<p><strong>因此 R60Login 的对比数据只记录、不汇总。真测量从第 2 个画面开始。</strong></p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>3. 已知的坑（★这里是为了不再重复讲）</h2>
+<h3>坑 1：阻塞机制对教学号段失效</h3>
+<p>coach 规格 §4.2 规定：执行体报了阻塞项且未回答时，节点应置 <code>state: blocked</code>，<br>且<strong>不出该节点的卡片</strong>；解除出口是 <code>tools.registry answer</code>。</p>
+<p><strong>但演练的教学号段（<code>Q-201…</code>）不登记进 <code>docs/00_registry/ids.yml</code></strong>，因此：</p>
+<ul><li><code>py -3 -m tools.registry blockers</code> <strong>永远是空的</strong>（权威判不出阻塞）；</li><li><code>tools.registry answer</code> <strong>没有对象可答</strong> → <strong>永走不出 blocked</strong>。</li></ul>
+<p><strong>照字面执行会让演练死锁。</strong> 所以演练中：节点状态<strong>不使用 <code>blocked</code></strong>，<br>阻塞项只记在 <code>nNN.yml</code> 的 <code>open_questions</code>（<code>block: true</code>）里，作为<strong>第 5 步承认时的检查依据</strong>。</p>
+<blockquote class="quote">这是「教程与机制贴合处」的真实缺陷，不是操作失误。要不要把机制改成「教学号段也走阻塞」，<br>属于骨架侧的设计决定。<br><strong>2026-10-19 已决：机制不改。</strong> 演练继续不使用 <code>blocked</code>，阻塞项只记在<br><code>open_questions</code>（<code>block: true</code>），作为节点承认时的检查项。该例外已写入<br><code>SKILL.md</code> §3.1「演练（教学号段）の例外」——实案件（<code>case_kind: real</code>）不受影响。</blockquote>
+<h3>坑 2：需求书的粒度会直接决定未确定事项的数量</h3>
+<p>第 1 次运行时，虚拟需求书缺少<strong>真实客户要求书必然有的条项</strong>——<br>「遵循弊社标准规约」「共通部品是调用而非新建」「主数据另行提供」——<br>结果节点1 产出 <strong>26 件</strong>未确定事项（A 20 件），其中 5 件阻塞，节点出不去。</p>
+<p><strong>修正</strong>：补上 §3.8「标准规约・共通部品」（2026-10-15），并<strong>重新冻结</strong>。</p>
+<p><strong>效果（实测）</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left">第 1 次运行</th><th style="text-align:left">第 2 次运行（补 §3.8 后）</th></tr></thead><tbody><tr><td style="text-align:left">未确定事项</td><td style="text-align:left">26 件</td><td style="text-align:left"><strong>12 件</strong></td></tr><tr><td style="text-align:left">A（顾客决定）</td><td style="text-align:left">20 件</td><td style="text-align:left"><strong>5 件</strong></td></tr><tr><td style="text-align:left">执行体报的阻塞项</td><td style="text-align:left">5 件（解除不能）</td><td style="text-align:left">3 件（可走）</td></tr></tbody></table>
+<p>执行体自己也写明「§3.8 明记的事项不作为未确定事项」。<strong>补上真实客户书必有的条项，缺口数掉了 54%。</strong></p>
+<p><strong>留一条认识</strong>：粒度定「中等」时，<strong>必须包含上述「标准条项」</strong>，<br>否则「没写」会被 AI 正确地识别为缺口，缺口数量与文档的欠缺程度成正比。<br>这不是 AI 的毛病，是<strong>出题</strong>的毛病。</p>
+<h3>坑 3：执行体读了「下游」的输入模板</h3>
+<p>第 2 次运行时，节点1 的执行体报告说自己「按节点2 输入模板里预留的 Q 编号范围（201〜212）对齐了编号」。<br><strong>下游的模板不在它的输入里</strong>（输入是上游だけ）。</p>
+<ul><li>影响：产出可能被下游的期待无意识地削过形（本例是编号范围，不排除连数量一起被对齐）。</li><li><strong>修正</strong>：<code>references/node-worker-contract.md</code> §5 に禁止 9「下流の成果物・入力模板を読むこと」を追加した。</li><li><strong>未采取</strong>：本回没有重跑（12 件的每一条都有独立的依据，看内容不像被削过）。若日后判明数量被压过，</li></ul>
+<p>再跑一次即可 —— 编号会变，但这一步的产物还没被人承认，重跑无成本。</p>
+<h3>坑 4：第 1 次运行的产物已归档</h3>
+<p>~~<code>tutorial/R60Login/节点1_需求/_archive-2026-10-15-第一次运行/</code>~~ 里是第 1 次的 <code>01</code>（AI 初稿）<br>与 <code>03</code>（组内意见）。当時の判断は「<strong>不删</strong>（留证，供对比「补了 §3.8 之后少了几件」）」だったが、<br><strong>2026-10-26 の整理で削除した</strong>（ノード1 の過去稿 6 系統すべて）。したがってこの対比はもう再現できない。</p>
+<h3>坑 5：中文视图是「派生视图」，不是第二份真源</h3>
+<p><code>tutorial/<strong></code> 的 <code>.md</code> 是</strong>机读源<strong>（日文），</strong>同名 <code>.zh.html</code><strong> 是</strong>中文阅读视图**。<br>（2026-10-21 统一：不再有日文 <code>.html</code>；中文视图一律用 <strong><code>.zh.html</code></strong> 这个名字，与节点1 一致；<code>.zh.md</code> 只是生成用的中间物，用完即删。）</p>
+<ul><li>生成物，<strong>不回写</strong>，<strong>手不改</strong>；机读源一变就必须重做。</li><li><strong>下游不拿中文视图当输入。</strong></li><li><strong>冻结只对机读源做</strong>（<code>freeze.yaml</code> 的 sha256 是日文那本的）。</li><li>适用范围<strong>限 <code>tutorial/</strong></code>**（实战案件不强制——对日交付物是日文，能不能用日文评审取决于体制）。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>4. 未决事项（留着，不用现在决定）</h2>
+<ol><li>~~坑 1 的机制要不要改（教学号段是否也走阻塞）。~~ <strong>已决（2026-10-19）：机制不改，采用演练例外（SKILL §3.1）。</strong></li><li><code>tutorial/R60Login</code> 的 README／节点2／节点3-8 模板仍是日文混在——要不要也补中文视图。</li><li>第 2 个画面选哪个（真测量要从没读过的画面开始）。</li></ol>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>README.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

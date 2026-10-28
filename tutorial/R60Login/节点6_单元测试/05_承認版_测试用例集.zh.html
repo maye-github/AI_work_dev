@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05_承認版_测试用例集.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>05_承認版_测试用例集.zh</h1>
+<div class="meta">
+  机读源: <code>05_承認版_测试用例集.zh.md</code> ／
+  生成: 2026-10-27 15:58 ／
+  节 7・表 24
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>05_承認版_测试用例集.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 本文件的定位</a></li><li><a href="#sec-2">1. 批准记录</a></li><li><a href="#sec-3">2. 对象与范围</a></li><li><a href="#sec-4">3. 正常系（5 件）</a></li><li><a href="#sec-5">4. 边界系（6 件）</a></li><li><a href="#sec-6">5. 异常系（10 件）</a> <span class="chip chip-err">异常</span></li><li><a href="#sec-7">6. 追溯</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>单元测试用例集（批准版）— 共通主数据　登录（R60Login）</h1>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 本文件的定位</h2>
+<p>本文件的输入是节点 3 批准版 <code>tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md</code>（v1.0.2）、节点 5 生产代码，以及 <code>01_AI产出_测试用例集.md</code>；本文件是把 01 整理后的版本（不删除、不合并 TC，也不重新编号）。</p>
+<p><strong>v1.0.1 在末尾追加了 1 条 TC-221。</strong> 追加原因是 BUG-002（上游节点 2 §11 的「登录尝试锁定」没有传达到详细设计 v1.0.4 一事）的 n03 回归；这是<strong>追加</strong>，不是重编号（规则 04 §9.2）。<strong>原有 20 条的编号和 <code>design_ids</code> 都没有动。</strong> TC-221 不走教学号段，而是在 <code>docs/00_registry/ids.yml</code> 正式发号（红线①。因为它作为 BUG-002 的回归用例来编号）。</p>
+<p><strong>本版只写结论。</strong> 未确定事项由状态文件 <code>docs/00_plan/coach/R60Login/n06.yml</code> 的 <code>open_questions</code> 持有。<strong>本版不放未确定事项清单</strong>（规则 02 §6.1）。</p>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 批准记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">版本</th><th style="text-align:left">日期</th><th style="text-align:left">批准者角色</th><th style="text-align:left">批准状态</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left">v1.0.0</td><td style="text-align:left">2026-10-26</td><td style="text-align:left">SE-001</td><td style="text-align:left">已批准</td><td style="text-align:left">连同④I-ID 缺失的修补与⑤边界值表未覆盖（转交节点 7）一并批准</td></tr><tr><td style="text-align:left">v1.0.1</td><td style="text-align:left">2026-10-27</td><td style="text-align:left">—</td><td style="text-align:left"><strong>未批准（等待签字）</strong></td><td style="text-align:left">末尾追加 TC-221（BUG-002 的 n03 回归、登录尝试锁定）。按红线③，批准由人来做</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 对象与范围</h2>
+<p><strong>对象（8 项）</strong> — 制造的单元是 3 个端点，不设第 4 个（§1.3）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">对象</th><th style="text-align:left">对应的 design_ids（主要）</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>backend/app/api/init_api.py::init</code>（<code>/R60Login/init</code>）</td><td style="text-align:left">L-201, L-202, D-204, I-306, I-308, I-311, I-314</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>backend/app/api/login_api.py::login</code>（<code>/R60Login/login</code>）</td><td style="text-align:left">L-201, L-203, L-206, D-201, D-202, D-203, D-205, I-316, I-317</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>backend/app/api/generate_url_api.py::generate_url</code>（<code>/R60Login/generateUrl</code>）</td><td style="text-align:left">L-201, L-205, L-206, I-310, I-313</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><code>backend/app/domain/availability.py</code>（可用性判定）</td><td style="text-align:left">L-201, E-203, E-206</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>backend/app/domain/stf_cd_cipher.py</code>（加密・解密）</td><td style="text-align:left">L-206, E-205</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>backend/app/domain/session_store.py</code>（Session 保持）</td><td style="text-align:left">L-203, L-208, I-316, I-317</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><code>frontend/services/loginApi.ts</code>（3 个端点的调用）</td><td style="text-align:left">L-201, L-202, L-203, L-205</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left"><code>frontend/views/LoginScreen.vue</code>（画面・输入检查・跳转）</td><td style="text-align:left">L-204, L-207, L-208, I-301, I-302, I-303, I-304, I-305, I-307, I-312</td></tr></tbody></table>
+<p><strong>设计 ID 的范围</strong></p>
+<ul><li>逻辑 <strong>L-201〜L-208</strong>（8 项）</li><li>数据 <strong>D-201〜D-205</strong>（5 项）</li><li>错误 <strong>E-201〜E-210</strong>（10 项）</li></ul>
+<p><strong>件数</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">区分</th><th style="text-align:left">件数</th><th style="text-align:left">TC</th></tr></thead><tbody><tr><td style="text-align:left">正常</td><td style="text-align:left">5</td><td style="text-align:left">TC-201〜TC-205</td></tr><tr><td style="text-align:left">边界</td><td style="text-align:left">6</td><td style="text-align:left">TC-206〜TC-210・TC-221</td></tr><tr><td style="text-align:left">异常</td><td style="text-align:left">10</td><td style="text-align:left">TC-211〜TC-220</td></tr><tr><td style="text-align:left"><strong>合计</strong></td><td style="text-align:left"><strong>21</strong></td><td style="text-align:left">—</td></tr></tbody></table>
+<p>满足「正常 3／边界 2／异常 3」的下限（规则 04 §2）。<strong>E-201〜E-210 的 10 项全部有异常系 TC 覆盖（10／10）</strong>。</p>
+<p><strong>覆盖率目标</strong> — 行 <strong>80%</strong>／分支 <strong>100%</strong>（E-201〜E-210 的分支，以及可用性判定、解密、位数判定的边界，不得排除）。这些是要求达到的目标，<strong>实测放在工程 7</strong>（本节点只做到设计）。</p>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 正常系（5 件）</h2>
+<h3>TC-201 初始显示的正常系（有候选・设定初始值）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">正常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（正常类：画面候选 1 件以上）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-201, L-202, D-204, I-306, I-308, I-311, I-314]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用（SQL-1 的 <code>operation_flg</code> 为有效值）。GMN_MST 中 <code>valid_flg</code> 有效的行有 1 件以上。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/init</code>。请求无参数。候选 = <code>VAL_1</code>／名称 = <code>VAL_2</code>（占位）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">HTTP 200、<code>errorCode="0"</code>。不返回 <code>errorDetailCode</code>、<code>errorMessage</code>。<code>pageList</code> = <code>[{value:VAL_1, label:VAL_2}, …]</code>（按 <code>disp_order</code> 升序，同序时按 <code>gmn_id</code> 升序）。<code>kbnList</code> 固定 2 件 <code>[{value:"Y",label:"更新あり"},{value:"N",label:"更新なし"}]</code>（原文为日文，按原文实现）。客户端把 I-306＝首个候选、I-307＝<code>Y</code>、I-304＝<code>3</code> 作为初始值，I-308・I-311 置为可用。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 <code>errorCode</code>、<code>pageList</code> 的内容・件数・顺序、<code>kbnList</code> 固定 2 件。断言 3 个初始值与按钮可用状态。不把调用次数当断言。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§2.3 步骤2〜7、§5.3 SQL-2、§7.4 B-23</td></tr></tbody></table>
+<h3>TC-202 登录成功（解密 → 员工校验 → 取信息 → 生成 Session）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">正常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（正常类：未删除员工 1 件）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-201, L-203, L-206, D-201, D-202, D-203, D-205, I-316, I-317]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。STF_MST 中有 1 行未删除（<code>del_flg=0</code>）的对应记录，ORG_JIG_MST 中有 1 个连接目标，SQL-5 返回 1 行。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/login</code>。<code>encryptedStfCd</code>（I-313）= <code>VAL_1</code>（<code>EMP_1</code> 的合法加密值）。请求里也带 <code>stfKbn</code>・<code>gmnId</code>・<code>kgnKbn</code>，但<strong>服务端不使用</strong>（Q-212）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">HTTP 200、<code>errorCode="0"</code>。<code>userInfo</code>（I-316）6 项 = <code>VAL_*</code>（<code>stfCd</code>／<code>stfNm</code>／<code>cmpCd</code>／<code>cmpNm</code>／<code>jigCd</code>／<code>jigNm</code>）。<code>mngInfo</code>（I-317）5 项 = <code>VAL_*</code>（<code>scmpCd</code>／<code>sjigCd</code>／<code>jiKjoKsnFlg</code>／<code>taKjoKsnFlg</code>／<code>loginAcsKais</code>）。两个标志保持 <code>Y</code>／<code>N</code> 原样，不转换成 <code>1</code>／<code>0</code>。不返回 <code>errorDetailCode</code>、<code>errorMessage</code>。生成 Session，只把标识符放在 HttpOnly Cookie 里返回，响应正文不含标识符。客户端保持登录成立状态，由 L-204 解析跳转目标。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 <code>errorCode</code>、<code>userInfo</code>・<code>mngInfo</code> 的各个值。断言标志的符号体系（仍是 <code>Y</code>／<code>N</code>）。断言 Set-Cookie 带 HttpOnly，且响应正文里没有标识符。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§2.4 步骤1〜7、§5.4 SQL-4、§5.5 SQL-5、§7.5 B-26、§8.2</td></tr></tbody></table>
+<h3>TC-203 菜单跳转（共用 <code>/login</code>・同一窗口）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">正常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">判定表（事件2／事件3 × <code>/login</code> 共用 × 跳转方式）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-203, L-204, I-309, I-304, I-307]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">TC-202 刚刚成立（保持 <code>errorCode="0"</code>）。I-306 已选中跳转目标候选。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left">按下菜单按钮（I-309）。向 <code>/login</code> 发与 TC-202 相同的请求（<code>encryptedStfCd</code> = <code>VAL_1</code>）。跳转方式为「同一窗口」。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">不设专用端点，共用 <code>/login</code>（端点仍是 3 个）。<code>errorCode="0"</code>。客户端以<strong>同一窗口</strong>跳到 SCR-202，交接只带 <code>stfKbn</code> 查询参数（<code>?stfKbn=VAL_1</code>）。<code>kgnKbn</code> 不上 URL，而是存进保持区域（<code>r60login.kgnKbn</code>），值为 <code>VAL_2</code>。Session 标识符通过 Cookie 传递。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言跳转目标 URL 为 <code>MENU_TARGET_ROUTE?stfKbn=VAL_1</code> 且不含 <code>kgnKbn</code>。断言是同一窗口跳转，并断言保持区域里的值。不把调用次数当断言。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§2.5 步骤6、§4.1 I-307、§10.5 附表 A（事件3）、制造差异 #3・#4</td></tr></tbody></table>
+<h3>TC-204 URL 输出的正常系（显示到 I-310）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">正常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（正常类：规范化后为半角数字 1 位以上）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-201, L-205, L-206, I-310, I-313]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。服务端的 URL 环境配置（scheme／host／port／context／route）已设定。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/generateUrl</code>。<code>stfCd</code>（I-303）= <code>COL_1</code>（7 位半角数字）、<code>stfKbn</code>=<code>VAL_1</code>、<code>gmnId</code>=<code>VAL_2</code>、<code>kgnKbn</code>=<code>VAL_3</code>。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">HTTP 200、<code>errorCode="0"</code>。<code>url</code>（I-310）= <code>{scheme}://{host}:{port}/{context}/{route}?stfCd=VAL_4&amp;stfKbn=VAL_1&amp;gmnId=VAL_2&amp;kgnKbn=VAL_3</code>。参数顺序固定。UTF-8、不做百分号编码。长度在 150 位以内。客户端只把 <code>url</code> 显示到 I-310，不用于跳转。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 <code>url</code> 字符串（顺序・分隔符・不编码）与长度 150 位以内。断言 I-310 的显示值与响应 <code>url</code> 一致。断言编辑它也不会跳转。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§2.6 步骤1〜9、§7.9 B-38・B-39、§5.2 SQL-1</td></tr></tbody></table>
+<h3>TC-205 关闭（销毁 Session → 关闭画面）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">正常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">判定表（登录成立与否 × 销毁成败 × 关闭）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-208, I-312, I-307]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">Session 已生成（<code>loggedIn=true</code>）。确认对话框可以显示。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left">按下 I-312 关闭 → 确认文案「画面を終了してよろしいですか？」（原文为日文，按原文实现）→「はい」。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">因为登录已成立，关闭前先向共通基盘的 Session 管理功能发出销毁请求（不新增本画面专用端点）。无论请求成败都关闭画面。失败时记 1 条运行日志（只有时刻・画面 ID・结果代码，不输出员工代码・Session 标识符）。删除保持区域 <code>r60login.kgnKbn</code>。登录尚未成立时不做销毁请求。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言「销毁请求 → 关闭」的顺序，以及调用了 <code>window.close()</code>。断言销毁失败也不追加面向用户的提示。断言失败时记 1 条日志。断言取消时什么都不做。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§2.9 步骤1〜5、§8.1、裁定 Q-228、制造差异 #2</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 边界系（6 件）</h2>
+<h3>TC-206 I-303 正好 7 位（B-02）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">边界</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">边界值（B-02：正好 7 位）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-207, I-303]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">I-303 为半角数字 7 位（占位 <code>COL_1</code>）。员工主数据中有 1 行未删除的对应记录（与 TC-202 相同的数据夹具）。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left">按下登录按钮（I-308）。I-303 = <code>COL_1</code>（7 个字符）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">按 B-02 视为正常。匹配 <code>^[0-9]{7}$</code>，由 L-206 加密后发往 <code>/login</code>。不是 E-202。<code>/login</code> 返回 <code>errorCode="0"</code> 及 I-316・I-317。I-313 的长度在 17 位以内。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言：不出现 E-202 的文案、<code>/login</code> 响应为 <code>0</code>、<code>encryptedStfCd</code> 匹配 <code>^[0-9_]+$</code> 且在 17 位以内。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§7.1 B-02、§2.8 步骤3〜5、§2.7（I-313 上限 17 位）、§7.8 B-37</td></tr></tbody></table>
+<h3>TC-207 I-310 正好 150 位（B-20）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">边界</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">边界值（B-20：正好 150 位。151 位见 TC-220）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-205, I-310]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">L-201 可用、URL 环境已配置。调整占位拼接后使组装结果正好 150 位。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/generateUrl</code>。<code>stfCd</code>=<code>COL_1</code>（半角数字）。<code>stfKbn</code>／<code>gmnId</code>／<code>kgnKbn</code> 用使总长成为 150 位的占位。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">按 B-20 在受理上限内视为正常。HTTP 200、<code>errorCode="0"</code>、<code>url</code> 长度正好 150 位。不是 E-210。不截断。显示到 I-310。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 <code>len(url) == 150</code>、<code>errorCode="0"</code>、<code>url</code> 末尾完整到 <code>kgnKbn=VAL_4</code>。断言不出现 E-210 错误提示。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§7.3 B-20、§2.6 步骤7〜8</td></tr></tbody></table>
+<h3>TC-208 加密算式的分割边界 5 位（B-35。4 位见 B-34）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">边界</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">边界值（B-35：5 位的分割边界。B-34：4 位作参考）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-206, I-313]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">明文员工代码为 5 位（占位 <code>COL_1</code>）。当日日期（JST・<code>yyyymmdd</code>）用参数固定（占位 <code>VAL_1</code>）。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>encrypt_stf_cd(COL_1, VAL_1)</code>（5 位）。为对照再执行 4 位的 <code>encrypt_stf_cd(COL_2, VAL_1)</code>。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">按 B-35 分成 1〜4 位／5 位两块，用 <code>_</code> 连接。每块的处理是「+1（不进位）→ 首块不补零、第二块起补足 2 位 → 加上当日 <code>yyyymmdd</code> 的整数」。B-34 的 4 位不分割，不带 <code>_</code>。解密按逆序还原成原来的 5 位。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">断言 5 位的结果恰好含 1 个 <code>_</code>，前块 4 位、后块 1 位。断言 <code>decrypt(encrypt(COL_1)) == COL_1</code>。断言 4 位的结果不含 <code>_</code>。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§7.8 B-35・B-34、§2.7 算式 1〜6</td></tr></tbody></table>
+<h3>TC-209 画面候选 0 件（B-22。不作为错误）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">边界</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">边界值（B-22：画面候选 0 件）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-202, D-204, I-308, I-311, I-314]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。GMN_MST 中 <code>valid_flg</code> 有效的行 0 件。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/init</code>。请求无参数。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">按 B-22 为 <code>errorCode="0"</code>（不是错误）。HTTP 200。<code>pageList</code> 是空数组。<code>kbnList</code> 仍是固定 2 件。客户端显示「利用可能な画面がありません」（原文为日文，按原文实现），I-308・I-311 置灰，I-306 不可选。不跳转。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 <code>errorCode="0"</code>、<code>pageList=[]</code>、<code>kbnList</code> 2 件。断言 I-308・I-311 置灰、I-306 不可选、不跳转。断言不返回错误响应（<code>errorDetailCode</code>）。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§7.4 B-22、§2.3 步骤6、§5.3 SQL-2</td></tr></tbody></table>
+<h3>TC-210 E-204 连续失败正好 3 次（B-30）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">边界</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">边界值（B-30：连续正好 3 次。B-29・B-31 作参考）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-202, E-204, I-308, I-318, I-319]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">同一客户端（同一 Cookie <code>r60login.cid</code>）调用 <code>/init</code>。SQL-2 每次抛异常。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left">同一客户端连续 3 次 <code>POST /R60Login/init</code>，每次之前把 SQL-2 置为异常。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">按 B-30，每次都是 HTTP 200・<code>errorCode="2"</code>・<code>errorDetailCode="R60E9999"</code>。第 1〜2 次不输出运行日志（B-29）。正好第 3 次输出 1 条运行日志（只有时刻・画面 ID=<code>R60Login</code>・结果代码=<code>R60E9999</code>，不含员工代码）。不到 3 次就成功时把计数归 0（B-31）。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 3 次响应都是 <code>2</code>／<code>R60E9999</code>。断言日志条数为第 1 次 0、第 2 次 0、第 3 次 1。断言日志内容不含员工代码，并断言成功后会重置计数。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§7.6 B-29・B-30・B-31、§2.3 步骤8〜9、§8.1</td></tr></tbody></table>
+<h3>TC-221 登录尝试锁定的边界（B-44・B-45・B-46）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">边界</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">边界值（B-44：4 次／B-45：第 5 次／B-46：正好 600 秒）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-203, E-201, I-303]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">L-201 可用。同一员工代码解密成功，但 STF_MST 查得 0 件的请求连续出现。计数单位是<strong>员工代码</strong>，窗口 600 秒。时刻用注入，不依赖真实时间（规则 03 §7.1）。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/login</code>。<code>encryptedStfCd</code>=<code>COL_1</code>。同一员工代码发 5 次，第 6 次以后仍然发同一个值。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">到第 4 次都不锁定（B-44）。第 5 次失败时锁定成立，此后<strong>不再计数</strong>（B-45）。成立后正好 600 秒解除，计数从 0 重新开始（B-46）。锁定中不发出 SQL-3（STF_MST），只返回 <code>errorCode="1"</code>，不发 Session Cookie。锁定成立记 1 条运行日志。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言第 4 次仍未锁定、第 5 次锁定成立。断言锁定期间的请求不会增加 STF_MST 的查询次数、不附带 Cookie。断言正好 600 秒时解除，解除后的第 1 次重新计数。断言登录成功会清掉计数与锁定，并且<strong>计数的键不是明文员工代码</strong>（哈希）。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">节点 3 批准版 <strong>v1.0.5</strong> §2.4.1・§2.9・§7.11 B-44〜B-46・§8.1（v1.0.4 未传达的条款，经 BUG-002 的 n03 回归追记的版本）</td></tr></tbody></table>
+</section>
+<section class="sec sec-err" id="sec-6">
+<h2>5. 异常系（10 件） <span class="chip chip-err">异常</span></h2>
+<h3>TC-211 E-201 员工主数据中没有未删除的对应行</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（无效类：SQL-3 查得 0 件＝只有已删除／无行）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-203, D-201, E-201, I-313, I-318]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。解密后的员工代码 <code>EMP_1</code>，未删除的对应行为 0 件（只有已删除，或无行）。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/login</code>。<code>encryptedStfCd</code> = <code>VAL_1</code>（<code>EMP_1</code> 的合法加密值）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-201。HTTP 200（业务错误响应）。<code>errorCode="1"</code>。不返回 <code>errorDetailCode</code>，也不返回 <code>errorMessage</code>（B-43）。不返回 <code>userInfo</code>・<code>mngInfo</code>。不生成 Session。客户端显示 E-201 的固定文案并跳到 Session 错误画面。日志只有结果代码，不输出加密值・明文。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言响应只有 <code>errorCode="1"</code>，不含 <code>errorDetailCode</code>・<code>errorMessage</code>・<code>userInfo</code>・<code>mngInfo</code>。断言不发 Session Cookie、跳转目标是 Session 错误画面、日志里没有值。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-201、§7.5 B-27・B-28、§7.10 B-43、§2.4 分支3、§5.7</td></tr></tbody></table>
+<h3>TC-212 E-202 输入非法（6 位・8 位・非数字・空）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（无效类：6 位・8 位・非数字・空）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-207, E-202, I-303]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">执行登录操作，I-303 不符合 7 位固定的规则。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left">4 种情况：①6 位（B-01）②8 位（B-03）③7 位但含 1 个非数字（B-04）④空（B-06）。值为 <code>COL_1</code>〜<code>COL_4</code>。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-202。不调用 <code>/login</code>（不产生服务端的 <code>errorCode</code>）。客户端显示与 E-201 相同的文案，并跳到 Session 错误画面。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 4 种情况都不产生对 <code>/login</code> 的请求、显示文案与 E-201 相同、跳转目标是 Session 错误画面。断言不产生服务端响应。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§7.1 B-01・B-03・B-04・B-06、§6.1 E-202、§2.8 分支2・3</td></tr></tbody></table>
+<h3>TC-213 E-203 不可用（HTTP 403・在线利用错误画面）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（不可用类：无效值・0 件・异常）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-201, E-203, I-320, I-318, I-319]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">SQL-1 的 <code>operation_flg</code> 为无效值 <code>0</code>、结果为 0 件、或查询抛异常，三者之一。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/login</code>（以及 <code>/R60Login/generateUrl</code>）。请求用正常占位（<code>encryptedStfCd</code>=<code>VAL_1</code>，或 <code>stfCd</code>=<code>COL_1</code>）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-203。HTTP 403。<code>errorCode="1"</code>。<code>errorDetailCode="R60W0004"</code>。<code>errorMessage</code> 取 SQL-6 的结果。不做解密・员工校验・Session 生成。客户端跳到在线利用错误画面，不停留在登录画面。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 HTTP 403・<code>1</code>／<code>R60W0004</code>。断言不返回 <code>userInfo</code>・<code>url</code>、不发 Session Cookie、跳转目标是在线利用错误画面。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-203、§2.2 分支2、§6.3、§8.1</td></tr></tbody></table>
+<h3>TC-214 E-204 画面主数据取得失败（errorCode 2）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（异常类：SQL-2 抛异常）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-202, D-204, E-204, I-314, I-315, I-318, I-319]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。画面主数据的查询（SQL-2）以异常结束。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/init</code>。请求无参数。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-204。HTTP 200。<code>errorCode="2"</code>。<code>errorDetailCode="R60E9999"</code>。<code>errorMessage</code> 取 SQL-6 的结果（0 件时用 §5.7 的替代文案）。不返回 <code>pageList</code>・<code>kbnList</code>。客户端跳到系统错误画面并显示「再読み込み」按钮（原文为日文，按原文实现）。不自动重试。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 HTTP 200・<code>2</code>／<code>R60E9999</code>。断言不返回候选数组、跳转目标是系统错误画面、出现「再読み込み」按钮、没有自动重试。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-204、§2.3 分支2、§5.7</td></tr></tbody></table>
+<h3>TC-215 E-205 解密失败（非法的加密值）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（无效类：无法解密的 I-313）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-203, L-206, E-205, I-313]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。I-313 是非法的加密值（含非数字・空・<code>_</code> 有 3 块以上・无法减算）。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/login</code>。<code>encryptedStfCd</code> = <code>VAL_1</code>〜<code>VAL_3</code>（各为非法值）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-205。HTTP 200（业务错误响应）。<code>errorCode="1"</code>。<code>errorDetailCode="R60W0003"</code>。<code>errorMessage</code> 取 SQL-6 的结果。不生成 Session。客户端跳到 Session 错误画面。日志只有结果代码，不输出加密值・明文。B-33（跨日）在设计上也按 E-205 处理。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 HTTP 200・<code>1</code>／<code>R60W0003</code>。断言不发 Session Cookie、跳转目标是 Session 错误画面、日志里没有值。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-205、§2.4 分支2、§2.7 分支1・2、§7.7 B-33</td></tr></tbody></table>
+<h3>TC-216 E-206 /init 不可用（HTTP 403）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（不可用类：SQL-1 不可用）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-201, E-206, I-314, I-315, I-318, I-319]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left"><code>/init</code> 的可用性判定（SQL-1）不可用（无效值・0 件・异常）。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/init</code>。请求无参数。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-206。HTTP 403。<code>errorCode="1"</code>。<code>errorDetailCode="R60W0004"</code>。<code>errorMessage</code> 取 SQL-6 的结果。不做候选取得（SQL-2）。不返回 <code>pageList</code>・<code>kbnList</code>。客户端跳到在线利用错误画面，不停留在登录画面。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 HTTP 403・<code>1</code>／<code>R60W0004</code>。断言不返回候选数组、跳转目标是在线利用错误画面。SQL-2 未执行，用「没有返回候选」这个结果来断言。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-206、§2.2 分支1、§2.3 步骤1、§6.3</td></tr></tbody></table>
+<h3>TC-217 E-207 /login 无对应记录（只返回 errorCode 的响应形式）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（无对应类：E-207 的响应形式）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-203, E-207, I-318]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。<code>/login</code> 无对应记录（SQL-3 查得 0 件）。触发条件与 E-201 相同，但本 TC 验证的是<strong>响应形式</strong>。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/login</code>。<code>encryptedStfCd</code> = <code>VAL_1</code>（解密能成立但查不到）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-207。HTTP 200。响应<strong>只有</strong> <code>errorCode="1"</code>。不返回 <code>errorDetailCode</code>・<code>errorMessage</code>・<code>userInfo</code>・<code>mngInfo</code>。不执行 SQL-6。不生成 Session。客户端显示固定文案并跳到 Session 错误画面。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言响应 JSON 的键只有 <code>errorCode</code>。断言没有 <code>errorDetailCode</code>・<code>errorMessage</code>、没有 Session Cookie、跳转目标是 Session 错误画面。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-207、§5.7、§6.2、§4.2 I-318</td></tr></tbody></table>
+<h3>TC-218 E-208 登录中的 DB 故障（errorCode 2）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（异常类：SQL-4／SQL-5 抛异常）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-203, E-208, I-316, I-317, I-318, I-319]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。解密与员工存在性校验成功，SQL-4 或 SQL-5 抛异常。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/login</code>。<code>encryptedStfCd</code> = <code>VAL_1</code>（有效员工 <code>EMP_1</code>）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-208。HTTP 200。<code>errorCode="2"</code>。<code>errorDetailCode="R60E9999"</code>。<code>errorMessage</code> 取 SQL-6 的结果。不返回 <code>userInfo</code>・<code>mngInfo</code>。不生成 Session。客户端跳到系统错误画面。异常内容只进运行日志，不写进面向用户的文案。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 HTTP 200・<code>2</code>／<code>R60E9999</code>。断言没有 <code>userInfo</code>・<code>mngInfo</code>、没有 Session Cookie、跳转目标是系统错误画面、文案里没有表名与异常内容。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-208、§2.4 分支5、§8.1</td></tr></tbody></table>
+<h3>TC-219 E-209 /generateUrl 的加密失败・配置不全</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">等价类划分（异常类：加密失败・配置不全）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-205, L-206, E-209, I-303, I-310, I-318, I-319]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">假定 L-201 可用。规范化后的值是 1 位以上数字。加密（L-206）失败（密钥日期非法・配置缺失）。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/generateUrl</code>。<code>stfCd</code>=<code>COL_1</code>（半角数字）。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-209。HTTP 200。<code>errorCode="2"</code>。<code>errorDetailCode="R60E9999"</code>。<code>errorMessage</code> 取 SQL-6 的结果，与 E-208 相同。不返回 <code>url</code>。客户端跳到系统错误画面。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言 HTTP 200・<code>2</code>／<code>R60E9999</code>。断言没有 <code>url</code>、跳转目标是系统错误画面、文案与 E-208 相同。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-209、§2.6 分支2、§2.7 分支3、§6.2</td></tr></tbody></table>
+<h3>TC-220 E-210 生成的 URL 为 151 位（B-21。不截断）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">区分</td><td style="text-align:left">异常</td></tr><tr><td style="text-align:left">观照点</td><td style="text-align:left">边界值（B-21：151 位。B-20 的外侧）</td></tr><tr><td style="text-align:left">design_ids</td><td style="text-align:left">[L-205, E-210, I-310]</td></tr><tr><td style="text-align:left">req_ids</td><td style="text-align:left">[R-201]</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left">L-201 可用、URL 环境已配置。调整占位拼接使组装结果成为 151 位。</td></tr><tr><td style="text-align:left">输入</td><td style="text-align:left"><code>POST /R60Login/generateUrl</code>。<code>stfCd</code>=<code>COL_1</code>。<code>stfKbn</code>／<code>gmnId</code>／<code>kgnKbn</code> 用使总长成为 151 位的占位。</td></tr><tr><td style="text-align:left">期望输出</td><td style="text-align:left">为 E-210。HTTP 200。<code>errorCode="1"</code>。<code>errorDetailCode="R60W0001"</code>。<code>errorMessage</code> 取 SQL-6 的结果。不返回 <code>url</code>。<strong>不截断</strong>。客户端显示错误提示，不跳转。不更新 I-310。</td></tr><tr><td style="text-align:left">断言</td><td style="text-align:left">以结果断言组装后的长度为 151 位、响应为 <code>1</code>／<code>R60W0001</code> 且没有 <code>url</code>。断言不会返回被截到 150 位的 URL、不会跳转。</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">§6.1 E-210、§7.3 B-21、§2.6 步骤7</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 追溯</h2>
+<p>从要求 <strong>R-201</strong> 到逻辑 <strong>L-201〜L-208</strong>・数据 <strong>D-201〜D-205</strong>・错误 <strong>E-201〜E-210</strong> 的对应是闭合的。21 条 TC 都带 <code>req_ids: [R-201]</code>，并在 <code>design_ids</code> 里列出所依据的 L・D・E（红线⑤）。E-201〜E-210 的 10 项全部至少被 1 条异常系 TC 覆盖（E-201→TC-211・TC-221、E-202→TC-212、E-203→TC-213、E-204→TC-210・TC-214、E-205→TC-215、E-206→TC-216、E-207→TC-217、E-208→TC-218、E-209→TC-219、E-210→TC-220），L-201〜L-208 通过 §2 的 8 个对象与各 TC 的 <code>design_ids</code> 全部出现。反方向由各 TC 的 <code>req_ids</code> 到达 R-201。TC-201〜TC-220 的件数・编号・<code>design_ids</code> 与 01 一致，没有删除・合并・重编号（规则 04 §9.2）。TC-221 是在 01 之后（2026-10-27）末尾追加的 1 条，没有放进 01（01 冻结在 v0.1.0，追加只在批准版侧追溯）。</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>05_承認版_测试用例集.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

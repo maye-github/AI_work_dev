@@ -1,0 +1,247 @@
+# provenance.yaml — 仮想需求書の倒推台帳（R60Login / 試点 #0）
+#
+# 本文件は「要求書の各条項が、実在資産のどこから来たか」を記録する。
+# **本文件は下流（節点2〜8）が読んではならない。** 読むと実在資産に間接的に触れることになる。
+# 読んでよいのは `drill-comparator`（事後の対比）と、次の画面を起こす本スキルだけである。
+#
+# 注意: このディレクトリは trace_check gate6（機密走査）の対象である。
+#       実値・絶対パス・実在の社員コードや氏名を書かないこと。
+
+ledger_version: "1"
+case_ref: "R60Login"
+generated_at: "2026-10-15"
+generated_by: "virtual-requirement-author@v0.1.0"
+book_path: "tutorial/R60Login/节点1_需求/00_输入_客户需求书.md"
+coverage_note: >
+  中等粒度。要求書は「顧客が読んで分かる言葉」で書くため、実装の細部（暗号化方式・
+  責任分界・符号系の実装・内部名・SQL）は意図的に記載していない。
+  したがって下記の各条項は「要求書に現れている範囲での出所」を示す。
+
+source_legend:
+  - {mark: "文書", meaning: "設計書（画面設計書 xlsx の sheet）"}
+  - {mark: "実測", meaning: "実装（.vue / .ts / .py）にそう書いてある"}
+  - {mark: "差異", meaning: "設計書と実装が食い違っている"}
+  - {mark: "未確認", meaning: "どちらにも記載がない"}
+
+items:
+  - ledger_no: "LG-01"
+    clause: "§1 背景（本画面の役割＝マスタメンテナンス画面へ遷移するためのログイン処理）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#画面概要"
+    deviation_ref: null
+  - ledger_no: "LG-02"
+    clause: "§1 背景（業務データを 1 件も更新しない／排他・被参照・重複チェック不要）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#画面概要（排他条件:なし）＋ R60LoginController.py（INSERT/UPDATE なし）"
+    deviation_ref: null
+    note: "実装側でも書き込みが 1 件も無いことを確認済み"
+  - ledger_no: "LG-03"
+    clause: "§3.1 画面の役割（利用対象者＝利用権限保持者のみ／使用頻度＝日次・随時／画面区分＝参照ほか）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#画面概要"
+    deviation_ref: null
+  - ledger_no: "LG-04"
+    clause: "§3.2 画面項目（12 項目）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#画面項目内容 r15-r29（＋ 実装 Front-end/src/views/R60Login.vue:1-81 で件数一致を確認）"
+    deviation_ref: null
+    note: "設計書 12 件・実装 12 件で欠落なし。数が一致することを確認した"
+  - ledger_no: "LG-05"
+    clause: "§3.2 ユーザーＩＤ（社員コード／半角 7 桁／初期値 空白）"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:14,198"
+    deviation_ref: null
+  - ledger_no: "LG-06"
+    clause: "§3.2 起動区分（1：本店 ／ 2：工場 ／ 3：システム管理者／初期値「3」）"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:23,199"
+    deviation_ref: null
+  - ledger_no: "LG-07"
+    clause: "§3.2 説明文（入力欄ではなく、起動区分の選択肢の説明を表示する）"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:26-28"
+    deviation_ref: null
+    note: "設計書は「コメント挿入」と記載。実装は素のテキスト表示のみ"
+  - ledger_no: "LG-08"
+    clause: "§3.2 画面（ドロップダウン／候補は画面マスタから取得／シミュレーション版を含む）"
+    source_kind: "実測"
+    source_ref: "R60LoginController.py:290（R60_SCREEN_M_TBL, DEL_FLG='0', ORDER BY HYJ_SEQ）"
+    deviation_ref: null
+    note: >
+      ★候補の内容は要求書に列挙していない。実物の権威は DB テーブルであり、
+      フロントのハードコード（58 件）でも設計書（59 件）でもない。
+      要求書を「マスタ参照」と書くことは、この実態に忠実である。
+      件数差（58 vs 59）は「実装漏れ」と即断しないこと（画面カード §3.2）。
+  - ledger_no: "LG-09"
+    clause: "§3.2 権限区分（更新あり／更新なし／初期値「更新あり」）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#画面項目内容（表示のみの記載）"
+    deviation_ref: "D-25"
+    note: >
+      ★要求書には符号値を書いていない。実物は符号系が 3 系統ある
+      （設計書＝表示のみ／FE 初期値 Y・N／/init 応答 1・0、送信時に旧符号へ戻す）。
+      「どちらに統一するか」は要求書からは決まらない缺口として残してある。
+  - ledger_no: "LG-10"
+    clause: "§3.2 URL（半角／入力上限 150 文字／表示幅 120 文字／初期値 空白）"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:65,202"
+    deviation_ref: null
+  - ledger_no: "LG-11"
+    clause: "§3.2 ボタン 4 種（ログイン／メニュー／URL出力／閉じる。初期状態は活性）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#画面項目内容 ＋ Front-end/src/views/R60Login.vue:52,55,70,78"
+    deviation_ref: null
+    note: "実装に非活性条件は無い"
+  - ledger_no: "LG-12"
+    clause: "§3.3 イベント（5 件）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#イベント一覧 r13-r17"
+    deviation_ref: null
+    note: >
+      ★5 イベントは 5 端点ではない。実装の端点は 4 本（閉じるは API 不要）。
+      端点の数はイベントの数から導けない（画面カード §4）。
+  - ledger_no: "LG-13"
+    clause: "§3.4 ログインの判定（社員コードを暗号化して送り、サーバ側で復号して存在確認／成功時は会社・事業場・氏名等を Session に保存）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#イベント一覧 イベント2 ＋ R60LoginController.py:324-385"
+    deviation_ref: "D-20"
+    note: >
+      ★要求書は「起動区分ごとに 3 分岐してログインする」と書いていない。
+      実物の /login は stf_cd しか読まず、3 分岐を実装していない（D-20）。
+      「由代码倒推」に忠実であるため、分岐は要求に含めない。
+      なお 3 分岐に相当するロジックは /menu 端点にのみ存在し、その端点は FE から呼ばれない（D-23）。
+  - ledger_no: "LG-14"
+    clause: "§3.4 社員が存在しない場合はログインさせずエラーとする（セッションエラー画面へ遷移する）"
+    source_kind: "実測"
+    source_ref: "R60LoginController.py:355-356（error_code=\"1\" のみ返す）／ Front-end/src/views/R60Login.vue:334-336 → SessionError"
+    deviation_ref: null
+    note: >
+      ★訂正（2026-10-15）: 初版の本条項は「存在を推測させる文面を出さない」と書かれ、
+      その出所を**「実測」と記録していた。これは誤りである。**
+      実在の設計書にも実装にも当該文言は無く、**当方が補完した要求**だった。
+      実装から言えるのは「原因を列挙する固定文面のセッションエラー画面へ遷移する」までであり、
+      「推測させる文面を出さない」という要求を満たしているかは**解釈が割れる**。
+      出所を偽らないため、実装から言える事実だけに書き換えた。
+  - ledger_no: "LG-15"
+    clause: "§3.5 画面遷移（メニューボタンでメニュー画面へ遷移する）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#イベント一覧 イベント3 ＋ Front-end/src/views/R60Login.vue:252-297"
+    deviation_ref: "D-23"
+    note: "要求書は遷移先の画面名・方法を指定していない（実装は router.push で MenuCommon へ）"
+  - ledger_no: "LG-16"
+    clause: "§3.6 遷移 URL の出力（パラメータの並びと URL の形を指定どおりにすること）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#業務処理説明 イベント4 ＋ R60LoginController.py:409"
+    deviation_ref: "D-24"
+    note: >
+      ★要求書は暗号化の方式・責任分界を書いていない。実物は同名 stf_cd の意味が端点で反転し
+      （/login＝暗号化済みを受ける／/generateUrl＝平文を受けてサーバが暗号化する）、
+      さらに暗号化ロジックが TS と Python で二重実装されている（D-24）。
+      ホスト・ポートは環境依存のため要求書では占位。
+  - ledger_no: "LG-17"
+    clause: "§3.7 稼働状態のチェック（オンライン利用不可ならエラー）"
+    source_kind: "実測"
+    source_ref: "R60LoginController.py 4 端点すべて（r60util.chk_onl_flg）"
+    deviation_ref: null
+  - ledger_no: "LG-18"
+    clause: "§4 社員コードは画面上で平文のまま送出しないこと"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:259,324（encryptStaffCode）"
+    deviation_ref: null
+  - ledger_no: "LG-19"
+    clause: "§4 ログに機密値を残さないこと"
+    source_kind: "文書"
+    source_ref: "設計書 §4 ＋ 骨架 .claude/rules/01-security-redlines.md（紅线⑦）"
+    deviation_ref: null
+  - ledger_no: "LG-20"
+    clause: "§4 応答のエラーは正常／業務エラー／システムエラーを区別できること"
+    source_kind: "実測"
+    source_ref: "R60LoginController.py:149-153（error_code 0/1/2）"
+    deviation_ref: null
+  - ledger_no: "LG-21"
+    clause: "§2 対象外（明示）：パスワード関連"
+    source_kind: "未確認"
+    source_ref: null
+    deviation_ref: null
+    note: >
+      ★実物の画面にはパスワード欄が 1 つも無く、設計書にも記載が無い。
+      つまり「パスワード関連」は実在資産からは決まらない。
+      段階 4 で人が「範囲外として明記する」と裁定したため、要求書では対象外と明示している（HD-01）。
+  - ledger_no: "LG-22"
+    clause: "§6 用語（社員コード／起動区分／画面 ID／権限区分／事業場／マスタ／Session）"
+    source_kind: "文書"
+    source_ref: "画面設計書 xlsx#画面概要・#画面項目内容"
+    deviation_ref: null
+
+  - ledger_no: "LG-23"
+    clause: "§3.2 #4 起動区分は遷移用 URL のパラメータおよびメニュー遷移時の引継ぎに用いる。ログインの可否は区分によって変わらない"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:291,403（stfKbn の引継ぎ）／ R60LoginController.py:324-384（/login は param.stf_cd しか読まない）"
+    deviation_ref: "D-20"
+    note: "設計書は「起動区分ごとに本店／工場／システム管理者としてログイン」と 3 分岐を書くが、実装はしていない。倒推は**実装に従った**。"
+  - ledger_no: "LG-24"
+    clause: "§3.2 #7 権限区分は遷移先の業務画面に引き継がれ、その画面での更新操作の可否に用いられる"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:288,353（送信時に Y/N へ戻す）／ stores/index.ts:32（userStore.kgn_kbn）／ common/R60Common.ts:1077,1093"
+    deviation_ref: "D-25"
+    note: "サーバ（/login）は kgn_kbn を読まない。引継ぎは FE の localStorage 経由であり、サーバは検証しない。"
+  - ledger_no: "LG-25"
+    clause: "§3.2 #6 画面の候補は全社共通の一覧であり、利用者ごとに絞り込まない"
+    source_kind: "実測"
+    source_ref: "R60LoginController.py:35-41（InitParams はフィールドを持たない）,291-305（R60_SCREEN_M_TBL, DEL_FLG='0'）"
+    deviation_ref: null
+    note: "「画面ごとの利用権限」というモデルが資産に存在しない（選択時にも遷移先でも弾かない）。"
+  - ledger_no: "LG-26"
+    clause: "§3.2 #10 URL 欄は利用者が直接編集できる"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:65（maxlength=150 のテキストボックス。readonly 指定なし）"
+    deviation_ref: null
+  - ledger_no: "LG-27"
+    clause: "§3.9 本画面を閉じてもログイン状態は保持される"
+    source_kind: "実測"
+    source_ref: "Front-end/src/views/R60Login.vue:375-391（window.close のみ）／ app/routers に logout 端点なし／ stores/index.ts にクリア処理なし"
+    deviation_ref: null
+  - ledger_no: "LG-28"
+    clause: "§3.4 ログインの可否に用いるのは社員コードの存在のみ（所属・権限・有効期限は用いない）"
+    source_kind: "実測"
+    source_ref: "R60LoginController.py:341-352（R60_USER_M_TBL に STF_CD + DEL_FLG='0' で EXISTS）"
+    deviation_ref: null
+    note: "権限情報（R60_USER_TYP_M_TBL 経由）は取得するだけで、ログイン可否の判定には使っていない。"
+
+notes_on_gaps: >
+  上の調査（2026-10-15、実在資産の横断読取）で「実在資産のどこにも答えが無い」と確認できた事項。
+  これらは**本物の缺口**であり、要求書に書かなくて正しい（顧客に聞くべき事項）。
+  - 遷移 URL の**受け手と用途**（他システムが使うのか、人が手で使うのか）
+  - **画面単位の利用権限**という考え方（現行は全社共通リスト）
+  - **セッション管理全般**（ログアウト・有効期限・履歴・連続失敗ロック・同時利用制限の要否）
+  - **権限区分の選択基準**（誰が何を基準に選ぶか。初期値だけが規定されている）
+  - **起動区分 1/2/3 の業務効果**（設計と実装が食い違い、どちらが正か未裁定）
+
+human_decisions:
+  - decision_no: "HD-01"
+    topic: "パスワード関連（変更・有効期限・複雑性）の扱い"
+    ruling: "範囲外として要求書 §2 に明記する"
+    decided_by: "SE-001"
+    decided_at: "2026-10-15"
+    note: "実物にも設計書にも該当が無い。空白として残す案もあったが、明記して外すことを選んだ。"
+  - decision_no: "HD-02"
+    topic: "「画面」ドロップダウンの候補一覧を要求書に書くか"
+    ruling: "書かない（画面マスタから取得する、とのみ記載）"
+    decided_by: "SE-001"
+    decided_at: "2026-10-15"
+    note: "実物の権威は DB テーブル。列挙すると要求書が設計書に近づき、かつ偽の権威を作る。"
+  - decision_no: "HD-03"
+    topic: "暗号化の記述の深さ"
+    ruling: "「暗号化して送り、サーバ側で復号する」まで（方式・責任分界は書かない）"
+    decided_by: "SE-001"
+    decided_at: "2026-10-15"
+    note: "粒度＝中等の既定どおり。方式は詳細設計の領域。"
+  - decision_no: "HD-04"
+    topic: "画面タイトルの背景色に言及するか"
+    ruling: "言及しない"
+    decided_by: "SE-001"
+    decided_at: "2026-10-15"
+    note: >
+      設計書は「背景色項目：メッセージ」と書くが、実物は CSS 固定値（D-22）。
+      「由代码倒推」に忠実な側として、背景色は要求に含めない。
+      ※この裁定により、対比でこの点は差として出ない（差を出す設計もあり得た）。

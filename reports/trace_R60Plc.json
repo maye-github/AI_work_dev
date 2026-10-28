@@ -1,0 +1,129 @@
+{
+  "root": "D:\\AI_work_dev",
+  "gates": [
+    {
+      "pass": false,
+      "stats": {
+        "error": "while parsing a block collection\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 30, column 3\nexpected <block end>, but found '?'\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 36, column 3"
+      },
+      "error": "ParserError('while parsing a block collection', <yaml.error.Mark object at 0x000001CC2A6E9550>, \"expected <block end>, but found '?'\", <yaml.error.Mark object at 0x000001CC2A759C50>)",
+      "id": "gate1",
+      "label": "ID 合法性（野号検出）"
+    },
+    {
+      "pass": false,
+      "stats": {
+        "error": "while parsing a block collection\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 30, column 3\nexpected <block end>, but found '?'\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 36, column 3"
+      },
+      "error": "ParserError('while parsing a block collection', <yaml.error.Mark object at 0x000001CC2A7016D0>, \"expected <block end>, but found '?'\", <yaml.error.Mark object at 0x000001CC2A703DD0>)",
+      "id": "gate2",
+      "label": "追跡双方向閉ループ"
+    },
+    {
+      "pass": false,
+      "stats": {
+        "error": "while parsing a block collection\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 30, column 3\nexpected <block end>, but found '?'\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 36, column 3"
+      },
+      "error": "ParserError('while parsing a block collection', <yaml.error.Mark object at 0x000001CC2A6E9250>, \"expected <block end>, but found '?'\", <yaml.error.Mark object at 0x000001CC2A6EB4D0>)",
+      "id": "gate3",
+      "label": "front-matter 7 字段"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "expected_field_count": 56,
+        "generated_field_count": 56
+      },
+      "detail": "gen_formal.columns=56",
+      "id": "gate4",
+      "label": "生成物一致"
+    },
+    {
+      "pass": false,
+      "stats": {
+        "error": "while parsing a block collection\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 30, column 3\nexpected <block end>, but found '?'\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 36, column 3"
+      },
+      "error": "ParserError('while parsing a block collection', <yaml.error.Mark object at 0x000001CC2A758150>, \"expected <block end>, but found '?'\", <yaml.error.Mark object at 0x000001CC2A75A8D0>)",
+      "id": "gate5",
+      "label": "命名分区"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "scanned_files": 502,
+        "patterns": 10,
+        "hits": 0
+      },
+      "hits": [],
+      "id": "gate6",
+      "label": "機密ゼロヒット"
+    }
+  ],
+  "results": {
+    "gate1": {
+      "pass": false,
+      "stats": {
+        "error": "while parsing a block collection\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 30, column 3\nexpected <block end>, but found '?'\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 36, column 3"
+      },
+      "error": "ParserError('while parsing a block collection', <yaml.error.Mark object at 0x000001CC2A6E9550>, \"expected <block end>, but found '?'\", <yaml.error.Mark object at 0x000001CC2A759C50>)",
+      "id": "gate1",
+      "label": "ID 合法性（野号検出）"
+    },
+    "gate2": {
+      "pass": false,
+      "stats": {
+        "error": "while parsing a block collection\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 30, column 3\nexpected <block end>, but found '?'\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 36, column 3"
+      },
+      "error": "ParserError('while parsing a block collection', <yaml.error.Mark object at 0x000001CC2A7016D0>, \"expected <block end>, but found '?'\", <yaml.error.Mark object at 0x000001CC2A703DD0>)",
+      "id": "gate2",
+      "label": "追跡双方向閉ループ"
+    },
+    "gate3": {
+      "pass": false,
+      "stats": {
+        "error": "while parsing a block collection\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 30, column 3\nexpected <block end>, but found '?'\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 36, column 3"
+      },
+      "error": "ParserError('while parsing a block collection', <yaml.error.Mark object at 0x000001CC2A6E9250>, \"expected <block end>, but found '?'\", <yaml.error.Mark object at 0x000001CC2A6EB4D0>)",
+      "id": "gate3",
+      "label": "front-matter 7 字段"
+    },
+    "gate4": {
+      "pass": true,
+      "stats": {
+        "expected_field_count": 56,
+        "generated_field_count": 56
+      },
+      "detail": "gen_formal.columns=56",
+      "id": "gate4",
+      "label": "生成物一致"
+    },
+    "gate5": {
+      "pass": false,
+      "stats": {
+        "error": "while parsing a block collection\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 30, column 3\nexpected <block end>, but found '?'\n  in \"D:\\AI_work_dev\\docs\\90_knowledge\\legacy-r60\\modules\\R60Plc\\05-tests.yaml\", line 36, column 3"
+      },
+      "error": "ParserError('while parsing a block collection', <yaml.error.Mark object at 0x000001CC2A758150>, \"expected <block end>, but found '?'\", <yaml.error.Mark object at 0x000001CC2A75A8D0>)",
+      "id": "gate5",
+      "label": "命名分区"
+    },
+    "gate6": {
+      "pass": true,
+      "stats": {
+        "scanned_files": 502,
+        "patterns": 10,
+        "hits": 0
+      },
+      "hits": [],
+      "id": "gate6",
+      "label": "機密ゼロヒット"
+    }
+  },
+  "all_pass": false,
+  "chain_complete": false,
+  "orphan_ids": [],
+  "stats": {
+    "field_count": 56,
+    "gates_run": 6,
+    "gates_pass": 2
+  }
+}

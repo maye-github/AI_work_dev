@@ -1,0 +1,29 @@
+module: R60Ikt
+evidence_dir: reports/module-survey/R60Ikt
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_16_R60Ikt_一括マスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_16_R60Ikt_一括マスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 3
+  impl_alignment: null
+  teachability: 2
+complexity:
+  level: complex
+  signals: {screens: 6, endpoints: 40, tables: 3, master_detail: true, upload: true, batch: true, sim: false, external: true}
+  note: "検索条件＋仕入単価＋購入品目＋購入品目明細＋全て＋アップロードの6画面、アップロード/一括/外部連携で complex。端点はイベント一覧からの推計40【推測】。項目移送表は3テーブルのみで、BPが更新する4つ目の定義が無い。"
+evidence:
+  - "sheet=共通・業務処理説明; rows=172 / 仕入単価; rows=1095 / 購入品目; rows=1360 / 購入品目明細; rows=1680 / 全て; rows=2558"
+  - "sheet=共通・イベント一覧; 14 / 仕入単価・イベント一覧; 13 / 購入品目・イベント一覧; 16 / 購入品目明細・イベント一覧; 16 / 全て・イベント一覧; 20"
+  - "sheet=項目移送表(仕入単価/購入品目/購入品目明細); row=13: R60_GZR_SIR_TK_M_TBL, R60_KON_HMK_SIR_M_TBL, R60_KON_HMK_SIR_MES_M_TBL の3テーブル"
+  - "sheet=全て・業務処理説明; row=36: 事業場購入品目有償品区分紐付けマスタを更新対象に含むが、対応する項目移送表が無い"
+  - "sheet=全て・業務処理説明; row=57: 「カーカーコード」と誤記（正: メーカーコード）"
+  - "test/00_単体ﾃｽﾄ仕様兼結果; row=4: テスト項目数=1685"
+  - "AB_Reports/reports/R60Ikt/ は存在しない（未測定）"
+  - "impl-size.json: R60Ikt view_lines=6306, router_lines=11633, service_lines=85"
+risks:
+  - "項目移送表が3テーブルのみ。BPは事業場購入品目有償品区分紐付けマスタの登録/更新を含むが、列定義が無い"
+  - "「カーカーコード」の誤記（正: メーカーコード）"
+  - "イベント番号の表記ゆれ（イベント11 / イベントNo11）"
+  - "試験項目1685、BP 5シート計6865行、実装 router 11633行で過大"
+  - "ABレポートが無く未測定（impl_alignment=null）"
+verdict: "不適（6画面・アップロード・一括で規模が過大、かつ項目移送表の欠落と誤記があり教材の正解が定まらない）"

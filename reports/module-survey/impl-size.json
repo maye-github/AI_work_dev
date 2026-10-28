@@ -1,0 +1,373 @@
+[
+ {
+  "module": "R60User",
+  "design_sheets": 16,
+  "view_lines": 975,
+  "router_lines": 1471,
+  "service_lines": 39
+ },
+ {
+  "module": "R60Ssk",
+  "design_sheets": 17,
+  "view_lines": 868,
+  "router_lines": 885,
+  "service_lines": 42
+ },
+ {
+  "module": "R60DC",
+  "design_sheets": 17,
+  "view_lines": 2048,
+  "router_lines": 2698,
+  "service_lines": 64
+ },
+ {
+  "module": "R60Jig",
+  "design_sheets": 18,
+  "view_lines": 1210,
+  "router_lines": 1820,
+  "service_lines": 42
+ },
+ {
+  "module": "R60Area",
+  "design_sheets": 17,
+  "view_lines": 1485,
+  "router_lines": 2915,
+  "service_lines": 54
+ },
+ {
+  "module": "R60Item",
+  "design_sheets": 26,
+  "view_lines": 3778,
+  "router_lines": 8715,
+  "service_lines": 106
+ },
+ {
+  "module": "R60Hsh",
+  "design_sheets": 17,
+  "view_lines": 950,
+  "router_lines": 3220,
+  "service_lines": 63
+ },
+ {
+  "module": "R60KonHmk",
+  "design_sheets": 22,
+  "view_lines": 2164,
+  "router_lines": 4574,
+  "service_lines": 76
+ },
+ {
+  "module": "R60Sir",
+  "design_sheets": 21,
+  "view_lines": 581,
+  "router_lines": 2091,
+  "service_lines": 52
+ },
+ {
+  "module": "R60SirKytn",
+  "design_sheets": 17,
+  "view_lines": 579,
+  "router_lines": 1497,
+  "service_lines": 52
+ },
+ {
+  "module": "R60Maker",
+  "design_sheets": 17,
+  "view_lines": 585,
+  "router_lines": 1337,
+  "service_lines": 52
+ },
+ {
+  "module": "R60KonHmkSir",
+  "design_sheets": 31,
+  "view_lines": 3658,
+  "router_lines": 10972,
+  "service_lines": 141
+ },
+ {
+  "module": "R60GzrSirTk",
+  "design_sheets": 27,
+  "view_lines": 2318,
+  "router_lines": 4138,
+  "service_lines": 116
+ },
+ {
+  "module": "R60GzrSkyTk",
+  "design_sheets": 16,
+  "view_lines": 0,
+  "router_lines": 0,
+  "service_lines": 0
+ },
+ {
+  "module": "R60KonHmkCopy",
+  "design_sheets": 14,
+  "view_lines": 648,
+  "router_lines": 632,
+  "service_lines": 40
+ },
+ {
+  "module": "R60Ikt",
+  "design_sheets": 52,
+  "view_lines": 6306,
+  "router_lines": 11633,
+  "service_lines": 85
+ },
+ {
+  "module": "R60SezRet",
+  "design_sheets": 19,
+  "view_lines": 1319,
+  "router_lines": 2605,
+  "service_lines": 64
+ },
+ {
+  "module": "R60SezKnoItem",
+  "design_sheets": 20,
+  "view_lines": 1087,
+  "router_lines": 2263,
+  "service_lines": 68
+ },
+ {
+  "module": "R60SntSsi",
+  "design_sheets": 17,
+  "view_lines": 1154,
+  "router_lines": 2326,
+  "service_lines": 63
+ },
+ {
+  "module": "R60SesModel",
+  "design_sheets": 35,
+  "view_lines": 1904,
+  "router_lines": 5929,
+  "service_lines": 98
+ },
+ {
+  "module": "R60KojoSesModel",
+  "design_sheets": 22,
+  "view_lines": 1455,
+  "router_lines": 3737,
+  "service_lines": 91
+ },
+ {
+  "module": "R60SikKgo",
+  "design_sheets": 18,
+  "view_lines": 2032,
+  "router_lines": 4935,
+  "service_lines": 108
+ },
+ {
+  "module": "R60SikKgoHan",
+  "design_sheets": 17,
+  "view_lines": 1111,
+  "router_lines": 1633,
+  "service_lines": 59
+ },
+ {
+  "module": "R60SikKgoPro",
+  "design_sheets": 16,
+  "view_lines": 1046,
+  "router_lines": 1518,
+  "service_lines": 52
+ },
+ {
+  "module": "R60Plc",
+  "design_sheets": 17,
+  "view_lines": 1378,
+  "router_lines": 3083,
+  "service_lines": 47
+ },
+ {
+  "module": "R60PlcUkiKnr",
+  "design_sheets": 17,
+  "view_lines": 1336,
+  "router_lines": 2884,
+  "service_lines": 70
+ },
+ {
+  "module": "R60YokMes",
+  "design_sheets": 18,
+  "view_lines": 801,
+  "router_lines": 2064,
+  "service_lines": 53
+ },
+ {
+  "module": "R60KkuChi",
+  "design_sheets": 39,
+  "view_lines": 3893,
+  "router_lines": 3096,
+  "service_lines": 79
+ },
+ {
+  "module": "R60KkuChiCopy",
+  "design_sheets": 25,
+  "view_lines": 3480,
+  "router_lines": 1385,
+  "service_lines": 59
+ },
+ {
+  "module": "R60R60PackGift",
+  "design_sheets": 17,
+  "view_lines": 0,
+  "router_lines": 0,
+  "service_lines": 0
+ },
+ {
+  "module": "R60HshChaChk2",
+  "design_sheets": 17,
+  "view_lines": 886,
+  "router_lines": 1672,
+  "service_lines": 61
+ },
+ {
+  "module": "R60SirSziCha",
+  "design_sheets": 17,
+  "view_lines": 774,
+  "router_lines": 1449,
+  "service_lines": 40
+ },
+ {
+  "module": "R60SziKirEvtReg",
+  "design_sheets": 40,
+  "view_lines": 876,
+  "router_lines": 6314,
+  "service_lines": 0
+ },
+ {
+  "module": "R60Code",
+  "design_sheets": 16,
+  "view_lines": 1715,
+  "router_lines": 3137,
+  "service_lines": 61
+ },
+ {
+  "module": "R60CodeMes",
+  "design_sheets": 16,
+  "view_lines": 1318,
+  "router_lines": 2645,
+  "service_lines": 69
+ },
+ {
+  "module": "R60Hany",
+  "design_sheets": 16,
+  "view_lines": 1648,
+  "router_lines": 2888,
+  "service_lines": 50
+ },
+ {
+  "module": "R60HanyMes",
+  "design_sheets": 16,
+  "view_lines": 1287,
+  "router_lines": 2517,
+  "service_lines": 50
+ },
+ {
+  "module": "R60CSVDownload",
+  "design_sheets": 12,
+  "view_lines": 218,
+  "router_lines": 370,
+  "service_lines": 24
+ },
+ {
+  "module": "R60Calender",
+  "design_sheets": 14,
+  "view_lines": 786,
+  "router_lines": 844,
+  "service_lines": 33
+ },
+ {
+  "module": "R60Login",
+  "design_sheets": 8,
+  "view_lines": 417,
+  "router_lines": 507,
+  "service_lines": 23
+ },
+ {
+  "module": "R60Menu",
+  "design_sheets": 8,
+  "view_lines": 0,
+  "router_lines": 0,
+  "service_lines": 0
+ },
+ {
+  "module": "R60ServerJobRef",
+  "design_sheets": 13,
+  "view_lines": 504,
+  "router_lines": 295,
+  "service_lines": 21
+ },
+ {
+  "module": "R60ItemSup",
+  "design_sheets": 12,
+  "view_lines": 0,
+  "router_lines": 797,
+  "service_lines": 19
+ },
+ {
+  "module": "R60KonHmkSup",
+  "design_sheets": 12,
+  "view_lines": 0,
+  "router_lines": 584,
+  "service_lines": 16
+ },
+ {
+  "module": "R60HshSup",
+  "design_sheets": 12,
+  "view_lines": 0,
+  "router_lines": 639,
+  "service_lines": 16
+ },
+ {
+  "module": "R60SirSup",
+  "design_sheets": 12,
+  "view_lines": 0,
+  "router_lines": 287,
+  "service_lines": 17
+ },
+ {
+  "module": "R60PlcSup",
+  "design_sheets": 12,
+  "view_lines": 0,
+  "router_lines": 540,
+  "service_lines": 15
+ },
+ {
+  "module": "R60SikKgoSup",
+  "design_sheets": 12,
+  "view_lines": 0,
+  "router_lines": 377,
+  "service_lines": 16
+ },
+ {
+  "module": "R60SubDeploy",
+  "design_sheets": 12,
+  "view_lines": 0,
+  "router_lines": 0,
+  "service_lines": 0
+ },
+ {
+  "module": "R60ChotSkSup",
+  "design_sheets": 12,
+  "view_lines": 0,
+  "router_lines": 481,
+  "service_lines": 11
+ },
+ {
+  "module": "R60KjoSesModelSup",
+  "design_sheets": 11,
+  "view_lines": 0,
+  "router_lines": 0,
+  "service_lines": 0
+ },
+ {
+  "module": "R60ListTypeSup",
+  "design_sheets": 11,
+  "view_lines": 0,
+  "router_lines": 286,
+  "service_lines": 11
+ },
+ {
+  "module": "R60ListTypeSupItem",
+  "design_sheets": 11,
+  "view_lines": 0,
+  "router_lines": 273,
+  "service_lines": 13
+ }
+]

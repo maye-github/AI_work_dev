@@ -1,0 +1,24 @@
+module: R60KonHmk
+evidence_dir: reports/module-survey/R60KonHmk
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_08_R60KonHmk_購入品目マスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_08_R60KonHmk_購入品目マスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 2
+  impl_alignment: 3
+  teachability: 3
+complexity:
+  level: complex
+  signals: {screens: 1, endpoints: 18, tables: 1, master_detail: false, upload: false, batch: false, sim: true, external: false}
+  note: "1画面・1表だが API 起動イベント約18・単項目チェック130件・分類階層を持ち、シミュレーション区分も設計／試験に存在するため complex。"
+evidence:
+  - "doc_completeness: design/13_業務処理説明.txt:1-1153（1153 行）; design/09_画面単項目チェック.txt（No.1-130）; design/10_画面項目間・DB整合目チェック.txt（No.1-13）; test/00_単体ﾃｽﾄ仕様兼結果.txt:5（FP 34 / テスト項目 1733 / バグ 0）"
+  - "design_consistency: design/13_業務処理説明.txt:288-296（分類3変更なのに分類3リストへセット、正しくは分類4）; :825（存在しない「イベント2 (25-3)」を参照）; :84,:193,:472,:773（未使用項目）; :921（「不要な処理と思われる」）; :1307-1317（イベント36の (2-1)/(2-2) が同一文面）"
+  - "impl_alignment: D:/AI_work/doc/03_AI/AB_Reports/reports/R60KonHmk/summary.md: ✅3 🔷2 ⚠️3 💥0 🚫0 ⏭️3（detail/copy/new が SQL 0 行 vs API 1 行、modify/download/datainit=SKIP）"
+  - "teachability: design/09_画面単項目チェック.txt（130 チェック）; design/13_業務処理説明.txt（購入品目分類1～4・BSC区分・原料／資材区分・購買大／小分類など顧客固有の分類体系が中核）"
+  - "complexity: design/12_イベント一覧.txt:14-48（全36イベント、API 起動 約18）; design/14_項目移送表(DB).txt:13（R60_KON_HMK_M_TBL・72 カラム）; design/13_業務処理説明.txt にシミュレーション記述 50 件; test/00:62,:65 に SIM4 2 件; impl-size.json（design_sheets 22 / view 2164 / router 4574）"
+risks:
+  - "同モジュールには「複数行・アップロード」版の別設計書（22 シート）が存在するが、本調査の抽出対象は単一行版（17 シート）。impl-size.json の design_sheets=22 はアップロード版に対応する可能性【推測】"
+  - "単体テスト仕様の確認資料名が R60SezKnoItem を指しており（test/00:5 ほか）、テスト資産のモジュール取り違えが疑われる"
+  - "未使用項目・参照番号の誤り・分類3→4のコピペ誤りが設計本文に残る。カード化の前に是正が必要"
+verdict: "不適（complex。130 チェック・1733 テスト項目・分類階層が重く、設計書のコピペ誤りも多い）"

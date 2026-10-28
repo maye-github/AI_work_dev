@@ -1,0 +1,1 @@
+[trace_check] gate1=PASS gate2=PASS gate3=PASS gate4=PASS gate5=PASS gate6=PASS seal=PASS freeze=PASS | total_ids=162 orphans=0 field_count=77 seal_hits=0

@@ -1,0 +1,24 @@
+module: R60DC
+evidence_dir: reports/module-survey/R60DC
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_03_R60DC_出荷場所マスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_03_R60DC_出荷場所マスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 2
+  impl_alignment: 3
+  teachability: 4
+complexity:
+  level: complex
+  signals: {screens: 1, endpoints: 8, tables: 1, master_detail: false, upload: false, batch: false, sim: true, external: false}
+  note: "構造は1画面・1表・API 8で simple〜medium 境界だが、シミュレーション区分（SIM4）を設計・単体テストに持つため規則どおり complex。"
+evidence:
+  - "doc_completeness: design/13_業務処理説明.txt:1-381（381 行）; design/09_画面単項目チェック.txt（No.1-13）; design/10_画面項目間・DB整合チェック.txt（No.1-9）; test/00_単体ﾃｽﾄ仕様兼結果.txt:5（FP 13 / テスト項目 420 / バグ 0）"
+  - "design_consistency: design/13_業務処理説明.txt:381（戻る＝変更なしで確認）vs design/09_画面単項目チェック.txt:13（No.5 データ変更あり→R60W0007）; design/13_業務処理説明.txt:390（登録＝変更ありで終了）vs design/09_画面単項目チェック.txt:12（No.4 データ変更なし→R60W0016）; design/13_業務処理説明.txt:45（ブロックコードを B1～B6 に固定）、:105（未解決の確認メモ「画面表示がどのようになるか確認」）"
+  - "impl_alignment: D:/AI_work/doc/03_AI/AB_Reports/reports/R60DC/summary.md: ✅3 🔷3 ⚠️0 💥0 🚫0 ⏭️3（modify/download/datainit=SKIP）"
+  - "teachability: design/09_画面単項目チェック.txt（13 チェック）; design/08_画面項目内容(マスタ項目).txt（マスタ項目表）; 専門用語はブロックコード／物流生産区分程度で、設計内に説明がある"
+  - "complexity: design/12_イベント一覧.txt:14-28（全16イベント、API 起動 8）; design/14_項目移送表(DB).txt:13（R60_DC_M_TBL・65 カラム）; design/13_業務処理説明.txt にシミュレーション記述 22 件; test/00:28,:40 に SIM4 2 件; impl-size.json（view 2048 / router 2698）"
+risks:
+  - "戻る／登録の条件が業務処理説明と単項目チェックで反転している（2 件）。教材化前に設計是正が必要"
+  - "ブロックコードが「B1～B6」前提で、検索時に D1～D6 を除外する環境依存の記述がある。汎用教材としては前提が顧客環境に依存"
+  - "イベント一覧に新規・複製・削除が無く、修正＋登録のみ。標準的な CRUD ライフサイクルを教える教材としては範囲が狭い"
+verdict: "保留（構造は小さいが、条件反転 2 件の是正と、シミュレーション共通処理の読解が前提）"

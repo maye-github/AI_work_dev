@@ -1,0 +1,27 @@
+module: R60SesModel
+evidence_dir: reports/module-survey/R60SesModel
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_20_R60SesModel_生産モデルマスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_20_R60SesModel_生産モデルマスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 4
+  impl_alignment: null
+  teachability: 3
+complexity:
+  level: complex
+  signals: {screens: 4, endpoints: 16, tables: 6, master_detail: true, upload: false, batch: false, sim: true, external: true}
+  note: "検索＋明細一覧＋マスタ項目(ヘッダ)＋マスタ項目(明細)の4画面、ヘッダ/明細の主従、6テーブル、Sim4対応で complex。端点は AB 未測定のためイベント一覧からの推計16【推測】。"
+evidence:
+  - "sheet=業務処理説明; rows=1935: イベント2〜31、登録/削除の分岐が詳細"
+  - "sheet=画面単項目チェック; row=14-45: 33項目 / sheet=画面項目間・DB整合チェック; row=14-52: 39項目"
+  - "sheet=イベント一覧; row=14-43: 31イベント、ヘッダ/明細/マスタ項目の主従構成"
+  - "sheet=項目移送表(DB)1..12; row=13: 生産モデル/明細/処方/半製品/関連/工場生産モデルの6テーブル"
+  - "test/00_単体ﾃｽﾄ仕様兼結果; row=4: テスト項目数=760"
+  - "AB_Reports/reports/R60SesModel/ は存在しない（未測定）"
+  - "impl-size.json: R60SesModel view_lines=1904, router_lines=5929, service_lines=98"
+risks:
+  - "ABレポートが無く、実装一致は未測定（impl_alignment=null）"
+  - "項目移送表12枚に対し実テーブルは6。4/10など同一テーブルの重複シートがあり、更新パターン列で読み分ける必要がある"
+  - "BPのイベント番号が17→21に飛ぶ（18-20は標準仕様）。教材で番号を追う際に注意"
+  - "飲料社/ビール社/カルピス社など顧客固有の会社区分が業務ルールの中核"
+verdict: "complex教材として推奨（主従＋6テーブル＋BP 1935行。AB未測定のため実装一致の教材化は別途検証が必要）"

@@ -1,0 +1,37 @@
+# nNN.yml — ノード 1 件分の進捗（雛形）
+#
+# 使い方: コーチが `docs/00_plan/coach/<module>/n01.yml` 〜 `n08.yml` を作る。
+#
+# なぜノードごとにファイルを分けるか:
+#   3-5 人が同時に開発するとき、1 ファイルを共有すると**後から書いた人が上書きする**。
+#   1 ノード = 1 ファイルにすれば、同一モジュール内でも n04 と n05 の担当者が衝突しない。
+#   総索引は作らない（索引こそが衝突源になる）。コーチが 9 ファイルを読んで集計する。
+#
+# 制約（機械検査に効く。破ると門番が落ちる）:
+#   - 鍵は snake_case 固定（gate5）
+#   - `id` / `*_id` / `*_ids` / `ids` という鍵を作ってはいけない（gate1 の野号誤認）
+#   - artifacts には**実在するパスだけ**を書く（存在しないファイルを主張してはいけない）
+#   - approved_by は**人の識別子のみ**。AI の名前を書いてはいけない（紅線③）
+#   - open_questions の項目に q_id / related_id / related_ids を使わない（gate1 の野号誤認）。
+#     台帳の Q-ID を指すには **q_ref** を使う（SKILL.md §4.2）
+
+node: "<1〜8>"
+name: "<工程名>"
+state: not_started             # not_started | in_progress | awaiting_review | approved | blocked
+owner: null                    # 作業者（人）の識別子。空 = 誰でも認領できる
+steps_total: "<このノードのステップ数>"
+steps_done: 0
+artifacts: []                  # 産出済みファイルのパス
+open_questions: []             # 未確定事項（人が裁定する）。実行体の報告から転記する。
+                               # 項目があるときだけ下の形（空なら [] のままでよい）:
+                               #   - q_ref: "Q-001"   # 台帳の Q-ID。空 = 台帳に未登録の純ローカルな問い
+                               #     text: "…"
+                               #     kind: "question" # question | issue
+                               #     block: true      # 未回答なら後続工程を止める
+                               #     answer: null
+                               #     answered_by: null
+                               #     answered_at: null
+approved_by: []                # 承認した人の識別子。複数可（例: ["SE・A", "顧客"]）
+approved_at: null              # YYYY-MM-DD
+updated_at: null               # YYYY-MM-DD
+note: null

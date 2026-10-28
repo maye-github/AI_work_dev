@@ -1,0 +1,107 @@
+---
+id: TPL-009
+type: impact_analysis
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ============================================================================
+# 影響分析レポート テンプレート / 影响分析报告模板
+# ============================================================================
+#
+# 使い方: 本ファイルを `impact-<BUG-xxx|CR-xxx>.yaml` に複製し、`<...>` を実値へ置換する。
+# 書き込み先: `docs/80_operation/`。
+#
+# 誰が書くか: 実行体 `trans-cosmos-ai-node9-change` が下書きし、
+#   `case_ref` と `root_cause_*` と `knowledge_entry` は人が確定する。
+#   番号（BUG-xxx / CR-xxx）は台帳 `docs/00_registry/ids.yml` が発番する。
+#   本ファイルに番号を手書きしない（紅線① 野号禁止）。
+#
+# 機密則（.claude/rules/01-security-redlines.md 準拠）:
+#   実データ値・接続情報・実 IP・実社員名・実メールアドレス・顧客名は記載しない。
+#   値が必要な箇所はすべて占位（COL_1 / VAL_1 / PWD_1 等）で記述する。
+#   対外媒体へ出す場合は tools/masking/mask_demo.py を通すこと（紅線⑦）。
+#
+# 出所: 要件源 PPT（落地篇）S15 工程⑦ AI作業④「改修時の影響範囲を分析する
+#   （要件IDから設計・コード・テストを逆引き）」＋ S16「変更影響分析」。
+#   本テンプレートのフィールド構成は本骨架の追加要素であり、登録は
+#   docs/90_knowledge/ppt-deviation-register.md §2 の A-20 にある。
+#
+# 書式の約束: 本ファイルは単一の YAML 文書である（冒頭の `---` は 1 つだけ）。
+#   散文はすべて `#` コメントで書く。front-matter の後に `---` を足すと
+#   PyYAML が「2 つ目の文書」と解釈してパースに失敗する（各 gate が落ちる）。
+
+# ── ① 案件（人が記入。番号は台帳が発番したものを転記するだけ）────────────
+title: "<レポートタイトル（例: R60Area 検索 0 件時の前回結果残存）>"
+case_ref: "<BUG-xxx または CR-xxx>"     # 台帳が発番。手で番号を作らない
+case_kind: bug                          # bug | change_request
+raised_by: "<QA / 顧客 / 運用 / 社内レビュー>"
+raised_at: "YYYY-MM-DD"
+summary: "<指摘・変更の要旨を 1 文で>"
+
+# ── ② 影響面（`py -3 -m tools.impact <起点ID>` の出力を転記）────────────
+#    値を自分で考えるのではなく、コマンドの出力をそのまま写すこと。
+#    「人手で思いついた範囲」は必ず漏れる（これが n09 を作った理由そのもの）。
+declared_scope:
+  # impact に与えた起点（失効の引き金）
+  upstream_trigger: "<R-xxx または F-xxx 等>"
+  downstream:
+    requirements: ["<R-xxx>"]
+    basic_design: ["<F-xxx>"]
+    screen_items: ["<I-xxx>"]
+    detail_design: ["<D-xxx>", "<L-xxx>"]
+    errors: ["<E-xxx>"]
+    tests: ["<TC-xxx>"]
+  # impact が出した件数をそのまま転記
+  total_count: 0
+
+# ── ③ 回溯分析（★人だけができる。ここが n09 の中核）─────────────────────
+#    問い: 「なぜ当初これを検出できなかったか」→ 直すべき起点ノードはどこか
+#
+#    判定の目安（迷ったら上流へ倒す。下流だけ直すのは二重定義の温床）:
+#      要件に書かれていない / 顧客が決めていない  → requirement（n01）
+#      要件にはあるが設計に落ちていない            → design（n02 または n03）
+#      設計は正しいが実装が違う                    → coding（n05）
+#      実装も設計も正しいが検証が無かった          → test（n06 / n07）
+root_cause_node: 1                      # 1〜8。戻す起点ノード（必ず 1 つに絞る）
+root_cause_class: requirement           # requirement | design | coding | test
+root_cause_note: |
+  <なぜ当初検出できなかったかを書く。例:
+   「要件書に『検索 0 件時の前回結果の扱い』が書かれておらず、
+     n01 で待確認事項として拾えていなかった」>
+
+# ── ④ 作り直し順（impact の「推奨の作り直し順」を転記）────────────────────
+redo_order: ["<L-014>", "<D-043>", "<TC-001>"]
+
+# ── ⑤ 失効の記録（人が tools.registry で実行。コーチも実行体も代行しない）──
+stale_recorded:
+  command: 'py -3 -m tools.registry mark-stale <ID> --reason "<変更内容>" --trigger <上流ID> --by <人>'
+  applied: false                        # --apply を付けて実行したら true
+  cleared: []                           # 作り直しが終わった節点を clear-stale したら追記
+
+# ── ⑥ 回帰（作り直し後の再検証。n06 / n07 を回し直す）────────────────────
+regression:
+  unit:
+    node: 6
+    result: pending                     # pending | pass | fail
+  integration:
+    node: 7
+    result: pending
+  gate_result: pending                  # py -3 -m tools.trace_check --strict の結果
+
+# ── ⑦ 知識沈殿（.claude/rules/06-knowledge-flywheel.md §4 の 4 点）────────
+#    追記先は docs/90_knowledge/review_diff_assets/<module>/review_comments.md
+knowledge_entry:
+  symptom: "<事象: 何が起きたか（再現手順。値は占位）>"
+  impact: "<影響: どの工程で発見され、どこまで波及したか>"
+  cause: "<原因: 既存のどの規則・どの gate が捕まえるべきだったか>"
+  countermeasure: "<対策: 機械化できるか / 規則化するならどの層か（紅线・rules・テンプレート・検査）>"
+  recorded_in: "docs/90_knowledge/review_diff_assets/<module>/review_comments.md"
+  appended: false                       # 実際に追記したら true
+
+open_issues:
+  - q_ref: "<Q-xxx>"
+    question: "<未確定の問い>"
+    status: open                        # open | done

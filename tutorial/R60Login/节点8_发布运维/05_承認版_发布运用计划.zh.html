@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05_承認版_发布运用计划.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>05_承認版_发布运用计划.zh</h1>
+<div class="meta">
+  机读源: <code>05_承認版_发布运用计划.zh.md</code> ／
+  生成: 2026-10-27 14:43 ／
+  节 8・表 18
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>05_承認版_发布运用计划.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 批准记录与本书的定位</a></li><li><a href="#sec-2">1. 发布说明</a></li><li><a href="#sec-3">2. 发布步骤</a></li><li><a href="#sec-4">3. 回滚步骤</a></li><li><a href="#sec-5">4. 运用 Runbook</a></li><li><a href="#sec-6">5. 交接物一览</a></li><li><a href="#sec-7">6. 本次发布不包含的东西</a></li><li><a href="#sec-8">7. 发布判定的处理</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>发布、运用计划（批准版） — 共通マスタ　ログイン（R60Login）（原文为日文，按原文实现）</h1>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 批准记录与本书的定位</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">版本</th><th style="text-align:left">日期</th><th style="text-align:left">批准者</th><th style="text-align:left">状态</th><th style="text-align:left">对象与范围</th></tr></thead><tbody><tr><td style="text-align:left">v1.0.0</td><td style="text-align:left">2026-10-26</td><td style="text-align:left">SE-001（发布责任人）</td><td style="text-align:left">已批准</td><td style="text-align:left">对象为本书的结论（发布准备物）。不包含发布判定（GO/NO-GO）。未裁决事项由 n04.yml／n07.yml／n08.yml 持有。</td></tr><tr><td style="text-align:left">v1.0.1</td><td style="text-align:left">2026-10-27</td><td style="text-align:left">—（批准者栏等待人确认）</td><td style="text-align:left"><strong>追加记录</strong></td><td style="text-align:left">①在 §5.2 追加 1 行，说明「4 个画面的跳转目标 URL 的值在临上线准备时从客户处领取」（n04 OQ-01 的裁决）。②把 §5.1 的上游版本号更正为现行版本（节点2 v2.0.6／节点3 v1.0.3／节点4 v1.0.1／节点7 v1.0.1）。③把 §6 的「没有按尝试次数锁定」更新为：<strong>决定把 BUG-002 纳入本次发布</strong>。依据是用户发言「<strong>都按方案</strong>」。仍然不包含发布判定（GO/NO-GO）</td></tr></tbody></table>
+<p>本书的输入是 <code>tutorial/R60Login/节点8_发布运维/01_AI产出_发布运用计划.md</code>。未裁决事项的追踪由 <code>docs/00_plan/coach/R60Login/n07.yml</code>、<code>n08.yml</code>、<code>n04.yml</code> 持有（本书不转写）。</p>
+<p><strong>这不是发布判定。</strong> 本书只持有判定材料（发布说明、步骤、回滚步骤、运用 Runbook、交接物）的结论。发布与否由人决定（红线③）。因此本书既不写「可以发布」，也不写「不得发布」。</p>
+<p><strong>记法</strong>：不写环境相关的实值。使用占位（<code>IP_1</code>／<code>PORT_1</code>／<code>PWD_1</code>／<code>TBL_1</code>／<code>SID_1</code>／<code>COL_1</code>／<code>VAL_1</code>／<code>EMP_1</code>），只保留配置键的<strong>名称</strong>。日期时间、阈值中属于业务约定的事项，写明<strong>由谁决定</strong>，不写值。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 发布说明</h2>
+<h3>1.1 包含什么</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">种别</th><th style="text-align:left">内容</th><th style="text-align:left">数量、范围</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">API 端点</td><td style="text-align:left"><code>POST /R60Login/init</code>、<code>POST /R60Login/login</code>、<code>POST /R60Login/generateUrl</code>。全部为 POST、JSON 应答。<strong>不设第 4 个</strong></td><td style="text-align:left">3 个</td><td style="text-align:left">节点3 §1.3、需求 §3 规则 20</td></tr><tr><td style="text-align:left">画面</td><td style="text-align:left">SCR-201 登录。输入 I-303、I-306、I-307，显示 I-301、I-304、I-310、I-312，可用性控制 I-308、I-311</td><td style="text-align:left">1 个画面</td><td style="text-align:left">节点3 §4.1</td></tr><tr><td style="text-align:left">权限类别的交接</td><td style="text-align:left">登录跳转时不把 <code>kgnKbn</code> 放在 URL 上，而用同源 localStorage 的键 <code>r60login.kgnKbn</code>（值 <code>Y</code>／<code>N</code>）传递。登录成立时覆盖，画面结束时删除。<strong>前提是与 SCR-202 同源</strong></td><td style="text-align:left">—</td><td style="text-align:left">节点3 §2.5 步骤4、节点4 §6.4</td></tr><tr><td style="text-align:left">URL 输出</td><td style="text-align:left"><code>{scheme}://{host}:{port}/{context}/{route}?stfCd=&lt;暗号化值&gt;&amp;stfKbn=&lt;n&gt;&amp;gmnId=VAL_2&amp;kgnKbn=&lt;Y|N&gt;</code>。参数顺序固定，不做百分号编码，接收 150 位／显示 120 位。<strong>仅供显示，不用于跳转</strong>（即使编辑该栏也不跳转）</td><td style="text-align:left">—</td><td style="text-align:left">节点3 §2.6、§7.3、§7.9</td></tr><tr><td style="text-align:left">运行判定</td><td style="text-align:left">3 个端点共通的前处理。不可（无效、无数据、参照例外）时返回 HTTP 403、<code>1</code>／<code>R60W0004</code>，跳转到在线使用错误画面。不停留在登录画面</td><td style="text-align:left">—</td><td style="text-align:left">节点3 §2.2、§6.3</td></tr><tr><td style="text-align:left">错误</td><td style="text-align:left">E-201～E-210 共 10 种。跳转目标的 4 个画面（菜单页眉、Session 错误、在线使用错误、系统错误）由客户的共通基础设施提供</td><td style="text-align:left">10 种</td><td style="text-align:left">节点3 §6.1、节点2 §10.2</td></tr><tr><td style="text-align:left">DB</td><td style="text-align:left">5 张表只做参照（SELECT）。不发出任何 DDL／DML。无需 commit</td><td style="text-align:left">5 张表</td><td style="text-align:left">节点3 §3、§5.1</td></tr><tr><td style="text-align:left">Session</td><td style="text-align:left">在服务器侧保存 11 项。只有标识放在 HttpOnly Cookie <code>r60login.sid</code>（SameSite=Lax、Path=/）。idle 30 分／绝对 8 小时。允许多重登录</td><td style="text-align:left">—</td><td style="text-align:left">节点3 §8.2</td></tr><tr><td style="text-align:left">加密</td><td style="text-align:left">统一到 L-206 的 1 个函数。<strong>相当于当日密钥的是日期（<code>yyyymmdd</code>）本身，不存在从外部取得的密钥</strong>。它不是 AES-256-ECB</td><td style="text-align:left">—</td><td style="text-align:left">节点3 §2.7、节点4 §6.3</td></tr><tr><td style="text-align:left">日志</td><td style="text-align:left">应用向标准输出输出一行一条 JSON，由采集代理送到公司内日志基础设施。访问日志中的社員コード已脱敏</td><td style="text-align:left">—</td><td style="text-align:left">节点3 §8.1、节点4 §6.2</td></tr></tbody></table>
+<h3>1.2 已知限制（本次发布包含的「做不到的事」）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">限制</th><th style="text-align:left">在利用者、运用上如何显现</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">Session 保存在进程内，<strong>不在多个实例之间共享</strong></td><td style="text-align:left">在冗余化构成中，若被分配到其他实例则登录状态不成立。重启会丢失 Session</td><td style="text-align:left">差异 #1、#14、节点4 §7 前提3</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>Session 销毁失败不会留在服务器运用日志中</strong>（只有客户端 <code>console.warn</code>）</td><td style="text-align:left">事后无法统计销毁失败的次数。只能依赖失效（idle 30 分）</td><td style="text-align:left">差异 #2</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>模拟版总是被当作非模拟版处理</strong>（不附加 <code>gmnKbn</code>）</td><td style="text-align:left">即使选择模拟版，也跳转到通常版的路由</td><td style="text-align:left">差异 #5</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>跨日时不是 E-205 而是 E-201</strong>（不返回 <code>errorDetailCode</code>）</td><td style="text-align:left">用前一天生成的加密值发送时，不会出现「无法确认登录信息」，而是与输入错误同样处理</td><td style="text-align:left">差异 #9</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><strong>跳转目标 URL 是环境变量，未设置则不跳转</strong></td><td style="text-align:left">配置遗漏表现为「不跳转」（不显示错误）</td><td style="text-align:left">差异 #3</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">因为不增加端点，<strong>错误文本由服务器取得并放入错误应答</strong></td><td style="text-align:left">文本的应答项目是 <code>I-321</code></td><td style="text-align:left">节点3 §1.3、§5.7</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">输入的前后空白不做 trim</td><td style="text-align:left">在 7 位前后加空白的输入（9 个字符）会成为输入错误</td><td style="text-align:left">节点3 §7.1 B-07</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">URL 输出时若未输入社員コード，则把 <code>"NaN"</code> 当作社員コード处理（不加密）</td><td style="text-align:left">URL 的社員コード位置会出现 <code>NaN</code>（按规格如此）</td><td style="text-align:left">节点3 §7.1 B-08</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">DB 无变更（仅参照）</td><td style="text-align:left">发布不包含 DDL／DML 的适用。不需要数据回退</td><td style="text-align:left">节点2 §12、节点3 §5.1</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 发布步骤</h2>
+<h3>2.1 前提（只要 1 项不满足就不开始步骤）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">前提</th><th style="text-align:left">确认方法</th><th style="text-align:left">不满足时的后果</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">节点7 的合格判定由<strong>人的标识符</strong>记录</td><td style="text-align:left"><code>verification.md</code> 的判定栏由人填写（AI 的报告不是判定）</td><td style="text-align:left">不开始</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>发布判定</strong>由人的标识符记录</td><td style="text-align:left">本书 §0 的批准记录（版本、日期、批准者角色、状态）</td><td style="text-align:left">不开始（红线③）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">无 DB 变更（DDL／DML 0 句）</td><td style="text-align:left">发布对象中不含 SQL 文件与迁移脚本</td><td style="text-align:left">重做步骤</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">稼働状態（是否可在线使用）的初始值符合运用规程</td><td style="text-align:left">系统共通表的稼働状態（<code>operation_flg</code>）初始值为有效</td><td style="text-align:left">所有画面返回 HTTP 403（在线使用错误画面）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">环境配置已投入</td><td style="text-align:left">§5.2 的键一览<strong>未设置 0 件</strong></td><td style="text-align:left">无法连接，或不跳转（差异 #3）</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">监控阈值已由运用方设置</td><td style="text-align:left">确认 §4.1.2 的告警设置</td><td style="text-align:left">不开始（阈值未设置则无法发现异常）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><strong>上线窗口已确定</strong></td><td style="text-align:left">由发布责任人决定，并记录在判定记录中（值不放在本书）</td><td style="text-align:left">不开始</td></tr></tbody></table>
+<h3>2.2 步骤（带确认点、仅角色）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">步骤</th><th style="text-align:left">确认点（进入下一步的条件）</th><th style="text-align:left">实施角色</th><th style="text-align:left">记录</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">通读 7 项前提与判定记录</td><td style="text-align:left">前提 1～7 全部为「满足」／判定记录中有人的标识符、日期、状态</td><td style="text-align:left">发布责任人</td><td style="text-align:left">判定记录的版本、日期</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">生成构建产物（backend／frontend）并标识版本</td><td style="text-align:left">构建成功，产物的版本标识符（提交或 Tag）已记录</td><td style="text-align:left">实现负责人</td><td style="text-align:left">版本标识符</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>上一版本的退避</strong>（用于回滚的产物与配置副本）</td><td style="text-align:left">能取得上一次发布的产物，且与 §3.2 步骤 1、2 参照的副本一致</td><td style="text-align:left">运用负责人</td><td style="text-align:left">副本的取得结果</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">投入环境配置（连接信息、URL 生成用、跳转目标、销毁请求目标）</td><td style="text-align:left">所有键均已设置且<strong>未设置 0 件</strong>。值从密钥管理或 secret 注入获取，不放在仓库与本书</td><td style="text-align:left">运用负责人</td><td style="text-align:left">键名与是否设置（不记录值）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">启动应用</td><td style="text-align:left">启动日志无异常／进程有响应</td><td style="text-align:left">运用负责人</td><td style="text-align:left">启动时刻</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">冒烟测试（§2.3）</td><td style="text-align:left">§2.3 的每一行由人判定，全部满足</td><td style="text-align:left">实现负责人＋运用负责人</td><td style="text-align:left">各项目的实测值</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">确认监控已启用（§4.1）</td><td style="text-align:left">应用的标准输出日志已到达采集基盘（每行 1 条 JSON）／告警已设置／健康检查已登记</td><td style="text-align:left">运用负责人</td><td style="text-align:left">到达确认的结果</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">记录发布完成</td><td style="text-align:left">版本标识符、完成时刻、实施者角色、冒烟结果均已记录</td><td style="text-align:left">发布责任人</td><td style="text-align:left">完成记录</td></tr></tbody></table>
+<h3>2.3 冒烟基准（由人判定）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">对象</th><th style="text-align:left">必须满足的条件</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>/R60Login/init</code></td><td style="text-align:left">HTTP 200、<code>errorCode="0"</code>、返回 <code>pageList</code> 与 <code>kbnList</code>（固定 2 件）、不发行 <code>r60login.sid</code>（只有 <code>r60login.cid</code>）</td><td style="text-align:left">IT-201</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>/R60Login/login</code></td><td style="text-align:left">请求正文的 <code>stfCd</code> 是加密值（17 位以内）且不含明文、HTTP 200、<code>errorCode="0"</code>、<code>userInfo</code> 6 项＋<code>mngInfo</code> 5 项、发行 <code>r60login.sid</code>（HttpOnly、SameSite=Lax、Path=/），且应答正文不含标识</td><td style="text-align:left">IT-202</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>/R60Login/generateUrl</code></td><td style="text-align:left">请求正文的 <code>stfCd</code> 为<strong>明文</strong>、HTTP 200、<code>errorCode="0"</code>、<code>url</code> 为 §1.1 的形式且在 150 位以内</td><td style="text-align:left">IT-204</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">画面走一圈</td><td style="text-align:left">初始显示 → 登录 → 菜单 → URL 输出 → 关闭。登录用<strong>新窗口／标签页</strong>（打不开时用同一窗口），菜单用<strong>同一窗口</strong>。编辑 URL 栏也不跳转</td><td style="text-align:left">节点2 §2 跳转表</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">关闭</td><td style="text-align:left">确认文本「画面を終了してよろしいですか？」与按钮「はい」「キャンセル」→ 销毁请求 → 关闭画面。<strong>不显示追加提示</strong>。<code>r60login.kgnKbn</code> 被删除（此处文本与按钮为日文原文，按原文实现）</td><td style="text-align:left">IT-205</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">稼働不可</td><td style="text-align:left">把稼働状態设为不可时，<code>/init</code> 与 <code>/login</code> 返回 HTTP 403、<code>1</code>／<code>R60W0004</code>，跳转到在线使用错误画面，且不发行 <code>r60login.sid</code></td><td style="text-align:left">IT-206</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">业务数据不变</td><td style="text-align:left">5 张表（社員マスタ、组织／事業場マスタ、代码／消息管理マスタ、画面マスタ、系统共通表）的件数与更新日时的最大值在试验前后一致</td><td style="text-align:left">节点7 §7</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">日志</td><td style="text-align:left">不输出当日密钥、社員コード实值（明文／加密）、Session 标识、姓名。访问日志中的社員コード已脱敏（保留头 1 位与末 1 位，中间 5 位改为 <code>*</code>，例 <code>1<strong>*</strong>7</code>）</td><td style="text-align:left">节点3 §8.1、节点4 §6.2</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">Session 设置</td><td style="text-align:left">idle 30 分／绝对 8 小时的设置值有效（确认设置值。时间经过的观测属于结合测试、演练的范围）</td><td style="text-align:left">节点3 §8.2</td></tr></tbody></table>
+<ul><li><strong>第 6 项在本番会伴随服务停止。</strong> 是否实施与时间段由<strong>人决定</strong>（本书不作决定）。作为测试准备而变更稼働状態，不是应用的写入，而是运用操作（节点7 §7 #5）。</li><li><strong>第 1～3 项的实施手段</strong>（通过 HTTP 调用还是用应用内客户端）尚未确定，未确定之前本项无法实施（追踪见 <code>n07.yml</code>）。</li></ul>
+<h3>2.4 上线窗口（由发布责任人决定）</h3>
+<ul><li>上线窗口<strong>由发布责任人决定</strong>。它取决于客户的运用时间帯，因此日期时间、所需时间<strong>不放在本书中</strong>。</li><li>决定的判断材料：处于利用者较少的时间帯／回滚能落在 §3.3 的目标之内／监控人员能够待命。</li><li>决定的日期时间记录在发布判定记录中（后续的批准版）。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 回滚步骤</h2>
+<h3>3.1 触发条件（谁看什么来宣布）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">触发条件</th><th style="text-align:left">观测到的事实</th><th style="text-align:left">宣布的角色</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">3 个端点中有任何一个返回 5xx</td><td style="text-align:left">HTTP 状态码</td><td style="text-align:left">发布责任人（接到运用一次窗口的报告后）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">登录成功率低于阈值</td><td style="text-align:left">成功率。<strong>阈值由运用方决定。AI 不写数值</strong></td><td style="text-align:left">发布责任人</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">观测到业务数据被意外更新</td><td style="text-align:left">5 张表的件数、更新日时最大值前后不一致</td><td style="text-align:left">发布责任人</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">冒烟中有任何一项不满足（包括因配置未投入而无法跳转）</td><td style="text-align:left">§2.3 的各项目</td><td style="text-align:left">发布责任人</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">稼働不可（HTTP 403）在更正配置后仍未解除</td><td style="text-align:left"><code>/init</code> 的应答仍为 403</td><td style="text-align:left">发布责任人</td></tr></tbody></table>
+<ul><li>第 3、4、5 项是<strong>本节点的追加（E4）</strong>。第 1、2 项是输入模板的规定。</li></ul>
+<h3>3.2 步骤（可执行的粒度）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">步骤</th><th style="text-align:left">具体操作</th><th style="text-align:left">确认点</th><th style="text-align:left">目安分配（C 案）</th></tr></thead><tbody><tr><td style="text-align:left">0</td><td style="text-align:left">宣布回滚</td><td style="text-align:left">由发布责任人宣布，并<strong>记录开始时刻</strong></td><td style="text-align:left">开始时刻已记录</td><td style="text-align:left">1 分</td></tr><tr><td style="text-align:left">1</td><td style="text-align:left">切换回上一版本的产物</td><td style="text-align:left">把步骤 §2.2 #3 退避的产物重新部署（在容器基盘上把镜像标签退回上一版本）</td><td style="text-align:left">运行中的版本标识符与上一版本一致</td><td style="text-align:left">5 分</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">把环境配置退回之前的值</td><td style="text-align:left">从退避的配置副本投入。值不放在本书、仓库中</td><td style="text-align:left">核对所有键的设置情况为<strong>未设置 0 件</strong>，且与之前的值一致</td><td style="text-align:left">3 分</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">重启应用</td><td style="text-align:left">停止 → 启动</td><td style="text-align:left">启动日志无异常／进程有响应</td><td style="text-align:left">2 分</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">使 Session 失效</td><td style="text-align:left"><strong>因为保存在进程内，重启即丢失</strong>（差异 #1）。引导利用者重新登录。共通基础设施侧的 Session 有时无法请求销毁（差异 #2）</td><td style="text-align:left">重启前发行的 <code>r60login.sid</code> 不被当作已登录。因为依赖当日密钥，回滚后需要重新登录</td><td style="text-align:left">1 分</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">重新实施冒烟</td><td style="text-align:left">实施 §2.3 的 1、2、3、4、7、8（第 6 项在本番会伴随状态变更，是否实施由人决定）</td><td style="text-align:left">满足 §2.3 的条件</td><td style="text-align:left">3 分</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">确认监控</td><td style="text-align:left">与 §2.2 #7 相同的确认</td><td style="text-align:left">日志到达、告警、健康检查有效</td><td style="text-align:left">（含在 5 中）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">记录完成</td><td style="text-align:left">记录完成时刻、实施者角色、原因的初步判断</td><td style="text-align:left">记录从开始到完成的所需时间，可判定是否在 15 分以内</td><td style="text-align:left">1 分</td></tr></tbody></table>
+<ul><li><strong>分配是方案（E4），不是实测值。</strong> 用演练中测得的值替换。</li><li><strong>本画面不更新业务数据，因此不做数据回退</strong>（§1.2 #9）。需要退回的对象只有产物与配置。</li></ul>
+<h3>3.3 目标时间</h3>
+<ul><li><strong>15 分以内</strong>（从判断开始＝宣布到回滚完成）。</li><li><strong>没有实测。</strong> 未实施演练，因此「15 分能回滚」是<strong>目标而非实绩</strong>。输入模板也把 <code>target_time: 15 分以内（判断开始から切戻し完了まで）</code> 作为目标来写。</li></ul>
+<h3>3.4 演练（尚未实施）</h3>
+<p><strong>演练尚未实施。</strong> 不把未演练的回滚步骤写成「已演练」（输入模板 <code>rollback_plan.drill</code> 的要求）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">场所</td><td style="text-align:left"><code>stg</code>（与本番同等构成。节点4 §3.1）。<strong>不在本番实施</strong></td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">前提</td><td style="text-align:left">上一版本与新版两个版本的产物、双方的配置副本、共通基础设施的 stg 连接目标齐备</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">步骤</td><td style="text-align:left">① 部署新版并实施 §2.3 的冒烟 ② 发布责任人宣布回滚并记录时刻 ③ <strong>不改读地</strong>执行 §3.2 ④ 记录各确认点是否观测到 ⑤ 记录所需时间</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">发生改读时</td><td style="text-align:left">那就是<strong>步骤的缺陷</strong>。不要当场修改，先记录，修正本书后再重新演练</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">无法观测的项目</td><td style="text-align:left">向共通基础设施发出 Session 销毁请求是否到达（差异 #2）取决于 stg 的共通基础设施规格。若没有手段，记录为「未观测」</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">记录位置</td><td style="text-align:left">演练记录（节点8 的后续成果物。由人作成）。<strong>本书不写结果</strong></td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">判定</td><td style="text-align:left">是否在 15 分以内完成、各确认点是否观测到，<strong>由人判定</strong></td></tr></tbody></table>
+<h3>3.5 回滚后仍无法恢复时</h3>
+<ul><li>首先怀疑<strong>环境配置未投入</strong>（差异 #3。未设置则不跳转）。核对 §5.2 的键。</li><li>其次确认<strong>能否到达日志基础设施</strong>（§4.1.1）与 DB 是否可参照。</li><li>如果仍然无法恢复，是否把稼働状態设为不可并引导到在线使用错误画面，<strong>由人决定</strong>（本书不作决定）。这个操作是本画面之外的（运用）操作。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 运用 Runbook</h2>
+<h3>4.1 监控</h3>
+<h4>4.1.1 日志（输出什么、不输出什么）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">种别</th><th style="text-align:left">输出的项目</th><th style="text-align:left">不输出的项目</th><th style="text-align:left">保存</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">访问日志</td><td style="text-align:left">时刻、画面ID、権限区分、结果代码、<strong>已脱敏</strong>的社員コード（例 <code>1<strong>*</strong>7</code>）</td><td style="text-align:left">当日密钥、明文／加密前后的社員コード实值、Session 标识、姓名</td><td style="text-align:left">1 年</td><td style="text-align:left">节点3 §8.1、节点4 §6.2</td></tr><tr><td style="text-align:left">运用日志（E-204 连续 3 次）</td><td style="text-align:left">时刻、画面ID、结果代码</td><td style="text-align:left">社員コード</td><td style="text-align:left">1 年（C）</td><td style="text-align:left">节点3 §2.3 步骤8～9、节点4 §6.2</td></tr><tr><td style="text-align:left">运用日志（Session 销毁失败）</td><td style="text-align:left"><strong>不输出到服务器</strong>（只有客户端 <code>console.warn</code>）</td><td style="text-align:left">—</td><td style="text-align:left">—</td><td style="text-align:left">差异 #2</td></tr><tr><td style="text-align:left">异常日志（E-208／E-209）</td><td style="text-align:left">异常的内容（仅运用侧）</td><td style="text-align:left">面向利用者文本中的内部信息</td><td style="text-align:left">1 年（C）</td><td style="text-align:left">节点3 §6.1、§8.1</td></tr><tr><td style="text-align:left">路径</td><td style="text-align:left">应用向标准输出输出一行一条 JSON → 采集代理 → 公司内日志基础设施。<strong>应用不直接向外部发送</strong></td><td style="text-align:left">—</td><td style="text-align:left">—</td><td style="text-align:left">节点4 §6.2</td></tr></tbody></table>
+<h4>4.1.2 告警（指标、阈值、超过时的动作）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">指标</th><th style="text-align:left">阈值</th><th style="text-align:left">如何决定</th><th style="text-align:left">超过时的动作</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">3 个端点的 5xx 应答</td><td style="text-align:left">由运用方设置（值不放在本书）</td><td style="text-align:left">由运用方决定（件数与时间窗）</td><td style="text-align:left">通知运用一次窗口 → 发布责任人按 §3.1 #1 判定触发条件</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">登录失败的连续次数</td><td style="text-align:left">由运用方设置（值不放在本书）</td><td style="text-align:left">由运用方决定（N 件）。<strong>本次发布没有锁定机制</strong>（§6）</td><td style="text-align:left">确认状况。业务上是否需要由人判断，必要时退回上游</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">稼働状態检查不可（HTTP 403）的持续</td><td style="text-align:left">由运用方设置（值不放在本书）</td><td style="text-align:left">由运用方决定</td><td style="text-align:left">确认稼働状態表（系统共通表）与主数据是否可参照</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">登录响应时间</td><td style="text-align:left">上游 §11 的水准＝<strong>3 秒以内（95 百分位）</strong></td><td style="text-align:left">已批准的水准。判定窗口由运用方决定</td><td style="text-align:left">持续超限则调查 DB 应答、主数据件数</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">可用性</td><td style="text-align:left">上游 §11 的水准＝<strong>99.5%（业务时间帯）</strong></td><td style="text-align:left">已批准的水准。按月确认</td><td style="text-align:left">未达标则分析原因并报告</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>init_failure_repeated</code>（<code>/init</code> 的连续失败）</td><td style="text-align:left"><strong>第 3 次时输出 1 件</strong>（第 1～2 次不输出）</td><td style="text-align:left">设计固定（B-29／B-30、差异 #6）</td><td style="text-align:left">确认件数增加，并确认画面マスタ与 DB 连通性</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">Session 销毁失败</td><td style="text-align:left"><strong>无法监控</strong>（不出现在服务器日志中。差异 #2）</td><td style="text-align:left">—</td><td style="text-align:left">作为限制记录，依赖 idle 30 分的失效</td></tr></tbody></table>
+<ul><li><strong>#1、#2、#3 与监控间隔的阈值，由运用方在发布前设置。</strong> 设置之前依据 §2.1 #6 不开始步骤。</li><li><strong>AI 不设置阈值的理由</strong>：阈值是关于业务可用性与运用体制的约定，是（运用方的）人的判断（规则 02 §4.1）。</li></ul>
+<h4>4.1.3 健康检查</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">对象</th><th style="text-align:left">方法</th><th style="text-align:left">判定</th><th style="text-align:left">注意</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">API 连通性</td><td style="text-align:left"><code>POST /R60Login/init</code>（不带输入，因此最轻）</td><td style="text-align:left">HTTP 200、<code>errorCode="0"</code></td><td style="text-align:left"><strong>稼働状態为不可时返回 HTTP 403（不是异常）。</strong> 把 403、<code>R60W0004</code> 作为「运行停止中」区分</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">DB 参照</td><td style="text-align:left">对 5 张表的 SELECT 成功（参照权限）</td><td style="text-align:left">每张表能取得 1 行</td><td style="text-align:left">本画面不写，因此不做伴随更新的检查</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">监控间隔、超时</td><td style="text-align:left">由运用方设置（值不放在本书）</td><td style="text-align:left">由运用方决定</td><td style="text-align:left">—</td></tr></tbody></table>
+<h3>4.2 故障时的一次应对</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">症状（来自利用者的申报）</th><th style="text-align:left">利用者看到的东西</th><th style="text-align:left">初步排查</th><th style="text-align:left">一次应对</th><th style="text-align:left">联络</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">画面打不开／不出初始显示</td><td style="text-align:left">在线使用错误画面</td><td style="text-align:left">E-203／E-206。稼働状態为不可、行 0 件、参照例外</td><td style="text-align:left">确认稼働状態（<code>operation_flg</code>）与 DB 连通性。若为不可，请运用方更正稼働状態</td><td style="text-align:left">运用一次窗口 → 发布责任人</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">无法登录（业务错误）</td><td style="text-align:left">Session 错误画面</td><td style="text-align:left">E-201／E-202／E-205／E-207（<strong>文本相同，不让利用者区分</strong>）</td><td style="text-align:left">输入是否为 7 位／是否有全角、前后空白／是否为前一天生成的加密值（跨日）／社員マスタ中是否有未删除行</td><td style="text-align:left">运用一次窗口（对利用者只提示同一文本）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">出现系统错误画面</td><td style="text-align:left">系统错误画面</td><td style="text-align:left">E-204（取得画面マスタ的异常）／E-208／E-209</td><td style="text-align:left">确认异常日志、主数据是否存在、消息管理マスタ（SQL-6）是否 0 件</td><td style="text-align:left">运用一次窗口 → 发布责任人</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">无法输出 URL</td><td style="text-align:left">错误通知（不跳转）</td><td style="text-align:left">E-210（超过 150 位）／E-202（正规化后含非数字）</td><td style="text-align:left">确认 URL 生成用配置（scheme／host／port／context／route）是否存在以及输入值</td><td style="text-align:left">运用一次窗口</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">登录后不跳转</td><td style="text-align:left">停留在当前画面</td><td style="text-align:left">跳转目标 URL 的环境变量未设置（差异 #3）</td><td style="text-align:left">确认 §5.2 的键是否存在</td><td style="text-align:left">运用负责人</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">关闭后 Session 仍残留</td><td style="text-align:left">画面会关闭</td><td style="text-align:left">销毁请求的目标未设置／失败（差异 #2）</td><td style="text-align:left">在 idle 30 分后失效。因为保存在进程内，重启也会消失</td><td style="text-align:left">运用一次窗口（仅记录）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">模拟版的跳转与预期不符</td><td style="text-align:left">未附加 <code>gmnKbn</code> 的 URL</td><td style="text-align:left">差异 #5（已知限制）</td><td style="text-align:left">作为已知现象说明</td><td style="text-align:left">运用一次窗口</td></tr></tbody></table>
+<ul><li><strong>本画面不更新业务数据。</strong> 若故障应对中需要直接更新主数据，那是由持有其他步骤与权限的运用负责人进行的工作，本书不持有该步骤。</li><li><strong>一次应对中不做的事</strong>：变更当日密钥（日期）、手动延长 Session、通过增加端点来规避。这些都属于设计变更（CR）。</li></ul>
+<h3>4.3 常见现象</h3>
+<h4>4.3.1 E-201～E-210</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">E-ID</th><th style="text-align:left">触发条件（利用者看到的症状）</th><th style="text-align:left">HTTP</th><th style="text-align:left"><code>errorCode</code>／<code>errorDetailCode</code></th><th style="text-align:left">跳转目标</th><th style="text-align:left">运用的初期应对</th></tr></thead><tbody><tr><td style="text-align:left">E-201</td><td style="text-align:left">社員マスタ中没有未删除的对应行／没有连接目标</td><td style="text-align:left">200</td><td style="text-align:left"><code>1</code>／<strong>不返回</strong></td><td style="text-align:left">Session 错误画面</td><td style="text-align:left">确认社員マスタ的未删除行与连接目标</td></tr><tr><td style="text-align:left">E-202</td><td style="text-align:left"><code>/login</code> 前的 7 位输入非法／<code>/generateUrl</code> 中正规化后含非数字／起動区分、権限区分超出取值范围</td><td style="text-align:left">200（<code>/login</code> 前无应答）</td><td style="text-align:left"><code>1</code>／<code>R60W0001</code></td><td style="text-align:left">Session 错误画面（起動区分、権限区分不跳转）</td><td style="text-align:left">确认输入值的位数、全角、空白</td></tr><tr><td style="text-align:left">E-203</td><td style="text-align:left">稼働状態无效、无数据、参照例外（<code>/login</code>、<code>/generateUrl</code>）</td><td style="text-align:left"><strong>403</strong></td><td style="text-align:left"><code>1</code>／<code>R60W0004</code></td><td style="text-align:left">在线使用错误画面</td><td style="text-align:left">确认稼働状態与 DB 连通性</td></tr><tr><td style="text-align:left">E-204</td><td style="text-align:left">取得画面マスタ失败</td><td style="text-align:left">200</td><td style="text-align:left"><code>2</code>／<code>R60E9999</code></td><td style="text-align:left">系统错误画面（不自动重试）</td><td style="text-align:left">确认画面マスタ与 DB。连续 3 次输出 1 件运用日志（§4.3.2）</td></tr><tr><td style="text-align:left">E-205</td><td style="text-align:left">解密失败（非法的加密值、当日密钥跨日）</td><td style="text-align:left">200</td><td style="text-align:left"><code>1</code>／<code>R60W0003</code></td><td style="text-align:left">Session 错误画面</td><td style="text-align:left">引导重新登录（跨日会以已知差异 #9 的形式成为 E-201）</td></tr><tr><td style="text-align:left">E-206</td><td style="text-align:left">初始显示（<code>/init</code>）的稼働状態检查不可</td><td style="text-align:left"><strong>403</strong></td><td style="text-align:left"><code>1</code>／<code>R60W0004</code></td><td style="text-align:left">在线使用错误画面</td><td style="text-align:left">确认稼働状態与 DB 连通性</td></tr><tr><td style="text-align:left">E-207</td><td style="text-align:left"><code>/login</code> 无对应（应答形式）</td><td style="text-align:left">200</td><td style="text-align:left"><code>1</code>／<strong>不返回</strong></td><td style="text-align:left">Session 错误画面</td><td style="text-align:left">与 E-201 做相同的确认</td></tr><tr><td style="text-align:left">E-208</td><td style="text-align:left">登录处理中的 DB 故障等</td><td style="text-align:left">200</td><td style="text-align:left"><code>2</code>／<code>R60E9999</code></td><td style="text-align:left">系统错误画面</td><td style="text-align:left">确认异常日志与 DB</td></tr><tr><td style="text-align:left">E-209</td><td style="text-align:left"><code>/generateUrl</code> 的加密失败、配置不备</td><td style="text-align:left">200</td><td style="text-align:left"><code>2</code>／<code>R60E9999</code></td><td style="text-align:left">系统错误画面</td><td style="text-align:left">确认配置（route 等）与异常日志</td></tr><tr><td style="text-align:left">E-210</td><td style="text-align:left">生成的 URL 超过 150 位</td><td style="text-align:left">200</td><td style="text-align:left"><code>1</code>／<code>R60W0001</code></td><td style="text-align:left">错误通知（<strong>不截断</strong>）</td><td style="text-align:left">确认 URL 生成用配置与输入值</td></tr></tbody></table>
+<ul><li>文本的实体是消息管理信息（节点3 §6.2 是草案）。E-201／E-202／E-205／E-207 使用<strong>相同文本</strong>，不让利用者推测社員是否存在或输入是否正确（节点3 §6.2）。</li><li>用 HTTP 200 区分业务错误／系统错误属于 C（节点3 §6.1 的注）。403 只用于 E-203／E-206，且是上游的明文。</li></ul>
+<h4>4.3.2 B-30（<code>/init</code> 连续 3 次失败）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">条件</td><td style="text-align:left"><strong>同一客户端</strong>上 <code>/init</code> 的失败（E-204 系）<strong>连续 3 次</strong></td></tr><tr><td style="text-align:left">行为</td><td style="text-align:left">第 1～2 次不输出运用日志（B-29）。<strong>只在第 3 次</strong>输出 1 件 <code>init_failure_repeated</code>（时刻、画面ID、结果代码）。成功则计数归 0（B-31）</td></tr><tr><td style="text-align:left">计数的实体</td><td style="text-align:left">用 Cookie <code>r60login.cid</code>（随机数、HttpOnly）计数（差异 #6、E4）</td></tr><tr><td style="text-align:left">运用的看法</td><td style="text-align:left">日志件数增加表示「同一终端连续 3 次初始显示失败」。<strong>1 次失败不会出现在日志中，因此日志 0 件并不意味着「没有失败」</strong></td></tr><tr><td style="text-align:left">与设计的差异</td><td style="text-align:left">节点3 §2.3 步骤8～9 只规定「连续 3 次输出 1 件」，没有规定计数的实体。实现上用 Cookie 计数（差异 #6）</td></tr><tr><td style="text-align:left">对利用者的提示</td><td style="text-align:left">系统错误画面（不自动重试）。用「再読み込み」按钮再次调用 <code>/init</code></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 交接物一览</h2>
+<h3>5.1 文档</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">文档</th><th style="text-align:left">路径</th><th style="text-align:left">版本、状态</th><th style="text-align:left">交接对象角色</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">发布说明</td><td style="text-align:left">本书 §1</td><td style="text-align:left">1.0.0、<code>baselined</code></td><td style="text-align:left">发布责任人、运用一次窗口</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">发布步骤</td><td style="text-align:left">本书 §2</td><td style="text-align:left">同上</td><td style="text-align:left">运用负责人</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">回滚步骤</td><td style="text-align:left">本书 §3</td><td style="text-align:left">同上（<strong>演练未实施</strong>）</td><td style="text-align:left">运用负责人、发布责任人</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">运用 Runbook</td><td style="text-align:left">本书 §4</td><td style="text-align:left">同上</td><td style="text-align:left">运用一次窗口</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">需求 批准版</td><td style="text-align:left"><code>tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md</code></td><td style="text-align:left">v1.0.4、<code>baselined</code></td><td style="text-align:left">设计负责人</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">基本设计 批准版</td><td style="text-align:left"><code>tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md</code></td><td style="text-align:left">v2.0.6、<code>baselined</code></td><td style="text-align:left">设计负责人</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">详细设计 批准版</td><td style="text-align:left"><code>tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md</code></td><td style="text-align:left">v1.0.3、<code>baselined</code></td><td style="text-align:left">实现负责人、运用负责人</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">框架构筑 批准版</td><td style="text-align:left"><code>tutorial/R60Login/节点4_框架构筑/05_承認版_框架构筑记录.md</code></td><td style="text-align:left">v1.0.1、<code>baselined</code></td><td style="text-align:left">运用负责人</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">制造记录 批准版</td><td style="text-align:left"><code>tutorial/R60Login/节点5_制造/05_承認版_制造记录.md</code></td><td style="text-align:left">v1.0.0、<code>baselined</code></td><td style="text-align:left">实现负责人</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">与设计的差异</td><td style="text-align:left"><code>tutorial/R60Login/节点5_制造/06_設計との差異.md</code></td><td style="text-align:left">v1.0.0、<code>baselined</code></td><td style="text-align:left">全角色（§1.2）</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">单元测试 批准版</td><td style="text-align:left"><code>tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md</code></td><td style="text-align:left">v1.0.0、<code>baselined</code></td><td style="text-align:left">实现负责人</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">结合测试规格书 批准版、验收基准的满足判定</td><td style="text-align:left"><code>tutorial/R60Login/节点7_结合测试/05_承認版_结合测试规格书.md</code>、<code>verification.md</code></td><td style="text-align:left">v1.0.1、<code>baselined</code>（<strong>IT 一项都没有执行</strong>）</td><td style="text-align:left">发布责任人</td></tr><tr><td style="text-align:left">13</td><td style="text-align:left">本节点的输入模板</td><td style="text-align:left"><code>tutorial/R60Login/节点8_发布运维/00_输入模板.yaml</code></td><td style="text-align:left">v0.2.0、<code>filled</code></td><td style="text-align:left">—</td></tr></tbody></table>
+<h3>5.2 环境配置的键一览（值另行管理。本书不写实值）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">用途</th><th style="text-align:left">键</th><th style="text-align:left">值的放置位置</th></tr></thead><tbody><tr><td style="text-align:left">DB 连接</td><td style="text-align:left">连接用户／密码／主机／端口／SID 或服务名（占位 <code>TBL_1</code>／<code>PWD_1</code>／<code>IP_1</code>／<code>PORT_1</code>／<code>SID_1</code>）</td><td style="text-align:left">密钥管理服务或 secret 注入。不放在仓库</td></tr><tr><td style="text-align:left">URL 组装</td><td style="text-align:left"><code>R60_URL_SCHEME</code>／<code>R60_URL_ROUTE</code>／host、port、context 的各个键</td><td style="text-align:left">环境配置</td></tr><tr><td style="text-align:left">跳转目标（共通基础设施）</td><td style="text-align:left"><code>VITE_R60_SESSION_ERROR_URL</code>／<code>VITE_R60_ONLINE_UNAVAILABLE_URL</code>／<code>VITE_R60_SYSTEM_ERROR_URL</code>／<code>VITE_R60_MENU_HEADER_URL</code>／<code>VITE_R60_MENU_URL</code></td><td style="text-align:left">环境配置</td></tr><tr><td style="text-align:left">Session 销毁的请求目标</td><td style="text-align:left"><code>VITE_R60_SESSION_PURGE_URL</code></td><td style="text-align:left">环境配置</td></tr><tr><td style="text-align:left">Session 失效</td><td style="text-align:left">idle 30 分／绝对 8 小时（设置值）</td><td style="text-align:left">配置</td></tr></tbody></table>
+<ul><li><strong>不写 host、port、context 的个别键名。</strong> 差异 #4 点名的只有 <code>R60_URL_ROUTE</code>，其他键名在上游中不存在。不发明名称。</li><li><strong>★「跳转目标（共通基础设施）」的 5 个与「Session 销毁的请求目标」的 1 个，其值在临上线准备时从客户处领取。</strong> 键名与结构已由本方确定，但<strong>值（URL、提供源）只有客户持有</strong>（类别 A。<code>n04.yml</code> OQ-01、OQ-02 的裁决 2026-10-27）。若在未设置的状态下启动，相应的跳转<strong>不会发生</strong>（节点5 差异 #3 的行为）。因此<strong>上线前必须确认这 6 个已设置</strong>——未设置不会导致启动失败，不确认就发现不了。</li></ul>
+<h3>5.3 联络体制（仅角色。不写个人信息、真实联络方式）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">角色</th><th style="text-align:left">职责</th><th style="text-align:left">联络途径</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">发布责任人</td><td style="text-align:left">发布判定（人）、宣布回滚、完成记录</td><td style="text-align:left">公司内联络途径（不写具体值）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">运用一次窗口</td><td style="text-align:left">监控、初步排查、利用者应对</td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">实现负责人（backend／frontend）</td><td style="text-align:left">故障时的原因调查、修正方案</td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">设计负责人</td><td style="text-align:left">设计所引起事象的裁决材料</td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">客户方窗口（共通基础设施的提供方）</td><td style="text-align:left">4 个画面、Session 管理、日志基础设施的提供方</td><td style="text-align:left">同上（经由客户的窗口）</td></tr></tbody></table>
+<ul><li><strong>不把个人姓名、邮件地址、电话号码、真实主机名写入本书。</strong> 联络方式一览由公司内部另行管理，并限定参照权限。</li><li>联络顺序（方案、E4）：一次窗口 → 发布责任人 → 客户方窗口（怀疑共通基础设施侧故障时）。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 本次发布不包含的东西</h2>
+<ul><li><strong>按尝试次数锁定的机制，现时点的实现中还没有。</strong> 节点2 §11 的「登录尝试 5 次／10 分锁定，10 分后自动解除」没有移送到节点3、节点5（实测见 <code>01_AI产出_发布运用计划.md</code> §6.5）。<strong>不过，2026-10-27 的裁决决定把该机制纳入本次发布</strong>（用户发言「都按方案」）。<strong>作为 BUG-002</strong> 向旁路环起票，并把回退起点裁定为 <strong>n03</strong>（详细设计）——在 n03 把停止条件、解除条件追加到设计，在 n05 重新制造，在 n06／n07 观测，然后在本节点的发布判定条件中增加 1 条。<strong>因此本节应读作「在移送完成之前不包含」，而不是「本次发布不包含」。</strong> 移送完成之前无法进行发布判定。追踪由 <code>docs/80_operation/impact-BUG-002.yaml</code> 与 <code>docs/00_plan/coach/R60Login/n09.yml</code> 持有。</li><li>未裁决事项的追踪由 <code>docs/00_plan/coach/R60Login/n07.yml</code>、<code>n08.yml</code>、<code>n04.yml</code> 持有（本书不转写）。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. 发布判定的处理</h2>
+<p>发布判定条件 6 条中，在本书的时点已满足的有 3 条（<code>trace_check --strict</code> Exit 0／<code>docs/<strong></code> 的 <code>.xlsx</code> 0 件／机密仅为占位）。未满足的有 3 条（结合、综合测试未实施／回滚演练未实施／上游存在未裁决事项）。</strong>因此尚未进行发布判定。** 判定由人进行（红线③）。</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>05_承認版_发布运用计划.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

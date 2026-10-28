@@ -1,0 +1,64 @@
+# ============================================================
+# テンプレート: 詳細設計 / 详细设计模板
+# 工程: docs/30_detail_design/  （落地篇 工程篇 S13-14 詳細設計）
+# 使い方: 本ファイルを D-xxx-<Module>.yaml に複製し <...> を実値へ置換する。
+# 三要素必須: logic_ids（ロジック）/ error_branch_table（エラー分岐）/ boundary_value_table（境界値）。
+# 単一ソース則: 物理定義・SQL 位置はここが唯一源。BD 側は参照のみ。
+# ============================================================
+
+# ---- front-matter（7 字段固定・全テンプレート共通）----
+id: TPL-003
+type: detail_design
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ---- body ----
+title: "<詳細設計タイトル>"
+design_id: "<D-xxx>"
+function_id: "<F-xxx>"
+
+# ロジック一覧: 業務ロジックごとに ID・説明・SQL 実装位置を持たせる。
+logic_ids:
+  - logic_id: "<L-xxx>"
+    name: "<ロジック名>"
+    description: "<処理概要>"
+    sql_location: "<file.py Lxxxx-Lyyyy>"   # migration=既存実装の位置 / greenfield=工程05 製造後の自実装位置（工程03 の時点では null 可）
+    steps:
+      - "<step1: 事前チェック>"
+      - "<step2: WHERE 組み立て>"
+      - "<step3: 実行 / コミット>"
+  - logic_id: "<L-yyy>"
+    name: "<ロジック名>"
+    description: "<処理概要>"
+    sql_location: "<file.py Lxxxx-Lyyyy>"   # migration=既存実装の位置 / greenfield=工程05 製造後の自実装位置（工程03 の時点では null 可）
+    steps:
+      - "<step1>"
+
+# エラー分岐表: 発生条件・メッセージ・復帰動作を行形式で構造化。
+error_branch_table:
+  - error_id: "<E-xxx>"
+    condition: "<発生条件>"
+    msg_placeholder: "<MSG_xxx: メッセージID（本文は別管理）>"
+    next_action: "<画面復帰 / フォーカス移動 / ロールバック>"
+  - error_id: "<E-yyy>"
+    condition: "<発生条件>"
+    msg_placeholder: "<MSG_yyy>"
+    next_action: "<画面復帰 / フォーカス移動 / ロールバック>"
+
+# 境界値表: 入力・件数・フォーマットの境界ケースを列挙し TC 設計へ引き継ぐ。
+boundary_value_table:
+  - item: "<項目 / 条件>"
+    boundary: "<境界条件（最小 / 最大 / 空 / 桁溢れ 等）>"
+    expected: "<期待結果>"
+  - item: "<項目 / 条件>"
+    boundary: "<境界条件>"
+    expected: "<期待結果>"
+
+# 未確定事項: 確認票 Q-ID へリンク
+open_issues:
+  - q_id: "<Q-xxx>"
+    question: "<未確定の問い>"
+    status: open

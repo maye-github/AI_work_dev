@@ -1,0 +1,92 @@
+---
+id: E-001
+type: error_catalog
+req_ids:
+- R-101
+status: baselined
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+title: R60Area エラー・イベント一覧（E-001〜E-008）
+error_table:
+- eid: E-001
+  error_id: R60W0010
+  level: WARN
+  occurrence: search
+  condition: 検索結果が 0 件
+  msg_template_placeholder: MSG_R60W0010
+  recovery_action: 一覧を 0 件表示し再検索を促す
+  related_r_id: R-101
+  related_tc_ids:
+  - TC-004
+- eid: E-002
+  error_id: R60W0006
+  level: ERROR
+  occurrence: edit
+  condition: 排他エラー（改竄日時 不一致）
+  msg_template_placeholder: MSG_R60W0006
+  recovery_action: 最新データの再読込を促す
+  related_r_id: R-101
+  related_tc_ids:
+  - TC-005
+- eid: E-003
+  error_id: R60W0014
+  level: ERROR
+  occurrence: edit
+  condition: キー重複（三鍵が既存）
+  msg_template_placeholder: MSG_R60W0014
+  recovery_action: キー項目へフォーカス移動
+  related_r_id: R-101
+  related_tc_ids:
+  - TC-006
+- eid: E-004
+  error_id: R60W0024
+  level: WARN
+  occurrence: delete
+  condition: 被参照エラー（削除不可）
+  msg_template_placeholder: MSG_R60W0024
+  recovery_action: 削除を中止し一覧へ復帰
+  related_r_id: R-101
+  related_tc_ids:
+  - TC-007
+- eid: E-005
+  error_id: R60E0025
+  level: ERROR
+  occurrence: delete
+  condition: システムエラー（内部例外・判定不能）
+  msg_template_placeholder: MSG_R60E0025
+  recovery_action: ロールバックし画面復帰
+  related_r_id: R-101
+  related_tc_ids:
+  - TC-006
+- eid: E-006
+  error_id: R60W0033
+  level: WARN
+  occurrence: edit
+  condition: ロケーション未登録（原材料・error_flg=1）
+  msg_template_placeholder: MSG_R60W0033
+  recovery_action: ロケーション項目へフォーカス移動
+  related_r_id: R-101
+  related_tc_ids:
+  - TC-008
+- eid: E-007
+  error_id: R60W0033
+  level: WARN
+  occurrence: edit
+  condition: ロケーション未登録（半製品・error_flg=2）
+  msg_template_placeholder: MSG_R60W0033
+  recovery_action: ロケーション項目へフォーカス移動
+  related_r_id: R-101
+  related_tc_ids:
+  - TC-008
+- eid: E-008
+  error_id: R60A0039-0040
+  level: INFO
+  occurrence: delete
+  condition: 削除確認メッセージ
+  msg_template_placeholder: MSG_R60A0039-0040
+  recovery_action: 確認ダイアログを表示（OK／キャンセル）
+  related_r_id: R-101
+  related_tc_ids:
+  - TC-007
+open_issues: []

@@ -1,0 +1,102 @@
+---
+id: L-014
+type: logic_design
+req_ids:
+- R-101
+status: baselined
+sensitivity: internal
+owner: AI-PG
+version: 0.1.0
+title: L-014 R60Area 検索ロジック
+logic_id: L-014
+design_id: D-043
+function_id: F-042
+name: search 業務（検索ロジック）
+description: 一覧検索のオンラインチェック・WHERE 組み立て・件数取得・ページング・56 項目マッピング。
+sql_location: R60AreaController.py L1499-L1647
+sort_whitelist:
+- CMP_CD
+- JIG_CD
+- ARA_CD
+default_sort: ALLOWED_SORT_FIELDS 以外は JIG_HYJ_SEQ ベースの既定ソートへフォールバック
+paging: OFFSET-FETCH + ROWID
+input_ids: &id001
+- I-201
+- I-202
+- I-203
+- I-204
+- I-205
+- I-206
+- I-207
+- I-208
+- I-209
+- I-210
+- I-211
+- I-212
+- I-213
+- I-214
+- I-215
+- I-216
+- I-217
+- I-218
+- I-219
+- I-220
+- I-221
+- I-222
+- I-223
+- I-224
+- I-225
+- I-226
+- I-227
+- I-228
+- I-229
+- I-230
+- I-231
+- I-232
+- I-233
+- I-234
+- I-235
+- I-236
+- I-237
+- I-238
+- I-239
+- I-240
+- I-241
+- I-242
+- I-243
+- I-244
+- I-245
+- I-246
+- I-247
+- I-248
+- I-249
+- I-250
+- I-251
+- I-252
+- I-253
+- I-254
+- I-255
+- I-256
+output_ids: *id001
+steps:
+- step: 1
+  name: online 利用可否チェック
+  lines: 1436-1437
+  detail: r60util.chk_onl_flg でオンライン利用可否を確認し、不可時は OnlineException。
+- step: 2
+  name: WHERE 組み立て
+  lines: 1450-1472
+  detail: 会社コードは完全一致、事業場コードはカンマ分割後の要素、エリアコードは LIKE 前方一致（ESCAPE '\'）、btn=0 で REG_STS、is_deleted=0 で削除フラグを条件化。
+- step: 3
+  name: COUNT(*) 総件数とページング境界
+  lines: 1474-1506
+  detail: COUNT(CMP_CD) を取得。0 件は R60W0010、最大件数超過は R60W0005。現在ページを総ページ数／下限へ補正し OFFSET を算出。
+- step: 4
+  name: select_column 動的取得と OFFSET-FETCH + ROWID
+  lines: 1508-1541
+  detail: r60get_select_column で列を動的取得。ALLOWED_SORT_FIELDS={CMP_CD,JIG_CD,ARA_CD} 以外は既定ソートへフォールバックし、ORDER BY ... ,ROWID と OFFSET/FETCH で取得。
+- step: 5
+  name: 56 項目マッピング
+  lines: 1543-1647
+  detail: 取得行を 56 項目（SearchItemData）へ代入し data と総件数を返却。
+open_issues: []

@@ -1,0 +1,108 @@
+---
+id: L-015
+type: logic_design
+req_ids:
+- R-101
+status: baselined
+sensitivity: internal
+owner: AI-PG
+version: 0.1.0
+title: L-015 R60Area 登録・修正・削除ロジック
+logic_id: L-015
+design_id: D-043
+function_id: F-042
+name: initEdit/edit/delete 業務（排他+参照+重複）
+description: 登録・修正・複製・論理削除における重複／排他／被参照チェックと DML 実行、緊急配信、コミット。
+sql_location: R60AreaController.py L1713-L2915
+input_ids: &id001
+- I-201
+- I-202
+- I-203
+- I-204
+- I-205
+- I-206
+- I-207
+- I-208
+- I-209
+- I-210
+- I-211
+- I-212
+- I-213
+- I-214
+- I-215
+- I-216
+- I-217
+- I-218
+- I-219
+- I-220
+- I-221
+- I-222
+- I-223
+- I-224
+- I-225
+- I-226
+- I-227
+- I-228
+- I-229
+- I-230
+- I-231
+- I-232
+- I-233
+- I-234
+- I-235
+- I-236
+- I-237
+- I-238
+- I-239
+- I-240
+- I-241
+- I-242
+- I-243
+- I-244
+- I-245
+- I-246
+- I-247
+- I-248
+- I-249
+- I-250
+- I-251
+- I-252
+- I-253
+- I-254
+- I-255
+- I-256
+output_ids: *id001
+steps:
+- step: 1
+  name: mode1/mode2 登録前キー重複チェック
+  lines: 2429-2451
+  detail: 新規(mode=1)・複製(mode=2)時に三鍵の COUNT を確認し、既存時は R60W0014（E-003）。
+- step: 2
+  name: mode3 修正前 排他チェック
+  lines: 2612-2619
+  detail: 修正(mode=3)時に haita_check_area（L2846-L2872）で 改竄区分 と 改竄日時 を取得し、不一致時は R60W0006（E-002）。
+- step: 3
+  name: 被参照チェック（削除フラグ=1 時）
+  lines: 2692-2705
+  detail: 削除フラグ=1 の場合のみ R60_Check_Area_Info_FNC で被参照を確認。参照ありは R60W0024（E-004）、判定不能は R60E0025（E-005）。
+- step: 4
+  name: ロケーション 2 件存在チェック
+  lines: 2491-2519
+  detail: 原材料・半製品のデフォルト場所を plc_exist_check（L2874-L2894）で確認。未登録時は error_flg=1／2 の R60W0033（E-006／E-007）。
+- step: 5
+  name: set_reg_sts 15 項目判定
+  lines: 2820-2842
+  detail: set_reg_sts_area で 15 項目すべて NotEmpty のとき REG_STS_ON、それ以外は REG_STS_OFF。
+- step: 6
+  name: INSERT / UPDATE / 論理削除 DML
+  lines: 2525-2604, 2708-2813, 2224-2313
+  detail: 登録は INSERT VALUES（42 列）、修正は UPDATE SET、削除は UPDATE 削除フラグ=1 の論理削除。
+- step: 7
+  name: 緊急配信（SEND_STS=9）
+  lines: 2606-2607, 2315-2316, 2810-2811
+  detail: 登録・削除・修正の各処理後に emergency_send_area（L2897-L2911）を呼び、該当時は緊急配信を実行。
+- step: 8
+  name: conn.commit()
+  lines: 2610, 2319, 2814
+  detail: トランザクションを commit して確定。例外時はロールバック。
+open_issues: []

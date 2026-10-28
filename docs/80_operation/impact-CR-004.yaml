@@ -1,0 +1,232 @@
+---
+id: CR-004
+type: impact_analysis
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ============================================================================
+# 影響分析レポート（CR-004）
+# ============================================================================
+#
+# 本ファイルは docs/80_operation/impact-analysis-template.yaml に準拠する。
+# 産出者は実行体 trans-cosmos-ai-node9-change。本件は作業票 §3 ステップ2
+# （影響面の機械的逆引き）のみの指示であり、ステップ3（回溯の裁定）・
+# ステップ4（失効記録）・ステップ5（回帰）・ステップ6（知識沈殿）は実行していない。
+#
+# 番号: CR-004 は台帳 docs/00_registry/ids.yml が発番済み（status: open）。
+#   本ファイルは番号を考案していない。失効記録（mark-stale）も実行していない。
+#
+# 機密則: 実データ値・接続情報・実 IP・実社員名・実メールアドレス・顧客名は記載しない。
+#   値が必要な箇所は占位（COL_1 / VAL_1 等）で記述する。
+#
+# 書式: 単一の YAML 文書である（冒頭の `---` は 1 つだけ。収尾 `---` は書かない）。
+
+# ── ① 案件 ────────────────────────────────────────────────────────────────
+title: "節点2 承認版 §1 備考① の画面ルート接頭辞（/R60Login/）と API 端点接頭辞の重複"
+case_ref: "CR-004"
+case_kind: change_request
+raised_by: "社内レビュー（節点4 框架構築・ルート規約の最終確定時に上流の表記差として検出）"
+raised_at: "2026-10-23"   # 検出日: 節点4 承認版 v1.0.0 の変更履歴（2026-10-23）。台帳への登録は 2026-10-26（ids.yml の注記）
+summary: >-
+  節点2 承認版 §1 備考① は画面ルート接頭辞を `/R60Login/` とするが、API 端点も
+  `POST /R60Login/init`・`/R60Login/login`・`/R60Login/generateUrl` であり、そのまま採ると
+  画面ルートと API 端点の接頭辞が同一になって区別できない。節点4 は節点3 側を採り、
+  画面 `/R60/{gmnId}` ／ API `/R60Login/` としてルート規約を最終確定した（Q-223 の範囲）。
+
+# ── 出所（番号・起点の引用）────────────────────────────────────────────────
+source_ref:
+  registry: "docs/00_registry/ids.yml"
+  case_id: "CR-004"                        # status: open
+  related_ids: ["F-201", "L-201"]          # ids.yml の CR-004.related_ids をそのまま転記
+  used_by: "tutorial/R60Login/节点4_框架构筑/05_承認版_框架构筑记录.md"
+  impact_command: "py -3 -m tools.impact F-201"
+  strict_command: "py -3 -m tools.impact F-201 --strict"
+  # 生の出力から読み取った数値（推測ではない）
+  raw_output:
+    target_status: baselined
+    direction: both
+    depth: null                            # 命令の印字は「深さ=無制限」
+    downstream_count: 46                   # 「▼ 下流（作り直しが必要になり得る）: 46 件」
+    upstream_count: 1                      # 「▲ 上流（見直しが必要になり得る）: 1 件」
+    order_count: 47                        # 「↻ 推奨の作り直し順」の項数
+    strict_exit_code: 0                    # py -3 -m tools.impact F-201 --strict → Exit 0
+    discovered_undeclared_edges: 0         # --json の discovered が空（漏記候補なし）
+    graph_sizes:
+      down_edges: 147
+      up_edges: 147
+      declared_edges: 147
+
+# ── ② 影響面（`py -3 -m tools.impact F-201` の出力を転記）──────────────
+#    値は自分で考えていない。命令の印字をそのまま写している。
+#    起点 F-201 自身は下流一覧に現れないが、「推奨の作り直し順」の 1 番目に印字された。
+declared_scope:
+  upstream_trigger: "F-201"
+  downstream:
+    # 命令では「▲ 上流」1 件として印字されたもの（下流一覧ではない）。
+    requirements: ["R-201"]
+    # 命令の下流一覧に F-xxx は 1 件も現れない（空は出力どおり）。
+    basic_design: []
+    screen_items:
+      - I-301
+      - I-302
+      - I-303
+      - I-304
+      - I-305
+      - I-306
+      - I-307
+      - I-308
+      - I-309
+      - I-310
+      - I-311
+      - I-312
+      - I-313
+      - I-314
+      - I-315
+      - I-316
+      - I-317
+      - I-318
+      - I-319
+      - I-320
+    detail_design:
+      - D-201
+      - D-202
+      - D-203
+      - D-204
+      - D-205
+      - L-201
+      - L-202
+      - L-203
+      - L-204
+      - L-205
+      - L-206
+      - L-207
+      - L-208
+    errors:
+      - E-201
+      - E-202
+      - E-203
+      - E-204
+      - E-205
+      - E-206
+      - E-207
+      - E-208
+      - E-209
+      - E-210
+    # R60Login には TC-/IT- の登録 ID が無いため、命令は 1 件も印字しない（空は出力どおり）。
+    tests: []
+    # テンプレート拡張: 命令の下流一覧に CR が 3 件現れるため、対応する区分を追加した。
+    change_requests: ["CR-002", "CR-003", "CR-004"]
+  # 46（下流）+ 1（上流）= 47。命令が印字した 2 つの件数の合計。
+  total_count: 47
+
+# ── ③ 回溯分析（★人だけができる。AI は埋めない）─────────────────────────
+#    本実行体への指示は「影響面逆引きのみ」。裁定は行っていないため空欄。
+root_cause_node: 2
+root_cause_class: design
+root_cause_note: "節点2 v2.0.0 で基本設計書を §1 概要＋§7 API の二部構成へ再編した際、旧 v1.0.x の「画面ルート接頭辞は /R60Login/」という記述を §1 備考① へそのまま持ち込み、同一文書 §5 の /R60/<gmnId> と突き合わせる検査が無かったため、承認まで検出されなかった。節点3 は §1.3 の端点定義を正として /R60/{gmnId}（画面）と /R60Login/（API）を分けて設計し、節点4 が §6.1 で衝突を注記して最終確定したため、下流は正しい。上流 R-201（遷移 URL /R60/Pages/index.jsp...）とも適合する。（裁定: 2026-10-27 ユーザー「好的」＝n02 案の採用。note は AI 起草、必要なら上書き可）"
+
+# ── ④ 作り直し順（命令の「推奨の作り直し順」を 1〜47 の順で転記）─────────
+redo_order:
+  - F-201
+  - CR-002
+  - D-201
+  - D-202
+  - D-203
+  - D-204
+  - D-205
+  - I-301
+  - I-302
+  - I-303
+  - I-304
+  - I-305
+  - I-306
+  - I-307
+  - I-308
+  - I-309
+  - I-310
+  - I-311
+  - I-312
+  - I-313
+  - I-314
+  - I-315
+  - I-316
+  - I-317
+  - I-318
+  - I-319
+  - I-320
+  - L-201
+  - CR-004
+  - L-202
+  - E-204
+  - E-206
+  - L-203
+  - E-201
+  - E-207
+  - E-208
+  - L-204
+  - L-205
+  - E-203
+  - E-210
+  - L-206
+  - E-205
+  - E-209
+  - L-207
+  - E-202
+  - L-208
+  - CR-003
+
+# ── ⑤ 失効の記録（人が tools.registry で実行。実行体は代行しない）────────
+stale_recorded:
+  command: 'py -3 -m tools.registry mark-stale F-201 --reason "<変更内容>" --trigger <上流ID> --by <人>'
+  applied: true
+  applied_at: "2026-10-27"
+  applied_by: "SE-001"
+  cleared: ["F-201"]
+  cleared_at: "2026-10-27"
+
+# ── ⑥ 回帰（2026-10-27。★「設計レベルの整合確認」であり、テストの実行ではない）──
+regression:
+  unit:
+    node: 6
+    result: design_level_consistent
+    note: "節点6 の TC は画面遷移を `/R60/{gmnId}`、API を `/R60Login/init|login|generateUrl` と書いており、v2.0.5 の訂正と一致する。**TC は 1 本も実行していない**（実行基盤が未確定）。したがって『合格』ではない。"
+  integration:
+    node: 7
+    result: design_level_consistent
+    note: "節点7 の IT-201〜IT-211 も同じ使い分けで書かれており、v2.0.5 の訂正と一致する。**IT は 1 本も実行していない**（`verification.md` の判定欄は『未実施』のまま）。したがって『合格』ではない。"
+  method: "grep による設計文書の整合確認（テスト実行ではない）"
+  rework_needed: false
+  rework_reason: "節点3〜7 は v2.0.5 より前から `/R60/{gmnId}`（画面）と `/R60Login/`（API）を使い分けていた。訂正したのは上流の 1 行のみで、下流の記述は元から正しい。"
+  gate_result: "design_level_consistent（実行による回帰は未実施）"
+
+# ── ⑦ 知識沈殿（2026-10-27 起案。採否・規則化の可否は人が決める）──────────
+knowledge_entry:
+  symptom: "節点2 承認版 §1 備考① が画面ルート接頭辞を `/R60Login/` と書き、同じ文書 §6・§7 の `/R60/<gmnId>`（画面）・`/R60Login/`（API）と食い違ったまま v2.0.2〜v2.0.4 の承認に至った。"
+  impact: "工程04 のルート規約確定時に検出。節点3〜7 は元から正しく使い分けており、下流へは波及していない。上流は v2.0.5 で 1 行訂正。"
+  cause: "節点2 v2.0.0 の構成全面改訂で旧版の記述を §1 概要へ持ち込んだ際、同一文書内の §6・§7 と突き合わせる検査が無かった。gate1/3/5 は自然文の用語整合を見ず、規則 02 §9 の移送検査は節点間のみを対象とする。"
+  countermeasure: "実装値（ルート・端点・固定文言・ステータス値）を各設計書の 1 表に集約し、本文は表を参照する形にすれば重複定義を grep で検出できる。規則化するなら `.claude/rules/02-requirements.md` §9 へ『同一文書内の実装値の一貫性』を 1 項追加（紅线は 7 条固定のため紅线にはしない）。**規則追加・検査追加は未実施**であり、本項は起案である。"
+  recorded_in: "docs/90_knowledge/review_diff_assets/R60Login/review_comments.md"
+  appended: true
+
+# ── 未確定（人へ戻す問い。AI は裁定しない）────────────────────────────────
+open_issues:
+  - q_ref: "Q-223"
+    question: >-
+      節点4 が Q-223 の範囲で「画面 `/R60/{gmnId}` ／ API `/R60Login/`」としてルート規約を
+      最終確定している。この確定のみで CR-004 を閉じてよいか、それとも節点2 承認版 §1 備考①
+      の文言修正を別途起票する必要があるか（未裁定）。
+    status: closed
+    resolution: >-
+      後者（節点2 §1 備考① の修正）を採った。2026-10-27 に mark-stale → 訂正 → 再承認
+      （節点2 v2.0.5・SE-001）→ changed → baselined → clear-stale を実行。訂正は 1 行のみ。
+    resolved_by: "SE-001"
+    resolved_at: "2026-10-27"
+  - q_ref: ""
+    question: >-
+      機械逆引きは ID 単位で引くため、ID を持たない成果物（節点4・5・6・7・8 の承認版と
+      節点5 の製造コード）は declared_scope に現れない。これらを影響面に含めるかは人の裁定。
+      Q-ID は発番していない（番号を考案しない）。
+    status: open

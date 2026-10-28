@@ -1,0 +1,37 @@
+module: R60Maker
+evidence_dir: reports/module-survey/R60Maker
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_11_R60Maker_メーカーマスタメンテ_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_11_R60Maker_メーカーマスタメンテ.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 4
+  impl_alignment: null
+  teachability: 4
+complexity:
+  level: medium
+  signals: {screens: 1, endpoints: 8, tables: 1, master_detail: false, upload: false, batch: false, sim: false, external: false}
+  note: "単一画面だが新規・複製・修正の3モードを持つため medium（複数モード）。AB は全8 action が404だが、現物の router は実在し main.py で登録済み・要求パスとも一致する。したがって『未実装』ではなく『測定時に API が公開していなかった』＝未測定（null）。"
+evidence:
+  - "sheet=概要; row=12-17: 画面ID=R60Maker、機能名/画面名=メーカーマスタメンテ"
+  - "sheet=概要; row=27-28: 前提条件は「なし」「あり」の記載のみで、ありの場合の前提本文が無い"
+  - "sheet=イベント一覧; row=14-27: イベントNo.1〜13（初期表示・表示・仕掛表示・検索条件表示・複製・一覧リンク・新規・ダウンロード・戻る・業務終了・削除・登録・戻る）"
+  - "sheet=業務処理説明; row=22,50,89,128,132,168,204,220,248,258,265,329,410: イベントNo.1〜13の見出しがイベント一覧と一致"
+  - "sheet=画面項目内容(検索); row=22-24: 検索条件はメーカーコード前方一致・メーカー日本語名中間一致・削除含むの3項目"
+  - "sheet=画面項目内容(マスタ項目); row=16-27: マスタ項目はNo.1〜12（実フィールドはメーカーコード/日本語名/カナ名/緊急配信/削除の5項目、他は操作モードとボタン）"
+  - "sheet=画面単項目チェック; row=14-26: チェックはNo.2/3/5〜14の12件（No.1/No.4は見出し）。コード必須・5桁半角英数、日本語名/カナ名の必須・桁・禁止文字、未登録破棄確認"
+  - "sheet=画面項目間・DB整合チェック; row=14-21: チェックはNo.2/3/5〜9の7件（No.1/No.4は見出し）。HIT0件、上限3000件、被参照エラー、排他、コード重複、購入品目別仕入先/原材料仕入単価の参照"
+  - "sheet=項目移送表(DB); row=13-31: 更新対象は R60_MAKER_M_TBL 1表（17カラム、主キー MAKER_CD）"
+  - "reports/module-survey/R60Maker/test/00_単体ﾃｽﾄ仕様兼結果.txt:3-5: テスト項目数 実績216、FP 13"
+  - "D:/AI_work/doc/03_AI/AB_Reports/reports/R60Maker/summary.md:11-39: 🚫8（head/init/check/search×2/detail/copy/new がすべて404 端点不存在）、⏭️2（modify/download は SKIP）"
+  - "D:/AI_work/api/fastapi_oracle_pjt/app/main.py:48,132: R60MakerController を import し app.include_router で登録済み（現物は公開されている）"
+  - "D:/AI_work/api/fastapi_oracle_pjt/app/routers/R60MakerController.py:23,561,670,817,884,984,1103: prefix=/R60Maker、/init・/search・/download・/initEdit・/delete・/edit を持ち、AB が要求した /api/R60Maker/init|search|initEdit のパスと一致する"
+  - "reports/module-survey/impl-size.json: R60Maker view_lines=585 / router_lines=1337 / service_lines=52"
+  - "sheet=画面単項目チェック; row=19-20: メーカー日本語名の必須チェックは削除時R60W0015/緊急配信時R60W0012"
+  - "sheet=業務処理説明; row=269,273,339,343: 削除・登録の必須チェックでR60W0012/R60W0015を使用し、単項目チェックと一致"
+risks:
+  - "AB が全8 action で404。ただし現物の router は実在し main.py:132 で登録済みのため、『実装欠落』とは断定できない。AB 測定時点の API が当該ルーターを公開していなかった（＝未測定）。実装一致の教材に使う前に AB を再実測すること"
+  - "概要の前提条件に「あり」の本文が無く、前提を設計書から特定できない（他3モジュールには受信完了の記載あり）"
+  - "緊急配信・被参照チェック（購入品目別仕入先/原材料仕入単価）など顧客固有語の補足が必要"
+  - "AB の 401/404 と実装の有無は別事実である。AB レポートだけを根拠に『未実装』と書かない（本調査で実際に誤読した）"
+  - "抽出対象外シート（画面遷移図・画面レイアウト・業務処理補足説明）は未確認"
+verdict: "medium 教材として推奨（設計は良好・3 モード＋被参照＋緊急配信が揃う典型形）。実装一致は AB 再実測まで未測定"

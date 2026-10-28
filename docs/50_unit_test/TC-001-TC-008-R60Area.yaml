@@ -1,0 +1,219 @@
+---
+id: TC-001
+type: unit_test_case
+req_ids:
+- R-101
+status: open
+sensitivity: internal
+owner: AI-QA
+version: 0.1.0
+title: R60Area 単体テストケース（TC-001〜TC-008）
+test_cases:
+- test_id: TC-001
+  category: 正常
+  viewpoint: 検索条件を指定した通常検索の検証
+  design_ids:
+  - D-043
+  - L-014
+  - I-201
+  - I-202
+  - I-203
+  req_ids:
+  - R-101
+  preconditions:
+  - R60_AREA_M_TBL に検索対象レコードが存在する。
+  - オンライン利用可否フラグが有効。
+  input_spec:
+  - item: I-201
+    value: '0001'
+    note: 会社コード 完全一致
+  - item: I-202
+    value: '01'
+    note: 事業場コード
+  - item: I-203
+    value: A
+    note: エリアコード 前方一致
+  expected_output:
+  - item: count
+    value: 1 以上
+  - item: I-203
+    value: 前方一致で取得
+  - item: error_code
+    value: '0'
+  assertion_rules:
+  - error_code == '0'
+  - total >= 1
+  - ARA_CD が 'A' で始まる
+- test_id: TC-002
+  category: 正常
+  viewpoint: 新規登録（mode=1）の検証
+  design_ids:
+  - D-043
+  - L-015
+  - I-201
+  - I-202
+  - I-203
+  - I-256
+  req_ids:
+  - R-101
+  preconditions:
+  - 三鍵に該当するレコードが存在しない。
+  - 15 項目がすべて入力済み。
+  input_spec:
+  - item: I-201
+    value: '0001'
+    note: 会社コード
+  - item: I-202
+    value: '01'
+    note: 事業場コード
+  - item: I-203
+    value: NEW
+    note: エリアコード 新規
+  expected_output:
+  - item: error_code
+    value: '0'
+  - item: I-256
+    value: REG_STS_ON
+  assertion_rules:
+  - error_code == '0'
+  - REG_STS == REG_STS_ON
+  - conn.commit 済み
+- test_id: TC-003
+  category: 正常
+  viewpoint: 既存修正（mode=3）の検証
+  design_ids:
+  - D-043
+  - L-015
+  - I-203
+  - I-204
+  req_ids:
+  - R-101
+  preconditions:
+  - 修正対象レコードが存在し 改竄日時 が一致。
+  - 削除フラグ=0。
+  input_spec:
+  - item: I-203
+    value: A01
+    note: 既存エリアコード
+  - item: I-204
+    value: 更新後名称
+    note: エリア名 変更
+  expected_output:
+  - item: error_code
+    value: '0'
+  - item: I-204
+    value: 更新後名称
+  assertion_rules:
+  - error_code == '0'
+  - ARA_NM が更新されている
+- test_id: TC-004
+  category: 境界
+  viewpoint: 検索 0 件時の検証
+  design_ids:
+  - D-043
+  - L-014
+  - I-203
+  - E-001
+  req_ids:
+  - R-101
+  preconditions:
+  - 該当条件に一致するレコードが存在しない。
+  input_spec:
+  - item: I-203
+    value: ZZZZ
+    note: 存在しないエリアコード
+  expected_output:
+  - item: E-001
+    value: R60W0010
+  - item: count
+    value: '0'
+  assertion_rules:
+  - error_id == 'R60W0010'
+  - total == 0
+- test_id: TC-005
+  category: 境界
+  viewpoint: 改竄日時 不一致による排他エラーの検証
+  design_ids:
+  - D-043
+  - L-015
+  - I-233
+  - E-002
+  req_ids:
+  - R-101
+  preconditions:
+  - 他セッションで対象レコードが更新され 改竄日時 が変化。
+  input_spec:
+  - item: I-233
+    value: 2000/01/01 00:00:00
+    note: 古い 改竄日時
+  expected_output:
+  - item: E-002
+    value: R60W0006
+  assertion_rules:
+  - error_id == 'R60W0006'
+- test_id: TC-006
+  category: 異常
+  viewpoint: 重複キー登録の検証
+  design_ids:
+  - D-043
+  - L-015
+  - I-203
+  - E-003
+  req_ids:
+  - R-101
+  preconditions:
+  - 三鍵に一致するレコードが既に存在する。
+  input_spec:
+  - item: I-203
+    value: A01
+    note: 既存エリアコード
+  expected_output:
+  - item: E-003
+    value: R60W0014
+  assertion_rules:
+  - error_id == 'R60W0014'
+- test_id: TC-007
+  category: 異常
+  viewpoint: 被参照レコードの削除フラグ=1 更新の検証
+  design_ids:
+  - D-043
+  - L-015
+  - I-226
+  - E-004
+  req_ids:
+  - R-101
+  preconditions:
+  - 対象レコードが他機能から参照されている。
+  - 削除フラグ=1 を指定。
+  input_spec:
+  - item: I-226
+    value: '1'
+    note: 削除フラグ=1
+  expected_output:
+  - item: E-004
+    value: R60W0024
+  assertion_rules:
+  - error_id == 'R60W0024'
+- test_id: TC-008
+  category: 異常
+  viewpoint: ロケーション未登録による error_flg 返却の検証
+  design_ids:
+  - D-043
+  - L-015
+  - I-215
+  - E-006
+  req_ids:
+  - R-101
+  preconditions:
+  - 移動デフォルトロケーションが ロケーションマスタに未登録。
+  input_spec:
+  - item: I-215
+    value: ZZZ
+    note: 未登録ロケーション
+  expected_output:
+  - item: E-006
+    value: R60W0033 / error_flg=1
+  assertion_rules:
+  - error_id == 'R60W0033'
+  - error_flg == '1'
+open_issues: []

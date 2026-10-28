@@ -1,0 +1,587 @@
+# Gold questions for the legacy R60 teaching corpus.
+# 80 questions: Ssk 15 / User 10 / Plc 15 / Maker 15 / SesModel 15 / KkuChi 10.
+# Every expected chunk id must exist in the teaching index.
+meta:
+  version: 0.1.0
+  language: ja
+  scope: teaching
+  distribution:
+    R60Ssk: 15
+    R60User: 10
+    R60Plc: 15
+    R60Maker: 15
+    R60SesModel: 15
+    R60KkuChi: 10
+
+questions:
+  # ---------------- R60Ssk (simple, update-only) ----------------
+  - qid: GQ-SSK-001
+    module: R60Ssk
+    type: fact
+    question: "R60Ssk の前提条件と、画面が持つ操作の範囲は？"
+    expected_chunk_ids: ["R60Ssk:screen:overview"]
+    expected_answer: "前提条件は IDM からのデータ受信完了。受信済みデータを更新する画面で、新規作成・論理削除を持たない。"
+    must_cite: true
+  - qid: GQ-SSK-002
+    module: R60Ssk
+    type: fact
+    question: "R60Ssk の検索画面は実項目で何件、内訳はどうなっている？"
+    expected_chunk_ids: ["R60Ssk:screen:search-items"]
+    expected_answer: "実項目 35 件。ヘッダー5、検索条件5、条件ボタン2、ページャ5、件数1、一覧8、下部ページャ5、ボタン4。"
+    must_cite: true
+  - qid: GQ-SSK-003
+    module: R60Ssk
+    type: fact
+    question: "R60Ssk のマスタ項目画面はどの操作モードで、編集できる項目は？"
+    expected_chunk_ids: ["R60Ssk:screen:master-items"]
+    expected_answer: "修正モードのみ。編集できるのは経理用会社と経理用事業場の 2 ドロップダウンだけ。"
+    must_cite: true
+  - qid: GQ-SSK-004
+    module: R60Ssk
+    type: fact
+    question: "R60Ssk の API 端点はいくつで、どのような共通規約か？"
+    expected_chunk_ids: ["R60Ssk:api:conventions"]
+    expected_answer: "init・search・download・initEdit・edit の 5 端点。POST / JSON、封筒 {params:{...}}、wire は camelCase。extra='ignore'。"
+    must_cite: true
+  - qid: GQ-SSK-005
+    module: R60Ssk
+    type: rule
+    question: "R60Ssk の検索で許可されるソート項目は？"
+    expected_chunk_ids: ["R60Ssk:logic:sort-page"]
+    expected_answer: "CMP_CD・SSK_UNIT・JIG_SSK_UNIT の 3 項目。指定ソート時は副キーが落ちる。"
+    must_cite: true
+  - qid: GQ-SSK-006
+    module: R60Ssk
+    type: rule
+    question: "R60Ssk の登録時に、変更なしと片方だけ入力のチェックはどう判定する？"
+    expected_chunk_ids: ["R60Ssk:logic:register-checks"]
+    expected_answer: "全項目に変更が無ければ R60W0016。経理用会社と経理用事業場の片方だけに値があれば R60W2002。"
+    must_cite: true
+  - qid: GQ-SSK-007
+    module: R60Ssk
+    type: rule
+    question: "R60Ssk の登録ステータス REG_STS は何を条件に 0 または 1 になる？"
+    expected_chunk_ids: ["R60Ssk:logic:reg-sts"]
+    expected_answer: "会社・組織ユニット・事業場組織ユニット・正式名称のいずれかが未設定なら 0、すべて設定済みなら 1。"
+    must_cite: true
+  - qid: GQ-SSK-008
+    module: R60Ssk
+    type: rule
+    question: "R60Ssk の排他チェックはどの条件で R60W0006 を返す？"
+    expected_chunk_ids: ["R60Ssk:logic:exclusive"]
+    expected_answer: "行が無い場合、または KSN_DAT が一致せず KSN_KBN='1'（オンライン）の場合。バッチ更新は不一致でも許容。"
+    must_cite: true
+  - qid: GQ-SSK-009
+    module: R60Ssk
+    type: rule
+    question: "R60Ssk は新規作成を行う画面か？"
+    expected_chunk_ids: ["R60Ssk:screen:overview"]
+    expected_answer: "新規作成を行わない。IDM 受信済みデータを更新する更新専用画面である。"
+    must_cite: true
+  - qid: GQ-SSK-010
+    module: R60Ssk
+    type: cross
+    question: "R60Ssk の download は search と比べて SQL の組み方がどう違う？"
+    expected_chunk_ids: ["R60Ssk:review:security"]
+    expected_answer: "download は cmp_cd・ssk_unit・sei_nm を WHERE 句へ文字列連結する。search は bind パラメータを使う。"
+    must_cite: true
+  - qid: GQ-SSK-011
+    module: R60Ssk
+    type: cross
+    question: "R60Ssk の A/B レポートは更新系の一致を測れているか？"
+    expected_chunk_ids: ["R60Ssk:test:ab"]
+    expected_answer: "測れていない。8 actionId のうち modify と download は SKIP。一致は参照系 3 件だけ。"
+    must_cite: true
+  - qid: GQ-SSK-012
+    module: R60Ssk
+    type: fact
+    question: "R60Ssk の設計イベントは何件か？"
+    expected_chunk_ids: ["R60Ssk:screen:events"]
+    expected_answer: "16 イベント。"
+    must_cite: true
+  - qid: GQ-SSK-013
+    module: R60Ssk
+    type: fact
+    question: "R60Ssk の検索条件はどの項目が前方一致・中間一致か？"
+    expected_chunk_ids: ["R60Ssk:screen:search-items"]
+    expected_answer: "組織ユニットは前方一致、正式名称は中間一致。会社の初期値はログインユーザの会社。"
+    must_cite: true
+  - qid: GQ-SSK-014
+    module: R60Ssk
+    type: fact
+    question: "R60Ssk のマスタ項目画面のボタン初期状態は？"
+    expected_chunk_ids: ["R60Ssk:screen:master-items"]
+    expected_answer: "戻るは活性、削除は非活性、登録は活性（権限区分 Y の時のみ活性）。"
+    must_cite: true
+  - qid: GQ-SSK-015
+    module: R60Ssk
+    type: rule
+    question: "R60Ssk の全 API 端点が先頭で必ず行うチェックは？"
+    expected_chunk_ids: ["R60Ssk:api:conventions"]
+    expected_answer: "r60util.chk_onl_flg() によるオンライン利用可否チェック。NG なら OnlineException。"
+    must_cite: true
+
+  # ---------------- R60User (thin secondary) ----------------
+  - qid: GQ-USR-001
+    module: R60User
+    type: fact
+    question: "R60User の位置づけ・テーブル・操作モードは？"
+    expected_chunk_ids: ["USR-SCR-001"]
+    expected_answer: "ユーザーマスタメンテナンス。R60_USER_M_TBL 28 列、API 5 端点、操作モードは修正のみ。"
+    must_cite: true
+  - qid: GQ-USR-002
+    module: R60User
+    type: fact
+    question: "R60User の検索画面は実項目で何件、ソート可能な列はいくつ？"
+    expected_chunk_ids: ["USR-SCR-002"]
+    expected_answer: "実項目 42 件。ソート可能な列は 5 つ。"
+    must_cite: true
+  - qid: GQ-USR-003
+    module: R60User
+    type: fact
+    question: "R60User のマスタ項目モーダルは何項目で、編集できるのはどの項目？"
+    expected_chunk_ids: ["USR-SCR-003"]
+    expected_answer: "実項目 20 件、操作モードは修正固定。編集可はメールアドレス2、経理用会社・事業場、役割、帳票共有グループ、帳票参照、帳票権限、ユーザタイプ、緊急配信チェック。"
+    must_cite: true
+  - qid: GQ-USR-004
+    module: R60User
+    type: fact
+    question: "R60User の設計イベントは何件か？"
+    expected_chunk_ids: ["USR-SCR-004"]
+    expected_answer: "13 イベント。"
+    must_cite: true
+  - qid: GQ-USR-005
+    module: R60User
+    type: fact
+    question: "R60User のドロップダウンはいくつで、その選択肢はどこから取得する？"
+    expected_chunk_ids: ["USR-FLD-002"]
+    expected_answer: "7 つ。コード値明細マスタなどの情報源（情報 ID）から取得する。"
+    must_cite: true
+  - qid: GQ-USR-006
+    module: R60User
+    type: rule
+    question: "R60User のテーブルは何列で、更新するのは何列、主キーは？"
+    expected_chunk_ids: ["USR-FLD-003"]
+    expected_answer: "28 列、更新 15 列、主キー STF_CD。INSERT と DELETE は行わない。"
+    must_cite: true
+  - qid: GQ-USR-007
+    module: R60User
+    type: rule
+    question: "R60User の検索で許可されるソート列と、既定ソートは？"
+    expected_chunk_ids: ["USR-LGC-002"]
+    expected_answer: "許可は SZK_CMP_CD・STF_CD・SSK_UNIT・S_CMP_CD・S_JIG_CD の 5 列。既定は DEL_FLG・所属会社・社員コード・ROWID。"
+    must_cite: true
+  - qid: GQ-USR-008
+    module: R60User
+    type: rule
+    question: "R60User の自工／他工判別と登録ボタンの活性制御は？"
+    expected_chunk_ids: ["USR-LGC-004"]
+    expected_answer: "設計は経理用または S 会社・事業場と一致すれば自工。権限 Y 以外は非活性。自工・他工フラグの組合せで活性が決まる。"
+    must_cite: true
+  - qid: GQ-USR-009
+    module: R60User
+    type: rule
+    question: "R60User の緊急配信はいつ実行され、引数は？"
+    expected_chunk_ids: ["USR-LGC-006"]
+    expected_answer: "緊急配信チェックがオンのときだけ、commit 前にテーブル ID・社員コード・プログラム ID を渡して実行する。"
+    must_cite: true
+  - qid: GQ-USR-010
+    module: R60User
+    type: cross
+    question: "R60User で未知の更新エラーが起きたとき画面はどう振る舞う？"
+    expected_chunk_ids: ["USR-REV-001"]
+    expected_answer: "errorCode='1' 以外は TODO のまま処理を抜け、R60I0001 を表示して成功扱いにする。最も危険な差分。"
+    must_cite: true
+
+  # ---------------- R60Plc (medium) ----------------
+  - qid: GQ-PLC-001
+    module: R60Plc
+    type: fact
+    question: "R60Plc の位置づけ・テーブル・API 端点は？"
+    expected_chunk_ids: ["PLC-SCR-001"]
+    expected_answer: "ロケーションマスタ。R60_PLC_M_TBL 41 列、API 6 端点、新規・複製・修正の 3 モード。"
+    must_cite: true
+  - qid: GQ-PLC-002
+    module: R60Plc
+    type: fact
+    question: "R60Plc の検索画面は実項目で何件、ソート可能な列は？"
+    expected_chunk_ids: ["PLC-SCR-002"]
+    expected_answer: "実項目 65 件。ソート可能列は会社・事業場・ロケーションコードの 3 列だけ。"
+    must_cite: true
+  - qid: GQ-PLC-003
+    module: R60Plc
+    type: fact
+    question: "R60Plc のマスタ項目モーダルは実項目何件で、モードごとの削除ボタンは？"
+    expected_chunk_ids: ["PLC-SCR-003"]
+    expected_answer: "実項目 37 件。新規・複製は削除非活性、修正は活性（削除済み行は非活性）。"
+    must_cite: true
+  - qid: GQ-PLC-004
+    module: R60Plc
+    type: fact
+    question: "R60Plc の設計イベントは何件で、API を呼ぶのは何件？"
+    expected_chunk_ids: ["PLC-SCR-004"]
+    expected_answer: "24 件。API を呼ぶのは 13 件で、6 端点に集約される。"
+    must_cite: true
+  - qid: GQ-PLC-005
+    module: R60Plc
+    type: rule
+    question: "R60Plc でロケーション属性区分がタンクのとき、必須に加わる 6 項目は？"
+    expected_chunk_ids: ["PLC-FLD-005"]
+    expected_answer: "検尺管理区分・検尺検定区分・検尺単位・最大深さ・開始検定深さ・仮想タンク区分。実装は '02' で判定する。"
+    must_cite: true
+  - qid: GQ-PLC-006
+    module: R60Plc
+    type: fact
+    question: "R60Plc のテーブルは何列で、操作別の列数は？"
+    expected_chunk_ids: ["PLC-FLD-008"]
+    expected_answer: "INSERT 41 列、UPDATE 33 列、DELETE 33 列。削除は DEL_FLG=1 の UPDATE。"
+    must_cite: true
+  - qid: GQ-PLC-007
+    module: R60Plc
+    type: fact
+    question: "R60Plc の業務キーと桁数は？"
+    expected_chunk_ids: ["PLC-FLD-007"]
+    expected_answer: "CMP_CD 4 桁、JIG_CD 4 桁、PLC_CD 8 桁。PLC_CD は半角英数大文字と _ - ( ) のみ。"
+    must_cite: true
+  - qid: GQ-PLC-008
+    module: R60Plc
+    type: rule
+    question: "R60Plc の検索で、仕掛表示と表示は REG_STS をどう扱う？"
+    expected_chunk_ids: ["PLC-LGC-001"]
+    expected_answer: "仕掛表示（searchBtn=0）の時だけ REG_STS=0 を加える。表示（searchBtn=1）では REG_STS を加えない。"
+    must_cite: true
+  - qid: GQ-PLC-009
+    module: R60Plc
+    type: rule
+    question: "R60Plc のソート許可項目と既定ソートは？"
+    expected_chunk_ids: ["PLC-LGC-003"]
+    expected_answer: "許可は CMP_CD・JIG_CD・PLC_CD の 3 項目。既定は DEL_FLG・CMP_CD・JIG_CD・PLC_CD・ROWID。"
+    must_cite: true
+  - qid: GQ-PLC-010
+    module: R60Plc
+    type: rule
+    question: "R60Plc の重複チェックはどのキーで、削除済みはどう扱う？"
+    expected_chunk_ids: ["PLC-LGC-010"]
+    expected_answer: "CMP_CD・JIG_CD・PLC_CD の 3 キー。実装は DEL_FLG を見ないため削除済みでも重複になる（R60W0014）。"
+    must_cite: true
+  - qid: GQ-PLC-011
+    module: R60Plc
+    type: rule
+    question: "R60Plc の排他チェックはどの値で比較し、成功時に何を更新する？"
+    expected_chunk_ids: ["PLC-LGC-011"]
+    expected_answer: "initEdit で受け取った KSN_DAT と DB の KSN_DAT を比較する。KSN_KBN='1' かつ不一致なら R60W0006。成功時は KSN_DAT と REV_NO+1。"
+    must_cite: true
+  - qid: GQ-PLC-012
+    module: R60Plc
+    type: rule
+    question: "R60Plc の被参照チェックはいつ、何を呼ぶ？"
+    expected_chunk_ids: ["PLC-LGC-012"]
+    expected_answer: "削除時と、修正で削除チェック付き登録を行う時。R60_CHECK_PLC_INFO_FNC を呼び、1 なら R60W0024、null なら R60E0025。"
+    must_cite: true
+  - qid: GQ-PLC-013
+    module: R60Plc
+    type: rule
+    question: "R60Plc の削除は物理削除か？何を設定する？"
+    expected_chunk_ids: ["PLC-LGC-013"]
+    expected_answer: "物理削除ではなく DEL_FLG=1 の UPDATE。SEND_STS=0、KSN_DAT=現在時刻、REV_NO+1、REG_STS 再判定。"
+    must_cite: true
+  - qid: GQ-PLC-014
+    module: R60Plc
+    type: rule
+    question: "R60Plc の REG_STS 判定は何項目で、タンク時はどう変わる？"
+    expected_chunk_ids: ["PLC-LGC-015"]
+    expected_answer: "基本 18 項目がすべて埋まれば 1。タンク（'02'）の時は 6 項目を必須に加える。"
+    must_cite: true
+  - qid: GQ-PLC-015
+    module: R60Plc
+    type: cross
+    question: "R60Plc の表示ボタンは設計どおり REG_STS で絞っているか？"
+    expected_chunk_ids: ["PLC-REV-005"]
+    expected_answer: "絞っていない。仕掛表示の時だけ REG_STS=0 を加え、表示では加えないため未確定データも出る（D-PL-07）。"
+    must_cite: true
+
+  # ---------------- R60Maker (medium, full) ----------------
+  - qid: GQ-MK-001
+    module: R60Maker
+    type: fact
+    question: "R60Maker の前提条件・排他条件・画面区分は？"
+    expected_chunk_ids: ["R60Maker:screen:overview"]
+    expected_answer: "前提条件は『あり』だが本文なし。排他条件あり（KSN_DAT 比較）。画面区分は参照・登録・更新・削除・DL。"
+    must_cite: true
+  - qid: GQ-MK-002
+    module: R60Maker
+    type: fact
+    question: "R60Maker の検索画面は実項目で何件、検索条件は？"
+    expected_chunk_ids: ["R60Maker:screen:search-items"]
+    expected_answer: "実項目 33 件。検索条件 7 件（メーカーコード・日本語名・削除含む・頁件数・仕掛表示・表示・条件非表示）。"
+    must_cite: true
+  - qid: GQ-MK-003
+    module: R60Maker
+    type: fact
+    question: "R60Maker の設計イベントは何件か？"
+    expected_chunk_ids: ["R60Maker:screen:events"]
+    expected_answer: "13 イベント。"
+    must_cite: true
+  - qid: GQ-MK-004
+    module: R60Maker
+    type: fact
+    question: "R60Maker の API 共通規約で、骨架規則と異なる点は？"
+    expected_chunk_ids: ["R60Maker:api:conventions"]
+    expected_answer: "POST / JSON、{params:{...}}、wire は camelCase。BaseCamelModel の extra は 'ignore' で、骨架規則の 'forbid' と異なる。"
+    must_cite: true
+  - qid: GQ-MK-005
+    module: R60Maker
+    type: rule
+    question: "R60Maker の検索で許可されるソート項目とページング方式は？"
+    expected_chunk_ids: ["R60Maker:api:search-sort-paging"]
+    expected_answer: "許可は MAKER_CD と MAKER_NM の 2 つ。OFFSET/FETCH。未指定・不正時は DEL_FLG・MAKER_CD・ROWID。"
+    must_cite: true
+  - qid: GQ-MK-006
+    module: R60Maker
+    type: rule
+    question: "R60Maker の initEdit は mode ごとに何を引き継ぐ？"
+    expected_chunk_ids: ["R60Maker:api:initEdit"]
+    expected_answer: "mode 1 新規は空と初期値、mode 2 複製は元のコード・名称を引き継ぎ緊急配信オフ、mode 3 修正は元の SEND_STS・DEL_FLG・KSN_*・REV_NO を引き継ぐ。"
+    must_cite: true
+  - qid: GQ-MK-007
+    module: R60Maker
+    type: rule
+    question: "R60Maker の削除は物理削除か？"
+    expected_chunk_ids: ["R60Maker:api:delete"]
+    expected_answer: "論理削除。DELETE ではなく DEL_FLG を更新する。"
+    must_cite: true
+  - qid: GQ-MK-008
+    module: R60Maker
+    type: rule
+    question: "R60Maker の edit 端点はどのモードを扱う？"
+    expected_chunk_ids: ["R60Maker:api:edit"]
+    expected_answer: "新規・複製・更新の 3 モードを扱う。モード値は設計書に無い実装規約。"
+    must_cite: true
+  - qid: GQ-MK-009
+    module: R60Maker
+    type: rule
+    question: "R60Maker の緊急配信は何を引数に呼ぶ？"
+    expected_chunk_ids: ["R60Maker:logic:emergency-send"]
+    expected_answer: "R60_EMERGENCY_SEND_CTL_PKG にマスタファイル ID='R60_MAKER_M_TBL'、社員コード、アプリケーション ID='R60Maker' を渡す。"
+    must_cite: true
+  - qid: GQ-MK-010
+    module: R60Maker
+    type: rule
+    question: "R60Maker の REG_STS は何を条件に決まる？設計書に書かれているか？"
+    expected_chunk_ids: ["R60Maker:logic:reg-sts-rule"]
+    expected_answer: "MAKER_CD・MAKER_NM・MAKER_ANM の 3 つが非空なら 1、空があれば 0。設計書は『共通仕様参照』で本文が無い。"
+    must_cite: true
+  - qid: GQ-MK-011
+    module: R60Maker
+    type: fact
+    question: "R60Maker の単項目チェックは何件か？"
+    expected_chunk_ids: ["R60Maker:error:single-item"]
+    expected_answer: "14 件。"
+    must_cite: true
+  - qid: GQ-MK-012
+    module: R60Maker
+    type: fact
+    question: "R60Maker が使うメッセージは何件で、内訳は？"
+    expected_chunk_ids: ["R60Maker:error:messages"]
+    expected_answer: "19 件。W 13、A 3、I 2、E 1。"
+    must_cite: true
+  - qid: GQ-MK-013
+    module: R60Maker
+    type: cross
+    question: "R60Maker でバックエンドが error_id で返すのはどのチェックか？"
+    expected_chunk_ids: ["R60Maker:error:front-vs-back"]
+    expected_answer: "項目間・DB 整合チェックの 6 種（W0005・W0006・W0010・W0014・W0024・E0025）のみ。単項目チェックはフロント側。"
+    must_cite: true
+  - qid: GQ-MK-014
+    module: R60Maker
+    type: cross
+    question: "R60Maker の主要な差異 D-MK-01〜13 には何がある？"
+    expected_chunk_ids: ["R60Maker:review:deviations"]
+    expected_answer: "項目数不一致、download の SQL 連結、完了メッセージ不在、extra='ignore'、REG_STS 規則が設計に無い、未使用 Create/Copy、AB 404 など。"
+    must_cite: true
+  - qid: GQ-MK-015
+    module: R60Maker
+    type: cross
+    question: "R60Maker の A/B レポートが全端点 404 なのはなぜ？"
+    expected_chunk_ids: ["R60Maker:review:ab-404"]
+    expected_answer: "実装が無いのではなく測定環境に公開されていなかったため。main.py で import・include_router され、prefix とパスも一致する。"
+    must_cite: true
+
+  # ---------------- R60SesModel (complex) ----------------
+  - qid: GQ-SES-001
+    module: R60SesModel
+    type: fact
+    question: "R60SesModel の構成（画面・テーブル・API・テスト）は？"
+    expected_chunk_ids: ["SES-SCR-001"]
+    expected_answer: "主従 4 画面、テーブル 6 つ、API 12 端点、設計イベント 28、単体テスト 760 セル（実項目 679）。"
+    must_cite: true
+  - qid: GQ-SES-002
+    module: R60SesModel
+    type: fact
+    question: "R60SesModel の検索一覧は実項目で何件、ソート可能な列は？"
+    expected_chunk_ids: ["SES-SCR-002"]
+    expected_answer: "実項目 42 件。ソート可能は生産モデルコードと生産モデル名の 2 列だけ。"
+    must_cite: true
+  - qid: GQ-SES-003
+    module: R60SesModel
+    type: fact
+    question: "R60SesModel の明細一覧は実項目何件で、子コードはどう扱う？"
+    expected_chunk_ids: ["SES-SCR-003"]
+    expected_answer: "実項目 30 件。子コードはリンクで、押下すると子のマスタ項目モーダルが修正モードで開く。"
+    must_cite: true
+  - qid: GQ-SES-004
+    module: R60SesModel
+    type: fact
+    question: "R60SesModel の設計イベントは何件で、API を呼ぶのは何件？"
+    expected_chunk_ids: ["SES-SCR-006"]
+    expected_answer: "28 件。API を呼ぶのは 17 件、呼ばないのは 11 件。12 端点に集約。"
+    must_cite: true
+  - qid: GQ-SES-005
+    module: R60SesModel
+    type: fact
+    question: "R60SesModel の API 端点はいくつで、共通規約は？"
+    expected_chunk_ids: ["SES-API-001"]
+    expected_answer: "12 端点。POST / JSON、{params:{...}}、wire は camelCase、extra='ignore'、全端点で chk_onl_flg()。"
+    must_cite: true
+  - qid: GQ-SES-006
+    module: R60SesModel
+    type: rule
+    question: "R60SesModel の明細系 API searchChild・initEditChild・getKonHmk は何をする？"
+    expected_chunk_ids: ["SES-API-009"]
+    expected_answer: "searchChild は親の SES_MDL_CD で子一覧を返し 0 件でも空一覧。initEditChild は子モーダルを 3 モードで初期化。getKonHmk は子コード名称を取得し、取れなければ R60W0011。"
+    must_cite: true
+  - qid: GQ-SES-007
+    module: R60SesModel
+    type: fact
+    question: "R60SesModel が使う 6 テーブルと列数は？"
+    expected_chunk_ids: ["SES-FLD-006"]
+    expected_answer: "親 18 列、明細 21 列、処方 27 列、半製品 62 列、品目・生産モデル参照 17 列、工場生産モデル 21 列。"
+    must_cite: true
+  - qid: GQ-SES-008
+    module: R60SesModel
+    type: fact
+    question: "R60SesModel の半製品マスタは 62 列だが、ダミー登録で INSERT するのは何列？"
+    expected_chunk_ids: ["SES-FLD-007"]
+    expected_answer: "40 列。残りは DB 既定値に委ねる。62 列 INSERT と読むと誤る。"
+    must_cite: true
+  - qid: GQ-SES-009
+    module: R60SesModel
+    type: rule
+    question: "R60SesModel の工場生産モデル判定はどのテーブルとコードを使う？"
+    expected_chunk_ids: ["SES-LGC-005"]
+    expected_answer: "R60_KJO_SES_MODEL_M_TBL を参照し、会社 0001・工場 P030 が判定に現れる。コード直書きのため会社追加時は修正が必要。"
+    must_cite: true
+  - qid: GQ-SES-010
+    module: R60SesModel
+    type: rule
+    question: "R60SesModel の購入品目・半製品からの生産モデル逆引きはどう実装されている？"
+    expected_chunk_ids: ["SES-LGC-006"]
+    expected_answer: "CONNECT BY NOCYCLE LEVEL <= 11 と CONNECT_BY_ISLEAF = 1 で親子を再帰解決する。LIKE 値は未エスケープ。"
+    must_cite: true
+  - qid: GQ-SES-011
+    module: R60SesModel
+    type: rule
+    question: "R60SesModel の半製品コード自動採番とダミー登録の規則は？"
+    expected_chunk_ids: ["SES-LGC-010"]
+    expected_answer: "4A0000〜4Z9999 の最大値の次を採番し、下 4 桁 9999 で英字繰上げ。枝番は 000/001。R60_HAN_SEIHIN_M_TBL に 40 列 INSERT、REG_STS='0'。"
+    must_cite: true
+  - qid: GQ-SES-012
+    module: R60SesModel
+    type: rule
+    question: "R60SesModel の排他制御は親子でどう行う？"
+    expected_chunk_ids: ["SES-LGC-018"]
+    expected_answer: "親と子の両方で KSN_DAT による楽観ロック。initEdit / initEditChild で受け取った値を更新・削除時に送り、不一致なら R60W0006。"
+    must_cite: true
+  - qid: GQ-SES-013
+    module: R60SesModel
+    type: rule
+    question: "R60SesModel の被参照・復活・イベント参照チェックは？"
+    expected_chunk_ids: ["SES-LGC-019"]
+    expected_answer: "ヘッダ削除時は R60W0017 flg=1、修正・削除時は R60W0018 flg 1〜3、子が未確定なら R60W2051、イベント参照失敗は R60W2019 flg 1〜3。"
+    must_cite: true
+  - qid: GQ-SES-014
+    module: R60SesModel
+    type: cross
+    question: "R60SesModel の SQL 文字列連結の危険箇所は？"
+    expected_chunk_ids: ["SES-REV-005"]
+    expected_answer: "search の件数 SQL は ses_mdl_cd を引用符なしで連結。get_ses_mdl_cd_condition は kon_hmk_cd と hsh_cd を未エスケープで LIKE に埋め込む。download は WHERE 全体を f-string で組み立てる。"
+    must_cite: true
+  - qid: GQ-SES-015
+    module: R60SesModel
+    type: cross
+    question: "R60SesModel に A/B レポートはあるか？"
+    expected_chunk_ids: ["SES-REV-009"]
+    expected_answer: "無い（D-SM-14、重大度 high）。設計と実装が一致していると断定できない。"
+    must_cite: true
+
+  # ---------------- R60KkuChi (complex, thin) ----------------
+  - qid: GQ-KKC-001
+    module: R60KkuChi
+    type: fact
+    question: "R60KkuChi の位置づけと 12 キーパターンの意味は？"
+    expected_chunk_ids: ["KKC-SCR-001"]
+    expected_answer: "規格値マスタメンテナンス。12 のキーパターン（0010〜0120、P1〜P12）を 1 画面に同居させ、管理項目の選択で構成が切り替わる。"
+    must_cite: true
+  - qid: GQ-KKC-002
+    module: R60KkuChi
+    type: fact
+    question: "R60KkuChi の設計イベントは何件で、中心となる連動は？"
+    expected_chunk_ids: ["KKC-SCR-003"]
+    expected_answer: "39 イベント。項目→キーパターン、キーパターン→管理項目、管理項目→検索画面の 3 段連動が中心。"
+    must_cite: true
+  - qid: GQ-KKC-003
+    module: R60KkuChi
+    type: fact
+    question: "R60KkuChi の API 端点はいくつ、DB は何列？"
+    expected_chunk_ids: ["KKC-SCR-004"]
+    expected_answer: "API 8 端点。R60_KKU_CHI_M_TBL は 32 列、主キーは KNR_KMK_CD と KEY_KMK_1〜6 の 8 列。"
+    must_cite: true
+  - qid: GQ-KKC-004
+    module: R60KkuChi
+    type: fact
+    question: "管理項目 0010 と 0070 のキー構成は？"
+    expected_chunk_ids: ["KKC-FLD-001"]
+    expected_answer: "0010 は会社・事業場・半製品・ロケタイプ。0070 は会社・事業場・半製品・受払区分・受払場所・ロケグループ。"
+    must_cite: true
+  - qid: GQ-KKC-005
+    module: R60KkuChi
+    type: rule
+    question: "R60KkuChi の登録時の固定値は？"
+    expected_chunk_ids: ["KKC-FLD-004"]
+    expected_answer: "REG_STS='1'、SEND_STS='0'、SEND_KBN='0'、REG_KBN='1'、KSN_KBN='1'。削除時は DEL_FLG=1。"
+    must_cite: true
+  - qid: GQ-KKC-006
+    module: R60KkuChi
+    type: rule
+    question: "R60KkuChi の検索 WHERE はどう組み立てられ、何が問題か？"
+    expected_chunk_ids: ["KKC-LGC-002"]
+    expected_answer: "管理項目コードを起点に、パターンごとに入力値を KEY_KMK_1〜6 へ詰める。値は f-string で SQL に直接埋め込み、バインド変数を使わないため SQL 注入余地がある。"
+    must_cite: true
+  - qid: GQ-KKC-007
+    module: R60KkuChi
+    type: rule
+    question: "R60KkuChi の件数・上限・ページング・ソートは？"
+    expected_chunk_ids: ["KKC-LGC-003"]
+    expected_answer: "COUNT(ROWID)、0 件は R60W0010、上限超過は R60W0005。OFFSET/FETCH。ソートは KEY_KMK_1〜6 の白名单、外は既定へ。取得列は DB 関数で動的に決める。"
+    must_cite: true
+  - qid: GQ-KKC-008
+    module: R60KkuChi
+    type: rule
+    question: "R60KkuChi の単項目チェックと変更なしチェックはどこで行う？"
+    expected_chunk_ids: ["KKC-LGC-004"]
+    expected_answer: "どちらも画面側だけで行う。サーバーの登録端点は行わない。複製・修正で変更が無ければ R60W0016。"
+    must_cite: true
+  - qid: GQ-KKC-009
+    module: R60KkuChi
+    type: cross
+    question: "R60KkuChi の最も重大な差異は？"
+    expected_chunk_ids: ["KKC-REV-001"]
+    expected_answer: "検索 WHERE の f-string 連結（D-KK-09、重大度 high）。文字列を直接 SQL に埋め込み、COUNT と一覧の両方で使う。"
+    must_cite: true
+  - qid: GQ-KKC-010
+    module: R60KkuChi
+    type: cross
+    question: "R60KkuChi の死んだコードと複製の二重実装には何がある？"
+    expected_chunk_ids: ["KKC-REV-003"]
+    expected_answer: "referred_check は未呼出、getSikKgo は端点なし、Copy/Create/Edit001〜003 の 9 component 計 3,795 行が未参照。R60KkuChiCopy と複製モード 2 で複製が 2 系統ある。"
+    must_cite: true

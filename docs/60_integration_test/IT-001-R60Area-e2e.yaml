@@ -1,0 +1,71 @@
+---
+id: IT-001
+type: integration_test
+req_ids:
+- R-101
+status: open
+sensitivity: internal
+owner: AI-QA
+version: 0.1.0
+title: R60Area 結合テスト（API 貫通・E2E）
+test_id: IT-001
+api_sequence:
+- step: 1
+  method: POST
+  path: /R60Area/init
+  expect: 画面初期化（会社・事業場・1 頁件数・メッセージ定義）を返却。
+- step: 2
+  method: POST
+  path: /R60Area/search
+  expect: 検索結果と総件数。0 件時は R60W0010。
+- step: 3
+  method: POST
+  path: /R60Area/initEdit
+  expect: 入力画面初期モデル（mode 別）を返却。
+- step: 4
+  method: POST
+  path: /R60Area/getPlcNm
+  expect: ロケーション名称を返却。
+- step: 5
+  method: POST
+  path: /R60Area/edit
+  expect: 登録／修正結果を返却し commit 完了。
+- step: 6
+  method: POST
+  path: /R60Area/delete
+  expect: 論理削除結果を返却し commit 完了。
+- step: 7
+  method: POST
+  path: /R60Area/download
+  expect: 検索結果の CSV を返却。
+frontend_call_chain:
+- layer: view
+  ref: Front-end/src/views/R60Area.vue
+- layer: component
+  ref: Front-end/src/components/R60AreaEdit.vue
+- layer: service
+  ref: Front-end/src/service/R60AreaService.ts
+- layer: http
+  ref: axios インスタンス / interceptors
+backend_db_transaction_boundary:
+  begin: 'api/fastapi_oracle_pjt/app/routers/R60AreaController.py: /R60Area/edit のセッション取得後'
+  operations:
+  - SELECT COUNT(CMP_CD)（キー重複チェック）
+  - SELECT ... （排他チェック／被参照チェック）
+  - INSERT R60_AREA_M_TBL / UPDATE R60_AREA_M_TBL
+  commit: conn.commit()（edit L2610 / delete L2319）
+  rollback: 例外時のセッションロールバック
+commit_points:
+- /R60Area/edit 成功時（L2610）
+- /R60Area/delete 成功時（L2319）
+ab_comparison_assert_fields:
+- cmp_cd
+- jig_cd
+- ara_cd
+- total
+- reg_sts
+- send_sts
+- del_flg
+- rev_no
+- ksn_dat
+open_issues: []

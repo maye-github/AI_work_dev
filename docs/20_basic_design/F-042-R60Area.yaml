@@ -1,0 +1,115 @@
+---
+id: F-042
+type: basic_design
+req_ids:
+- R-101
+status: baselined
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+title: R60Area 全画面機能 基本設計
+function_id: F-042
+function_overview:
+  summary: 一覧検索画面 + 登録修正複製ダイアログの 2 画面でエリアマスタを検索・登録・修正・複製・論理削除・CSVダウンロードする。
+  screen_count: '2'
+  modes:
+  - 'mode1: 新規登録'
+  - 'mode2: 複製'
+  - 'mode3: 修正'
+  - 'delete: 論理削除'
+screen_list:
+- screen_id: SCR-01
+  file: Front-end/src/views/R60Area.vue
+  role: 一覧検索
+- screen_id: SCR-02
+  file: Front-end/src/components/R60AreaEdit.vue
+  role: 登録修正複製ダイアログ
+input_ids: &id001
+- I-201
+- I-202
+- I-203
+- I-204
+- I-205
+- I-206
+- I-207
+- I-208
+- I-209
+- I-210
+- I-211
+- I-212
+- I-213
+- I-214
+- I-215
+- I-216
+- I-217
+- I-218
+- I-219
+- I-220
+- I-221
+- I-222
+- I-223
+- I-224
+- I-225
+- I-226
+- I-227
+- I-228
+- I-229
+- I-230
+- I-231
+- I-232
+- I-233
+- I-234
+- I-235
+- I-236
+- I-237
+- I-238
+- I-239
+- I-240
+- I-241
+- I-242
+- I-243
+- I-244
+- I-245
+- I-246
+- I-247
+- I-248
+- I-249
+- I-250
+- I-251
+- I-252
+- I-253
+- I-254
+- I-255
+- I-256
+output_ids: *id001
+db_tables_used:
+- R60_AREA_M_TBL
+- R60_COMPANY_M_TBL
+- R60_JIG_M_TBL
+- R60_UKH_PLC_M_TBL
+- R60_HIYO_KEIJ_BSY_M_TBL
+- R60_CODE_MES_M_TBL
+- R60_PLC_M_TBL
+common_functions_used:
+- R60Common.subCheckSubmit()
+- R60Common.resetErrors()
+- R60Common.showErrorAndFocus()
+- R60Common.byteCheck()
+- R60Common.subCheckKanaByte()
+- R60Common.chkHanEngNum3()
+- R60Common.subCheckAlphabetNumber()
+- R60Common.subListBtnDisabled()
+- R60Common.subDownload()
+- R60Common.showMessageDialog()
+- R60Common.subInitSubmitFlg()
+- R60Common.spreadResults()
+error_ids_ref:
+- E-001
+- E-002
+- E-003
+- E-004
+- E-005
+- E-006
+- E-007
+- E-008
+open_issues: []

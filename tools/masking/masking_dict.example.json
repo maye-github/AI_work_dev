@@ -1,0 +1,35 @@
+{
+  "_comment": "双方向脱敏辞書の「構造」見本。key = プレースホルダ、value = 置換対象の実値リスト。実値を書いた版を masking_dict.json として作成すること（.gitignore 済み・絶対にコミットしない）。本ファイルの値はすべて合成サンプルであり実在の接続情報ではない。",
+  "_usage": [
+    "1. cp tools/masking/masking_dict.example.json tools/masking/masking_dict.json",
+    "2. masking_dict.json の各配列を実値に置換（この example は絶対に編集してコミットしない）",
+    "3. python -m tools.masking.mask_demo --mask <in.md> <out.md>"
+  ],
+  "TBL_1": [
+    "R60_SAMPLE_M_TBL"
+  ],
+  "COL_1": [
+    "sample_cmp_cd",
+    "sample_jig_cd",
+    "sample_ara_cd",
+    "sample_ksn_dat",
+    "sample_rev_no"
+  ],
+  "PWD_1": [
+    "sample_password_0000",
+    "sample_api_secret_0000"
+  ],
+  "IP_1": [
+    "198.51.100.11",
+    "198.51.100.12"
+  ],
+  "DOM_1": [
+    "sample-tenant.auth0.example"
+  ],
+  "BUCKET_1": [
+    "sample-bucket-0000"
+  ],
+  "PROFILE_1": [
+    "sample-profile-0000"
+  ]
+}

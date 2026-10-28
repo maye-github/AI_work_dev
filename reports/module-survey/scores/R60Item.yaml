@@ -1,0 +1,28 @@
+module: R60Item
+evidence_dir: reports/module-survey/R60Item
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_06_R60Item_アイテムマスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_06_R60Item_アイテムマスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 4
+  impl_alignment: 1
+  teachability: 3
+complexity:
+  level: complex
+  signals: {screens: 2, endpoints: 10, tables: 6, master_detail: false, upload: false, batch: false, sim: true, external: true}
+  note: "検索条件・結果＋マスタ項目（SPIRIT未接続/接続済の2モード）、6テーブル、SPIRIT外部連携、Sim4対応で complex。端点10は AB の action 一覧で実測（実装の全端点はこれより多い可能性）。"
+evidence:
+  - "sheet=業務処理説明; rows=1689: イベント2〜39を網羅（20-22は標準仕様のため省略）"
+  - "sheet=画面単項目チェック; row=15-212: 200項目 / sheet=画面項目間・DB整合チェック; row=14-31: 18項目"
+  - "sheet=イベント一覧; row=14-51: 38イベント、検索結果＋マスタ項目の2画面構成"
+  - "sheet=項目移送表(DB)1..7; row=13: R60_ITEM_M_TBL ほか計6テーブル（1/2は同一テーブルの登録/更新パターン）"
+  - "sheet=画面項目内容(検索); 181行 / (マスタ項目_SPIRIT未接続); 197行 / (接続済); 194行"
+  - "test/00_単体ﾃｽﾄ仕様兼結果; row=4: テスト項目数=2392"
+  - "summary.md: ✅1 🔷0 ⚠️2 💥4 🚫0 ⏭️3（head/init/check/search が500）"
+  - "impl-size.json: R60Item view_lines=3778, router_lines=8715, service_lines=106"
+risks:
+  - "AB で head/init/check/search が500。検索・初期表示が動作せず、実装一致の教材にできない"
+  - "項目移送表(DB)1と2が同一テーブルR60_ITEM_M_TBL・同一画面名で、登録/更新パターンの区別がシート名から読み取れない"
+  - "SPIRIT未接続/接続済で画面項目内容が2分され、分岐が大きい（197/194項目）"
+  - "実装規模が view 3778行・router 8715行で、1回の教材生成には大きすぎる"
+verdict: "保留（complex教材の候補だが、ABでinit/searchが500のため実装一致を測れず、規模も最大級）"

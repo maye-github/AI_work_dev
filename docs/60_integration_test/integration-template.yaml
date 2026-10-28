@@ -1,0 +1,64 @@
+# ============================================================
+# テンプレート: 結合テスト / 集成测试模板
+# 工程: docs/60_integration_test/  （落地篇 工程篇 S16 工程間連携・E2E）
+# 使い方: 本ファイルを IT-xxx-<Module>-e2e.yaml に複製し <...> を実値へ置換する。
+# 観点: フロント→API→DB の貫通、トランザクション境界、A/B 比較断言。
+# A/B 比較: doc/03_AI/AB_Reports（健康度記録）を参照して断言フィールドを定める。
+# ============================================================
+
+# ---- front-matter（7 字段固定・全テンプレート共通）----
+id: TPL-006
+type: integration_test
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ---- body ----
+title: "<結合テストタイトル>"
+test_id: "<IT-xxx>"
+
+# API シーケンス: 呼び出し順に API を列挙（1 シナリオ = 1 列表）
+api_sequence:
+  - step: 1
+    method: "<GET|POST>"
+    path: "/<Module>/init"
+    expect: "<期待レスポンス概要>"
+  - step: 2
+    method: "<GET|POST>"
+    path: "/<Module>/search"
+    expect: "<期待レスポンス概要>"
+
+# フロントエンド呼び出しチェーン: View → Service → HTTP の順に記述
+frontend_call_chain:
+  - layer: view
+    ref: "<views/<ScreenName>.vue>"
+  - layer: service
+    ref: "<service/<Module>Service.ts>"
+  - layer: http
+    ref: "<axios インスタンス / interceptors>"
+
+# バックエンド DB トランザクション境界: BEGIN から COMMIT/ROLLBACK までを明示
+backend_db_transaction_boundary:
+  begin: "<routers/<Module>Controller.py: トランザクション開始位置>"
+  operations:
+    - "<INSERT / UPDATE / SELECT FOR UPDATE 等>"
+  commit: "<conn.commit() 位置>"
+  rollback: "<例外時の conn.rollback() 位置>"
+
+# コミットポイント: 業務上データが確定する箇所
+commit_points:
+  - "<commit 点1（例: /<Module>/edit 成功時）>"
+  - "<commit 点2（例: /<Module>/delete 成功時）>"
+
+# A/B 比較断言フィールド: 旧新比較で一致を保証する項目。
+#   migration のみ。旧実装との A/B 比較を行う案件でのみ埋める（比較キーの実項目名は案件の設計成果物 F/D/L を参照）。
+#   greenfield では比較対象の旧実装が無いため空配列でよい（検証は受入基準の E2E で行う。規則 04 §7.1）。
+ab_comparison_assert_fields: []
+
+# 未確定事項: 確認票 Q-ID へリンク
+open_issues:
+  - q_id: "<Q-xxx>"
+    question: "<未確定の問い>"
+    status: open

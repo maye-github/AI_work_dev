@@ -1,0 +1,203 @@
+# =============================================================================
+# 节点7（结合・综合测试）输入模板 —— 文件编号: IN-307
+# -----------------------------------------------------------------------------
+# 【本节点的输入来自上一节点的哪个文件】
+#   ① 节点6 的单元测试结果与用例（TC-201…）
+#   ② 节点5 的制造源代码
+#   ③ 节点2 承認版 基本设计书（F-201，用于确认端到端口径）
+#   单元测试过了不等于能用；本节点验证「前端→API→DB→跳转」整条链路是否贯通。
+#
+# 【你要填哪些字段】
+#   api_sequence …… 调用的 API 顺序与期待
+#   e2e_scenarios … E2E 场景（从打开登录画面到跳转成功）
+#   frontend_call_chain  前端各层调用链
+#   db_transaction_boundary  DB 事务边界（本机能主要是只读）
+#   ab_comparison … A/B 比较字段（**migration 案件のみ**。下記 ★参照）
+#   human_review_required  必须人拍板的点
+#
+# 【本节点 AI 会产出什么】
+#   结合テスト规格书、综合测试（E2E）场景、验收结果。
+#
+# 【人必须审查什么】
+#   ① 端到端确实贯通（不是只测了单层）；② 期待値の出所が正しい（下記 ★）；
+#   ③ 事务边界（本机能只读，不应有意外写）；④ 敏感值不落测试报告。
+#
+# ★期待値をどこから取るか（build_mode で変わる。規則 04 §7／§7.1）：
+#   - migration … **旧版との A/B 比較**。期待値は「旧版の実測値」。結果と健康度閾値は
+#       `doc/03_AI/AB_Reports/reports/<module>/summary.md` に**単一箇所で**記録する（値を複製しない）。
+#   - greenfield（既定・本演習）… **A/B 比較はしない**（比較対象たる旧版が存在しない）。
+#       期待値は「**承認済みの要求（R-201）・基本設計（F-201）の受入基準**」であり、
+#       判定は一致比較ではなく**受入基準の充足判定**になる。
+#       記録先は `verification.md`（A/B ではないので慣例名 `summary.md` を流用しない）。
+#
+# 规则：键名一律 snake_case；camelCase（stfCd / gmnId）只在值里。
+# =============================================================================
+
+# ---------- 顶部 7 个固定字段 ----------
+---
+id: IN-307
+type: node-input
+req_ids: [R-201]
+status: filled
+sensitivity: internal
+owner: AI-SE
+version: 0.2.1
+
+# =============================================================================
+# 正文
+# =============================================================================
+
+# 【输入来源】
+source_tests:
+  file: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  version: "v1.0.0（baselined / SE-001 / 2026-10-26）"
+  test_ids: [TC-201, TC-202, TC-203, TC-204, TC-205, TC-206, TC-207, TC-208, TC-209, TC-210,
+             TC-211, TC-212, TC-213, TC-214, TC-215, TC-216, TC-217, TC-218, TC-219, TC-220]
+  note: 単体は 20 件。本節点は単体で観測できない結合事象（HTTP・Session Cookie・遷移・DB 実行）を突く。
+source_design:
+  file: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  version: "v2.0.4（baselined / SE-001 / 2026-10-24）"
+  function_id: F-201
+source_requirements:
+  file: tutorial/R60Login/节点1_需求/04_承認版_需求结构化表.md
+  version: "v1.0.4（baselined / SE-001 / 2026-10-23）"
+  note: 受入基準の出所。§3 業務規則 32 条・§5 イベント 5 件・§8 異常処理。
+source_code: tutorial/R60Login/节点5_制造/（backend 11 本・frontend 5 本）
+build_mode: greenfield
+
+# 【API 顺序与期待】端点は 3 本のみ（节点3 承認版 §1.3・节点1 §4.1）
+api_sequence:
+  - step: 1
+    method: POST
+    path: /R60Login/init
+    expect: 入力なし。HTTP 200・errorCode="0"・pageList（I-314）と kbnList（I-315）を返す。前処理に稼働状態チェック（E-203／E-206 は HTTP 403）
+  - step: 2
+    method: POST
+    path: /R60Login/login
+    expect: encryptedStfCd（I-313）を受けて復号→社員検証→userInfo（I-316）・mngInfo（I-317）を返し、Session Cookie を発行する
+  - step: 3
+    method: POST
+    path: /R60Login/login（イベント3 メニュー押下。専用端点なし）
+    expect: 同一端点を共用。errorCode="0" のまま、クライアントは同一ウィンドウでメニュー画面へ遷移し stfKbn のみをクエリで渡す
+  - step: 4
+    method: POST
+    path: /R60Login/generateUrl
+    expect: 平文 stfCd（I-303）を受けてサーバで暗号化し url（I-310）を返す。パラメータ順固定・エンコードなし・150 桁以内
+  - step: 5
+    method: （なし）
+    path: （閉じる。端点を持たない）
+    expect: 共通基盤の Session 管理機能へ破棄要求を出してから window.close()。追加の利用者向け提示なし
+
+# 【E2E 场景】承認済み要求の受入基準に対応づける（A/B 比較はしない）
+e2e_scenarios:
+  - scenario_id: E2E-201
+    name: 初期表示の正常系
+    steps: 画面を開く → init を呼ぶ → 画面タイトル・画面候補・権限区分候補・各項目の初期値が表示される
+    expected: タイトル（I-301）・画面候補（I-306 初期値＝先頭）・権限区分（I-307 初期値＝Y）・URL 欄（I-310 空）が表示される。受入基準＝要求 §5 イベント1・§3 規則 11・13
+  - scenario_id: E2E-202
+    name: 正常ログイン→選択画面へ遷移
+    steps: 7 桁の社員コードを入力 → 画面を選択 → ログインボタン → 遷移
+    expected: /login が errorCode="0" で userInfo・mngInfo を返し Session Cookie を発行する。選択画面が同一ウィンドウで開き、権限区分が引き継がれる。受入基準＝要求 §3 規則 04・07・14、§5 イベント2
+  - scenario_id: E2E-203
+    name: メニュー遷移
+    steps: ログイン成立後にメニューボタン押下
+    expected: 専用端点を叩かず /login を共用し、メニュー画面へ同一ウィンドウで遷移。引継ぎは stfKbn のクエリのみで、kgnKbn は URL に載せず保持領域に置く。受入基準＝要求 §3 規則 15、§5 イベント3（Q-202 の確定）
+  - scenario_id: E2E-204
+    name: URL 出力の正常系
+    steps: 社員コードを入力 → URL出力ボタン → URL 欄を確認
+    expected: url が所定の順序・区切りで返り、URL 欄に表示される。編集しても遷移しない。受入基準＝要求 §3 規則 17・18、§5 イベント4
+  - scenario_id: E2E-205
+    name: 閉じる
+    steps: 閉じるボタン押下 → 確認 → 画面が閉じる
+    expected: Session 破棄要求の後に window.close() が成立し、利用者向けの追加提示が出ない。受入基準＝要求 §5 イベント5
+  - scenario_id: E2E-206
+    name: 稼働不可（オンライン利用停止）での端到端遮断
+    steps: 稼働状態を不可にした状態で画面を開く → ログインを試みる
+    expected: init が HTTP 403・1／R60W0004 を返し、オンライン利用エラー画面へ遷移する。ログインは成立しない。受入基準＝要求 §3 規則 19
+  - scenario_id: E2E-207
+    name: 日跨ぎ（B-33）— 残リスク #4 の受け皿
+    steps: 当日鍵で暗号化 → サーバの日付を翌日に進める → /login
+    expected: 設計 §7.7 は E-205（Session エラー画面）。製造差異 #9 は実測 E-201 と記録している。**どちらが正かは本節点で観測して記録する**（判定は人が行う）
+  - scenario_id: E2E-208
+    name: Session 破棄失敗時の運用ログ — 残リスク #2 の受け皿
+    steps: 破棄要求を失敗させる → 画面を閉じる
+    expected: 設計 §2.9 は「運用ログ 1 件」。製造差異 #2 はクライアントの console.warn のみと記録している。**サーバ運用ログに 1 件出るかを観測して記録する**
+  - scenario_id: E2E-209
+    name: 複数インスタンス構成での Session 共有 — 残リスク #1 の受け皿
+    steps: 2 インスタンス構成でログイン → 別インスタンスへ振り分けられる
+    expected: 単体では観測できない。Session が共有されるか（sticky か共有ストアか）を観測して記録する
+  - scenario_id: E2E-210
+    name: シミュレーション版画面の扱い — 残リスク #3 の受け皿
+    steps: 候補にシミュレーション版を含めて初期表示 → シミュレーション版を選んでログイン
+    expected: 製造差異 #5 は「常に非シミュレーション版として扱われる」と記録している。I-314 に gmn_kbn が無いため、遷移先で区別が保たれるかを観測する
+  - scenario_id: E2E-211
+    name: 未被覆 25 の境界行の受け皿（ノード6 で確定した送り先）
+    steps: B-05・B-07〜B-19・B-23〜B-25・B-32・B-34・B-36〜B-37・B-40〜B-42 を、E2E で観測可能な形に割り当てる
+    expected: 各行が「どの IT で・どの事象として観測されるか」を 1 対 1 で示す。**黙って落とさない**（ノード6 ⑤ の裁定）
+  - scenario_id: E2E-212
+    name: ログイン試行ロックの端到端観測（BUG-002 の工程07 側の受け皿）
+    steps: 同一社員コードで /login を 4 回失敗させる → 5 回目の失敗 → 6 回目の試行 → 10 分経過後に再度試行する
+    expected: 4 回までは通常の照会（B-44）。5 回目の応答は通常の E-201 で、その次の試行からロック（B-45）＝`errorCode="1"` のみ・SQL-3 を発行しない・Session Cookie を発行しない・ロック成立で運用ログ 1 件。10 分経過後に自動解除され、計数が 0 から再開する（B-46）。単体 TC-221 はプロセス内の計数と解除しか観測しないため、**HTTP 往復を跨いだときに同じことが成り立つか**を本 E2E が見る。出所＝節点2 §11・節点3 v1.0.5 §2.4.1／§7.11
+
+# 【前端调用链】节点5 製造の実ファイル（greenfield のため本案件の新規資産が唯一真源）
+frontend_call_chain:
+  - layer: view
+    ref: tutorial/R60Login/节点5_制造/frontend/views/LoginScreen.vue
+    note: 5 イベントの起点。二度押し防止は submitGuard を通す
+  - layer: common
+    ref: tutorial/R60Login/节点5_制造/frontend/common/stfCdCipher.ts
+    note: I-303 → I-313 の暗号化（当日鍵はサーバ応答から取得）
+  - layer: common
+    ref: tutorial/R60Login/节点5_制造/frontend/common/submitGuard.ts
+    note: 二重送信の抑止
+  - layer: store
+    ref: tutorial/R60Login/节点5_制造/frontend/stores/sessionState.ts
+    note: 遷移引継ぎの保持領域（r60login.kgnKbn）
+  - layer: service
+    ref: tutorial/R60Login/节点5_制造/frontend/services/loginApi.ts
+    note: init／login／generateUrl の 3 呼出しのみ
+  - layer: http
+    ref: （axios 等の実体は前端基盤に属する。本案件は services 層までを自前で持つ）
+    note: Blob 応答の JSON 変換は基盤側の責務（規則 00 §4）。本画面の応答は JSON のため発生しない
+
+# 【DB 事务边界（本机能主要为只读）】
+db_transaction_boundary:
+  begin: 各端点のリクエスト処理開始時（明示的な BEGIN は発行しない）
+  operations: 読取のみ — 稼働状態表・社員マスタ・画面マスタ・メッセージマスタへの SELECT（物理名は工程03 承認版 §5 の SQL-1〜SQL-6）
+  write: なし（画面マスタ・社員マスタを更新しない。Session は DB ではなく Session 管理機能が持つ）
+  commit: 不要（更新系 SQL を 1 文も発行しないことを本節点で確認する）
+  verify: 全 E2E の前後で対象表の件数・更新日時が変わらないことを確認する
+
+# 【A/B 比较字段】greenfield のため **行わない**（規則 04 §7.1）
+ab_comparison: null
+ab_comparison_reason: build_mode=greenfield。比較対象たる旧版が存在しないため A/B も健康度閾値も設けない（規則 04 §7.1）。
+
+# 【greenfield の代替：受入基準の充足判定】
+acceptance_verification:
+  source: 节点1 承認版 v1.0.4 §3 業務規則（32 条）・§5 イベント（5 件）・§8 異常処理、节点2 承認版 v2.0.4
+  method: 各受入基準を、E2E で観測可能な事象（HTTP ステータス・errorCode・Session Cookie・遷移先・表示値・ログ件数）に対応づけて合否を判定する。一致比較ではなく充足判定である。
+  record: tutorial/R60Login/节点7_结合测试/verification.md（`summary.md` は使わない）
+  coverage: 業務規則 32 条のうち E2E で観測できるもの（規則 01〜32 のうち画面・API・遷移・暗号化・稼働状態・エラー区分に該当する条）を 1 対 1 で対応づけ、対応づかない条は「本節点の対象外」と理由付きで列挙する
+
+# 【节点6 から引き継ぐ残リスク 5 件】
+residual_risks:
+  - risk: 複数インスタンス構成では Session が共有されない（製造差異 #1・#14）
+    covered_at: E2E-209
+  - risk: Session 破棄の失敗がサーバ運用ログに残らない（製造差異 #2。設計 §2.9 は「ログ 1 件」）
+    covered_at: E2E-208
+  - risk: シミュレーション版が常に非シミュレーション版として扱われる（製造差異 #5。I-314 に gmn_kbn が無い）
+    covered_at: E2E-210
+  - risk: 日跨ぎ（B-33）で E-205 ではなく E-201 を返す（製造差異 #9）
+    covered_at: E2E-207
+  - risk: テスト実行基盤（ランナー・window.open／window.close・運用ログのモック）が未定義
+    covered_at: 本節点で実行基盤を確定するか、工程04 へ戻す。**確定しないまま「実施済み」と書かない**
+
+# 【人必须拍板的点】
+human_review_required:
+  - 端到端贯通（前端→API→DB→跳转）で観測しているか。単層の検証を結合テストと呼ばない
+  - 期待値の出所が承認済み受入基準であるか（greenfield。旧版実測値を混ぜていないか）
+  - 事務境界に意外な書き込みが無いこと（SELECT のみ・件数不変）
+  - テスト報告に敏感値が無いこと（占位のみ）
+  - 未被覆 25 境界行の受け皿が 1 対 1 で示されているか（ノード6 ⑤ の裁定の履行）
+  - 残リスク 5 件が観測結果として記録されたか（**「送った」で終わらせない**）
+  - 実行基盤が未確定のまま「実施済み」と書いていないか

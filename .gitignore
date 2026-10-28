@@ -1,0 +1,78 @@
+# ============================================================
+# R60 AI 全流程骨架 — .gitignore
+# ------------------------------------------------------------
+# 方針:
+#   - Claude Code の設定（.claude/rules, skills, agents, settings.json）は
+#     プロジェクトの生きた設定なので **コミットする**。
+#   - 骨架の成果物（docs/, tools/, reports/）も **入库する**（2026-10-28 変更）。
+#     旧方針（AI_FULL_LIFECYCLE=1 のときだけ -f）は、commit 0 件を招き
+#     紅线⑥「trace_check なき commit 禁止」を空文化させたため廃止した。
+#   - .github/ とルート補助 md（AGENTS/CODEOWNERS/CONTRIBUTING/ROADMAP）は引続き対象外。
+# ============================================================
+
+# ---- Claude Code 設定（コミット対象）--------------------------------
+# 個人専用のローカル上書きのみ除外する
+.claude/settings.local.json
+.claude/**/__pycache__/
+
+# ============================================================
+# 骨架本体（2026-10-28 起：docs/ tools/ reports/ を既定で入库）
+# ------------------------------------------------------------
+# 旧方針「AI_FULL_LIFECYCLE=1 のときだけ -f で強制 add」は**廃止**した。
+# 理由：このリポジトリは**骨架そのもの**であり、客户プロジェクトではない。
+#       NFR-5「無侵入」は「骨架を客户案件へ持ち込むとき」の制約であって、
+#       骨架自身の版管理を止める理由にはならない。
+#       （旧方針のままでは commit が 0 件となり、紅线⑥が対象を持たなかった。）
+# 骨架を客户プロジェクトへ copy する場合の去留は、**その案件の .gitignore** が決める。
+# ============================================================
+
+# 旧 Trae 資産のアーカイブ置き場（2026-10-26 に中身を削除。今後も作らない想定だが、
+# 誤って復活させたときにコミットしないための規則として残す）
+archive/*
+
+# .github workflow は placeholder（内網では GitLab/Jenkins 側で組み直す）
+.github/*
+
+# ルート直下の補助文書（人向け。骨架本体の入库対象外。必要になったら個別に外す）
+AGENTS.md
+CODEOWNERS
+CONTRIBUTING.md
+ROADMAP_3PHASE.md
+
+# 計画文書のバックアップ
+docs/00_plan/*.bak
+
+# Stop フックが毎ターン再生成する目視用 Excel（生成物。手で編集しない＝版管理しない）
+reports/_auto/
+
+# ---- 機密（絶対にコミットしない）--------------------------------------
+# 脱敏辞書の実値（example はコミットする＝下の否定パターンで除外解除）
+tools/masking/masking_dict.json
+tools/masking/masking_dict.local.json
+!tools/masking/masking_dict.example.json
+
+# gate6 ローカル固有機密パターンの実値（example のみコミット）
+tools/trace_check/secret_patterns.local.json
+
+# ============================================================
+# 入库手順（骨架成果物をコミットしたい場合）:
+#   PowerShell: $env:AI_FULL_LIFECYCLE=1; git add -f docs tools reports .github .claude
+#   bash      : AI_FULL_LIFECYCLE=1 git add -f docs tools reports .github .claude
+# ============================================================
+
+# ---- 既存プロジェクト共通 ignore --------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+node_modules/
+dist/
+# RAG 索引は語料から再生成できる（語料 JSONL は docs/ 側で管理する）
+build/
+.env
+.env.*
+.idea/
+*.log
+
+# VSCode: 拡張推薦は共有する（Claude Code 拡張の推奨）
+.vscode/*
+!.vscode/extensions.json

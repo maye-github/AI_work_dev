@@ -1,0 +1,24 @@
+module: R60SezRet
+evidence_dir: reports/module-survey/R60SezRet
+source_design: "基刷_調達生産_マスタ_基本設計書(画面編)_17_R60SezRet_製造列マスタメンテナンス_v1.0.xlsx"
+source_test: "2-041-F_単体テスト仕様兼チェックリスト(画面編)_17_R60SezRet_製造列マスタメンテナンス.xlsx"
+scores:
+  doc_completeness: 5
+  design_consistency: 3
+  impl_alignment: 3
+  teachability: 4
+complexity:
+  level: complex
+  signals: {screens: 1, endpoints: 14, tables: 1, master_detail: false, upload: false, batch: false, sim: true, external: false}
+  note: "構造は1画面・1表・API 14で medium 相当だが、シミュレーション区分（'SEZ'＋シミュレーション区分パラメータ）を設計に持つため規則どおり complex。"
+evidence:
+  - "doc_completeness: design/15_業務処理説明.txt:1-565（565 行）; design/11_画面単項目チェック.txt（No.1-16）; design/12_画面項目間・DB整合チェック.txt（No.1-10）; test/00_単体ﾃｽﾄ仕様兼結果.txt:5（FP 20 / テスト項目 480 / バグ 0）"
+  - "design_consistency: design/15_業務処理説明.txt:199（条件がテキストボックスのまま）、:300-301（ロケーションリストが未使用／複製・修正で未取得の削除漏れ懸念）、:306（見出しはロケーションマスタだが表名はコード値マスタ(明細)）、:361（現行設計書とソースの不一致を注記）、:638（(3-1) の下に (1-1-2)）"
+  - "impl_alignment: D:/AI_work/doc/03_AI/AB_Reports/reports/R60SezRet/summary.md: ✅2 🔷2 ⚠️4 💥0 🚫0 ⏭️3（search col[?] sql=0≠api=1、detail/copy/new が 0 行、modify/download/datainit=SKIP）"
+  - "teachability: design/11_画面単項目チェック.txt（16 チェック）; design/12_画面項目間・DB整合チェック.txt（10 チェック）; 製造列・ロケーション（フィラー／繰越置場）は設計内で説明されている"
+  - "complexity: design/14_イベント一覧.txt:14-36（全24イベント、API 起動 約14）; design/16_項目移送表(DB).txt:8（R60_SEZ_RET_M_TBL・29 カラム）; design/15_業務処理説明.txt にシミュレーション記述 19 件（:242 起動区分 'SEZ'）; impl-size.json（view 1319 / router 2605）"
+risks:
+  - "設計にはシミュレーション記述が 19 件あるが、単体テスト仕様に SIM 項目が 0 件（test/00 全体）。シミュレーション経路が未試験"
+  - "設計本文にレビュー用の注記（「確認」「削除漏れの可能性」等）が残ったまま。教材では注記と確定仕様の区別が必要"
+  - "A/B で search の SQL 0 行 vs API 1 行、detail/copy/new の 0 行一致があり、実装一致は部分的（impl_alignment=3）"
+verdict: "保留（complex 判定だが構造は medium 相当。設計メモ混入と SIM 未試験の是正が教材化の条件）"

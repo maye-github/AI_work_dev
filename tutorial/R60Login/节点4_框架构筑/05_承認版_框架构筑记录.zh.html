@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05_承認版_框架构筑记录.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>05_承認版_框架构筑记录.zh</h1>
+<div class="meta">
+  机读源: <code>05_承認版_框架构筑记录.zh.md</code> ／
+  生成: 2026-10-27 14:46 ／
+  节 10・表 29
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>05_承認版_框架构筑记录.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 文档管理</a></li><li><a href="#sec-2">1. 采用的技术栈</a></li><li><a href="#sec-3">2. 实现规约</a></li><li><a href="#sec-4">3. 环境部署与值的取得方式</a></li><li><a href="#sec-5">4. 依赖包</a></li><li><a href="#sec-6">5. 构建与 CI</a></li><li><a href="#sec-7">6. 上游送达的 4 项的结论</a></li><li><a href="#sec-8">7. 前提条件</a></li><li><a href="#sec-9">8. 追溯</a></li><li><a href="#sec-10">9. 修订履历</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>F-201 框架构筑记录（技术选型、环境、依赖、构建、CI）— 共通マスタ　ログイン（R60Login）（原文为日文，按原文实现）</h1>
+<blockquote class="quote"><strong>本记录的输入是 <code>01_AI产出_框架构筑记录.md</code>（v0.1.0）与 <code>00_输入模板.yaml</code>（IN-304 / v0.3.0 / <code>filled</code>），上位设计是节点3 批准版 <code>05_承認版_详细设计书.md</code>（L-201 / v1.0.0 / <code>baselined</code>）。</strong><br>本记录<strong>只保留结论</strong>（<code>.claude/rules/02-requirements.md</code> §6.1）。未确定事项的状态（OQ-01～OQ-05 的回答与保留）由 <strong><code>docs/00_plan/coach/R60Login/n04.yml</code> 持有</strong>——本记录不保留该清单。前提清单放在 §7。<br><strong>批准只有经过人的发言才成立</strong>（红线③）。本文件在收到 2026-10-23 用户发言「<strong>签 SE-001</strong>」之后将 <code>status</code> 置为 <code>baselined</code>，并把批准者标识 <strong>SE-001</strong> 转记到 §0.2 的 <strong>SE・A 行</strong>。<br><strong>这不是 AI 自行作出的批准判断。PG・B、测试人员・C、PM・D 三行仍未批准。</strong><br>前提形态为 <code>greenfield</code>（不把既有系统、旧设计书作为输入）。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 文档管理</h2>
+<h3>0.1 文档信息</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">文档 REF.NO.</td><td style="text-align:left">DOC-305（教学号段。未在 <code>ids.yml</code> 登记。登记属人审关卡＝红线①）</td></tr><tr><td style="text-align:left">文档名</td><td style="text-align:left">框架构筑记录（技术选型、环境、依赖、构建、CI）— 共通マスタ　ログイン（R60Login）</td></tr><tr><td style="text-align:left">版本号</td><td style="text-align:left">1.0.1</td></tr><tr><td style="text-align:left">创建日</td><td style="text-align:left">2026-10-23</td></tr><tr><td style="text-align:left">更新日</td><td style="text-align:left">2026-10-27（v1.0.1 追加记录）</td></tr><tr><td style="text-align:left">责任人、审阅、担当</td><td style="text-align:left">SE-001（责任人）／（审阅：未填写）／AI-SE（担当）</td></tr><tr><td style="text-align:left">父需求</td><td style="text-align:left">R-201 共通マスタログイン（R60Login）画面</td></tr><tr><td style="text-align:left">上位设计</td><td style="text-align:left"><code>tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md</code>（L-201 / v1.0.0 / <code>baselined</code>）</td></tr><tr><td style="text-align:left">本节点输入</td><td style="text-align:left"><code>01_AI产出_框架构筑记录.md</code>（v0.1.0）／<code>00_输入模板.yaml</code>（IN-304 / v0.3.0 / <code>filled</code>）</td></tr><tr><td style="text-align:left">前提形态</td><td style="text-align:left"><code>greenfield</code>（從無到有）</td></tr><tr><td style="text-align:left">状态</td><td style="text-align:left"><strong><code>baselined</code></strong>（2026-10-23。<strong>仅 SE・A 行已批准</strong>。PG・B／测试人员・C／PM・D 未批准）</td></tr><tr><td style="text-align:left">收录范围</td><td style="text-align:left">采用技术栈 4 项＋认证方式／实现规约／3 种环境／依赖 17 项（其中开发依赖 1 项）／构建、CI／上游送达 4 项（HO-01～HO-04）／前提条件 4 项</td></tr></tbody></table>
+<h3>0.2 批准记录</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">版本</th><th style="text-align:left">日期</th><th style="text-align:left">批准者角色</th><th style="text-align:left">批准状态</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-10-23</td><td style="text-align:left">SE・A</td><td style="text-align:left">批准</td><td style="text-align:left">批准者标识 <strong>SE-001</strong>。确认技术选型（frontend／backend／database（Oracle 19c）／infra）与认证方式（服务器侧 Session、不采用 Auth0）、HO-01～HO-04 的取舍、§6.1 的路由规约、§7 的 4 项前提条件</td></tr><tr><td style="text-align:left">1.0.1</td><td style="text-align:left">2026-10-27</td><td style="text-align:left">SE・A</td><td style="text-align:left"><strong>追加记录（等待批准）</strong></td><td style="text-align:left">在 §4 的依赖表里<strong>追加了 1 行：第 17 项 <code>playwright</code>（开发依赖）</strong>。原有的 16 项一项也没有改动。依据是用户发言「<strong>都按方案</strong>」对 n04 OQ-05／n07 执行基盘的裁决（<code>reports/audit/R60Login/blocking-7-裁定案.md</code> ⑥）。<strong>这不是产品技术栈的变更</strong>——它是为执行工程07 的 IT 而使用的测试工具，不计入产品的运行时依赖（不属于红线④的对象）。因此不提 CR（不包含设计内容的变更）。批准者栏为「—」＝等待人确认</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left"></td><td style="text-align:left">PG・B</td><td style="text-align:left"></td><td style="text-align:left">确认可实现性（SQL、绑定、端点的划分、与共通基础设施的连接）</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left"></td><td style="text-align:left">测试人员・C</td><td style="text-align:left"></td><td style="text-align:left">确认环境、日志、保存范围、前提条件可以测试</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left"></td><td style="text-align:left">PM・D</td><td style="text-align:left"></td><td style="text-align:left">确认没有真实环境值、密钥只停留在「取得方式」、检查关卡仍留在流水线中</td></tr></tbody></table>
+<ul><li><strong>批准只有经过人的发言才成立。</strong> SE・A 行是接到 2026-10-23 用户发言「<strong>签 SE-001</strong>」后原样转记的，<strong>不是 AI 自行作出的批准判断</strong>（红线③）。<strong>PG・B／测试人员・C／PM・D 三行仍未批准</strong>（实际项目中需要各角色确认）。</li><li>这一行的批准者标识已记录在 <code>n04.yml</code> 的 <code>approved_by</code> 中。</li></ul>
+<h3>0.3 记述分类</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">类别</th><th style="text-align:left">含义</th><th style="text-align:left">正文中的标记</th></tr></thead><tbody><tr><td style="text-align:left"><strong>上游由来</strong></td><td style="text-align:left">节点3 批准版（05）或节点2 批准版中有明文的设计事实</td><td style="text-align:left"><code>05 §n</code>／<code>节点2 §n</code></td></tr><tr><td style="text-align:left"><strong>人的指示</strong></td><td style="text-align:left">人明确给出的事项（2026-10-23 的裁决、承接发包方的运用标准）</td><td style="text-align:left"><code>（人的指示 2026-10-23）</code></td></tr><tr><td style="text-align:left"><strong>一般论（E4）</strong></td><td style="text-align:left">产品、库的品类选择本身、浏览器规范、业界惯例</td><td style="text-align:left"><code>（一般论 E4）</code></td></tr><tr><td style="text-align:left"><strong>本节点的决定（C）</strong></td><td style="text-align:left">我方决定的实现内部事项（类型的映射、日志的脱敏方法等）。由人在设计评审中决定采纳与否</td><td style="text-align:left"><code>（C）</code></td></tr></tbody></table>
+<ul><li><strong>因为是 <code>greenfield</code>，不把 E2（既有实现的实测）作为依据</strong>（<code>docs/90_knowledge/answer-engine.md</code> §3.2）。</li><li><strong>不把 E4 写进上游由来的位置。</strong> 产品名、版本、品类必须带上上述标记（<code>answer-engine.md</code> §3.1）。</li><li><strong>未确定的事项不在本记录中列成清单</strong>（§6.1）。状态由 <code>n04.yml</code> 持有。</li></ul>
+<h3>0.4 上游送达的 4 项的移送</h3>
+<p>节点3 §9 末尾「送往工程04 的事项」4 项，<strong>一项不漏地</strong>移送到了本记录的结论中。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">上游的记述（节点3 §9）</th><th style="text-align:left">本记录的结论</th><th style="text-align:left">节</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">路由规约的最终形态，以及给模拟版标注类别的查询参数名（Q-223 的范围）</td><td style="text-align:left">画面路由为 <strong><code>/R60/{gmnId}</code></strong>，API 前缀为 <strong><code>/R60Login/</code></strong>，类别用查询参数 <code>gmnKbn</code>（与节点2 §1 备注① 的表述差异见 §6.1 的注）</td><td style="text-align:left">§6.1</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">日志基础设施的构成（脱敏方法、运用日志的送出路径、保存位置）</td><td style="text-align:left">应用向标准输出输出一行一条 JSON。由采集代理送到公司内日志基础设施。社員コード的中间 5 位改为 <code>*</code>。访问日志保存 1 年</td><td style="text-align:left">§6.2</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">当日密钥的取得方式与存放位置</td><td style="text-align:left"><strong>不存在要取得的密钥。</strong> 相当于当日密钥的是日期（yyyymmdd）本身（更正）</td><td style="text-align:left">§6.3</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">画面「保存区域」的实体（浏览器侧的保存方式）</td><td style="text-align:left">同源的 localStorage（<code>r60login.kgnKbn</code>）＋ 画面结束时显式删除</td><td style="text-align:left">§6.4</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 采用的技术栈</h2>
+<p>技术选型 4 项与认证方式<strong>依人的裁决（2026-10-23）采用</strong>。每一项分别附上「从设计的哪里推导出来」与「属于一般论（E4）／人的指示的部分」。<strong>采用并不意味着通过了批准关卡</strong>（§0.2 中相应的栏位为空）。</p>
+<h3>1.1 frontend</h3>
+<p><strong>结论</strong>：采用 <strong>Vue 3（Composition API ＋ <code>&lt;script setup&gt;</code>）＋ TypeScript（<code>strict</code>）＋ Vite ＋ PrimeVue ＋ Pinia</strong>。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">出处</th><th style="text-align:left">设计的事实</th><th style="text-align:left">支撑该决定的要求</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">05 §4.1、§7.4 B-22</td><td style="text-align:left">I-306／I-307 是下拉框，I-310 是输入输出文本（显示 120 位，超出部分在显示上滚动），I-308／I-311 在候选 0 件时置为不可用，I-301 带背景色</td><td style="text-align:left">具备选择部件、输入部件、可用性控制、对话框、配色的成套 UI 基础设施</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">05 §4.1、§4.4</td><td style="text-align:left">端点为 camelCase，物理列为 snake_case，I-307 在画面上是 <code>Y</code>／<code>N</code>，内部值是 <code>1</code>／<code>0</code></td><td style="text-align:left">不会混淆 3 套符号的类型约束（<code>strict</code>）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">05 §6.3、§2.5</td><td style="text-align:left">错误类别的判断与向 4 个画面的分流<strong>由客户端主导</strong></td><td style="text-align:left">能判断 <code>errorCode</code>／HTTP status 并跳转的层</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">05 §2.8 步骤 1、8、9、§8.5</td><td style="text-align:left">L-207 的 3 个部件<strong>在本项目中新定义</strong></td><td style="text-align:left">可以放置客户端共通部件的模块结构</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">05 §8.4</td><td style="text-align:left">输入的正规化（不 trim、全角转半角、去除非 ASCII）<strong>只在 L-207 这一处</strong></td><td style="text-align:left">收敛于一个共通函数的结构</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">05 §8.2</td><td style="text-align:left">Session 标识只用 HttpOnly Cookie 发送，<strong>客户端不读取</strong></td><td style="text-align:left">不自行组装认证头，而用浏览器标准 Cookie 发送（同源发布）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">05 §4.1</td><td style="text-align:left">I-302 在显示期间每 1 秒更新为<strong>客户端终端的时刻</strong></td><td style="text-align:left">客户端侧定时器</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">节点2 §11</td><td style="text-align:left">Chrome／Edge 最新 2 个版本、1280×800 以上、并发 100、响应 3 秒以内（95 百分位）</td><td style="text-align:left">不持有面向旧浏览器的 polyfill</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">05 §2.5、§2.6</td><td style="text-align:left">画面只有 1 个。跳转目标的 URL 由服务器组装后返回</td><td style="text-align:left">不持有客户端侧路由</td></tr></tbody></table>
+<ul><li><strong>一般论（E4）</strong>：选用 Vue／PrimeVue／Pinia／Vite 这些<strong>品类本身</strong>，无法从设计中决定。</li><li>Pinia 用于保持「登录是否成立」（05 §2.9 步骤 2）以及汇总共通部件的状态。<strong><code>kgnKbn</code> 不是放在 Pinia 中，而是保存在浏览器里</strong>（§6.4）。</li></ul>
+<h3>1.2 backend</h3>
+<p><strong>结论</strong>：采用 <strong>Python 3.12 ＋ FastAPI ＋ Pydantic v2 ＋ SQLAlchemy Core（<code>text()</code>。不使用 ORM 映射）＋ oracledb（Thin）</strong>。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">出处</th><th style="text-align:left">设计的事实</th><th style="text-align:left">支撑该决定的要求</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">05 §5.1 #1～#6</td><td style="text-align:left">SQL 全部手写，值一律用 <code>:name</code>，不从用户输入拼装列名、表名，没有动态排序</td><td style="text-align:left">不交给 ORM 自动生成（保留 SQL 正文，只使用绑定与连接池）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">05 §1.3、§6.1</td><td style="text-align:left">3 个端点、全部为 POST、JSON 应答。<strong>E-203／E-206 返回 HTTP 403</strong></td><td style="text-align:left">能明确控制 status 与应答正文的 HTTP 层</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">05 §2.6、裁决 Q-233</td><td style="text-align:left">URL 的组装与 150 位判定<strong>由服务器</strong>完成</td><td style="text-align:left">从环境配置读取 scheme／host／port／context</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">05 §8.2、§2.9 步骤 3、§10.5、裁决 Q-232</td><td style="text-align:left">Session 保存在服务器侧、11 项、idle 30 分／绝对 8 小时、允许多重登录、只把标识放在 HttpOnly Cookie 中。销毁的请求目标是客户的共通基础设施</td><td style="text-align:left">服务器侧存储与 Cookie 发行。不追加本画面专用的销毁端点</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">05 §2.7、§8.3、规则 03 §7.1</td><td style="text-align:left">L-206 在相同输入＋相同日期下输出相同结果。日期<strong>作为参数注入</strong></td><td style="text-align:left">作为纯函数切分出来，测试时可以固定日期</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">规则 03 §2、§4</td><td style="text-align:left">接口层用 camelCase／定义层用 snake_case，未定义的项目一律拒绝</td><td style="text-align:left">把转换收敛在一处，拒绝多余输入（<code>model_config</code> 4 行固定）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">05 §8.4、节点2 §11</td><td style="text-align:left">UTF-8，日期时间为 JST。不把日期、时刻写入 DB</td><td style="text-align:left">明确指定</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">节点2 §11</td><td style="text-align:left">响应 3 秒以内（95 百分位）、并发使用 100</td><td style="text-align:left">异步 I/O 足以应对的规模</td></tr></tbody></table>
+<ul><li><strong>一般论（E4）</strong>：选用 Python／FastAPI 这些<strong>语言与框架本身</strong>，无法从设计中决定。</li><li><strong>不生成 ORM 的模型定义。</strong> 物理定义的唯一来源是 05 §3，以避免重复定义。</li></ul>
+<h3>1.3 database</h3>
+<p><strong>结论</strong>：采用 <strong>Oracle Database 19c</strong>（<strong>人的指示 2026-10-23</strong>）。<strong>版本类型遵循客户的运用标准</strong>（确定后写入配置。本记录的方式不变）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">出处</th><th style="text-align:left">内容</th><th style="text-align:left">种别</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">人的指示（2026-10-23）</td><td style="text-align:left">DB 产品为 Oracle，<strong>版本不用「最新版」而用「稳定的版本」＝19c</strong></td><td style="text-align:left"><strong>人的指示</strong></td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">人的指示（2026-10-23）</td><td style="text-align:left">承接发包方的运用标准。从设计无法推导出 DB 产品（05 §0.3、§3.1、§9）</td><td style="text-align:left"><strong>人的指示</strong></td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">05 §5.1 #1</td><td style="text-align:left">值全部用 <code>:name</code> 命名绑定变量</td><td style="text-align:left">与 Oracle 的原生写法完全一致（不插入转换层）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">05 §3.1</td><td style="text-align:left">大小写的实现规约在技术栈批准后写入。名称的实体不变</td><td style="text-align:left">非引用标识符会被折叠为大写，因此物理名用大写（§2.1）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">05 §3.1</td><td style="text-align:left">类型是「字符串(n)／数值(p)／1 位标志」。不把产品固有的类型名写回设计</td><td style="text-align:left">映射为 <code>VARCHAR2(n CHAR)</code>／<code>NUMBER(p)</code>／<code>CHAR(1)</code>（§2.2）</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">05 §3.1、§10.2、§5.3、§3.4、§3.9</td><td style="text-align:left">5 张表、全部为读、只用 SELECT、内连接、PK／UNIQUE、固定顺序</td><td style="text-align:left">标准 SQL 足够</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">05 §5.1 #4、§8.4、规则 00 §2</td><td style="text-align:left">不把日期、时刻写入 SQL。UTF-8。固定 <code>NLS_DATE_FORMAT='RR-MM-DD'</code></td><td style="text-align:left">作为会话设置固定（§2.3）</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">05 §5.1 #2</td><td style="text-align:left">没有动态排序，<code>ALLOWED_SORT_FIELDS</code> 没有适用对象</td><td style="text-align:left">不持有白名单机制</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">节点2 §11</td><td style="text-align:left">并发使用 100、只读参照 5 张表</td><td style="text-align:left">小规模。备份、监控、许可遵循运用标准</td></tr></tbody></table>
+<ul><li>连接使用 <strong>oracledb 的 Thin 模式</strong>（不在客户端终端安装 Oracle Client）。</li><li>连接信息从环境配置／密钥管理中注入，不写入本记录（只用占位。§3.3）。</li><li><strong>更换产品会改变 §2 的标识符规约与驱动依赖＝设计变更（CR）</strong>。版本变更（19c 范围内）通过更新 lockfile 与连接配置来处理。</li></ul>
+<h3>1.4 infra</h3>
+<p><strong>结论</strong>：采用 <strong>容器运行基盘 ＋ TLS 终端的反向代理 ＋ dev／stg／prod 3 种环境 ＋ 日志采集基盘（应用向标准输出送出）</strong>。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">出处</th><th style="text-align:left">设计的事实</th><th style="text-align:left">支撑该决定的要求</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">05 §8.3、节点2 §11</td><td style="text-align:left">API <strong>必须使用 HTTPS</strong>（仅开发环境允许 http）。URL 的 scheme 来自环境配置</td><td style="text-align:left">把 TLS 终端放在反向代理上</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">05 §8.4</td><td style="text-align:left">当日密钥的日期判定用 <strong>JST</strong>（与 I-302 的终端时刻是两回事）</td><td style="text-align:left">把服务器时区固定为 Asia/Tokyo</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">05 §2.9 步骤 3、§10.5、裁决 Q-232</td><td style="text-align:left">Session 销毁的请求目标是客户的共通基础设施</td><td style="text-align:left">到达共通基础设施的通路（网络、证书）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">05 §1.2</td><td style="text-align:left">4 个画面由客户的共通基础设施提供。本项目只负责调用／跳转</td><td style="text-align:left">部署源的同一性决定 Cookie 与保存区域的方式（§7 前提 1）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">05 §8.1</td><td style="text-align:left">访问日志保存<strong>已脱敏</strong>的社員コード等，保存 1 年</td><td style="text-align:left">日志采集、保存基盘（§6.2）</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">05 §6.1</td><td style="text-align:left">E-203／E-206 返回 HTTP 403</td><td style="text-align:left">代理不得改写 status</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">节点2 §11</td><td style="text-align:left">并发使用 100、可用性 99.5%（业务时间帯）、响应 3 秒以内（95 百分位）</td><td style="text-align:left">单区域、小规模构成</td></tr></tbody></table>
+<ul><li><strong>一般论（E4）</strong>：容器基盘、代理、日志基盘的<strong>产品与托管形态</strong>、冗余化方式无法从设计中决定。产品与托管遵循客户的运用标准。</li><li>主机名、连接目标、桶名、租户名由公司内部另行管理，不写入本记录（只用占位）。</li></ul>
+<h3>1.5 认证</h3>
+<p><strong>结论</strong>：采用<strong>服务器侧 Session 方式</strong>（标识只放在 <strong>HttpOnly Cookie</strong> 中，保存 11 项，idle 30 分／绝对 8 小时，允许多重登录）。<strong>不采用 Auth0。</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">出处</th><th style="text-align:left">设计的事实</th><th style="text-align:left">决定</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">05 §8.2</td><td style="text-align:left"><strong>保存在服务器侧，只有标识放在 HttpOnly Cookie 中</strong>。只保存 11 项</td><td style="text-align:left">不采用由客户端保存并发送 token 的方式</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">05 §2.9 步骤 3、§10.5、裁决 Q-232</td><td style="text-align:left">销毁的请求目标是<strong>客户共通基础设施的 Session 管理功能</strong>（不追加本画面专用的端点）</td><td style="text-align:left">不把外部 IdP 的登出端点作为销毁请求的接收方</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">05 §4.1、I-307、§2.9 步骤 2</td><td style="text-align:left">能否登录由<strong>社員マスタ中是否存在未删除的对应行</strong>决定。权限类别来自社員マスタ</td><td style="text-align:left">不把外部 IdP 的主体信息用于判定</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">节点2 §12、§11</td><td style="text-align:left">密码相关不在范围内（NG-02）。只用社員コード登录，防冒充交给网络层、终端认证</td><td style="text-align:left">IdP 承担的认证要素在需求中不存在</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">05 §8.1、§9</td><td style="text-align:left">日志中不输出当日密钥、社員コード实值、Session 标识、姓名</td><td style="text-align:left">不增加标识的传播路径</td></tr></tbody></table>
+<ul><li><strong>一般论（E4）</strong>：认证基础设施的<strong>产品选型</strong>无法从设计中决定。<strong>「不采用」这个结论本身是 05 §8.2 的明文（上游由来）</strong>。</li></ul>
+<h3>1.6 不采用的东西</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">不采用的东西</th><th style="text-align:left">理由</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">Auth0（外部 IdP 的 token 方式）</td><td style="text-align:left">与服务器侧 Session 的明文不相容。它也不是销毁请求的接收方</td><td style="text-align:left">05 §8.2、§2.9 步骤 3</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">AWS S3（成果物输出桶）</td><td style="text-align:left">本项目设计中没有关于成果物输出桶的规定</td><td style="text-align:left">05 §1～§9</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">客户端侧路由</td><td style="text-align:left">跳转目标 URL 由服务器组装。画面只有 1 个</td><td style="text-align:left">05 §2.5、§2.6</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">ORM 的模型定义</td><td style="text-align:left">SQL 全部手写。避免物理定义的重复</td><td style="text-align:left">05 §5.1、§3</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>ALLOWED_SORT_FIELDS</code> 白名单机制</td><td style="text-align:left">不存在动态排序</td><td style="text-align:left">05 §5.1 #2</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">面向旧浏览器的 polyfill</td><td style="text-align:left">对象是 Chrome／Edge 最新 2 个版本</td><td style="text-align:left">节点2 §11</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">分页处理（ROWID／OFFSET-FETCH）</td><td style="text-align:left">一览只有候选，没有分页</td><td style="text-align:left">05 §5.1 #2</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 实现规约</h2>
+<p>这些规约是为了不在实现中破坏上游设计。<strong>不改变上游的值</strong>（05 §9）。</p>
+<h3>2.1 标识符 — 物理名用大写</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规约</th><th style="text-align:left">内容</th><th style="text-align:left">依据</th></tr></thead><tbody><tr><td style="text-align:left">表名</td><td style="text-align:left">业务对象的英文字母缩写 ＋ <code>_MST</code>（主数据）／<code>_TBL</code>（非主数据的共通表）</td><td style="text-align:left">05 §3.1（裁决 Q-227）</td></tr><tr><td style="text-align:left">列名</td><td style="text-align:left">snake_case。后缀为 <code>_cd</code>／<code>_nm</code>／<code>_flg</code>／<code>_id</code>／<code>_kais</code>／<code>_order</code></td><td style="text-align:left">05 §3.1</td></tr><tr><td style="text-align:left">大小写</td><td style="text-align:left"><strong>物理名全部用大写创建</strong>，应用的参照也统一用大写（非引用标识符会被折叠为大写）</td><td style="text-align:left">05 §3.1</td></tr><tr><td style="text-align:left">名称实体</td><td style="text-align:left">不变。05 §3 的表、列名称是唯一来源</td><td style="text-align:left">05 §3.1、§9</td></tr><tr><td style="text-align:left">引用</td><td style="text-align:left">不用引用标识符（<code>"..."</code>）创建小写</td><td style="text-align:left">（C。违抗折叠则每次参照都需要引用）</td></tr></tbody></table>
+<ul><li>05 §3 的物理名已经是大写表记（例：社員マスタ <code>STF_MST</code>、画面マスタ <code>GMN_MST</code>）。它与 Oracle 的折叠方向一致，因此不重写名称。定义层的小写表记是文档上的逻辑表记。</li></ul>
+<h3>2.2 类型 — 从与产品无关的表述映射</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">上游的表述（05 §3.1）</th><th style="text-align:left">物理类型</th><th style="text-align:left">例</th></tr></thead><tbody><tr><td style="text-align:left">字符串(n)</td><td style="text-align:left"><code>VARCHAR2(n CHAR)</code></td><td style="text-align:left">社員コード <code>VARCHAR2(7 CHAR)</code>／社員名 <code>VARCHAR2(60 CHAR)</code>／代码类 <code>VARCHAR2(6 CHAR)</code></td></tr><tr><td style="text-align:left">数值(p)</td><td style="text-align:left"><code>NUMBER(p)</code></td><td style="text-align:left">登录访问次数 <code>NUMBER(9)</code></td></tr><tr><td style="text-align:left">1 位标志</td><td style="text-align:left"><code>CHAR(1)</code></td><td style="text-align:left"><code>del_flg</code>／<code>valid_flg</code>／<code>ji_kjo_ksn_flg</code>／<code>ta_kjo_ksn_flg</code></td></tr></tbody></table>
+<ul><li><strong><code>n CHAR</code> 是字符数指定</strong>（不用字节指定）。日文名称（社員名 60）按字数计算。</li><li><strong>1 位标志的存储值有 2 套。</strong> <code>del_flg</code>／<code>valid_flg</code> 是 <code>0</code>／<code>1</code>，<code>ji_kjo_ksn_flg</code>／<code>ta_kjo_ksn_flg</code> 是 <code>'Y'</code>／<code>'N'</code>（05 §3.2、裁决 Q-234）。类型同为 <code>CHAR(1)</code>，但<strong>取值范围不同，不得混用</strong>。画面的 <code>Y</code>／<code>N</code> 与内部值 <code>1</code>／<code>0</code>（I-307）又是另一套（05 §4.4）。</li><li>映射只放在本记录（工程04）中。<strong>不把产品固有的类型名写回上游设计</strong>（05 §3.1）。</li><li>这个映射属于 <strong>（C）</strong>（包括是否采用 <code>n CHAR</code>）。</li></ul>
+<h3>2.3 日期、时刻 — 固定 <code>NLS_DATE_FORMAT</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规约</th><th style="text-align:left">内容</th><th style="text-align:left">依据</th></tr></thead><tbody><tr><td style="text-align:left">会话设置</td><td style="text-align:left">固定 <code>NLS_DATE_FORMAT = 'RR-MM-DD'</code>。<strong>禁止变更</strong></td><td style="text-align:left">规则 00 §2</td></tr><tr><td style="text-align:left">写入 SQL</td><td style="text-align:left">不把日期、时刻写入 SQL。当日密钥在 SQL 之外处理</td><td style="text-align:left">05 §5.1 #4、L-206</td></tr><tr><td style="text-align:left">时区</td><td style="text-align:left">服务器为 Asia/Tokyo。当日密钥的日期判定用 JST</td><td style="text-align:left">05 §8.4</td></tr><tr><td style="text-align:left">与终端时刻的区别</td><td style="text-align:left">I-302 是<strong>客户端终端的时刻</strong>，与当日密钥的判定是两回事</td><td style="text-align:left">05 §8.4</td></tr></tbody></table>
+<h3>2.4 绑定 — <code>:name</code> 原生绑定</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规约</th><th style="text-align:left">内容</th><th style="text-align:left">依据</th></tr></thead><tbody><tr><td style="text-align:left">写法</td><td style="text-align:left">值全部用 <code>:name</code> 的<strong>命名绑定</strong>接收。不转换为 <code>?</code>／<code>%s</code></td><td style="text-align:left">05 §5.1 #1</td></tr><tr><td style="text-align:left">禁止</td><td style="text-align:left">不用 f-string 等把值拼接到 SQL 正文。不把实值、实代码写入 SQL</td><td style="text-align:left">05 §5.1 #1</td></tr><tr><td style="text-align:left">标识符</td><td style="text-align:left">不从用户输入拼装列名、表名</td><td style="text-align:left">05 §5.1 #2</td></tr><tr><td style="text-align:left">实体</td><td style="text-align:left">绑定值的实体由环境配置或裁决值（Q-227／Q-234）给出</td><td style="text-align:left">05 §5.1 #5</td></tr></tbody></table>
+<h3>2.5 仅 SELECT</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">规约</th><th style="text-align:left">内容</th><th style="text-align:left">依据</th></tr></thead><tbody><tr><td style="text-align:left">DML</td><td style="text-align:left"><strong>只用 SELECT。</strong> 不持有 INSERT／UPDATE／DELETE</td><td style="text-align:left">05 §3.1、§5.1 #3</td></tr><tr><td style="text-align:left">结果</td><td style="text-align:left">不设计排他控制、被参照检查、重复检查、提交／回滚</td><td style="text-align:left">05 §3.8、§1.2</td></tr><tr><td style="text-align:left">5 张表</td><td style="text-align:left">全部为读。连接是 SQL-4 的内连接，顺序固定为 <code>ORDER BY disp_order, gmn_id</code></td><td style="text-align:left">05 §3.7、§5.3</td></tr><tr><td style="text-align:left">白名单</td><td style="text-align:left">因为不存在动态排序，<code>ALLOWED_SORT_FIELDS</code> 没有适用对象</td><td style="text-align:left">05 §5.1 #2</td></tr></tbody></table>
+<h3>2.6 命名的 3 层（camelCase／snake_case／UPPER）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">层</th><th style="text-align:left">表记</th><th style="text-align:left">例</th><th style="text-align:left">依据</th></tr></thead><tbody><tr><td style="text-align:left">画面、接口（TS）</td><td style="text-align:left">camelCase</td><td style="text-align:left"><code>stfCd</code>／<code>gmnId</code>／<code>kgnKbn</code></td><td style="text-align:left">规则 03 §4、05 §4.2</td></tr><tr><td style="text-align:left">定义层、Python 变量</td><td style="text-align:left">snake_case</td><td style="text-align:left"><code>stf_cd</code>／<code>gmn_id</code>／<code>kgn_kbn</code></td><td style="text-align:left">规则 03 §4、05 §3.1</td></tr><tr><td style="text-align:left">DB 物理名</td><td style="text-align:left">UPPER</td><td style="text-align:left"><code>STF_CD</code>／<code>GMN_ID</code></td><td style="text-align:left">05 §3.1＋§2.1</td></tr></tbody></table>
+<ul><li><strong>转换点只有 1 处</strong>（<code>BaseCamelModel</code> 的 <code>model_config</code> 4 行固定。规则 03 §2）。不让手写转换散落各处。</li><li>不混淆 3 套符号：画面 <code>Y</code>／<code>N</code>、内部 <code>1</code>／<code>0</code>（I-307）、标志列的 <code>0</code>／<code>1</code> 与 <code>'Y'</code>／<code>'N'</code>（05 §4.4、§3.2）。</li></ul>
+<h3>2.7 幂等性（生成、再执行）</h3>
+<ul><li>从相同的设计输入（L／D／E）生成的代码与差异，<strong>无论生成多少次都必须相同</strong>（规则 03 §7.1）。</li><li><strong>不把当前时刻、随机数、UUID、顺序不定的遍历写进输出。</strong> L-206 的日期<strong>通过参数注入</strong>（05 §2.7）。</li><li>不在启动时把非确定性的值写进配置值。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 环境部署与值的取得方式</h2>
+<p><strong>只写「值的取得方法」，不写值。</strong> 不写真实主机名、IP、口令、桶名、租户名、连接字符串（规则 01）。</p>
+<h3>3.1 环境一览</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">环境</th><th style="text-align:left">用途</th><th style="text-align:left">值的取得方法</th></tr></thead><tbody><tr><td style="text-align:left"><code>dev</code></td><td style="text-align:left">开发、单元测试。API 允许 http（05 §8.3）。当日密钥的日期通过参数注入固定（05 §2.7）。主数据为测试数据。日志只输出到本地标准输出</td><td style="text-align:left">启动时从环境变量（仓库外的本地配置）读取</td></tr><tr><td style="text-align:left"><code>stg</code></td><td style="text-align:left">结合测试、验收前确认。与本番同等的构成（HTTPS、JST、反向代理）。验证与共通基础设施（4 个画面、Session 管理）的连接，以及已脱敏访问日志的送出</td><td style="text-align:left">启动时从环境变量（容器 secret 注入）或密钥管理服务读取</td></tr><tr><td style="text-align:left"><code>prod</code></td><td style="text-align:left">本番。可用性 99.5%（业务时间帯）。访问日志保存 1 年（05 §8.1）</td><td style="text-align:left">启动时从密钥管理服务读取（没有时用环境变量的 secret 注入）</td></tr><tr><td style="text-align:left">共通（<code>all</code>）</td><td style="text-align:left">字符编码 UTF-8、服务器时区 Asia/Tokyo（05 §8.4）</td><td style="text-align:left">各环境的值通过环境变量／密钥管理注入，不放在代码与仓库中</td></tr></tbody></table>
+<h3>3.2 值的取得方式（仅方式）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">对象</th><th style="text-align:left">取得方法</th><th style="text-align:left">不放置的位置</th></tr></thead><tbody><tr><td style="text-align:left">DB 连接信息（用户、密码、主机、端口、SID／服务名）</td><td style="text-align:left">在启动时从密钥管理服务或环境变量（secret 注入）<strong>读取</strong>。通过 DI 传入</td><td style="text-align:left">代码、仓库、本记录</td></tr><tr><td style="text-align:left">相当于当日密钥的日期</td><td style="text-align:left"><strong>不从外部取得。</strong> 由服务器的 JST 决定，<strong>作为参数传给</strong> L-206（§6.3）</td><td style="text-align:left">—（没有要取得的实体）</td></tr><tr><td style="text-align:left">URL 组装用的 scheme／host／port／context</td><td style="text-align:left">从环境配置读取（裁决 Q-233）</td><td style="text-align:left">代码</td></tr><tr><td style="text-align:left">共通基础设施（4 个画面、Session 管理 API）的连接目标</td><td style="text-align:left">从环境配置读取（§7 前提 1、2）</td><td style="text-align:left">代码</td></tr><tr><td style="text-align:left">Session 的失效秒数（idle 30 分／绝对 8 小时）</td><td style="text-align:left">作为配置值持有（05 §8.2）</td><td style="text-align:left">—</td></tr></tbody></table>
+<h3>3.3 占位（本记录中使用的记号）</h3>
+<ul><li>实值全部由公司内部另行管理，不放在本记录、仓库、日志的任何一处。</li><li>本项目使用的占位：<code>IP_1</code>／<code>PORT_1</code>／<code>PWD_1</code>／<code>TBL_1</code>／<code>SID_1</code>。<strong>不使用 <code>BUCKET_1</code>／<code>DOM_1</code></strong>（因为不采用 S3 与外部 IdP。§1.6）。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 依赖包</h2>
+<p>版本采用<strong>范围指定</strong>（<code>^</code>／<code>~</code>）。实体由 lockfile（<code>package-lock.json</code>／<code>requirements.txt</code> 的固定）确定。<strong>原则上不追加。</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">库</th><th style="text-align:left">版本</th><th style="text-align:left">类别</th><th style="text-align:left">用途</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>vue</code></td><td style="text-align:left"><code>^3.5</code></td><td style="text-align:left">frontend</td><td style="text-align:left">1 个画面的声明式 UI。部件、可用性控制、1 秒更新的定时器（05 §4.1、§7.4 B-22）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>typescript</code></td><td style="text-align:left"><code>~5.6</code></td><td style="text-align:left">frontend</td><td style="text-align:left">用类型防止 camelCase 接口（05 §4.2）与符号体系 <code>Y</code>/<code>N</code>↔<code>1</code>/<code>0</code>（05 §4.4）的混淆</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>vite</code></td><td style="text-align:left"><code>^6.0</code></td><td style="text-align:left">frontend</td><td style="text-align:left">构建。对象为 Chrome／Edge 最新 2 个版本（节点2 §11）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><code>@vitejs/plugin-vue</code></td><td style="text-align:left"><code>^5.2</code></td><td style="text-align:left">frontend</td><td style="text-align:left">单文件组件的构建</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>primevue</code></td><td style="text-align:left"><code>^4.2</code></td><td style="text-align:left">frontend</td><td style="text-align:left">下拉框、输入、对话框、主题（I-301 背景色、05 §4.1）。品类选择属于一般论（E4）</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>pinia</code></td><td style="text-align:left"><code>^2.3</code></td><td style="text-align:left">frontend</td><td style="text-align:left">保持登录是否成立（05 §2.9 步骤 2）以及汇总共通部件的状态</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><code>vue-tsc</code></td><td style="text-align:left"><code>^2.2</code></td><td style="text-align:left">frontend</td><td style="text-align:left">把类型检查设为 CI 的关卡（在构建前失败）</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left"><code>vitest</code></td><td style="text-align:left"><code>^2.1</code></td><td style="text-align:left">frontend</td><td style="text-align:left">客户端单元测试（执行工程06 的 TC。CI 必需）</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left"><code>python</code></td><td style="text-align:left"><code>3.12</code></td><td style="text-align:left">runtime</td><td style="text-align:left">执行环境。语言版本无法从设计中决定（一般论 E4）</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left"><code>fastapi</code></td><td style="text-align:left"><code>^0.115</code></td><td style="text-align:left">backend</td><td style="text-align:left">3 个端点（POST、JSON）与 HTTP status 控制（05 §1.3、§6.1）</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left"><code>uvicorn</code></td><td style="text-align:left"><code>^0.34</code></td><td style="text-align:left">backend</td><td style="text-align:left">ASGI 服务器（dev 启动。prod 在反向代理之下）</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left"><code>pydantic</code></td><td style="text-align:left"><code>^2.10</code></td><td style="text-align:left">backend</td><td style="text-align:left">camelCase↔snake_case 的批量转换与拒绝多余输入（规则 03 §2、§4）</td></tr><tr><td style="text-align:left">13</td><td style="text-align:left"><code>sqlalchemy</code></td><td style="text-align:left"><code>^2.0</code></td><td style="text-align:left">backend</td><td style="text-align:left">用 <code>text()</code> 保留 SQL 正文，使用 <code>:name</code> 绑定与连接池（05 §5.1）。不使用 ORM 映射</td></tr><tr><td style="text-align:left">14</td><td style="text-align:left"><code>oracledb</code></td><td style="text-align:left"><code>^2.5</code></td><td style="text-align:left">backend</td><td style="text-align:left">Oracle 连接（Thin 模式。无需 Oracle Client）。可以原样传递 <code>:name</code> 绑定（05 §5.1 #1）</td></tr><tr><td style="text-align:left">15</td><td style="text-align:left"><code>httpx</code></td><td style="text-align:left"><code>^0.28</code></td><td style="text-align:left">backend</td><td style="text-align:left">向共通基础设施的 Session 管理 API 发出销毁请求（05 §2.9、裁决 Q-232）</td></tr><tr><td style="text-align:left">16</td><td style="text-align:left"><code>pytest</code></td><td style="text-align:left"><code>^8.3</code></td><td style="text-align:left">backend</td><td style="text-align:left">服务器单元测试（执行工程06 的 TC。CI 必需）</td></tr><tr><td style="text-align:left">17</td><td style="text-align:left"><code>playwright</code></td><td style="text-align:left"><code>^1</code>（固定版本在引入时由 lockfile 确定）</td><td style="text-align:left">backend（<strong>开发依赖</strong>）</td><td style="text-align:left">结合测试（工程07 IT-201～IT-211）的浏览器自动化。<strong>它不是产品技术栈，而是测试工具</strong>，不计入产品的运行时依赖（不属于红线④的对象。2026-10-27 人的裁决「都按方案」）</td></tr></tbody></table>
+<ul><li><strong>Pydantic 的 <code>model_config</code> 4 行是固定的</strong>（<code>alias_generator</code>／<code>populate_by_name</code>／<code>serialize_by_alias</code>／<code>extra</code>。规则 03 §2、禁止事项②）。派生模型不得重新定义。</li><li>提升版本属于依赖的变更，相当于<strong>批准后的技术栈变更（红线④）</strong>。范围内的更新由 lockfile 的差异评审处理。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 构建与 CI</h2>
+<h3>5.1 本地（开发者终端、Windows）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">步骤</th><th style="text-align:left">命令</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left">安装（frontend）</td><td style="text-align:left"><code>npm ci</code></td><td style="text-align:left">按 lockfile 安装</td></tr><tr><td style="text-align:left">安装（backend）</td><td style="text-align:left"><code>py -3 -m pip install -r requirements.txt</code></td><td style="text-align:left">用固定版本安装</td></tr><tr><td style="text-align:left">构建（frontend）</td><td style="text-align:left"><code>npm run build</code>（= <code>vue-tsc --noEmit &amp;&amp; vite build</code>）</td><td style="text-align:left">让类型检查在构建之前失败</td></tr><tr><td style="text-align:left">语法检查（backend）</td><td style="text-align:left"><code>py -3 -m compileall -q app</code></td><td style="text-align:left">Python 没有构建</td></tr><tr><td style="text-align:left">启动（dev）</td><td style="text-align:left"><code>py -3 -m uvicorn app.main:app --reload --port 8000</code></td><td style="text-align:left">绑定地址用 uvicorn 的默认值（回环）。不写真实 IP</td></tr><tr><td style="text-align:left">启动（prod）</td><td style="text-align:left">在反向代理之下启动 uvicorn</td><td style="text-align:left">TLS 终端在代理侧。时区为 Asia/Tokyo。值在启动时注入</td></tr><tr><td style="text-align:left"><strong>检查关卡</strong></td><td style="text-align:left"><code>py -3 -m tools.trace_check --strict</code></td><td style="text-align:left"><strong>禁止用 <code>--skip</code> 突破关卡</strong>（红线⑥）</td></tr></tbody></table>
+<ul><li>启动必须<strong>幂等</strong>（规则 03 §7.1）。</li></ul>
+<h3>5.2 CI（常设检查关卡）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">关卡</th><th style="text-align:left">命令</th><th style="text-align:left">含义</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">追溯、机密的检查关卡</td><td style="text-align:left"><code>python -m tools.trace_check --strict</code>（CI 为 <code>ubuntu-latest</code>）</td><td style="text-align:left">与本地 <code>py -3</code> 只是写法不同，检查内容相同。<strong>检查关卡仍为 6 道</strong>（<code>gates_run = 6</code>）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">机密的单独执行</td><td style="text-align:left"><code>python -m tools.trace_check --strict --only-check secrets</code></td><td style="text-align:left"><strong>只要命中 1 件就禁止提交</strong>（红线⑦）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">类型检查</td><td style="text-align:left"><code>npx vue-tsc --noEmit</code></td><td style="text-align:left">让它在构建之前失败</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">单元测试（服务器）</td><td style="text-align:left"><code>pytest</code></td><td style="text-align:left"><strong>不把 0 件测试当作通过</strong></td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">单元测试（客户端）</td><td style="text-align:left"><code>npx vitest run</code></td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">构建</td><td style="text-align:left"><code>npm run build</code></td><td style="text-align:left">零 error（相当于构建关卡，不是本骨架的检查关卡）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">依赖的固定</td><td style="text-align:left"><code>npm ci</code>、pip 的固定版本</td><td style="text-align:left">把 lockfile 的差异作为评审对象</td></tr></tbody></table>
+<ul><li><strong>本地检查关卡 → CI 常设检查关卡</strong>：把相同的命令放在两处。不因为本地通过了就撤掉 CI 侧（红线⑥）。<strong>无论是否已批准，都不放松关卡。</strong></li></ul>
+<h3>5.3 本骨架不持有的东西</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">关卡（公司内既有成果的称呼）</th><th style="text-align:left">本骨架</th></tr></thead><tbody><tr><td style="text-align:left">G1 静态检查</td><td style="text-align:left"><strong>有</strong>（<code>tools.trace_check</code> 的 gate1～gate6 相当）</td></tr><tr><td style="text-align:left">G2 构建／G3 Console／G4 冒烟／G5 截图对比</td><td style="text-align:left"><strong>未实现</strong>（以接入项目侧 CI 为前提的草案。§5.2 #6）</td></tr></tbody></table>
+<ul><li>本骨架是守护<strong>成果物（设计书、YAML、测试设计）质量</strong>的骨架，并不是守护「可运行应用质量」的装置（规则 04 §9.1）。不持有 G2～G5 不是缺失，而是角色的不同。</li><li>§5.2 的类型检查、构建、单元测试是<strong>以接入项目侧 CI 为前提的草案</strong>，不增减本骨架的检查关卡（6 道）。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 上游送达的 4 项的结论</h2>
+<p>节点3 §9 的 4 项，作为<strong>本节点的结论</strong>接收（采用＝<strong>人的裁决 2026-10-23</strong>）。<strong>没有改写上游（05）。</strong></p>
+<h3>6.1 HO-01 路由规约与模拟版的类别查询参数名</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">结论</th></tr></thead><tbody><tr><td style="text-align:left">画面路由</td><td style="text-align:left"><strong><code>/R60/{gmnId}</code></strong>（path 参数。末尾无斜杠。<strong>原样采用 05 §2.5 步骤 3 的记述</strong>）</td></tr><tr><td style="text-align:left">API 的前缀</td><td style="text-align:left"><strong><code>/R60Login/</code></strong>（<code>POST /R60Login/init</code>、<code>/R60Login/login</code>、<code>/R60Login/generateUrl</code>。<strong>原样采用 05 §2.3、§2.6 的端点写法</strong>）</td></tr><tr><td style="text-align:left">模拟版</td><td style="text-align:left">持有 <code>GMN_MST.gmn_kbn</code> 的另一条记录。用 <code>gmnId</code> 的<strong>去掉末尾 1 个字符（类别）后的值</strong>确定路由，类别用查询 <strong><code>gmnKbn=VAL_1</code></strong> 附加</td></tr><tr><td style="text-align:left">跳转 URL 的查询顺序</td><td style="text-align:left"><code>stfKbn</code> → <code>gmnKbn</code>。<strong><code>kgnKbn</code> 不放在 URL 上</strong>（§6.4）</td></tr><tr><td style="text-align:left">显示用 URL（<code>generateUrl</code>）</td><td style="text-align:left">保持 05 §7.9 B-38 的 4 个固定顺序。它与跳转 URL 是两回事，追加类别也不会破坏 B-38</td></tr></tbody></table>
+<ul><li><strong>依据</strong>：05 §2.5 步骤 3（明文写出画面路由为「<code>/R60/</code> ＋ gmnId」。<strong>在工程04 的路由规约中最终确定</strong>＝Q-223。本节点进行该最终确定）／05 §2.3、§2.6（明文写出端点为 <code>POST /R60Login/init</code>、<code>/R60Login/login</code>、<code>/R60Login/generateUrl</code>）／05 §2.5 步骤 4（<code>stfKbn</code> 是查询参数，<code>kgnKbn</code> 是保存区域）／人的裁决（2026-10-23。确定两者的读法）。</li><li><strong>注（上游的表述差异）</strong>：节点2 §1 备注① 写的是「画面的路由前缀为 <code>/R60Login/</code>」。<strong>如果原样采用这个记述</strong>，画面路由的前缀与 API 端点（<code>/R60Login/…</code>）的前缀就会相同，无法区分两者。因此本记录<strong>采用 05（详细设计）侧的记述</strong>：<strong>画面路由为 <code>/R60/</code>，API 的前缀为 <code>/R60Login/</code></strong>。按这种读法两者不同，不会冲突。节点2 的该行是<strong>上游的表述差异</strong>，是<strong>在变更环（n09）中更正的候选</strong>。<strong>本节点不改写上游。</strong></li><li><strong>端点路径的最终形态</strong>：<code>/R60Login/init</code>、<code>/R60Login/login</code>、<code>/R60Login/generateUrl</code>（与 05 的写法一致。不变更）。</li></ul>
+<h3>6.2 HO-02 日志基础设施</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">结论</th></tr></thead><tbody><tr><td style="text-align:left">送出路径</td><td style="text-align:left">应用向<strong>标准输出输出一行一条 JSON</strong>（结构化日志），由采集代理送到公司内日志基础设施。<strong>应用不直接向外部发送</strong></td></tr><tr><td style="text-align:left">脱敏方法</td><td style="text-align:left">社員コード 7 位中<strong>保留头 1 位与末 1 位，中间的 5 位替换为 <code>*</code></strong>（例 <code>1<strong>*</strong>7</code>）。不使用盐的确定性转换。<strong>不输出姓名</strong></td></tr><tr><td style="text-align:left">访问日志的项目</td><td style="text-align:left">时刻、画面ID、权限类别、结果代码、已脱敏的社員コード。<strong>保存 1 年</strong>（05 §8.1）</td></tr><tr><td style="text-align:left">运用日志的项目</td><td style="text-align:left">只有时刻、画面ID、结果代码（不输出社員コード）。保存期间<strong>与访问日志相同，为 1 年</strong>（C）</td></tr></tbody></table>
+<ul><li><strong>依据</strong>：05 §8.1（输出／不输出的区分已在表中确定。<strong>只有脱敏方法在上游没有确定</strong>）／05 §2.3 步骤 9、§2.9 步骤 5（运用日志的项目）／05 §9（机密红线）。脱敏方法与运用日志保存期间是<strong>本节点的决定（C）</strong>。</li></ul>
+<h3>6.3 HO-03 当日密钥 — 不存在要取得的密钥</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">结论</th></tr></thead><tbody><tr><td style="text-align:left">当日密钥的实体</td><td style="text-align:left"><strong>相当于当日密钥的就是「日期（yyyymmdd）」本身。</strong> 05 §2.7 算式 #4 规定「对各块的转换值整数加算当天的 <code>yyyymmdd</code>」。<strong>没有从外部取得的密钥，也没有存放位置</strong></td></tr><tr><td style="text-align:left">日期的取法</td><td style="text-align:left">从服务器的 JST 取得，<strong>作为参数传给</strong> L-206。<strong>取得收敛在 1 处，其他位置不重新计算</strong></td></tr><tr><td style="text-align:left">密钥管理的对象</td><td style="text-align:left"><strong>只有 DB 连接信息</strong>（用户、密码、主机、端口、SID／服务名）。能用托管的密钥管理就用它，没有则用环境变量（容器 secret 注入）</td></tr><tr><td style="text-align:left">跨日</td><td style="text-align:left">日期一变，转换结果就变。<strong>把前一天生成的 I-313 在次日解密会产生业务错误 E-205</strong>（05 §2.7、Q-216）</td></tr></tbody></table>
+<ul><li><strong>依据</strong>：05 §2.7 算式 #4（整数加算的对象就是日期本身）／05 §8.3（「不在本书中写当日密钥的实值与存放位置」是<strong>没有可写的实值</strong>的反面）／05 §2.7、§8.3（参数注入、JST、仅当天有效）。</li><li><strong>更正的内容</strong>：05 §9「送往工程04 的事项 3（当日密钥的取得方式与存放位置）」的<strong>前提落空了</strong>。工程04 要决定的是 <strong>DB 连接信息的取得方式</strong>。<strong>没有改写上游</strong>（若要修正设计，走变更环）。</li></ul>
+<h3>6.4 HO-04 画面「保存区域」的实体</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">结论</th></tr></thead><tbody><tr><td style="text-align:left">保存的实体</td><td style="text-align:left">把 <code>kgnKbn</code>（权限类别）用<strong>同源的 localStorage</strong> 以 1 个键保存（键名 <code>r60login.kgnKbn</code>，值 <code>Y</code>／<code>N</code>）</td></tr><tr><td style="text-align:left">理由</td><td style="text-align:left">跳转会打开新窗口／标签页，而 localStorage <strong>在同源的窗口之间共享</strong>（手动打开的标签页也共享）。sessionStorage<strong>只能通过 opener 经由 <code>window.open</code> 复制</strong>（一般论 E4）</td></tr><tr><td style="text-align:left">残留对策</td><td style="text-align:left">登录成立时<strong>必定覆盖</strong>，并在<strong>画面结束时显式删除</strong>（不把上一次的权限类别带到下一次启动）</td></tr><tr><td style="text-align:left">不放在 URL 上</td><td style="text-align:left"><code>kgnKbn</code> 不放在 URL 上（05 §2.5 步骤 4）</td></tr><tr><td style="text-align:left">前提</td><td style="text-align:left"><strong>SCR-201（登录）与跳转目标 SCR-202 必须同源</strong>（§7 前提 1）</td></tr></tbody></table>
+<ul><li><strong>依据</strong>：05 §2.5 步骤 4（<code>kgnKbn</code> 是保存区域，Session 标识是 Cookie，<code>stfKbn</code> 是查询参数）／05 §4.1 I-307／浏览器规范（一般论 E4）。保存的实体与残留对策是<strong>本节点的决定（C）</strong>。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. 前提条件</h2>
+<p>这是本节点结论成立所需的前提。<strong>把每个前提不成立时的后果写在同一行</strong>（不在前提不成立的状态下进入实现）。前提是否成立由 <strong><code>n04.yml</code> 的 OQ-01／OQ-02／OQ-05</strong> 的回答确定。<strong>AI 倒推出来的假想答案不作为事实处理。</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">前提</th><th style="text-align:left">不成立时的后果</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>共通基础设施的 4 个画面（菜单页眉、Session 错误画面、在线使用错误画面、系统错误画面）必须同源</strong>（05 §1.2）</td><td style="text-align:left">若不同源，Cookie 的属性（SameSite／Domain）与 §6.4 的保存区域方式都会改变。作为<strong>设计变更（CR）</strong>处理，§6.4 失效</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>Session 销毁请求的对方必须存在</strong>（客户共通基础设施的 Session 管理功能。05 §2.9 步骤 3、裁决 Q-232）</td><td style="text-align:left">若对方不存在，把 L-208 步骤 3 改读为「<strong>销毁自己的 Session</strong>」。这涉及裁决 Q-232 的前提，属于<strong>设计变更（CR）</strong></td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>Session 可以保存在服务器侧</strong>（05 §8.2）</td><td style="text-align:left">保存位置依存于冗余化构成。若多实例无法共享、<strong>需要外部存储，则构成变更（CR）</strong>（05 §8.2 的水准值不变）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>§6.1 的路由规约（画面 <code>/R60/{gmnId}</code>／API <code>/R60Login/</code>）获得批准</strong></td><td style="text-align:left"><code>05 §2.5</code> 写的是「在工程04 的路由规约中最终确定」，而该最终确定就是本记录。若不获批准，画面路由仍是未确定状态，不能交给实现</td></tr></tbody></table>
+<ul><li>前提 1～3 对应 <strong>OQ-01／OQ-02／OQ-05</strong>。<strong>OQ-03（日志基础设施的提供方）／OQ-04（密钥管理基盘）</strong>不改变 §6.2、§6.3 的方式（只确定送出目标与存放位置的种别）。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>8. 追溯</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">上游</th><th style="text-align:left">本记录的相应节</th></tr></thead><tbody><tr><td style="text-align:left">R-201 共通マスタログイン画面（需求）</td><td style="text-align:left">全体（<code>req_ids: [R-201]</code>）</td></tr><tr><td style="text-align:left">F-201 基本设计（画面、跳转、错误、非功能）</td><td style="text-align:left">§1（技术栈）、§3（环境）、§6（HO）</td></tr><tr><td style="text-align:left">I-301～I-320（画面项目、画面外项目）</td><td style="text-align:left">§1.1（部件要求）、§2.1～§2.6（命名、类型、符号体系）</td></tr><tr><td style="text-align:left">L-201～L-208（逻辑）</td><td style="text-align:left">§1.2（3 个端点、Session、L-206）、§2.7（幂等性）、§6.1（路由）、§6.3（当日密钥）</td></tr><tr><td style="text-align:left">D-201～D-205（数据模型）</td><td style="text-align:left">§1.3（DB 产品）、§2.1～§2.5（标识符、类型、绑定、仅 SELECT）</td></tr><tr><td style="text-align:left">E-201～E-210（错误分支）</td><td style="text-align:left">§1.1 #3（客户端跳转）、§1.2 #2（HTTP status）、§1.4 #6（不改写 403）</td></tr><tr><td style="text-align:left">边界值 B-01～B-43</td><td style="text-align:left">§2.2（符号体系、位数）、§6.1（维持 B-38）</td></tr><tr><td style="text-align:left">节点3 §9「送往工程04 的事项」1～4</td><td style="text-align:left">§0.4、§6.1～§6.4</td></tr><tr><td style="text-align:left">节点2 §11（非功能）</td><td style="text-align:left">§1.1 #8、§1.2 #8、§1.4 #7</td></tr></tbody></table>
+<ul><li>本记录<strong>不改变上游的设计值</strong>（05 §9）。需要变更时经由变更环（CR）（规则 02 §6.3）。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-10">
+<h2>9. 修订履历</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">版本</th><th style="text-align:left">日期</th><th style="text-align:left">内容</th><th style="text-align:left">作成</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-10-23</td><td style="text-align:left">把 <code>01_AI产出_框架构筑记录.md</code>（v0.1.0）整理为<strong>只保留结论的形式</strong>（用 §7 的前提条件替换未确定清单）。把人的裁决（技术选型 4 项的采用、DB 为 Oracle 19c、HO-01～HO-04 的采用、路由前缀的读法）作为结论反映进来。在 §0.4 追加了上游送达 4 项的移送表</td><td style="text-align:left">AI-SE</td><td style="text-align:left"><strong><code>baselined</code></strong>（SE・A 批准／2026-10-23）</td></tr><tr><td style="text-align:left">1.0.1</td><td style="text-align:left">2026-10-27</td><td style="text-align:left">在 §4 的依赖表里追加 <strong>第 17 项 <code>playwright</code>（开发依赖）</strong>。原有的 16 项不变。把收录范围更新为「依赖 17 件（其中开发依赖 1 件）」。<strong>不包含产品技术栈的变更</strong>（它是工程07 的测试工具，不是产品的运行时依赖。不属于红线④的对象）</td><td style="text-align:left">AI-SE</td><td style="text-align:left"><code>baselined</code>（<strong>SE・A 行处于追加记录、等待批准状态</strong>）</td></tr></tbody></table>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>05_承認版_框架构筑记录.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

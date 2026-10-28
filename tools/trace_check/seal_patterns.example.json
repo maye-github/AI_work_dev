@@ -1,0 +1,26 @@
+{
+  "_comment": "封印検査（補助）のモジュール固有識別子パターン。実在名をここに書いた版を reports/drill/<module>/seal_patterns.local.json として作成すること（reports/* は .gitignore 済み）。この example はプレースホルダのみで、__ で始まる regex はローダがスキップする。",
+  "_usage": [
+    "1. cp tools/trace_check/seal_patterns.example.json reports/drill/<module>/seal_patterns.local.json",
+    "2. local 側の regex を実在の物理名・実装ファイル名・共通部品名に置換",
+    "3. py -3 -m tools.trace_check --strict --only-check seal"
+  ],
+  "schema_version": "1",
+  "patterns": [
+    {
+      "label": "物理テーブル名",
+      "kind": "identifier",
+      "regex": "__REPLACE_WITH_LOCAL_REGEX__"
+    },
+    {
+      "label": "画面実装ファイル名",
+      "kind": "identifier",
+      "regex": "__REPLACE_WITH_LOCAL_REGEX__"
+    },
+    {
+      "label": "共通部品名",
+      "kind": "identifier",
+      "regex": "__REPLACE_WITH_LOCAL_REGEX__"
+    }
+  ]
+}

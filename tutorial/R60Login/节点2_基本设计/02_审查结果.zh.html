@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02_审查结果.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>02_审查结果.zh</h1>
+<div class="meta">
+  机读源: <code>02_审查结果.zh.md</code> ／
+  生成: 2026-10-21 16:40 ／
+  节 1・表 3
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>02_审查结果.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+
+<section class="sec sec-lead">
+<h1>节点2 审查结果（人逐项审查记录）</h1>
+<blockquote class="quote"><strong>审查对象</strong>：<code>01_AI产出_基本设计书.md</code>（初稿・2026-10-21）<br><strong>审查清单</strong>：<code>02_你在这里审查.md</code>（六节 22 项）<br><strong>方式</strong>：A（我逐项提问，人回答，我代记）<br><strong>判定值</strong>：<code>合</code> / <code>不合</code> / <code>C</code>（我方内部事项，不在此确认） / <code>未判定</code>（尚未回答）<br>本记录是红线③（人评审）的证据。<strong>判定只能由人给出</strong>，<code>approved_by</code> 只记人的标识符。<br>第六节（#20〜#22）的对象是尚未产出的 <code>04</code>／<code>05</code>，<strong>到步骤4・5 才能判</strong>，现在保持未判定。<br><strong>注（2026-10-21 追加）</strong>：本记录是 <strong>v1.0.2 时点</strong>的审查。表中与补足判定里的 <code>§8.4-x</code> 指<strong>当时 <code>05</code> 的第 8 节</strong>（未确定事项与判定的汇总）。<br><strong>v1.0.3 已废止旧 §8</strong>，结论移入本文各使用处（见 <code>05</code> §11 修订履历）。<strong>旧 §8 的判定本身仍然有效</strong>，<br>现在的保存位置是 <code>docs/00_plan/coach/R60Login/n02.yml</code> 的 <code>open_questions</code>。本记录作为审查时点的证据保留，不追改。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">节</th><th style="text-align:left">审查项</th><th style="text-align:left">判定</th><th style="text-align:left">意见・处置</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">一 需求追溯</td><td style="text-align:left">F-201 挂在 R-201 之下，功能名称与需求一致</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">题名写作「R60Login ログイン機能」，括号内引用批准版原标题；父需求 R-201，链条通</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">一 需求追溯</td><td style="text-align:left">画面 SCR-201 / SCR-202 的划分与理解一致</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">SCR-202 作迁转目标，只负责连接契约（同窗口・stfKbn 传递）；错误画面作共通部件</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">一 需求追溯</td><td style="text-align:left">输入输出项目 I-301〜I-311 无遗漏</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">批准版 §4 的 12 项 1:1 对应 I-301〜I-312，无增删；I-304 未丢。清单「〜I-311」是旧写法，一并订正</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">一 需求追溯</td><td style="text-align:left">★逐项对照节点1 批准版：输入项 + Q-201〜Q-219 结论是否搬全</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">Q-201〜Q-219 共 19 件全部转记，未决 0；逐条比对批准版 §11.2 无走样</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">二 业务正确性</td><td style="text-align:left">处理流程 6 步的顺序正确</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">6 步顺序与清单一致。表内行序原与说明矛盾（客户端校验排在稼働判定之后），已按「客户端校验→加密→①稼働判定」改行序</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">二 业务正确性</td><td style="text-align:left">E-203 的提示文面不泄露「员工是否存在」</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">认证类 E-201/202/205/207 共用一文面；E-203 只讲系统状态且先于解密判定。E-203 措辞改为「現在、システムを利用できません」</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">二 业务正确性</td><td style="text-align:left">停止服务时的行为符合 BR-201-01</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">3 个处理开头都判稼働；不可时 403＋专用「在线利用错误画面」，不是通用错误页；初期显示不取候选</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">二 业务正确性</td><td style="text-align:left"><code>kgnKbn</code>（权限区分）与画面访问控制的对应正确</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">主体正确：本画面不判权限（Q-209 A）、<code>kgnKbn</code> 是「更新あり Y／更新なし N」、由迁转目标决定更新可否（批准版 §3.5 #14）。<strong>订正 §12 措辞</strong>：原文「権限区分は URL に載せない」是绝对句，与 §5.5 显示用 URL 含 4 参数冲突；改为「登录迁转不载 URL・走保持领域（Q-203）；<code>generateUrl</code> 的显示用 URL 按上游 §4.4 含 4 参数，不用于迁转」</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">二 业务正确性</td><td style="text-align:left">起動区分 <code>stfKbn</code> 的处理与上游一致</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">清单原引「Q-208・含める・必須」有误（Q-208 是社員マスタ）；实为规则 10＋Q-210＋Q-204＋Q-212。I-304 已定义・入迁转查询・入 URL 参数序；必须性未编造，建在 §8.4-1。<strong>补漏</strong>：§5.3 加「起動区分はログイン可否に用いない」及「不得按值分认证分支」</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">三 红线</td><td style="text-align:left">未在工程02 确定技术栈（红线④）</td><td style="text-align:left"><strong>合</strong>（2026-10-21・机械）</td><td style="text-align:left">全文 0 处 Vue/FastAPI/Oracle/SQLAlchemy/PrimeVue/TypeScript</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">三 红线</td><td style="text-align:left">未以「既有共通函数」为前提（greenfield）</td><td style="text-align:left"><strong>合</strong>（2026-10-21・机械）</td><td style="text-align:left">「既存」只出现在「既存ではない」的否定句</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">三 红线</td><td style="text-align:left">未引入 <code>ids.yml</code> 未登记的野号</td><td style="text-align:left"><strong>合</strong>（2026-10-21・机械）</td><td style="text-align:left">ID 仅 R-201/F-201/I-301〜320/E-201〜210/SCR-201・202/Q-201〜226，无越界</td></tr><tr><td style="text-align:left">13</td><td style="text-align:left">三 红线</td><td style="text-align:left">文中无任何真实敏感值（含暗号键实值）</td><td style="text-align:left"><strong>合</strong>（2026-10-21・机械）</td><td style="text-align:left">无 IP／邮箱／PWD／EMP 实值；gate6 PASS</td></tr><tr><td style="text-align:left">14</td><td style="text-align:left">四 非机能</td><td style="text-align:left">性能目标对场景合理（无指定则为 B 类提案）</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">Q-219（B・待批准）：3 秒 p95・同时 100・99.5%・Chrome/Edge 最新 2 版・1280×800；§9 每行标「B 承認待ち」</td></tr><tr><td style="text-align:left">15</td><td style="text-align:left">四 非机能</td><td style="text-align:left">Session 超时未擅自填暂定值</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">值来自 Q-205（B 提案）并标「B 承認待ち」，非自定暂定值。<strong>清单引用订正</strong>：原文 <code>Q-201／Q-221</code> → <code>Q-205</code>（Q-201 是加密、Q-221 是共通部件）</td></tr><tr><td style="text-align:left">16</td><td style="text-align:left">四 非机能</td><td style="text-align:left">安全要求（日志不出敏感值、文面不漏存在性）写进设计</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">§7.2 认证类 E-201/202/205/207 同一文面；§9 日志仅掩码社員コード・画面 ID・権限区分・结果码・时刻、姓名不输出；HTTPS；5 回/10 分锁定。<strong>补漏</strong>：§9 加「当日鍵・平文/暗号化社員コード実値・Session 識別子は出力しない」</td></tr><tr><td style="text-align:left">17</td><td style="text-align:left">五 未定事项</td><td style="text-align:left">Q-220〜Q-222 及节点1 遗留项的 A/B/C 分类</td><td style="text-align:left"><strong>合</strong>（2026-10-21・人判定）</td><td style="text-align:left">继承 10 件保持原判定（A3/B5/C2）。新增：<strong>Q-220 初步方案 B → A</strong>（提供元为顾客事实）・Q-221 C・Q-222 B・Q-223 C・Q-226 C；Q-224/225 已解决不分类。件数体检：A 1／B 1／C 3（A 20% ≦1/4、C 60% ≧1/3） → 已写入 <code>n02.yml</code> 与 §8.2</td></tr><tr><td style="text-align:left">18</td><td style="text-align:left">五 未定事项</td><td style="text-align:left">无「AI 假装已经确定」的事项</td><td style="text-align:left"><strong>合</strong>（2026-10-21・机械＋人确认）</td><td style="text-align:left">20 处标「初步方案／未決」、13 处标「確定・上流」；未定项全部出现在第 8 节</td></tr><tr><td style="text-align:left">19</td><td style="text-align:left">五 未定事项</td><td style="text-align:left">Q 编号不撞号（节点1 Q-201〜Q-219／节点2 Q-220 起）</td><td style="text-align:left"><strong>合</strong>（2026-10-21・机械）</td><td style="text-align:left">Q-201〜Q-226 无重叠</td></tr><tr><td style="text-align:left">20</td><td style="text-align:left">六 批准前</td><td style="text-align:left">组内审查意见已全部落实</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">意见-01〜06 均有处置：01 部分采纳（写明「不让进登录画面」＋专用提示，补引批准版 §3 規則19・§8 E-03）／02 部分采纳（编号本无重复，补注记；Session 保持 Q-205 出处，<strong>不改挂 Q-221</strong>，否则破坏人判定的 C）／03 未采纳（初稿 §10 本无技术栈断定）／04 部分采纳（復号入参 I-313・失败 E-205・日志不出平文与密文）／05 部分采纳（「条件」栏为内部记述；文面待 Q-206）／06 采纳（SCR-202 只负责决定并返回迁移 URL）</td></tr><tr><td style="text-align:left">21</td><td style="text-align:left">六 批准前</td><td style="text-align:left"><code>04</code> 开头有「意见→改动」对照表且对得上</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left">§0.1 的 6 行与正文改动位置逐一核对一致：§5.1・§7.2／§8.1／§10／§5.3・§7.1・§7.2・§8.4-9／§7.1・§7.2／§1.2・§2</td></tr><tr><td style="text-align:left">22</td><td style="text-align:left">六 批准前</td><td style="text-align:left"><code>05</code> 填写了批准记录（版本 / 日期 / 批准者）</td><td style="text-align:left"><strong>合</strong>（2026-10-21）</td><td style="text-align:left"><code>05</code> 为 v1.0.1。§0 批准记录 SE・A 行已由 <strong>SE-001</strong> 记入（版本 1.0.1／日期 2026-10-21／状态 承認）。<strong>PG・B／テスター・C／PM・D 三行仍为未批准</strong>（空栏即未批准）</td></tr></tbody></table>
+<h3>补充判定（2026-10-21・人）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">未决点</th><th style="text-align:left">人判定</th><th style="text-align:left">记入位置</th></tr></thead><tbody><tr><td style="text-align:left">§8.4-9 DB 连接获取失败＝「稼働不可（E-203/E-206）」还是「系统错误（E-208）」</td><td style="text-align:left"><strong>B</strong>（提案：归 <strong>E-203</strong>，与稼働判定同源，用户所见提示一致；依据批准版 §8 E-03 的分类）→ 待顾客批准</td><td style="text-align:left"><code>04</code> §8.4-9・<code>n02.yml</code> Q 条目</td></tr><tr><td style="text-align:left">§8.4-10 復号失败后的去向</td><td style="text-align:left"><strong>A</strong>（以批准版 §8 E-05「Session 错误画面」为准，不改为回登录画面）</td><td style="text-align:left"><code>04</code> §8.4-10</td></tr><tr><td style="text-align:left">§8.4-11 意见引用的 <code>BR-201-01</code>／<code>BR-201-08</code>・Q 编号与批准版不一致</td><td style="text-align:left"><strong>C</strong>（内部处理：不采用这些编号，改引 §・規則编号；正文已注记）</td><td style="text-align:left"><code>04</code> §8.4-11</td></tr></tbody></table>
+<h3>批准前的判定（2026-10-21・人「按你的方案」一括判定）</h3>
+<blockquote class="quote">步骤5 后仍有 <strong>13 件未回答</strong>（鉄則18 使其不能批准）。按 C→B→A 顺序重新判定后，13 件归为 3 组，人一括判定如下。<br>批准由 SE-001 在 <code>05</code> §0 批准记录上记入（红線③：AI 不代写批准）。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">组</th><th style="text-align:left">件数</th><th style="text-align:left">事项</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left">C（内部判定）</td><td style="text-align:left">8</td><td style="text-align:left">§8.4-1 I-304 不设必须（空栏＝<code>3</code>）、§8.4-2 I-306/307/310 不设必须、§8.4-4・§8.4-6 详细代码 <code>R60W0001</code>、§8.4-8 先去全角再判 7 桁、Q-221 本案新规定义共通函数、Q-223 <code>/R60/&lt;gmnId&gt;</code>、Q-226 评审后由 SE-001 一括登记</td><td style="text-align:left"><strong>全部照案</strong></td></tr><tr><td style="text-align:left">B（提案）</td><td style="text-align:left">3</td><td style="text-align:left">§8.4-3 <code>mngInfo</code> 5 项型定义（E4）、§8.4-7 登录后「閉じる」不销毁迁转目标的 Session（E3）、Q-222 候选 0 件时两按钮都置灰（E4）</td><td style="text-align:left"><strong>全部照案</strong>（演练＝批准；实案＝顾客批准待ち）</td></tr><tr><td style="text-align:left">A（顾客事实）</td><td style="text-align:left">2</td><td style="text-align:left"><strong>Q-220 4 种共通部件由客户共通基盘提供</strong>（阻塞解除）、§8.4-5 消息文本实体由顾客提供（书中文言保持初步方案）</td><td style="text-align:left"><strong>照虚拟答案</strong>（演练；实案＝顾客回答待ち）</td></tr></tbody></table>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>02_审查结果.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

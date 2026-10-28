@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+
+  "_comment": "共有プロジェクト設定。原則 deny のみを置く（Claude の権限を制限するだけで、何も自動承認しない）。承認を減らしたい場合は docs/90_knowledge/claude-code-migration-guide.md の『任意: 権限の緩和』節を参照し、ユーザ自身が settings.local.json に allow を追加すること。例外は下の SessionStart フック 1 本のみ。これも context を足すだけで、権限の自動承認は一切しない。",
+
+  "permissions": {
+    "deny": [
+      "Read(./tools/masking/masking_dict.json)",
+      "Read(./tools/trace_check/secret_patterns.local.json)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/id_rsa)",
+      "Read(./**/*.pem)"
+    ]
+  },
+
+  "_comment_hooks": "フックは 2 本だけ。(1) SessionStart（startup / resume / clear / compact / fork）: 8 工程の現在地を Claude の context へ差し込み、systemMessage で画面にも出す。実体は tools/coach_brief.py --hook。(2) Stop（1 ターン終了ごと）: 機読源の基本設計書 md が Excel より新しければ描き直す。実体は tools/gen_formal/auto.py（更新が無ければ stat 2 回で終了し、常に exit 0 なのでターンを止めない）。どちらも何も自動承認しない。不要になったら該当ブロックを削除すればよい（他に副作用はない）。",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact|fork",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py -3 -X utf8 \"${CLAUDE_PROJECT_DIR}/tools/coach_brief.py\" --hook",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py -3 -X utf8 \"${CLAUDE_PROJECT_DIR}/tools/gen_formal/auto.py\"",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

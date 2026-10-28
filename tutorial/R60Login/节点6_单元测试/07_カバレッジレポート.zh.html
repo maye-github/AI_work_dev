@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>07_カバレッジレポート.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>07_カバレッジレポート.zh</h1>
+<div class="meta">
+  机读源: <code>07_カバレッジレポート.zh.md</code> ／
+  生成: 2026-10-27 15:57 ／
+  节 6・表 5
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>07_カバレッジレポート.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 测量对象与目标</a></li><li><a href="#sec-2">1. 测量命令与实际输出</a> <span class="chip chip-io">项目定义</span></li><li><a href="#sec-3">2. 数值汇总</a></li><li><a href="#sec-4">3. 对目标的判定（只写数值，采不采纳由人定）</a></li><li><a href="#sec-5">4. 未覆盖的每一条及其原因</a></li><li><a href="#sec-6">5. 请人决定的事项（签字）</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>07 覆盖率报告 — 共通主数据　登录（R60Login）</h1>
+<blockquote class="quote"><strong>本文件是测量记录，不是合格判定。</strong> 对目标是否达成，§3 只用<strong>数值</strong>写出来；<br>这些数值是否接受，由人决定（红线③）。<br>记录按规则 02 §10 办，写的是<strong>「命令＋实际输出」</strong>，不写结论。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 测量对象与目标</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">测量对象</td><td style="text-align:left">节点 5 的生产代码（<code>节点5_制造/backend/app/<strong></code>、<code>节点5_制造/frontend/{common,services,stores,views}/</strong></code>）</td></tr><tr><td style="text-align:left">测量工具</td><td style="text-align:left">后端：<code>coverage 7.17.0</code>（经 pytest-cov，含分支测量）／前端：<code>@vitest/coverage-v8 5.0.5</code></td></tr><tr><td style="text-align:left">测量日期</td><td style="text-align:left">2026-10-27</td></tr><tr><td style="text-align:left">目标出处</td><td style="text-align:left"><code>05_承認版_测试用例集.md</code> §1「<strong>行 80%／分支 100%</strong>（E-201〜E-210 的分支，以及可用性判定、解密、位数判定的边界，不得排除）」</td></tr><tr><td style="text-align:left">目标原定时机</td><td style="text-align:left">上面写的是「实测放到工程 7」，但 §5.6 的成果物包含<strong>执行结果・覆盖率报告</strong>，所以在本节点先测了（工程 7 会再测一次）。</td></tr></tbody></table>
+</section>
+<section class="sec sec-io" id="sec-2">
+<h2>1. 测量命令与实际输出 <span class="chip chip-io">项目定义</span></h2>
+<h3>1.1 后端</h3>
+<pre><code>cd tutorial/R60Login/节点5_制造/backend
+py -3 -m pytest -q --cov=app --cov-branch --cov-report=term-missing \
+  --cov-report=json:D:/AI_work_dev/reports/unit/R60Login/coverage.json</code></pre>
+<pre><code>Name                          Stmts   Miss Branch BrPart  Cover   Missing
+-------------------------------------------------------------------------
+app\api\generate_url_api.py      59      0     18      0   100%
+app\api\init_api.py              51      0      6      1    98%   72-&gt;82
+app\api\login_api.py             68      0     16      0   100%
+app\config.py                    40      0      2      0   100%
+app\domain\availability.py       14      0      2      0   100%
+app\domain\login_lockout.py      47      0      6      0   100%
+app\domain\session_store.py      47      0     10      0   100%
+app\domain\stf_cd_cipher.py      50      1     20      1    97%   101
+app\main.py                      75      4      6      1    94%   84-&gt;89, 102-106
+app\repository\queries.py        44      0      2      0   100%
+app\schemas.py                   49      0      0      0   100%
+-------------------------------------------------------------------------
+TOTAL                           544      5     88      3    99%
+145 passed, 1 warning in 9.14s</code></pre>
+<p>（原始输出：<code>reports/unit/R60Login/backend_run.txt</code>／机器可读：<code>reports/unit/R60Login/coverage.json</code>）</p>
+<h3>1.2 前端</h3>
+<pre><code>cd tutorial/R60Login/节点5_制造/frontend
+npx vitest run --coverage</code></pre>
+<pre><code> Test Files  5 passed (5)
+      Tests  95 passed (95)
+
+ % Coverage report from v8
+------------------|---------|----------|---------|---------|--------------------
+File              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+------------------|---------|----------|---------|---------|--------------------
+All files         |   96.21 |    82.95 |    98.3 |   96.12 |
+ common           |   96.66 |    93.33 |     100 |   96.42 |
+  stfCdCipher.ts  |   96.42 |    93.33 |     100 |   96.15 | 91,103
+ services         |     100 |    83.33 |     100 |     100 |
+  loginApi.ts     |     100 |    83.33 |     100 |     100 | 123
+ views            |   95.58 |    80.71 |   96.87 |   95.52 |
+  LoginScreen.vue |   95.58 |    80.71 |   96.87 |   95.52 | ...226-232,262,498
+------------------|---------|----------|---------|---------|--------------------
+Statements   : 96.21% ( 280/291 )
+Branches     : 82.95% ( 146/176 )
+Functions    : 98.3% ( 58/59 )
+Lines        : 96.12% ( 273/284 )</code></pre>
+<p>（原始输出：<code>reports/unit/R60Login/frontend_run.txt</code>／机器可读：<code>reports/unit/R60Login/frontend-coverage/coverage-final.json</code>、<code>coverage-summary.json</code>）</p>
+<h3>1.3 未覆盖部分的原始数据（机器输出）</h3>
+<p>未覆盖的行和分支在上面的表里被 <code>...</code> 省略了，所以从机器可读文件里重新取了一遍。</p>
+<pre><code># 后端（coverage.json 的 missing_lines / missing_branches）
+app\api\init_api.py        | lines: []                        | branches: [[72, 82]]
+app\domain\stf_cd_cipher.py | lines: [101]                    | branches: [[100, 101]]
+app\main.py                | lines: [102, 103, 104, 106]      | branches: [[84, 89]]
+
+# 前端（coverage-final.json 的未命中 statement / branch）
+stfCdCipher.ts  | stmt: 91,103                                       | branch-line: 90,102
+submitGuard.ts  | stmt: (无)                                         | branch-line: (无)
+loginApi.ts     | stmt: (无)                                         | branch-line: 123
+sessionState.ts | stmt: (无)                                         | branch-line: (无)
+LoginScreen.vue | stmt: 126,156,226,228,229,230,232,262,498
+                | fn: (anonymous)@498
+                | branch-line: 42,104,109,110,124,141,153,155,173,179,223,226,248,
+                |              261,279,320,326,332,337,380,387,393,397,398,401,423</code></pre>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 数值汇总</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">对象</th><th style="text-align:left">语句</th><th style="text-align:left">未执行</th><th style="text-align:left">分支</th><th style="text-align:left">部分未执行</th><th style="text-align:left">行</th><th style="text-align:left">分支覆盖率</th></tr></thead><tbody><tr><td style="text-align:left">后端</td><td style="text-align:left">544</td><td style="text-align:left">5</td><td style="text-align:left">88</td><td style="text-align:left">3</td><td style="text-align:left">99%</td><td style="text-align:left"><strong>96.6%</strong>（85/88）</td></tr><tr><td style="text-align:left">前端</td><td style="text-align:left">291</td><td style="text-align:left">11</td><td style="text-align:left">176</td><td style="text-align:left">—</td><td style="text-align:left">96.12%</td><td style="text-align:left"><strong>82.95%</strong>（146/176）</td></tr></tbody></table>
+<ul><li>后端的「99%」是 coverage.py 的 <code>Cover</code> 列（语句与分支的合成值）。<strong>只看分支是 96.6%</strong>，不是 99%。</li><li>前端的分支按 v8 的计法（每个分支两侧各算一个），还剩下<strong>未执行 30 个</strong>。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 对目标的判定（只写数值，采不采纳由人定）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">目标</th><th style="text-align:left">实测</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left">行 80%</td><td style="text-align:left">后端 99%／前端 96.12%</td><td style="text-align:left"><strong>达成</strong></td></tr><tr><td style="text-align:left">分支 100%</td><td style="text-align:left">后端 96.6%（85/88）／前端 82.95%（146/176）</td><td style="text-align:left"><strong>未达成</strong></td></tr></tbody></table>
+<ul><li><strong>目标里没有排除条款。</strong> 原文写的是「E-201〜E-210 的分支，以及可用性判定、解密、位数判定的边界，不得排除」，</li></ul>
+<p>所以没有采用「反正到不了就排除掉」这种解释。理由写在 §4，但<strong>照样计为未达成</strong>。</p>
+<ul><li>单看目标点名的 4 个领域，情况如下：</li><li><strong>E-201〜E-210 的分支</strong>：后端的 3 个端点都是 100%（例外只有 §4.1 的「不带 Cookie」路径）。</li></ul>
+<p>画面侧只有 E-205 的分支（<code>LoginScreen.vue:226-232</code>）没执行（§4.2）。</p>
+<ul><li><strong>可用性判定</strong>：<code>availability.py</code> 2/2 分支，100%。</li><li><strong>解密</strong>：<code>stf_cd_cipher.py</code> 20 个分支中有 1 个未执行（<code>100-&gt;101</code>，§4.1）。</li><li><strong>位数判定</strong>：正好 150 位／151 位（<code>generate_url_api</code>），以及 7 位／4 位以下／9 的进位（加密），都已执行。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 未覆盖的每一条及其原因</h2>
+<h3>4.1 后端（5 行・3 分支）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">位置</th><th style="text-align:left">未执行的内容</th><th style="text-align:left">原因</th><th style="text-align:left">类别</th></tr></thead><tbody><tr><td style="text-align:left"><code>init_api.py:72-&gt;82</code></td><td style="text-align:left"><code>if client_id is not None:</code> 的<strong>假</strong>分支（不挂 Cookie 直接返回）</td><td style="text-align:left"><code>init</code> 总是传 <code>client_id</code>，没有走假分支的调用</td><td style="text-align:left">到不了的防御</td></tr><tr><td style="text-align:left"><code>stf_cd_cipher.py:100</code>→<code>101</code></td><td style="text-align:left"><code>len(rest) % 2 != 0</code> 的<strong>真</strong>分支（<code>raise StfCdCipherError</code>）</td><td style="text-align:left">首元素长度按 <code>(len-1)%2</code> 选取，所以 <code>rest</code> 的长度<strong>对任何输入都必然为偶数</strong>，结构上不会抛</td><td style="text-align:left">到不了的防御</td></tr><tr><td style="text-align:left"><code>main.py:84-&gt;89</code></td><td style="text-align:left"><code>if not logger.handlers:</code> 的<strong>假</strong>分支（已存在 handler）</td><td style="text-align:left"><code>_configure_logging()</code> 只在模块加载时调用 1 次</td><td style="text-align:left">到不了（单进程）</td></tr><tr><td style="text-align:left"><code>main.py:102-106</code></td><td style="text-align:left"><code>connect</code> 事件的监听器本体（<code>ALTER SESSION SET NLS_DATE_FORMAT='RR-MM-DD'</code>）</td><td style="text-align:left">执行需要<strong>真实数据库连接</strong>。单元测试不建连接（§2.1）。<strong>列为工程 7 的测量项</strong></td><td style="text-align:left">交给工程 7</td></tr></tbody></table>
+<h3>4.2 前端（11 行・30 分支）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">位置</th><th style="text-align:left">未执行的内容</th><th style="text-align:left">原因</th><th style="text-align:left">类别</th></tr></thead><tbody><tr><td style="text-align:left"><code>stfCdCipher.ts:91</code></td><td style="text-align:left"><code>rest.length % 2 !== 0</code> 的 <code>raise</code></td><td style="text-align:left">与后端同一位置的「结构上到不了的防御」相同</td><td style="text-align:left">到不了的防御</td></tr><tr><td style="text-align:left"><code>stfCdCipher.ts:103</code></td><td style="text-align:left"><code>digit out of range</code> 的 <code>raise</code></td><td style="text-align:left">契约上的输入是数字串，但<strong>传非数字就能到</strong>（例如 <code>"ab"</code>）。<strong>属未验证，不是到不了</strong></td><td style="text-align:left">未验证（契约外输入）</td></tr><tr><td style="text-align:left"><code>loginApi.ts:123</code></td><td style="text-align:left"><code>meta.env?.[name] ?? ""</code> 的 <code>?? ""</code> 侧</td><td style="text-align:left">vitest 里 <code>import.meta.env</code> 总是已定义</td><td style="text-align:left">依赖环境</td></tr><tr><td style="text-align:left"><code>LoginScreen.vue:126</code></td><td style="text-align:left">跳转目标为 <code>""</code> 时的 <code>return</code></td><td style="text-align:left"><code>COMMON_SCREEN_ROUTES</code> 在模块加载时由环境变量拼成；要置空得在加载前 <code>vi.stubEnv</code></td><td style="text-align:left">依赖环境</td></tr><tr><td style="text-align:left"><code>LoginScreen.vue:156</code></td><td style="text-align:left">模拟版时追加 <code>gmnKbn</code> 的那一行</td><td style="text-align:left"><code>isSimulationVersion()</code> 是<strong>恒返回 <code>false</code></strong> 的实现（输入里没有判定材料，已登记在 <code>节点5_制造/06_設計との差異.md</code>）</td><td style="text-align:left">设计上不可达</td></tr><tr><td style="text-align:left"><code>LoginScreen.vue:226-232</code></td><td style="text-align:left">E-205（加密异常）的分支及其再抛出</td><td style="text-align:left">先判 7 位半角数字，且日期源恒返回 8 位，所以 <code>encryptStfCd</code> 不会抛</td><td style="text-align:left">到不了的防御</td></tr><tr><td style="text-align:left"><code>LoginScreen.vue:262</code></td><td style="text-align:left"><code>MENU_TARGET_ROUTE === ""</code> 的 <code>return</code></td><td style="text-align:left">与 <code>:126</code> 相同（只有环境变量为空才会到）</td><td style="text-align:left">依赖环境</td></tr><tr><td style="text-align:left"><code>LoginScreen.vue:498</code></td><td style="text-align:left"><code>Dialog</code> 的 <code>v-model:visible</code> setter</td><td style="text-align:left">把 <code>Dialog</code> <strong>替换掉了</strong>，所以 <code>update:visible</code> 不会触发。关闭路径本身已用替换件的按钮执行过（L-208 的顺序已验证）</td><td style="text-align:left">测试部件的限制</td></tr><tr><td style="text-align:left"><code>LoginScreen.vue</code> 其余 30 个分支</td><td style="text-align:left"><code>??</code> / <code>?.</code> / 模板 <code>v-if</code> 的一侧等</td><td style="text-align:left">只执行了一侧（例如 <code>jstClock.value ?? …</code> 只走了左侧、<code>errorCode</code> 比较只走了相等侧）</td><td style="text-align:left">只执行一侧</td></tr></tbody></table>
+<p><strong>没有为了让「到不了的防御」消失去改产品代码。</strong> 删掉能把数字做好看，但会丢掉设计规定的防御<br>（E-205、E-204、解密格式检查），这违背红线②的宗旨。</p>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 请人决定的事项（签字）</h2>
+<ol><li><strong>分支 100% 的目标是否维持。</strong> 现在剩余的未达成如上表，其中</li></ol>
+<p><strong>结构上到不了的有 6 件</strong>（含单进程、需要连接）、<strong>未验证 1 件</strong>（<code>stfCdCipher.ts:103</code>）、<br><strong>依赖环境 3 件</strong>、<strong>测试部件限制 1 件</strong>。如果要维持目标，就得决定未验证那 1 件是否补测，<br>以及「到不了的分支」怎么写进设计（补一条排除条款）。</p>
+<ol><li><strong><code>main.py:102-106</code>（NLS 固定）列为工程 7 的测量项。</strong> 只有真实连接才能测，本节点保留为未达成。</li><li><strong>本节点的测试代码共 95 件（画面 43 件、其余 52 件）</strong>，对应 <code>05_承認版</code> v1.0.1 的 21 条 TC。</li></ol>
+<p>没有新增 TC（在既有 TC 的观照点范围内，补上了原本没执行的<strong>画面部件输入</strong>（I-306／I-307）和<strong>重复点击</strong>路径）。</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>07_カバレッジレポート.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

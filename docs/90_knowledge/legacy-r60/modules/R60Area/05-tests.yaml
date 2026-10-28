@@ -1,0 +1,180 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60AREA-TESTS
+type: knowledge
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60Area
+artifact_type: test-viewpoint
+
+source:
+  test_spec: "doc/02_INPUT/60.単体テスト/2-041-F_単体テスト仕様兼チェックリスト(画面編)_05_R60Area_エリアマスタメンテナンス.xlsx"
+  extracted_dir: reports/legacy-raw/R60Area/unittest/
+  summary_sheet: reports/legacy-raw/R60Area/unittest/00_単体ﾃｽﾄ仕様兼結果.txt
+
+summary:
+  program_id: R60Area
+  program_name: エリアマスタメンテナンス
+  fp: 30
+  total_test_items: 560
+  executed: 560
+  bugs: 0
+
+test_item_counts:
+  screen_transition: 5
+  screen_layout:
+    search_condition: 18
+    search_result: 56
+    master_new: 43
+    master_modify: 43
+    master_copy: 43
+    subtotal: 203
+  input_check:
+    search: 3
+    delete: 44
+    register: 48
+    other: 2
+    subtotal: 97
+  event:
+    initial_display: 20
+    search_button: 9
+    in_progress_button: 9
+    search_condition_toggle: 1
+    pagination: 5
+    sort_company: 2
+    sort_jig: 2
+    sort_area_code: 2
+    company_dropdown: 3
+    result_link: 33
+    new_button: 31
+    copy_button: 31
+    download: 6
+    business_end: 1
+    back_search: 1
+    company_dropdown_master: 17
+    jig_dropdown_master: 3
+    area_name_blur: 2
+    ukh_keij_jig_dropdown: 3
+    saim_keij_jig_dropdown: 3
+    saikn_keij_jig_dropdown: 3
+    location_search_gzr: 3
+    location_search_hsh: 3
+    sych_kbi_cmp_dropdown: 9
+    sych_kbi_ukh_keij_jig_dropdown: 3
+    sych_kbi_ukh_saim_jig_dropdown: 3
+    sych_kbi_ukh_saikn_jig_dropdown: 3
+    back_master: 6
+    delete_button: 4
+    register_button: 8
+    subtotal: 229
+  special:
+    permission_search_result: 12
+    permission_master: 10
+    exception: 4
+    subtotal: 26
+  total_check: "5 + 203 + 97 + 229 + 26 = 560"
+
+viewpoint_mapping:
+  note: >-
+    旧単体テスト仕様は「正常/境界/異常」の分類を持たない。
+    骨架の 正常3/境界2/異常3 へ写像するときは、下記の読み替えを使う。
+  equivalence_partition:
+    - "入力チェック（3.入力チェック）の各項目：有効値・無効値・空値"
+    - "権限マトリクス（5-1-1 / 5-1-2）：権限区分 × 自工場/他工場更新権限"
+  boundary_value:
+    - "エリアコード 7 文字（7 文字 OK / 8 文字 NG）"
+    - "エリア名 30Byte（30Byte OK / 31Byte NG）"
+    - "エリア略称 16Byte（16Byte OK / 17Byte NG）"
+    - "届先名 25 全角文字（25 OK / 26 NG）"
+    - "ロケーション 8 文字（8 OK / 9 NG）"
+    - "検索上限 3000 件（3000 OK / 3001 NG）"
+    - "ページ最終頁・先頭頁"
+  decision_table:
+    - "操作パターン（新規/複製/修正）× 削除チェック × 緊急配信チェック（4-30-1..8）"
+    - "削除パターン（削除のみ/他項目変更有）× 緊急配信（4-29-1..4）"
+    - "権限区分 Y/N × 自工場更新権限 × 他工場更新権限（5-1-1: 12 パターン、5-1-2: 10 パターン）"
+
+key_test_cards:
+  - legacy_case_id: 4-2-1..4-2-9
+    sheet: "4.検索機能"
+    title: 表示ボタンクリック（確定データ）
+    patterns: 9
+    checks:
+      - "検索条件の会社・事業場・エリアコード（前方一致）・削除含むが一覧に反映される。"
+      - "現行環境と新環境の検索結果が同じである（現新比較）。"
+      - "ソート順：DEL_FLG 昇順 → CMP_CD 昇順 → 事業場表示順 昇順 → JIG_CD 昇順。"
+      - "0 件時：検索条件が残り、戻る/ダウンロード/新規が非活性、業務終了が活性。"
+      - "上限超過時：同上。"
+    viewpoint: 同値分割 + 境界値
+  - legacy_case_id: 4-3-1..4-3-9
+    sheet: "4.検索機能"
+    title: 仕掛表示ボタンクリック（REG_STS=0）
+    patterns: 9
+    checks:
+      - "検索条件に一致し、かつ REG_STS='0' のデータが表示される。"
+      - "ソート順・0 件時・上限超過時の挙動は表示ボタンと同じ。"
+    viewpoint: 同値分割 + 境界値
+  - legacy_case_id: 4-29-1..4-29-4
+    sheet: "4.削除機能"
+    title: 削除ボタンクリック
+    patterns: 4
+    decision_table:
+      - { case: 4-29-1, delete_only: true,  other_changed: false, emergency: false }
+      - { case: 4-29-2, delete_only: true,  other_changed: false, emergency: true }
+      - { case: 4-29-3, delete_only: false, other_changed: true,  emergency: false }
+      - { case: 4-29-4, delete_only: false, other_changed: true,  emergency: true }
+    checks:
+      - "エリアマスタにデータが正しく更新される（DEL_FLG='1'）。"
+      - "緊急配信チェック ON のとき R60_EMERGENCY_SEND_CTL_PKG が呼ばれる。"
+      - "更新後データが画面に正しく表示される。"
+      - "現新比較（4-29-1, 4-29-4 のみ）。"
+  - legacy_case_id: 4-30-1..4-30-8
+    sheet: "4.登録機能"
+    title: 登録ボタンクリック
+    patterns: 8
+    decision_table:
+      - { case: 4-30-1, mode: 新規, delete_check: false, emergency: false }
+      - { case: 4-30-2, mode: 新規, delete_check: false, emergency: true }
+      - { case: 4-30-3, mode: 複製, delete_check: false, emergency: false }
+      - { case: 4-30-4, mode: 複製, delete_check: false, emergency: true }
+      - { case: 4-30-5, mode: 修正, delete_check: false, emergency: false }
+      - { case: 4-30-6, mode: 修正, delete_check: true,  emergency: false }
+      - { case: 4-30-7, mode: 修正, delete_check: false, emergency: true }
+      - { case: 4-30-8, mode: 修正, delete_check: true,  emergency: true }
+    checks:
+      - "エリアマスタにデータが正しく更新される。"
+      - "緊急配信 ON のとき R60_EMERGENCY_SEND_CTL_PKG が呼ばれる。"
+      - "更新後データが画面に正しく表示される。"
+      - "現新比較（4-30-8 を除く）。"
+  - legacy_case_id: 5-1-1-1..5-1-1-12
+    sheet: "5.特殊機能"
+    title: 権限処理（検索条件・結果画面表示時）
+    patterns: 12
+    checks:
+      - "権限区分 Y/N、自工場更新権限、他工場更新権限の組合せで、表示・仕掛表示の可否が決まる。"
+      - "新規・複製ボタンの活性が決まる。"
+  - legacy_case_id: 5-1-2-1..5-1-2-10
+    sheet: "5.特殊機能"
+    title: 権限処理（マスタ画面表示時）
+    patterns: 10
+    checks:
+      - "新規・複製・修正の操作可否が決まる。"
+      - "削除ボタン・登録ボタンの活性が決まる。"
+  - legacy_case_id: 5-2-1..5-2-4
+    sheet: "5.特殊機能"
+    title: 例外処理
+    patterns: 4
+    checks:
+      - "30 分無操作後の再操作でセッションエラー画面。"
+      - "セッションエラー以外の異常でシステムエラー画面。"
+      - "登録・更新時のシステムエラーで DB ロールバック。"
+      - "システム管理情報.システムID が 'Y' 以外でオンライン制御エラー画面。"
+
+traceability_note: >-
+  旧テスト仕様のケース番号（4-2-1 等）は骨架の TC-xxx ではない。
+  RAG では「設計 → テスト観点」の検索に使うが、ids.yml への発号は行わない。
+  TC-xxx を起こす場合は、本ファイルの key_test_cards を観点の出所として
+  design_ids / req_ids を別途付与する（红线⑤）。

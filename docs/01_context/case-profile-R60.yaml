@@ -1,0 +1,76 @@
+---
+id: CASE-PROFILE-R60
+type: case-profile
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+title: "案件プロファイル — 朝日ビール R60 共通マスタ（JET-R60）"
+case_ref: "JET-R60"
+case_kind: real
+source_root: "D:/AI_work"
+source_root_note: "参照のみ。書き込み永久禁止（この骨架の外にある他社資産）。"
+
+# ---------------------------------------------------------------------------
+# 0. 本ファイルの位置づけ（★変種サンプル）
+# ---------------------------------------------------------------------------
+# 本ファイルは build_mode: migration の案件（既存システム・旧設計書あり）の変種サンプルである。
+# 骨架の既定は build_mode: greenfield（從無到有）であり、その場合スタックは工程04 で我方が提案し
+# 人が承認する（本ファイルが記すような既存スタックは存在しない）。
+# ただし build_mode の宣言は docs/00_plan/coach/<module>/case.yml が唯一の故郷である。本ファイルには書かない。
+
+# ---------------------------------------------------------------------------
+# 1. スタック（★本案件固有の値。唯一真源は本ファイル）
+# ---------------------------------------------------------------------------
+# 骨架の紅线④ は「人の承認なく変更しない」という手続きを定めるのみで、値を固定しない。
+# 値は案件ごとに違い、別案件（React 既定の現場など）でも骨架をそのまま使えるようにするため、
+# スタックの定義はここへ外出しする。
+# 本案件（migration）では「現に動いている既存スタック」である。greenfield 案件のプロファイルは
+# 同じ `stack` 鍵を「工程04 で我方が提案し人が承認した採用スタック」として持つ。
+stack:
+  frontend:
+    framework: Vue3
+    language: TypeScript
+    ui: PrimeVue
+    state: Pinia
+    build: Vite
+  backend:
+    framework: FastAPI
+    validation: Pydantic
+    orm: SQLAlchemy
+    db_driver: oracledb Thin
+  database: Oracle
+  authentication: Auth0
+  object_storage: AWS S3
+
+# ---------------------------------------------------------------------------
+# 2. 案件固有の禁止事項・技術定数（★ここに再記述しない — NFR-1 単一ソース）
+# ---------------------------------------------------------------------------
+# 禁① 禁②（R60Common.ts / r60util.py / BaseCamelModel の改変禁止）と、
+# 案件固有の技術定数（当日鍵＝桁変換＋日付加算・R60_DECRYPTION_FNC・NLS_DATE_FORMAT 等）は
+# 以下が唯一真源である。本ファイルは値を複製しない（二重定義を作らない）。
+prohibitions_source: "CLAUDE.md §2（禁止事項 5 条）"
+tech_constants_source: ".claude/rules/00-project-global.md §1〜§9"
+
+# ---------------------------------------------------------------------------
+# 3. 本案件で接ぐ既存資産の在処（中身は書かない。上記 source を参照）
+# ---------------------------------------------------------------------------
+reused_assets_source: "CLAUDE.md §2 禁①② が唯一真源。パス・関数数はそちらを見ること。"
+frontend_common_root: "Front-end/src/common/"
+backend_util_root: "api/app/utils/"
+
+# ---------------------------------------------------------------------------
+# 4. 上流（本案件の要求メタ）
+# ---------------------------------------------------------------------------
+upstream_requirement: "docs/10_requirements/R-101-R60Area.yaml"
+requirement_context: "docs/01_context/R-101-R60Area.md"
+ingest_manifest: "docs/00_registry/ingest-manifest.yml"
+
+note: >-
+  本ファイルは骨架の紅线④（スタックの無断変更禁止）が指す「案件ごとのスタック」の定義場所である。
+  本案件は build_mode: migration（既存システムあり）の変種サンプルであり、記載の stack は
+  現に動いている既存スタックを指す。骨架本体（CLAUDE.md・.claude/rules）は特定案件の値を固定せず、
+  既定の greenfield と本変種の双方で同じ手続きが働くようにこの位置を参照する。
+  承認は人ゲート（工程 04 技術選型承認）。AI は status を baselined へ上げない（紅线③）。

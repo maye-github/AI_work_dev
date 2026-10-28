@@ -1,0 +1,60 @@
+# ============================================================
+# テンプレート: 単体テストケース / 单元测试用例模板
+# 工程: docs/50_unit_test/  （落地篇 工程篇 S15 テスト設計）
+# 使い方: 本ファイルを TC-xxx-<Module>.yaml に複製し <...> を実値へ置換する。
+# 比例標準: 正常 3 / 境界 2 / 異常 3 を最低ラインとする。
+# 入出力明示: design_ids には D/L ID、req_ids には R ID を必ず列挙する。
+# 注: req_ids は front-matter の 7 字段と共用（重複定義を避けるため 1 箇所のみ）。
+# ============================================================
+
+# ---- front-matter（7 字段固定・全テンプレート共通）----
+id: TPL-005
+type: unit_test_case
+req_ids: []
+status: draft
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+# ---- body ----
+title: "<テストケース名>"
+test_id: "<TC-xxx>"
+category: "<正常 | 境界 | 異常>"
+
+# テスト観点: 何を確認するテストか（1 行で）
+viewpoint: "<テスト観点>"
+
+# 設計 ID: 対応する詳細設計 D-ID / ロジック L-ID（trace_check で逆引き可能にする）
+design_ids:
+  - "<D-xxx>"
+  - "<L-xxx>"
+
+# 前提条件: テスト実行前に成立させる状態
+preconditions:
+  - "<前提1（データ / 権限 / セッション 等）>"
+  - "<前提2>"
+
+# 入力仕様: 画面項目 I-ID 単位で入力値を構造化
+input_spec:
+  - item: "<I-xxx>"
+    value: "<入力値>"
+    note: "<備考>"
+  - item: "<I-xxx>"
+    value: "<入力値>"
+    note: "<備考>"
+
+# 期待結果: 出力 I-ID 単位 or メッセージ ID 単位で構造化
+expected_output:
+  - item: "<I-xxx / E-xxx / MSG_xxx>"
+    value: "<期待値 / 期待メッセージ>"
+
+# 断言規則: 自動判定する条件式（assert 相当）
+assertion_rules:
+  - "<assert 条件1>"
+  - "<assert 条件2>"
+
+# 未確定事項: 確認票 Q-ID へリンク
+open_issues:
+  - q_id: "<Q-xxx>"
+    question: "<未確定の問い>"
+    status: open

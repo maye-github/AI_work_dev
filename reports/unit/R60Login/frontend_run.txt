@@ -1,0 +1,33 @@
+
+ RUN  v5.0.5 D:/AI_work_dev/tutorial/R60Login/节点5_制造/frontend
+      Coverage enabled with v8
+
+
+ Test Files  5 passed (5)
+      Tests  95 passed (95)
+   Start at  15:53:59
+   Duration  23.02s (environment 67%, tests 26%, import 3%, worker 2%, transform 2%)
+
+Environment  jsdom was created 5 times · 33.95s total, 67% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+ % Coverage report from v8
+------------------|---------|----------|---------|---------|--------------------
+File              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s  
+------------------|---------|----------|---------|---------|--------------------
+All files         |   96.21 |    82.95 |    98.3 |   96.12 |                    
+ common           |   96.66 |    93.33 |     100 |   96.42 |                    
+  stfCdCipher.ts  |   96.42 |    93.33 |     100 |   96.15 | 91,103             
+ services         |     100 |    83.33 |     100 |     100 |                    
+  loginApi.ts     |     100 |    83.33 |     100 |     100 | 123                
+ views            |   95.58 |    80.71 |   96.87 |   95.52 |                    
+  LoginScreen.vue |   95.58 |    80.71 |   96.87 |   95.52 | ...226-232,262,498 
+------------------|---------|----------|---------|---------|--------------------
+
+=============================== Coverage summary ===============================
+Statements   : 96.21% ( 280/291 )
+Branches     : 82.95% ( 146/176 )
+Functions    : 98.3% ( 58/59 )
+Lines        : 96.12% ( 273/284 )
+================================================================================

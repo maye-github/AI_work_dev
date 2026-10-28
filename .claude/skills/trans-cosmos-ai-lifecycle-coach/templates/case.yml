@@ -1,0 +1,24 @@
+# case.yml — モジュール 1 件分のケース情報（雛形）
+#
+# 使い方: コーチが `docs/00_plan/coach/<module>/case.yml` へ複製して初期化する。
+#         これは「機制生成物」であり、手で編集しない（編集はコーチ経由で行う）。
+#
+# 制約（機械検査に効く。破ると門番が落ちる）:
+#   - 鍵は snake_case 固定（gate5 が .claude/ と docs/ 配下の .yml 鍵名を検査する）
+#   - `id` / `*_id` / `*_ids` / `ids` という鍵を作ってはいけない
+#     （gate1 が「ID 宣言」と誤認し、値に ID 形の文字列があると野号判定になる）
+#   - 機密の実値を書かない（gate6 が docs/ と .claude/ を走査する）。
+#     人の識別子（SE・A 等）は識別子であって機密ではないので書いてよい
+
+schema_version: "1"
+case: "<対象の根。例: tutorial/R60Login>"
+case_kind: tutorial            # tutorial | real
+mode: drill                    # drill=教材を1周 | deliver=実納品
+build_mode: greenfield         # greenfield=從無到有（既定。既存システム無し） | migration=既存システム・旧設計書あり
+module: "<モジュール識別子。ディレクトリ名と一致させる。例: R60Login>"
+title: "<この回の表題>"
+team: []                       # 参加者（人）の識別子。例: ["SE・A", "PG・B"]
+started_at: "<YYYY-MM-DD>"
+updated_at: "<YYYY-MM-DD>"
+notes: |
+  自由記述。ここに「なぜこの case を回しているか」を残す。

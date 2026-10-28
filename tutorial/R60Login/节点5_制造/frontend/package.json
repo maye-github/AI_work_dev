@@ -1,0 +1,19 @@
+{
+  "name": "r60login-frontend",
+  "private": true,
+  "type": "module",
+  "description": "R60Login フロント（節点5 製造）。単体テストの実行は `npm test`（節点6）。",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.10",
+    "@vitest/coverage-v8": "^5.0.5",
+    "@vue/test-utils": "^2.5.1",
+    "jsdom": "^29.1.1",
+    "pinia": "^4.1.0",
+    "primevue": "^5.0.4",
+    "vitest": "^5.0.5",
+    "vue": "^3.5.44"
+  }
+}

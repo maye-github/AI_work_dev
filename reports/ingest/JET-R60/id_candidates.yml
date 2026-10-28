@@ -1,0 +1,5518 @@
+schema_version: '1'
+generated_by: tools.ingest id-candidates
+approval_required: true
+human_gate: G-B2 発号承認
+approved_count: 0
+modules:
+- module: R60Area
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60Area.vue
+  - fastapi_oracle_pjt/app/routers/R60AreaController.py
+  - src/components/R60AreaCopy.vue
+  - src/components/R60AreaCreate.vue
+  - src/components/R60AreaEdit.vue
+  - src/views/R60Area.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60AreaService
+  evidence:
+  - src/service/R60AreaService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60CSVDownloadService
+  evidence:
+  - src/service/R60CSVDownloadService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Calender
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60CalenderController.py
+  - src/views/R60Calender.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60CalenderService
+  evidence:
+  - src/service/R60CalenderService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ChotSk
+  evidence:
+  - src/components/R60ChotSkSup.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ChotSkSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60ChotSkSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ChotSkSupService
+  evidence:
+  - src/service/R60ChotSkSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Code
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60CodeController.py
+  - src/components/R60CodeCreate.vue
+  - src/components/R60CodeEdit.vue
+  - src/views/R60Code.vue
+  - src/views/R60CodeMes.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60CodeMes
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60CodeMesController.py
+  - src/components/R60CodeMesCopy.vue
+  - src/components/R60CodeMesCreate.vue
+  - src/components/R60CodeMesEdit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60CodeMesService
+  evidence:
+  - src/service/R60CodeMesService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60CodeService
+  evidence:
+  - src/service/R60CodeService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60CommonService
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/service/R60CommonService.ts
+  - src/service/R60CommonService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60CyotSk
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60CyotSkSup.vue
+  - src/components/R60CyotSkSup.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60DC
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60DCController.py
+  - src/components/R60DCCreate.vue
+  - src/components/R60DCEdit.vue
+  - src/views/R60DC.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60DCService
+  evidence:
+  - src/service/R60DCService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60GzrSirTk
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60GzrSirTk.vue
+  - fastapi_oracle_pjt/app/routers/R60GzrSirTkController.py
+  - src/components/R60GzrSirTkCopy.vue
+  - src/components/R60GzrSirTkCreate.vue
+  - src/components/R60GzrSirTkEdit.vue
+  - src/views/R60GzrSirTk.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60GzrSirTkService
+  evidence:
+  - src/service/R60GzrSirTkService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60GzrSkTk
+  evidence:
+  - src/components/R60GzrSkTkCopy.vue
+  - src/components/R60GzrSkTkCreate.vue
+  - src/components/R60GzrSkTkEdit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60GzrSkyTk
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60GzrSkyTkSelf.vue
+  - src/components/R60GzrSkyTkEdit.vue
+  - src/views/R60GzrSkyTkSelf.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60GzrSkyTkSelf
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60GzrSkyTkSelfController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60GzrSkyTkSelfService
+  evidence:
+  - src/service/R60GzrSkyTkSelfService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Hany
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60Hany.vue
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60HanyMes.vue
+  - fastapi_oracle_pjt/app/routers/R60HanyController.py
+  - src/components/R60HanyCreate.vue
+  - src/components/R60HanyEdit.vue
+  - src/views/R60Hany.vue
+  - src/views/R60HanyMes.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60HanyMes
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60HanyMesController.py
+  - src/components/R60HanyMesCopy.vue
+  - src/components/R60HanyMesCreate.vue
+  - src/components/R60HanyMesEdit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60HanyMesService
+  evidence:
+  - src/service/R60HanyMesService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60HanyService
+  evidence:
+  - src/service/R60HanyService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Hsh
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60HshSup.vue
+  - fastapi_oracle_pjt/app/routers/R60HshController.py
+  - src/components/R60HshCopy.vue
+  - src/components/R60HshCreate.vue
+  - src/components/R60HshEdit.vue
+  - src/components/R60HshSup.vue
+  - src/views/R60Hsh.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60HshChaChk2
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60HshChaChk2Controller.py
+  - src/components/R60HshChaChk2Copy.vue
+  - src/components/R60HshChaChk2Create.vue
+  - src/components/R60HshChaChk2Edit.vue
+  - src/views/R60HshChaChk2.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60HshChaChk2Service
+  evidence:
+  - src/service/R60HshChaChk2Service.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60HshService
+  evidence:
+  - src/service/R60HshService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60HshSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60HshSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60HshSupService
+  evidence:
+  - src/service/R60HshSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Ikt
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60IktController.py
+  - src/views/R60Ikt.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60IktService
+  evidence:
+  - src/service/R60IktService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Item
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60ItemSup.vue
+  - fastapi_oracle_pjt/app/routers/R60ItemController.py
+  - src/components/R60ItemEdit.vue
+  - src/components/R60ItemSup.vue
+  - src/views/R60Item.vue
+  - src/views/R60ItemMulti.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ItemMulti
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60ItemMultiController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ItemMultiHelp
+  evidence:
+  - src/components/R60ItemMultiHelp.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ItemMultiService
+  evidence:
+  - src/service/R60ItemMultiService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ItemService
+  evidence:
+  - src/service/R60ItemService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ItemSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60ItemSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ItemSupService
+  evidence:
+  - src/service/R60ItemSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Jig
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60Jig.vue
+  - fastapi_oracle_pjt/app/routers/R60JigController.py
+  - src/components/R60JigEdit.vue
+  - src/views/R60Jig.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60JigService
+  evidence:
+  - src/service/R60JigService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KjoSesModel
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60KjoSesModel.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChi
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60KkuChi.vue
+  - fastapi_oracle_pjt/app/routers/R60KkuChiController.py
+  - src/components/R60KkuChiEdit.vue
+  - src/views/R60KkuChi.vue
+  - src/views/R60KkuChiCopy.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiCopy
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60KkuChiCopyController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiCopy001
+  evidence:
+  - src/components/R60KkuChiCopy001.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiCopy002
+  evidence:
+  - src/components/R60KkuChiCopy002.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiCopy003
+  evidence:
+  - src/components/R60KkuChiCopy003.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiCopyService
+  evidence:
+  - src/service/R60KkuChiCopyService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiCreate001
+  evidence:
+  - src/components/R60KkuChiCreate001.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiCreate002
+  evidence:
+  - src/components/R60KkuChiCreate002.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiCreate003
+  evidence:
+  - src/components/R60KkuChiCreate003.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiEdit001
+  evidence:
+  - src/components/R60KkuChiEdit001.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiEdit002
+  evidence:
+  - src/components/R60KkuChiEdit002.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiEdit003
+  evidence:
+  - src/components/R60KkuChiEdit003.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KkuChiService
+  evidence:
+  - src/service/R60KkuChiService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KojoSesModel
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60KojoSesModelSup.vue
+  - fastapi_oracle_pjt/app/routers/R60KojoSesModelController.py
+  - src/components/R60KojoSesModelEdit.vue
+  - src/components/R60KojoSesModelSup.vue
+  - src/views/R60KojoSesModel.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KojoSesModelService
+  evidence:
+  - src/service/R60KojoSesModelService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KojoSesModelSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60KojoSesModelSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KojoSesModelSupService
+  evidence:
+  - src/service/R60KojoSesModelSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmk
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60KonHmkSup.vue
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60KonHmkCopy.vue
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60KonHmkMulti.vue
+  - fastapi_oracle_pjt/app/routers/R60KonHmkController.py
+  - src/components/R60KonHmkCopy.vue
+  - src/components/R60KonHmkCreate.vue
+  - src/components/R60KonHmkEdit.vue
+  - src/components/R60KonHmkSup.vue
+  - src/views/R60KonHmk.vue
+  - src/views/R60KonHmkCopy.vue
+  - src/views/R60KonHmkMulti.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkCopy
+  evidence:
+  - 03_AI/API設計書/R60KonHmkCopyController.py
+  - fastapi_oracle_pjt/app/routers/R60KonHmkCopyController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkCopyService
+  evidence:
+  - src/service/R60KonHmkCopyService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkMulti
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60KonHmkMultiController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkMultiHelp
+  evidence:
+  - src/components/R60KonHmkMultiHelp.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkMultiService
+  evidence:
+  - src/service/R60KonHmkMultiService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkService
+  evidence:
+  - src/service/R60KonHmkService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkSir
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60KonHmkSirController.py
+  - src/components/R60KonHmkSirCopy.vue
+  - src/components/R60KonHmkSirCreate.vue
+  - src/components/R60KonHmkSirEdit.vue
+  - src/views/R60KonHmkSir.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkSirMes
+  evidence:
+  - src/components/R60KonHmkSirMesEdit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkSirService
+  evidence:
+  - src/service/R60KonHmkSirService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60KonHmkSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60KonHmkSupService
+  evidence:
+  - src/service/R60KonHmkSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ListType
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60ListTypeSup.vue
+  - src/components/R60ListTypeSup.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ListTypeSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60ListTypeSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ListTypeSupItem
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60ListTypeSupItem.vue
+  - fastapi_oracle_pjt/app/routers/R60ListTypeSupItemController.py
+  - src/components/R60ListTypeSupItem.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ListTypeSupItemService
+  evidence:
+  - src/service/R60ListTypeSupItemService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ListTypeSupService
+  evidence:
+  - src/service/R60ListTypeSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60LoginService
+  evidence:
+  - src/service/R60LoginService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Maker
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60MakerController.py
+  - src/components/R60MakerCopy.vue
+  - src/components/R60MakerCreate.vue
+  - src/components/R60MakerEdit.vue
+  - src/views/R60Maker.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60MakerService
+  evidence:
+  - src/service/R60MakerService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60OnlineError
+  evidence:
+  - src/views/R60OnlineError.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60PackGift
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60PackGift.vue
+  - fastapi_oracle_pjt/app/routers/R60PackGiftController.py
+  - src/views/R60PackGift.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60PackGiftService
+  evidence:
+  - src/service/R60PackGiftService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Plc
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60PlcSup.vue
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60Plc.vue
+  - fastapi_oracle_pjt/app/routers/R60PlcController.py
+  - src/components/R60PlcCopy.vue
+  - src/components/R60PlcCreate.vue
+  - src/components/R60PlcEdit.vue
+  - src/components/R60PlcSup.vue
+  - src/views/R60Plc.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60PlcService
+  evidence:
+  - src/service/R60PlcService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60PlcSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60PlcSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60PlcSupService
+  evidence:
+  - src/service/R60PlcSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60PlcUkiKnr
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60PlcUkiKnr.vue
+  - fastapi_oracle_pjt/app/routers/R60PlcUkiKnrController.py
+  - src/components/R60PlcUkiKnrCopy.vue
+  - src/components/R60PlcUkiKnrCreate.vue
+  - src/components/R60PlcUkiKnrEdit.vue
+  - src/views/R60PlcUkiKnr.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60PlcUkiKnrService
+  evidence:
+  - src/service/R60PlcUkiKnrService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60ServerJobRefService
+  evidence:
+  - src/service/R60ServerJobRefService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SesModel
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60SesModel.vue
+  - fastapi_oracle_pjt/app/routers/R60SesModelController.py
+  - src/components/R60SesModelEdit.vue
+  - src/views/R60SesModel.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SesModelMes
+  evidence:
+  - src/components/R60SesModelMesEdit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SesModelService
+  evidence:
+  - src/service/R60SesModelService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SessionError
+  evidence:
+  - src/views/R60SessionError.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SezKnoItem
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/views/R60SezKnoItem.vue
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/dev-fastapi-1413/fastapi_oracle_pjt/app/routers/R60SezKnoItemController.py
+  - fastapi_oracle_pjt/app/routers/R60SezKnoItemController.py
+  - src/components/R60SezKnoItemEdit.vue
+  - src/views/R60SezKnoItem.vue
+  - src/views/R60SezKnoItemMulti.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SezKnoItemMulti
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60SezKnoItemMultiController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SezKnoItemMultiHelp
+  evidence:
+  - src/components/R60SezKnoItemMultiHelp.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SezKnoItemMultiService
+  evidence:
+  - src/service/R60SezKnoItemMultiService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SezKnoItemService
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/service/R60SezKnoItemService.ts
+  - src/service/R60SezKnoItemService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SezKnoItemedit
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60SezKnoItemedit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SezRet
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60SezRet.vue
+  - fastapi_oracle_pjt/app/routers/R60SezRetController.py
+  - src/components/R60SezRetCopy.vue
+  - src/components/R60SezRetCreate.vue
+  - src/components/R60SezRetEdit.vue
+  - src/views/R60SezRet.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SezRetService
+  evidence:
+  - src/service/R60SezRetService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikHaig
+  evidence:
+  - src/components/R60SikHaigEdit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgo
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60SikKgoSup.vue
+  - fastapi_oracle_pjt/app/routers/R60SikKgoController.py
+  - src/components/R60SikKgoCopy.vue
+  - src/components/R60SikKgoCreate.vue
+  - src/components/R60SikKgoEdit.vue
+  - src/components/R60SikKgoSup.vue
+  - src/views/R60SikKgo.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoH
+  evidence:
+  - src/components/R60SikKgoHCreate.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoHan
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60SikKgoHan.vue
+  - fastapi_oracle_pjt/app/routers/R60SikKgoHanController.py
+  - src/components/R60SikKgoHanCopy.vue
+  - src/components/R60SikKgoHanCreate.vue
+  - src/components/R60SikKgoHanEdit.vue
+  - src/views/R60SikKgoHan.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoHanService
+  evidence:
+  - src/service/R60SikKgoHanService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoMes
+  evidence:
+  - src/components/R60SikKgoMesCopy.vue
+  - src/components/R60SikKgoMesEdit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoPro
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60SikKgoPro.vue
+  - fastapi_oracle_pjt/app/routers/R60SikKgoProController.py
+  - src/components/R60SikKgoProCopy.vue
+  - src/components/R60SikKgoProCreate.vue
+  - src/components/R60SikKgoProEdit.vue
+  - src/views/R60SikKgoPro.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoProService
+  evidence:
+  - src/service/R60SikKgoProService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoService
+  evidence:
+  - src/service/R60SikKgoService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60SikKgoSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SikKgoSupService
+  evidence:
+  - src/service/R60SikKgoSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Sir
+  evidence:
+  - 02_INPUT/20260407_初回連携/60.ソース/サンプルソース最終版/1413/src/components/R60SirSup.vue
+  - fastapi_oracle_pjt/app/routers/R60SirController.py
+  - src/components/R60SirCreate.vue
+  - src/components/R60SirEdit.vue
+  - src/components/R60SirSup.vue
+  - src/views/R60Sir.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SirKytn
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60SirKytnController.py
+  - src/components/R60SirKytnCopy.vue
+  - src/components/R60SirKytnCreate.vue
+  - src/components/R60SirKytnEdit.vue
+  - src/views/R60SirKytn.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SirKytnService
+  evidence:
+  - src/service/R60SirKytnService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SirService
+  evidence:
+  - src/service/R60SirService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SirSup
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60SirSupController.py
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SirSupService
+  evidence:
+  - src/service/R60SirSupService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SirSziCha
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60SirSziChaController.py
+  - src/components/R60SirSziChaCopy.vue
+  - src/components/R60SirSziChaCreate.vue
+  - src/components/R60SirSziChaEdit.vue
+  - src/views/R60SirSziCha.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SirSziChaService
+  evidence:
+  - src/service/R60SirSziChaService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SntSsi
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60SntSsi.vue
+  - fastapi_oracle_pjt/app/routers/R60SntSsiController.py
+  - src/components/R60SntSsiEdit.vue
+  - src/views/R60SntSsi.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SntSsiService
+  evidence:
+  - src/service/R60SntSsiService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Ssk
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60SskController.py
+  - src/components/R60SskEdit.vue
+  - src/views/R60Ssk.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SskService
+  evidence:
+  - src/service/R60SskService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SubDeploy
+  evidence:
+  - src/components/R60SubDeploy.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Sup
+  evidence:
+  - src/views/R60Sup.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SystemError
+  evidence:
+  - src/views/R60SystemError.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60SziKirEvtReg
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60SziKirEvtRegController.py
+  - src/views/R60SziKirEvtReg.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60UserService
+  evidence:
+  - src/service/R60UserService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60Yok
+  evidence:
+  - 02_INPUT/20260413_連携/60.ソース/1413/src/views/R60YokMes.vue
+  - src/views/R60YokMes.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60YokMes
+  evidence:
+  - fastapi_oracle_pjt/app/routers/R60YokMesController.py
+  - src/components/R60YokMesCreate.vue
+  - src/components/R60YokMesEdit.vue
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+- module: R60YokMesService
+  evidence:
+  - src/service/R60YokMesService.ts
+  proposals:
+  - prefix: R
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: F
+    count: 1
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: I
+    count: 100
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: L
+    count: 10
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: E
+    count: 20
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する
+  - prefix: TC
+    count: 30
+    assigned: null
+    approved: false
+    approved_by: null
+    note: 人ゲート G-B2 で承認された行のみ id-apply が登録する

@@ -1,0 +1,977 @@
+# ============================================================
+# trans-cosmos-ai AI 全流程骨架 - ID 発号統合レジストリ
+# 唯一発号口（NFR-1 単一ソース）。野号は tools/trace_check.py gate1 で Exit 1。
+# 発号規則: 3桁起步、連番、不使用番号の再利用禁止（void で明示的に無効化）
+# status 値域: draft / open / baselined / changed / done / void
+# ============================================================
+registry:
+  description: "朝日ビール R60 共通マスタ 开球周 ID 発号本（R60Area 貫通例）"
+  owner: AI-SE
+  version: 0.1.0
+  started: 2026-10-08
+  prefixes:
+    R: "Requirements（要求）"
+    Q: "Quality（確認事項・QA票）"
+    F: "Functional Spec（機能仕様）"
+    I: "Interface/Data Item（画面項目・I/O）"
+    D: "Data Model（DML/物理設計）"
+    L: "Logic/Function（業務ロジック）"
+    E: "Event/Error（エラー・イベント）"
+    TC: "Test Case（テストケース・工程⑥）"
+    IT: "Integration Test（結合・総合テスト・工程⑦）"
+    CR: "Change Request（変更要求）"
+    BUG: "Bug Report（不具合）"
+
+ids:
+  # ---------- R: 要求 ----------
+  R-101:
+    status: baselined
+    name: "R60Areaマスタ検索登録修正削除"
+    description: "エリアマスタ（R60_AREA_M_TBL）の検索・新規登録・複製・修正・論理削除・CSVダウンロード"
+    used_by: docs/10_requirements/R-101-R60Area.yaml
+
+  # ---------- F: 機能仕様 ----------
+  F-042:
+    status: baselined
+    name: "R60Area全画面機能"
+    r_id: R-101
+    description: "一覧検索画面 + 登録修正複製ダイアログの 2 画面構成"
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+
+  # ---------- I: 画面項目（56 件 = R60_AREA_M_TBL 56 列相当）----------
+  I-201:
+    status: baselined
+    name: cmpCd
+    jp: 会社コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-202:
+    status: baselined
+    name: jigCd
+    jp: 事業場コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-203:
+    status: baselined
+    name: araCd
+    jp: エリアコード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-204:
+    status: baselined
+    name: araNm
+    jp: エリア名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-205:
+    status: baselined
+    name: araRnm
+    jp: エリア略名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-206:
+    status: baselined
+    name: ukhPlcCd
+    jp: 受払場所コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-207:
+    status: baselined
+    name: ukhKeijJigCd
+    jp: 受払計上事業場コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-208:
+    status: baselined
+    name: ukhKeijBsyCd
+    jp: 受払計上部署コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-209:
+    status: baselined
+    name: saimKeijJigCd
+    jp: 債務計上事業場コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-210:
+    status: baselined
+    name: saimKeijBsyCd
+    jp: 債務計上部署コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-211:
+    status: baselined
+    name: saiknKeijJigCd
+    jp: 債権計上事業場コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-212:
+    status: baselined
+    name: saiknKeijBsyCd
+    jp: 債権計上部署コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-213:
+    status: baselined
+    name: jidHarSynFlg
+    jp: 自動発生同期フラグ
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-214:
+    status: baselined
+    name: shrAnsyTdkNm
+    jp: 共有回答先名称
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-215:
+    status: baselined
+    name: idoDfltPlcCdGzr
+    jp: 異動デフォルト場所コード（元帳）
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-216:
+    status: baselined
+    name: idoDfltPlcCdHsh
+    jp: 異動デフォルト場所コード（補助）
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-217:
+    status: baselined
+    name: sychKbiCmpCd
+    jp: 接替区分会社コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-218:
+    status: baselined
+    name: sychKbiJigCd
+    jp: 接替区分事業場コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-219:
+    status: baselined
+    name: sychKbiUkhKeijJigCd
+    jp: 接替区分受払計上事業場コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-220:
+    status: baselined
+    name: sychKbiUkhKeijBsyCd
+    jp: 接替区分受払計上部署コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-221:
+    status: baselined
+    name: sychKbiUkhSaimJigCd
+    jp: 接替区分受払債務事業場コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-222:
+    status: baselined
+    name: sychKbiUkhSaimBsyCd
+    jp: 接替区分受払債務部署コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-223:
+    status: baselined
+    name: sychKbiUkhSaiknJigCd
+    jp: 接替区分受払債権事業場コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-224:
+    status: baselined
+    name: sychKbiUkhSaiknBsyCd
+    jp: 接替区分受払債権部署コード
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-225:
+    status: baselined
+    name: sendSts
+    jp: 送信ステータス
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-226:
+    status: baselined
+    name: delFlg
+    jp: 削除フラグ
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-227:
+    status: baselined
+    name: sendKbn
+    jp: 送信区分
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-228:
+    status: baselined
+    name: ksnKbn
+    jp: 改竄区分
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-229:
+    status: baselined
+    name: ksnKbnStfId
+    jp: 改竄区分者ID
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-230:
+    status: baselined
+    name: regStfId
+    jp: 登録者ID
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-231:
+    status: baselined
+    name: regDat
+    jp: 登録日時
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-232:
+    status: baselined
+    name: ksnStfId
+    jp: 改竄者ID
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-233:
+    status: baselined
+    name: ksnDat
+    jp: 改竄日時
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-234:
+    status: baselined
+    name: revNo
+    jp: リビジョン番号
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-235:
+    status: baselined
+    name: cmpNm
+    jp: 会社名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-236:
+    status: baselined
+    name: jigNm
+    jp: 事業場名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-237:
+    status: baselined
+    name: ukhPlcNm
+    jp: 受払場所名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-238:
+    status: baselined
+    name: ukhKeijJigNm
+    jp: 受払計上事業場名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-239:
+    status: baselined
+    name: ukhKeijBsyNm
+    jp: 受払計上部署名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-240:
+    status: baselined
+    name: saimKeijJigNm
+    jp: 債務計上事業場名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-241:
+    status: baselined
+    name: saimKeijBsyNm
+    jp: 債務計上部署名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-242:
+    status: baselined
+    name: saiknKeijJigNm
+    jp: 債権計上事業場名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-243:
+    status: baselined
+    name: saiknKeijBsyNm
+    jp: 債権計上部署名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-244:
+    status: baselined
+    name: idoDfltPlcNmGzr
+    jp: 異動デフォルト場所名（元帳）
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-245:
+    status: baselined
+    name: idoDfltPlcNmHsh
+    jp: 異動デフォルト場所名（補助）
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-246:
+    status: baselined
+    name: sychKbiCmpNm
+    jp: 接替区分会社名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-247:
+    status: baselined
+    name: sychKbiJigNm
+    jp: 接替区分事業場名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-248:
+    status: baselined
+    name: sychKbiUkhKeijJigNm
+    jp: 接替区分受払計上事業場名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-249:
+    status: baselined
+    name: sychKbiUkhKeijBsyNm
+    jp: 接替区分受払計上部署名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-250:
+    status: baselined
+    name: sychKbiUkhSaimJigNm
+    jp: 接替区分受払債務事業場名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-251:
+    status: baselined
+    name: sychKbiUkhSaimBsyNm
+    jp: 接替区分受払債務部署名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-252:
+    status: baselined
+    name: sychKbiUkhSaiknJigNm
+    jp: 接替区分受払債権事業場名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-253:
+    status: baselined
+    name: sychKbiUkhSaiknBsyNm
+    jp: 接替区分受払債権部署名
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-254:
+    status: baselined
+    name: delStatus
+    jp: 削除ステータス
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-255:
+    status: baselined
+    name: jigHyjSeq
+    jp: 事業場表示順
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+  I-256:
+    status: baselined
+    name: regSts
+    jp: 登録ステータス
+    f_id: F-042
+    used_by: docs/20_basic_design/F-042-R60Area.yaml
+
+  # ---------- D: データモデル / DML ----------
+  D-043:
+    status: baselined
+    name: "R60Area詳細設計（DML定義）"
+    f_id: F-042
+    description: "R60_AREA_M_TBL に対する SELECT/INSERT/UPDATE の物理設計"
+    used_by: docs/30_detail_design/D-043-R60Area.yaml
+
+  # ---------- L: 業務ロジック ----------
+  L-014:
+    status: baselined
+    name: "search 業務（検索ロジック）"
+    d_id: D-043
+    file: R60AreaController.py
+    lines: "1499-1647"
+    used_by: docs/30_detail_design/L-014-R60Area-search.yaml
+  L-015:
+    status: baselined
+    name: "initEdit/edit/delete 業務（排他+参照+重複）"
+    d_id: D-043
+    file: R60AreaController.py
+    lines: "1713-2915"
+    used_by: docs/30_detail_design/L-015-R60Area-edit.yaml
+
+  # ---------- E: エラー・イベント ----------
+  E-001:
+    status: baselined
+    error_id: R60W0010
+    jp: 検索結果0件
+    l_id: L-014
+    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+  E-002:
+    status: baselined
+    error_id: R60W0006
+    jp: 排他エラー（KSN_DAT不一致）
+    l_id: L-015
+    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+  E-003:
+    status: baselined
+    error_id: R60W0014
+    jp: キー重複エラー
+    l_id: L-015
+    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+  E-004:
+    status: baselined
+    error_id: R60W0024
+    jp: 被参照エラー（削除不可）
+    l_id: L-015
+    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+  E-005:
+    status: baselined
+    error_id: R60E0025
+    jp: システムエラー
+    l_id: L-015
+    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+  E-006:
+    status: baselined
+    error_id: R60W0033
+    flg: "1"
+    jp: ロケーション未登録（原材料）
+    l_id: L-015
+    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+  E-007:
+    status: baselined
+    error_id: R60W0033
+    flg: "2"
+    jp: ロケーション未登録（半製品）
+    l_id: L-015
+    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+  E-008:
+    status: baselined
+    error_id: R60A0039-0040
+    jp: 削除確認メッセージ
+    l_id: L-015
+    used_by: docs/30_detail_design/E-001-E005-R60Area.yaml
+
+  # ---------- TC: テストケース ----------
+  TC-001:
+    status: open
+    name: "通常検索"
+    category: 正常
+    r_id: R-101
+    d_id: D-043
+    l_id: L-014
+    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+  TC-002:
+    status: open
+    name: "新規登録"
+    category: 正常
+    r_id: R-101
+    d_id: D-043
+    l_id: L-015
+    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+  TC-003:
+    status: open
+    name: "既存修正"
+    category: 正常
+    r_id: R-101
+    d_id: D-043
+    l_id: L-015
+    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+  TC-004:
+    status: open
+    name: "検索0件"
+    category: 境界
+    r_id: R-101
+    d_id: D-043
+    l_id: L-014
+    e_id: E-001
+    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+  TC-005:
+    status: open
+    name: "KSN_DAT不一致排他"
+    category: 境界
+    r_id: R-101
+    d_id: D-043
+    l_id: L-015
+    e_id: E-002
+    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+  TC-006:
+    status: open
+    name: "重複キー登録"
+    category: 異常
+    r_id: R-101
+    d_id: D-043
+    l_id: L-015
+    e_id: E-003
+    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+  TC-007:
+    status: open
+    name: "被参照DEL_FLG=1削除"
+    category: 異常
+    r_id: R-101
+    d_id: D-043
+    l_id: L-015
+    e_id: E-004
+    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+  TC-008:
+    status: open
+    name: "ロケーション未登録"
+    category: 異常
+    r_id: R-101
+    d_id: D-043
+    l_id: L-015
+    e_id: E-006
+    used_by: docs/50_unit_test/TC-001-TC-008-R60Area.yaml
+  TC-201:
+    status: open
+    name: 初期表示の正常系（候補あり・初期値設定）
+    origin_key: R60Login TC-201
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-202:
+    status: open
+    name: ログイン成功（復号→社員検証→情報取得→Session 生成）
+    origin_key: R60Login TC-202
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-203:
+    status: open
+    name: メニュー遷移（/login 共用・同一ウィンドウ）
+    origin_key: R60Login TC-203
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-204:
+    status: open
+    name: URL 出力の正常系（I-310 に表示）
+    origin_key: R60Login TC-204
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-205:
+    status: open
+    name: 閉じる（Session 破棄→画面を閉じる）
+    origin_key: R60Login TC-205
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-206:
+    status: open
+    name: I-303 が 7 桁ちょうど（B-02）
+    origin_key: R60Login TC-206
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-207:
+    status: open
+    name: I-310 が 150 桁ちょうど（B-20）
+    origin_key: R60Login TC-207
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-208:
+    status: open
+    name: 暗号化算式の分割境界 5 桁（B-35）
+    origin_key: R60Login TC-208
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-209:
+    status: open
+    name: 画面候補 0 件（B-22。エラーにしない）
+    origin_key: R60Login TC-209
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-210:
+    status: open
+    name: E-204 の連続失敗が 3 回ちょうど（B-30）
+    origin_key: R60Login TC-210
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-211:
+    status: open
+    name: E-201 社員マスタに未削除の該当行が無い
+    origin_key: R60Login TC-211
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-212:
+    status: open
+    name: E-202 入力不正（6 桁・8 桁・非数字・空欄）
+    origin_key: R60Login TC-212
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-213:
+    status: open
+    name: E-203 稼働不可（HTTP 403）
+    origin_key: R60Login TC-213
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-214:
+    status: open
+    name: E-204 画面マスタ取得失敗
+    origin_key: R60Login TC-214
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-215:
+    status: open
+    name: E-205 復号失敗（不正な暗号化値）
+    origin_key: R60Login TC-215
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-216:
+    status: open
+    name: E-206 /init の稼働不可（HTTP 403）
+    origin_key: R60Login TC-216
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-217:
+    status: open
+    name: E-207 /login の該当なし（errorCode のみ返す）
+    origin_key: R60Login TC-217
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-218:
+    status: open
+    name: E-208 ログイン中の DB 障害
+    origin_key: R60Login TC-218
+    r_id: R-201
+    used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+
+  # ---------- CR / BUG ----------
+  CR-001:
+    status: open
+    name: "初期 Phase1 申請"
+    description: "Phase1 骨架導入に伴う変更要求（承認待ち）"
+    used_by: CONTRIBUTING.md
+  CR-002:
+    status: open
+    origin_key: 错误文案回传给前端的响应项（节点2 §7.2）
+    related_ids: [F-201, R-201]
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  CR-003:
+    status: open
+    origin_key: 详细设计自相矛盾 2 件：当日密钥日期取得元／错误文案取得主体
+    related_ids: [F-201, L-201, L-202, L-203, L-204, L-205, L-206, L-207, L-208]
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  CR-004:
+    status: open
+    origin_key: 节点2 §1 備考① 画面路由前缀与 API 端点前缀冲突
+    related_ids: [F-201, L-201]
+    used_by: tutorial/R60Login/节点4_框架构筑/05_承認版_框架构筑记录.md
+  BUG-001:
+    status: void
+    name: "無効バグレポート（void 記録例）"
+    description: "void 作废标记の記入例。番号は再利用しない。"
+    used_by: docs/00_registry/ids.yml
+
+
+  # ==========================================================
+  # R60Login（演習・教学号段）
+  # 登録の根拠: 節点1 承認版 / 節点2 承認版 v2.0.4 / 節点3 承認版 v1.0.2
+  # もとは Q-226 で「設計評審後に人が一括登録」とされていた分を、
+  #   2026-10-26 にユーザー（SE-001）の指示で登録した。
+  # 登録したのは「設計書が既に使用している番号」であり、新しい番号の考案ではない。
+  #   （発番の唯一口は本ファイル。紅线①）
+  # R-101・R-102・F-042・I-201〜I-256・D-043・L-014/L-015・E-001〜E-008・TC-001〜TC-008 は R60Area 側。
+  # R-301・TC-201・E-211 は発番していない（R-301 は例示、TC-201 は節点6、E-211 は Q-236 で不採用）。
+  # ==========================================================
+  R-201:
+    status: baselined
+    name: "共通マスタログイン（R60Login）画面"
+    description: "初期表示・ログイン判定・遷移用 URL 生成・画面遷移・閉じる（5 イベント／3 端点）"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  F-201:
+    status: baselined
+    status_reason: v2.0.5 再承認（SE-001・2026-10-27）
+    name: "R60Login 基本設計書（画面編）"
+    r_id: R-201
+    description: "画面項目 I-301〜I-320・イベント 5 件・処理モジュール 3 件"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+
+  # ---------- I: R60Login 画面項目（20 件）----------
+  I-301:
+    status: baselined
+    name: "画面タイトル"
+    f_id: F-201
+    description: "固定値「共通マスタ　ログイン」（全角空白を含む）"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-302:
+    status: baselined
+    name: "システム日時"
+    f_id: F-201
+    description: "19 桁 YYYY/MM/DD HH:mm:ss・クライアント端末時刻"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-303:
+    status: baselined
+    name: "ユーザーＩＤ"
+    f_id: F-201
+    description: "半角数字 7 桁固定。URL 出力時は未入力可"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-304:
+    status: baselined
+    name: "起動区分"
+    f_id: F-201
+    description: "値域 1/2/3・初期値 3。ログイン可否の判定には用いない"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-305:
+    status: baselined
+    name: "説明文"
+    f_id: F-201
+    description: "固定値「1：本店ユーザー、2：工場ユーザー、3：システム管理者」"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-306:
+    status: baselined
+    name: "画面"
+    f_id: F-201
+    description: "画面マスタの有効行。候補 0 件は選択不可"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-307:
+    status: baselined
+    name: "権限区分"
+    f_id: F-201
+    description: "表示値 Y/N・内部値 1/0。初期値 Y"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-308:
+    status: baselined
+    name: "ログイン"
+    f_id: F-201
+    description: "ボタン。画面候補 0 件のとき非活性"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-309:
+    status: baselined
+    name: "メニュー"
+    f_id: F-201
+    description: "ボタン。初期値 活性"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-310:
+    status: baselined
+    name: "URL"
+    f_id: F-201
+    description: "受付 150 桁／表示 120 桁。編集値は遷移に用いない"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-311:
+    status: baselined
+    name: "URL出力"
+    f_id: F-201
+    description: "ボタン。画面候補 0 件のとき非活性"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-312:
+    status: baselined
+    name: "閉じる"
+    f_id: F-201
+    description: "ボタン。初期値 活性"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-313:
+    status: baselined
+    name: "暗号化社員コード（encryptedStfCd）"
+    f_id: F-201
+    description: "I-303 の転送表現。単一ソースは I-303"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-314:
+    status: baselined
+    name: "画面候補一覧（pageList）"
+    f_id: F-201
+    description: "配列 {value, label}。有効行を表示順の昇順"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-315:
+    status: baselined
+    name: "権限区分候補一覧（kbnList）"
+    f_id: F-201
+    description: "配列 {value, label}。2 件固定"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-316:
+    status: baselined
+    name: "ユーザー情報（userInfo）"
+    f_id: F-201
+    description: "6 項目：cmpCd／cmpNm／jigCd／jigNm／stfCd／stfNm"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-317:
+    status: baselined
+    name: "管理情報（mngInfo）"
+    f_id: F-201
+    description: "5 項目：scmpCd／sjigCd／jiKjoKsnFlg／taKjoKsnFlg／loginAcsKais"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-318:
+    status: baselined
+    name: "エラー区分コード（errorCode）"
+    f_id: F-201
+    description: "1 桁。0＝正常／1＝業務エラー／2＝システムエラー"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-319:
+    status: baselined
+    name: "詳細エラーコード（errorDetailCode）"
+    f_id: F-201
+    description: "8 桁。R60W0001〜R60W0004／R60E9999"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-320:
+    status: baselined
+    name: "稼働状態フラグ（operationFlag）"
+    f_id: F-201
+    description: "稼働判定の結果（利用者入力ではない）"
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-321:
+    status: baselined
+    name: "利用者向けエラーメッセージ（errorMessage）"
+    f_id: F-201
+    description: "エラー応答に載せる利用者向け文言。サーバがメッセージ管理情報から取得する。E-201／E-207（/login の該当なし）には含めない"
+    origin_key: I-3xx-error-message
+    used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+
+  # ---------- D: R60Login データモデル（5 件・論理）----------
+  D-201:
+    status: baselined
+    name: "社員マスタ（STF_MST）"
+    f_id: F-201
+    description: "PK stf_cd。社員検証（SQL-3）・社員情報取得（SQL-4/5）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  D-202:
+    status: baselined
+    name: "組織・事業場マスタ（ORG_JIG_MST）"
+    f_id: F-201
+    description: "PK cmp_cd, jig_cd。D-201 との結合（複合キー完全一致）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  D-203:
+    status: baselined
+    name: "コード・メッセージ管理マスタ（CD_MSG_MST）"
+    f_id: F-201
+    description: "PK cd_kbn, cd_val ＋ UNIQUE msg_id。メッセージ参照（SQL-6）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  D-204:
+    status: baselined
+    name: "画面マスタ（GMN_MST）"
+    f_id: F-201
+    description: "PK gmn_id ＋ 索引（valid_flg, disp_order）。画面候補取得（SQL-2）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  D-205:
+    status: baselined
+    name: "システム共通テーブル（SYS_CMN_TBL）"
+    f_id: F-201
+    description: "PK cmn_key。稼働判定（SQL-1）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+
+  # ---------- L: R60Login 業務ロジック（8 件）----------
+  L-201:
+    status: baselined
+    name: "稼働判定（共通前処理）"
+    f_id: F-201
+    description: "SQL-1。E-203・E-206"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  L-202:
+    status: baselined
+    name: "init 業務（候補取得と初期値設定）"
+    f_id: F-201
+    description: "SQL-2。E-204・E-206"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  L-203:
+    status: baselined
+    name: "login 業務（復号〜Session 生成）"
+    f_id: F-201
+    description: "SQL-3/4/5。E-201・E-203・E-205・E-208"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  L-204:
+    status: baselined
+    name: "遷移先の解決と遷移実行"
+    f_id: F-201
+    description: "クライアント側。遷移先 URL の値は設計に無く環境変数で与える（差異登記 #3）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  L-205:
+    status: baselined
+    name: "generateUrl 業務（正規化→暗号化→URL 組立）"
+    f_id: F-201
+    description: "SQL-1。E-203・E-209・E-210"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  L-206:
+    status: baselined
+    name: "社員コード暗号化・復号（共通処理）"
+    f_id: F-201
+    description: "算式は要求書 §10.3 の転記。日付は引数で受ける。E-205・E-209"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  L-207:
+    status: baselined
+    name: "クライアント入力チェックと二度送信防止"
+    f_id: F-201
+    description: "E-202"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  L-208:
+    status: baselined
+    name: "Session 破棄（閉じる）"
+    f_id: F-201
+    description: "破棄要求の相手仕様は設計に無く環境変数で与える（差異登記 #2）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+
+  # ---------- E: R60Login エラー（10 件）----------
+  E-201:
+    status: baselined
+    jp: "社員マスタに未削除の該当行が無い（SQL-3 が 0 件）／SQL-4 の結合 0 件"
+    l_id: L-203
+    description: "応答は errorCode のみ（詳細コードは返さない。裁定 Q-235・Q-237）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-202:
+    status: baselined
+    error_id: R60W0001
+    jp: "I-303 が半角数字 7 桁固定に合致しない／I-304・I-307 が値域外"
+    l_id: L-207
+    description: "値域外は E-202 に写像し E-ID を増やさない（Q-236）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-203:
+    status: baselined
+    error_id: R60W0004
+    jp: "稼働状態が無効・データなし・例外（/login・/generateUrl の前処理）"
+    l_id: L-201
+    description: "HTTP 403"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-204:
+    status: baselined
+    error_id: R60E9999
+    jp: "画面マスタの取得に失敗（SQL-2 の例外）"
+    l_id: L-202
+    description: "同一クライアントで連続 3 回のとき運用ログ 1 件"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-205:
+    status: baselined
+    error_id: R60W0003
+    jp: "復号失敗（入力 I-313 が不正な暗号化値・当日鍵の日跨ぎ）"
+    l_id: L-206
+    description: "跨日は実際には E-201 に落ちる（B-33・差異登記 #9）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-206:
+    status: baselined
+    error_id: R60W0004
+    jp: "初期表示（/init）の稼働状態チェックが不可（SQL-1）"
+    l_id: L-201
+    description: "HTTP 403。文面は E-203 と同一"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-207:
+    status: baselined
+    jp: "/login の該当なし"
+    l_id: L-203
+    description: "応答は errorCode のみ（裁定 Q-235）"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-208:
+    status: baselined
+    error_id: R60E9999
+    jp: "ログイン処理中の DB 障害等"
+    l_id: L-203
+    description: "利用者文言に例外内容を出さない"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-209:
+    status: baselined
+    error_id: R60E9999
+    jp: "/generateUrl の暗号化失敗・設定不備"
+    l_id: L-205
+    description: "文面は E-208 と同一"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-210:
+    status: baselined
+    error_id: R60W0001
+    jp: "生成 URL が 150 桁を超える"
+    l_id: L-205
+    description: "切捨てない"
+    used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+
+
+prefix_count_summary:
+  R: 2
+  Q: 0
+  F: 2
+  I: 77
+  D: 6
+  L: 10
+  E: 18
+  TC: 26
+  CR: 4
+  BUG: 1

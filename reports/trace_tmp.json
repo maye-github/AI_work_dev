@@ -1,0 +1,252 @@
+{
+  "root": "D:\\AI_work_dev",
+  "gates": [
+    {
+      "pass": true,
+      "stats": {
+        "declared_ids": 81,
+        "registered_ids": 128,
+        "wild_ids": 0,
+        "void_used": 0
+      },
+      "wild_ids": [],
+      "void_used": [],
+      "id": "gate1",
+      "label": "ID 合法性（野号検出）"
+    },
+    {
+      "pass": false,
+      "stats": {
+        "nodes": 122,
+        "edges": 134,
+        "unreachable": 0,
+        "asymmetric": 0,
+        "orphans": 1,
+        "leaves": 45,
+        "leaves_not_returning": 0,
+        "tc_design_id_gaps": 0
+      },
+      "unreachable_ids": [],
+      "asymmetric": [],
+      "orphan_ids": [
+        "I-321"
+      ],
+      "back_unreachable": [],
+      "design_id_gaps": [],
+      "chain_complete": false,
+      "id": "gate2",
+      "label": "追跡双方向閉ループ"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "checked": 130,
+        "problems": 0
+      },
+      "problems": [],
+      "id": "gate3",
+      "label": "front-matter 7 字段"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "expected_field_count": 77,
+        "generated_field_count": 77
+      },
+      "detail": "gen_formal.columns=77",
+      "id": "gate4",
+      "label": "生成物一致"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "violations": 0
+      },
+      "violations": [],
+      "id": "gate5",
+      "label": "命名分区"
+    },
+    {
+      "pass": true,
+      "stats": {
+        "scanned_files": 540,
+        "patterns": 10,
+        "hits": 0
+      },
+      "hits": [],
+      "id": "gate6",
+      "label": "機密ゼロヒット"
+    }
+  ],
+  "results": {
+    "gate1": {
+      "pass": true,
+      "stats": {
+        "declared_ids": 81,
+        "registered_ids": 128,
+        "wild_ids": 0,
+        "void_used": 0
+      },
+      "wild_ids": [],
+      "void_used": [],
+      "id": "gate1",
+      "label": "ID 合法性（野号検出）"
+    },
+    "gate2": {
+      "pass": false,
+      "stats": {
+        "nodes": 122,
+        "edges": 134,
+        "unreachable": 0,
+        "asymmetric": 0,
+        "orphans": 1,
+        "leaves": 45,
+        "leaves_not_returning": 0,
+        "tc_design_id_gaps": 0
+      },
+      "unreachable_ids": [],
+      "asymmetric": [],
+      "orphan_ids": [
+        "I-321"
+      ],
+      "back_unreachable": [],
+      "design_id_gaps": [],
+      "chain_complete": false,
+      "id": "gate2",
+      "label": "追跡双方向閉ループ"
+    },
+    "gate3": {
+      "pass": true,
+      "stats": {
+        "checked": 130,
+        "problems": 0
+      },
+      "problems": [],
+      "id": "gate3",
+      "label": "front-matter 7 字段"
+    },
+    "gate4": {
+      "pass": true,
+      "stats": {
+        "expected_field_count": 77,
+        "generated_field_count": 77
+      },
+      "detail": "gen_formal.columns=77",
+      "id": "gate4",
+      "label": "生成物一致"
+    },
+    "gate5": {
+      "pass": true,
+      "stats": {
+        "violations": 0
+      },
+      "violations": [],
+      "id": "gate5",
+      "label": "命名分区"
+    },
+    "gate6": {
+      "pass": true,
+      "stats": {
+        "scanned_files": 540,
+        "patterns": 10,
+        "hits": 0
+      },
+      "hits": [],
+      "id": "gate6",
+      "label": "機密ゼロヒット"
+    }
+  },
+  "aux": {
+    "seal": {
+      "pass": true,
+      "status": "PASS",
+      "stats": {
+        "modules": 1,
+        "hit_lines": 0,
+        "hits": 0,
+        "identifier_skipped": 0
+      },
+      "hits": [],
+      "problems": [],
+      "id": "aux:seal",
+      "label": "封印検査（補助）"
+    },
+    "freeze": {
+      "pass": true,
+      "status": "PASS",
+      "stats": {
+        "modules": 1,
+        "issues": 37,
+        "dispositions": 37,
+        "r_defects": 3,
+        "revision_entries": 7
+      },
+      "problems": [],
+      "modules": [
+        {
+          "module": "R60Login",
+          "source": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "issues": 37,
+          "dispositions": 37,
+          "r_defects": 3,
+          "revision_entries": 7
+        }
+      ],
+      "id": "aux:freeze",
+      "label": "凍結前整合（補助）"
+    }
+  },
+  "aux_checks": [
+    {
+      "pass": true,
+      "status": "PASS",
+      "stats": {
+        "modules": 1,
+        "hit_lines": 0,
+        "hits": 0,
+        "identifier_skipped": 0
+      },
+      "hits": [],
+      "problems": [],
+      "id": "aux:seal",
+      "label": "封印検査（補助）"
+    },
+    {
+      "pass": true,
+      "status": "PASS",
+      "stats": {
+        "modules": 1,
+        "issues": 37,
+        "dispositions": 37,
+        "r_defects": 3,
+        "revision_entries": 7
+      },
+      "problems": [],
+      "modules": [
+        {
+          "module": "R60Login",
+          "source": "tutorial/R60Login/节点1_需求/02_確認事項一覧.md",
+          "issues": 37,
+          "dispositions": 37,
+          "r_defects": 3,
+          "revision_entries": 7
+        }
+      ],
+      "id": "aux:freeze",
+      "label": "凍結前整合（補助）"
+    }
+  ],
+  "all_pass": false,
+  "chain_complete": false,
+  "orphan_ids": [
+    "I-321"
+  ],
+  "stats": {
+    "field_count": 77,
+    "gates_run": 6,
+    "gates_pass": 5,
+    "aux_checks_run": 2,
+    "aux_checks_pass": 2,
+    "aux_checks_skipped": 0
+  }
+}
