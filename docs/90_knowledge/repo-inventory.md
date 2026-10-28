@@ -217,6 +217,7 @@ tutorial/R60Login/
 | `registry.py` | `ids.yml` への発号・阻塞・失効（`mark-stale`） | 人（発号は人の行為） |
 | `impact.py` | ID から下流/上流の影響面を逆引き | n09 環 |
 | `metrics.py` | 実施規格書 §13 の 6 次元 KPI の基準値を測る（測れない次元は「測れない」と書く） | 手動（節目ごと） |
+| `kb_export.py` | 知識 `.md` を社内知識基盤 `kb-platform` の形（8 字段 front matter）へ書き出す。片方向・再生成可 | 手動 |
 | `coach_brief.py` | 現在地の要約（SessionStart フック） | 自動 |
 | `rag/`・`ingest/`・`legacy/` | RAG 索引／旧資産の取り込み／旧 Excel のテキスト化 | 手動 |
 | `paths.py` | パス解決の共通部品 | 内部 |
@@ -234,6 +235,7 @@ tutorial/R60Login/
 | `ingest/JET-R60/` | 旧案件取り込みの試走結果 | 試走 |
 | `rag/` | RAG 評価結果 JSON | 評価記録 |
 | `metrics/` | §13 KPI の基準値スナップショット（`.md` ＋ `.json`）。**手で編集しない**、`py -3 -m tools.metrics --out …` で再生成 | 時点記録 |
+| `kb-export/` | `kb-platform` 向け書き出しの中継（`projects/` は gitignore、README のみ追跡） | 再生成可 |
 | `AC-selfcheck.md`／`DELIVERY_MEMO.md`／`PHASE15-EXIT.md` | Phase 1 の受入・引渡・出口記録 | 履歴（`review.md` が引用） |
 | `trace_*.json`（5）／`gate6_report.json`／`seal_before.json`／`gen_formal_columns_R101.json` | 過去の門番の生出力 | `spec.md`/`tasks.md`/`review.md` が証拠として引用 |
 | `eval/gold-qa.yaml` | RAG 評価用の設問セット | `tools/rag/evaluate.py` が読む |

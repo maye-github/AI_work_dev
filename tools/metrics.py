@@ -442,7 +442,7 @@ def render_markdown(snap: dict) -> str:
         u = rag["unfiltered"] or {}
         L.append(
             f"| ⑥ 知識資産 | ✅ 測れる | 知識 {k['knowledge_md']} 本・chunk {k['chunks']} 件"
-            f"（{k['chunk_files']} ファイル）。"
+            f"（{k['chunk_files']} ファイルの JSONL）。"
             f"RAG hit@{rag['k']}：モジュール絞り込み {f.get('hit_at_k')}／絞り込み無し {u.get('hit_at_k')}"
             f"（MRR {f.get('mrr')}／{u.get('mrr')}、設問 {rag['gold_count']} 問） |"
         )

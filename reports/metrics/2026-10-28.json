@@ -13,11 +13,11 @@
     },
     "3_ai_usage": {
       "measurable": "partial",
-      "commits": 9,
-      "with_ai_trailer": 9,
+      "commits": 10,
+      "with_ai_trailer": 10,
       "ai_ratio": 1.0,
       "by_type": {
-        "chore": 9
+        "chore": 10
       },
       "reason": "AI 関与率のみ。生成物の採用率・修正率は人の記録が要る"
     },

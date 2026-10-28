@@ -82,3 +82,6 @@ build/
 docs/00_registry/_backup/
 # テスト実行の副産物（Node/Python のカバレッジ中間ファイル）
 tutorial/**/backend/.coverage
+# kb-platform 向け書き出し（`py -3 -m tools.kb_export --out reports/kb-export` で再生成できる。
+# 正本は docs/90_knowledge/ 側であり、ここに写しを溜めない）
+reports/kb-export/projects/
