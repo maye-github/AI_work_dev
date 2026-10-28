@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>file-inventory_2026-10-28.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>file-inventory_2026-10-28.zh</h1>
+<div class="meta">
+  机读源: <code>file-inventory_2026-10-28.zh.md</code> ／
+  生成: 2026-10-28 10:11 ／
+  节 13・表 21
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>file-inventory_2026-10-28.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 五个判定标记</a></li><li><a href="#sec-2">1. 乱在哪：55% 的体积是三类东西</a></li><li><a href="#sec-3">2. 总账</a></li><li><a href="#sec-4">3. 根目录（11）</a></li><li><a href="#sec-5">4. `.claude/`（40）</a></li><li><a href="#sec-6">5. `tools/`（41）— 全部保留</a></li><li><a href="#sec-7">6. `docs/`（190）</a></li><li><a href="#sec-8">7. `tutorial/R60Login/`（111）</a></li><li><a href="#sec-9">8. `reports/`（311）→ 删 266</a></li><li><a href="#sec-10">9. `eval/`</a></li><li><a href="#sec-11">10. 可执行的删除清单</a></li><li><a href="#sec-12">11. 需要你拍板的 6 件事</a></li><li><a href="#sec-13">12. 判定依据的复算方法</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: FILE-INVENTORY-2026-10-28<br>type: knowledge<br>req_ids: []<br>status: draft<br>sensitivity: internal<br>owner: AI-SE<br>version: 0.1.0</p>
+<hr>
+<h1>逐文件清点（断舍离用）— 2026-10-28</h1>
+<blockquote class="quote"><strong>这份文件回答三个问题</strong>：这个文件是干什么的、谁在用它、能不能删。<br>判定的依据全部可复算：<code>git ls-files</code> 701 个文件、入向引用图（脚本第 §12 节）、<br>以及首部/全文阅读。<strong>凡「用途」栏带 ※ 的，是我只读了首部或据目录结构推定，没有通读。</strong><br><strong>这不是唯一真源</strong>。真源仍是各自的文件。本文只是<strong>一次性清点</strong>，清点完可以作废。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 五个判定标记</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">标记</th><th style="text-align:left">含义</th><th style="text-align:left">是否需要你点头</th></tr></thead><tbody><tr><td style="text-align:left"><strong>留</strong></td><td style="text-align:left">原样保留</td><td style="text-align:left">否</td></tr><tr><td style="text-align:left"><strong>删</strong></td><td style="text-align:left">可以删，风险已评估</td><td style="text-align:left">删「可逆」类不需要；删「不可再生」类需要</td></tr><tr><td style="text-align:left"><strong>并</strong></td><td style="text-align:left">内容并入另一处，本文件消失</td><td style="text-align:left">需要</td></tr><tr><td style="text-align:left"><strong>移</strong></td><td style="text-align:left">换路径或改名</td><td style="text-align:left">需要（引用面广）</td></tr><tr><td style="text-align:left"><strong>重组</strong></td><td style="text-align:left">目录结构变化</td><td style="text-align:left">需要（一次决定，影响全仓）</td></tr></tbody></table>
+<p>「可逆」＝删了还能用一条命令重新生成，或 git 历史里就有。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 乱在哪：55% 的体积是三类东西</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">类别</th><th style="text-align:left">文件</th><th style="text-align:left">体积</th><th style="text-align:left">占比</th><th style="text-align:left">性质</th></tr></thead><tbody><tr><td style="text-align:left">一次性调查产物（module-survey 234 ／ legacy-raw 29 ／ ingest 7）</td><td style="text-align:left">270</td><td style="text-align:left">3.5 MB</td><td style="text-align:left">25%</td><td style="text-align:left">跑过一次，结论已存别处</td></tr><tr><td style="text-align:left">生成物 <code>.zh.html</code></td><td style="text-align:left">38</td><td style="text-align:left">2.4 MB</td><td style="text-align:left">17%</td><td style="text-align:left">机读源的派生物</td></tr><tr><td style="text-align:left">自动备份 <code>_backup/*.bak</code></td><td style="text-align:left">54</td><td style="text-align:left">1.7 MB</td><td style="text-align:left">12%</td><td style="text-align:left">每次发号都新增一个</td></tr><tr><td style="text-align:left"><strong>小计</strong></td><td style="text-align:left"><strong>362</strong></td><td style="text-align:left"><strong>7.6 MB</strong></td><td style="text-align:left"><strong>54%</strong></td><td style="text-align:left"><strong>都不是「真源」</strong></td></tr></tbody></table>
+<p>剩下的 46%（339 个文件、6.5MB）才是真东西：规则、skill、agent、工具、工程产物、演练记录。</p>
+<p><strong>但体积不是唯一的乱。</strong> 第二个乱是<strong>说明文有 5 个版本</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">行数</th><th style="text-align:left">讲什么</th><th style="text-align:left">和谁重复</th></tr></thead><tbody><tr><td style="text-align:left"><code>CLAUDE.md</code></td><td style="text-align:left">—</td><td style="text-align:left">AI 的常时约束</td><td style="text-align:left">角色表与 <code>AGENTS.md</code> 重复</td></tr><tr><td style="text-align:left"><code>START_HERE.md</code></td><td style="text-align:left">285</td><td style="text-align:left">新人唯一入口</td><td style="text-align:left">8 节点表与 <code>使用手册</code> 重复</td></tr><tr><td style="text-align:left"><code>使用手册.md</code>（1053 行 51KB）＋<code>.zh.html</code>（95KB）</td><td style="text-align:left">1053</td><td style="text-align:left">全功能手册</td><td style="text-align:left">包含上面两本的内容</td></tr><tr><td style="text-align:left"><code>AGENTS.md</code>（<strong>未入 git</strong>）</td><td style="text-align:left">241</td><td style="text-align:left">14 个角色定义</td><td style="text-align:left"><code>CLAUDE.md §0</code> + RACI 与规则 02 §8 重复</td></tr><tr><td style="text-align:left">规格书（78KB）</td><td style="text-align:left">—</td><td style="text-align:left">目标态（不是现状）</td><td style="text-align:left">与 <code>使用手册</code> 的"为什么"部分重叠</td></tr></tbody></table>
+<p><strong>入口 5 本、共 190KB 的说明文，讲同一件事。</strong> 这是"打开就晕"的真正原因——不是文件多，是<strong>同一件事有五个说法，且没有一处写着"以我为准"</strong>。</p>
+<p>第三个乱：<strong>盘上有、git 里没有</strong>的 4 个文件（<code>AGENTS.md</code>／<code>ROADMAP_3PHASE.md</code>／<code>CONTRIBUTING.md</code>／<code>CODEOWNERS</code>）。<br>别人 clone 下来拿不到，但它们被其它文档引用着。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 总账</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">区域</th><th style="text-align:left">入库</th><th style="text-align:left">盘上另有</th><th style="text-align:left">小计</th><th style="text-align:left">判定分布</th></tr></thead><tbody><tr><td style="text-align:left">根目录</td><td style="text-align:left">7</td><td style="text-align:left"><strong>4</strong></td><td style="text-align:left">11</td><td style="text-align:left">留 8 ／ 并 2 ／ 待定 1</td></tr><tr><td style="text-align:left"><code>.claude/</code></td><td style="text-align:left">40</td><td style="text-align:left">0</td><td style="text-align:left">40</td><td style="text-align:left">留 40</td></tr><tr><td style="text-align:left"><code>tools/</code></td><td style="text-align:left">41</td><td style="text-align:left">0</td><td style="text-align:left">41</td><td style="text-align:left">留 41</td></tr><tr><td style="text-align:left"><code>docs/</code></td><td style="text-align:left">190</td><td style="text-align:left">0</td><td style="text-align:left">190</td><td style="text-align:left">留 131 ／ 删 55 ／ 并 4</td></tr><tr><td style="text-align:left"><code>tutorial/R60Login/</code></td><td style="text-align:left">111</td><td style="text-align:left">0</td><td style="text-align:left">111</td><td style="text-align:left">留 110 ／ 删 1</td></tr><tr><td style="text-align:left"><code>reports/</code></td><td style="text-align:left">311</td><td style="text-align:left">0</td><td style="text-align:left">311</td><td style="text-align:left">留 35 ／ 删 274 ／ 待定 2</td></tr><tr><td style="text-align:left"><code>eval/</code></td><td style="text-align:left">1</td><td style="text-align:left">0</td><td style="text-align:left">1</td><td style="text-align:left">留 1</td></tr><tr><td style="text-align:left"><strong>合计</strong></td><td style="text-align:left"><strong>701</strong></td><td style="text-align:left"><strong>4</strong></td><td style="text-align:left"><strong>705</strong></td><td style="text-align:left"><strong>留 366 ／ 删 330 ／ 并 6 ／ 待定 3</strong></td></tr></tbody></table>
+<blockquote class="quote">根目录那 4 个「盘上另有」是 <code>AGENTS.md</code>／<code>ROADMAP_3PHASE.md</code>／<code>CONTRIBUTING.md</code>／<code>CODEOWNERS</code>，<br>被 <code>.gitignore</code> 排除，<strong>clone 下来不存在</strong>，但其它文档引用着它们。<br>删除的 330 个里，<strong>329 个是可逆的</strong>（自动备份 54 ＋ 一次性调查 270 ＋ 孤立产物 5）。<br>真正需要你想一下的只有 <strong>6 项</strong>，在 §11。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 根目录（11）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">谁在用</th><th style="text-align:left">判定</th><th style="text-align:left">说明</th></tr></thead><tbody><tr><td style="text-align:left"><code>CLAUDE.md</code></td><td style="text-align:left">AI 的常时约束；7 红线 / 禁止 5 条 / commit 样式 / 设定表</td><td style="text-align:left"><strong>AI 每轮自动加载</strong></td><td style="text-align:left">留</td><td style="text-align:left">唯一被自动加载的入口。不能动</td></tr><tr><td style="text-align:left"><code>START_HERE.md</code></td><td style="text-align:left">新人门：走哪 8 步、说哪 10 句话</td><td style="text-align:left">人</td><td style="text-align:left">留</td><td style="text-align:left">与 <code>使用手册</code> 重号（见 §4 问题 1）</td></tr><tr><td style="text-align:left"><code>使用手册.md</code></td><td style="text-align:left">1053 行全功能手册</td><td style="text-align:left">人</td><td style="text-align:left">并</td><td style="text-align:left"><strong>建议作为"唯一的人读说明书"</strong>，把 <code>START_HERE</code> 与 <code>AGENTS</code> 吸收进来</td></tr><tr><td style="text-align:left"><code>使用手册.zh.html</code></td><td style="text-align:left">上面那本的中文视图（95KB）</td><td style="text-align:left">人</td><td style="text-align:left">留</td><td style="text-align:left">生成物；改了 md 要重新生成</td></tr><tr><td style="text-align:left"><code>AI全链路软件工程平台_实施规格书.md</code></td><td style="text-align:left">目标态定义（78KB）</td><td style="text-align:left">企划/管理</td><td style="text-align:left">留</td><td style="text-align:left"><strong>不是现状</strong>，是要求。与我的调查报告对照着看</td></tr><tr><td style="text-align:left"><code>AGENTS.md</code> ※</td><td style="text-align:left">14 个角色 + RACI</td><td style="text-align:left">人</td><td style="text-align:left">并</td><td style="text-align:left"><strong>未入 git</strong>。角色表与 <code>CLAUDE.md §0</code>、规则 02 §8 三重重复</td></tr><tr><td style="text-align:left"><code>ROADMAP_3PHASE.md</code> ※</td><td style="text-align:left">三期计划</td><td style="text-align:left">管理</td><td style="text-align:left">待定</td><td style="text-align:left"><strong>未入 git</strong>。与规格书 §14 是两套分期，同名不同物</td></tr><tr><td style="text-align:left"><code>CONTRIBUTING.md</code> ※</td><td style="text-align:left">分支/Tag 规约</td><td style="text-align:left">开发</td><td style="text-align:left">留（需入库）</td><td style="text-align:left"><strong>未入 git</strong>。内容是 commit 规则的补充，建议并进规则 05</td></tr><tr><td style="text-align:left"><code>CODEOWNERS</code> ※</td><td style="text-align:left">11 块审批人</td><td style="text-align:left">Git</td><td style="text-align:left">留（需入库）</td><td style="text-align:left"><strong>未入 git</strong>。红线③的机械可读证据，应当入库</td></tr><tr><td style="text-align:left"><code>.gitignore</code></td><td style="text-align:left">忽略规则</td><td style="text-align:left">git</td><td style="text-align:left">留</td><td style="text-align:left">2026-10-28 已改：docs/tools/reports 转为默认入库</td></tr><tr><td style="text-align:left"><code>.vscode/extensions.json</code></td><td style="text-align:left">推荐扩展</td><td style="text-align:left">编辑器</td><td style="text-align:left">留</td><td style="text-align:left">1 行，无害</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. <code>.claude/</code>（40）</h2>
+<h3>4.1 <code>rules/</code>（7）— 全部保留</h3>
+<p>起動時に自動ロードされる。<strong>删任何一本都要同时改 CLAUDE.md §0 的表。</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">管什么</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>00-project-global.md</code></td><td style="text-align:left">工程横断 13 条（加密按案件、ROWID、野号、成果物两份、媒体契约…）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>01-security-redlines.md</code></td><td style="text-align:left">L3 机密 13 项 + 脱敏占位。<strong>gate6 唯一豁免文件</strong></td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>02-requirements.md</code></td><td style="text-align:left">R/Q 发号 SOP、A/B/C 分类、回答接收、状态机、上流字段移送检查</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>03-design-coding.md</code></td><td style="text-align:left"><code>BaseCamelModel</code> 4 行、snake/camel 分区、SQL 白名单</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>04-testing.md</code></td><td style="text-align:left">TC 正3/边2/异3、<code>design_ids</code>、双向闭包</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>05-commit-messages.md</code></td><td style="text-align:left">commit 7 种 + Trace/AI/Review 三段</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>06-knowledge-flywheel.md</code></td><td style="text-align:left">踩坑→规则化→加检查→全队免疫；<strong>红线不加条</strong>原则</td><td style="text-align:left">留</td></tr></tbody></table>
+<blockquote class="quote"><strong>唯一的结构问题</strong>：CLAUDE.md 常时加载 ≈ 12KB，7 条规则 ≈ 105KB，加起来 <strong>117KB 在每轮对话开头</strong>。这是"AI 抓不住重点"的物理原因。断舍离时可以考虑：规则 02 已经 400+ 行，可以拆成"必读 30 行 + 附录"。</blockquote>
+<h3>4.2 <code>skills/</code>（18）— 全部保留，但有一件要确认</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">skill</th><th style="text-align:left">文件</th><th style="text-align:left">何时启用</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>trans-cosmos-ai-lifecycle-coach</code></td><td style="text-align:left"><code>SKILL.md</code> + <code>nodes/n01..n09</code>(9) + <code>references/node-worker-contract.md</code> + <code>templates/{case,node}.yml</code> = 13</td><td style="text-align:left"><strong>8 工程的唯一推进入口</strong></td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>requirement-interrogator</code></td><td style="text-align:left"><code>SKILL.md</code> + <code>references/lenses.md</code> = 2</td><td style="text-align:left">节点 1 的 51 视角审问</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>virtual-requirement-author</code></td><td style="text-align:left"><code>SKILL.md</code></td><td style="text-align:left">节点 0 倒推（仅 migration）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>code-from-design-trans-cosmos-ai</code></td><td style="text-align:left"><code>SKILL.md</code></td><td style="text-align:left">只有 R-101 系 / migration 的制造</td><td style="text-align:left">留（<strong>内容里写死 R-101，是待修项</strong>）</td></tr><tr><td style="text-align:left"><code>legacy-r60-navigator</code></td><td style="text-align:left"><code>SKILL.md</code></td><td style="text-align:left">旧 R60 只读导航</td><td style="text-align:left">留</td></tr></tbody></table>
+<blockquote class="quote"><strong>要确认的一件事</strong>：<code>code-from-design</code> 与 <code>legacy-navigator</code> 都<strong>只对 R60 有意义</strong>。如果这个骨架要卖给别的客户，这两个 skill 是"附赠 R60 资产"还是"核心能力"？——影响它们该不该留在主目录（见 §11 问题 4）。</blockquote>
+<h3>4.3 <code>agents/</code>（14）— 全部保留</h3>
+<p><strong>注意：agent 是靠 <code>description</code> 自动匹配的，不是靠路径引用。所以"引用数 0"对 agent 是正常的，不能当死文件。</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">职责</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>trans-cosmos-ai-node1-requirements</code> … <code>node8-release-ops</code>（8）</td><td style="text-align:left">每个节点一个执行体，独立上下文出初稿</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>trans-cosmos-ai-node9-change</code></td><td style="text-align:left">变更环产出</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>spec-reviewer</code></td><td style="text-align:left">独立审查（重跑命令，不信提交方的话）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>secret-auditor</code></td><td style="text-align:left">机密扫描（只报文件行，不打印值）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>deliverable-reviewer</code></td><td style="text-align:left">视图生成 + A/B/C 分类 + 确认请求书</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>drill-comparator</code></td><td style="text-align:left">训练对比归因（不判合格）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>legacy-module-surveyor</code></td><td style="text-align:left">旧模块选型普查</td><td style="text-align:left">留（同上，R60 专属）</td></tr></tbody></table>
+<h3>4.4 <code>settings.json</code>（1）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">内容</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left">deny 5 条（机密文件/.env/密钥）+ 钩子 2 个（SessionStart 注入当前进度；Stop 重画 Excel 预览）</td><td style="text-align:left">留</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. <code>tools/</code>（41）— 全部保留</h2>
+<p><strong>这块是整个仓库最干净的部分。</strong> 没有重复实现，没有孤岛，每个包都有入口。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">包 / 文件</th><th style="text-align:left">文件数</th><th style="text-align:left">干什么</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>trace_check/</code>（<code>__init__</code>/<code>__main__</code>/<code>aux_checks</code> ＋2 个 example json）</td><td style="text-align:left">5</td><td style="text-align:left"><strong>6 道门</strong> + seal + freeze</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>trace_check.py</code></td><td style="text-align:left">1</td><td style="text-align:left">568 字节的启动器，等价于 <code>-m tools.trace_check</code></td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>gen_view/</code>（<code>__main__</code>/<code>render</code>/<code>__init__</code>/README）</td><td style="text-align:left">4</td><td style="text-align:left">机读源 → 人看 HTML</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>gen_formal/</code>（<code>book</code>/<code>md_book</code>/<code>gen_excel</code>/<code>auto</code>/<code>__init__</code>/README）</td><td style="text-align:left">6</td><td style="text-align:left">机读源 → 日文 Excel；<code>auto.py</code> 是 Stop 钩子</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>masking/</code>（<code>mask_demo</code>/<code>__init__</code>/example json）</td><td style="text-align:left">3</td><td style="text-align:left">双向脱敏</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>ingest/</code>（6 模块 + <code>__main__</code> + <code>__init__</code>）</td><td style="text-align:left">8</td><td style="text-align:left">旧案件取入（清单 → 扫描 → 秘密门 → 编号候选）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>legacy/</code>（<code>xlsx_text</code>/<code>selftest</code>/<code>__main__</code>/<code>__init__</code>）</td><td style="text-align:left">4</td><td style="text-align:left">旧 Excel → 纯文本</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>rag/</code>（<code>loader</code>/<code>store</code>/<code>evaluate</code>/<code>__main__</code>/<code>__init__</code>）</td><td style="text-align:left">5</td><td style="text-align:left">词法检索（纯标准库）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>registry.py</code></td><td style="text-align:left">1</td><td style="text-align:left">发号 / 阻塞 / 作废</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>impact.py</code></td><td style="text-align:left">1</td><td style="text-align:left">编号 → 上下游影响面</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>coach_brief.py</code></td><td style="text-align:left">1</td><td style="text-align:left">当前进度摘要（SessionStart 钩子）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>paths.py</code></td><td style="text-align:left">1</td><td style="text-align:left">路径解析共用件</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>__init__.py</code></td><td style="text-align:left">1</td><td style="text-align:left">包标记</td><td style="text-align:left">留</td></tr></tbody></table>
+<blockquote class="quote"><strong>一处卫生问题</strong>：<code>tools/registry.py</code> 每次发号都会往 <code>docs/00_registry/_backup/</code> 写一个 <code>.bak</code>。<br>这些文件被提交进了 git（54 个，1.7MB）。<strong>应当移出 git</strong>，见 §7。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. <code>docs/</code>（190）</h2>
+<h3>6.1 <code>docs/00_plan/</code>（16）— 工程管理</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>spec.md</code></td><td style="text-align:left">Trae 时代的规格书：6 条通用规则、约束、AC</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>tasks.md</code>（438 行 48KB）</td><td style="text-align:left">16 个任务的计划</td><td style="text-align:left"><strong>并</strong> — 16 个任务<strong>全部还是 <code>pending</code></strong>，实际早做完了。留着会让人以为没开工</td></tr><tr><td style="text-align:left"><code>review.md</code>（310 行）</td><td style="text-align:left">12 条受入基准 CP</td><td style="text-align:left">留（被 5 处机械检查引用）</td></tr><tr><td style="text-align:left"><code>phase0-closure.md</code></td><td style="text-align:left">Phase 0 结项记录</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>coach/README.md</code></td><td style="text-align:left">进度文件怎么读</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>coach/R60Login/case.yml</code></td><td style="text-align:left">案件定义（模块/形态/团队）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>coach/R60Login/n01..n09.yml</code>（9）</td><td style="text-align:left"><strong>一个节点一个状态文件</strong>——当前进度的真源</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>coach/R60Login/handoff.md</code></td><td style="text-align:left">交接票（下一个会话先读这个）</td><td style="text-align:left">留</td></tr></tbody></table>
+<blockquote class="quote"><code>tasks.md</code> 的去向：要么把 16 个任务勾成 done 并加"已完成"抬头，要么并进 <code>phase0-closure.md</code>。<br><strong>不改的代价</strong>：任何新人打开都会以为项目没开始。</blockquote>
+<h3>6.2 <code>docs/00_registry/</code>（58）→ 删 54</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>ids.yml</code></td><td style="text-align:left"><strong>全仓编号唯一发号口</strong>（164 个：R2/Q0/F2/I77/D6/L10/E18/TC29/IT13/CR5/BUG2）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>traceability.yml</code></td><td style="text-align:left">追踪矩阵（roots = R-101, R-201）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>glossary.yml</code></td><td style="text-align:left">中日英三语术语表（50 词），正式 Excel 由它生成</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>ingest-manifest.yml</code></td><td style="text-align:left">旧案件取入清单（<code>tools/ingest</code> 只读这个）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>_backup/ids.yml.*.bak</code> × <strong>54</strong></td><td style="text-align:left"><code>tools/registry.py</code> 每次发号自动写的备份</td><td style="text-align:left"><strong>删</strong>（1.7MB，可逆；git 历史里就有，且会自动再生成）</td></tr></tbody></table>
+<blockquote class="quote"><strong>这是全仓最划算的一刀</strong>：54 个文件、1.7MB、零风险。<br>配套动作：<code>.gitignore</code> 加 <code>docs/00_registry/_backup/</code>，否则下次发号又会新增。</blockquote>
+<h3>6.3 <code>docs/01_context/</code> ～ <code>docs/80_operation/</code>（22）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>01_context/case-profile-R60.yaml</code></td><td style="text-align:left">migration 的既有技术栈（<strong>红线④的事实来源</strong>）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>01_context/case-profile-sample-greenfield.yaml</code></td><td style="text-align:left">新案件模板</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>01_context/R-101-R60Area.md</code></td><td style="text-align:left">R-101 的背景说明</td><td style="text-align:left">留（※ 与 10_requirements 的 yaml 有重叠，可并）</td></tr><tr><td style="text-align:left"><code>10_requirements/R-101-R60Area.yaml</code></td><td style="text-align:left"><strong>见本</strong>：需求书的机读形态</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>10_requirements/req-template.yaml</code></td><td style="text-align:left">需求模板</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>20_basic_design/F-042-R60Area.yaml</code></td><td style="text-align:left">见本：基本设计</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>20_basic_design/bd-template.yaml</code></td><td style="text-align:left">模板</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>30_detail_design/D-043/L-014/L-015/E-001-E005</code>（4）</td><td style="text-align:left">见本：数据模型 / 检索 / 编辑 / 错误</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>30_detail_design/dd-template.yaml</code></td><td style="text-align:left">模板</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>40_framework/framework-record.yaml</code></td><td style="text-align:left">技术选型记录（人批准的栈写在这）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>50_unit_test/TC-001-TC-008-R60Area.yaml</code></td><td style="text-align:left">见本：8 个用例（3/2/3）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>50_unit_test/tc-template.yaml</code></td><td style="text-align:left">模板</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>60_integration_test/IT-001-R60Area-e2e.yaml</code></td><td style="text-align:left">见本：e2e</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>60_integration_test/integration-template.yaml</code></td><td style="text-align:left">模板</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>70_release/release-template.md</code></td><td style="text-align:left">发布模板</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>80_operation/impact-analysis-template.yaml</code></td><td style="text-align:left">影响面模板</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>80_operation/impact-BUG-002.yaml</code> / <code>impact-CR-004.yaml</code></td><td style="text-align:left">两个真实影响面</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>80_operation/operation-runbook.md</code></td><td style="text-align:left">运行手册模板</td><td style="text-align:left">留</td></tr></tbody></table>
+<blockquote class="quote"><strong>这 22 个里，8 个是模板、14 个是 R-101 见本。</strong><br>问题：<strong>见本与真实案件长在同一个目录里</strong>，新人分不清哪个是"我该照着填的"、哪个是"别人填过的"。<br>建议加前缀（<code>_sample-R-101-...</code>）或移进 <code>docs/_samples/</code>（见 §11 问题 3）。</blockquote>
+<h3>6.4 <code>docs/90_knowledge/</code>（94）</h3>
+<h4>(a) 方法论与对应表（15）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>platform-map.md</code></td><td style="text-align:left"><strong>7 层平台 × 实有资产</strong>的唯一对应表</td><td style="text-align:left">留（<strong>核心</strong>）</td></tr><tr><td style="text-align:left"><code>ppt-deviation-register.md</code></td><td style="text-align:left">PPT 之外新增要素的登记簿（A-1〜A-31）</td><td style="text-align:left">留（<strong>核心</strong>）</td></tr><tr><td style="text-align:left"><code>answer-engine.md</code></td><td style="text-align:left">出处等级 E1〜E4 的唯一真源</td><td style="text-align:left">留（<strong>核心</strong>）</td></tr><tr><td style="text-align:left"><code>v1-platform-4layer.md</code></td><td style="text-align:left">方案 v1 的 4 层 ↔ 落地篇 7 层</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>ai-dev-playbook.md</code></td><td style="text-align:left">方法论 7 原则</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>dual-deliverable.md</code></td><td style="text-align:left">机读源 ↔ 正式 Excel 的双份设计</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>reference-design-book.md</code> ※</td><td style="text-align:left">参考设计书的体裁笔记</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>onboarding-checklist.md</code></td><td style="text-align:left">新人 2 小时 Walkthrough</td><td style="text-align:left"><strong>并</strong> → 与 <code>START_HERE</code> 重复，二者只留一</td></tr><tr><td style="text-align:left"><code>repo-inventory.md</code>（304 行）</td><td style="text-align:left">2026-10-26 的仓内清点</td><td style="text-align:left"><strong>并</strong> → 与本报告重复；本报告取代它，或它取代本报告</td></tr><tr><td style="text-align:left"><code>repo-inventory.zh.html</code></td><td style="text-align:left">上面那本的中文视图</td><td style="text-align:left"><strong>删</strong>（同名 md 被并掉后就没有源了）</td></tr><tr><td style="text-align:left"><code>requirement-review-capability.md</code> ※</td><td style="text-align:left">"要求书暗含论点读不出来"的能力设计</td><td style="text-align:left">留（是 <code>requirement-interrogator</code> 的设计依据）</td></tr><tr><td style="text-align:left"><code>ppt-coverage-assessment.md</code> ※</td><td style="text-align:left">PPT 各页实现到哪的评估（<strong>已过期</strong>：写着我方 0/8 承认，实际 8/8）</td><td style="text-align:left"><strong>并</strong> → 结论已由本报告 §2 取代</td></tr><tr><td style="text-align:left"><code>ppt-example-walkthrough.md</code></td><td style="text-align:left">D1→D7 端到端实走记录</td><td style="text-align:left">留（历史证据）</td></tr><tr><td style="text-align:left"><code>agent-run-record.md</code></td><td style="text-align:left">8 工程走破记录索引</td><td style="text-align:left">留（历史证据）</td></tr><tr><td style="text-align:left"><code>claude-code-migration-guide.md</code></td><td style="text-align:left">Trae → Claude Code 迁移记录</td><td style="text-align:left">留（历史证据；一次性，但有用）</td></tr></tbody></table>
+<h4>(b) <code>internal/</code>（2）</h4>
+<p><code>harmony-5gates.md</code>（5 道门的实绩）、<code>sds2-lessons.md</code>（幂等性/双重确认/客户指示优先）——<br>被规则 00 §13、规则 04 §9、规则 06 §7 引用。<strong>留。</strong></p>
+<h4>(c) <code>legacy-r60/</code>（65）— R60 旧案件知识</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">组</th><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left">手引 10 本（<code>00-index</code>〜<code>09-ai-workflow</code>）</td><td style="text-align:left">10</td><td style="text-align:left">源码地图 / 架构 / 惯例 / 共通部品 / DB / API / 追踪 / 差异 / AI 流程</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>chunks/*.jsonl</code></td><td style="text-align:left">7</td><td style="text-align:left"><strong>RAG 的语料</strong>——<code>tools/rag/loader.py</code> 按目录读取</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>screens/</code></td><td style="text-align:left">9</td><td style="text-align:left">56 画面一览 + 8 张画面卡（<code>00-screen-index</code> 引用全部）</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>modules/&lt;7 模块&gt;/*.yaml</code></td><td style="text-align:left">36</td><td style="text-align:left">每个模块的字段/API/逻辑/错误/测试/审查</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>module-selection.md</code> / <code>learning-plan-3modules.md</code> / <code>rag-usage.md</code></td><td style="text-align:left">3</td><td style="text-align:left">选型结论 / 教材计划 / RAG 用法</td><td style="text-align:left">留</td></tr></tbody></table>
+<blockquote class="quote"><strong>这 65 个是"附赠资产"</strong>：只对有 R60 旧系统的案件有用。它们是 <code>legacy-r60-navigator</code> 和<br><code>virtual-requirement-author</code> 的数据源，删了这两个 skill 就空了。**建议整体移到独立的<br><code>knowledge/legacy-r60/</code>，让主目录变干净**（见 §11 问题 4）。</blockquote>
+<h4>(d) <code>review_diff_assets/</code>（12）</h4>
+<table class="tbl"><thead><tr><th style="text-align:left">组</th><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>SOP-review-diff.md</code></td><td style="text-align:left">1</td><td style="text-align:left">审查前后差异的作业标准</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>_skeleton/review_comments.md</code></td><td style="text-align:left">1</td><td style="text-align:left"><strong>骨架自身踩过的坑（RC-SK-01〜03）</strong>，规则 02/06 引用</td><td style="text-align:left">留（<strong>重要</strong>）</td></tr><tr><td style="text-align:left"><code>R60Area</code> <code>R60Code</code> <code>R60Item</code> × 3（<code>review_before/after README</code> + <code>review_comments</code>）</td><td style="text-align:left">9</td><td style="text-align:left">三个真实模块的审查修正记录</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>R60Login/review_comments.md</code></td><td style="text-align:left">1</td><td style="text-align:left">演练模块的审查记录</td><td style="text-align:left">留</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. <code>tutorial/R60Login/</code>（111）</h2>
+<p><strong>这是唯一的"跑通过一遍"的实证。</strong> 结构本身没问题，问题在三个细节。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">组</th><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>README.md</code> + <code>.zh.html</code></td><td style="text-align:left">2</td><td style="text-align:left">685 行手顺书</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left">节点 1（16）</td><td style="text-align:left">需求书、结构化表（md+yaml）、<strong>回答接收核对 + 确认事项一览（都是 02_）</strong>、确认请求书 AB（md+pdf）、技术课题 C（md+pdf）、承认版</td><td style="text-align:left">留</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">节点 2（14）</td><td style="text-align:left">模板、输入、AI 产出、审查中/审查结果（都是 02_）、组内意见、改修版、承认版</td><td style="text-align:left">留</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">节点 3（11）</td><td style="text-align:left">同上；<strong><code>03_</code> 缺号</strong></td><td style="text-align:left">留</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">节点 4（5）</td><td style="text-align:left">模板、AI 产出、承认版</td><td style="text-align:left">留</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">节点 5（5 文档 + 38 代码）</td><td style="text-align:left"><code>05_承認版_制造记录</code>、<code>06_設計との差異</code>、<code>backend/</code>（16 py+test）、<code>frontend/</code>（16 ts/vue/config）</td><td style="text-align:left">留，<strong>删 <code>.coverage</code></strong></td><td style="text-align:left"></td></tr><tr><td style="text-align:left">节点 6（5）</td><td style="text-align:left">用例集、承认版、<strong>单测执行结果</strong>、<strong>覆盖率报告</strong></td><td style="text-align:left">留</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">节点 7（7）</td><td style="text-align:left">结合测试规格、承认版、<code>verification.md</code>（不做 A/B 的案件的记录处）</td><td style="text-align:left">留</td><td style="text-align:left"></td></tr><tr><td style="text-align:left">节点 8（5）</td><td style="text-align:left">运用计划、承认版</td><td style="text-align:left">留</td><td style="text-align:left"></td></tr><tr><td style="text-align:left"><code>.coverage</code></td><td style="text-align:left">1</td><td style="text-align:left">pytest 跑完留下的二进制</td><td style="text-align:left"><strong>删</strong>（生成物，可逆）</td></tr></tbody></table>
+<p><strong>三个细节问题</strong>：</p>
+<ol><li><strong>节点内编号不齐</strong>：节点 1 有两个 <code>02_</code>；节点 2 有两个 <code>01_</code>、两个 <code>02_</code>；节点 3 没有 <code>03_</code>；节点 4〜8 只有 <code>00/01/05</code>。</li></ol>
+<p>每次都要问"03 在哪"。<strong>改法</strong>：<code>02a_</code> / <code>02b_</code> 两位编号，或统一成 <code>10_输入 / 20_AI产出 / 30_审查 / 40_承认</code>。<br><strong>代价</strong>：要同时改 9 个作业票、<code>nNN.yml</code> 的 artifacts、<code>使用手册</code> 的路径。<strong>引用面很广，事故风险高。</strong></p>
+<ol><li><strong><code>节点5_制造</code> 里有真代码（38 个文件）</strong>，而 <code>reports/unit/R60Login/</code> 是它的运行结果。</li></ol>
+<p>源码与结果分在两处，是对的。但 <code>.coverage</code> 这种二进制混进来了。</p>
+<ol><li><strong>38 个 <code>.zh.html</code> 里有 7 个已经过期</strong>（md 比 html 新）：<code>节点3/05</code>、<code>节点5/05</code>、<code>节点6/05</code>、<code>节点7/05</code>、<code>节点8/01</code>、<code>节点8/05</code>、<code>drill/comparison</code>。</li></ol>
+<p><strong>不是删，是重新生成。</strong> 而且最好加一道检查：md 比 html 新就报错。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>8. <code>reports/</code>（311）→ 删 266</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">组</th><th style="text-align:left">文件</th><th style="text-align:left">体积</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>module-survey/</code></td><td style="text-align:left"><strong>234</strong></td><td style="text-align:left">2.9 MB</td><td style="text-align:left">13 个旧模块的设计书/测试书<strong>原文抽取</strong>＋选型打分</td><td style="text-align:left"><strong>删</strong>（结论已存 <code>legacy-r60/module-selection.md</code>）<strong>需你点头</strong></td></tr><tr><td style="text-align:left"><code>legacy-raw/</code></td><td style="text-align:left">29</td><td style="text-align:left">0.3 MB</td><td style="text-align:left">R60Area 的设计书 + 单测书原文抽取</td><td style="text-align:left"><strong>删</strong>（<code>tools/legacy</code> 可再抽取）<strong>需你点头</strong></td></tr><tr><td style="text-align:left"><code>ingest/JET-R60/</code></td><td style="text-align:left">7</td><td style="text-align:left">0.35 MB</td><td style="text-align:left"><code>tools/ingest</code> 的试跑结果（清单/证据/编号候选）</td><td style="text-align:left"><strong>删</strong>（试跑过，可重跑）<strong>需你点头</strong></td></tr><tr><td style="text-align:left"><code>drill/R60Login/</code></td><td style="text-align:left">16</td><td style="text-align:left">0.36 MB</td><td style="text-align:left"><strong>训练测量记录</strong>：README（7 个坑）、comparison（AI vs 人 归因）、answer-key、interrogation、requirement-defects、provenance、freeze</td><td style="text-align:left"><strong>留</strong>（唯一证明"框架有用"的实证）</td></tr><tr><td style="text-align:left"><code>unit/R60Login/</code></td><td style="text-align:left">6</td><td style="text-align:left">0.13 MB</td><td style="text-align:left">单测运行输出 + 覆盖率 json</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>rag/eval-2026-10-19.json</code></td><td style="text-align:left">1</td><td style="text-align:left">0.08 MB</td><td style="text-align:left">RAG 评测结果快照</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>survey/prj01-logistics-1026-inventory.md</code> + <code>.zh.html</code></td><td style="text-align:left">2</td><td style="text-align:left">0.06 MB</td><td style="text-align:left"><strong>另一个仓库</strong>（<code>D:\AI_work_dev2\prj01-logistics</code>）的清点报告</td><td style="text-align:left"><strong>待定</strong> — 是外部参考，不属于本仓</td></tr><tr><td style="text-align:left"><code>audit/</code></td><td style="text-align:left">4</td><td style="text-align:left">0.1 MB</td><td style="text-align:left">本报告 + 规格书对照调查报告 + 一个 156 字节的门禁输出 + 上一轮阻塞项裁定案</td><td style="text-align:left">留</td></tr><tr><td style="text-align:left"><code>AC-selfcheck.md</code> / <code>DELIVERY_MEMO.md</code> / <code>PHASE15-EXIT.md</code></td><td style="text-align:left">3</td><td style="text-align:left">0.03 MB</td><td style="text-align:left">Phase 1 验收 / 交付备忘 / 出口记录</td><td style="text-align:left">留（被 11 / 5 / 1 处引用）</td></tr><tr><td style="text-align:left"><code>trace_R101.json</code> / <code>gate6_report.json</code> / <code>gen_formal_columns_R101.json</code> / <code>trace_aux.json</code> / <code>seal_before.json</code></td><td style="text-align:left">5</td><td style="text-align:left">0.03 MB</td><td style="text-align:left">过去的门禁原始输出</td><td style="text-align:left">留（被 10 / 7 / 7 / 1 / 1 处引用）</td></tr><tr><td style="text-align:left"><code>trace_w1.json</code> / <code>trace_tmp.json</code> / <code>trace_R60Plc.json</code> / <code>trace_node1_R60Login.json</code></td><td style="text-align:left">4</td><td style="text-align:left">0.02 MB</td><td style="text-align:left">临时/调试输出</td><td style="text-align:left"><strong>删</strong>（<strong>0 处引用</strong>，已实测）</td></tr></tbody></table>
+<blockquote class="quote"><strong><code>reports/</code> 现在的乱，是"含义混杂"</strong>：门禁证据、训练记录、一次性调查、别的仓库的报告、<br>临时 json 全在一个目录下。§11 问题 6 给了一个重组成 5 个子目录的方案。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-10">
+<h2>9. <code>eval/</code></h2>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">用途</th><th style="text-align:left">判定</th></tr></thead><tbody><tr><td style="text-align:left"><code>eval/gold-qa.yaml</code></td><td style="text-align:left">RAG 评测的 80 题金标（<code>tools/rag/evaluate.py</code> 读它）</td><td style="text-align:left">留</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-11">
+<h2>10. 可执行的删除清单</h2>
+<h3>10.1 零风险（可逆，建议今天就做）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">删什么</th><th style="text-align:left">文件</th><th style="text-align:left">体积</th><th style="text-align:left">证据</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>docs/00_registry/_backup/*.bak</code></td><td style="text-align:left">54</td><td style="text-align:left">1.7 MB</td><td style="text-align:left">由 <code>registry.py</code> 自动生成；git 历史已有；删后发号会再生成（故须同时改 <code>.gitignore</code>）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>tutorial/R60Login/节点5_制造/backend/.coverage</code></td><td style="text-align:left">1</td><td style="text-align:left">~0.05 MB</td><td style="text-align:left">pytest 生成物</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>reports/trace_w1.json</code> <code>trace_tmp.json</code> <code>trace_R60Plc.json</code> <code>trace_node1_R60Login.json</code></td><td style="text-align:left">4</td><td style="text-align:left">0.02 MB</td><td style="text-align:left">引用数实测 = 0</td></tr><tr><td style="text-align:left"><strong>小计</strong></td><td style="text-align:left"></td><td style="text-align:left"><strong>59</strong></td><td style="text-align:left"><strong>≈1.8 MB</strong></td><td style="text-align:left"></td></tr></tbody></table>
+<p>配套两行 <code>.gitignore</code>：</p>
+<pre><code>docs/00_registry/_backup/
+tutorial/**/backend/.coverage</code></pre>
+<h3>10.2 需要你点头（先备份或先打 tag）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">删什么</th><th style="text-align:left">文件</th><th style="text-align:left">体积</th><th style="text-align:left">不可逆的部分</th></tr></thead><tbody><tr><td style="text-align:left">4</td><td style="text-align:left"><code>reports/module-survey/</code></td><td style="text-align:left">234</td><td style="text-align:left">2.9 MB</td><td style="text-align:left">要重跑 <code>tools/legacy</code> 对旧 Excel 再抽取才能得到</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>reports/legacy-raw/</code></td><td style="text-align:left">29</td><td style="text-align:left">0.3 MB</td><td style="text-align:left">同上</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>reports/ingest/JET-R60/</code></td><td style="text-align:left">7</td><td style="text-align:left">0.35 MB</td><td style="text-align:left">重跑 <code>tools/ingest</code> 即可</td></tr><tr><td style="text-align:left"><strong>小计</strong></td><td style="text-align:left"></td><td style="text-align:left"><strong>270</strong></td><td style="text-align:left"><strong>3.55 MB</strong></td><td style="text-align:left">结论性内容已存在 <code>legacy-r60/</code> 与 <code>module-selection.md</code></td></tr></tbody></table>
+<h3>10.3 不删，但要重新生成</h3>
+<p>7 个过期的 <code>.zh.html</code>（清单见 §7）。<br>另外 <code>reports/audit/R60Login/gate-2026-10-27.txt</code> 的 <code>total_ids=162</code>，当前是 164 —— <strong>是一条过时证据</strong>，<br>留着会误导（说明当时和现在的编号数不同），建议删或改名加日期戳。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-12">
+<h2>11. 需要你拍板的 6 件事</h2>
+<blockquote class="quote">每一件都是"我给了建议，但改起来引面广或删了不可逆"。<strong>其余全部事项我自己处理。</strong></blockquote>
+<h3>问题 1：入口说明文 5 本，要合成几本？</h3>
+<p>现在：<code>CLAUDE.md</code>（AI 读）／<code>START_HERE.md</code>（新人）／<code>使用手册.md</code>（全功能）／<code>AGENTS.md</code>（角色）／规格书（目标）。</p>
+<p><strong>我的建议</strong>：留 <strong>3 本</strong>。<code>CLAUDE.md</code>（AI 的约束，不动）、<code>使用手册.md</code>（唯一的人读本，吸收 <code>START_HERE</code> 与 <code>AGENTS</code>）、规格书（目标态）。<br><code>START_HERE.md</code> 缩成 <code>使用手册</code> 的前一页（保留文件名，内容只剩"打开这一本、然后说这句话"）。</p>
+<p><strong>代价</strong>：要改 <code>CLAUDE.md §0</code>（它写着"不熟悉的人从 START_HERE 开始"）和 3 处交叉引用。<strong>改动量约 1 小时。</strong></p>
+<h3>问题 2：一次性调查产物 270 个文件、3.5MB，删不删？</h3>
+<p>这三批是旧系统普查的<strong>原始抽取</strong>，结论已经写进 <code>legacy-r60/module-selection.md</code> 和 7 个模块 YAML。</p>
+<ul><li><strong>删</strong>：仓库从 14MB 降到 10.5MB，<code>reports/</code> 从 311 文件降到 41 个。</li><li><strong>不删</strong>：以后要复查"当时为什么选这三个模块做教材"，原始抽取还在。</li></ul>
+<p><strong>我的建议</strong>：<strong>先打 tag 再删</strong>（<code>git tag keep/module-survey-2026-10-28</code>），这样随时能捞回来。<strong>这是可逆的。</strong></p>
+<h3>问题 3：R-101 见本要不要和真实案件分开？</h3>
+<p><code>docs/10_requirements/</code> 等 8 个目录里，<strong>模板和见本混放</strong>。新人分不清哪个该照着填。</p>
+<p><strong>我的建议</strong>：只改名，不移动 —— 见本加前缀 <code>_sample-</code>（如 <code>_sample-R-101-R60Area.yaml</code>）。<br><strong>代价</strong>：<code>traceability.yml</code>、<code>review.md</code>、<code>tasks.md</code>、<code>ids.yml</code> 的 <code>used_by</code> 都要跟着改（约 30 处正则替换）。<br><strong>风险</strong>：中途漏改会导致门禁红。</p>
+<h3>问题 4：R60 专属资产（65 个知识文件 + 2 个 skill + 1 个 agent + 演练）是"附赠"还是"核心"？</h3>
+<p>这决定了它们该留在主目录，还是整体搬进 <code>knowledge/legacy-r60/</code>（给将来交付别的客户时能整块剥离）。</p>
+<p><strong>我的建议</strong>：<strong>当成附赠品整体剥离</strong>。主目录只留"任何客户都用得上"的东西。理由：你要做的是一个<strong>给外包公司用的框架</strong>，R60 是第一个客户，不是框架本身。</p>
+<h3>问题 5：<code>tasks.md</code> 16 个任务全是 <code>pending</code>，怎么处理？</h3>
+<p>实际全做完了，但文件写着没开始。任何新人打开都会得到错误印象。</p>
+<p><strong>我的建议</strong>：改成"已完成记录"，抬头写清"本表记录的是骨架自身的构建任务（2026-10 已完成）"。</p>
+<h3>问题 6：<code>reports/</code> 要不要按含义重分子目录？</h3>
+<p>现在是 311 个文件混装 5 种东西。<strong>我的建议</strong>：</p>
+<pre><code>reports/
+├─ gate/     门禁原始输出（trace_*.json、gate6、seal）
+├─ drill/    训练测量（已在，不动）
+├─ audit/    调查报告（已在）
+├─ legacy/   旧系统调查（module-survey + legacy-raw + ingest 合并）
+├─ run/      跑出来的结果（unit、rag 评测）
+└─ memo/     阶段记录（AC-selfcheck、DELIVERY_MEMO、PHASE15-EXIT）</code></pre>
+<p><strong>代价</strong>：<code>spec.md</code>/<code>tasks.md</code>/<code>review.md</code> 里有 30+ 处路径引用要跟着改。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-13">
+<h2>12. 判定依据的复算方法</h2>
+<pre><code>1. 文件全集       git -c core.quotepath=false ls-files            -&gt; 701
+2. 入向引用图     扫全仓 token，按 basename 与相对路径双向匹配      -&gt; 见下
+3. 体积分类       按类别汇总                                      -&gt; §1
+4. 过期视图       md -nt html 比较 38 个 .zh.html                 -&gt; 7 个过期
+5. 引用数实测     grep -rl &lt;name&gt; 排除自身                        -&gt; §10 的 4 个 0 引用</code></pre>
+<p><strong>引用图的两个已知盲点</strong>（所以不能只看数字判定死文件）：</p>
+<ul><li><strong>Python 的 <code>from .x import</code> 不带 <code>.py</code></strong>，因此 <code>tools/legacy/xlsx_text.py</code> 显示 0 引用，</li></ul>
+<p>实际被 <code>__main__.py</code> 和 <code>selftest.py</code> 导入。</p>
+<ul><li><strong>按目录整批加载的文件</strong>（<code>tools/rag/loader.py</code> 读 <code>chunks/*.jsonl</code>）不出现文件名，同样显示 0。</li></ul>
+<p><strong>agent 的引用数 0 是正常的</strong>（靠 description 自动匹配），不可作为死文件判据。</p>
+<h3>引用数为 0 但确认「在用」的文件（避免误删）</h3>
+<pre><code>.claude/agents/*.md（8 个）                        -&gt; description 自动匹配
+docs/90_knowledge/legacy-r60/chunks/*.jsonl（7）    -&gt; tools/rag/loader.py 按目录读取
+tools/legacy/xlsx_text.py                          -&gt; from .xlsx_text import
+tools/legacy/selftest.py / tools/ingest/selftest.py -&gt; from .selftest import
+docs/90_knowledge/legacy-r60/screens/R60Maker.md   -&gt; 8 张画面卡之一；00-screen-index.md 以
+                                                      模块名列示（不写路径），故路径引用数 0
+reports/drill 与 tutorial 的 .zh.html（多数）       -&gt; 由同名 .md 生成，生成器不回写引用</code></pre>
+<blockquote class="quote">这一栏是本报告最该被复核的地方：<strong>引用数只能证明"没被路径提到"，不能证明"没人用"。</strong></blockquote>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>file-inventory_2026-10-28.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>
