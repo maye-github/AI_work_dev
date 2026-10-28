@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>reply-to-review_2026-10-28</title>
+<title>reply-to-review_2026-10-28.zh</title>
 <style>
 :root{
   --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
@@ -142,14 +142,14 @@ table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
 <body>
 <div class="wrap">
 <header class="banner">
-<h1>reply-to-review_2026-10-28</h1>
+<h1>reply-to-review_2026-10-28.zh</h1>
 <div class="meta">
-  机读源: <code>reply-to-review_2026-10-28.md</code> ／
-  生成: 2026-10-28 13:44 ／
+  机读源: <code>reply-to-review_2026-10-28.zh.md</code> ／
+  生成: 2026-10-28 14:14 ／
   节 6・表 23
 </div>
 <div class="warn-note">
-  ⚠️ 本页由机读源 (<code>reply-to-review_2026-10-28.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  ⚠️ 本页由机读源 (<code>reply-to-review_2026-10-28.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
   <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
 </div>
 </header>
@@ -193,7 +193,7 @@ table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
 <p><strong>4.4 质检仪 tools</strong></p>
 <table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-7</td><td style="text-align:left">「不一定、参考规格书是否可以一一对应、列出来功用和来源」</td><td style="text-align:left"><strong>① 我上次说错了，你说的「不一定」是对的。</strong> 我原话是「零重复、零孤岛，一个都不用动」——&lt;br&gt;实际上：<code>tools/trace_check.py</code>（18 行薄启动器）与 <code>tools/trace_check/__main__.py</code> 是<strong>重复入口</strong>；<code>tools/ingest</code>、<code>tools/legacy</code> 是<strong>一次性迁移工具</strong>，任务完成就不需要了。&lt;br&gt;「不能动」只对 6 个成立：<code>trace_check</code> / <code>registry</code> / <code>impact</code> / <code>gen_view</code> / <code>gen_formal</code> / <code>masking</code>。&lt;br&gt;<strong>⑤</strong> 逐工具对照见对应表 §3.5。</td></tr></tbody></table>
 <p><strong>4.5 项目看板</strong></p>
-<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-8</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">4-9</td><td style="text-align:left">「tasks.md 是做什么的、符合规格书哪一条、怎么运作的、如果同时开工多个业务模块怎么处理？」</td><td style="text-align:left"><strong>④ 查了，四问逐条答</strong>：&lt;br&gt;<strong>① 是什么</strong>：骨架<strong>建设期</strong>的施工计划（旧 Trae 时代，2026-10-12）。文件开头自己写着「本ファイルは更新しない。実施済み／未実施の区別は <code>reports/AC-selfcheck.md</code> と <code>DELIVERY_MEMO.md</code> を正とする」。&lt;br&gt;<strong>② 符合规格书哪条</strong>：§18「实施 Checklist」——它管的是<strong>建这套骨架</strong>这项工程，不是<strong>用骨架做客户项目</strong>。两件事别混。&lt;br&gt;<strong>③ 怎么运作</strong>：23 个 Task，各有 Status / Priority / Depends On / 验收条件（AC-xxx）/ 测试要求（TR-x.y）。本该做完就改 status，但它自己定了「不更新」，所以 23 个全停在 pending。<strong>这是有意冻结的历史记录，不是活的待办</strong>（我上次说「新人打开会以为没开工」，说的其实是这个副作用；现在明确它是故意的）。&lt;br&gt;<strong>④ 多模块同时开工怎么办</strong>：靠 <code>docs/00_plan/coach/&lt;模块&gt;/</code>——<strong>一个模块一个文件夹</strong>，每份里有自己的 <code>case.yml</code> + <code>n01..n09.yml</code> + <code>handoff.md</code>。现在只有 <code>R60Login</code> 一个。&lt;br&gt;多模块并行时：各自独立编号段（<code>ids.yml</code> 的 R/F/I 段按案子分段）、独立签字、独立门禁。<strong>这正是规格书 §10.1「上下文中心」的做法</strong>——编号是钥匙，模块是分区。</td></tr></tbody></table>
+<table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-8</td><td style="text-align:left">（空白）</td><td style="text-align:left"><strong>⑥ 视为已确认。</strong></td></tr><tr><td style="text-align:left">4-9</td><td style="text-align:left">「tasks.md 是做什么的、符合规格书哪一条、怎么运作的、如果同时开工多个业务模块怎么处理？」</td><td style="text-align:left"><strong>④ 查了，四问逐条答</strong>：&lt;br&gt;<strong>① 是什么</strong>：骨架<strong>建设期</strong>的施工计划（旧 Trae 时代，2026-10-12）。文件开头自己写着「本ファイルは更新しない。実施済み／未実施の区別は <code>reports/AC-selfcheck.md</code> と <code>DELIVERY_MEMO.md</code> を正とする」。&lt;br&gt;<strong>② 符合规格书哪条</strong>：§18「实施 Checklist」——它管的是<strong>建这套骨架</strong>这项工程，不是<strong>用骨架做客户项目</strong>。两件事别混。&lt;br&gt;<strong>③ 怎么运作</strong>：22 个 Task（实查 <code>grep -n "^## Task " docs/00_plan/tasks.md</code> → Task 1〜22），各有 Status / Priority / Depends On / 验收条件（AC-xxx）/ 测试要求（TR-x.y）。本该做完就改 status，但它自己定了「不更新」，所以 22 个全停在 pending。<strong>这是有意冻结的历史记录，不是活的待办</strong>（我上次说「新人打开会以为没开工」，说的其实是这个副作用；现在明确它是故意的）。&lt;br&gt;<strong>④ 多模块同时开工怎么办</strong>：靠 <code>docs/00_plan/coach/&lt;模块&gt;/</code>——<strong>一个模块一个文件夹</strong>，每份里有自己的 <code>case.yml</code> + <code>n01..n09.yml</code> + <code>handoff.md</code>。现在只有 <code>R60Login</code> 一个。&lt;br&gt;多模块并行时：各自独立编号段（<code>ids.yml</code> 的 R/F/I 段按案子分段）、独立签字、独立门禁。<strong>这正是规格书 §10.1「上下文中心」的做法</strong>——编号是钥匙，模块是分区。</td></tr></tbody></table>
 <p><strong>4.6 文件柜</strong></p>
 <table class="tbl"><thead><tr><th style="text-align:left">编号</th><th style="text-align:left">你写的</th><th style="text-align:left">我的处理</th></tr></thead><tbody><tr><td style="text-align:left">4-10</td><td style="text-align:left">「需要整理取舍、告诉我每个文件的用处和来源」</td><td style="text-align:left"><strong>① 我上次的数字也错了。</strong> 我说「22 个：8 模板 + 14 样板」，实际是 <strong>19 个：7 模板 + 12 填好的</strong>。&lt;br&gt;<strong>④ 正确清单</strong>（全部出自规格书 §9.1 成果物地图，位置正确，一个都不用搬）：&lt;br&gt;<strong>模板 7 个</strong>（文件名带 <code>-template</code>）：<code>req-template.yaml</code>、<code>bd-template.yaml</code>、<code>dd-template.yaml</code>、<code>tc-template.yaml</code>、<code>integration-template.yaml</code>、<code>release-template.md</code>、<code>impact-analysis-template.yaml</code>。&lt;br&gt;<strong>填好的 12 个</strong>（R-101 系列样板 8 个 + 记录 4 个）：<code>R-101</code>、<code>F-042</code>、<code>D-043</code>、<code>E-001-E005</code>、<code>L-014</code>、<code>L-015</code>、<code>TC-001-TC-008</code>、<code>IT-001</code>、<code>framework-record.yaml</code>、<code>operation-runbook.md</code>、<code>impact-BUG-002.yaml</code>、<code>impact-CR-004.yaml</code>。&lt;br&gt;<strong>来源</strong>：R-101 系列全部照着真实模块 R60Area 手写，是给人看「模板该怎么填」的。</td></tr><tr><td style="text-align:left">4-11</td><td style="text-align:left">「听不懂 别搞这么复杂」（指我建议给样板加 <code>_sample-</code> 前缀）</td><td style="text-align:left"><strong>② 撤回这个提案。</strong> 你说得对，多余。&lt;br&gt;<strong>④ 复核后其实已经能分</strong>：模板文件名都带 <code>template</code>，不带的就是填好的。<strong>保持现状，一个字不用改。</strong></td></tr></tbody></table>
 <p><strong>4.7 编号簿</strong></p>
@@ -234,7 +234,7 @@ table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
 <p>**你的 25 条问的是同一件事，我用一份对应表答了。<br>剩下 6 件事需要你定，其中第 1 件（KPI 度量）决定这东西是「骨架」还是「平台」。**</p>
 </section>
 <div class="foot">
-  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>reply-to-review_2026-10-28.md</code>。来自人的意见请写进「指摘单／评审栏」。
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>reply-to-review_2026-10-28.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
 </div>
 </div>
 </body>

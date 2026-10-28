@@ -13,6 +13,8 @@ version: 0.1.0
 > **この文書の役割**：`D:\AI_work_dev` 配下に**何があり、誰が作り、誰が読み、捨ててよいか**を 1 枚で示す。
 > **唯一真源ではない。** 各領域の真源はそれぞれ別にある（§3 の表の「真源」列を参照）。
 > 本書は **2026-10-26 時点の実測**に基づく。件数・容量は測り直せば変わる。
+> **2026-10-28 に再測した項目**：入口文書の本数・容量（§1・§2・§3）、`ids.yml` の件数（§1・§5）、
+> `*.zh.html` の本数（§11）、`tasks.md` のタスク数（§12 #8）。他は 10-26 の値のままである。
 
 ---
 
@@ -21,8 +23,8 @@ version: 0.1.0
 ```
 D:\AI_work_dev
 │
-├─【入口】人が読む文書（9 ファイル）
-│   CLAUDE.md／START_HERE.md／使用手册.md＋.zh.html／AGENTS.md／
+├─【入口】人が読む文書（7 ファイル）
+│   CLAUDE.md／使用手册.md＋.zh.html／AGENTS.md／
 │   AI全链路软件工程平台_实施规格书.md／ROADMAP_3PHASE.md／CONTRIBUTING.md／CODEOWNERS
 │
 ├─【設定】AI が読む（.claude/ 568KB）
@@ -33,7 +35,7 @@ D:\AI_work_dev
 │
 ├─【成果物の器】docs/ 2.2MB
 │   ├─ 00_plan/      … 工程管理（spec/tasks/review）＋ coach/R60Login/ の状態 11 ファイル
-│   ├─ 00_registry/  … ID 台帳（ids.yml 124 件）・traceability・glossary 50 語
+│   ├─ 00_registry/  … ID 台帳（ids.yml 164 件）・traceability・glossary 50 語
 │   ├─ 01_context/   … 案件プロファイル（スタックの事実）
 │   ├─ 10〜80_*/     … 工程ごとの器。**テンプレ 8 本＋見本 R-101 系 13 本**
 │   └─ 90_knowledge/ … 知識・対応表・旧案件ナレッジ（1.4MB）
@@ -56,7 +58,7 @@ D:\AI_work_dev
 
 | 領域 | 主なファイル数 | 容量 | 性質 | 捨てられるか |
 |---|---|---|---|---|
-| ルート文書 | 9 | 208KB | 人が読む説明・統制 | ✗ |
+| ルート文書 | 7 | 186KB | 人が読む説明・統制 | ✗ |
 | `.claude/rules` | 7 | 124KB | 規約（真源） | ✗ |
 | `.claude/skills` | 18 | 360KB | 手順書（真源） | ✗ |
 | `.claude/agents` | 14 | 80KB | 実行体・検証体 | ✗ |
@@ -77,21 +79,21 @@ D:\AI_work_dev
 
 ---
 
-## 3. 入口 —— 人が読む 9 ファイル
+## 3. 入口 —— 人が読む 7 ファイル
 
 | ファイル | 容量 | 誰が読む | 自動ロード | 中身 | 他との重複 |
 |---|---|---|---|---|---|
 | `CLAUDE.md` | 12KB | AI（毎回） | **○** | 7 条紅线・禁止 5 条・commit 様式・設定一覧 | 役割表が `AGENTS.md` と重複 |
-| `START_HERE.md` | 12KB | 新人 | ✗ | 「どこを開き、何を言うか」だけの 1 頁 | 8 節点表が `使用手册` と重複 |
-| `使用手册.md`＋`.zh.html` | 52KB | 全員 | ✗ | 全機能の解説（6 規則・フロー・トラブル） | 入口 3 本の内容を含む最上位版 |
-| `AGENTS.md` | 19KB | 人（役割定義） | ✗（CLAUDE があるため） | 14 役割とその起動プロンプト | `CLAUDE.md §0` と重複 |
-| `AI全链路软件工程平台_实施规格书.md` | 78KB | 企画・管理 | ✗ | **上流 2 本の PPT の統合稿**。4 層知識モデル・7 層平台・8 工程 | なし（最上位の語彙の正） |
+| `使用手册.md`＋`.zh.html` | 59KB | 全員 | ✗ | **巻頭「三分钟版」＝新人の唯一の門**。以後 6 規則・フロー・トラブル | 入口 3 本の内容を含む最上位版 |
+| `AGENTS.md` | 18KB | 人（役割定義） | ✗（CLAUDE があるため） | 14 役割とその起動プロンプト | `CLAUDE.md §0` と重複 |
+| `AI全链路软件工程平台_实施规格书.md` | 76KB | 企画・管理 | ✗ | **上流 2 本の PPT の統合稿**。4 層知識モデル・7 層平台・8 工程 | なし（最上位の語彙の正） |
 | `ROADMAP_3PHASE.md` | 12KB | 管理 | ✗ | Phase 1/2/3 の計画 | 規格書 §14 と同じ内容 |
 | `CONTRIBUTING.md` | 6KB | 開発 | ✗ | ブランチ規約・Tag 規約 | — |
 | `CODEOWNERS` | 2KB | Git | ✗ | 11 ブロックの承認者 | — |
 
-> **重複の実測**：`START_HERE.md` と `使用手册.md` の「8 節点表・会話の復帰・変更環・ディレクトリ案内」は
-> 同じ内容の長短 2 版。`CLAUDE.md §0` と `AGENTS.md §0` の資産一覧も同源である（§12 #1）。
+> **重複の実測**：`CLAUDE.md §0` と `AGENTS.md §0` の資産一覧は同源である（§12 #1）。
+> かつて `START_HERE.md`（12KB）が `使用手册.md` の「8 節点表・会話の復帰・変更環・ディレクトリ案内」と
+> 長短 2 版になっていたが、**2026-10-28 に `使用手册.md` 巻頭「三分钟版」へ統合し、`START_HERE.md` は削除した**。
 
 ---
 
@@ -142,7 +144,7 @@ D:\AI_work_dev
 |---|---|---|
 | `00_plan/` | `spec.md`／`tasks.md`／`review.md`（受入基準 CP 12 本）／`phase0-closure.md` | 工程管理の真源 |
 | `00_plan/coach/R60Login/` | `case.yml`＋`n01〜n09.yml`＋`handoff.md`（**1 ノード 1 ファイル**） | 進行状態の真源（機械生成物） |
-| `00_registry/` | `ids.yml`（**124 件**：R2/F2/I76/D6/L10/E18/TC8/CR1/BUG1）／`traceability.yml`（roots=R-101,R-201）／`glossary.yml`（50 語）／`ingest-manifest.yml` | **ID 発号の唯一口**（紅线①） |
+| `00_registry/` | `ids.yml`（**164 件**：R2/Q0/F2/I77/D6/L10/E18/TC29/IT13/CR5/BUG2）／`traceability.yml`（roots=R-101,R-201）／`glossary.yml`（50 語）／`ingest-manifest.yml` | **ID 発号の唯一口**（紅线①） |
 | `01_context/` | `case-profile-R60.yaml`（migration のスタック）／`case-profile-sample-greenfield.yaml`／`R-101-R60Area.md` | スタックの事実 |
 | `10〜80_*/` | **テンプレ 8 本**（`*-template`）＋**見本 13 本**（R-101/F-042/I/D-043/L-014/L-015/E-001..005/TC-001..008/IT-001） | 器の雛形と記入例 |
 | `90_knowledge/` | 手法・対応表・旧案件ナレッジ・審査差分資産（§6） | 知識（一部は派生） |
@@ -235,6 +237,12 @@ tutorial/R60Login/
 | `eval/gold-qa.yaml` | RAG 評価用の設問セット | `tools/rag/evaluate.py` が読む |
 | `build/rag/` | RAG 索引（`.sqlite` 2 本＋文脈束 1 本） | **再生成可**（`.gitignore` 済み） |
 
+> **附贈層（骨組みの一部ではない）の目印**：`module-survey/` と `legacy-raw/` は
+> **R60 専用の付随データ**であり、8 工程・6 道の門番・`trace_check` のどこからも参照されない。
+> 各ディレクトリ直下の `README.md` に「中身・誰が使うか・**削ってよいか**・機密度」を書いてある。
+> `docs/90_knowledge/legacy-r60/`（migration 専用の知識庫）も同じ附贈層に属する
+> （入口 `legacy-r60/00-index.md` の冒頭に、`greenfield` では参照しない旨の断りがある）。
+
 ---
 
 ## 10. 統制
@@ -261,7 +269,7 @@ tutorial/R60Login/
 ```
 
 - **演習は教材**、**`docs/` は本番の器**。演習の成果物を `docs/` へ移す運用はしない（番号系が違う）。
-- **生成物は触らない**：`*.zh.html`（34 本）／`reports/_auto/*.xlsx`／`build/rag/`。
+- **生成物は触らない**：`*.zh.html`（42 本）／`reports/_auto/*.xlsx`／`build/rag/`。
   修正は必ず機読源へ入れ、再生成する（単一ソース原則）。
 
 ---
@@ -270,14 +278,14 @@ tutorial/R60Login/
 
 | # | 問題 | 実測 | 影響 |
 |---|---|---|---|
-| 1 | **入口文書が 5 本**で役割が重なる | `CLAUDE.md`／`START_HERE.md`／`使用手册.md`／`AGENTS.md`／規格書＝208KB | どれが正か迷う。更新時に 3 箇所直す必要 |
+| 1 | ~~入口文書が 5 本で役割が重なる~~ **→ 4 本に減らした（2026-10-28）** | `CLAUDE.md`／`使用手册.md`／`AGENTS.md`／規格書＝166KB。`START_HERE.md` は `使用手册.md` 巻頭へ統合 | 残る重複は `CLAUDE.md §0` ↔ `AGENTS.md §0` の 1 組のみ |
 | 2 | **`docs/` に中文ビューが 0** | `docs/**/*.md` 58 本に対し `.zh.html` 0 本 | 媒体規約（規則 00 §12）は実質 tutorial/reports にしか適用されていない |
 | 3 | **節点のファイル番号が不揃い** | 節点1 は `02_` が 2 本、節点2 は `01_`・`02_` が各 2 本、節点3 は `03_` が無い、節点4〜8 は 00/01/05 だけ | 「03 はどこ？」が毎節点で起きる |
 | 4 | **見本と演習が同じ名前空間** | `docs/10_requirements/R-101-R60Area.yaml`（見本）と `tutorial/.../节点1/R-201`（演習） | R-101 を演習と誤解しやすい |
 | 5 | **一度きりの調査出力が 4.1MB** | `module-survey` 3.4MB＋`legacy-raw` 376KB＋`ingest` 374KB | 容量の 84% を占める。結論は別途保存済み |
 | 6 | **Office のロックファイルが残存** | `节点1_需求/.~lock.03_客户確認依頼書（AB類）.pdf#` | 単なるゴミ |
 | 7 | **`reports/drill` の 6 ファイルに中文ビューが無い** | `human-answer-sim.md`／`requirement-defects.md` 等 | 訓練記録の可読性が揃わない |
-| 8 | **`docs/00_plan/tasks.md` は全タスク `pending` のまま** | Task 1〜16 すべて `pending` | 実際は完了している。履歴として残すなら注記が要る |
+| 8 | **`docs/00_plan/tasks.md` は全タスク `pending` のまま** | Task 1〜22 すべて `pending` | 実際は完了している。履歴として残すなら注記が要る |
 | 9 | **`gen_view` の chrome は直したが、本文の言語判定はしない** | `.zh.md` を書く人の責任 | 中文ビューに日文が混ざっても機械は止めない（意図的な設計） |
 
 ---
@@ -287,7 +295,7 @@ tutorial/R60Login/
 | # | やること | 得られるもの | 代償・危険 |
 |---|---|---|---|
 | A | **節点ファイルの番号を統一**（`02a_`/`02b_` 等に振り直す、または `00_入力 → 10_AI産出 → 20_審査 → 30_承認` の 10 番台に） | 「03 が無い」問題が消える | 全節点のファイル名変更＋SKILL の 9 作業票＋`nNN.yml` の `artifacts`＋`使用手册` の記述を同時更新。**参照が広いので一括置換の事故が起きやすい** |
-| B | **入口を 2 本に統合**（`CLAUDE.md`＋`START_HERE.md` を残し、`AGENTS.md` と `使用手册` を `docs/` へ移す） | ルートが軽くなる。正が 1 つに見える | `CLAUDE.md` が「AGENTS.md は残す」と明記している。移すなら同時に規則も直す |
+| B | ~~入口を 2 本に統合~~ **→ 一部実施（2026-10-28）**：`START_HERE.md` を `使用手册.md` へ統合。`AGENTS.md` の移動は**未実施** | ルート直下の人が読む文書が 1 本減った | `AGENTS.md` を動かすには `docs/00_plan/review.md` CP-R-1（6 根級ファイルの存在を要求）と `CLAUDE.md §0` を同時に直す必要がある |
 | C | **見本（R-101 系）に印を付ける**（ファイル名先頭に `_sample_`、または `docs/_samples/` へ） | 演習との混同が消える | `traceability.yml`・`review.md`・`tasks.md` のパス参照を全部直す |
 | D | **一度きりの調査出力を削除**（`module-survey`・`legacy-raw`・`ingest`） | 4.1MB 減る | 再調査のコスト。**結論は `module-selection.md` に在るので実害は小さい**（あなたの判断で「全部残す」となった経緯あり） |
 | E | **`docs/` にも中文ビューを付ける** | 媒体規約が全域で成立 | 58 本 × 翻訳。**規約を「節点成果物のみ」と明文化する方が安い** |
@@ -299,6 +307,6 @@ tutorial/R60Login/
 
 - `docs/90_knowledge/platform-map.md` — 7 層平台・4 層知識モデルへの対応（**層の視点**）
 - `docs/90_knowledge/ppt-deviation-register.md` — PPT に無い追加要素の登録簿
-- `START_HERE.md` §七 — 新人向けの「どこを開くか」（**本書の要約版**）
+- `使用手册.md`「三分钟版」§6 ディレクトリ導覧 — 新人向けの「どこを開くか」（**本書の要約版**）
 - `使用手册.md`「文件都去哪了」 — 同上（より詳しい）
 - `ROADMAP_3PHASE.md` — Phase 1/2/3 の計画

@@ -25,7 +25,7 @@ version: 0.2.0
 
 | 層 | 規格書の定義（§11.3.1） | 本リポジトリの実在資産 | 成熟度 |
 |---|---|---|---|
-| ① 入口層（Entry） | AI が最初に読む「プロジェクトの地図」 | `CLAUDE.md`（唯一の常時ロード制約）／`START_HERE.md`（新人の唯一の門）／`使用手册.md`＋`.zh.html`（全機能）／`AGENTS.md`（人向け役割定義。Claude Code は自動ロードしない） | 充足 |
+| ① 入口層（Entry） | AI が最初に読む「プロジェクトの地図」 | `CLAUDE.md`（唯一の常時ロード制約）／`使用手册.md`＋`.zh.html`（新人の唯一の門＝巻頭「三分钟版」、全機能は同書の後半）／`AGENTS.md`（人向け役割定義。Claude Code は自動ロードしない） | 充足 |
 | ② 規則層（Rules） | ベストプラクティス・禁止パターン・用語集・教訓 | `.claude/rules/` 7 份（`00` 総則／`01` 機密／`02` 要求管理／`03` 設計製造／`04` テスト／`05` commit／`06` 知識飛輪）＋ `docs/90_knowledge/`（`answer-engine.md`＝出典等級 E1〜E4 の唯一真源、`ai-dev-playbook.md` 等） | 充足 |
 | ③ 実行層（Execution） | プロンプトテンプレート・AI スキル | `.claude/skills/` 5 個、`.claude/agents/` 14 個（工程実行系 9＝8 工程＋旁路環／検証・補助系 5）、`tutorial/R60Login/节点*/` の作業票 | 充足 |
 | ④ 検証層（Verification） | 品質ゲート・自動チェック | `tools/trace_check/`（6 gate ＋ seal ＋ freeze）／`tools/masking/mask_demo.py --self-test`／`tools/gen_view --self-test`／`.github/workflows/ai-gate.yml`（占位） | 充足 |
