@@ -1,0 +1,971 @@
+{
+  "summary": {
+    "cases": 80,
+    "top_k": 5,
+    "recall": 0.8625,
+    "mrr": 0.6719,
+    "top1_module": 76
+  },
+  "details": [
+    {
+      "qid": "GQ-SSK-001",
+      "module": "R60Ssk",
+      "question": "R60Ssk の前提条件と、画面が持つ操作の範囲は？",
+      "expect": [
+        "R60Ssk:screen:overview"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:screen:overview",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk 画面概要・前提条件・権限"
+    },
+    {
+      "qid": "GQ-SSK-002",
+      "module": "R60Ssk",
+      "question": "R60Ssk の検索画面は実項目で何件、内訳はどうなっている？",
+      "expect": [
+        "R60Ssk:screen:search-items"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:screen:search-items",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / 検索画面の項目構成（実項目 35 件）"
+    },
+    {
+      "qid": "GQ-SSK-003",
+      "module": "R60Ssk",
+      "question": "R60Ssk のマスタ項目画面はどの操作モードで、編集できる項目は？",
+      "expect": [
+        "R60Ssk:screen:master-items"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:screen:master-items",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / マスタ項目画面（修正モード・実項目 10 件）"
+    },
+    {
+      "qid": "GQ-SSK-004",
+      "module": "R60Ssk",
+      "question": "R60Ssk の API 端点はいくつで、どのような共通規約か？",
+      "expect": [
+        "R60Ssk:api:conventions"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:api:conventions",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / API 共通規約（5 端点）"
+    },
+    {
+      "qid": "GQ-SSK-005",
+      "module": "R60Ssk",
+      "question": "R60Ssk の検索で許可されるソート項目は？",
+      "expect": [
+        "R60Ssk:logic:sort-page"
+      ],
+      "rank": 4,
+      "matched_by": "R60Ssk:logic:sort-page",
+      "top1_module_ok": false,
+      "top1": "r60-001-learning-plan-3modules § 7. 金标问答与评测 > 7.2 金标格式"
+    },
+    {
+      "qid": "GQ-SSK-006",
+      "module": "R60Ssk",
+      "question": "R60Ssk の登録時に、変更なしと片方だけ入力のチェックはどう判定する？",
+      "expect": [
+        "R60Ssk:logic:register-checks"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:logic:register-checks",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / 登録時の入力チェック"
+    },
+    {
+      "qid": "GQ-SSK-007",
+      "module": "R60Ssk",
+      "question": "R60Ssk の登録ステータス REG_STS は何を条件に 0 または 1 になる？",
+      "expect": [
+        "R60Ssk:logic:reg-sts"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:logic:reg-sts",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / 登録ステータス REG_STS の判定"
+    },
+    {
+      "qid": "GQ-SSK-008",
+      "module": "R60Ssk",
+      "question": "R60Ssk の排他チェックはどの条件で R60W0006 を返す？",
+      "expect": [
+        "R60Ssk:logic:exclusive"
+      ],
+      "rank": 3,
+      "matched_by": "R60Ssk:logic:exclusive",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § POST /api/R60Ssk/edit"
+    },
+    {
+      "qid": "GQ-SSK-009",
+      "module": "R60Ssk",
+      "question": "R60Ssk は新規作成を行う画面か？",
+      "expect": [
+        "R60Ssk:screen:overview"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:screen:overview",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk 画面概要・前提条件・権限"
+    },
+    {
+      "qid": "GQ-SSK-010",
+      "module": "R60Ssk",
+      "question": "R60Ssk の download は search と比べて SQL の組み方がどう違う？",
+      "expect": [
+        "R60Ssk:review:security"
+      ],
+      "rank": 4,
+      "matched_by": "R60Ssk:review:security",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / A/B レポートの結果（参照系のみ一致）"
+    },
+    {
+      "qid": "GQ-SSK-011",
+      "module": "R60Ssk",
+      "question": "R60Ssk の A/B レポートは更新系の一致を測れているか？",
+      "expect": [
+        "R60Ssk:test:ab"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:test:ab",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / A/B レポートの結果（参照系のみ一致）"
+    },
+    {
+      "qid": "GQ-SSK-012",
+      "module": "R60Ssk",
+      "question": "R60Ssk の設計イベントは何件か？",
+      "expect": [
+        "R60Ssk:screen:events"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": false,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / イベント 28 件と API 対応"
+    },
+    {
+      "qid": "GQ-SSK-013",
+      "module": "R60Ssk",
+      "question": "R60Ssk の検索条件はどの項目が前方一致・中間一致か？",
+      "expect": [
+        "R60Ssk:screen:search-items"
+      ],
+      "rank": 2,
+      "matched_by": "R60Ssk:screen:search-items",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § POST /api/R60Ssk/search"
+    },
+    {
+      "qid": "GQ-SSK-014",
+      "module": "R60Ssk",
+      "question": "R60Ssk のマスタ項目画面のボタン初期状態は？",
+      "expect": [
+        "R60Ssk:screen:master-items"
+      ],
+      "rank": 2,
+      "matched_by": "R60Ssk:screen:master-items",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / 項目移送表の操作フラグ：更新のみ"
+    },
+    {
+      "qid": "GQ-SSK-015",
+      "module": "R60Ssk",
+      "question": "R60Ssk の全 API 端点が先頭で必ず行うチェックは？",
+      "expect": [
+        "R60Ssk:api:conventions"
+      ],
+      "rank": 1,
+      "matched_by": "R60Ssk:api:conventions",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60ssk § R60Ssk / API 共通規約（5 端点）"
+    },
+    {
+      "qid": "GQ-USR-001",
+      "module": "R60User",
+      "question": "R60User の位置づけ・テーブル・操作モードは？",
+      "expect": [
+        "USR-SCR-001"
+      ],
+      "rank": 1,
+      "matched_by": "USR-SCR-001",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60user § R60User の位置づけと規模"
+    },
+    {
+      "qid": "GQ-USR-002",
+      "module": "R60User",
+      "question": "R60User の検索画面は実項目で何件、ソート可能な列はいくつ？",
+      "expect": [
+        "USR-SCR-002"
+      ],
+      "rank": 3,
+      "matched_by": "USR-SCR-002",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60user § R60User / 画面項目数（検索 42＋マスタ 20＝62）"
+    },
+    {
+      "qid": "GQ-USR-003",
+      "module": "R60User",
+      "question": "R60User のマスタ項目モーダルは何項目で、編集できるのはどの項目？",
+      "expect": [
+        "USR-SCR-003"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": false,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / 明細マスタ項目の編集可否"
+    },
+    {
+      "qid": "GQ-USR-004",
+      "module": "R60User",
+      "question": "R60User の設計イベントは何件か？",
+      "expect": [
+        "USR-SCR-004"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": false,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / イベント 28 件と API 対応"
+    },
+    {
+      "qid": "GQ-USR-005",
+      "module": "R60User",
+      "question": "R60User のドロップダウンはいくつで、その選択肢はどこから取得する？",
+      "expect": [
+        "USR-FLD-002"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": true,
+      "top1": "r60-001-modules-r60user-03-logic § logics"
+    },
+    {
+      "qid": "GQ-USR-006",
+      "module": "R60User",
+      "question": "R60User のテーブルは何列で、更新するのは何列、主キーは？",
+      "expect": [
+        "USR-FLD-003"
+      ],
+      "rank": 1,
+      "matched_by": "USR-FLD-003",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60user § R60User / DB モデル（28 列・更新 15 列・主キー STF_CD）"
+    },
+    {
+      "qid": "GQ-USR-007",
+      "module": "R60User",
+      "question": "R60User の検索で許可されるソート列と、既定ソートは？",
+      "expect": [
+        "USR-LGC-002"
+      ],
+      "rank": 1,
+      "matched_by": "USR-LGC-002",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60user § R60User / 検索条件・件数上限・ソート・ページング（L-US-02〜05）"
+    },
+    {
+      "qid": "GQ-USR-008",
+      "module": "R60User",
+      "question": "R60User の自工／他工判別と登録ボタンの活性制御は？",
+      "expect": [
+        "USR-LGC-004"
+      ],
+      "rank": 2,
+      "matched_by": "USR-LGC-004",
+      "top1_module_ok": true,
+      "top1": "r60-001-modules-r60user-06-review § deviations"
+    },
+    {
+      "qid": "GQ-USR-009",
+      "module": "R60User",
+      "question": "R60User の緊急配信はいつ実行され、引数は？",
+      "expect": [
+        "USR-LGC-006"
+      ],
+      "rank": 1,
+      "matched_by": "USR-LGC-006",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60user § R60User / 緊急配信と REG_STS 判定（L-US-14 / L-US-16）"
+    },
+    {
+      "qid": "GQ-USR-010",
+      "module": "R60User",
+      "question": "R60User で未知の更新エラーが起きたとき画面はどう振る舞う？",
+      "expect": [
+        "USR-REV-001"
+      ],
+      "rank": 2,
+      "matched_by": "USR-REV-001",
+      "top1_module_ok": true,
+      "top1": "r60-001-modules-r60user-06-review § deviations"
+    },
+    {
+      "qid": "GQ-PLC-001",
+      "module": "R60Plc",
+      "question": "R60Plc の位置づけ・テーブル・API 端点は？",
+      "expect": [
+        "PLC-SCR-001"
+      ],
+      "rank": 2,
+      "matched_by": "PLC-SCR-001",
+      "top1_module_ok": true,
+      "top1": "r60-001-screens-r60plc § R60Plc — ロケーションマスタメンテナンス"
+    },
+    {
+      "qid": "GQ-PLC-002",
+      "module": "R60Plc",
+      "question": "R60Plc の検索画面は実項目で何件、ソート可能な列は？",
+      "expect": [
+        "PLC-SCR-002"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-SCR-002",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 検索画面の構成（65 項目）"
+    },
+    {
+      "qid": "GQ-PLC-003",
+      "module": "R60Plc",
+      "question": "R60Plc のマスタ項目モーダルは実項目何件で、モードごとの削除ボタンは？",
+      "expect": [
+        "PLC-SCR-003"
+      ],
+      "rank": 2,
+      "matched_by": "PLC-SCR-003",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / ボタン活性制御（L-PL-16）"
+    },
+    {
+      "qid": "GQ-PLC-004",
+      "module": "R60Plc",
+      "question": "R60Plc の設計イベントは何件で、API を呼ぶのは何件？",
+      "expect": [
+        "PLC-SCR-004"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-SCR-004",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / イベント 24 件と API 対応"
+    },
+    {
+      "qid": "GQ-PLC-005",
+      "module": "R60Plc",
+      "question": "R60Plc でロケーション属性区分がタンクのとき、必須に加わる 6 項目は？",
+      "expect": [
+        "PLC-FLD-005"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-FLD-005",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 条件付き必須（タンクの 6 項目）"
+    },
+    {
+      "qid": "GQ-PLC-006",
+      "module": "R60Plc",
+      "question": "R60Plc のテーブルは何列で、操作別の列数は？",
+      "expect": [
+        "PLC-FLD-008"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-FLD-008",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 操作別の列数（INSERT 41 / UPDATE 33 / DELETE 33）"
+    },
+    {
+      "qid": "GQ-PLC-007",
+      "module": "R60Plc",
+      "question": "R60Plc の業務キーと桁数は？",
+      "expect": [
+        "PLC-FLD-007"
+      ],
+      "rank": 4,
+      "matched_by": "PLC-FLD-007",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 複製・修正モードの初期化（L-PL-07）"
+    },
+    {
+      "qid": "GQ-PLC-008",
+      "module": "R60Plc",
+      "question": "R60Plc の検索で、仕掛表示と表示は REG_STS をどう扱う？",
+      "expect": [
+        "PLC-LGC-001"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-LGC-001",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 検索条件の組み立て（L-PL-01）"
+    },
+    {
+      "qid": "GQ-PLC-009",
+      "module": "R60Plc",
+      "question": "R60Plc のソート許可項目と既定ソートは？",
+      "expect": [
+        "PLC-LGC-003"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-LGC-003",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 一覧ソートの白名单（L-PL-03）"
+    },
+    {
+      "qid": "GQ-PLC-010",
+      "module": "R60Plc",
+      "question": "R60Plc の重複チェックはどのキーで、削除済みはどう扱う？",
+      "expect": [
+        "PLC-LGC-010"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-LGC-010",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 重複チェック（L-PL-10）"
+    },
+    {
+      "qid": "GQ-PLC-011",
+      "module": "R60Plc",
+      "question": "R60Plc の排他チェックはどの値で比較し、成功時に何を更新する？",
+      "expect": [
+        "PLC-LGC-011"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-LGC-011",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 排他チェック（L-PL-11）"
+    },
+    {
+      "qid": "GQ-PLC-012",
+      "module": "R60Plc",
+      "question": "R60Plc の被参照チェックはいつ、何を呼ぶ？",
+      "expect": [
+        "PLC-LGC-012"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-LGC-012",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 被参照チェック（L-PL-12）"
+    },
+    {
+      "qid": "GQ-PLC-013",
+      "module": "R60Plc",
+      "question": "R60Plc の削除は物理削除か？何を設定する？",
+      "expect": [
+        "PLC-LGC-013"
+      ],
+      "rank": 1,
+      "matched_by": "PLC-LGC-013",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 論理削除（L-PL-13）"
+    },
+    {
+      "qid": "GQ-PLC-014",
+      "module": "R60Plc",
+      "question": "R60Plc の REG_STS 判定は何項目で、タンク時はどう変わる？",
+      "expect": [
+        "PLC-LGC-015"
+      ],
+      "rank": 3,
+      "matched_by": "PLC-LGC-015",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / キー列と排他・状態列"
+    },
+    {
+      "qid": "GQ-PLC-015",
+      "module": "R60Plc",
+      "question": "R60Plc の表示ボタンは設計どおり REG_STS で絞っているか？",
+      "expect": [
+        "PLC-REV-005"
+      ],
+      "rank": 3,
+      "matched_by": "PLC-REV-005",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60plc § R60Plc / 差異の全体像"
+    },
+    {
+      "qid": "GQ-MK-001",
+      "module": "R60Maker",
+      "question": "R60Maker の前提条件・排他条件・画面区分は？",
+      "expect": [
+        "R60Maker:screen:overview"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:screen:overview",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker 画面概要・権限・使用頻度"
+    },
+    {
+      "qid": "GQ-MK-002",
+      "module": "R60Maker",
+      "question": "R60Maker の検索画面は実項目で何件、検索条件は？",
+      "expect": [
+        "R60Maker:screen:search-items"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:screen:search-items",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / 検索画面の項目構成（33 項目）"
+    },
+    {
+      "qid": "GQ-MK-003",
+      "module": "R60Maker",
+      "question": "R60Maker の設計イベントは何件か？",
+      "expect": [
+        "R60Maker:screen:events"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / 単体テストの総数と内訳"
+    },
+    {
+      "qid": "GQ-MK-004",
+      "module": "R60Maker",
+      "question": "R60Maker の API 共通規約で、骨架規則と異なる点は？",
+      "expect": [
+        "R60Maker:api:conventions"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:api:conventions",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / API 共通規約（封筒・大小文字・extra）"
+    },
+    {
+      "qid": "GQ-MK-005",
+      "module": "R60Maker",
+      "question": "R60Maker の検索で許可されるソート項目とページング方式は？",
+      "expect": [
+        "R60Maker:api:search-sort-paging"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:api:search-sort-paging",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / 検索のソートとページング"
+    },
+    {
+      "qid": "GQ-MK-006",
+      "module": "R60Maker",
+      "question": "R60Maker の initEdit は mode ごとに何を引き継ぐ？",
+      "expect": [
+        "R60Maker:api:initEdit"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:api:initEdit",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § POST /api/R60Maker/initEdit（3 モード初期化）"
+    },
+    {
+      "qid": "GQ-MK-007",
+      "module": "R60Maker",
+      "question": "R60Maker の削除は物理削除か？",
+      "expect": [
+        "R60Maker:api:delete"
+      ],
+      "rank": 2,
+      "matched_by": "R60Maker:api:delete",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / 項目 DEL_FLG（論理削除フラグ）"
+    },
+    {
+      "qid": "GQ-MK-008",
+      "module": "R60Maker",
+      "question": "R60Maker の edit 端点はどのモードを扱う？",
+      "expect": [
+        "R60Maker:api:edit"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § POST /api/R60Maker/initEdit（3 モード初期化）"
+    },
+    {
+      "qid": "GQ-MK-009",
+      "module": "R60Maker",
+      "question": "R60Maker の緊急配信は何を引数に呼ぶ？",
+      "expect": [
+        "R60Maker:logic:emergency-send"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:logic:emergency-send",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / 緊急配信の起動"
+    },
+    {
+      "qid": "GQ-MK-010",
+      "module": "R60Maker",
+      "question": "R60Maker の REG_STS は何を条件に決まる？設計書に書かれているか？",
+      "expect": [
+        "R60Maker:logic:reg-sts-rule"
+      ],
+      "rank": 2,
+      "matched_by": "R60Maker:logic:reg-sts-rule",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / 項目 REG_STS（登録ステータス）"
+    },
+    {
+      "qid": "GQ-MK-011",
+      "module": "R60Maker",
+      "question": "R60Maker の単項目チェックは何件か？",
+      "expect": [
+        "R60Maker:error:single-item"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:error:single-item",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / 単項目チェック 14 件"
+    },
+    {
+      "qid": "GQ-MK-012",
+      "module": "R60Maker",
+      "question": "R60Maker が使うメッセージは何件で、内訳は？",
+      "expect": [
+        "R60Maker:error:messages"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:error:messages",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / メッセージ一覧（19 件）"
+    },
+    {
+      "qid": "GQ-MK-013",
+      "module": "R60Maker",
+      "question": "R60Maker でバックエンドが error_id で返すのはどのチェックか？",
+      "expect": [
+        "R60Maker:error:front-vs-back"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:error:front-vs-back",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / フロント側チェックとバックエンドの error_id の分担"
+    },
+    {
+      "qid": "GQ-MK-014",
+      "module": "R60Maker",
+      "question": "R60Maker の主要な差異 D-MK-01〜13 には何がある？",
+      "expect": [
+        "R60Maker:review:deviations"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:review:deviations",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker の主要な差異（D-MK-01〜13）"
+    },
+    {
+      "qid": "GQ-MK-015",
+      "module": "R60Maker",
+      "question": "R60Maker の A/B レポートが全端点 404 なのはなぜ？",
+      "expect": [
+        "R60Maker:review:ab-404"
+      ],
+      "rank": 1,
+      "matched_by": "R60Maker:review:ab-404",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60maker § R60Maker / A/B レポートの 404 の読み替え"
+    },
+    {
+      "qid": "GQ-SES-001",
+      "module": "R60SesModel",
+      "question": "R60SesModel の構成（画面・テーブル・API・テスト）は？",
+      "expect": [
+        "SES-SCR-001"
+      ],
+      "rank": 1,
+      "matched_by": "SES-SCR-001",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel の位置づけと規模"
+    },
+    {
+      "qid": "GQ-SES-002",
+      "module": "R60SesModel",
+      "question": "R60SesModel の検索一覧は実項目で何件、ソート可能な列は？",
+      "expect": [
+        "SES-SCR-002"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": true,
+      "top1": "r60-001-screens-r60sesmodel § R60SesModel — 生産モデルマスタメンテナンス"
+    },
+    {
+      "qid": "GQ-SES-003",
+      "module": "R60SesModel",
+      "question": "R60SesModel の明細一覧は実項目何件で、子コードはどう扱う？",
+      "expect": [
+        "SES-SCR-003"
+      ],
+      "rank": 4,
+      "matched_by": "SES-SCR-003",
+      "top1_module_ok": true,
+      "top1": "r60-001-screens-r60sesmodel § R60SesModel — 生産モデルマスタメンテナンス"
+    },
+    {
+      "qid": "GQ-SES-004",
+      "module": "R60SesModel",
+      "question": "R60SesModel の設計イベントは何件で、API を呼ぶのは何件？",
+      "expect": [
+        "SES-SCR-006"
+      ],
+      "rank": 1,
+      "matched_by": "SES-SCR-006",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / イベント 28 件と API 対応"
+    },
+    {
+      "qid": "GQ-SES-005",
+      "module": "R60SesModel",
+      "question": "R60SesModel の API 端点はいくつで、共通規約は？",
+      "expect": [
+        "SES-API-001"
+      ],
+      "rank": 1,
+      "matched_by": "SES-API-001",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / API の共通規約と 12 端点"
+    },
+    {
+      "qid": "GQ-SES-006",
+      "module": "R60SesModel",
+      "question": "R60SesModel の明細系 API searchChild・initEditChild・getKonHmk は何をする？",
+      "expect": [
+        "SES-API-009"
+      ],
+      "rank": 1,
+      "matched_by": "SES-API-009",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / searchChild / initEditChild / getKonHmk"
+    },
+    {
+      "qid": "GQ-SES-007",
+      "module": "R60SesModel",
+      "question": "R60SesModel が使う 6 テーブルと列数は？",
+      "expect": [
+        "SES-FLD-006"
+      ],
+      "rank": 1,
+      "matched_by": "SES-FLD-006",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / DB モデル 6 テーブル"
+    },
+    {
+      "qid": "GQ-SES-008",
+      "module": "R60SesModel",
+      "question": "R60SesModel の半製品マスタは 62 列だが、ダミー登録で INSERT するのは何列？",
+      "expect": [
+        "SES-FLD-007"
+      ],
+      "rank": 1,
+      "matched_by": "SES-FLD-007",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / 半製品マスタの 62 列と INSERT 40 列"
+    },
+    {
+      "qid": "GQ-SES-009",
+      "module": "R60SesModel",
+      "question": "R60SesModel の工場生産モデル判定はどのテーブルとコードを使う？",
+      "expect": [
+        "SES-LGC-005"
+      ],
+      "rank": 1,
+      "matched_by": "SES-LGC-005",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / 半製品の工場生産モデル判定（L-SM-05）"
+    },
+    {
+      "qid": "GQ-SES-010",
+      "module": "R60SesModel",
+      "question": "R60SesModel の購入品目・半製品からの生産モデル逆引きはどう実装されている？",
+      "expect": [
+        "SES-LGC-006"
+      ],
+      "rank": 4,
+      "matched_by": "SES-LGC-006",
+      "top1_module_ok": true,
+      "top1": "r60-001-modules-r60sesmodel-03-logic § logics"
+    },
+    {
+      "qid": "GQ-SES-011",
+      "module": "R60SesModel",
+      "question": "R60SesModel の半製品コード自動採番とダミー登録の規則は？",
+      "expect": [
+        "SES-LGC-010"
+      ],
+      "rank": 2,
+      "matched_by": "SES-LGC-010",
+      "top1_module_ok": true,
+      "top1": "r60-001-modules-r60sesmodel-03-logic § logics"
+    },
+    {
+      "qid": "GQ-SES-012",
+      "module": "R60SesModel",
+      "question": "R60SesModel の排他制御は親子でどう行う？",
+      "expect": [
+        "SES-LGC-018"
+      ],
+      "rank": 3,
+      "matched_by": "SES-LGC-018",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / キー列・排他・状態列"
+    },
+    {
+      "qid": "GQ-SES-013",
+      "module": "R60SesModel",
+      "question": "R60SesModel の被参照・復活・イベント参照チェックは？",
+      "expect": [
+        "SES-LGC-019"
+      ],
+      "rank": 2,
+      "matched_by": "SES-LGC-019",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / editChild / deleteChild"
+    },
+    {
+      "qid": "GQ-SES-014",
+      "module": "R60SesModel",
+      "question": "R60SesModel の SQL 文字列連結の危険箇所は？",
+      "expect": [
+        "SES-REV-005"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / 差異の全体像"
+    },
+    {
+      "qid": "GQ-SES-015",
+      "module": "R60SesModel",
+      "question": "R60SesModel に A/B レポートはあるか？",
+      "expect": [
+        "SES-REV-009"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60sesmodel § R60SesModel / A/B 不在とテストデータの扱い"
+    },
+    {
+      "qid": "GQ-KKC-001",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の位置づけと 12 キーパターンの意味は？",
+      "expect": [
+        "KKC-SCR-001"
+      ],
+      "rank": 2,
+      "matched_by": "KKC-SCR-001",
+      "top1_module_ok": true,
+      "top1": "r60-001-screens-r60kkuchi § R60KkuChi — 規格値マスタメンテナンス"
+    },
+    {
+      "qid": "GQ-KKC-002",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の設計イベントは何件で、中心となる連動は？",
+      "expect": [
+        "KKC-SCR-003"
+      ],
+      "rank": 4,
+      "matched_by": "KKC-SCR-003",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60kkuchi § R60KkuChi の位置づけと規模"
+    },
+    {
+      "qid": "GQ-KKC-003",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の API 端点はいくつ、DB は何列？",
+      "expect": [
+        "KKC-SCR-004"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60kkuchi § R60KkuChi の位置づけと規模"
+    },
+    {
+      "qid": "GQ-KKC-004",
+      "module": "R60KkuChi",
+      "question": "管理項目 0010 と 0070 のキー構成は？",
+      "expect": [
+        "KKC-FLD-001"
+      ],
+      "rank": 4,
+      "matched_by": "KKC-FLD-001",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60kkuchi § R60KkuChi / 項目・管理項目の選択規則"
+    },
+    {
+      "qid": "GQ-KKC-005",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の登録時の固定値は？",
+      "expect": [
+        "KKC-FLD-004"
+      ],
+      "rank": 1,
+      "matched_by": "KKC-FLD-004",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60kkuchi § R60KkuChi / DB 32 列と固定値"
+    },
+    {
+      "qid": "GQ-KKC-006",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の検索 WHERE はどう組み立てられ、何が問題か？",
+      "expect": [
+        "KKC-LGC-002"
+      ],
+      "rank": 3,
+      "matched_by": "KKC-LGC-002",
+      "top1_module_ok": true,
+      "top1": "r60-001-modules-r60kkuchi-06-review § deviations"
+    },
+    {
+      "qid": "GQ-KKC-007",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の件数・上限・ページング・ソートは？",
+      "expect": [
+        "KKC-LGC-003"
+      ],
+      "rank": 1,
+      "matched_by": "KKC-LGC-003",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60kkuchi § R60KkuChi / 件数・上限・ページング・ソート・取得列"
+    },
+    {
+      "qid": "GQ-KKC-008",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の単項目チェックと変更なしチェックはどこで行う？",
+      "expect": [
+        "KKC-LGC-004"
+      ],
+      "rank": 2,
+      "matched_by": "KKC-LGC-004",
+      "top1_module_ok": true,
+      "top1": "r60-001-modules-r60kkuchi-06-review § deviations"
+    },
+    {
+      "qid": "GQ-KKC-009",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の最も重大な差異は？",
+      "expect": [
+        "KKC-REV-001"
+      ],
+      "rank": null,
+      "matched_by": null,
+      "top1_module_ok": true,
+      "top1": "r60-001-screens-r60kkuchi § R60KkuChi — 規格値マスタメンテナンス"
+    },
+    {
+      "qid": "GQ-KKC-010",
+      "module": "R60KkuChi",
+      "question": "R60KkuChi の死んだコードと複製の二重実装には何がある？",
+      "expect": [
+        "KKC-REV-003"
+      ],
+      "rank": 1,
+      "matched_by": "KKC-REV-003",
+      "top1_module_ok": true,
+      "top1": "r60-001-chunks-r60kkuchi § R60KkuChi / 死んだコードと複製の二重実装"
+    }
+  ]
+}
