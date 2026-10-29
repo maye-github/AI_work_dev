@@ -78,6 +78,46 @@ py -3 -m pip install numpy     # 装的是全局 Python 3.14.3 环境
 - 本抄本: 这一点**与上游一致**。但此前 `docs/95_legacy/r60/` 是正本、`repo/` 是导出物，2026-10-29 已反转——现在 `repo/projects/P-R60-001/` 是唯一正本，**要提交进 git**。
 - 已在 `CLAUDE.md` 与 `使用手册.md` 同步。
 
+### 偏离 3: `search()` / `eval` 增加 `module` 与 `scope` 两个筛选口（2026-10-29）
+
+- 改了什么: `kbkit/retrieval.py` 新增 `_filter_candidates()`，`search()` 末尾加 `module=None, scope=None`；
+  `run.py` 的 `search` 子命令加 `--module` / `--scope`；`kbkit/eval.py` 把用例里的
+  `module` / `scope` 透传给 `search`。
+- 为什么: 案件知识集中在一个 `project_id` 下后，`R60User` 的提问会被 `R60SesModel`
+  的同型章节抢走（实测 80 题中 3 件是模块串味）。调用方**知道**问的是哪个模块，却**没有口子**告诉检索器。
+  公司共通条目（§11.3 会社层）与案件条目也混在一个池里，`STD-TEST-RATIO-001` 会被案件正文挤到 7〜9 位。
+- 影响面: **向后兼容**（默认 `None` = 不筛）。上游若采纳，可原样 PR；两个参数不改变任何默认排序。
+- 注意: `module` 是 `doc_id` 与 `title` 的**部分一致**。语干相同的别的模块出现时，要补对应表。
+
+### 偏离 4: `kbkit/eval.py` 增加节级判定 `expect_heading`（2026-10-29）
+
+- 改了什么: 用例可选 `expect_heading`，命中结果里 `doc_id` 在 `expect` 内、且 `heading` 部分一致，
+  记 `section_hit` / `section_rank`；汇总增加 `section_cases` / `section_recall`，报告打 `§OK(rank=n)` / `§MISS`。
+- 为什么: **doc 级判定看不见「模块对了、节错了」。** 实测 12 个带节期望的用例里，
+  2 件答案是 `doc` 命中但节在第 8 / 12 位（`top_k=5` 之外），而 doc 级指标仍是 `recall@5=1.000`。
+  不修指标就会一直显示「满分」。
+- 影响面: 只有本抄本；不加 `expect_heading` 的用例行为完全不变。
+
+### 偏离 5: 目录页不进索引（`company-README.md` / `projects-README.md` 放在 `repo/` 之外）
+
+- 改了什么: 两份说明文件放在 `tools/kb-platform/` 根下，而不是 `repo/company/` 与 `repo/projects/`。
+- 为什么: `kbkit/pipeline.py` 的 `collect_docs()` 收 `repo/` 下**全部** `.md`，**没有 README 排除**。
+  实测把目录页放进 `repo/company/` 后，它因为列了全部 `doc_id` 与主题词，
+  在「テストケースの最低件数」「A/B/C 分類」「出典等級」三问上都排到第 1 位，
+  真正写了答案的条目掉出前 5。目录页的职责是指路，不该和它指的内容抢位置。
+- 影响面: 只有本抄本的数据组织方式。上游若也想排除目录页，最省事的做法是给 `collect_docs()`
+  加一行 `if p.name.upper() == "README.MD": continue`——但**这是行为变更**，需上游自己决定。
+- 位置记录: `reports/audit/kb-integration/04_残留问题清单_2026-10-29.md` §1.2。
+
+### 偏离 6: 生成物在 front matter 里自带 `generated_by`（2026-10-29）
+
+- 改了什么: `tools/kb_migrate.py` 的 `merged_fm()` 输出 `generated_by: tools/kb_migrate.py`；
+  移设元已消失时，`stamp_existing()` 给既存 `.md` 补这个键（只补键，正文不动）。
+- 为什么: `repo/projects/P-R60-001/` 下 79 篇 `.md` 全是派生物，但此前**没有任何标记**，
+  看起来像可以手改的正文。手改会在下次 `--apply` 时被静默覆盖。
+- 幂等: 2026-10-29 实测连续两次 `--apply`，79 篇的 SHA-256 完全一致。
+- 影响面: 只有本抄本。这是**生成器**的改动，不在 `kbkit/` 里。
+
 ### 顺带修正: `repo/eval/golden.yaml` 的上游 demo 12 问缺 `project`
 
 上流 demo 的 12 个用例没有 `project:` 字段，检索时只搜 company scope，导致 `eval` 恒为 `recall@5=0.333`。
