@@ -83,7 +83,8 @@ py -3 -m tools.rag eval
 |---|---|---|
 | `run.py lint` | `OK 91 文書` | 形（front matter・scope・doc_type） |
 | `run.py eval` | `recall@5=1.000  MRR=0.958  節recall=0.833 (12 件)` | 上流 demo 24 問。**下がったら同期で壊した** |
-| `kb_eval`（KPI⑥） | `recall@5=0.863  MRR=0.672  top1_module=76/80` | 80 問を案件知識に対して。**これが本来の指標** |
+| `kb_eval`（KPI⑥）— ヒントなし | `recall@5=0.863  MRR=0.672  top1_module=76/80` | 80 問を案件知識に対して。**これが本来の指標** |
+| `kb_eval --with-module` | `recall@5=0.925  MRR=0.720  top1_module=80/80` | 呼び出し側がモジュールを知っている場合の上限。**下がったら `_filter_candidates` が壊れた** |
 | `tools.rag eval` | `filtered 1.000 / 0.901` `unfiltered 0.863 / 0.645` | chunk 単位の回帰尺。**同期では動いてはならない** |
 
 `tools.rag` の数値は**同期と無関係に動かない**はずである（`kbkit/` を通らない）。

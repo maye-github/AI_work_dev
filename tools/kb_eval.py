@@ -58,6 +58,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--db", default=str(DEFAULT_DB))
     ap.add_argument("--project", default="P-R60-001")
     ap.add_argument("--top-k", type=int, default=5)
+    ap.add_argument("--with-module", action="store_true",
+                    help="金标の module を検索器に渡す（『呼び出し側がモジュールを知っている』場合の上限）")
     ap.add_argument("--json", dest="json_out")
     args = ap.parse_args(argv)
 
@@ -71,6 +73,7 @@ def main(argv: list[str] | None = None) -> int:
         hits = search(
             conn, q["question"], embedder,
             project_id=args.project, top_k=args.top_k,
+            module=q.get("module") if args.with_module else None,
         )
         expect = list(q["expected_chunk_ids"])
         # 命中判定: 期待 chunk id が取得片段の本文に現れるか（摘要片は先頭に id 行を持つ）
@@ -107,9 +110,10 @@ def main(argv: list[str] | None = None) -> int:
     for r in rows:
         by_mod[r["module"] or "?"].append(r)
 
+    mode = "module ヒントあり" if args.with_module else "module ヒントなし"
     print(f"gold={len(rows)}  top_k={args.top_k}  "
           f"recall@{args.top_k}={hits / n:.3f}  MRR={rr / n:.3f}  "
-          f"top1_module={mod_ok}/{len(rows)}")
+          f"top1_module={mod_ok}/{len(rows)}  [{mode}]")
     print()
     for mod in sorted(by_mod):
         rs = by_mod[mod]

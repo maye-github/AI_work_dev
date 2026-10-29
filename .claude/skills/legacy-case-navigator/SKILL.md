@@ -85,6 +85,27 @@ tools/kb-platform/repo/projects/<P-ID>/
 | 「追跡はどう管理していた？」 | `07-traceability.md`（★最も示唆が大きい） |
 | 機械的に引く | `py -3 tools/kb-platform/run.py search "<問い>" --repo tools/kb-platform/repo --project <P-ID> --top-k 5` |
 
+**機械的に引くときの 2 つのスイッチ**（2026-10-29 追加。付けないと取りこぼす）:
+
+| スイッチ | いつ付けるか | 付けないとどうなるか（実測） |
+|---|---|---|
+| `--module <module>` | 対象モジュールが既に分かっている（「`R60User` の検索画面は？」） | 語幹の近い別モジュールが上位を取る。80 題中 3 件がこれ |
+| `--scope company` | 案件の事実ではなく**決め事**を聞いている（比率・分類・出典等級・命名規約） | 案件本文が上 6 位を占め、規約類が 7〜9 位に沈む |
+
+```bash
+# モジュールが分かっている
+py -3 tools/kb-platform/run.py search "検索一覧は実項目で何件" \
+    --repo tools/kb-platform/repo --project P-R60-001 --module R60SesModel --top-k 5
+
+# 会社の決め事を聞く
+py -3 tools/kb-platform/run.py search "テストケースの最低件数" \
+    --repo tools/kb-platform/repo --project P-R60-001 --scope company --top-k 5
+```
+
+`--module` は `doc_id` と `title` の部分一致である（`r60sesmodel` でも `R60SesModel` でも当たる）。
+**語幹が同じ別モジュールがある場合**（例 `<Module>` と `<Module>Detail`）は、狭いほうから試して
+0 件なら広げる。
+
 ---
 
 ## 2. 抽出ツール `tools/legacy`（xlsx を読む唯一の手段）
