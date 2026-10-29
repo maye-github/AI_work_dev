@@ -5,47 +5,109 @@
   question: 在庫が不足したとき、受注はどうなるか
   expect: [REQ-001, BS-001]
   project: P-DEMO-001
+  project: P-DEMO-001
 
 - id: Q002
   question: 在庫不足を表すエラーコードは何番か
   expect: [REQ-001, BS-001]
+  project: P-DEMO-001
 
 - id: Q003
   question: 引当の優先順位はどのような順で決まるか
   expect: [REQ-001]
+  project: P-DEMO-001
 
 - id: Q004
   question: 同時接続数の非機能要件はいくつか
   expect: [REQ-001]
+  project: P-DEMO-001
 
 - id: Q005
   question: ログインに連続して失敗するとどうなるか
   expect: [REQ-001]
+  project: P-DEMO-001
 
 - id: Q006
   question: T_ALLOC テーブルの主キーはどのカラムか
   expect: [DS-001]
+  project: P-DEMO-001
 
 - id: Q007
   question: 楽観ロックに使っているカラムは何か
   expect: [DS-001]
+  project: P-DEMO-001
 
 - id: Q008
   question: E-1042 を返すのはどのようなときか
   expect: [DS-001, BS-001]
+  project: P-DEMO-001
 
 - id: Q009
   question: 一覧検索画面が必ず持つべき4つの要素は何か
   expect: [PAT-SCREEN-001]
+  project: P-DEMO-001
 
 - id: Q010
   question: 引当は英語で何と表記するか
   expect: [STD-GLOSSARY-001]
+  project: P-DEMO-001
 
 - id: Q011
   question: 性能試験の合格基準は何秒以内か
   expect: [TC-001]
+  project: P-DEMO-001
 
 - id: Q012
   question: 変数や関数の命名規則はどうなっているか
   expect: [STD-CODING-001]
+  project: P-DEMO-001
+
+# === P-R60-001（2026-10-29 移設時に追加。期待値は移設後の doc_id）===
+- id: RQ001
+  question: R60Ssk の前提条件と、画面が持つ操作の範囲は？
+  expect: [r60-001-chunks-r60ssk, r60-001-screens-r60ssk]
+  project: P-R60-001
+- id: RQ002
+  question: R60Ssk の検索画面は実項目で何件、内訳はどうなっている？
+  expect: [r60-001-chunks-r60ssk, r60-001-screens-r60ssk]
+  project: P-R60-001
+- id: RQ003
+  question: R60User の位置づけ・テーブル・操作モードは？
+  expect: [r60-001-chunks-r60user, r60-001-screens-r60user]
+  project: P-R60-001
+- id: RQ004
+  question: R60User の検索画面は実項目で何件、ソート可能な列はいくつ？
+  expect: [r60-001-chunks-r60user, r60-001-screens-r60user]
+  project: P-R60-001
+- id: RQ005
+  question: R60Plc の位置づけ・テーブル・API 端点は？
+  expect: [r60-001-chunks-r60plc, r60-001-screens-r60plc]
+  project: P-R60-001
+- id: RQ006
+  question: R60Plc の検索画面は実項目で何件、ソート可能な列は？
+  expect: [r60-001-chunks-r60plc, r60-001-screens-r60plc]
+  project: P-R60-001
+- id: RQ007
+  question: R60Maker の前提条件・排他条件・画面区分は？
+  expect: [r60-001-chunks-r60maker, r60-001-screens-r60maker]
+  project: P-R60-001
+- id: RQ008
+  question: R60Maker の検索画面は実項目で何件、検索条件は？
+  expect: [r60-001-chunks-r60maker, r60-001-screens-r60maker]
+  project: P-R60-001
+- id: RQ009
+  question: R60SesModel の構成（画面・テーブル・API・テスト）は？
+  expect: [r60-001-chunks-r60sesmodel, r60-001-screens-r60sesmodel]
+  project: P-R60-001
+- id: RQ010
+  question: R60SesModel の検索一覧は実項目で何件、ソート可能な列は？
+  expect: [r60-001-chunks-r60sesmodel, r60-001-screens-r60sesmodel]
+  project: P-R60-001
+- id: RQ011
+  question: R60KkuChi の位置づけと 12 キーパターンの意味は？
+  expect: [r60-001-chunks-r60kkuchi, r60-001-screens-r60kkuchi]
+  project: P-R60-001
+- id: RQ012
+  question: R60KkuChi の設計イベントは何件で、中心となる連動は？
+  expect: [r60-001-chunks-r60kkuchi, r60-001-screens-r60kkuchi]
+  project: P-R60-001

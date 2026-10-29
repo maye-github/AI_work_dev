@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import math
+import os
 import sqlite3
 from typing import Callable
 
@@ -26,13 +27,30 @@ def _bigrams(text: str) -> set[str]:
     return {s[i : i + 2] for i in range(len(s) - 1)}
 
 
+# 2026-10-29 追加: 検索対象にする status。上流は `active` 固定だったが、
+#   骨架（`.claude/rules/02` §6）の状態機は `open/baselined/changed/done` を使うため、
+#   そのままでは移設した知識が 1 件も当たらない。既定を骨架の「進行中〜完了」に広げ、
+#   環境変数 `KB_RETRIEVABLE_STATUSES`（カンマ区切り）で上書きできるようにした。
+#   `draft` / `void` / `deprecated` は既定で除外（未確定・作废は検索に出さない）。
+DEFAULT_RETRIEVABLE = "active,open,baselined,changed,done"
+
+
+def _retrievable_statuses() -> tuple[str, ...]:
+    raw = os.environ.get("KB_RETRIEVABLE_STATUSES", DEFAULT_RETRIEVABLE)
+    return tuple(s.strip() for s in raw.split(",") if s.strip())
+
+
 def _load_candidates(
     conn: sqlite3.Connection,
     project_id: str | None,
     user_level: int,
 ) -> list[sqlite3.Row]:
-    where = ["d.status = 'active'", "d.conf_level <= :user_level"]
+    statuses = _retrievable_statuses()
+    placeholders = ", ".join(f":st{i}" for i in range(len(statuses)))
+    where = [f"d.status IN ({placeholders})", "d.conf_level <= :user_level"]
     params: dict[str, object] = {"user_level": user_level}
+    for i, st in enumerate(statuses):
+        params[f"st{i}"] = st
     if project_id:
         # 会社共通は全案件から、案件知識はその案件からのみ
         where.append(

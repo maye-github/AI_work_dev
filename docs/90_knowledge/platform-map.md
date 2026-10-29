@@ -73,7 +73,7 @@ AI と自動化の実行能力。出典：PPT 第 S26 页「能力層：モデ�
 
 | 已有 | 本次新建 | Phase 2+ 予定 |
 |---|---|---|
-| `project_memory.md` §18-§26（241 行・26 章の方法論。**原文の行数・章数は失効**——現物 11 行。`docs/00_plan/spec.md:34` を参照）<br>`doc/02_INPUT/`（日方規約／DB 定義／画面規約／旧 Java ソース／DDL）<br>`doc/03_AI/AB_Reports/`（A/B 比較レポート群） | `docs/90_knowledge/review_diff_assets/`（R60Area/R60Code/R60Item の review_before / review_after / review_comments 審査差分資産）<br>`docs/00_registry/glossary.yml`（中日英三語の用語集・30 用語以上）<br>`docs/95_legacy/r60/`（**migration 案件の読取専用ナレッジ**：画面卡・chunks・DB/API/規約・偏差記録。`legacy-r60-navigator` skill と `tools/legacy` が入口）<br>`docs/90_knowledge/answer-engine.md`（**出典等級 E1〜E4 の唯一真源**。確認票の根拠の格付け）<br>`docs/90_knowledge/ai-dev-playbook.md` / `onboarding-checklist.md` / `platform-map.md`（方法論・新人 Walkthrough・本マップ） | RAG 検索の精度向上（索引は `build/rag/`・語料から再生成可）<br>32 モジュール全量の資産インベントリ |
+| `project_memory.md` §18-§26（241 行・26 章の方法論。**原文の行数・章数は失効**——現物 11 行。`docs/00_plan/spec.md:34` を参照）<br>`doc/02_INPUT/`（日方規約／DB 定義／画面規約／旧 Java ソース／DDL）<br>`doc/03_AI/AB_Reports/`（A/B 比較レポート群） | `docs/90_knowledge/review_diff_assets/`（R60Area/R60Code/R60Item の review_before / review_after / review_comments 審査差分資産）<br>`docs/00_registry/glossary.yml`（中日英三語の用語集・30 用語以上）<br>`tools/kb-platform/repo/projects/P-R60-001/`（**migration 案件の読取専用ナレッジ**：画面卡・chunks・DB/API/規約・偏差記録。`legacy-r60-navigator` skill と `tools/legacy` が入口）<br>`docs/90_knowledge/answer-engine.md`（**出典等級 E1〜E4 の唯一真源**。確認票の根拠の格付け）<br>`docs/90_knowledge/ai-dev-playbook.md` / `onboarding-checklist.md` / `platform-map.md`（方法論・新人 Walkthrough・本マップ） | RAG 検索の精度向上（索引は `build/rag/`・語料から再生成可）<br>32 モジュール全量の資産インベントリ |
 
 - 参照：PPT 第 S27 页（ナレッジベース「過去案件・用語辞書・設計規約・既存ソースを検索、流用資産を提示」）、PPT 第 S19 页（全鏈路成果物マップ）。
 

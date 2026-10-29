@@ -2,7 +2,7 @@
 
 なぜ必要か
 ----------
-実施規格書 §10.2 ② の「知識庫」は、本骨架では `docs/90_knowledge/`（方法論）と `docs/95_legacy/`（旧案件知識）の `.md` 群でしかない。
+実施規格書 §10.2 ② の「知識庫」は、本骨架では `docs/90_knowledge/`（方法論）と `tools/kb-platform/repo/projects/P-R60-001/`（旧案件知識）の `.md` 群でしかない。
 一方、社内には既に `D:\\AI_platform\\kb-platform`（front matter ＋ chunk ＋ 索引 ＋ 検索 API）がある。
 **同じ知識を二つの流儀で持つと、どちらが正か分からなくなる**（NFR-1）。
 
@@ -63,9 +63,15 @@ import yaml
 
 from . import paths
 
+# 2026-10-29: 本ツールは役目を終えた（`main()` 冒頭で停止する）。
+#   旧案件知識は `tools/kb-platform/repo/projects/P-R60-001/` が**正本**になったため、
+#   ここから書き出すと自分自身へ書き戻す循環になる。移設は `tools.kb_migrate` が担った。
+#   ファイルは記録として残す（kb の front matter 規則の写しが参照価値を持つため）。
+SUPERSEDED_BY = "tools.kb_migrate"
+
 # 対象は「歴史案件の消化後知識」。生の抽出物（reports/legacy-raw）は対象外
 # （案件が特定できる実データを含むため。01-security-redlines.md §10）。
-DEFAULT_SOURCE = "docs/95_legacy/r60"
+DEFAULT_SOURCE = "docs/95_legacy/r60"  # 2026-10-29 に削除済み
 
 # パスの形 → kb-platform の doc_type（pipeline.py の DOC_TYPES のいずれか）
 DOC_TYPE_BY_PATH: list[tuple[str, str]] = [
@@ -398,6 +404,14 @@ def self_test() -> int:
 # --------------------------------------------------------------------------
 
 def main(argv: list[str] | None = None) -> int:
+    print(
+        "[kb_export] この変換器は 2026-10-29 以降使いません。"
+        f"旧案件知識の正本は tools/kb-platform/repo/projects/P-R60-001/ に移りました。"
+        f"移設・再生成は `py -3 -m {SUPERSEDED_BY}` を使ってください。",
+        file=sys.stderr,
+    )
+    return 2
+
     ap = argparse.ArgumentParser(
         prog="py -3 -m tools.kb_export",
         description="本骨架の知識 .md を kb-platform が読める形へ書き出す（既定は下見）。",

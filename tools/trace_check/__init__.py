@@ -282,7 +282,11 @@ class Repo:
     #   gate6（機密）以外の 5 門から丸ごと外れていた**。その結果、台帳に無い ID・
     #   他人の ID を名乗る文書・7 字段を欠く承認版が「6 門全 PASS」で通っていた。
     #   検査範囲を広げる変更は許可されている（規則 06 §3 は「狭める変更」のみ禁止）。
-    SCAN_BASES = ("docs", ".claude", "tutorial")
+    # 2026-10-29 追加: 旧案件知識を tools/kb-platform/repo/projects/P-R60-001 へ移した。
+    #   tools/ は従来「gate6 の *.py」しか見ていなかったため、知識を置くと
+    #   野号（gate1）・front-matter（gate3）から丸ごと外れる。
+    #   移設はユーザー拍板（reports/audit/kb-integration/03_拍板记录_2026-10-29.md）。
+    SCAN_BASES = ("docs", ".claude", "tutorial", "tools/kb-platform/repo/projects/P-R60-001")
 
     def iter_docs(self, *, suffixes=(".yaml", ".yml", ".md")) -> list[Path]:
         out = []
@@ -686,9 +690,16 @@ def gate6_secret_scan(repo: Repo) -> dict:
         p = repo.root / extra
         if p.is_file():
             targets.append(p)
+    # 2026-10-29: tools/ は長らく *.py だけだった。旧案件知識を tools/kb-platform/repo/
+    #   へ移したため、.md/.yaml が走査外へ出る。走査範囲を狭める変更は行わない（追加のみ・
+    #   規則 06 §3）ので、ここで .md/.yaml/.yml/.json/.txt を加える。
     tools_dir = repo.root / "tools"
     if tools_dir.is_dir():
-        targets += [p for p in sorted(tools_dir.rglob("*.py")) if p.is_file()]
+        targets += [
+            p
+            for p in sorted(tools_dir.rglob("*"))
+            if p.is_file() and p.suffix in (".py", ".md", ".yaml", ".yml", ".json", ".txt")
+        ]
     # reports/ は納品証跡（DELIVERY_MEMO / AC-selfcheck 等）を含むため走査対象に加える。
     # 取入機構（tools/ingest）は reports/ingest/** に YAML/JSON を書き出すため、
     # archive/ ・ tutorial/ と同じく .yaml/.yml まで含める。

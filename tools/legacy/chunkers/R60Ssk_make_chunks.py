@@ -7,7 +7,7 @@ import sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-OUT = "docs/95_legacy/r60/chunks/R60Ssk.jsonl"
+OUT = "tools/kb-platform/repo/projects/P-R60-001/chunks/raw/R60Ssk.jsonl"
 DESIGN = "reports/module-survey/R60Ssk/design"
 TEST = "reports/module-survey/R60Ssk/test"
 
@@ -196,7 +196,7 @@ add("R60Ssk:api:edit", "api", "POST /api/R60Ssk/edit",
     "完了メッセージ R60I0001 はフロントが表示する。")
 
 add("R60Ssk:api:event-map", "api", "イベントと API 端点の対応",
-    "docs/95_legacy/r60/screens/R60Ssk.md", "section 4",
+    "tools/kb-platform/repo/projects/P-R60-001/screens/R60Ssk.md", "section 4",
     "16 イベントのうち API を呼ぶのは、初期表示→init、表示→search、ページ移動→search、"
     "ソート 3 種→search、一覧リンク→initEdit、ダウンロード→download、登録→edit。"
     "会社変更・組織ユニット検索・検索条件の表示切替・経理用会社変更・戻る・業務終了はフロントのみ。"
@@ -383,7 +383,7 @@ add("R60Ssk:test:transition", "test", "画面遷移テストの 4 件",
     "1-4 業務終了ボタンで本画面が閉じること。")
 
 add("R60Ssk:test:viewpoints", "test", "テスト観点の読み替え",
-    "docs/95_legacy/r60/modules/R60Ssk/05-tests.yaml", "viewpoint_mapping",
+    "tools/kb-platform/repo/projects/P-R60-001/modules/R60Ssk/05-tests.yaml", "viewpoint_mapping",
     "旧単体テスト仕様は正常・境界・異常の分類を持たない。骨架の 3 観点へは次のように読み替える。"
     "同値分割は検索条件の有無、組織ユニットの文字種、経理用会社・事業場の組合せ。"
     "境界値は組織ユニット 8 文字、正式名称 40byte、上限件数、先頭・最終頁。"
@@ -400,7 +400,7 @@ add("R60Ssk:test:ab", "test", "A/B レポートの結果（参照系のみ一致
 
 # ---------- review ----------
 add("R60Ssk:review:deviations", "review", "R60Ssk の主要な差異（D-SS-01〜15）",
-    "docs/95_legacy/r60/modules/R60Ssk/06-review.yaml", "deviations",
+    "tools/kb-platform/repo/projects/P-R60-001/modules/R60Ssk/06-review.yaml", "deviations",
     "主要な差異。実項目数は検索 35・マスタ 10 で骨架の 56 と不一致（D-SS-01）。"
     "調査票の端点 8 は AB actionId 数で、API 端点は 5（D-SS-02）。"
     "本画面は更新専用で INSERT / DELETE を持たない（D-SS-03）。extra='ignore'（D-SS-04）。"
@@ -412,7 +412,7 @@ add("R60Ssk:review:deviations", "review", "R60Ssk の主要な差異（D-SS-01�
     "例外処理列が No1 / No14 にしか無い（D-SS-15）。")
 
 add("R60Ssk:review:update-only", "review", "更新専用という第一命題",
-    "docs/95_legacy/r60/modules/R60Ssk/06-review.yaml", "D-SS-03",
+    "tools/kb-platform/repo/projects/P-R60-001/modules/R60Ssk/06-review.yaml", "D-SS-03",
     "R60Ssk は『部署マスタメンテナンス』という名称だが、新規作成も論理削除も提供しない。"
     "根拠は 3 つ。項目移送表の登録・削除列に ○ が 1 つも無いこと、"
     "検索画面の新規ボタンとマスタ項目画面の削除ボタンが初期値 非活性であること、"
@@ -421,7 +421,7 @@ add("R60Ssk:review:update-only", "review", "更新専用という第一命題",
     "名称から新規・削除を想定すると、設計に無い機能を作ってしまう。")
 
 add("R60Ssk:review:contradictions", "review", "設計書自身の矛盾と欠番",
-    "docs/95_legacy/r60/modules/R60Ssk/06-review.yaml", "D-SS-10; D-SS-11; D-SS-14",
+    "tools/kb-platform/repo/projects/P-R60-001/modules/R60Ssk/06-review.yaml", "D-SS-10; D-SS-11; D-SS-14",
     "設計書には次の矛盾がある。"
     "REG_STS の本文は 4 項目判定で 0 を設定すると書くが、同じセルに『定数 REG_STS_ON を"
     "設定しているのでこの設定は無効』という実装メモが混在する。"
@@ -430,7 +430,7 @@ add("R60Ssk:review:contradictions", "review", "設計書自身の矛盾と欠番
     "いずれも設計書だけでは正否を決められず、人への確認事項になる。")
 
 add("R60Ssk:review:sort-ambiguity", "review", "ソート列の名称と DB 列の対応が不明",
-    "docs/95_legacy/r60/modules/R60Ssk/06-review.yaml", "D-SS-05; D-SS-08; D-SS-12",
+    "tools/kb-platform/repo/projects/P-R60-001/modules/R60Ssk/06-review.yaml", "D-SS-05; D-SS-08; D-SS-12",
     "ソートは会社・事業場組織ユニット・組織ユニット：コードの 3 列が可能と書かれるが、"
     "イベント一覧の処理概要は『標準仕様参照』だけで、DB 列との対応が無い。"
     "さらに検索シートとマスタ項目シートで、項目名称とエンティティ項目の対応が入れ替わって見える。"
@@ -445,7 +445,7 @@ add("R60Ssk:review:security", "review", "download の SQL 連結",
     "セキュリティ方針に関わるため骨架側では修正せず、人（ユーザー）の裁定事項として残す。")
 
 add("R60Ssk:review:teaching", "review", "教材としての強みと注意",
-    "docs/95_legacy/r60/modules/R60Ssk/06-review.yaml", "teaching_value",
+    "tools/kb-platform/repo/projects/P-R60-001/modules/R60Ssk/06-review.yaml", "teaching_value",
     "強みは、検索一覧＋修正モーダルの最小構成で、画面項目→単項目チェック→イベント→"
     "項目移送表→単体テストの写像を一通り学べること。"
     "更新専用という性格が、項目移送表の ○ 列・ボタン初期値・イベント一覧の 3 箇所で"

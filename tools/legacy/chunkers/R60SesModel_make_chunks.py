@@ -7,7 +7,7 @@ import sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-OUT = "docs/95_legacy/r60/chunks/R60SesModel.jsonl"
+OUT = "tools/kb-platform/repo/projects/P-R60-001/chunks/raw/R60SesModel.jsonl"
 C = []
 
 
@@ -28,13 +28,13 @@ def add(chunk_id, artifact_type, title, source_path, source_locator, text, scope
     })
 
 
-SCREEN = "docs/95_legacy/r60/screens/R60SesModel.md"
-FIELDS = "docs/95_legacy/r60/modules/R60SesModel/01-fields.yaml"
-API = "docs/95_legacy/r60/modules/R60SesModel/02-api.yaml"
-LOGIC = "docs/95_legacy/r60/modules/R60SesModel/03-logic.yaml"
-ERRORS = "docs/95_legacy/r60/modules/R60SesModel/04-errors.yaml"
-TESTS = "docs/95_legacy/r60/modules/R60SesModel/05-tests.yaml"
-REVIEW = "docs/95_legacy/r60/modules/R60SesModel/06-review.yaml"
+SCREEN = "tools/kb-platform/repo/projects/P-R60-001/screens/R60SesModel.md"
+FIELDS = "tools/kb-platform/repo/projects/P-R60-001/modules/R60SesModel/01-fields.yaml"
+API = "tools/kb-platform/repo/projects/P-R60-001/modules/R60SesModel/02-api.yaml"
+LOGIC = "tools/kb-platform/repo/projects/P-R60-001/modules/R60SesModel/03-logic.yaml"
+ERRORS = "tools/kb-platform/repo/projects/P-R60-001/modules/R60SesModel/04-errors.yaml"
+TESTS = "tools/kb-platform/repo/projects/P-R60-001/modules/R60SesModel/05-tests.yaml"
+REVIEW = "tools/kb-platform/repo/projects/P-R60-001/modules/R60SesModel/06-review.yaml"
 DESIGN = "reports/module-survey/R60SesModel/design"
 TEST_SRC = "reports/module-survey/R60SesModel/test/00_単体ﾃｽﾄ仕様兼結果.txt"
 CTRL = "api/fastapi_oracle_pjt/app/routers/R60SesModelController.py"

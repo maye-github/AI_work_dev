@@ -168,15 +168,19 @@ def latest_rag_eval(root: Path) -> dict | None:
 
 
 def count_knowledge(root: Path) -> dict:
-    """知識の件数。`docs/90_knowledge/**` と `docs/95_legacy/**` の `.md` を数える。
+    """知識の件数。`docs/90_knowledge/**` と `tools/kb-platform/repo/projects/**` の `.md` を数える。
 
-    2026-10-28 に R60 知識庫を `docs/95_legacy/` へ分けたため、両方を数える
-    （どちらも知識資産であることに変わりはない。生成物 `.html` は数えない）。
+    2026-10-29 に R60 知識を `tools/kb-platform/repo/projects/P-R60-001/` から kb-platform の project scope へ移した。
+    どちらも知識資産であることに変わりはない（生成物 `.html` は数えない）。
 
     chunk は**ファイル数ではなく行数**を数える。`.jsonl` は 1 行 1 chunk なので、
     ファイル数を出すと「7 本」と表示され、実際の知識量（数百）を桁で誤らせる。
     """
-    dirs = [root / "docs" / "90_knowledge", root / "docs" / "95_legacy"]
+    dirs = [
+        root / "docs" / "90_knowledge",
+        # 2026-10-29: 旧案件知識（R60）は docs/95_legacy → kb-platform の project scope へ移動。
+        root / "tools" / "kb-platform" / "repo" / "projects",
+    ]
     dirs = [d for d in dirs if d.is_dir()]
     if not dirs:
         return {"md": 0, "chunk_files": 0, "chunks": 0}

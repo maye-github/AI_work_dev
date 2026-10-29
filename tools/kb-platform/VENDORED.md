@@ -45,3 +45,26 @@ py -3 -m pip install numpy     # 装的是全局 Python 3.14.3 环境
 ```
 
 不想要了：`py -3 -m pip uninstall numpy`。但卸载后 `ingest` / `search` 跑不了（`lint` 也跑不了）。
+
+---
+
+## 本抄本对上游的两处偏离（2026-10-29）
+
+上游 `D:\AI_platform` 是正，本文件是抄本。**抄本改了的地方必须记在这里**，否则同步上游时会静默丢失。
+
+### 偏离 1: 可检索状态从固定 `active` 改为可配置
+
+- 改了什么: `kbkit/retrieval.py` 的 `DEFAULT_RETRIEVABLE`（`active,open,baselined,changed,done`，可用环境变量 `KB_RETRIEVABLE_STATUSES` 覆盖）；`kbkit/pipeline.py` 的 `STATUSES` 追加骨架词表。
+- 为什么: 旧案件知识搬进本库后，文档的 `status` 用的是骨架状态机（`.claude/rules/02` §6）。上游只认 `active`，直接搬进来会「索引得进、一条也搜不到」；反过来写 `active` 又会让骨架的 `trace_check` gate3 判为「status 値不正」。
+- 影响面: 只有本抄本。上游若采纳，改动约 20 行，可原样作为 PR 提交。
+
+### 偏离 2: `repo/projects/P-R60-001/` 是**正本**，不是派生物
+
+- 上游模型: `repo/` 是知识正本，索引是派生物。
+- 本抄本: 这一点**与上游一致**。但此前 `docs/95_legacy/r60/` 是正本、`repo/` 是导出物，2026-10-29 已反转——现在 `repo/projects/P-R60-001/` 是唯一正本，**要提交进 git**。
+- 已在 `CLAUDE.md` 与 `使用手册.md` 同步。
+
+### 顺带修正: `repo/eval/golden.yaml` 的上游 demo 12 问缺 `project`
+
+上流 demo 的 12 个用例没有 `project:` 字段，检索时只搜 company scope，导致 `eval` 恒为 `recall@5=0.333`。
+补上 `project: P-DEMO-001` 后为 `1.000`。**这是上游文件的缺陷，不是我们的知识质量**。

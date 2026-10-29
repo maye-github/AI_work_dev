@@ -21,7 +21,11 @@ REQUIRED_KEYS = {
     "version",
 }
 
-DEFAULT_CHUNKS_DIR = os.path.join("docs", "95_legacy", "r60", "chunks")
+# 2026-10-29: 旧案件知識は kb-platform の project scope へ移した。
+# 摘要の生データ（1 行 1 chunk）は検索用にここへ残している。
+DEFAULT_CHUNKS_DIR = os.path.join(
+    "tools", "kb-platform", "repo", "projects", "P-R60-001", "chunks", "raw"
+)
 
 
 class ChunkError(ValueError):

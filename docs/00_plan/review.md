@@ -139,7 +139,7 @@
   - 4 = 5 テンプレート + R60Area 具体 10 条（各条に 関連 R-ID）
   - 5 = 4 に加え「新人猜中率」検証段落が統計付きで存在
 - **合格閾値**: >= 4
-- **検査方法**: `docs/95_legacy/r60/review_diff_assets/R60Area/review_comments.md` を読み、5 テンプレート × 10 条 + 猜中率段落の有無を確認。R60Code / R60Item は 3 条 + SOP 段落。
+- **検査方法**: `tools/kb-platform/repo/projects/P-R60-001/review/R60Area/review_comments.md` を読み、5 テンプレート × 10 条 + 猜中率段落の有無を確認。R60Code / R60Item は 3 条 + SOP 段落。
 - **Evidence**: 各 `review_comments.md`
 - **Result**: **_5_**（R60Area 10 条・各 5 テンプレート・関連 R-ID 付き・猜中率 8/10 = 80% の統計段落あり。R60Code/R60Item は 3 条 + SOP）
 

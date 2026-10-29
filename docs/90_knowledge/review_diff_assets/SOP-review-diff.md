@@ -24,7 +24,7 @@ version: 0.1.0
 > ※ 従来この時期を「0 週」と呼んでいたが、PPT に対応する語が無いため本骨架では用いない。
 >   以下「キックオフ週」に統一する。
 >
-> 参照: `docs/95_legacy/r60/review_diff_assets/R60Area/review_comments.md`（完成例）、
+> 参照: `tools/kb-platform/repo/projects/P-R60-001/review/R60Area/review_comments.md`（完成例）、
 > `docs/00_registry/ids.yml`（ID の唯一源）、`tools/trace_check`（6 重門番）。
 > 機密則（規則 01 §L3 準拠）: **実データ値・接続情報・実 IP・実社員名・実メールアドレスは一切記載しない**。
 > **顧客名については「内部機読源は可・対外媒体は占位」**とする — 本骨架は社内資産であり、

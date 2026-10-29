@@ -146,7 +146,7 @@ tutorial/R60Login/ → 节点1・节点2 は人の記入済み、节点3〜8 は
 
 ### ③ 内容缺口 — 56 画面カードは 1 枚
 
-`docs/95_legacy/r60/screens/` に `R60Login.md` が 1 枚だけ。
+`tools/kb-platform/repo/projects/P-R60-001/screens/` に `R60Login.md` が 1 枚だけ。
 （これは 2026-10-14 の裁定「先 R60Login 垂直打通，确认质量后再横向铺开」どおりの状態。）
 
 ---

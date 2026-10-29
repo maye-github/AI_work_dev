@@ -62,7 +62,7 @@ version: 0.1.0
 
 - [ ] 対象の**画面が 1 つに絞られている**（1 画面 = 1 需求書。混ざっていたら先に分ける）
 - [ ] `docs/00_plan/coach/<module>/case.yml` が実在し、`build_mode` を確認した
-- [ ] 実在資産の在り処を知っている（`docs/95_legacy/r60/00-index.md` §4）
+- [ ] 実在資産の在り処を知っている（`tools/kb-platform/repo/projects/P-R60-001/00-index.md` §4）
 
 **`build_mode: migration` だった場合**：本スキルは**そこで止めて人に確認する**。
 `migration` なら既存実装が**入力**になるので、倒推ではなく「移行要件の整理」になり、**別の作業**である。
@@ -106,8 +106,8 @@ coach と同じ鉄則。**1 回の返答で 6 ステップ全部を出さない�
 
 **やること**：題材の画面が**どの実在資産に対応するか**を確定する。
 
-1. `docs/95_legacy/r60/00-index.md` §4（いつどのファイルを開くか）を読む。
-2. `docs/95_legacy/r60/screens/00-screen-index.md` で画面を特定する。
+1. `tools/kb-platform/repo/projects/P-R60-001/00-index.md` §4（いつどのファイルを開くか）を読む。
+2. `tools/kb-platform/repo/projects/P-R60-001/screens/00-screen-index.md` で画面を特定する。
 3. **画面カードが既にあるか**を確認する（現在は `screens/R60Login.md` の 1 枚のみ）。
    - **ある** → それを使う。
    - **無い** → **先にカードを作る**。書式は `screens/00-screen-index.md` §7 の 12 節固定。
@@ -130,7 +130,7 @@ coach と同じ鉄則。**1 回の返答で 6 ステップ全部を出さない�
 |---|---|---|
 | ① 設計書 | 画面項目の定義・イベント一覧・業務処理説明 | `50.設計書/画面設計書/*.xlsx` を `py -3 -m tools.legacy <xlsx> --list` → `--sheet NAME` で抽出 |
 | ② 実装 | 実際の振る舞い（前後端の責任分界を含む） | `.vue` / `.ts` / `.py`（絶対パスは書かず、`D:\AI_work` 相対で控える） |
-| ③ 既存の知識 | 横断規約・DB・API 契約・既知の差異 | `docs/95_legacy/r60/` の `02`〜`08` |
+| ③ 既存の知識 | 横断規約・DB・API 契約・既知の差異 | `tools/kb-platform/repo/projects/P-R60-001/` の `02`〜`08` |
 
 **出所の記号**（**既存資産の語彙をそのまま使う。新しい語を作らない**）：
 
@@ -294,7 +294,7 @@ coach と同じ鉄則。**1 回の返答で 6 ステップ全部を出さない�
 3. 人に宣言する：
 
 > 要求書を凍結しました。**ここから先、節点 2〜8 は `D:\AI_work` と
-> `docs/95_legacy/r60/` を読み返しません。**
+> `tools/kb-platform/repo/projects/P-R60-001/` を読み返しません。**
 > 人版を読むのは**事後の対比（`drill-comparator`）だけ**です。
 > 凍結後に要求書を直すと sha256 が変わるので、変更の有無は機械で検出できます。
 
@@ -376,7 +376,7 @@ book_path: "tutorial/<案件>/节点1_需求/00_输入_客户需求书.md"
 book_sha256: "<64桁>"
 frozen_scope:
   - "D:/AI_work"
-  - "docs/95_legacy/r60/"
+  - "tools/kb-platform/repo/projects/P-R60-001/"
 # frozen_scope は「下流が読んではならない範囲」であると同時に、
 # 封印検査（--only-check seal）が下流成果物から探すパスの唯一の出所でもある。
 # 絶対パスの字面と、十分に長い basename の両方で照合する（境界一致）。
@@ -502,7 +502,7 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比（dri
 
 | | 許す | 禁じる |
 |---|---|---|
-| 節点 2〜8 の実行体 | 凍結済み要求書と、その上流成果物を読む | `D:\AI_work`・`docs/95_legacy/r60/` を読む |
+| 節点 2〜8 の実行体 | 凍結済み要求書と、その上流成果物を読む | `D:\AI_work`・`tools/kb-platform/repo/projects/P-R60-001/` を読む |
 | `legacy-r60-navigator` | 対比・カード作成のために読む | — |
 | `drill-comparator` | **人版（`D:\AI_work`）を読む**（これが仕事） | 人版の内容を AI 側の成果物へ還流させる |
 | 本スキル | 次の画面のために読む | 凍結済み要求書を**黙って**書き換える（変えるなら再凍結と明示） |
@@ -564,9 +564,9 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比（dri
 | 既定の案件形態（`greenfield` / `migration`） | `docs/90_knowledge/ppt-deviation-register.md` **A-22** |
 | `case.yml` / `nNN.yml` の鍵仕様 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md` §4 |
 | 8 節点の手順 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/nodes/n0*.md` |
-| 実在資産の読み方・知識庫の入口 | `docs/95_legacy/r60/00-index.md`（§4 に読み順） |
-| 画面カードの書式（12 節） | `docs/95_legacy/r60/screens/00-screen-index.md` §7 |
-| 設計書と実装の既知の食い違い | `docs/95_legacy/r60/08-deviations.md`（D-1〜D-25） |
-| 対比の帰因分類（「AI が劣る」と即断しない） | `docs/95_legacy/r60/09-ai-workflow.md` §7.1 |
+| 実在資産の読み方・知識庫の入口 | `tools/kb-platform/repo/projects/P-R60-001/00-index.md`（§4 に読み順） |
+| 画面カードの書式（12 節） | `tools/kb-platform/repo/projects/P-R60-001/screens/00-screen-index.md` §7 |
+| 設計書と実装の既知の食い違い | `tools/kb-platform/repo/projects/P-R60-001/08-deviations.md`（D-1〜D-25） |
+| 対比の帰因分類（「AI が劣る」と即断しない） | `tools/kb-platform/repo/projects/P-R60-001/09-ai-workflow.md` §7.1 |
 | 節点1 以降を走らせる進行役 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md` |
 | 訓練報告の作り方 | `.claude/agents/drill-comparator.md` |
