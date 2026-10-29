@@ -66,47 +66,71 @@
   question: R60Ssk の前提条件と、画面が持つ操作の範囲は？
   expect: [r60-001-chunks-r60ssk, r60-001-screens-r60ssk]
   project: P-R60-001
+  module: R60Ssk
+  expect_heading: "画面概要・前提条件・権限"
 - id: RQ002
   question: R60Ssk の検索画面は実項目で何件、内訳はどうなっている？
   expect: [r60-001-chunks-r60ssk, r60-001-screens-r60ssk]
   project: P-R60-001
+  module: R60Ssk
+  expect_heading: "検索画面の項目構成"
 - id: RQ003
   question: R60User の位置づけ・テーブル・操作モードは？
   expect: [r60-001-chunks-r60user, r60-001-screens-r60user]
   project: P-R60-001
+  module: R60User
+  expect_heading: "位置づけと規模"
 - id: RQ004
   question: R60User の検索画面は実項目で何件、ソート可能な列はいくつ？
   expect: [r60-001-chunks-r60user, r60-001-screens-r60user]
   project: P-R60-001
+  module: R60User
+  expect_heading: "検索画面の構成"
 - id: RQ005
   question: R60Plc の位置づけ・テーブル・API 端点は？
   expect: [r60-001-chunks-r60plc, r60-001-screens-r60plc]
   project: P-R60-001
+  module: R60Plc
+  expect_heading: "位置づけと規模"
 - id: RQ006
   question: R60Plc の検索画面は実項目で何件、ソート可能な列は？
   expect: [r60-001-chunks-r60plc, r60-001-screens-r60plc]
   project: P-R60-001
+  module: R60Plc
+  expect_heading: "検索画面の構成"
 - id: RQ007
   question: R60Maker の前提条件・排他条件・画面区分は？
   expect: [r60-001-chunks-r60maker, r60-001-screens-r60maker]
   project: P-R60-001
+  module: R60Maker
+  expect_heading: "画面概要・権限・使用頻度"
 - id: RQ008
   question: R60Maker の検索画面は実項目で何件、検索条件は？
   expect: [r60-001-chunks-r60maker, r60-001-screens-r60maker]
   project: P-R60-001
+  module: R60Maker
+  expect_heading: "検索画面の項目構成"
 - id: RQ009
   question: R60SesModel の構成（画面・テーブル・API・テスト）は？
   expect: [r60-001-chunks-r60sesmodel, r60-001-screens-r60sesmodel]
   project: P-R60-001
+  module: R60SesModel
+  expect_heading: "位置づけと規模"
 - id: RQ010
   question: R60SesModel の検索一覧は実項目で何件、ソート可能な列は？
   expect: [r60-001-chunks-r60sesmodel, r60-001-screens-r60sesmodel]
   project: P-R60-001
+  module: R60SesModel
+  expect_heading: "検索一覧の構成"
 - id: RQ011
   question: R60KkuChi の位置づけと 12 キーパターンの意味は？
   expect: [r60-001-chunks-r60kkuchi, r60-001-screens-r60kkuchi]
   project: P-R60-001
+  module: R60KkuChi
+  expect_heading: "12 キーパターンの対応表"
 - id: RQ012
   question: R60KkuChi の設計イベントは何件で、中心となる連動は？
   expect: [r60-001-chunks-r60kkuchi, r60-001-screens-r60kkuchi]
   project: P-R60-001
+  module: R60KkuChi
+  expect_heading: "39 イベントと 3 段連動"

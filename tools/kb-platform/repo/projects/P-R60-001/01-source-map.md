@@ -13,6 +13,7 @@ title: 01 権威源の地図 — `D:\AI_work` のどこに何があるか
 doc_type: howto
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 01 権威源の地図 — `D:\AI_work` のどこに何があるか

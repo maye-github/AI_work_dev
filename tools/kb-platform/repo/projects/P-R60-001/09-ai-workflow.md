@@ -13,6 +13,7 @@ title: 09 向こうの AI 生成手順 — 「模倣」で作っていた（★�
 doc_type: howto
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 09 向こうの AI 生成手順 — 「模倣」で作っていた（★われわれとの決定的な違い）

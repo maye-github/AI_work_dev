@@ -13,6 +13,7 @@ title: R60 知識ベースの RAG 索引 — 構築・検索・評価
 doc_type: howto
 conf_level: 30
 updated_at: '2026-10-29'
+generated_by: tools/kb_migrate.py
 ---
 
 # R60 知識ベースの RAG 索引 — 構築・検索・評価

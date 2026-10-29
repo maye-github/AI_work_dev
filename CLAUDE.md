@@ -31,7 +31,7 @@ Claude Code が 8 工程（要件理解・基本設計・詳細設計・框架�
 |------|------|------|
 | プロジェクト記憶 | `CLAUDE.md`（本ファイル） | 常時ロードされる中核制約。簡潔に保つ |
 | 工程別ルール 7 份 | `.claude/rules/` | 起動時に自動ロード。各工程の詳細規約（`00` 総則／`01` 機密／`02` 要求管理／`03` 設計製造／`04` テスト／`05` commit／`06` 知識飛輪） |
-| スキル | `.claude/skills/` の 5 つ（`code-from-design-trans-cosmos-ai`・`trans-cosmos-ai-lifecycle-coach`・`legacy-case-navigator`・`virtual-requirement-author`・`requirement-interrogator`） | 設計→製造パイプライン（description で自動起動）／8 工程の伴走進行役（進捗は `docs/00_plan/coach/<module>/` に 1 ノード 1 ファイル）／歴史案件の読取専用ナビゲータ／**節点 0**＝節点1 の入力を実在資産から倒推して作る（8 工程の外側。`build_mode: migration` では使わない）／**要求書審査**＝顧客の要求書から「確認すべき点」を立てる（実在案件の QA 票 177 件から抽出した 51 の観点。真案件で使う本命） |
+| スキル | `.claude/skills/` の 5 つ（`code-from-design-trans-cosmos-ai`・`trans-cosmos-ai-lifecycle-coach`・`legacy-case-navigator`・`virtual-requirement-author`・`requirement-interrogator`） | 設計→製造パイプライン（description で自動起動）／8 工程の伴走進行役（進捗は `docs/00_plan/coach/<module>/` に 1 ノード 1 ファイル）／歴史案件の読取専用ナビゲータ／**節点 0**＝節点1 の入力を実在資産から倒推して作る（8 工程の外側。`build_mode: migration` では使わない）／**要求書審査**＝顧客の要求書から「確認すべき点」を立てる（実在案件の QA 票 177 件から抽出した 52 の観点。真案件で使う本命） |
 | サブエージェント | `.claude/agents/` | **検証系**：`spec-reviewer` / `secret-auditor` / `deliverable-reviewer`。**工程実行系**：`trans-cosmos-ai-node1-requirements` … `trans-cosmos-ai-node8-release-ops` と旁路環 `trans-cosmos-ai-node9-change`（各工程の産出を独立コンテキストで担い、`trans-cosmos-ai-lifecycle-coach` が派発する）。**テスト設計の専用 agent は置かない**（工程 06 の実行体が担う）。**訓練の対比・帰因と旧案件モジュールの選型普查は agent を置かない**（2026-10-29 に削除。方法は `docs/90_knowledge/agent-run-record.md` §5） |
 | 成果物の変換 | `tools/gen_view/`・`tools/gen_formal/` | 機読源 → 人向けビュー（`gen_view`）／日文正式 Excel（`gen_formal`・Phase1 は dry-run のみ） |
 | 権限・フック | `.claude/settings.json`（共有）／`settings.local.json`（個人・gitignore 済） | 門番コマンドの権限、機密ファイルの参照禁止 |

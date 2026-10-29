@@ -13,6 +13,7 @@ title: R60SesModel — 検索摘要（80 条）
 doc_type: glossary
 conf_level: 30
 updated_at: '2026-10-29'
+generated_by: tools/kb_migrate.py
 ---
 
 # R60SesModel — 検索摘要（80 条）

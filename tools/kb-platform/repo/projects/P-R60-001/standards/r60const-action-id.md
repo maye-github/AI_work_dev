@@ -1,7 +1,8 @@
 ---
 id: STD-R60-001-ACTIONID
 type: knowledge
-req_ids: [R-101]
+req_ids:
+- R-101
 status: baselined
 sensitivity: internal
 owner: AI-PG
@@ -13,6 +14,7 @@ title: r60const.py ACTION_ID 40 個の操作分類
 doc_type: standard
 conf_level: 30
 updated_at: 2026-10-29
+generated_by: tools/kb_migrate.py
 ---
 
 # r60const.py ACTION_ID 40 個の操作分類

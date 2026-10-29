@@ -13,6 +13,7 @@ title: 03 規約 — 作る前に必ず当たる 4 冊
 doc_type: standard
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 03 規約 — 作る前に必ず当たる 4 冊

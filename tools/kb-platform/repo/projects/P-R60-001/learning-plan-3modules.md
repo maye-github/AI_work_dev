@@ -13,6 +13,7 @@ title: 3 模块学习计划 — R60Area / R60Code / R60Item
 doc_type: decision
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 3 模块学习计划 — R60Area / R60Code / R60Item

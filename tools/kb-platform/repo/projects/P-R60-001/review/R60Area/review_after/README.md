@@ -13,6 +13,7 @@ title: R60Area review_after（審査後スナップショット）
 doc_type: decision
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # R60Area review_after（審査後スナップショット）

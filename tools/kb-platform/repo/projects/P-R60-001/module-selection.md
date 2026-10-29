@@ -13,6 +13,7 @@ title: 教材モジュール選型 — 簡単／中等／複雑の 3 つを選�
 doc_type: decision
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 教材モジュール選型 — 簡単／中等／複雑の 3 つを選ぶ

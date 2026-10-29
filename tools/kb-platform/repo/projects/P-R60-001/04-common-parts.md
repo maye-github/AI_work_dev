@@ -13,6 +13,7 @@ title: 04 共通部品 — 「自作しない」ための目録
 doc_type: standard
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 04 共通部品 — 「自作しない」ための目録

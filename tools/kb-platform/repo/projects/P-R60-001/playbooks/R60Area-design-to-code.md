@@ -1,7 +1,8 @@
 ---
 id: PLAY-R60-001-R60AREA
 type: knowledge
-req_ids: [R-101]
+req_ids:
+- R-101
 status: baselined
 sensitivity: internal
 owner: AI-PG
@@ -13,6 +14,7 @@ title: R60Area 設計→製造 貫通例（BD/DD/製造の実値）
 doc_type: howto
 conf_level: 30
 updated_at: 2026-10-29
+generated_by: tools/kb_migrate.py
 ---
 
 # R60Area 設計→製造 貫通例（BD/DD/製造の実値）

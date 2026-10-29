@@ -13,6 +13,7 @@ title: R60Area — 検索摘要（57 条）
 doc_type: glossary
 conf_level: 30
 updated_at: '2026-10-29'
+generated_by: tools/kb_migrate.py
 ---
 
 # R60Area — 検索摘要（57 条）

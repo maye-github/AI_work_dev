@@ -13,6 +13,7 @@ title: 05 データベース定義
 doc_type: design-detail
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 05 データベース定義

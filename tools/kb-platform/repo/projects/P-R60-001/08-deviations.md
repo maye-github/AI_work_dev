@@ -13,6 +13,7 @@ title: 08 【差異】登記簿 — 骨架規則 vs 実物、向こうの文書 
 doc_type: decision
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 08 【差異】登記簿 — 骨架規則 vs 実物、向こうの文書 vs 向こうの実装

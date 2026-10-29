@@ -13,6 +13,7 @@ title: 原本テキスト（抽出物）はどこへ行ったか
 doc_type: howto
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 原本テキスト（抽出物）はどこへ行ったか

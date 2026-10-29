@@ -1,19 +1,15 @@
----
-doc_id: HOWTO-COMPANY-INDEX-001
-scope: company
-title: company/ ディレクトリの使い方と昇格の判据
-doc_type: howto
-version: "1.0"
-status: active
-conf_level: 10
-owner: 共通基盤チーム
-updated_at: 2026-10-29
-tags: [knowledge-base, company-scope, promotion]
----
-
 # `company/` — 公司级知识（跨案件复用）
 
-> 本目录放**任何案件都能用**的方法与标准。案件事实不放这里。
+> **本文件放在 `repo/` 之外，是有意的：它不进索引。**
+> 2026-10-29 实测：这篇放在 `repo/company/README.md` 时，被 kb 索引进检索池，
+> 因为「现有条目」表列了全部 doc_id 与主题词，它比正文更匹配方法类提问——
+> 问「テストケースの最低件数」时第 1 位是这篇目录页，而真正写了答案的
+> `STD-TEST-RATIO-001` 前 5 位里没有；问「A/B/C 分類」「出典等級」同样。
+> 目录页的职责是指路，不该和它指的内容抢位置。
+> 位置改动记录：`reports/audit/kb-integration/04_残留问题清单_2026-10-29.md` §1.2。
+
+> 本目录放**任何案件都能用**的方法与标准。案件事实不放这里（那些去 `repo/projects/`，
+> 见 `projects-README.md`）。
 > 上层说明见 `tools/kb-platform/VENDORED.md`；上游正本是 `D:\AI_platform`。
 
 ---
@@ -72,4 +68,7 @@ py -3 tools/kb-platform/run.py eval --repo tools/kb-platform/repo
 
 - **本ディレクトリはベンダリング（写し）である。** 正本は `D:\AI_platform`。
   ここで足した条目は、**上流へ PR で還流させる**。上流を直接編集しない。
+  同期の手順と、本抄本が上流からずれている箇所の一覧は `UPSTREAM-SYNC.md`。
 - 還流の単位は**条目 1 本**（ファイル 1 つ）。複数案件で使われた実績ができたら上げる、が目安。
+- **案件 scope（`repo/projects/`）の知識は上流へ上げない。** 上げてよいのは本ディレクトリに
+  昇格させた条目だけ（`projects-README.md` §3）。

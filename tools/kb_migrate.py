@@ -45,6 +45,7 @@ import yaml
 SRC_REL = "docs/95_legacy/r60"  # 移設元（1 回限りの移設器。実行後は存在しない）
 DST_REL = "tools/kb-platform/repo/projects/P-R60-001"
 PROJECT_ID = "P-R60-001"
+GENERATED_BY = "tools/kb_migrate.py"
 ROOT = Path(__file__).resolve().parent.parent
 
 # パスの形 → kb の doc_type（pipeline.py の DOC_TYPES のいずれか）
@@ -179,6 +180,10 @@ def merged_fm(meta: dict, rel: str, source_rel: str, fallback_title: str, body: 
     out["doc_type"] = doc_type_for(rel)
     out["conf_level"] = CONF_MAP.get(str(out["sensitivity"]), DEFAULT_CONF)
     out["updated_at"] = git_date(source_rel)
+    # 生成物であることを front matter に残す（2026-10-29 追加）。
+    #   この木の .md はすべて派生物であり、手で直すと次回の `--apply` で消える。
+    #   正本は同ディレクトリの .yaml（モジュールカード）と chunks/raw/*.jsonl。
+    out["generated_by"] = GENERATED_BY
     return out
 
 
@@ -347,7 +352,29 @@ def main(argv: list[str] | None = None) -> int:
                 write_digest(jl, dst / "chunks" / f"{jl.stem}.md", dst)
         verb = "再生成しました" if args.apply else "再生成します（--apply で実行）"
         print(f"[kb_migrate] 移設済み。モジュールビュー {len(views)} 件・検索摘要 {len(digests)} 件を{verb}")
+        if args.apply:
+            restamped = stamp_existing(dst)
+            if restamped:
+                print(f"[kb_migrate] generated_by を後付けした既存 .md: {restamped} 件")
         return 0
+
+
+def stamp_existing(dst: Path) -> int:
+    """移設元が消えた後も、生成済み .md に `generated_by` を行き渡らせる。
+
+    移設元から本文を写した `.md`（種別 `md`）は、元ディレクトリが無いと作り直せない。
+    そのままでは front matter に `generated_by` が無く「手で直してよい文書」に見えるため、
+    既に合成済みの front matter（`doc_id` を持つ）に限って鍵を足す。本文には触らない。
+    """
+    n = 0
+    for p in sorted(dst.rglob("*.md")):
+        meta, body = split_fm(p.read_text(encoding="utf-8"))
+        if not meta.get("doc_id") or meta.get("generated_by") == GENERATED_BY:
+            continue
+        meta["generated_by"] = GENERATED_BY
+        p.write_text(dump_fm(meta) + "\n" + body.lstrip("\n"), encoding="utf-8", newline="\n")
+        n += 1
+    return n
 
     plan: list[tuple[str, str, str]] = []  # (種別, 元, 先)
     written = 0

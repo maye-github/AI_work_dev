@@ -13,6 +13,7 @@ title: R60Item 審査差分資産 レビュー指摘（review_comments）
 doc_type: decision
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # R60Item 審査差分資産 レビュー指摘（review_comments）

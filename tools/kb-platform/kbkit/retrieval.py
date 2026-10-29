@@ -113,6 +113,33 @@ def simple_rerank(query: str, row: sqlite3.Row, base: float) -> float:
     return base + 0.30 * coverage + 0.10 * head + 0.05 * title
 
 
+def _filter_candidates(
+    rows: list[sqlite3.Row],
+    module: str | None = None,
+    scope: str | None = None,
+) -> list[sqlite3.Row]:
+    """案件内の「モジュール」「スコープ」で候補を絞る（2026-10-29 追加）。
+
+    なぜ要るか: 案件知識を 1 案件にまとめて入れたため、`R60User` の質問に対して
+    `R60SesModel` の同種の節（イベント一覧など）が上位に来る。呼び出し側は
+    「どのモジュールの話か」を知っているのに、それを伝える口が無かった
+    （実測: 80 題中 3 件がモジュール違いで落ちた）。
+
+    モジュールの判定は doc_id と title の部分一致（`r60ssk` / `R60Ssk` など）。
+    語幹が同じ別モジュールが現れたら、そのときに対応表を足すこと。
+    """
+    if module:
+        m = module.strip().lower()
+        if m:
+            rows = [
+                r for r in rows
+                if m in (r["doc_id"] or "").lower() or m in (r["title"] or "").lower()
+            ]
+    if scope:
+        rows = [r for r in rows if (r["scope"] or "") == scope]
+    return rows
+
+
 def search(
     conn: sqlite3.Connection,
     query: str,
@@ -122,8 +149,10 @@ def search(
     top_k: int = 5,
     rerank_n: int = 30,
     reranker: Callable[[str, sqlite3.Row, float], float] | None = simple_rerank,
+    module: str | None = None,
+    scope: str | None = None,
 ) -> list[dict]:
-    rows = _load_candidates(conn, project_id, user_level)
+    rows = _filter_candidates(_load_candidates(conn, project_id, user_level), module, scope)
     if not rows:
         return []
 

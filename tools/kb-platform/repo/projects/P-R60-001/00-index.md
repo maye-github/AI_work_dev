@@ -13,6 +13,7 @@ title: 歴史案件 R60 知識庫 — 総索引
 doc_type: howto
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 歴史案件 R60 知識庫 — 総索引

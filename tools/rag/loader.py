@@ -21,6 +21,14 @@ REQUIRED_KEYS = {
     "version",
 }
 
+# source_kind は 2026-10-29 に足した任意キー。
+#   repo     … source_path は本リポジトリ内。そのまま開ける。
+#   external … 旧案件側の資産。本リポジトリには無い（出典の記録として残す）。
+# 足した理由: 移設後、344 chunk の source_path が 1 本も盤上に無くなり、
+# 「どれが本当に開けないのか」が判別できなかった（tools/kb_repoint_sources.py）。
+OPTIONAL_KEYS = {"source_kind"}
+SOURCE_KINDS = {"repo", "external"}
+
 # 2026-10-29: 旧案件知識は kb-platform の project scope へ移した。
 # 摘要の生データ（1 行 1 chunk）は検索用にここへ残している。
 DEFAULT_CHUNKS_DIR = os.path.join(
@@ -36,9 +44,13 @@ def _check_one(row, path, lineno):
     missing = REQUIRED_KEYS - set(row)
     if missing:
         raise ChunkError("%s:%d missing keys: %s" % (path, lineno, sorted(missing)))
-    extra = set(row) - REQUIRED_KEYS
+    extra = set(row) - REQUIRED_KEYS - OPTIONAL_KEYS
     if extra:
         raise ChunkError("%s:%d unexpected keys: %s" % (path, lineno, sorted(extra)))
+    if "source_kind" in row and row["source_kind"] not in SOURCE_KINDS:
+        raise ChunkError(
+            "%s:%d source_kind must be one of %s" % (path, lineno, sorted(SOURCE_KINDS))
+        )
     if not isinstance(row["ids"], list):
         raise ChunkError("%s:%d ids must be a list" % (path, lineno))
     digest = hashlib.sha256(row["text"].encode("utf-8")).hexdigest()

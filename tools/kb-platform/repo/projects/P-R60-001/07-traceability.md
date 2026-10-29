@@ -13,6 +13,7 @@ title: 07 追跡台帳 — 向こうは Excel で人手管理していた（★�
 doc_type: standard
 conf_level: 30
 updated_at: '2026-10-28'
+generated_by: tools/kb_migrate.py
 ---
 
 # 07 追跡台帳 — 向こうは Excel で人手管理していた（★最も示唆が大きい）
