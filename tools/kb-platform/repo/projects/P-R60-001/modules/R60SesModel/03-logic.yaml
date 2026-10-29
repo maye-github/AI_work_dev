@@ -1,0 +1,474 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60SESMODEL-LOGIC
+type: knowledge
+req_ids: []
+status: open
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60SesModel
+artifact_type: business-logic
+
+source:
+  design_process: reports/module-survey/R60SesModel/design/21_業務処理説明.txt
+  design_events: reports/module-survey/R60SesModel/design/20_イベント一覧.txt
+  design_single_checks: reports/module-survey/R60SesModel/design/17_画面単項目チェック.txt
+  design_cross_checks: reports/module-survey/R60SesModel/design/18_画面項目間・DB整合チェック.txt
+  design_messages: reports/module-survey/R60SesModel/design/19_その他メッセージ.txt
+  backend_controller: api/fastapi_oracle_pjt/app/routers/R60SesModelController.py
+  frontend_view: Front-end/src/views/R60SesModel.vue
+  frontend_header_edit: Front-end/src/components/R60SesModelEdit.vue
+  frontend_detail_edit: Front-end/src/components/R60SesModelMesEdit.vue
+
+constants:
+  option_kbn:
+    "1": アイテム
+    "2": 半製品
+    "3": 原材料
+  mode:
+    "1": 新規
+    "2": 複製
+    "3": 修正
+  search_button:
+    "0": 仕掛表示（REG_STS='0' を条件に加える）
+    "1": 表示（REG_STS を条件に加えない）
+  is_deleted:
+    "0": 削除を含まない（DEL_FLG='0'）
+    "1": 削除を含む
+  reg_sts:
+    "0": 未確定
+    "1": 確定
+  send_sts:
+    "0": 未送信
+    "9": 緊急配信
+  companies:
+    "0093": 飲料社（I-Pro/ASD 接続）
+    "0452": カルピス社（I-Pro/ASD 接続）
+  factory:
+    company: "0001"
+    jig: "P030"
+  dummy_semi:
+    pattern: "4[A-Z][0-9]{4}"
+    range: "4A0000 ～ 4Z9999"
+    suffix: "生産モデルコードの枝番 '-000' または '-001' のみを採番対象にする"
+  joho_ids:
+    max_count: "000000024"
+    send_sts: "000000057"
+    oya_cd_kbn: "000000091"
+    del_flg: "000000063"
+    page_limit: "000000089"
+    kojo_cd: "000000412"
+    jig_list: "000000375"
+  pgm_id: R60SesModel
+  note: >-
+    会社コード 0093 / 0452 / 0001 と事業場 P030 が業務ルールに直書きされている（D-SM-12）。
+
+logics:
+  - id: L-SM-01
+    name: 画面初期表示
+    design_locator: "BP r21-r76（イベント No2）"
+    handler: "R60SesModelController.py init:1735-1873"
+    rules:
+      - "sim_kbn が空ならセッションエラー（error_code='3'）。"
+      - "情報ID 000000375 から事業場リストを作る（DEL_FLG=0、HYJ_SEQ・KEY_ID 昇順）。"
+      - "情報ID 000000089 から頁件数リストと既定値（KOB_KMK_NM_10='D'、無ければ '10'）を作る。"
+      - "工場ユーザー判定は情報ID 000000412 に 'CMP_CD||JIG_CD' が存在するかで行う。"
+      - "メッセージ 36 件を返す。"
+    deviation: "R60W0001 を取得しない（D-SM-10）。"
+    bind_style: "すべて bind 変数。"
+
+  - id: L-SM-02
+    name: 検索条件の組み立て
+    design_locator: "BP r101-r379（イベント No6/No7）"
+    handler: "R60SesModelController.py search:1933-2038, get_ses_mdl_cd_condition:5144-5313"
+    rules:
+      - "生産モデルコードは前方一致（LIKE '値%'）。"
+      - "OYA_CD_KBN はオプション区分と同値（1/2/3）。"
+      - "仕掛表示（btn='0'）の時だけ REG_STS='0' を加える。"
+      - "削除含むが未チェック（is_deleted != '1'）なら DEL_FLG='0'。"
+      - "アイテム名称は親番（'-' より前）を ITEM_CD とみなし、ITEM_20_KNM を中間一致で引く。"
+      - "購入品目コード・半製品コードは明細の KO_CD を前方一致で引き、該当する生産モデルコードの集合を WHERE に加える。"
+      - "購入品目名称・半製品名称は名称マスタを子クエリで引き、スペース区切りの各語を AND 連結する。"
+      - "逆引きは CONNECT BY NOCYCLE（LEVEL<=11、CONNECT_BY_ISLEAF=1）で親モデルを再帰収集する。"
+    bind_style: >-
+      件数 SQL は文字列連結で組み立て、ses_mdl_cd をクォート未エスケープで埋め込む。
+      本検索は bind を使うが、get_ses_mdl_cd_condition の戻り文字列はそのまま埋め込む（D-SM-05）。
+    deviation: "条件の意味は設計どおり。方式のみ骨架の bind 原則から外れる。"
+
+  - id: L-SM-03
+    name: 件数チェックと上限
+    design_locator: "BP r101-r379（イベント No6/No7）"
+    handler: "R60SesModelController.py search:1919-2058"
+    rules:
+      - "上限件数は R60_GET_CODE_CHI_MEISAI_FNC('000000024','R60SesModel','0')。取得できなければ 500。"
+      - "0 件なら R60W0010 を返す。"
+      - "上限超過なら R60W0005 を返し、total と max_count を添える。"
+      - "どちらの場合も data は空配列。"
+    deviation: "なし。"
+
+  - id: L-SM-04
+    name: 並び順とページング
+    design_locator: "BP r101-r379"
+    handler: "R60SesModelController.py search:2060-2112"
+    rules:
+      - "許可ソート列は SES_MDL_CD / SES_MDL_NM の 2 つ。"
+      - "指定ソートは ORDER BY DEL_FLG, {列} {ASC|DESC}, ROWID。"
+      - "既定は ORDER BY DEL_FLG, SES_MDL_CD, ROWID。"
+      - "ページは OFFSET (n-1)*limit ROWS FETCH FIRST limit ROWS ONLY。"
+      - "要求頁が総頁を超えたら最終頁に丸める。"
+    deviation: >-
+      指定ソート時に SES_MDL_CD の副キーが落ちる（D-SM-07）。
+      ページングは骨架の ROWID 方式ではなく OFFSET/FETCH（D-SM-08）。
+
+  - id: L-SM-05
+    name: 半製品の工場生産モデル判定
+    design_locator: "BP r101-r379（5-1）"
+    handler: "R60SesModelController.py search:2123-2155, get_kjo_ses_mdl_m_info_batch:5329-5384"
+    rules:
+      - "半製品（opt_kbn='2'）の時、当頁の生産モデルコードについて工場生産モデル情報を一括取得する。"
+      - "自社の工場生産モデルが 0 件で他社のみなら、工場会社・事業場コードは空。"
+      - "それ以外はログイン会社・事業場を工場コードとして返す。"
+      - "ログイン会社が 0093/0452 以外で、親番がダミー半製品（4[A-Z][0-9]{4}）なら工場コードを空にする。"
+    deviation: "なし（設計の分岐をそのまま移植）。"
+    note: "N+1 を避けるため一括取得に置換している。"
+
+  - id: L-SM-06
+    name: 購入品目・半製品からの生産モデル逆引き
+    design_locator: "BP r101-r379（2-1-2）"
+    handler: "R60SesModelController.py get_ses_mdl_cd_condition:5144-5313"
+    rules:
+      - "購入品目コード／半製品コードは KO_CD LIKE '値%'。"
+      - "名称は KON_HMK_NM・KON_HMK_RNM（購入品目）、半製品は名称系 4 列を対象にする。"
+      - "明細を起点に DISTINCT の生産モデルコード集合を作り、再帰的に親モデルを集める。"
+      - "該当なしの時は SES_MDL_CD = '' を返して 0 件にする。"
+    bind_style: "戻り値は SQL 断片文字列。コード値はクォート未エスケープ（D-SM-05）。"
+    note: "名称は str_like_convert でエスケープするが、コードはしない。"
+
+  - id: L-SM-07
+    name: CSV ダウンロード
+    design_locator: "BP r575-r599（イベント No15）"
+    handler: "R60SesModelController.py download:2172-2286"
+    rules:
+      - "検索と同じ条件・並び順で CSV を作る。"
+      - "データ源は R60_SES_MODEL_M_VW（明細ビュー）。"
+      - "ファイル名は R60CsvUtil が定義から生成する。"
+      - "削除条件は is_deleted == '0' の時だけ DEL_FLG='0'。"
+    deviation: >-
+      search は is_deleted != '1'、download は == '0' で判定する（現行の入力値では同値。D-SM-06）。
+      WHERE は f-string 連結で、ses_mdl_cd のみシングルクォートを二重化する（D-SM-05）。
+
+  - id: L-SM-08
+    name: シミュレーションデータ初期化
+    design_locator: "BP r645-r663（イベント No17）"
+    handler: "R60SesModelController.py data_init:2287-2342"
+    rules:
+      - "sim_kbn='0'（通常環境）は R60W0001 で拒否する。"
+      - "R60L550BBean.do_r60l550b() を SES、続いて SES_MES の順に実行する。"
+      - "途中で失敗したら rollback して例外。成功したら commit。"
+      - "設計（Java）は完了メッセージ R60I0022 を設定する。実装は error_id='' を返し、画面が R60I0022 を表示する。"
+    deviation: "応答契約が設計と異なるが、画面の見え方は同じ。"
+
+  - id: L-SM-09
+    name: ヘッダマスタ項目の初期化
+    design_locator: "BP r380-r424（No9 複製）, r472-r493（No11 修正）, r600-r644（No16 新規）"
+    handler: "R60SesModelController.py init_edit:2345-2481"
+    rules:
+      - "新規（mode=1）: 既定値のみ。半製品かつ会社 0093/0452 なら自動採番チェックを ON。"
+      - "複製（mode=2）: 複製元の生産モデルコード・名称を取得し、ksn_dat / rev_no を空にリセットする。"
+      - "修正（mode=3）: 選択行のフル項目を返す。"
+      - "親コード区分の表示名はオプション区分から決める（1=アイテム, 2=半製品, 3=原材料）。"
+      - "明細は返さない。画面が別途 searchChild を呼ぶ。"
+    deviation: >-
+      InitEditHeaderData に mode フィールドが無いのに mode='修正' を渡している。
+      extra='ignore' により応答へ出ない（D-SM-21）。
+    note: "設計は新規・複製・修正を別画面のように書くが、実装は 1 モーダル・3 モード。"
+
+  - id: L-SM-10
+    name: 半製品コード自動採番とダミー登録
+    design_locator: "BP r664-r670（イベント No21）, r1266-r1577（No25 新規）"
+    handler: "R60SesModelController.py auto_number_hsh_cd:4887-5011"
+    rules:
+      - "生産モデルマスタから枝番 -000 / -001 のダミーコードを降順に取得する。"
+      - "4[A-Z][0-9]{4} 形式に一致する最大コードを採る。"
+      - "該当なしは '4A0000'。"
+      - "'4Z9999' は枯渇で空文字を返し、呼出し元が R60W2019 にする。"
+      - "下 4 桁が 9999 なら英字を繰り上げて 0000（4A9999 → 4B0000）。"
+      - "それ以外は数値 +1（4A0099 → 4A0100）。"
+      - "採番と同時に半製品マスタへダミーを INSERT する（40 列）。HSH_NM=生産モデル名、GNK_CD=半製品コード自身、HYJ_SEQ=NULL。"
+      - "REG_STS / SEND_STS / SEND_KBN / DEL_FLG はいずれも '0'、REG_KBN='1'、REV_NO=開始値。"
+    deviation: >-
+      移送表 DB10 はテーブル全 62 列を示すが、実装の INSERT は 40 列。
+      残りは DB 既定値/NULL（DB10 の読み方の注意）。
+    bind_style: "SELECT は文字列連結だが値は含まない。INSERT は bind。"
+
+  - id: L-SM-11
+    name: ヘッダ新規・複製
+    design_locator: "BP r1266-r1577（イベント No25 新規）"
+    handler: "R60SesModelController.py edit:2488-2822"
+    rules:
+      - "単項目チェック（W0009 必須 / W0016 変更なし / W0103 コード桁 / W0131 名称桁 / W0012 緊急配信必須 / W0015 削除必須）。"
+      - "親コード存在チェック（W0011）。アイテムは REG_STS='1' かつ SEND_KBN='1'。半製品はダミーなら状態条件を付けない。"
+      - "複製時は複製元に子コードがあるか確認する（W0032）。"
+      - "自動採番 ON ならダミー半製品を登録し、コードを採番する（L-SM-10）。"
+      - "重複チェック（W0014）。"
+      - "イベントマスタ参照チェック（W2019、error_flg='2'）。"
+      - "生産モデルマスタ INSERT（DB1、REG_STS は必須 4 項目で判定）。"
+      - "複製時は明細を複製する（DB2）。"
+      - "処方マスタ生成・緊急配信パッケージ・I-Pro 連携を行う。"
+      - "完了文言はフロントが R60I0001 を表示する。"
+    deviation: >-
+      設計の『飲料社接続フラグを強制 0』は複製時に asd_stu_flg='0' として実装されている。
+      実装は完了メッセージ ID を返さない（D-SM-23）。
+
+  - id: L-SM-12
+    name: ヘッダ修正
+    design_locator: "BP r1266-r1577（イベント No25 修正）"
+    handler: "R60SesModelController.py edit:2823-3312"
+    rules:
+      - "排他チェック（W0006。KSN_KBN='1' かつ保存 ksn_dat ≠ DB ksn_dat）。"
+      - "親コード存在チェック（W0011）。"
+      - "イベントマスタ参照チェック（W2019、error_flg='3'）。"
+      - "論理削除から復活させる場合、関連データの復活を確認する（E0025 / W0018）。"
+      - "明細を取得し、削除済み明細だけの緊急配信は W2007。"
+      - "生産モデルマスタ UPDATE（DB1、REG_STS を必須 4 項目で再判定）。"
+      - "明細 UPDATE（DB2/7/8）、ダミー半製品 UPDATE（DB4/10）。"
+      - "工場生産モデル削除（DB6/DB9）、処方マスタ UPDATE（DB3）、緊急配信、I-Pro。"
+      - "削除チェックが ON なら R60I0002、それ以外は R60I0001 をフロントが表示する。"
+    deviation: "なし（設計の順序どおり）。"
+
+  - id: L-SM-13
+    name: ヘッダ削除
+    design_locator: "BP r695-r1265（イベント No24）"
+    handler: "R60SesModelController.py delete:3313-3737"
+    rules:
+      - "単項目チェック（W0131 / W0015）。"
+      - "削除確認（R60A0004）。"
+      - "排他チェック（W0006）。"
+      - "親コード存在チェック（W0011）。"
+      - "イベントマスタ参照チェック（W2019）。"
+      - "明細取得後、緊急配信対象に明細が無ければ W2007。"
+      - "子マスタの REG_STS を確認し、未確定なら W2051。ダミー半製品は REG_STS='0' で確認する。"
+      - "削除順: SES_MODEL（DB7）→ SES_MODEL_MES（DB8）→ ダミー半製品（DB4/DB10）→ 処方マスタ UPDATE（DB3）→ KJO（DB6/DB9）→ I-Pro → 緊急配信 → commit。"
+      - "完了文言はフロントが R60I0002 を表示する。"
+    deviation: "なし。"
+
+  - id: L-SM-14
+    name: 明細一覧の表示
+    design_locator: "BP r425-r471（イベント No10）, r494-r552（No12）"
+    handler: "R60SesModelController.py search_child:3740-3847"
+    rules:
+      - "生産モデルコードで明細を取得する。"
+      - "工場ユーザーかつ飲料社接続フラグ='1' の時、購入品目分類コード１が 'S000%' の子コードに絞る（BP イベント No10）。"
+      - "子コード名称は半製品マスタ／購入品目マスタから引く。"
+      - "削除済み明細は del_flg_param='1' の時だけ返す。"
+      - "ko_cnt は削除されていない明細件数。"
+    deviation: "なし。"
+
+  - id: L-SM-15
+    name: 明細マスタ項目の初期化
+    design_locator: "BP r1600-r1608（イベント No28 周辺）, r1710-r1935（No31）"
+    handler: "R60SesModelController.py init_edit_child:3850-3948, R60SesModelMesEdit.vue onMounted"
+    rules:
+      - "子コード区分・調達対象外フラグ・展開区分の 3 ドロップダウンを作る。"
+      - "新規時、会社が 0093/0452 なら子コード区分='2'（購入品目）、調達対象外フラグ='0'。それ以外は空。"
+      - "基準値の初期値は '1'。"
+      - "所要量の範囲は 0.001〜99,999.999、基準値は 1〜9,999,999,999。"
+      - "子コード区分が空白なら子コードと検索アイコンを非活性にする。"
+      - "子コード区分='1'（半製品）なら展開区分='1'、'2'（購入品目）なら '0'（BP イベント No28）。"
+    deviation: >-
+      明細マスタ項目シート No13『展開区分』の初期値欄が『同行の調達対象外フラグ』に
+      なっている（コピー＆ペースト誤り。D-SM-16）。
+
+  - id: L-SM-16
+    name: 子コード名称取得
+    design_locator: "BP r1578-r1599（イベント No27）"
+    handler: "R60SesModelController.py get_kon_hmk:3950-3981, R60SesModelMesEdit.vue openCond:494-568"
+    rules:
+      - "検索アイコンは子コード区分により R60HshSup / R60KonHmkSup を開く。"
+      - "戻り値のコードで名称を引く。半製品は R60_Get_Hsh_Information_FNC、購入品目は R60_Get_KonHmk_Information_FNC。"
+      - "名称が取れなければ W0011。##1=『子コード(値)』、##2=『半製品マスタ／購入品目マスタ』。"
+    deviation: "なし。"
+    note: "名称取得は入力支援画面の戻り時だけでなく、コード変更時にも使う設計と読めるが、実装は戻り時のみ。"
+
+  - id: L-SM-17
+    name: 明細新規・複製
+    design_locator: "BP r1710-r1935（イベント No31 新規）"
+    handler: "R60SesModelController.py edit_child:3984-4195, insert_or_update_child:4773-4862"
+    rules:
+      - "単項目チェック（W0009 / W0016 / W0015 / W0121 / W0031）。W0031 は子コードの先頭が親番と一致すること。"
+      - "親が削除済みなら W0019。"
+      - "子コード存在チェック（W0011）。"
+      - "飲料社工場ユーザーが非素材の購入品目を選んだら W2050。"
+      - "イベントマスタ参照チェック（W2019）。"
+      - "複製で子コードを変えた場合、変更前の行を物理削除してから INSERT する（DB12）。"
+      - "重複チェック（W0014）。"
+      - "明細 INSERT（DB11、REG_STS は必須項目で判定）。"
+      - "I-Pro 連携（R60L270B / R60L830B / R60L940B）、処方マスタ生成。"
+      - "完了文言はフロントが R60I0001 を表示する。"
+    deviation: "なし。"
+
+  - id: L-SM-18
+    name: 明細修正
+    design_locator: "BP r1710-r1935（イベント No31 修正）"
+    handler: "R60SesModelController.py edit_child:4196-4379"
+    rules:
+      - "論理削除から復活させる場合、関連データの復活を確認する（W0018 / E0025）。"
+      - "被参照チェック（W0018 / E0025）。"
+      - "明細存在チェック（W0011）、排他チェック（W0006）。"
+      - "イベントマスタ参照チェック（W2019）。"
+      - "明細 UPDATE（DB11）、処方マスタ生成、I-Pro。"
+      - "削除チェックが ON なら R60I0002、それ以外は R60I0001。"
+    deviation: "なし。"
+
+  - id: L-SM-19
+    name: 明細削除
+    design_locator: "BP r1619-r1709（イベント No30）"
+    handler: "R60SesModelController.py delete_child:4382-4576"
+    rules:
+      - "単項目チェック（W0015 / W0121）。"
+      - "削除確認（R60A0004）。"
+      - "子コード存在チェック（W0011）。"
+      - "排他チェック（W0006）。"
+      - "イベントマスタ参照チェック（W2019、error_flg='3'）。"
+      - "明細 UPDATE で DEL_FLG='1'（DB11）。"
+      - "処方マスタ生成、I-Pro。"
+      - "完了文言はフロントが R60I0002 を表示する。"
+    deviation: "なし。"
+
+  - id: L-SM-20
+    name: 排他制御
+    design_locator: "BP 各更新イベント"
+    handler: "各更新ハンドラ内の KSN_DAT 比較"
+    rules:
+      - "画面が保持する ksn_dat と DB の KSN_DAT（'YYYY/MM/DD HH24:MI:SS'）を比較する。"
+      - "KSN_KBN='1'（オンライン）かつ不一致なら W0006。"
+      - "処方マスタ連動更新でも、L270B 直後の KSN_DAT を保存し、更新直前に再取得して比較する。"
+      - "更新・削除時は DEL_FLG / REG_STS で絞らず全件取得する（設計コメント）。"
+    deviation: "なし。"
+    note: "設計は更新日時を文字列で受け渡す。タイムゾーン・書式の統一が前提。"
+
+  - id: L-SM-21
+    name: 被参照・復活チェック
+    design_locator: "BP r1266-r1577（No25 修正）, r1710-r1935（No31 修正）"
+    handler: "edit / edit_child 内の R60_CHECK_* 呼出し"
+    rules:
+      - "論理削除されたレコードを復活させる場合、関連レコードも復活しているか確認する。"
+      - "未復活の関連があれば W0018（error_flg で対象を切替）。"
+      - "チェック関数が null を返したら E0025（共通部品異常）。"
+    deviation: "なし。"
+
+  - id: L-SM-22
+    name: イベントマスタ参照チェック
+    design_locator: "BP 各更新イベント"
+    handler: "check_evt_szi_kmws_ptn_m:5448-5477"
+    rules:
+      - "登録・更新・削除の直前に、対象がイベントマスタの抽出行に載っているか確認する。"
+      - "載っていれば R60W2019。error_flg で状況を区別する（1=枯渇, 2=登録時, 3=削除・修正時）。"
+    deviation: "なし。"
+
+  - id: L-SM-23
+    name: 単項目チェック（29 件）
+    design_locator: "17_画面単項目チェック No1-33（節行 [1,10,23,32] を除く 29 件）"
+    handler: "R60SesModelEdit.vue inputCheck:926-1100 / R60SesModelMesEdit.vue inputCheck:925-1068"
+    rules:
+      - "W0103: 生産モデルコードの親番 17 桁・枝番 16 桁・コード全体 17 桁。"
+      - "W0108: 購入品目コードは 6 桁。"
+      - "W0118: アイテム名称は全角 20 桁。"
+      - "W0131: 名称桁（生産モデル名 30、半製品名 40、購入品目名 30）。"
+      - "W0009: 必須項目。W0015: 削除チェック時の必須。W0016: 変更なし。"
+      - "W0012: 緊急配信時の必須。"
+      - "W0121: 所要量 0.001〜99,999.999、基準値 1〜9,999,999,999。"
+      - "W0031: 子コードの先頭が親番と一致。"
+      - "W0007: 画面を閉じる時の破棄確認。"
+    deviation: >-
+      No8 半製品名称のチェック本文は『30byte』だが、メッセージ引数は ##2=40。
+      半製品名称の桁は 40 が正と読める（D-SM-18）。
+
+  - id: L-SM-24
+    name: 項目間・DB整合チェック（36 件）
+    design_locator: "18_画面項目間・DB整合チェック No1-39（節行 [1,4,25] を除く 36 件）"
+    handler: "search / edit / delete / editChild / deleteChild の各段"
+    rules:
+      - "W0010: 検索 0 件。W0005: 検索上限超過（メッセージ本文に 3000/3001 が直書き）。"
+      - "W0011: 親コード・子コードの存在。"
+      - "W2019: イベントマスタ参照。"
+      - "W0032: 複製元に子コードが存在。"
+      - "W2007: 緊急配信対象に明細が無い。"
+      - "W2051: 子マスタが未確定（REG_STS='0'）。ダミー半製品もこの経路で確認する。"
+      - "W0006: 排他。W0014: 重複。W0017: 関連必須。W0020: 緊急配信必須。"
+      - "E0025: 共通チェック関数が null。"
+      - "W0018: 復活時に未復活の関連がある。W0019: 親が削除済み。"
+      - "W2050: 飲料社工場ユーザーが非素材の購入品目を選択。"
+    deviation: >-
+      W0005 のメッセージ本文が上限値を直書きしている。上限は情報ID 000000024 で
+      変えられるため、文言と実値がずれ得る。
+    note: "設計 36 件のうち、複数は複数画面で再利用される。"
+
+  - id: L-SM-25
+    name: メッセージ・確認フロー
+    design_locator: "19_その他メッセージ"
+    handler: "init の message_info + 各コンポーネントの表示分岐"
+    rules:
+      - "確認は R60A0004（削除）、R60A0003（登録・更新）、W0007（破棄）。"
+      - "完了は R60I0001（登録・更新）、R60I0002（削除）、R60I0022（データ初期化）。"
+      - "確認でキャンセルされたら処理を中断する。"
+      - "メッセージのプレースホルダ（##1/##2）は画面側で埋める。"
+    deviation: >-
+      更新系 API は message_id を返さない。画面が固定文言を表示する
+      （D-SM-23）。設計のメッセージ契約と実装が一対一でない。
+
+  - id: L-SM-26
+    name: ボタン活性制御
+    design_locator: "06/10/12/16 各画面項目シート, BP No24/No25/No30/No31"
+    handler: "各 Vue コンポーネントの deleteBtnEnabled / registBtnEnabled"
+    rules:
+      - "検索画面: 権限区分='Y' かつ検索結果ありで複製・明細を活性。"
+      - "ヘッダモーダル: 修正モードのみ削除を活性。登録は必須項目充足で活性。"
+      - "明細モーダル: 修正モードのみ削除を活性。"
+      - "飲料社接続フラグ='1' の時、生産モデル名・所要量・基準値を非活性。"
+    deviation: >-
+      R60Plc と同様、フラグ名 Enabled が disabled 属性へバインドされている
+      （true=非活性）。レビュー時の誤読源（D-SM-24）。
+
+  - id: L-SM-27
+    name: 処方マスタ・緊急配信・I-Pro 連携
+    design_locator: "BP No24/No25/No30/No31 の後段"
+    handler: "update_syoho_master:5014-5135, _check_emergency_send, del_ipro_hsh, ipro_reg_hsh_sync, _update_kjo_ses_model"
+    rules:
+      - "処方マスタ R60_SYOHO_M_TBL は画面から INSERT しない。自動生成後に SEND_STS と監査列を UPDATE する。"
+      - "処方マスタ更新前に L270B を実行し、その直後の KSN_DAT を保存して排他に使う。"
+      - "シミュレーション時（sim_kbn != '0'）は処方マスタ連動をスキップする。"
+      - "緊急配信は送信ステータス='9' の時だけパッケージを呼ぶ。"
+      - "I-Pro 連携は半製品マスタの登録・削除に同期する。"
+      - "工場生産モデルマスタは削除・復活の両方で更新する（DB6/DB9）。"
+    deviation: >-
+      DB5 / DB6 の削除で KSN_KBN / KSN_STF_ID / REV_NO を更新しない。
+      他の削除系と監査列の扱いが異なる（D-SM-19、未確定）。
+    note: >-
+      外部連携（I-Pro・緊急配信・処方生成）を持つため、設計の複雑度判定では
+      「外部連携あり」に該当する。
+
+design_vs_implementation_summary:
+  matched:
+    - "仕掛表示だけ REG_STS='0' を加え、表示は絞らない（R60Plc の D-PL-07 と対照的）。"
+    - "自動採番の範囲・繰上げ規則。"
+    - "REG_STS を必須項目の充足で判定する（ヘッダ 4 項目、明細は子コード等）。"
+    - "削除順と対象テーブル。"
+    - "排他 → イベント参照 → 被参照 → 更新の順序。"
+  divergent:
+    - "指定ソートで副キーが落ちる（D-SM-07）。"
+    - "ページングが OFFSET/FETCH（D-SM-08）。"
+    - "更新系が message_id を返さない（D-SM-23）。"
+    - "データ初期化の R60I0022 を API が返さない。"
+  risky:
+    - "件数 SQL と逆引き条件の文字列連結（D-SM-05）。"
+    - "search と download の DEL_FLG 判定差（D-SM-06）。"
+    - "顧客会社コードの直書き（D-SM-12）。"
+
+open_questions:
+  - "ヘッダ REG_STS の判定に明細の状態を含めるか。実装はヘッダ必須 4 項目のみで判定する。"
+  - "明細の REG_STS は必須 5 項目（子コード区分・子コード・所要量・調達対象外フラグ・基準値）で判定するが、設計本文に明記があるか。"
+  - "W0005 の上限値 3000/3001 は情報ID 000000024 の値と一致しているか。"
+  - "イベント No28 の展開区分の初期値 '1'/'0' は設計と実装で一致するか（設計は『選択値の変更』とだけ書く）。"
+  - "DB5 / DB6 の削除で監査列を更新しない理由（D-SM-19）。"

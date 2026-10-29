@@ -1,0 +1,187 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60SSK-FIELDS
+type: knowledge
+req_ids: []
+status: open
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60Ssk
+artifact_type: field-dictionary
+
+source:
+  design_file: "doc/02_INPUT/50.設計書/画面設計書/基刷_調達生産_マスタ_基本設計書(画面編)_02_R60Ssk_部署マスタメンテ_v1.0.xlsx"
+  sheets:
+    - name: 画面項目内容(検索)
+      extracted: reports/module-survey/R60Ssk/design/06_画面項目内容(検索).txt
+      rows: r11-r53
+    - name: 画面項目内容(マスタ項目)
+      extracted: reports/module-survey/R60Ssk/design/08_画面項目内容(マスタ項目).txt
+      rows: r11-r28
+    - name: 廃止_画面項目内容(入力)
+      extracted: reports/module-survey/R60Ssk/design/14_廃止_画面項目内容(入力).txt
+      rows: r11-r37
+      note: >-
+        シート名は『廃止_画面項目内容(入力)』だが、中身はメーカーコード・メーカー日本語名・
+        メーカーカナ名・緊急配信・削除という R60Maker 由来の項目である（D-SS-06）。
+        本画面の入力仕様として読んではならない。
+    - name: 項目移送表(DB)
+      extracted: reports/module-survey/R60Ssk/design/15_項目移送表(DB).txt
+      rows: r12-r33
+
+screen_item_inventory:
+  search_sheet:
+    max_item_no: 39
+    numbered_rows: 39
+    actual_items: 35
+    section_rows: [1, 7, 15, 35]
+    row_range: r15-r53
+    groups:
+      - name: ヘッダー部
+        items: [2, 3, 4, 5, 6]
+        count: 5
+      - name: 検索条件部
+        items: [8, 9, 10, 11, 12]
+        count: 5
+      - name: 検索条件部ボタン
+        items: [13, 14]
+        count: 2
+      - name: 検索結果部_ページャ上部
+        items: [16, 17, 18, 19, 20]
+        count: 5
+      - name: 検索結果部_件数
+        items: [21]
+        count: 1
+      - name: 検索結果部_一覧列
+        items: [22, 23, 24, 25, 26, 27, 28, 29]
+        count: 8
+      - name: 検索結果部_ページャ下部
+        items: [30, 31, 32, 33, 34]
+        count: 5
+      - name: ボタン部
+        items: [36, 37, 38, 39]
+        count: 4
+    total_check: "5 + 5 + 2 + 5 + 1 + 8 + 5 + 4 = 35"
+  master_sheet:
+    max_item_no: 13
+    numbered_rows: 13
+    actual_items: 10
+    section_rows: [1, 3, 10]
+    row_range: r16-r28
+    groups:
+      - name: ヘッダー部
+        items: [2]
+        count: 1
+      - name: マスタ項目部
+        items: [4, 5, 6, 7, 8, 9]
+        count: 6
+      - name: ボタン部
+        items: [11, 12, 13]
+        count: 3
+    total_check: "1 + 6 + 3 = 10"
+  deprecated_input_sheet:
+    max_item_no: 23
+    numbered_rows: 23
+    actual_items: 19
+    section_rows: [2, 8, 14, 20]
+    note: >-
+      新規・修正・複製の 3 モード別に 5 項目＋ボタン 3 を繰り返す構成。
+      ただし項目名はメーカーマスタのものであり、R60Ssk の廃止仕様ではなく流用残骸である。
+  discrepancy_note: >-
+    設計書の実項目数は検索 35 件・マスタ項目 10 件（見出し行を除く）。
+    骨架の I-201..I-256（56 件）とは一致しない。I-ID を起こす場合は
+    設計書の項目番号を source_locator に持たせ、項目数そのものを ID の根拠にしない（D-SS-01）。
+
+search_conditions:
+  - { no: 8,  name: 会社,       input: ドロップダウン, source: "コード値マスタ(明細) 情報ID='000000104'（HR会社）", initial: "ログインユーザの会社", note: "先頭にブランク行。ブランク時は WHERE に加えない" }
+  - { no: 9,  name: 組織ユニット, input: テキストボックス, max: 8, match: 前方一致, note: "ワイルドカード入力不要。入力支援は SSK_UNIT + 会社選択値" }
+  - { no: 10, name: 組織ユニット検索, input: アイコン, behavior: "一覧型入力支援(択一式)を起動" }
+  - { no: 11, name: 正式名称,   input: テキストボックス, max: 40, match: 中間一致, note: "ワイルドカード入力不要" }
+  - { no: 12, name: １頁件数,   input: ドロップダウン, note: "標準仕様参照" }
+
+search_result_columns:
+  note: >-
+    一覧のデータ列は No23-29 の 7 列。No22『送信』は送信ステータスの表示ラベルで、
+    列そのものか行ラベルかは抽出範囲では確定できない（画面レイアウトシート未抽出）。
+  columns:
+    - { no: 22, name: 送信,                 source: "部署マスタ.SEND_STS", lookup: "コード値マスタ(明細)(送信ステータス) 情報ID='000000057', KEYID=SEND_STS", status: "位置づけ未確定" }
+    - { no: 23, name: 会社,                 source: "部署マスタ.CMP_CD", lookup: "コード値マスタ(明細)(HR会社) 情報ID='000000104', KEYID=CMP_CD", sortable: true }
+    - { no: 24, name: 事業場組織ユニット,   source: "部署マスタ.SSK_UNIT", lookup: 単純移送, sortable: true }
+    - { no: 25, name: 組織ユニット：コード, source: "部署マスタ.JIG_SSK_UNIT", lookup: 単純移送, sortable: true }
+    - { no: 26, name: 組織ユニット：正式名称, source: "部署マスタ.SEI_NM", lookup: 単純移送 }
+    - { no: 27, name: 経理用：会社,         source: "部署マスタ.S_CMP_CD", lookup: 単純移送 }
+    - { no: 28, name: 経理用：事業場,       source: "部署マスタ.S_JIG_CD", lookup: 単純移送 }
+    - { no: 29, name: 削除,                 source: "部署マスタ.DEL_FLG", lookup: "コード値マスタ(明細)(論理削除) 情報ID='000000063', KEYID=DEL_FLG" }
+  naming_caution: >-
+    No24 の項目名称は『事業場組織ユニット』だが、エンティティ項目は SSK_UNIT（組織ユニット）。
+    No25 は名称が『組織ユニット：コード』で、エンティティ項目は JIG_SSK_UNIT。
+    名称と項目の対応が入れ替わって見えるため、実装・移送表と突合して読むこと（D-SS-05）。
+
+master_items:
+  - { no: 2, name: 操作モード, control: ラベル, value: "検索結果一覧リンククリック → 修正" }
+  - { no: 4, name: 会社,                 control: ラベル,     source: "部署マスタ.CMP_CD", lookup: "コード値マスタ(明細)(HR会社) 情報ID='000000104'" }
+  - { no: 5, name: 事業場組織ユニット,   control: ラベル,     source: "部署マスタ.JIG_SSK_UNIT" }
+  - { no: 6, name: 組織ユニットコード,   control: ラベル,     source: "部署マスタ.SSK_UNIT" }
+  - { no: 7, name: 組織ユニット正式名称, control: ラベル,     source: "部署マスタ.SEI_NM" }
+  - { no: 8, name: 経理用会社,           control: ドロップダウン, source: "会社マスタ（論理削除フラグ='0'、会社コード昇順）", required: false }
+  - { no: 9, name: 経理用事業場,         control: ドロップダウン, source: "会社マスタ＋事業場マスタ（双方 DEL_FLG='0'、表示順 NOT NULL）", required: false }
+
+buttons:
+  search_screen:
+    - { no: 13, name: 表示,             initial: 活性, note: "会社未選択なら組織ユニット検索は非活性" }
+    - { no: 14, name: 検索条件非表示,   initial: 活性, behavior: "標準仕様（条件部の縮小/拡大）" }
+    - { no: 36, name: 戻る,             initial: 非活性, activation: "検索結果 1 件以上で活性" }
+    - { no: 37, name: 業務終了,         initial: 活性 }
+    - { no: 38, name: ダウンロード,     initial: 非活性, activation: "検索結果 1 件以上で活性" }
+    - { no: 39, name: 新規,             initial: 非活性, note: "本画面では新規を提供しない（設計上も非活性のまま）" }
+  master_screen:
+    - { no: 11, name: 戻る, initial: 活性 }
+    - { no: 12, name: 削除, initial: 非活性, note: "修正モードでも非活性。本画面は更新のみ（D-SS-03）" }
+    - { no: 13, name: 登録, initial: 活性, activation: "権限区分:Y の時のみ活性（BP r147）" }
+
+db_columns:
+  table: R60_SSK_M_TBL
+  table_name: 部署マスタ
+  column_count: 19
+  business_key: [CMP_CD, SSK_UNIT]
+  business_key_locator: "BP r117-r118（一覧リンクの検索条件）/ r211（更新条件）"
+  columns:
+    - { no: 1,  name: 会社コード,           column: CMP_CD,      length: 4,  insert: "-", update: "-", delete: "-" }
+    - { no: 2,  name: 組織ユニット,         column: SSK_UNIT,    length: 8,  insert: "-", update: "-", delete: "-" }
+    - { no: 3,  name: 事業場組織ユニット,   column: JIG_SSK_UNIT, length: 8, insert: "-", update: "-", delete: "-" }
+    - { no: 4,  name: 正式名称,             column: SEI_NM,      length: 40, insert: "-", update: "-", delete: "-" }
+    - { no: 5,  name: Ｓ会社コード,         column: S_CMP_CD,    length: 4,  insert: "-", update: "○", delete: "-", screen: 経理用会社, edit: "リスト選択値" }
+    - { no: 6,  name: Ｓ事業場コード,       column: S_JIG_CD,    length: 4,  insert: "-", update: "○", delete: "-", screen: 経理用事業場, edit: "リスト選択値" }
+    - { no: 7,  name: 登録ステータス,       column: REG_STS,     length: 1,  insert: "-", update: "○", delete: "-", edit: "プログラム内設定値" }
+    - { no: 8,  name: 送信ステータス,       column: SEND_STS,    length: 1,  insert: "-", update: "○", delete: "-", edit: "固定値 '0':未送信" }
+    - { no: 9,  name: 送信区分,             column: SEND_KBN,    length: 1,  insert: "-", update: "-", delete: "-" }
+    - { no: 10, name: 論理削除フラグ,       column: DEL_FLG,     length: 1,  insert: "-", update: "-", delete: "-" }
+    - { no: 11, name: 登録区分,             column: REG_KBN,     length: 1,  insert: "-", update: "-", delete: "-" }
+    - { no: 12, name: 登録者ＩＤ,           column: REG_STF_ID,  length: 10, insert: "-", update: "-", delete: "-" }
+    - { no: 13, name: 登録時刻,             column: REG_DAT,                insert: "-", update: "-", delete: "-" }
+    - { no: 14, name: 登録プログラムＩＤ,   column: REG_PGM_ID,  length: 20, insert: "-", update: "-", delete: "-" }
+    - { no: 15, name: 更新区分,             column: KSN_KBN,     length: 1,  insert: "-", update: "○", delete: "-", edit: "共通仕様参照" }
+    - { no: 16, name: 更新者ＩＤ,           column: KSN_STF_ID,  length: 10, insert: "-", update: "○", delete: "-", edit: "共通仕様参照" }
+    - { no: 17, name: 更新時刻,             column: KSN_DAT,                insert: "-", update: "○", delete: "-", edit: "共通仕様参照" }
+    - { no: 18, name: 更新プログラムＩＤ,   column: KSN_PGM_ID,  length: 20, insert: "-", update: "○", delete: "-", edit: "共通仕様参照" }
+    - { no: 19, name: リビジョン,           column: REV_NO,      length: 5,  insert: "-", update: "○", delete: "-", edit: "共通仕様参照" }
+  operation_flags:
+    insert_columns: []
+    update_columns: [S_CMP_CD, S_JIG_CD, REG_STS, SEND_STS, KSN_KBN, KSN_STF_ID, KSN_DAT, KSN_PGM_ID, REV_NO]
+    delete_columns: []
+    implication: >-
+      項目移送表に登録（INSERT）・削除（DELETE）の ○ が 1 つも無い。本画面は
+      IDM から受信済みの行を更新するだけであり、新規作成・論理削除は提供しない。
+      削除ボタンが初期非活性であることと一致する（D-SS-03）。
+
+field_naming_rules:
+  definition_layer: snake_case（YAML / Python）
+  interface_layer: camelCase（TS / JSON wire）
+  conversion_point: "BaseCamelModel（alias_generator=to_camel）"
+  note: "実装の BaseCamelModel は extra='ignore'（骨架規則は 'forbid'）。02-api.yaml / D-SS-04 を参照。"
+
+open_points:
+  - "画面レイアウトシートが未抽出のため、No22『送信』が列か行ラベルか確定できない。"
+  - "項目移送表は主キー列を持たない。業務キーは BP の検索条件・更新条件から CMP_CD + SSK_UNIT と読んだ。"
+  - "『廃止_画面項目内容(入力)』は R60Maker の項目を残したまま廃止されており、R60Ssk の履歴資料としては使えない。"

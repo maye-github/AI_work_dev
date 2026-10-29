@@ -1,0 +1,181 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60KKUCHI-FIELDS
+type: knowledge
+req_ids: []
+status: open
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60KkuChi
+artifact_type: field-dictionary
+
+source:
+  design_overview: reports/module-survey/R60KkuChi/design/01_概要.txt
+  design_key_items: "reports/module-survey/R60KkuChi/design/06_画面項目内容(キー項目).txt"
+  design_search_p1: "reports/module-survey/R60KkuChi/design/07_画面項目内容(検索_P1).txt"
+  design_master_p1: "reports/module-survey/R60KkuChi/design/20_画面項目内容(マスタ項目_P1).txt"
+  design_transfer: "reports/module-survey/R60KkuChi/design/37_項目移送表(DB).txt"
+  design_process: "reports/module-survey/R60KkuChi/design/36_業務処理説明.txt"
+
+identification:
+  screen_id: R60KkuChi
+  screen_name: 規格値マスタメンテナンス
+  subsystem: 生産系共通マスタシステム
+  build_mode_observed: migration
+  screen_class: 検索一覧＋マスタ項目領域（同一画面内）／12 キーパターン同居
+  premise: なし
+  exclusive: あり（KSN_DAT による排他。行なしも W0006 → D-KK-05）
+  frequency: 月次・随時
+  permission: 利用権限保持者のみ
+  operation_modes:
+    - { mode: "1", name: 新規 }
+    - { mode: "2", name: 複製 }
+    - { mode: "3", name: 修正 }
+    - { name: 削除, note: "独立した /delete 端点。モード番号は使わない（del_flg=1 の UPDATE）" }
+
+pattern_matrix:
+  note: >-
+    キーパターン（管理項目コード）ごとに、意味を持つキー列が決まる。
+    物理的な KEY_KMK_1〜6 への詰め方は実装の build_where が決める。
+  patterns:
+    - { code: "0010", screen: P1, keys: [会社, 事業場, 半製品, ロケタイプ], search_items: 28, master_items: 25 }
+    - { code: "0020", screen: P2, keys: [会社, 半製品], search_items: 13, master_items: 12 }
+    - { code: "0030", screen: P3, keys: [会社, 事業場, 製造列], search_items: 13, master_items: 11 }
+    - { code: "0040", screen: P4, keys: [会社, 欠減区分], search_items: 11, master_items: 10 }
+    - { code: "0050", screen: P5, keys: [会社, 事業場, 製造列, 購入品目分類4, 容器形態区分, 容器容量区分], search_items: 20, master_items: 14 }
+    - { code: "0060", screen: P6, keys: [会社, 受払区分, 半製品品目分類4], search_items: 16, master_items: 13 }
+    - { code: "0070", screen: P7, keys: [会社, 事業場, 半製品, 受払区分, 受払場所, ロケグループ], search_items: 25, master_items: 18 }
+    - { code: "0080", screen: P8, keys: [会社, 事業場, 受払場所, 仕込記号, 仕込系列], search_items: 21, master_items: 14 }
+    - { code: "0090", screen: P9, keys: [会社, 半製品, 受払区分], search_items: 17, master_items: 15 }
+    - { code: "0100", screen: P10, keys: [会社, 事業場, 半製品, 受払場所], search_items: 18, master_items: 14 }
+    - { code: "0110", screen: P11, keys: [会社, 事業場, ロケタイプ, 受払場所], search_items: 16, master_items: 12 }
+    - { code: "0120", screen: P12, keys: [会社, 事業場, 半製品, ロケタイプ, 受払場所], search_items: 20, master_items: 15 }
+  item_count_rule: >-
+    各シートの No 採番の個数（節見出し行を含む）。実項目数ではない。
+  item_total_observed: { search_all: 218, master_all: 173 }
+
+common_items:
+  key_sheet:
+    - { no: 2, name: 画面タイトル, type: label, spec: 固定値「規格値マスタメンテナンス」 }
+    - { no: 3, name: システム日時, type: label, spec: YYYY/MM/DD hh:mm:ss }
+    - { no: 4, name: ログインユーザー会社, type: label }
+    - { no: 5, name: ログインユーザー部署, type: label }
+    - { no: 6, name: ログインユーザー名, type: label }
+    - { no: 8, name: 項目, type: dropdown, source: "情報ID 000000199 / 個別項目名2='1' / DEL_FLG=0", note: 先頭に空白行 }
+    - { no: 9, name: 管理項目, type: dropdown, source: "情報ID 000000197 / 個別項目名1 IN 0010..0120 / DEL_FLG=0", note: 先頭に空白行 }
+    - { no: 12, name: "管理項目：{選択値}", type: label }
+    - { no: 13, name: "<<", type: link }
+    - { no: 14, name: "<", type: link }
+    - { no: 15, name: ページ番号, type: link }
+    - { no: 16, name: ">", type: link }
+    - { no: 17, name: ">>", type: link }
+    - { no: 18, name: 検索結果件数, type: label }
+    - { no: 19, name: 複製, type: button }
+  selection_rule: >-
+    項目が空白なら管理項目は空白のみ。項目を選ぶと、その項目を含むキーパターンだけを管理項目に並べる。
+    選択肢「会社」「事業場」は管理項目には表示しない（キー列としては使う）。
+
+p1_search:
+  conditions:
+    - { no: 2, name: 会社, type: dropdown, spec: "S 会社を表示し変更不可（他工更新権限がある場合のみ事業場を再生成）" }
+    - { no: 3, name: 事業場, type: dropdown, spec: "複合値 会社コード,事業場コード。初期は S 事業場。他工更新権限なしは変更不可" }
+    - { no: 4, name: 半製品コード, type: textbox, len: 6, condition: 前方一致 }
+    - { no: 5, name: 半製品検索, type: icon, action: "半製品入力支援を起動" }
+    - { no: 6, name: ロケタイプ, type: dropdown, source: ロケーションタイプマスタ }
+    - { no: 7, name: 1 頁件数, type: dropdown, spec: 標準仕様 }
+    - { no: 8, name: 削除含む, type: checkbox, initial: off, rule: "オフなら DEL_FLG='0' を検索条件に追加" }
+    - { no: 9, name: 表示, type: button }
+    - { no: 10, name: 検索条件(非)表示, type: button }
+  result_columns:
+    - { no: 12, name: 会社, sortable: true }
+    - { no: 13, name: 事業場, sortable: true }
+    - { no: 14, name: 半製品：コード, sortable: true }
+    - { no: 15, name: 半製品：名称, sortable: false }
+    - { no: 16, name: ロケタイプ, sortable: true }
+    - { no: 17, name: "規格値(相対値)：下限％", sortable: false, format: FM999,999,990.999999 }
+    - { no: 18, name: "規格値(相対値)：上限％", sortable: false }
+    - { no: 19, name: "規格値(相対値)：区分", sortable: false, source: "000000192" }
+    - { no: 20, name: "規格値(相対値)：チェックレベル", sortable: false, source: "000000193" }
+    - { no: 21, name: "規格値(相対値)：メッセージID", sortable: false, source: "000000328" }
+    - { no: 22, name: "規格値(絶対値)：下限値", sortable: false }
+    - { no: 23, name: "規格値(絶対値)：上限値", sortable: false }
+    - { no: 24, name: "規格値(絶対値)：区分", sortable: false }
+    - { no: 25, name: "規格値(絶対値)：チェックレベル", sortable: false }
+    - { no: 26, name: "規格値(絶対値)：メッセージID", sortable: false }
+    - { no: 27, name: 標準規格値, sortable: false }
+    - { no: 28, name: 削除, sortable: false, source: "000000063" }
+
+master_p1:
+  fields:
+    - { no: 4, name: 会社, type: dropdown, editable: false }
+    - { no: 5, name: 事業場, type: dropdown, editable: conditional }
+    - { no: 6, name: 半製品：コード, type: textbox, len: 6, editable: true }
+    - { no: 7, name: 半製品検索, type: icon }
+    - { no: 8, name: 半製品：名称, type: label, editable: false }
+    - { no: 9, name: ロケタイプ, type: dropdown, editable: true }
+    - { no: 10, name: 規格値下限％, type: numeric, len: 15, editable: true }
+    - { no: 11, name: 規格値上限％, type: numeric, len: 15, editable: true }
+    - { no: 12, name: 規格値上下限％区分, type: dropdown, editable: true }
+    - { no: 13, name: 規格値上下限％チェックレベル, type: dropdown, editable: true }
+    - { no: 14, name: 規格値上下限％メッセージID, type: textbox, len: 9, editable: true }
+    - { no: 15, name: 規格値下限値, type: numeric, len: 15, editable: true }
+    - { no: 16, name: 規格値上限値, type: numeric, len: 15, editable: true }
+    - { no: 17, name: 規格値上下限値区分, type: dropdown, editable: true }
+    - { no: 18, name: 規格値上下限値チェックレベル, type: dropdown, editable: true }
+    - { no: 19, name: 規格値上下限値メッセージID, type: textbox, len: 9, editable: true }
+    - { no: 20, name: 標準規格値, type: numeric, len: 15, editable: true }
+    - { no: 21, name: 削除, type: label, note: 論理削除フラグ }
+  buttons:
+    - { no: 23, name: 戻る, initial: 活性 }
+    - { no: 24, name: 削除, initial: "非活性（新規時）。削除済の行も非活性。権限区分 Y のときのみ活性判定を行う" }
+    - { no: 25, name: 登録, initial: 活性 }
+  button_rule: >-
+    キーパターン 0020/0040/0060/0090 とそれ以外で、参照する権限判定の共通関数が変わる
+    （登録は ①/②、削除は ①/③）。
+
+key_columns:
+  - { name: KNR_KMK_CD, label: 管理項目コード, len: 3, note: 主キー（1 列目） }
+  - { name: KEY_KMK_1, label: キー項目１, len: 10, note: 主キー。パターンにより名称が変わる }
+  - { name: KEY_KMK_2, label: キー項目２, len: 10, note: 主キー }
+  - { name: KEY_KMK_3, label: キー項目３, len: 10, note: 主キー }
+  - { name: KEY_KMK_4, label: キー項目４, len: 10, note: 主キー }
+  - { name: KEY_KMK_5, label: キー項目５, len: 10, note: 主キー }
+  - { name: KEY_KMK_6, label: キー項目６, len: 10, note: 主キー }
+  - { name: KSN_DAT, label: 更新時刻, note: 排他の比較対象 }
+  - { name: KSN_KBN, label: 更新区分, len: 1, note: "オンライン='1'" }
+  - { name: REV_NO, label: リビジョン, len: 5, note: 更新時 +1 }
+
+db_model:
+  table: R60_KKU_CHI_M_TBL
+  table_id: 規格値マスタ
+  columns_total: 32
+  primary_key: [KNR_KMK_CD, KEY_KMK_1, KEY_KMK_2, KEY_KMK_3, KEY_KMK_4, KEY_KMK_5, KEY_KMK_6]
+  operation_columns:
+    insert: all_32
+    update: [KKU_CHI_KAG, KKU_CHI_JOG, KKU_CHI_JOG_KAG_KBN, KKU_CHI_JOG_KAG_CHK_LVL, KKU_CHI_JOG_KAG_MSG_ID, KKU_CHI_KAG_CHI, KKU_CHI_JOG_CHI, KKU_CHI_JOG_KAG_CHI_KBN, KKU_CHI_JOG_KAG_CHI_CHK_LVL, KKU_CHI_JOG_KAG_CHI_MSG_ID, HJN_KKU_CHI, DEL_FLG, KSN_KBN, KSN_STF_ID, KSN_DAT, KSN_PGM_ID, REV_NO]
+    delete: same_as_update
+    physical_delete: false
+  fixed_values:
+    - { column: REG_STS, value: "1", timing: insert }
+    - { column: SEND_STS, value: "0", timing: insert }
+    - { column: SEND_KBN, value: "0", timing: insert }
+    - { column: REG_KBN, value: "1", timing: insert }
+    - { column: KSN_KBN, value: "1", timing: insert_and_update }
+    - { column: DEL_FLG, value: "1", timing: delete }
+  numeric_columns_note: >-
+    規格値の 6 列（下限％・上限％・下限値・上限値・標準規格値・その他）は
+    画面のカンマを除去して保存する（実装 .replace(",", "")）。
+
+design_defects_in_field_sheet:
+  - "各検索／マスタシートの項目数は No 採番の個数で、節見出し行を含む。実項目数として使わない。"
+  - "「会社」「事業場」は項目ドロップダウンには出るが管理項目には出さない。設計 r64 の注記どおり。"
+  - "事業場は複合値（会社コード,事業場コード）で持つが、KEY_KMK_2 には 2 番目のみを入れる。分解規則は本文に明記が無い。"
+  - "画面区分のチェックボックスは抽出で記号が落ちており、どれが印されているか未確認。"
+  - "キー項目の物理位置はパターンごとに異なるが、設計の対応表は『意味のあるキー』の一覧で、位置までは書かない。"
+
+open_questions:
+  - "端点の単項目チェックをサーバー側へ寄せるか（D-KK-02）。"
+  - "未知の mode をエラーにするか（D-KK-11）。"
+  - "一括コピー画面を本画面の一部とみなすか、別モジュールとみなすか（D-KK-15）。"
+  - "KEY_KMK_1〜6 の詰め方の正本は設計のどこにあるか（実装の build_where が唯一の実装）。"

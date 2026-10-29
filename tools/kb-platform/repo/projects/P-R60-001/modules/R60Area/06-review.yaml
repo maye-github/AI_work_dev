@@ -1,0 +1,196 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60AREA-REVIEW
+type: knowledge
+req_ids: []
+status: open
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60Area
+artifact_type: review-card
+
+source:
+  design_file: "doc/02_INPUT/50.設計書/画面設計書/基刷_調達生産_マスタ_基本設計書(画面編)_05_R60Area_エリアマスタメンテナンス_v1.0.xlsx"
+  test_file: "doc/02_INPUT/60.単体テスト/2-041-F_単体テスト仕様兼チェックリスト(画面編)_05_R60Area_エリアマスタメンテナンス.xlsx"
+  implementation:
+    - api/fastapi_oracle_pjt/app/routers/R60AreaController.py
+    - Front-end/src/views/R60Area.vue
+    - Front-end/src/components/R60AreaCreate.vue
+    - Front-end/src/components/R60AreaEdit.vue
+    - Front-end/src/components/R60AreaCopy.vue
+    - Front-end/src/service/R60AreaService.ts
+  ab_report: doc/03_AI/AB_Reports/reports/R60Area/
+
+deviations:
+  - id: D-AR-01
+    title: 画面項目数が骨架の I-ID 枠（56）と一致しない
+    type: design_vs_skeleton
+    evidence:
+      - "画面項目内容(検索)：項目番号 76 件（r15-r90）"
+      - "画面項目内容(マスタ項目)：項目番号 45 件（r16-r60）"
+      - "骨架の I-201..I-256 は 56 件"
+    impact: "I-ID を 1 対 1 で対応付けると、検索 76 件・マスタ 45 件のどちらとも合わない。"
+    cause: "56 は骨架構築時に置いた仮の枠であり、設計書から導いた数ではない。"
+    action: "R60Area では I-ID を画面項目数として使わない。I-ID を起こす場合は、検索・マスタを別採番し、設計書の項目番号を source_locator に持つ。"
+    machine_detectable: false
+    layer: knowledge
+
+  - id: D-AR-02
+    title: R60A0039 / R60A0040（計上事業場 ≠ 事業場の確認）が実装されていない
+    type: implementation_gap
+    evidence:
+      - "設計書 10_画面項目間・DB整合チェック r18-r29 に 12 件の確認メッセージがある。"
+      - "R60AreaController.py:2453-2489（登録）と 2155-2191（削除）は全てコメントアウトされている。"
+    impact: "計上事業場が事業場と異なるデータでも、確認なしで登録・削除される。設計どおりの挙動ではない。"
+    cause: "実装時に確認ダイアログの往復（エラーコードで返してフロントが再送する方式）が未実装のままコメントアウトされた。"
+    action: "実装課題として記録する。設計書を正とするなら、フロントの確認ダイアログとバックエンドの再送パラメータ（confirm_flg 等）を設計へ追加する必要がある。勝手に設計を変えない。"
+    machine_detectable: true
+    detection_hint: "設計書のメッセージ ID と実装の message_id 一覧を突合すると、R60A0039/R60A0040 が実装に現れない。"
+    layer: knowledge
+
+  - id: D-AR-03
+    title: BaseCamelModel の extra が 'ignore'（骨架規則は 'forbid'）
+    type: design_vs_skeleton
+    evidence:
+      - "R60AreaController.py:33-39 は extra=\"ignore\"。"
+      - "03-design-coding.md §2 は extra='forbid' を固定としている。"
+    impact: "定義外の入力が 422 にならず、静かに無視される。項目追加・改定の検知が弱い。"
+    cause: "既存案件の実装が骨架規則より先に存在し、骨架規則が実装に合わせられていない。"
+    action: "R60Area の知識カードには実装値を記録する。骨架規則を変えるかは人（ユーザー）の裁定事項であり、本カードでは変更しない。"
+    machine_detectable: true
+    detection_hint: "grep 'extra=' で 'ignore' と 'forbid' の混在を検出できる。"
+    layer: rules
+
+  - id: D-AR-04
+    title: イベント番号が 12_イベント一覧 と 14_業務処理説明 で重複・不一致
+    type: design_internal_inconsistency
+    evidence:
+      - "12_イベント一覧：No10=ダウンロード、No16=債務計上事業場ドロップダウン変更、No25=削除、No26=登録。"
+      - "14_業務処理説明：r191『イベントNo16：ダウンロードボタンクリック』、r274 以降にも No16 が見える。"
+    impact: "イベント番号で設計を引くと別の処理に当たる。RAG の検索キーにイベント番号を使うと誤検索する。"
+    cause: "シート間で番号を振り直したが、片方が追随していない。"
+    action: "RAG の chunk ではイベント番号を主キーにせず、『イベント名称＋処理内容』を主キーにする。"
+    machine_detectable: true
+    detection_hint: "同一文書内で『イベントNo16』が複数の名称に付いている。"
+    layer: knowledge
+
+  - id: D-AR-05
+    title: ダウンロード処理が検索条件を SQL 文字列へ直接連結している
+    type: security
+    evidence:
+      - "R60AreaController.py:1666-1682 で cmp_cd / jig_cd を f-string / + で WHERE 句に埋め込む。"
+      - "同じファイルの search（1429 以降）は bind パラメータを使っている。"
+    impact: "入力値によっては SQL インジェクションが成立し得る。search と download で安全度が異なる。"
+    cause: "共通 CSV ユーティリティが WHERE 文字列を受け取る設計であり、呼び出し側が値を連結している。"
+    action: "実装課題として記録する。download も bind パラメータ化するか、CSV ユーティリティ側でパラメータを受ける形へ変更する。設計（D/L）を変える場合は CR を起票する。"
+    machine_detectable: true
+    detection_hint: "WHERE 句の組み立てで f-string / + を使っている箇所を grep する。"
+    layer: gate
+
+  - id: D-AR-06
+    title: ページングと既定ソートが骨架規則の例と異なる
+    type: design_vs_skeleton
+    evidence:
+      - "実装は OFFSET {offset} ROWS FETCH FIRST {page_limit} ROWS ONLY。"
+      - "既定ソートは DEL_FLG, CMP_CD, TO_NUMBER(R60_Get_Jig_Information_FNC(CMP_CD, JIG_CD, '3')), JIG_CD, ROWID。"
+      - "00-project-global.md §5 は ROWID 方式を原則とし、03-design-coding.md §5 の例は JIG_HYJ_SEQ を既定としている。"
+    impact: "骨架の例をそのまま当てはめると設計書のソート順（事業場表示順）と食い違う。"
+    cause: "骨架の例が R60Area 以外の画面を想定した簡略例であり、案件の設計書と一致していない。"
+    action: "R60Area では設計書のソート順（DEL_FLG → CMP_CD → 事業場表示順 → JIG_CD）を正とする。骨架の例は案件ごとに読み替える。"
+    machine_detectable: false
+    layer: rules
+
+  - id: D-AR-07
+    title: R60AreaService.ts のヘッダコメントが別画面の名称
+    type: implementation_quality
+    evidence:
+      - "Front-end/src/service/R60AreaService.ts:4 は『製造可能品種マスタサービス R60AreaService』。"
+    impact: "検索・保守時に画面の取り違えを招く。機能には影響しない。"
+    cause: "別サービスのコピー元コメントを残したまま。"
+    action: "実装課題として記録する（コメント修正のみ。動作変更なし）。"
+    machine_detectable: true
+    detection_hint: "サービス名とコメント内の画面名が一致しない。"
+    layer: knowledge
+
+  - id: D-AR-08
+    title: A/B レポートで search が 500、detail/new に 8 列差異
+    type: implementation_quality
+    evidence:
+      - "doc/03_AI/AB_Reports/reports/R60Area/summary.md"
+      - "search / check：500 サーバー崩壊（同一入力で旧 SQL は正常）"
+      - "detail / new：8 列差異"
+      - "modify / download：SKIP"
+    impact: "R60Area の新実装は、検索の主要経路が動作しない状態を含む。A/B 比較は完了していない。"
+    cause: "レポートの診断では『データ問題ではなくコード bug』とされている。"
+    action: "R60Area を『完成した参照実装』として扱わない。学習材料としては設計書を正とし、実装は差分の観測対象とする。"
+    machine_detectable: false
+    layer: knowledge
+
+  - id: D-AR-09
+    title: REG_STS 判定 16 項目と緊急配信必須 13 項目の混同リスク
+    type: design_clarity
+    evidence:
+      - "14_業務処理説明 r488-r505：REG_STS は 16 項目。"
+      - "14_業務処理説明 r391-r408：緊急配信必須は 13 項目（キー 3 項目を除く）。"
+      - "設計書の項目名に『受払計上場所』『債務計上場所』『債権計上場所』とあるが、実カラムは UKH_KEIJ_BSY_CD / SAIM_KEIJ_BSY_CD / SAIKN_KEIJ_BSY_CD（部署コード）。"
+    impact: "項目名だけを読むと存在しないカラムを探す。13 と 16 を取り違えると REG_STS が誤判定される。"
+    cause: "設計書内で『場所』と『部署』の用語が混在している。"
+    action: "カラムとの対応は 01-fields.yaml を正とする。REG_STS は 16、R60W0012 は 13 と明記する。"
+    machine_detectable: false
+    layer: knowledge
+
+  - id: D-AR-10
+    title: 複合キーを 'CMP_CD,JIG_CD' 形式の文字列で受け渡している
+    type: implementation_convention
+    evidence:
+      - "request の jig_cd は 'CMP_CD,JIG_CD' 形式で、実装は split(',')[1] を使う。"
+      - "部署コードは split(',')[0] を使う箇所がある（R60AreaController.py:2369-2375）。"
+    impact: "値の中にカンマが含まれると壊れる。設計書には記述がない暗黙の規約である。"
+    cause: "フロントのドロップダウン値が複合キーを 1 文字列で持つ実装都合。"
+    action: "API 契約カード（02-api.yaml）に明記する。RAG では『jig_cd は複合キー文字列』として検索できるようにする。"
+    machine_detectable: false
+    layer: knowledge
+
+  - id: D-AR-11
+    title: 設計書の検索処理説明に『ロケーションマスタを検索する』とある
+    type: design_typo
+    evidence:
+      - "14_業務処理説明 r92：『取得した抽出項目と設定した検索条件でロケーションマスタを検索する。』"
+      - "同シートの前後はエリアマスタ（R60_AREA_M_TBL）の検索である。"
+    impact: "設計書だけを読むと対象テーブルを取り違える。"
+    cause: "別画面（ロケーション）からの流用。"
+    action: "R60Area の検索対象は R60_AREA_M_TBL とする。設計書の逐語は source_locator 付きで残す。"
+    machine_detectable: false
+    layer: knowledge
+
+  - id: D-AR-12
+    title: マスタ項目画面がフロントでは 3 コンポーネントに分かれている
+    type: implementation_structure
+    evidence:
+      - "R60AreaCreate.vue（736 行） / R60AreaEdit.vue（1,874 行） / R60AreaCopy.vue（772 行）"
+      - "設計書は『マスタ項目画面』を 1 画面として記述する。"
+    impact: "設計書の画面単位と実装のファイル単位が一致しない。修正時に 3 箇所を見る必要がある。"
+    cause: "新規・修正・複製でコンポーネントを分けた実装判断。"
+    action: "RAG では『マスタ項目画面 = Create/Edit/Copy の 3 コンポーネント』として 1 チャンクにまとめる。"
+    machine_detectable: false
+    layer: knowledge
+
+review_questions:
+  - question: "R60A0039/R60A0040 を実装しないことは、顧客の合意済み仕様か。"
+    status: open
+    owner: 人（ユーザー）
+    note: "設計書は実装を要求している。合意済みなら設計書側に注記が必要。"
+  - question: "download の SQL 連結は許容されているか。"
+    status: open
+    owner: 人（ユーザー）
+    note: "セキュリティ方針に関わるため、骨架側で勝手に直さない。"
+  - question: "extra='ignore' を骨架規則（forbid）へ合わせるのか、規則を実装へ合わせるのか。"
+    status: open
+    owner: 人（ユーザー）
+    note: "migration 案件固有の実装と greenfield の既定規則が衝突している。"
+
+ab_comparison:
+  status: incomplete
+  evidence: "search 500 / modify・download SKIP / detail・new 8 列差異"
+  implication: "R60Area の実装を正解として学習しない。設計書と単体テスト仕様を正とする。"

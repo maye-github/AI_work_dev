@@ -1,0 +1,134 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60SESMODEL-TESTS
+type: knowledge
+req_ids: []
+status: open
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60SesModel
+artifact_type: test-catalog
+
+source:
+  unit_test_spec: reports/module-survey/R60SesModel/test/00_単体ﾃｽﾄ仕様兼結果.txt
+  unit_test_transition: reports/module-survey/R60SesModel/test/01_1.画面遷移.txt
+  design_events: reports/module-survey/R60SesModel/design/20_イベント一覧.txt
+  design_single_checks: reports/module-survey/R60SesModel/design/17_画面単項目チェック.txt
+  design_cross_checks: reports/module-survey/R60SesModel/design/18_画面項目間・DB整合チェック.txt
+
+summary:
+  total_items: 760
+  leaf_items: 679
+  detected_bugs: 0
+  fp: 26
+  fp_note: >-
+    ヘッダに『FP 26』と記載があるが、内訳・定義は本文に無い。
+    ファンクションポイントか工程管理値かは未確認（R60Plc の『FP 24』と同じ性質）。
+  test_level: 単体テスト（画面単位）
+  result: 全件 OK（不具合 0 件で終了）
+
+count_reconciliation:
+  total_cells: 760
+  leaf_cells: 679
+  subtotal_cells: 81
+  explanation: >-
+    760 は節の小計行を二重に数えている。実テスト項目は 679。
+    760 = 679 + 53（B5 小計）+ 21（B21 小計）+ 7（B25 小計）。
+  discrepancy: "B5 小計は 53 だが、配下の子は 48。5 件の差（D-SM-02）。"
+  note: "『760 項目』と『679 項目』のどちらを対外説明に使うかは未確定。"
+
+breakdown:
+  - category: 画面遷移
+    cells: 38
+    leaf: 38
+    detail: "01_1.画面遷移.txt の 38 ケース"
+  - category: レイアウト
+    cells: 149
+    leaf: 149
+    blocks: [25, 19, 13, 13, 12, 26, 14, 14, 13]
+    check: "25+19+13+13+12+26+14+14+13 = 149"
+  - category: 入力チェック
+    cells: 160
+    leaf: 160
+    blocks: [16, 16, 38, 17, 2, 44, 22, 1, 1, 1, 2]
+    check: "16+16+38+17+2+44+22+1+1+1+2 = 160"
+  - category: イベント
+    cells: 371
+    leaf: 290
+    subtotal_rows: 81
+    note: >-
+      イベント系は小計行を含む。小計 53（B5）/ 21（B21）/ 7（B25）を
+      除くと 290。B5 の小計 53 と配下 48 の差 5 が全体の差の原因。
+  - category: 特殊
+    cells: 42
+    leaf: 42
+    blocks: [38, 4, 0]
+    check: "38+4+0 = 42"
+  - category: 合計
+    cells: 760
+    leaf: 679
+    check: "38+149+160+371+42 = 760 / 38+149+160+290+42 = 679"
+
+category_notes:
+  画面遷移:
+    what: "検索一覧⇔明細一覧⇔ヘッダモーダル⇔明細モーダルの遷移、新規・複製・修正の起動と戻り。"
+    cases: "38 件（01_1.画面遷移.txt）"
+  レイアウト:
+    what: "各画面の項目配置、活性・非活性、条件付き表示（自動採番・飲料社接続・緊急配信・削除）。"
+    blocks: "9 区分（25/19/13/13/12/26/14/14/13）"
+  入力チェック:
+    what: "単項目・項目間・DB 整合のチェック。設計 17（29 件）と 18（36 件）に対応する。"
+    blocks: "11 区分（16/16/38/17/2/44/22/1/1/1/2）"
+  イベント:
+    what: "設計 20_イベント一覧 の 28 イベントを軸に、押下・変更・焦点喪失ごとの挙動を検証する。"
+    count: "371（小計込み）/ 290（実項目）"
+  特殊:
+    what: "排他・被参照・重複・上限超過・権限による活性差・外部連携の呼出し確認。"
+    blocks: "3 区分（38/4/0）"
+
+coverage_observations:
+  event_coverage: >-
+    設計イベント 28 件に対し、イベント系の実項目 290 件。1 イベントあたり平均 10.4 件。
+    主従構造（ヘッダ＋明細＋2 モーダル）のため、1 イベントの分岐が多く、
+    押下・条件違い・異常系を細かく展開している。
+  check_coverage: >-
+    入力チェック 160 件は設計 17（29 件）と 18（36 件）の合計 65 件の約 2.5 倍。
+    正常・境界・異常を区別して展開していると読める。
+  transition_coverage: >-
+    画面遷移 38 件は 4 画面の組合せ（一覧→明細→ヘッダ→明細、
+    新規・複製・修正の 3 モード）を網羅する水準。
+  zero_bug_note: >-
+    単体テストで不具合 0 件。ただし本仕様書は『兼結果』であり、
+    期待値と実施結果が同一ファイルにある。結果欄が期待値の転記になっていないかは
+    原本の列構成を確認する必要がある（R60Plc と同じ注意）。
+  unreachable_areas:
+    - "R60HshSup / R60KonHmkSup（入力支援画面）は別モジュール。遷移先の仕様は本テストの対象外。"
+    - "処方マスタ自動生成・I-Pro・緊急配信の内部処理は外部部品。呼出しの有無までを確認していると読める。"
+    - "A/B レポートが無いため、単体テストは新旧の一致を検証していない（D-SM-14）。"
+
+design_to_test_mapping:
+  - { design: "検索条件（14 項目）",         tests: "入力チェック・イベント（表示/仕掛表示）" }
+  - { design: "一覧（5 列＋2 ボタン）",      tests: "レイアウト・ソート・ページ移動" }
+  - { design: "ヘッダマスタ項目（12 項目）", tests: "レイアウト・入力チェック・登録・削除" }
+  - { design: "明細（30 項目）",             tests: "レイアウト・明細検索・ページ移動" }
+  - { design: "明細マスタ項目（15 項目）",   tests: "レイアウト・入力チェック・登録・削除" }
+  - { design: "排他（KSN_DAT）",             tests: "特殊" }
+  - { design: "被参照・復活（W0018/E0025）", tests: "特殊・削除" }
+  - { design: "重複（業務キー）",            tests: "特殊・新規/複製" }
+  - { design: "自動採番（4A0000-4Z9999）",   tests: "イベント・特殊（枯渇含む）" }
+  - { design: "REG_STS 判定",                tests: "登録・仕掛表示・特殊" }
+  - { design: "緊急配信（SEND_STS='9'）",    tests: "レイアウト・イベント・特殊" }
+
+test_data_policy:
+  observable: >-
+    テスト仕様書の入力値は実データを含むが、本カードには転記しない。
+    必要な場合は占位（COL_1 / VAL_1）で参照する。
+  note: "原本の実値は L3 相当のため外部出力しない。"
+
+open_questions:
+  - "『FP 26』の定義。"
+  - "結果欄が実施記録か期待値の転記か。"
+  - "B5 小計 53 と配下 48 の差 5 の原因（D-SM-02）。"
+  - "対外説明に 760 と 679 のどちらを使うか。"
+  - "イベント系の小計行を除いた 290 件の内訳（28 イベントへの配分）。"

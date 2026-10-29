@@ -1,0 +1,259 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60PLC-LOGIC
+type: knowledge
+req_ids: []
+status: open
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60Plc
+artifact_type: logic-catalog
+
+source:
+  design_process: reports/module-survey/R60Plc/design/13_業務処理説明.txt
+  design_events: reports/module-survey/R60Plc/design/12_イベント一覧.txt
+  design_single_check: reports/module-survey/R60Plc/design/09_画面単項目チェック.txt
+  design_cross_check: reports/module-survey/R60Plc/design/10_画面項目間・DB整合チェック.txt
+  frontend_view: Front-end/src/views/R60Plc.vue
+  frontend_edit: Front-end/src/components/R60PlcEdit.vue
+  backend_controller: api/fastapi_oracle_pjt/app/routers/R60PlcController.py
+  constants: api/fastapi_oracle_pjt/app/utils/r60const.py
+
+constants:
+  REG_STS_ON: "1"
+  REG_STS_OFF: "0"
+  DEL_FLG_ON: "1"
+  DEL_FLG_OFF: "0"
+  SEND_STS_INITIAL: "0"
+  KSN_KBN_ON: "1"
+  SOURCE: "r60const.py:63 ほか"
+
+logics:
+  - id: L-PL-01
+    name: 検索条件の組み立て
+    design_locator: "BP r71-r98（イベント No5/No6）"
+    handler: "R60PlcController.py:1804-1980"
+    rules:
+      - "会社・事業場・エリア・ロケーションコード・ロケーション名・ロケグループ・ロケタイプを条件に加える。"
+      - "ロケーションコードは前方一致（LIKE '値%'）、名称は中間一致（LIKE '%値%'）。"
+      - "複合 value（'CMP,JIG' / 'CMP,JIG,ARA' / 'CMP,JIG,GRP'）は分解して該当列に使う。"
+      - "削除含む＝未チェック（del_flg_include='0'）の時だけ DEL_FLG=0 を加える。"
+      - "仕掛表示（search_btn='0'）の時だけ REG_STS=0 を加える。"
+      - "表示（search_btn='1'）の時は REG_STS を条件に加えない。"
+    deviation: >-
+      設計 13_業務処理説明 は『表示は登録ステータス＝確定のデータを表示』と書く。
+      実装は表示時に REG_STS で絞らないため、未確定データも一覧に現れる（D-PL-07）。
+    bind_style: "search は bind 変数（:cmp_cd 等）。値の f-string 連結はしない。"
+
+  - id: L-PL-02
+    name: 件数取得と上限判定
+    design_locator: "BP r99-r106"
+    rules:
+      - "COUNT(*) を同じ WHERE で先に取得する。"
+      - "件数 0 → R60W0010（該当データなし）。"
+      - "上限超過 → R60W0005（件数上限）。上限値は情報ID 000000024 から取得。"
+      - "上限超過時は data=[] と max_count を返し、一覧を描画しない。"
+    open_point: "設計の上限値は情報ID参照のみで、実値は本カードに書かない（環境依存）。"
+
+  - id: L-PL-03
+    name: 一覧ソート
+    design_locator: "BP r107-r112"
+    allowed_fields: [CMP_CD, JIG_CD, PLC_CD]
+    rules:
+      - "既定は ORDER BY DEL_FLG, CMP_CD, JIG_CD, PLC_CD, ROWID。"
+      - "ユーザー指定時は ORDER BY DEL_FLG, {許可列} {ASC|DESC}, ROWID。"
+      - "許可列は ALLOWED_SORT_FIELDS の 3 項目のみ。白名单外は既定ソートへフォールバック。"
+    deviation: >-
+      指定ソート時に CMP_CD/JIG_CD/PLC_CD の副キーが落ち、ROWID だけが続く。
+      同時刻・同値の行で並びが設計と変わりうる（D-PL-10）。
+
+  - id: L-PL-04
+    name: CSV ダウンロード
+    design_locator: "BP r193-r217"
+    handler: "R60PlcController.py:1981-2052"
+    rules:
+      - "直前の検索条件とソート順をそのまま使う（画面が保持する検索パラメータを再送）。"
+      - "CSV ヘッダは R60_GET_SELECT_COLUMN_FNC('R60_PLC_M_TBL','H')、明細は同 'D'。"
+      - "ファイル名は R60CsvUtil.get_csv_name() が返す。"
+    deviation: "WHERE 句を文字列連結で組み立てる。search と実装方式が異なる（D-PL-09）。"
+
+  - id: L-PL-05
+    name: 初期表示ドロップダウン生成
+    design_locator: "BP r23-r45"
+    handler: "R60PlcController.py:1552-1803"
+    lists:
+      - { name: cmp_list,     sql: "会社マスタ×エリアマスタ（双方 DEL_FLG=0）、CMP_CD 昇順" }
+      - { name: jig_list,     sql: "事業場×エリア（双方 DEL_FLG=0、HYJ_SEQ NOT NULL）、HYJ_SEQ・value 昇順" }
+      - { name: area_list,    sql: "エリアマスタ DEL_FLG=0 かつ REG_STS=1、ARA_CD 昇順" }
+      - { name: plc_grp_list, sql: "ロケグループ DEL_FLG=0・REG_STS=1、HYJ_SEQ 昇順" }
+      - { name: plc_typ_list, sql: "ロケタイプ DEL_FLG=0・REG_STS=1、HYJ_SEQ 昇順" }
+    rules:
+      - "全ドロップダウンの先頭に空選択肢（value=''）を置く。"
+      - "value は複合キーをカンマ連結した文字列。フロントは分割して送る。"
+      - "頁件数は情報ID 000000174。既定値は個別項目名10='D' の行。"
+
+  - id: L-PL-06
+    name: マスタ項目モーダル初期化（新規）
+    design_locator: "BP r129-r160（イベント No17）"
+    handler: "R60PlcController.py:2053-2602（mode=1）"
+    rules:
+      - "初期値は情報ID 295/296/297/299/300/301/302/303/420 から取得する。"
+      - "会社・事業場はログインユーザーの所属を初期選択にする。"
+      - "ロケーションコードは空。名称・略称・容量等も空。"
+      - "削除チェックは非表示（新規では削除できない）。"
+    dropdown_count: 17
+    dropdown_ids:
+      [119, 117, 158, 159, 123, 124, 125, 121, 120, 127, 126, 118, 157, 160, 418, 419]
+
+  - id: L-PL-07
+    name: マスタ項目モーダル初期化（複製・修正）
+    design_locator: "BP r161-r191（イベント No12/No13）"
+    handler: "R60PlcController.py:2053-2602（mode=2/3）"
+    rules:
+      - "mode 2（複製）・mode 3（修正）は選択行を業務キーで読み込む。"
+      - "表示値・コード値・KSN_DAT・REV_NO・DEL_FLG を返す。"
+      - "複製ではロケーションコードを空にし、名称等は引き継ぐ。"
+      - "修正ではロケーションコードを編集不可にする。"
+      - "会社・事業場を変更すると、エリア・ロケグループのドロップダウンを再生成する。"
+    deviation: >-
+      R60PlcCreate.vue / R60PlcCopy.vue は存在するが import されておらず、
+      実際は R60PlcEdit.vue 1 本が 3 モードを担う（D-PL-16）。
+
+  - id: L-PL-08
+    name: 単項目入力チェック
+    design_locator: "09_画面単項目チェック（40 件）"
+    checks:
+      - { code: R60W0128, target: ロケーションコード, rule: "半角英数大文字と _ - ( ) のみ、8 桁以内" }
+      - { code: R60W0131, target: "ロケーション名称 / 略称", rule: "名称 24 桁以内、略称 16 桁以内" }
+      - { code: R60W0121, target: 容量・深さ, rule: "数値範囲チェック" }
+      - { code: R60W0009, target: 必須項目, rule: "新規・複製時に必須" }
+      - { code: R60W0015, target: 削除チェック, rule: "削除チェック時は削除理由等の必須項目を要求" }
+      - { code: R60W0016, target: 全項目, rule: "変更なしの場合は登録させない" }
+    behavior:
+      - "エラー時は項目特定してフォーカスを移す（showErrorAndFocus 相当）。"
+      - "名称の焦点喪失時に略称の自動転記を行う（handlePlcNameBlur）。"
+    note: "40 件の個別対応表は設計シート側を参照。本カードは代表のみ抜粋。"
+
+  - id: L-PL-09
+    name: 項目間・DB 整合チェック
+    design_locator: "10_画面項目間・DB整合チェック"
+    checks:
+      - { code: R60W0010, rule: "検索結果 0 件" }
+      - { code: R60W0005, rule: "件数上限超過" }
+      - { code: R60W0014, rule: "同一業務キーが既存（新規・複製）" }
+      - { code: R60W0006, rule: "排他：KSN_DAT 不一致" }
+      - { code: R60W0024, rule: "被参照：R60_CHECK_PLC_INFO_FNC が '1'" }
+      - { code: R60E0025, rule: "被参照チェック関数が null を返す" }
+      - { code: R60A0041, rule: "必須項目確認（OK なら登録続行）" }
+    order: "単項目 → 重複 → 排他 → 被参照 → 登録/削除"
+    note: "A0041 は確認ダイアログのため、OK で処理を継続する。"
+
+  - id: L-PL-10
+    name: 重複チェック（新規・複製）
+    design_locator: "BP r316-r340"
+    handler: "R60PlcController.py:2758-3012（mode 1/2）"
+    rules:
+      - "CMP_CD + JIG_CD + PLC_CD で既存行を検索する。"
+      - "DEL_FLG に関係なく存在すれば R60W0014 を返す。"
+    open_point: "設計は『削除済みも重複とみなすか』を明記していない。実装は DEL_FLG を見ない。"
+
+  - id: L-PL-11
+    name: 排他チェック（修正・削除）
+    design_locator: "BP r316-r360"
+    rules:
+      - "画面が保持する KSN_DAT と DB の KSN_DAT を比較する。"
+      - "KSN_KBN='1' かつ不一致なら R60W0006（他のユーザーが更新済み）。"
+      - "一致時は KSN_DAT を現在時刻で更新し、REV_NO を +1 する。"
+    note: "KSN_DAT の取得元は initEdit の応答。一覧の値ではない。"
+
+  - id: L-PL-12
+    name: 被参照チェック（削除・削除済み登録）
+    design_locator: "BP r260-r310"
+    rules:
+      - "R60_CHECK_PLC_INFO_FNC(業務キー) を呼ぶ。"
+      - "戻り値 '1' → R60W0024（参照されているため削除不可）。"
+      - "戻り値 null → R60E0025（チェック関数エラー）。"
+      - "削除チェック付きで登録（mode 3 かつ del_flg=1）の場合にも同じチェックを行う。"
+    order: "排他 → 被参照 → UPDATE"
+
+  - id: L-PL-13
+    name: 論理削除
+    design_locator: "BP r260-r425（イベント No23）"
+    handler: "R60PlcController.py:2603-2757"
+    rules:
+      - "物理削除はしない。DEL_FLG=1 の UPDATE。"
+      - "同時に SEND_STS=0、KSN_KBN='1'、KSN_DAT=現在時刻、REV_NO+1。"
+      - "REG_STS を再判定する（削除により必須項目が欠ける場合がある）。"
+      - "成功時は R60I0002 を返す。"
+    deviation: >-
+      フロントは delete の応答 message を表示せず、常に R60I0001（登録しました。）を表示する。
+      設計の完了メッセージ R60I0002 と食い違う（D-PL-08）。"
+    update_columns: 33
+
+  - id: L-PL-14
+    name: 登録（新規・複製・修正）
+    design_locator: "BP r316-r425（イベント No24）"
+    handler: "R60PlcController.py:2758-3012"
+    rules:
+      - "mode 1/2：INSERT。41 列すべてを設定する。"
+      - "mode 1/2：SEND_KBN=0、REV_NO=開始値。"
+      - "mode 3：UPDATE。更新対象は 33 列（項目移送表の更新 ○ と一致）。"
+      - "修正で削除チェックを外す（DEL_FLG 1→0）場合も同じ UPDATE 経路。"
+      - "成功時は R60I0001 を返す。"
+    note: "登録系 5 列（登録者・登録日時等）と SEND_KBN は UPDATE 対象外。"
+
+  - id: L-PL-15
+    name: 登録ステータス判定（set_reg_sts）
+    design_locator: "BP r426 以降（登録ステータス判定）"
+    handler: "R60PlcController.py:3035-3076"
+    rules:
+      - "基本 18 項目がすべて埋まっていれば REG_STS='1'、そうでなければ '0'。"
+      - "ロケーション属性区分 = '02'（タンク）の時は、さらに 6 項目を必須に加える。"
+      - "6 項目：検尺管理区分・検尺検定区分・検尺単位・最大深さ・開始検定深さ・仮想タンク区分。"
+    deviation: "設計は『2:タンク』と『02:タンク』を混在して書く。実装は '02' で判定（D-PL-06）。"
+
+  - id: L-PL-16
+    name: ボタン活性制御
+    design_locator: "06_画面項目内容(検索) / 08_画面項目内容(マスタ項目)"
+    frontend_locator: "R60PlcEdit.vue（disabled バインド）"
+    rules:
+      - "初期状態：ダウンロード・新規は非活性。検索後に活性。"
+      - "マスタ項目モーダル：新規・複製では削除ボタン非活性。"
+      - "修正では削除ボタン活性。ただし既に削除済み（DEL_FLG=1）の行では非活性。"
+      - "登録ボタンは新規モードでは常に活性、それ以外は権限区分 Y の時のみ活性。"
+      - "コンポーネントのフラグ名は『Enabled』だが、実際は disabled 属性へバインドされており意味が反転している（D-PL-15）。"
+
+  - id: L-PL-17
+    name: 確認・完了メッセージ
+    design_locator: "11_その他メッセージ"
+    messages:
+      - { code: R60W0007, rule: "変更を破棄してよいか（戻る・閉じる時）", design_locator: "09_画面単項目チェック" }
+      - { code: R60A0004, rule: "削除してよいか" }
+      - { code: R60A0003, rule: "登録してよいか" }
+      - { code: R60A0008, rule: "必須項目の確認" }
+      - { code: R60I0001, rule: "登録しました。（登録・削除の両方で表示される）" }
+      - { code: R60I0002, rule: "削除しました。（設計のみ。画面では表示されない）" }
+    deviation: "R60I0002 は取得も返却もされるが、画面表示に到達しない（D-PL-08）。"
+
+design_vs_implementation_summary:
+  matched:
+    - "検索条件・前方/中間一致・削除含む・頁件数"
+    - "件数 0 と上限超過のメッセージ"
+    - "重複・排他・被参照の判定順序"
+    - "論理削除と 33 列 UPDATE"
+    - "REG_STS の 18＋6 項目判定"
+  mismatched:
+    - "表示ボタンの REG_STS 絞り込み（D-PL-07）"
+    - "指定ソート時の副キー（D-PL-10）"
+    - "download の WHERE 組み立て（D-PL-09）"
+    - "削除完了メッセージ（D-PL-08）"
+    - "ボタン活性フラグの名前と意味（D-PL-15）"
+  unimplemented_design_artifacts:
+    - "R60PlcCreate.vue / R60PlcCopy.vue（参照なし）"
+    - "R60W0013（取得のみ、使用箇所なし）"
+
+open_questions:
+  - "表示ボタンで未確定データを出すのが正しいのか、設計の『確定のみ』が正しいのか。"
+  - "削除済みの業務キーを新規登録で再利用してよいか（重複チェックが DEL_FLG を見ない）。"
+  - "ロケーション属性区分の正式な選択肢値（2 か 02 か）。"

@@ -30,8 +30,9 @@ reports/_auto/
 tools/kb-platform/data/*.sqlite3
 tools/kb-platform/data/*.sqlite3-wal
 tools/kb-platform/data/*.sqlite3-shm
-# kb_export 的导出件（正本在 docs/90_knowledge/legacy-r60/）
-tools/kb-platform/repo/projects/P-R60-001/
+# 2026-10-29: 旧案件知識は tools/kb-platform/repo/projects/P-R60-001/ が正本になったため、
+#   ここを ignore しない（旧規則は「kb_export の導出物」だったが、その前提は撤廃された）。
+#   理由と経緯: reports/audit/kb-integration/03_拍板记录_2026-10-29.md
 # registry.py 每次发号的自动备份
 docs/00_registry/_backup/
 # pytest 的覆盖率中间文件

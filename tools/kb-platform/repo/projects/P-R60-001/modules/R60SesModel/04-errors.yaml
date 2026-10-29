@@ -1,0 +1,130 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60SESMODEL-ERRORS
+type: knowledge
+req_ids: []
+status: open
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60SesModel
+artifact_type: error-catalog
+
+source:
+  design_messages: reports/module-survey/R60SesModel/design/19_その他メッセージ.txt
+  design_single_checks: reports/module-survey/R60SesModel/design/17_画面単項目チェック.txt
+  design_cross_checks: reports/module-survey/R60SesModel/design/18_画面項目間・DB整合チェック.txt
+  design_events: reports/module-survey/R60SesModel/design/20_イベント一覧.txt
+  backend_controller: api/fastapi_oracle_pjt/app/routers/R60SesModelController.py
+  frontend_components: "R60SesModel.vue / R60SesModelEdit.vue / R60SesModelMesEdit.vue"
+
+message_inventory:
+  design_other_messages:
+    rows: 13
+    distinct_ids: [R60A0008, R60A0021, R60I0022, R60I0001, R60I0002, R60A0003, R60A0004, R60W0007]
+    note: "ヘッダ・明細で同じ ID を繰り返すため、行数 13 に対し ID は 8。"
+  design_check_sheets:
+    distinct_ids: 33
+    note: >-
+      単項目 29 件・項目間 36 件のチェックが参照するメッセージを数えると 33 ID。
+      『その他メッセージ』8 ID と合わせても、チェック系の文言はそちらに集約されていない。
+  implementation_fetch:
+    count: 36
+    from: "R60SesModelController.py get_message_info:4639-4723"
+  implementation_reference:
+    count: 37
+    extra: "R60W0001（dataInit:2305）"
+    gap: "R60W0001 は fetch されない（D-SM-10）。"
+  mismatch: >-
+    設計 8＋33、実装 fetch 36・参照 37。完全一致しない。
+    『その他メッセージ』だけを見て実装を照合すると、チェック系文言の欠落を見落とす（D-SM-03）。
+
+message_types:
+  I: "情報（完了）"
+  A: "確認（Yes/No）"
+  W: "警告（処理中断または注意）"
+  E: "エラー（共通部品・DB 異常）"
+
+messages:
+  - { id: R60W0001, type: W, role: "通常環境でのデータ初期化拒否", design_sheet: "なし", impl: "dataInit:2305", fetched: false }
+  - { id: R60W0005, type: W, role: "検索上限超過", design_sheet: "18_項目間", impl: "search:2051", fetched: true, note: "文言に 3000/3001 を直書き" }
+  - { id: R60W0006, type: W, role: "排他エラー（更新日時不一致）", design_sheet: "18_項目間", impl: "各更新・削除", fetched: true }
+  - { id: R60W0007, type: W, role: "画面を閉じる時の破棄確認", design_sheet: "17_単項目", impl: "各モーダル close", fetched: true }
+  - { id: R60W0009, type: W, role: "必須項目", design_sheet: "17_単項目", impl: "inputCheck", fetched: true }
+  - { id: R60W0010, type: W, role: "検索結果 0 件", design_sheet: "18_項目間", impl: "search:2049 / delete:3362", fetched: true }
+  - { id: R60W0011, type: W, role: "親コード・子コードが存在しない", design_sheet: "18_項目間", impl: "各更新・削除", fetched: true }
+  - { id: R60W0012, type: W, role: "緊急配信時の必須項目", design_sheet: "17_単項目", impl: "inputCheck（ヘッダ）", fetched: true }
+  - { id: R60W0014, type: W, role: "重複キー", design_sheet: "18_項目間", impl: "edit / editChild", fetched: true }
+  - { id: R60W0015, type: W, role: "削除チェック時の必須項目", design_sheet: "17_単項目", impl: "inputCheck", fetched: true }
+  - { id: R60W0016, type: W, role: "変更がない", design_sheet: "17_単項目", impl: "inputCheck", fetched: true }
+  - { id: R60W0017, type: W, role: "関連データの必須（親子・生産工場）", design_sheet: "18_項目間", impl: "edit / delete", fetched: true, error_flg: "1=親子, 2=生産工場" }
+  - { id: R60W0018, type: W, role: "復活時に未復活の関連がある", design_sheet: "18_項目間", impl: "edit / editChild", fetched: true, error_flg: "1-3 で対象を切替" }
+  - { id: R60W0019, type: W, role: "親が削除済み", design_sheet: "18_項目間", impl: "editChild", fetched: true }
+  - { id: R60W0020, type: W, role: "緊急配信に関する必須（明細）", design_sheet: "18_項目間", impl: "edit（明細確認）", fetched: true }
+  - { id: R60W0031, type: W, role: "子コードの先頭が親番と不一致", design_sheet: "17_単項目", impl: "編集画面 inputCheck", fetched: true }
+  - { id: R60W0032, type: W, role: "複製元に子コードが無い", design_sheet: "18_項目間", impl: "edit（複製）", fetched: true }
+  - { id: R60W0101, type: W, role: "未確認（画面側の使用箇所が薄い）", design_sheet: "未確認", impl: "fetch のみ", fetched: true }
+  - { id: R60W0102, type: W, role: "未確認（コード桁系と推測）", design_sheet: "未確認", impl: "fetch のみ", fetched: true }
+  - { id: R60W0103, type: W, role: "生産モデルコードの桁不正", design_sheet: "17_単項目", impl: "searchChk / inputCheck", fetched: true }
+  - { id: R60W0108, type: W, role: "購入品目コードは 6 桁", design_sheet: "17_単項目", impl: "searchChk", fetched: true }
+  - { id: R60W0118, type: W, role: "アイテム名称は全角 20 桁", design_sheet: "17_単項目", impl: "searchChk", fetched: true }
+  - { id: R60W0121, type: W, role: "所要量・基準値の数値範囲", design_sheet: "17_単項目", impl: "inputCheck", fetched: true }
+  - { id: R60W0131, type: W, role: "名称の桁不正", design_sheet: "17_単項目", impl: "searchChk / inputCheck", fetched: true }
+  - { id: R60W2007, type: W, role: "緊急配信対象に有効な明細が無い", design_sheet: "18_項目間", impl: "edit / delete", fetched: true }
+  - { id: R60W2019, type: W, role: "イベントマスタ参照エラー", design_sheet: "18_項目間", impl: "各更新・削除・自動採番枯渇", fetched: true, error_flg: "1=枯渇, 2=イベント(登録), 3=イベント(削除/修正)" }
+  - { id: R60W2050, type: W, role: "飲料社工場ユーザーが非素材の購入品目を選択", design_sheet: "18_項目間", impl: "editChild / delete", fetched: true }
+  - { id: R60W2051, type: W, role: "子マスタが未確定（REG_STS='0'）", design_sheet: "18_項目間", impl: "edit / delete", fetched: true }
+  - { id: R60E0023, type: E, role: "未確認（共通部品異常系と推測）", design_sheet: "未確認", impl: "fetch のみ", fetched: true }
+  - { id: R60E0025, type: E, role: "共通チェック関数が null を返した", design_sheet: "18_項目間", impl: "edit / editChild", fetched: true }
+  - { id: R60A0003, type: A, role: "登録・更新の確認", design_sheet: "19_その他", impl: "登録前確認", fetched: true }
+  - { id: R60A0004, type: A, role: "削除の確認", design_sheet: "19_その他", impl: "削除前確認", fetched: true }
+  - { id: R60A0008, type: A, role: "確認（用途未確認）", design_sheet: "19_その他", impl: "fetch のみ", fetched: true }
+  - { id: R60A0021, type: A, role: "確認（用途未確認）", design_sheet: "19_その他", impl: "fetch のみ", fetched: true }
+  - { id: R60I0001, type: I, role: "登録・更新完了", design_sheet: "19_その他", impl: "フロントが固定表示", fetched: true }
+  - { id: R60I0002, type: I, role: "削除完了", design_sheet: "19_その他", impl: "フロントが固定表示", fetched: true }
+  - { id: R60I0022, type: I, role: "データ初期化完了", design_sheet: "19_その他", impl: "dataInit は返さずフロントが表示", fetched: true }
+
+error_flow:
+  search:
+    - "0 件 → R60W0010（error_code='1'）"
+    - "上限超過 → R60W0005（total・max_count 付き）"
+  init_edit:
+    - "対象なし → header_data を空で返す（エラーにしない）"
+  edit_new:
+    - "W0009 / W0016 / W0103 / W0131 / W0012 / W0015 → W0011 → W0032 → W2019(flg=2) → W0014 → W2051"
+  edit_modify:
+    - "W0006 → W0011 → W2019(flg=3) → E0025 / W0018 → W2007 → W2051 → W0017 / W0020"
+  delete:
+    - "W0010 → W0006 → W2019(flg=2) → W2007 → W2051 → W0017(flg=1)"
+  edit_child_new:
+    - "W0019 → W0011 → W2050 → W2019 → W0014"
+  edit_child_modify:
+    - "W0018 / E0025 → W0011 → W0006 → W2019"
+  delete_child:
+    - "W0011 → W0006 → W2019(flg=3)"
+  data_init:
+    - "sim_kbn='0' → R60W0001（ただし message_info に無い）"
+
+error_flg_semantics:
+  R60W0011: "1=アイテム, 2=半製品, 3=購入品目"
+  R60W0017: "1=親子, 2=生産/工場"
+  R60W2019: "1=枯渇, 2=イベント(登録時), 3=イベント(削除/修正時)"
+  note: "同じ警告 ID でも画面が文言を差し替えるため、error_flg が必須。"
+
+design_vs_implementation:
+  matched:
+    - "W0006 / W0011 / W0014 / W2019 / W2007 / W2051 / W0017 の発火位置は設計の処理順と一致。"
+    - "error_flg の意味も応答モデルの説明と一致。"
+  divergent:
+    - "更新系は message_id を返さず、フロントが R60I0001 / R60I0002 を固定表示する（D-SM-23）。"
+    - "dataInit は R60I0022 を返さない（画面が自前で表示）。"
+    - "R60W0001 を fetch しない（D-SM-10）。"
+  design_defects:
+    - "W0005 の文言が上限値 3000/3001 を直書きしている。上限は情報ID 000000024 で変わる。"
+    - "単項目 No8 半製品名称は本文 30byte・メッセージ引数 40 で食い違う（D-SM-18）。"
+
+open_questions:
+  - "R60W0101 / R60W0102 / R60E0023 / R60A0008 / R60A0021 の正式な用途。"
+  - "R60W0001 を init の message_info に含めない理由。"
+  - "更新系 API が message_id を返さないのは設計か実装の簡略化か。"
+  - "W0005 の文言 3000/3001 と情報ID 000000024 の現在値の関係。"

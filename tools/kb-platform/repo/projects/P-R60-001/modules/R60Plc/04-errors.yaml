@@ -1,0 +1,226 @@
+---
+id: KNOW-LEGACY-R60-MODULE-R60PLC-ERRORS
+type: knowledge
+req_ids: []
+status: open
+sensitivity: internal
+owner: AI-SE
+version: 0.1.0
+
+module: R60Plc
+artifact_type: message-catalog
+
+source:
+  design_single_check: reports/module-survey/R60Plc/design/09_画面単項目チェック.txt
+  design_cross_check: reports/module-survey/R60Plc/design/10_画面項目間・DB整合チェック.txt
+  design_other_messages: reports/module-survey/R60Plc/design/11_その他メッセージ.txt
+  backend_controller: api/fastapi_oracle_pjt/app/routers/R60PlcController.py
+  frontend_view: Front-end/src/views/R60Plc.vue
+  frontend_edit: Front-end/src/components/R60PlcEdit.vue
+
+message_inventory:
+  fetched_at_init: 20
+  used_in_design: 19
+  unused: [R60W0013]
+  returned_by_backend_but_not_shown: [R60I0002]
+
+message_types:
+  R60W: 警告・入力チェック（処理を止める）
+  R60A: 確認ダイアログ（OK/キャンセル）
+  R60I: 完了通知
+  R60E: システムエラー
+
+messages:
+  - id: R60W0128
+    type: warning
+    category: 単項目
+    trigger: ロケーションコードの形式不正（半角英数大文字と _ - ( ) 以外、または 8 桁超）
+    timing: "項目から焦点が外れた時・登録時"
+    design_locator: "09_画面単項目チェック"
+    implemented: true
+
+  - id: R60W0131
+    type: warning
+    category: 単項目
+    trigger: ロケーション名称が 24 桁超、または略称が 16 桁超
+    timing: "焦点喪失時・登録時"
+    design_locator: "09_画面単項目チェック"
+    implemented: true
+
+  - id: R60W0121
+    type: warning
+    category: 単項目
+    trigger: 最大容量・最大深さ・開始検定深さ等の数値範囲外
+    timing: "焦点喪失時・登録時"
+    design_locator: "09_画面単項目チェック"
+    implemented: true
+
+  - id: R60W0009
+    type: warning
+    category: 単項目
+    trigger: 新規・複製時に必須項目が未入力
+    timing: 登録時
+    design_locator: "09_画面単項目チェック"
+    implemented: true
+
+  - id: R60W0015
+    type: warning
+    category: 単項目
+    trigger: 削除チェック時に削除に必要な項目が未入力
+    timing: 登録時
+    design_locator: "09_画面単項目チェック"
+    implemented: true
+
+  - id: R60W0016
+    type: warning
+    category: 単項目
+    trigger: 前回読込時から変更が無い
+    timing: 登録時
+    design_locator: "09_画面単項目チェック"
+    implemented: true
+
+  - id: R60W0010
+    type: warning
+    category: 検索
+    trigger: 検索結果が 0 件
+    timing: 仕掛表示・表示・ページ移動・ソート
+    design_locator: "10_画面項目間・DB整合チェック"
+    implemented: true
+
+  - id: R60W0005
+    type: warning
+    category: 検索
+    trigger: 件数が上限を超過
+    timing: 検索時
+    design_locator: "10_画面項目間・DB整合チェック"
+    implemented: true
+    note: "上限値は情報ID 000000024。超過時は一覧を描画しない。"
+
+  - id: R60W0014
+    type: warning
+    category: DB整合
+    trigger: 同一業務キー（CMP_CD+JIG_CD+PLC_CD）が既存
+    timing: 新規・複製の登録時
+    design_locator: "10_画面項目間・DB整合チェック"
+    implemented: true
+    note: "DEL_FLG を見ないため、削除済みキーでも重複になる。"
+
+  - id: R60W0006
+    type: warning
+    category: DB整合
+    trigger: 排他エラー（KSN_DAT 不一致）
+    timing: 修正・削除の登録時
+    design_locator: "10_画面項目間・DB整合チェック"
+    implemented: true
+
+  - id: R60W0024
+    type: warning
+    category: DB整合
+    trigger: 他情報から参照されているため削除不可
+    timing: 削除時・削除チェック付き登録時
+    design_locator: "10_画面項目間・DB整合チェック"
+    implemented: true
+    function: "R60_CHECK_PLC_INFO_FNC"
+
+  - id: R60E0025
+    type: error
+    category: DB整合
+    trigger: 被参照チェック関数が null を返す
+    timing: 削除時・削除チェック付き登録時
+    design_locator: "10_画面項目間・DB整合チェック"
+    implemented: true
+
+  - id: R60W0007
+    type: warning
+    category: 確認
+    trigger: 変更を破棄してよいか
+    timing: "戻る・閉じる・モーダルを閉じる時"
+    design_locator: "09_画面単項目チェック"
+    implemented: true
+
+  - id: R60A0004
+    type: confirm
+    category: 確認
+    trigger: 削除してよいか
+    timing: 削除ボタン
+    design_locator: "11_その他メッセージ"
+    implemented: true
+
+  - id: R60A0003
+    type: confirm
+    category: 確認
+    trigger: 登録してよいか
+    timing: 登録ボタン
+    design_locator: "11_その他メッセージ"
+    implemented: true
+
+  - id: R60A0008
+    type: confirm
+    category: 確認
+    trigger: 必須項目の確認
+    timing: 登録時
+    design_locator: "11_その他メッセージ"
+    implemented: true
+
+  - id: R60A0041
+    type: confirm
+    category: 確認
+    trigger: 必須項目確認（OK で登録続行）
+    timing: 登録時
+    design_locator: "10_画面項目間・DB整合チェック"
+    implemented: true
+    note: "確認ダイアログのため、キャンセルで処理を中止する。"
+
+  - id: R60I0001
+    type: info
+    category: 完了
+    trigger: 登録・削除の完了
+    timing: "edit 成功時、および delete 成功時（フロント固定表示）"
+    design_locator: "11_その他メッセージ"
+    implemented: true
+    deviation: "削除でも R60I0001 を表示する（設計は R60I0002）。"
+
+  - id: R60I0002
+    type: info
+    category: 完了
+    trigger: 削除の完了
+    timing: "delete 成功時（バックエンドが返す）"
+    design_locator: "11_その他メッセージ"
+    implemented: partial
+    deviation: "取得・返却はあるが、フロントは表示しない。"
+
+  - id: R60W0013
+    type: warning
+    category: 未使用
+    trigger: 設計シートに記述が無い
+    timing: なし
+    implemented: false
+    note: >-
+      init の message_info に含めて取得しているが、設計 3 シートおよび
+      フロント・バックエンドのいずれにも使用箇所が無い。
+
+error_flow:
+  - stage: 単項目チェック
+    messages: [R60W0128, R60W0131, R60W0121, R60W0009, R60W0015, R60W0016]
+    on_error: "項目にフォーカスを戻し、処理を中止する。"
+  - stage: 検索
+    messages: [R60W0010, R60W0005]
+    on_error: "一覧を描画しない。"
+  - stage: 登録前チェック
+    messages: [R60W0014, R60W0006, R60W0024, R60E0025, R60A0041]
+    on_error: "処理を中止する。A0041 はキャンセルで中止、OK で続行。"
+  - stage: 完了
+    messages: [R60I0001, R60I0002]
+    on_error: "なし（通知のみ）。"
+
+design_vs_implementation:
+  matched:
+    - "入力チェック・検索・DB整合のメッセージ割当"
+    - "確認ダイアログのタイミング"
+  mismatched:
+    - "R60I0002 が画面に到達しない"
+    - "R60W0013 が未使用のまま取得されている"
+
+open_questions:
+  - "R60I0002 を表示するのが正しいか、登録と同じ R60I0001 が正しいか。"
+  - "R60W0013 はどの操作を想定したメッセージか（設計から読み取れない）。"
