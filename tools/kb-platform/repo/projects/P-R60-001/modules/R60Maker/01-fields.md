@@ -12,7 +12,7 @@ project_id: P-R60-001
 title: R60Maker — 項目定義（フィールド辞書）
 doc_type: design-detail
 conf_level: 30
-updated_at: '2026-10-28'
+updated_at: '2026-10-29'
 ---
 
 # R60Maker — 項目定義（フィールド辞書）
@@ -24,7 +24,7 @@ updated_at: '2026-10-28'
 |---|---|
 | id | KNOW-LEGACY-R60-MODULE-R60MAKER-FIELDS |
 | type | knowledge |
-| status | draft |
+| status | open |
 | sensitivity | internal |
 | owner | AI-SE |
 | version | 0.1.0 |

@@ -19,22 +19,27 @@
 
 ## 怎么用
 
+**`repo/projects/P-R60-001/` 就是知识正本，直接编辑，然后建索引。**
+2026-10-29 之前链的是另一个方向（`docs/95_legacy/r60/` 为正本、`repo/` 是导出物），
+那个方向的导出器 `tools/kb_export` **已停止使用**（运行即返回 2 并说明原因，留作映射规则的参考）。
+
 ```bash
-# 1. 把本项目的知识导出成 kb-platform 的格式（会删改 repo/projects/P-R60-001/ 这一棵子树）
-py -3 -m tools.kb_export --out tools/kb-platform/repo --promote --check --kb tools/kb-platform
+# 1. 改过模块卡的 YAML 正本后，重生成同目录的 .md 视图（幂等；不改 YAML 时什么都不变）
+py -3 -m tools.kb_migrate --apply
 
 # 2. 建索引（差分，没变的不重建）
-py -3 tools/kb-platform/run.py ingest
+py -3 tools/kb-platform/run.py ingest --repo tools/kb-platform/repo
 
 # 3. 查
-py -3 tools/kb-platform/run.py search "エリアマスタ 排他制御" --project P-R60-001 --top-k 5
+py -3 tools/kb-platform/run.py search "エリアマスタ 排他制御" --repo tools/kb-platform/repo --project P-R60-001 --top-k 5
 
-# 4. 状态
-py -3 tools/kb-platform/run.py stats
+# 4. 状态 / 评测
+py -3 tools/kb-platform/run.py stats --repo tools/kb-platform/repo
+py -3 tools/kb-platform/run.py eval  --repo tools/kb-platform/repo
 ```
 
-`--promote` 的作用见 `reports/kb-export/README.md`：
-kb-platform 的检索**只返回 `status=active` 的文档**，不加这个参数，22 篇都索引得进去但一条也搜不出来。
+检索返回哪些状态，由下面「偏离 1」的 `DEFAULT_RETRIEVABLE` 决定（`active,open,baselined,changed,done`）。
+**`draft` 与 `void` 检索不到，这是有意的**——未定稿和作废的知识不该被当成答案。
 
 ## 依赖
 

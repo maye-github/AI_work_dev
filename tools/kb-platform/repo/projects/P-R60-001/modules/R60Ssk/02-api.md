@@ -12,7 +12,7 @@ project_id: P-R60-001
 title: R60Ssk — API 契約
 doc_type: design-detail
 conf_level: 30
-updated_at: '2026-10-28'
+updated_at: '2026-10-29'
 ---
 
 # R60Ssk — API 契約
@@ -24,7 +24,7 @@ updated_at: '2026-10-28'
 |---|---|
 | id | KNOW-LEGACY-R60-MODULE-R60SSK-API |
 | type | knowledge |
-| status | draft |
+| status | open |
 | sensitivity | internal |
 | owner | AI-SE |
 | version | 0.1.0 |

@@ -12,7 +12,7 @@ project_id: P-R60-001
 title: R60KkuChi — レビュー指摘と処置
 doc_type: design-detail
 conf_level: 30
-updated_at: '2026-10-28'
+updated_at: '2026-10-29'
 ---
 
 # R60KkuChi — レビュー指摘と処置
@@ -24,7 +24,7 @@ updated_at: '2026-10-28'
 |---|---|
 | id | KNOW-LEGACY-R60-MODULE-R60KKUCHI-REVIEW |
 | type | knowledge |
-| status | draft |
+| status | open |
 | sensitivity | internal |
 | owner | AI-SE |
 | version | 0.1.0 |

@@ -2,8 +2,11 @@
 
 背景
 ----
-`tools/kb-platform/repo/projects/P-R60-001/` の 76 件を `tools/kb-platform/repo/projects/P-R60-001/` へ移し、
+`docs/95_legacy/r60/` の 76 件を `tools/kb-platform/repo/projects/P-R60-001/` へ移し、
 知識庫の正本にする（ユーザー拍板: reports/audit/kb-integration/03_拍板记录_2026-10-29.md）。
+
+移設元 `docs/95_legacy/r60/` は移設後に削除した。**移設済みの現在の用途は
+「モジュールカードの YAML 正本から、同ディレクトリの `.md` ビューを作り直す」ことだけ**である（§本体の分岐を参照）。
 
 移設のとき、**1 ファイルが 2 つの lint を同時に満たす**ように front matter を合成する。
 
@@ -365,7 +368,9 @@ def main(argv: list[str] | None = None) -> int:
             rel_for_slug = dp.relative_to(dst).as_posix()
             fm = merged_fm(
                 {"id": f"KNOW-LEGACY-R60-CHUNKS-{module.upper()}", "type": "knowledge", "req_ids": [],
-                 "status": "draft", "sensitivity": "internal", "owner": "AI-SE", "version": "0.1.0"},
+                 # `open` にする: `draft` は kb の DEFAULT_RETRIEVABLE に含まれず**検索に出ない**。
+                 # 既存の 7 篇も `open` であり、生成し直しても状態が変わらないよう合わせてある。
+                 "status": "open", "sensitivity": "internal", "owner": "AI-SE", "version": "0.1.0"},
                 rel_for_slug, s, f"{module} 検索摘要", body,
             )
             dp.write_text(dump_fm(fm) + "\n" + body, encoding="utf-8", newline="\n")
