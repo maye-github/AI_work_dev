@@ -30,10 +30,15 @@ generated_by: tools/kb_migrate.py
 
 ```bash
 py -3 -m tools.kb_migrate --apply          # .md を作り直す（何度実行しても同じ結果）
-py -3 tools/kb-platform/run.py lint --repo tools/kb-platform/repo
-py -3 tools/kb-platform/run.py ingest --repo tools/kb-platform/repo --prune
-py -3 tools/kb-platform/run.py eval --repo tools/kb-platform/repo
+py -3 -m tools.kb_local lint
+py -3 -m tools.kb_local ingest --prune
+py -3 -m tools.kb_local eval
 ```
+
+> **上流 CLI（`tools/kb-platform/run.py`）を直接叩かないこと。** 上流は `status = 'active'` 固定で、
+> 骨架の状態語彙（`open` / `baselined` / …）を知らないため、我々の文書では `search` が 0 件・
+> `lint` が NG になる。差分は `tools/kb_local/` にあり、上流のコードは逐字のまま
+> （`UPSTREAM-SYNC.md` §3・`VENDORED.md` 偏离 1〜3）。
 
 `--apply` は**冪等**である（2026-10-29 実測：2 回連続実行で全 79 篇の SHA-256 が一致）。
 一致しない場合は生成器に時刻・乱数・順序不定の反復が混入している（`.claude/rules/03` §7.1）。

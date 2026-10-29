@@ -83,7 +83,7 @@ tools/kb-platform/repo/projects/<P-ID>/
 | 「この端点の要求/応答は？」 | `06-api.md` ＋ **実物の controller を読む** |
 | 「骨架規則と実物が違うのだが」 | **`08-deviations.md`**（まず既存の登記を検索） |
 | 「追跡はどう管理していた？」 | `07-traceability.md`（★最も示唆が大きい） |
-| 機械的に引く | `py -3 tools/kb-platform/run.py search "<問い>" --repo tools/kb-platform/repo --project <P-ID> --top-k 5` |
+| 機械的に引く | `py -3 -m tools.kb_local search "<問い>" --project <P-ID> --top-k 5` |
 
 **機械的に引くときの 2 つのスイッチ**（2026-10-29 追加。付けないと取りこぼす）:
 
@@ -94,17 +94,26 @@ tools/kb-platform/repo/projects/<P-ID>/
 
 ```bash
 # モジュールが分かっている
-py -3 tools/kb-platform/run.py search "検索一覧は実項目で何件" \
-    --repo tools/kb-platform/repo --project P-R60-001 --module R60SesModel --top-k 5
+py -3 -m tools.kb_local search "検索一覧は実項目で何件" \
+    --project P-R60-001 --module R60SesModel --top-k 5
 
 # 会社の決め事を聞く
-py -3 tools/kb-platform/run.py search "テストケースの最低件数" \
-    --repo tools/kb-platform/repo --project P-R60-001 --scope company --top-k 5
+py -3 -m tools.kb_local search "テストケースの最低件数" \
+    --project P-R60-001 --scope company --top-k 5
 ```
 
 `--module` は `doc_id` と `title` の部分一致である（`r60sesmodel` でも `R60SesModel` でも当たる）。
 **語幹が同じ別モジュールがある場合**（例 `<Module>` と `<Module>Detail`）は、狭いほうから試して
 0 件なら広げる。
+
+> **上流 CLI（`py -3 tools/kb-platform/run.py search …`）を直接叩かない。** 上流は
+> `status = 'active'` 固定で、骨架の状態語彙（`open` / `baselined`）を知らないため、
+> 我々の知識では **0 件**が返る。`tools.kb_local` は上流を 1 行も変えずにその差を吸収している
+> （`tools/kb-platform/UPSTREAM-SYNC.md` §3）。
+
+> **★引いた証拠を残す**（2026-10-29 ユーザー指示）。回答に「知識庫で確認した」と書くなら、
+> **実行したコマンドと返ってきた `doc_id`（落点の `§` まで）を併記する**。併記できないなら、
+> それは確認ではなく推測である。ヒット 0 件も `→ ヒットなし` と書く。
 
 ---
 

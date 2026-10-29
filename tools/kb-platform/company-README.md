@@ -48,7 +48,7 @@ Q009・Q010・Q012）がこの 3 篇を期待している。**消してはなら
 
 1. **front matter は 10 項目**：`doc_id` / `scope: company` / `title` / `doc_type` / `version` /
    `status` / `conf_level` / `owner` / `updated_at` / `tags`。
-   **`scope: company` に `project_id` を書いてはならない**（`run.py lint` が弾く）。
+   **`scope: company` に `project_id` を書いてはならない**（`tools.kb_local lint` が弾く）。
 2. `doc_id` は `<種別>-<領域>-<連番>`。既存と衝突させない。
 3. `doc_type` は `standard` / `pattern` / `glossary` / `decision` / `howto` から選ぶ。
 4. **本文は「要約＋正本へのポインタ」にする。** 同一の定義を二箇所に書くと、必ずどちらかが古くなる。
@@ -59,16 +59,19 @@ Q009・Q010・Q012）がこの 3 篇を期待している。**消してはなら
 
 ```bash
 # 形（front matter・scope・doc_type・conf_level）を検査
-py -3 tools/kb-platform/run.py lint --repo tools/kb-platform/repo
+py -3 -m tools.kb_local lint
 
 # 索引を作り直してから評価
-py -3 tools/kb-platform/run.py ingest --repo tools/kb-platform/repo
-py -3 tools/kb-platform/run.py eval --repo tools/kb-platform/repo
+py -3 -m tools.kb_local ingest --prune
+py -3 -m tools.kb_local eval
 ```
 
 - **本ディレクトリはベンダリング（写し）である。** 正本は `D:\AI_platform`。
-  ここで足した条目は、**上流へ PR で還流させる**。上流を直接編集しない。
-  同期の手順と、本抄本が上流からずれている箇所の一覧は `UPSTREAM-SYNC.md`。
-- 還流の単位は**条目 1 本**（ファイル 1 つ）。複数案件で使われた実績ができたら上げる、が目安。
+  **上流の実装規則・コードは我々の都合で変えない**（2026-10-29 ユーザー指示）。
+  我々の差分は `tools/kb_local/` に置き、上流のコードは逐字のまま保つ。
+  同期の手順は `UPSTREAM-SYNC.md`。
+- ここで足した条目を全社へ渡すのは、**会社の指示があったとき**だけ（§4）。
+  渡し方は会社のやり方に従い、我々が `D:\AI_platform` へ直接 commit しない。
+- 還流の単位は**条目 1 本**（ファイル 1 つ）。複数案件で使われた実績ができたら、が目安。
 - **案件 scope（`repo/projects/`）の知識は上流へ上げない。** 上げてよいのは本ディレクトリに
   昇格させた条目だけ（`projects-README.md` §3）。

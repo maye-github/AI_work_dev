@@ -19,12 +19,6 @@ REQUIRED_KEYS = [
 ]
 SCOPES = {"company", "project"}
 STATUSES = {"draft", "review", "active", "deprecated"}
-# 2026-10-29 追加: 骨架（`.claude/rules/02` §6）の状態機の語彙を受ける。
-#   旧案件知識を `tools/kb-platform/repo/` へ移したため、1 ファイルが
-#   骨架 gate3 と本 lint の両方を満たす必要が生じた（status の共通部分が
-#   `draft` だけでは、baselined にすると検索から消え、active にすると gate3 が落ちる）。
-#   「どの状態を検索対象にするか」は retrieval.py 側の RETRIEVABLE が持つ。
-STATUSES |= {"open", "baselined", "changed", "done", "void"}
 DOC_TYPES = {
     "standard", "pattern", "glossary", "requirement",
     "design-basic", "design-detail", "test", "decision",

@@ -83,6 +83,10 @@ py -3 tools/kb-platform/run.py eval --repo tools/kb-platform/repo
 表里每一行都能在那份文本里找到对应的 `RQ0NN | … | RAG: … | KB: …` 行。
 
 **后续（同日）**：上文第 4 点说的「模块串味」已修到「检索器开口子」这一步——
-`run.py search` 加了 `--module`，实测 80 题 `recall@5` 0.863 → 0.925、`top1_module` 76 → 80。
+`tools.kb_local search` 加了 `--module`，实测 80 题 `recall@5` 0.863 → 0.925、`top1_module` 76 → 80。
 调用侧（本报告 §4 的下一步）已写进两个 skill。详见
-`reports/audit/kb-integration/04_残留问题清单_2026-10-29.md` §7。
+`reports/audit/kb-integration/04_残留问题清单_2026-10-29.md` §7・§7.2。
+
+> **命令名注意**：本报告 §1 与 P3 / P4 记录里的 `py -3 tools/kb-platform/run.py …` 是**当时实际执行的命令**，
+> 按 rules/02 §10 原样保留。同日稍后这些差分搬进了 `tools/kb_local/`（上游代码逐字还原，
+> 本地代码改変 = 0），**现在要写成 `py -3 -m tools.kb_local …`**。上游 CLI 直接敲会返回 0 件。

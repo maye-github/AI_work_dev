@@ -73,7 +73,6 @@ def cmd_search(args) -> int:
     results = search(
         conn, args.query, embedder,
         project_id=args.project, user_level=args.level, top_k=args.top_k,
-        module=args.module, scope=args.scope,
     )
     if args.json:
         _out(json.dumps(results, ensure_ascii=False, indent=2))
@@ -154,10 +153,6 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--project", default=None, help="案件ID（例: P-DEMO-001）")
     sp.add_argument("--level", type=int, default=30, help="利用者の権限レベル")
     sp.add_argument("--top-k", type=int, default=5)
-    sp.add_argument("--module", default=None,
-                    help="モジュールで絞る（例: R60Ssk）。doc_id/title の部分一致")
-    sp.add_argument("--scope", default=None, choices=["company", "project"],
-                    help="会社共通だけ / 案件知識だけ に絞る")
     sp.add_argument("--context", action="store_true", help="LLM 用コンテキストも出力")
     sp.add_argument("--json", action="store_true")
     sp.set_defaults(func=cmd_search)

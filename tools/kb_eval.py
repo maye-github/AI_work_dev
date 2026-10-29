@@ -35,7 +35,11 @@ sys.path.insert(0, str(KB_ROOT))
 
 from kbkit import store  # noqa: E402
 from kbkit.embedder import get_embedder  # noqa: E402
-from kbkit.retrieval import search  # noqa: E402
+
+# 検索は上流 `kbkit.retrieval` を直接使わない。上流は `status = 'active'` 固定で、
+# 我々の文書（`open` / `baselined`）が 1 件も拾われないため。
+# 差分は `tools/kb_local/` に置き、上流は逐字のまま保つ（`tools/kb-platform/UPSTREAM-SYNC.md`）。
+from tools.kb_local.retrieval import search  # noqa: E402
 
 DEFAULT_GOLD = ROOT / "eval" / "gold-qa.yaml"
 DEFAULT_DB = KB_ROOT / "data" / "kb.sqlite3"

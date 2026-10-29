@@ -14,8 +14,12 @@
 ## 这里的代码不是我们写的
 
 **不要按本项目的规矩改它**（commit 7 种格式、7 字段 front matter 等都不适用）。
-要改就回到上游 `D:\AI_platform\kb-platform` 改，再同步过来。
-**上游是正，这份是抄本。**
+
+**也不要在抄本里改它。** 上游 `D:\AI_platform\kb-platform` 的实现规则是上游的决め事であり、
+こちらが手を入れたり、変更を提案・commit したりしない（2026-10-29 ユーザー指示）。
+我々の差分は **`tools/kb_local/`（本地拡張層）** に置き、`kbkit/` `run.py` `api.py` は
+**上流と逐字一致**を保つ（合格条件は `py -3 -m tools.kb_vendor_manifest --check` の
+「本地改変（コード）= 0」）。**上游是正，这份是抄本；抄本不动上游。**
 
 ## 怎么用
 
@@ -29,18 +33,25 @@
 py -3 -m tools.kb_migrate --apply
 
 # 2. 建索引（差分，没变的不重建）
-py -3 tools/kb-platform/run.py ingest --repo tools/kb-platform/repo
+py -3 -m tools.kb_local ingest --prune
 
-# 3. 查
-py -3 tools/kb-platform/run.py search "エリアマスタ 排他制御" --repo tools/kb-platform/repo --project P-R60-001 --top-k 5
+# 3. 查（检索、lint、评测都要走 tools.kb_local，见下「偏离 1」）
+py -3 -m tools.kb_local search "エリアマスタ 排他制御" --project P-R60-001 --top-k 5
+py -3 -m tools.kb_local search "検索一覧は実項目で何件" --project P-R60-001 --module R60Ssk
 
 # 4. 状态 / 评测
-py -3 tools/kb-platform/run.py stats --repo tools/kb-platform/repo
-py -3 tools/kb-platform/run.py eval  --repo tools/kb-platform/repo
+py -3 -m tools.kb_local stats
+py -3 -m tools.kb_local eval
 ```
 
-检索返回哪些状态，由下面「偏离 1」的 `DEFAULT_RETRIEVABLE` 决定（`active,open,baselined,changed,done`）。
+检索返回哪些状态，由 `tools/kb_local/_bootstrap.py` 的 `DEFAULT_RETRIEVABLE` 决定
+（`active,open,baselined,changed,done`，可用环境变量 `KB_RETRIEVABLE_STATUSES` 覆盖）。
 **`draft` 与 `void` 检索不到，这是有意的**——未定稿和作废的知识不该被当成答案。
+
+> **上流 CLI（`py -3 tools/kb-platform/run.py …`）直接敲会看起来「坏了」**（2026-10-29 实测）：
+> `search` 返回 0 件、`lint` 是 `NG 79 件の問題`、`eval` 是 `recall@5=0.500`（上流 demo 12 问还中，
+> 案件 12 问全落）。原因不是坏了，而是上流只认 `status = 'active'`、只认它自己的状态词表。
+> **用 `tools/kb_local` 就好。**（`ingest` / `stats` 走哪个都行。）
 
 ## 在规格书里是哪一个组件
 
@@ -62,63 +73,62 @@ py -3 -m pip install numpy     # 装的是全局 Python 3.14.3 环境
 
 ---
 
-## 本抄本对上游的两处偏离（2026-10-29）
+## 本抄本对上游的偏离（2026-10-29 最终形）
 
-上游 `D:\AI_platform` 是正，本文件是抄本。**抄本改了的地方必须记在这里**，否则同步上游时会静默丢失。
+**合否判定は 1 行で言える**: `py -3 -m tools.kb_vendor_manifest --check` の
+**「本地改変（コード）= 0」**。`kbkit/` `run.py` `api.py` は上流と逐字一致である。
 
-### 偏离 1: 可检索状态从固定 `active` 改为可配置
+| # | 事項 | 置き場所 | 性質 |
+|---|---|---|---|
+| 1 | 骨架の状態語彙＋可检索状态 | `tools/kb_local/_bootstrap.py` | **本地拡張（上流コード不変）** |
+| 2 | `module` / `scope` の絞り込み | `tools/kb_local/` | **同上** |
+| 3 | `expect_heading` による節判定 | `tools/kb_local/evaluation.py` | **同上** |
+| 4 | ディレクトリ頁を索引に入れない | `repo/` の置き方（README を `repo/` の外へ） | データの組織 |
+| 5 | 生成物が `generated_by` を持つ | `tools/kb_migrate.py`（**`tools/` 側の我々のコード**） | 生成器 |
+| 6 | `golden.yaml` に案件 12 問を追加・demo に `project` を補完 | `repo/eval/golden.yaml` | データ（規則ではない） |
 
-- 改了什么: `kbkit/retrieval.py` 的 `DEFAULT_RETRIEVABLE`（`active,open,baselined,changed,done`，可用环境变量 `KB_RETRIEVABLE_STATUSES` 覆盖）；`kbkit/pipeline.py` 的 `STATUSES` 追加骨架词表。
-- 为什么: 旧案件知识搬进本库后，文档的 `status` 用的是骨架状态机（`.claude/rules/02` §6）。上游只认 `active`，直接搬进来会「索引得进、一条也搜不到」；反过来写 `active` 又会让骨架的 `trace_check` gate3 判为「status 値不正」。
-- 影响面: 只有本抄本。上游若采纳，改动约 20 行，可原样作为 PR 提交。
+### 1〜3: 上流を書き換えずに足した（本地拡張層）
 
-### 偏离 2: `repo/projects/P-R60-001/` 是**正本**，不是派生物
+上流には無いが我々に要る 3 つは、**上流のコードを 1 行も変えずに** `tools/kb_local/` で足した。
+仕組みは `_bootstrap.py` の冒頭に書いてある。要点だけ:
 
-- 上游模型: `repo/` 是知识正本，索引是派生物。
-- 本抄本: 这一点**与上游一致**。但此前 `docs/95_legacy/r60/` 是正本、`repo/` 是导出物，2026-10-29 已反转——现在 `repo/projects/P-R60-001/` 是唯一正本，**要提交进 git**。
-- 已在 `CLAUDE.md` 与 `使用手册.md` 同步。
+- **状態語彙**: 骨架の状態機（`.claude/rules/02` §6）は `open/baselined/changed/done` を使う。
+  上流の `search` は `status = 'active'` 固定、`lint` は `draft/review/active/deprecated` しか知らない。
+  そのままだと「索引には入るが 1 件も当たらない／lint が NG」になる。
+  → `_bootstrap.patched_candidates()` が `retrieval._load_candidates` を、`wider_statuses()` が
+  `pipeline.STATUSES` を、**呼び出しの間だけ**差し替える。
+- **`module` / `scope`**: 案件知識を 1 つの `project_id` にまとめたため、`R60User` の問いが
+  `R60SesModel` の同型章に奪われる（実測 80 題中 3 件）。呼び方**は**モジュールを知っているのに
+  口が無かった。→ 差し替えた `_load_candidates` が候補抽出の WHERE に押し込む
+  （上流の鉄則「後掛けしない」に従う）。実測 `recall@5` 0.863 → 0.925、top-1 モジュール 76/80 → 80/80。
+- **節判定**: doc 単位の的中は「モジュールは合っているが節が違う」を見逃す。
+  実測 12 問中 2 問は doc 命中でも答えの節は 8 / 12 位（`top_k=5` の外）で、
+  doc 級指標は `recall@5=1.000` のままだった。→ `evaluation.py` が `expect_heading` を持つ
+  ケースだけ見出しまで判定し、`節recall` を出す。
 
-### 偏离 3: `search()` / `eval` 增加 `module` 与 `scope` 两个筛选口（2026-10-29）
+**並び替え（dense+sparse → RRF → rerank）は上流の 1 本をそのまま呼ぶ。複製していない。**
+上流が検索品質を上げれば、我々の数字も自動で上がる。
 
-- 改了什么: `kbkit/retrieval.py` 新增 `_filter_candidates()`，`search()` 末尾加 `module=None, scope=None`；
-  `run.py` 的 `search` 子命令加 `--module` / `--scope`；`kbkit/eval.py` 把用例里的
-  `module` / `scope` 透传给 `search`。
-- 为什么: 案件知识集中在一个 `project_id` 下后，`R60User` 的提问会被 `R60SesModel`
-  的同型章节抢走（实测 80 题中 3 件是模块串味）。调用方**知道**问的是哪个模块，却**没有口子**告诉检索器。
-  公司共通条目（§11.3 会社层）与案件条目也混在一个池里，`STD-TEST-RATIO-001` 会被案件正文挤到 7〜9 位。
-- 影响面: **向后兼容**（默认 `None` = 不筛）。上游若采纳，可原样 PR；两个参数不改变任何默认排序。
-- 注意: `module` 是 `doc_id` 与 `title` 的**部分一致**。语干相同的别的模块出现时，要补对应表。
+### 4: ディレクトリ頁（`company-README.md` / `projects-README.md`）は `repo/` の外に置く
 
-### 偏离 4: `kbkit/eval.py` 增加节级判定 `expect_heading`（2026-10-29）
+`collect_docs()` は `repo/` 下の `.md` を**全部**索引に入れる（README 除外は無い）。
+`repo/company/` に目次頁を置いたら、全 `doc_id` と主題語を並べているため
+「テストケースの最低件数」「A/B/C 分類」「出典等級」の 3 問で 1 位を取り、
+答えを書いた条目が top-5 から落ちた。目次の仕事は道案内であって、案内先と席を争うことではない。
+→ **上流の `collect_docs()` は変えない**。我々が目次を `repo/` の外に置く。
+（記録: `reports/audit/kb-integration/04_残留问题清单_2026-10-29.md` §1.2）
 
-- 改了什么: 用例可选 `expect_heading`，命中结果里 `doc_id` 在 `expect` 内、且 `heading` 部分一致，
-  记 `section_hit` / `section_rank`；汇总增加 `section_cases` / `section_recall`，报告打 `§OK(rank=n)` / `§MISS`。
-- 为什么: **doc 级判定看不见「模块对了、节错了」。** 实测 12 个带节期望的用例里，
-  2 件答案是 `doc` 命中但节在第 8 / 12 位（`top_k=5` 之外），而 doc 级指标仍是 `recall@5=1.000`。
-  不修指标就会一直显示「满分」。
-- 影响面: 只有本抄本；不加 `expect_heading` 的用例行为完全不变。
+### 5: 生成物は front matter に `generated_by` を持つ（`tools/kb_migrate.py`）
 
-### 偏离 5: 目录页不进索引（`company-README.md` / `projects-README.md` 放在 `repo/` 之外）
+`repo/projects/P-R60-001/` の 79 篇は派生物だが、以前は何の印も無く、手で直せそうに見えた
+（手で直すと次の `--apply` で黙って上書きされる）。`tools/kb_migrate.py` の `merged_fm()` が
+`generated_by: tools/kb_migrate.py` を出し、`stamp_existing()` が既存分にも補う（鍵だけ、本文は触らない）。
+**これは `tools/` 側の我々のコードであり、`kbkit/` には入っていない。**
+幂等: 2026-10-29 実測、`--apply` 2 回連続で 79 篇の SHA-256 が一致。
 
-- 改了什么: 两份说明文件放在 `tools/kb-platform/` 根下，而不是 `repo/company/` 与 `repo/projects/`。
-- 为什么: `kbkit/pipeline.py` 的 `collect_docs()` 收 `repo/` 下**全部** `.md`，**没有 README 排除**。
-  实测把目录页放进 `repo/company/` 后，它因为列了全部 `doc_id` 与主题词，
-  在「テストケースの最低件数」「A/B/C 分類」「出典等級」三问上都排到第 1 位，
-  真正写了答案的条目掉出前 5。目录页的职责是指路，不该和它指的内容抢位置。
-- 影响面: 只有本抄本的数据组织方式。上游若也想排除目录页，最省事的做法是给 `collect_docs()`
-  加一行 `if p.name.upper() == "README.MD": continue`——但**这是行为变更**，需上游自己决定。
-- 位置记录: `reports/audit/kb-integration/04_残留问题清单_2026-10-29.md` §1.2。
+### 6: `repo/eval/golden.yaml` は上流 24 問＋案件 12 問（データ）
 
-### 偏离 6: 生成物在 front matter 里自带 `generated_by`（2026-10-29）
-
-- 改了什么: `tools/kb_migrate.py` 的 `merged_fm()` 输出 `generated_by: tools/kb_migrate.py`；
-  移设元已消失时，`stamp_existing()` 给既存 `.md` 补这个键（只补键，正文不动）。
-- 为什么: `repo/projects/P-R60-001/` 下 79 篇 `.md` 全是派生物，但此前**没有任何标记**，
-  看起来像可以手改的正文。手改会在下次 `--apply` 时被静默覆盖。
-- 幂等: 2026-10-29 实测连续两次 `--apply`，79 篇的 SHA-256 完全一致。
-- 影响面: 只有本抄本。这是**生成器**的改动，不在 `kbkit/` 里。
-
-### 顺带修正: `repo/eval/golden.yaml` 的上游 demo 12 问缺 `project`
-
-上流 demo 的 12 个用例没有 `project:` 字段，检索时只搜 company scope，导致 `eval` 恒为 `recall@5=0.333`。
-补上 `project: P-DEMO-001` 后为 `1.000`。**这是上游文件的缺陷，不是我们的知识质量**。
+- 上流 demo の 12 問は `project:` を持たず、company scope だけを引くため `eval` が
+  `recall@5=0.333` に固定されていた。`project: P-DEMO-001` を補って `1.000` にした。
+- 案件 12 問（`module` / `expect_heading` 付き）を後ろに足した。**規則ではなくデータ**である。
+- 同期のときは「上流の 24 問を残したまま末尾に 12 問を足す」だけ。手で当て直すのはここだけ。

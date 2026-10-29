@@ -42,8 +42,10 @@ def _run(cmd: list[str]) -> object:
 
 
 def kb_hits(question: str) -> list[dict]:
+    # 検索は上流 run.py ではなく `tools.kb_local` を通す（上流は status='active' 固定で、
+    # 我々の文書が 1 件も拾われない）。上流のファイルは逐字のまま保つ。
     rows = _run(
-        [sys.executable, "tools/kb-platform/run.py", "search", question,
+        [sys.executable, "-m", "tools.kb_local", "search", question,
          "--repo", str(KB_REPO), "--project", PROJECT, "--top-k", str(TOP_K), "--json"]
     )
     return [{"key": r["doc_id"], "label": f'{r["title"]} § {r["heading"]}'} for r in rows]

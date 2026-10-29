@@ -61,22 +61,26 @@ version: 0.2.0
 
 ```bash
 # 1. 何が入っているかを見る
-py -3 tools/kb-platform/run.py stats --repo tools/kb-platform/repo
+py -3 -m tools.kb_local stats
 
 # 2. 案件知識を引く（project を必ず指定する）
-py -3 tools/kb-platform/run.py search "共通部品 呼び出し順" \
-    --repo tools/kb-platform/repo --project P-XXXXXX-001 --top-k 5
+py -3 -m tools.kb_local search "共通部品 呼び出し順" --project P-XXXXXX-001 --top-k 5
 
 # 3. 引いた文書を読む（落点は doc_id で示される）
 ```
+
+> **上流 CLI（`py -3 tools/kb-platform/run.py …`）を直接叩かない。** 上流は `status = 'active'`
+> 固定で、骨架の状態語彙を知らないため、我々の知識では **0 件**が返る（壊れて見えるが、
+> 走査対象が違うだけ）。`tools.kb_local` が上流を 1 行も変えずにその差を吸収している
+> （`tools/kb-platform/UPSTREAM-SYNC.md` §3）。
 
 > **★対象モジュールが分かっているなら `--module` を付ける**（2026-10-29 追加）。
 > 付けないと、同じ語幹の別モジュールの同型の節が上位を取る
 > （実測: 80 題中 3 件が `R60User` の質問で `R60SesModel` を返した）。
 >
 > ```bash
-> py -3 tools/kb-platform/run.py search "検索一覧は実項目で何件" \
->     --repo tools/kb-platform/repo --project P-XXXXXX-001 --module R60Area --top-k 5
+> py -3 -m tools.kb_local search "検索一覧は実項目で何件" \
+>     --project P-XXXXXX-001 --module R60Area --top-k 5
 > ```
 >
 > `--module` は `doc_id` と `title` の部分一致である。**語幹が同じ別モジュールがある場合**
@@ -90,6 +94,18 @@ py -3 tools/kb-platform/run.py search "共通部品 呼び出し順" \
 > |---|---|
 > | この案件でどうなっているか | `--project <P-ID>`（＋分かれば `--module`） |
 > | 決まりとしてどうすべきか（比率・分類・出典等級・命名規約） | `--project <P-ID> --scope company` |
+
+> **★引いた証拠を残す**（2026-10-29 ユーザー指示）。知識庫を引いたら、**実行したコマンドと
+> 返ってきた `doc_id` を成果物か作業メモに残す**。残さないと「引いた」と言っただけになり、
+> 後から検算できない（`.claude/rules/02` §10 と同じ理由）。書式は 2 行で足りる:
+>
+> ```text
+> 参照: py -3 -m tools.kb_local search "共通部品 呼び出し順" --project P-XXXXXX-001 --top-k 5
+>       → 1 位 [STD-COMMON-001] 共通部品呼び出し順 § 呼び出し順の典型
+> ```
+>
+> **ヒット 0 件も記録する**（`→ ヒットなし`）。0 件は「知識庫に無い」という事実であり、
+> 設計を自分で決めてよい根拠にはならない。決めたなら**提案（B）**として人へ出す。
 
 引くべきものと、その置き場：
 

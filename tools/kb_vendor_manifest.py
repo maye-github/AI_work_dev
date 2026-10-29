@@ -16,7 +16,8 @@
 ----------
 - `一致`       … 上流のまま。次の同期では触らない。
 - `本地改変`   … こちらで手を入れた。**同期のたびに手で当て直す必要がある**（`VENDORED.md` の偏离表）。
-  この数を減らすのが同期コストを下げる唯一の方法である（上流へ PR を出す）。
+  **コードは 0 が合格条件である**：我々の差分は `tools/kb_local/` に置き、上流は逐字で保つ
+  （上流の実装規則は我々の持ち物ではない。`UPSTREAM-SYNC.md` §7）。
 - `上流に無い` … こちらの追加物。`repo/company/`・`repo/projects/`・`repo/eval/` は
   **そもそも上流の持ち物ではない**ので、ここに出るのが正常。
 """
@@ -118,7 +119,7 @@ def cmd_check(args) -> int:
     print(f"本地追加 {len(added)} 件: 我々の区画={len(ours)} 想定外={len(foreign)}")
 
     if patched_code:
-        print("\n本地改変（コード）— 同期のたびに手で当て直す。数を減らすには上流へ PR:")
+        print("\n本地改変（コード）— 0 であるべき。差分は tools/kb_local/ へ移す（上流は触らない）:")
         for rel in patched_code:
             print(f"  M  {rel}")
     if patched_data:
