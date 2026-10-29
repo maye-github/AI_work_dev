@@ -24,6 +24,9 @@
 - `.yaml`（モジュールカード）: そのままコピー（正本）。同ディレクトリに `.md` の表形式ビューを生成
 - `.jsonl`（検索摘要）: モジュールごとに 1 篇の `.md` へまとめる（摘要本文は改変しない）
 
+派生物は**移設後も何度でも作り直せる**（`write_view` / `write_digest`）。正本が変わったら
+`--apply` を回すだけでよい。節見出しにモジュール名を前置する規則は `write_digest` の説明を参照。
+
 使い方
 ------
     py -3 -m tools.kb_migrate            # 下見（何がどこへ行くかだけ出す）
@@ -245,6 +248,44 @@ def _cell(v) -> str:
     return s.strip()
 
 
+def write_digest(jsonl_path: Path, md_path: Path, dst_root: Path) -> None:
+    """検索摘要 JSONL → 1 篇の Markdown（1 節 = 1 chunk）。
+
+    **節見出しには必ずモジュール名を前置する。** kb の chunker は `##` 単位で切り、
+    その見出しが検索時の手掛かり（`simple_rerank` の head 項）になる。前置しないと
+    「検索画面の項目構成」のような同名節がモジュールをまたいで衝突し、命中しても
+    どのモジュールの話か判別できない（実測: reports/kb-export/R60-comparison.md RQ006〜RQ008）。
+    """
+    rows = [json.loads(x) for x in jsonl_path.read_text(encoding="utf-8").splitlines() if x.strip()]
+    module = jsonl_path.stem
+    parts = [f"# {module} — 検索摘要（{len(rows)} 条）", "",
+             "> 各節は検索用に書かれた摘要であり、原文のスライスではない。",
+             "> 正本は `screens/` と `modules/` 側。", ""]
+    for r in rows:
+        title = str(r.get("title") or r.get("chunk_id") or "")
+        if module and module.lower() not in title.lower():
+            title = f"{module} / {title}"
+        parts.append(f"## {title}")
+        parts.append("")
+        if r.get("chunk_id"):
+            # 空行を入れない: chunker は空行で段落を切るため、空行を挟むと
+            # 「id だけの chunk」が別に 1 本でき、その節の本文と分離してしまう。
+            parts.append(f"`{r['chunk_id']}` / `{r.get('artifact_type', '')}`")
+        parts.append(str(r.get("text", "")).strip())
+        parts.append("")
+    body = "\n".join(parts)
+    rel_for_slug = md_path.relative_to(dst_root).as_posix()
+    fm = merged_fm(
+        {"id": f"KNOW-LEGACY-R60-CHUNKS-{module.upper()}", "type": "knowledge", "req_ids": [],
+         # `open` にする: `draft` は kb の DEFAULT_RETRIEVABLE に含まれず**検索に出ない**。
+         # 既存の 7 篇も `open` であり、生成し直しても状態が変わらないよう合わせてある。
+         "status": "open", "sensitivity": "internal", "owner": "AI-SE", "version": "0.1.0"},
+        rel_for_slug, jsonl_path.as_posix(), f"{module} 検索摘要", body,
+    )
+    md_path.parent.mkdir(parents=True, exist_ok=True)
+    md_path.write_text(dump_fm(fm) + "\n" + body, encoding="utf-8", newline="\n")
+
+
 def write_view(yaml_path: Path, view_path: Path, dst_root: Path) -> None:
     """モジュールカード YAML から、検索用の表形式 Markdown を作る。"""
     data = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
@@ -295,13 +336,17 @@ def main(argv: list[str] | None = None) -> int:
     src = ROOT / SRC_REL
     dst = ROOT / DST_REL
     if not src.is_dir():
-        # 移設済み。YAML 正本はすでに dst にあるので、ビューだけを作り直す。
+        # 移設済み。正本（YAML カードと chunks/raw/*.jsonl）はすでに dst にあるので、
+        # 派生物（同ディレクトリの .md ビューと検索摘要）だけを作り直す。
         views = [p for p in sorted(dst.rglob("*.yaml"))]
+        digests = [p for p in sorted((dst / "chunks" / "raw").glob("*.jsonl"))]
         if args.apply:
             for yp in views:
                 write_view(yp, yp.with_suffix(".md"), dst)
+            for jl in digests:
+                write_digest(jl, dst / "chunks" / f"{jl.stem}.md", dst)
         verb = "再生成しました" if args.apply else "再生成します（--apply で実行）"
-        print(f"[kb_migrate] 移設済み。モジュールビュー {len(views)} 件を{verb}")
+        print(f"[kb_migrate] 移設済み。モジュールビュー {len(views)} 件・検索摘要 {len(digests)} 件を{verb}")
         return 0
 
     plan: list[tuple[str, str, str]] = []  # (種別, 元, 先)
@@ -351,29 +396,7 @@ def main(argv: list[str] | None = None) -> int:
         elif kind == "view":
             write_view(sp, dp, dst)
         elif kind == "digest":
-            rows = [json.loads(x) for x in sp.read_text(encoding="utf-8").splitlines() if x.strip()]
-            module = sp.stem
-            parts = [f"# {module} — 検索摘要（{len(rows)} 条）", "",
-                     "> 各節は検索用に書かれた摘要であり、原文のスライスではない。",
-                     "> 正本は `screens/` と `modules/` 側。", ""]
-            for r in rows:
-                parts.append(f"## {r.get('title') or r.get('chunk_id')}")
-                parts.append("")
-                if r.get("chunk_id"):
-                    parts.append(f"`{r['chunk_id']}` / `{r.get('artifact_type', '')}`")
-                    parts.append("")
-                parts.append(str(r.get("text", "")).strip())
-                parts.append("")
-            body = "\n".join(parts)
-            rel_for_slug = dp.relative_to(dst).as_posix()
-            fm = merged_fm(
-                {"id": f"KNOW-LEGACY-R60-CHUNKS-{module.upper()}", "type": "knowledge", "req_ids": [],
-                 # `open` にする: `draft` は kb の DEFAULT_RETRIEVABLE に含まれず**検索に出ない**。
-                 # 既存の 7 篇も `open` であり、生成し直しても状態が変わらないよう合わせてある。
-                 "status": "open", "sensitivity": "internal", "owner": "AI-SE", "version": "0.1.0"},
-                rel_for_slug, s, f"{module} 検索摘要", body,
-            )
-            dp.write_text(dump_fm(fm) + "\n" + body, encoding="utf-8", newline="\n")
+            write_digest(sp, dp, dst)
         else:
             dp.write_bytes(sp.read_bytes())
         written += 1

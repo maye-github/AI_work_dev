@@ -63,3 +63,5 @@ dist/
 
 # 断舍离清单的生成器（一次性，不入库；成果物 html/txt 入库）
 reports/audit/_gen/
+# rag 评测的「最新一次」是每次跑都会变的临时产物（带日期的快照才入库）
+reports/rag/eval-latest.json

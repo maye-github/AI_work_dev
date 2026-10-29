@@ -5,7 +5,6 @@
   question: 在庫が不足したとき、受注はどうなるか
   expect: [REQ-001, BS-001]
   project: P-DEMO-001
-  project: P-DEMO-001
 
 - id: Q002
   question: 在庫不足を表すエラーコードは何番か
