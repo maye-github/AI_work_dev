@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知识库整合 — 复核报告（2026-10-29）</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>知识库整合 — 复核报告（2026-10-29）</h1>
+<div class="meta">
+  机读源: <code>01_复核报告_2026-10-29.md</code> ／
+  生成: 2026-10-29 10:13 ／
+  节 9・表 13
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>01_复核报告_2026-10-29.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 一页结论</a></li><li><a href="#sec-2">1. 复核方法与实测记录</a></li><li><a href="#sec-3">2. 发现一：框架层混入了案件事实</a></li><li><a href="#sec-4">3. 发现二：知识库只接了一半</a></li><li><a href="#sec-5">4. 发现三：两套检索引擎并存</a></li><li><a href="#sec-6">5. 发现四：三条硬约束（决定方案形态）</a></li><li><a href="#sec-7">6. 发现五：其他一致性缺口</a></li><li><a href="#sec-8">7. 影响评估：不改会怎样</a></li><li><a href="#sec-9">8. 结论</a></li></ol></nav>
+<section class="sec sec-lead">
+<h1>知识库整合 — 复核报告</h1>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">日期</td><td style="text-align:left">2026-10-29</td></tr><tr><td style="text-align:left">触发</td><td style="text-align:left">用户指出两件事：①「附赠资产」的说法不妥，R60 业务内容不应写进公司级框架；②<code>D:\AI_platform</code> 才是公司级知识库，应把本仓库所有与知识库相关的内容（如 R60 案件）按它的做法学进 <code>tools/kb-platform/</code></td></tr><tr><td style="text-align:left">性质</td><td style="text-align:left"><strong>复核报告</strong>。只陈述事实与证据，不含执行。处置方案见同目录 <code>02_详细方案_2026-10-29.md</code></td></tr><tr><td style="text-align:left">结论</td><td style="text-align:left">用户指出的两点<strong>都成立</strong>，且问题比表述更深：框架层的设计→制造主技能实际是「R60Area 单画面操作手册」；知识库侧只接了 33/76，且存在两套检索引擎</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 一页结论</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">发现</th><th style="text-align:left">严重度</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>框架层混入案件事实</strong>。<code>code-from-design-trans-cosmos-ai</code> 的适用范围原文写着「R60Area（R-101）系」；它的 §3.5 被 <a href="../../../.claude/rules/03-design-coding.md">rules/03 §3</a> 指定为「唯一真源」——<strong>案件事实成了框架的单一定义源</strong></td><td style="text-align:left">高（会带到下一个案件）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>知识库只接了一半</strong>。<code>kb-platform/repo</code> 里只有上游自带的 demo；我们自己的知识 0 条。<code>kb_export</code> 覆盖 33/76 篇，36 个模块卡与 344 条检索摘要不在范围内</td><td style="text-align:left">高（知识库形同虚设）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>两套检索引擎并存</strong>（<code>tools/rag</code> 与 <code>tools/kb-platform</code>），语料、切块、评测各不相同，主次未定</td><td style="text-align:left">中（维护成本翻倍）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>三条硬约束</strong>决定了「怎么整合」：知识不能搬进 <code>tools/</code>（逃出机密扫描）、<code>status</code> 词表冲突（一份文件无法同时满足两个 lint）、kb 只索引 <code>.md</code></td><td style="text-align:left">高（决定方案形态）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><strong>文档表述</strong>：「附赠资产」的来源句在 <a href="../../../docs/95_legacy/r60/00-index.md">00-index.md:15</a>，措辞把案件知识说成可携带可不携带的附属品</td><td style="text-align:left">低（但会误导后续判断）</td></tr></tbody></table>
+<p><strong>待用户拍板 3 件</strong>（详见方案文档 §6）：知识正本放哪、三个 skill 怎么处理、<code>tools/rag</code> 去留。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 复核方法与实测记录</h2>
+<blockquote class="quote">记录口径遵循 <a href="../../../.claude/rules/02-requirements.md">rules/02 §10</a>：写「命令 + 实际输出」，不写「问题なし」这类结论句。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">命令</th><th style="text-align:left">实际输出</th><th style="text-align:left">用途</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>grep -c R60</code> 逐个扫 <code>.claude/rules</code>・<code>agents</code>・<code>skills</code></td><td style="text-align:left">rules 最多 14 处；skills 中 <code>code-from-design</code> <strong>70</strong>、coach <strong>26</strong>、<code>legacy-r60-navigator</code> 13、<code>virtual-requirement-author</code> 8</td><td style="text-align:left">量化框架层混入</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>py -3 -m tools.kb_export</code>（下見のみ）</td><td style="text-align:left"><code>対象 33 本</code>，全部来自 <code>docs/95_legacy/r60</code></td><td style="text-align:left">确认导出覆盖面</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>find docs/95_legacy -type f | wc -l</code></td><td style="text-align:left"><strong>76</strong></td><td style="text-align:left">与 33 对比得缺口</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><code>wc -l docs/95_legacy/r60/chunks/*.jsonl</code></td><td style="text-align:left">合计 <strong>344</strong> 条</td><td style="text-align:left">摘要资产规模</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>py -3 -m tools.rag stats</code></td><td style="text-align:left"><code>chunk_count: 341</code>（teaching）</td><td style="text-align:left">第二套索引的规模</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">读 <code>reports/rag/eval-2026-10-19.json</code></td><td style="text-align:left"><code>gold_count: 80</code>，<code>hit_at_k: 1.0</code>（按模块过滤）/ <code>0.8625</code>，<code>mrr: 0.9015</code></td><td style="text-align:left">第二套索引的实测水平</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><code>grep -c "教材モジュールの中等" docs/95_legacy/r60/screens/R60Plc.md</code></td><td style="text-align:left"><strong>0</strong></td><td style="text-align:left">证明 chunk 是<strong>AI 写的摘要</strong>，不是画面卡原文的切片</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">合并式 front matter 送入 <code>py -3 tools/kb-platform/run.py lint --repo /tmp/kbtest</code></td><td style="text-align:left"><code>OK  1 文書に問題ありません</code></td><td style="text-align:left">证明 kb lint <strong>不管多余键</strong></td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">读 <code>tools/kb-platform/kbkit/pipeline.py</code></td><td style="text-align:left"><code>STATUSES = {draft, review, active, deprecated}</code></td><td style="text-align:left">与 gate3 词表比对</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">读 <code>tools/trace_check/__init__.py</code></td><td style="text-align:left"><code>SCAN_BASES = ("docs", ".claude", "tutorial")</code>（L285）；gate6 对 <code>tools/</code> 仅取 <code>rglob("*.py")</code>（L689-691）</td><td style="text-align:left">证明扫描边界</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left"><code>grep -c SELECT docs/_samples/30_detail_design/L-014-R60Area-search.yaml</code> vs SKILL.md</td><td style="text-align:left">样例 <strong>0</strong> / 技能 <strong>5</strong></td><td style="text-align:left">澄清：SQL 模板<strong>只存在于技能</strong>，搬迁不是去重</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">读 <code>pipeline.py::collect_docs</code></td><td style="text-align:left"><code>root.rglob("*.md")</code></td><td style="text-align:left">kb 只索引 .md</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 发现一：框架层混入了案件事实</h2>
+<h3>2.1 先定分界</h3>
+<p>同一份资产里，「方法」和「事实」必须分开：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">类别</th><th style="text-align:left">判据</th><th style="text-align:left">例子</th><th style="text-align:left">归宿</th></tr></thead><tbody><tr><td style="text-align:left"><strong>公司级（方法）</strong></td><td style="text-align:left">换一个案件仍然成立</td><td style="text-align:left">8 工程顺序、红线、门禁、A/B/C 分类、E1–E4 证据等级、受控回流、51 个审查视角</td><td style="text-align:left">框架层（<code>.claude/</code>）与方法论文档（<code>docs/90_knowledge/</code>）</td></tr><tr><td style="text-align:left"><strong>案件级（事实）</strong></td><td style="text-align:left">出现具体画面名/表名/函数名/项目数才成立</td><td style="text-align:left">R60 画面卡、R60Common 16 函数、ACTION_ID 40 个、R60Area 56 项目、R60 的 DB/API</td><td style="text-align:left">知识库 project scope</td></tr></tbody></table>
+<p>判据可以压缩成一句：<strong>「这句话换到另一个客户的另一个系统，还成立吗？」</strong> 不成立就是案件事实。</p>
+<h3>2.2 量化：框架层里的 R60 出现次数</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:right">次数</th><th style="text-align:left">性质</th></tr></thead><tbody><tr><td style="text-align:left"><code>.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md</code></td><td style="text-align:right">70</td><td style="text-align:left"><strong>案件事实进了正文</strong>（见 2.3）</td></tr><tr><td style="text-align:left"><code>.claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md</code></td><td style="text-align:right">26</td><td style="text-align:left">多为教材路径 <code>tutorial/R60Login/…</code>；SKILL.md:47 已声明「固有記述は例であり規則ではない」</td></tr><tr><td style="text-align:left"><code>.../nodes/n02・n03・n01</code></td><td style="text-align:right">20 / 19 / 19</td><td style="text-align:left">同上，教材举例</td></tr><tr><td style="text-align:left"><code>.claude/skills/requirement-interrogator/references/lenses.md</code></td><td style="text-align:right">16</td><td style="text-align:left">QA 票出处的引用</td></tr><tr><td style="text-align:left"><code>.claude/skills/legacy-r60-navigator/SKILL.md</code></td><td style="text-align:right">13</td><td style="text-align:left"><strong>整篇都是案件</strong></td></tr><tr><td style="text-align:left"><code>.claude/skills/virtual-requirement-author/SKILL.md</code></td><td style="text-align:right">8</td><td style="text-align:left">例子绑定 <code>D:\AI_work</code></td></tr><tr><td style="text-align:left"><code>.claude/agents/*</code></td><td style="text-align:right">1–3</td><td style="text-align:left">举例</td></tr><tr><td style="text-align:left"><code>.claude/rules/*</code></td><td style="text-align:right">2–14</td><td style="text-align:left">见 2.5</td></tr></tbody></table>
+<p><strong>判断</strong>：coach 与 agents 的第 1–3 次出现属「举例」，可保留；<strong>需要动的是 3 个 skill</strong>（code-from-design、legacy-r60-navigator、virtual-requirement-author）。</p>
+<h3>2.3 个案：<code>code-from-design-trans-cosmos-ai</code>（418 行）</h3>
+<p>它的适用范围原文（L31）：</p>
+<blockquote class="quote">本スキルの適用対象は <strong>R60Area（R-101）系の設計→製造パイプライン</strong>（BD → DD → 製造）である。</blockquote>
+<p>也就是说，<strong>框架的「设计→制造」主技能，实际上被限定在了一个案件的单个画面上</strong>。逐节拆解：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">节</th><th style="text-align:left">内容</th><th style="text-align:left">归类</th></tr></thead><tbody><tr><td style="text-align:left">Step1 §1.1</td><td style="text-align:left">R-ID 受理、ids.yml 事前确认</td><td style="text-align:left">方法 ✔</td></tr><tr><td style="text-align:left">Step1 §1.2</td><td style="text-align:left"><code>R60Area.vue</code> 行号 194–238、<code>R60AreaService.ts</code> 7 方法</td><td style="text-align:left"><strong>案件</strong></td></tr><tr><td style="text-align:left">Step1 §1.3</td><td style="text-align:left">F-042 / I-201..I-256（56 项）</td><td style="text-align:left"><strong>案件</strong></td></tr><tr><td style="text-align:left">Step2 §2.1–2.3</td><td style="text-align:left">F/I 发号、模板嵌入、BD 构成</td><td style="text-align:left">方法 ✔</td></tr><tr><td style="text-align:left">Step2 §2.4</td><td style="text-align:left"><code>r60const.py</code> ACTION_ID 40 个</td><td style="text-align:left"><strong>案件</strong></td></tr><tr><td style="text-align:left">Step3 §3.1–3.2</td><td style="text-align:left">D/L/E 发号、DD 模板</td><td style="text-align:left">方法 ✔</td></tr><tr><td style="text-align:left">Step3 §3.3–3.4</td><td style="text-align:left">L-014 / L-015 的 SQL 模板（实测：<code>docs/_samples</code> 的同名 YAML 里 <code>SELECT</code> 出现 0 次，<strong>这些东西只存在于本技能</strong>）</td><td style="text-align:left"><strong>案件</strong></td></tr><tr><td style="text-align:left">Step3 §3.5</td><td style="text-align:left">R60Common 16 函数映射</td><td style="text-align:left"><strong>案件</strong></td></tr><tr><td style="text-align:left">Step4</td><td style="text-align:left">制造执行手顺、<code>trace_check</code> 验证</td><td style="text-align:left">方法 ✔</td></tr></tbody></table>
+<p><strong>最严重的一条</strong>：<a href="../../../.claude/rules/03-design-coding.md#L49">rules/03 §3</a> 写着</p>
+<blockquote class="quote">代表関数の<strong>全リスト（16 関数）は <code>.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md</code> §3.5 が唯一の定義</strong>である。</blockquote>
+<p>也就是说，<strong>规则文件把「案件事实」指定成了框架内的唯一真源</strong>。同一指针还出现在 <a href="../../../.claude/agents/trans-cosmos-ai-node4-framework.md#L36">node4-framework.md:36</a>。这条不处理，R60 的 16 个函数名会被下一个案件原样继承。</p>
+<h3>2.4 个案：<code>legacy-r60-navigator</code>（253 行）</h3>
+<p>结构拆开后实质是两块：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">节</th><th style="text-align:left">内容</th><th style="text-align:left">归类</th></tr></thead><tbody><tr><td style="text-align:left">§0</td><td style="text-align:left"><code>D:\AI_work</code> 永久只读的纪律</td><td style="text-align:left"><strong>方法</strong>（任何旧案件都适用）</td></tr><tr><td style="text-align:left">§1</td><td style="text-align:left">R60 知识库的读法、路径、读顺</td><td style="text-align:left"><strong>案件</strong></td></tr><tr><td style="text-align:left">§2</td><td style="text-align:left"><code>tools/legacy</code>（xlsx 抽取器）用法</td><td style="text-align:left"><strong>方法</strong></td></tr><tr><td style="text-align:left">§3</td><td style="text-align:left">写入时的门禁约束</td><td style="text-align:left"><strong>方法</strong></td></tr><tr><td style="text-align:left">§4</td><td style="text-align:left">R60 的 10 条差异要点</td><td style="text-align:left"><strong>案件</strong>（已在 <code>08-deviations.md</code> 里）</td></tr><tr><td style="text-align:left">§5</td><td style="text-align:left">禁止事项</td><td style="text-align:left"><strong>方法</strong></td></tr><tr><td style="text-align:left">§6</td><td style="text-align:left">学另一个旧案件的手顺（可复用型）</td><td style="text-align:left"><strong>方法</strong></td></tr></tbody></table>
+<p>所以它不是「附赠」，而是<strong>方法和案件被装进了同一个文件</strong>。方法部分（§0/§2/§3/§5/§6）属于框架；案件部分（§1/§4）属于知识库。</p>
+<h3>2.5 个案：<code>virtual-requirement-author</code>（572 行）</h3>
+<p>倒推虚拟需求书的方法（6 步、冻结、provenance）是<strong>公司级方法</strong>；但示例与路径绑定 <code>D:\AI_work</code>、<code>R60Login</code>。<br>结论：<strong>轻度泛化即可，不必拆分</strong>（把硬编码路径改成从 <code>docs/00_registry/ingest-manifest.yml</code> 与案件档案读）。</p>
+<h3>2.6 表述问题：「附赠资产」</h3>
+<p>来源句在 <a href="../../../docs/95_legacy/r60/00-index.md#L15">00-index.md:15</a>：</p>
+<blockquote class="quote">他案件へ骨架を持ち込むとき、本ディレクトリと R60 専用 skill（<code>legacy-r60-navigator</code> 等）は<strong>一緒に持っていかない</strong>。</blockquote>
+<p>这句话的后果不是事实错误（确实不该带走），而是<strong>归因错误</strong>：它把「案件知识」描述成「骨架的附属品」。正确的表述应该是：<strong>案件知识有自己的家（知识库 project scope），它从来不归框架层</strong>。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 发现二：知识库只接了一半</h2>
+<h3>3.1 <code>tools/kb-platform</code> 的现状</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项</th><th style="text-align:left">现状</th></tr></thead><tbody><tr><td style="text-align:left">来源</td><td style="text-align:left">2026-10-28 从 <code>D:\AI_platform\kb-platform</code> 复制（<a href="../../../tools/kb-platform/VENDORED.md">VENDORED.md</a>）</td></tr><tr><td style="text-align:left">引擎</td><td style="text-align:left"><code>kbkit/</code> 7 个模块 + <code>run.py</code> + <code>api.py</code>，<strong>完整可用</strong></td></tr><tr><td style="text-align:left">内容</td><td style="text-align:left"><code>repo/</code> 只有上游 demo：<code>company/</code> 3 篇 + <code>projects/P-DEMO-001/</code> 4 篇 —— <strong>全部是别人的示例数据</strong></td></tr><tr><td style="text-align:left">我们自己的知识</td><td style="text-align:left"><strong>0 篇</strong>。<code>repo/projects/P-R60-001/</code> 不存在</td></tr><tr><td style="text-align:left">索引</td><td style="text-align:left"><code>data/</code> 为空，从未 <code>ingest</code> 过</td></tr></tbody></table>
+<p>也就是说：<strong>知识库装好了引擎，但我们的知识一条都没进去。</strong></p>
+<h3>3.2 导出器的覆盖缺口</h3>
+<p><code>tools/kb_export.py</code>（475 行）已写好 front-matter 映射、状态映射、机密等级映射，是个合格的适配器。但范围只到 <code>.md</code>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">组</th><th style="text-align:right">件数</th><th style="text-align:left">是否覆盖</th><th style="text-align:left">后果</th></tr></thead><tbody><tr><td style="text-align:left">手册 00–09 + howto 4 篇</td><td style="text-align:right">14</td><td style="text-align:left">✅</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">画面卡 <code>screens/</code></td><td style="text-align:right">9</td><td style="text-align:left">✅</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">评审差分 <code>review_diff_assets/</code></td><td style="text-align:right">10</td><td style="text-align:left">✅</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left"><strong>模块卡 <code>modules/</code>（36 个 YAML）</strong></td><td style="text-align:right">36</td><td style="text-align:left">❌</td><td style="text-align:left"><strong>字段定义/API/逻辑/错误/测试查不到</strong></td></tr><tr><td style="text-align:left"><strong>检索摘要 <code>chunks/</code>（7 个 JSONL）</strong></td><td style="text-align:right">344 条</td><td style="text-align:left">❌</td><td style="text-align:left">摘要价值丢失</td></tr><tr><td style="text-align:left">合计</td><td style="text-align:right">76</td><td style="text-align:left">33</td><td style="text-align:left">缺口 43</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 发现三：两套检索引擎并存</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">维度</th><th style="text-align:left"><code>tools/rag</code></th><th style="text-align:left"><code>tools/kb-platform</code></th></tr></thead><tbody><tr><td style="text-align:left">语料</td><td style="text-align:left">344 条 chunk（AI 摘要）</td><td style="text-align:left"><code>repo/</code> 下的 <code>.md</code></td></tr><tr><td style="text-align:left">切块</td><td style="text-align:left">预先切好（人工/AI 编制）</td><td style="text-align:left">自动（见出し/表行/代码块）</td></tr><tr><td style="text-align:left">检索</td><td style="text-align:left">SQLite FTS5 + 日文 n-gram</td><td style="text-align:left">hash n-gram 向量 + RRF + rerank</td></tr><tr><td style="text-align:left">评测</td><td style="text-align:left">80 题金标，hit@5 <strong>1.0 / 0.8625</strong>，MRR 0.9015</td><td style="text-align:left">12 题（上游 demo），<strong>未跑过</strong></td></tr><tr><td style="text-align:left">权限</td><td style="text-align:left">无</td><td style="text-align:left"><code>conf_level</code> 数值比较</td></tr><tr><td style="text-align:left">front matter</td><td style="text-align:left">无（自建 schema）</td><td style="text-align:left">必需 8 键</td></tr><tr><td style="text-align:left">维护方</td><td style="text-align:left">本仓库自建</td><td style="text-align:left">上游（公司级）</td></tr></tbody></table>
+<p>两个都留着，就会出现「同一个问题，两个工具给两个答案」，而<strong>哪个是准的没人能说清</strong>。这正是用户担心的那类混乱。</p>
+<p>但<strong>不能简单删掉 <code>tools/rag</code></strong>：它的 344 条 chunk 是<strong>AI 撰写的摘要</strong>，不是原文切片——</p>
+<pre><code>grep -c &quot;教材モジュールの中等&quot; docs/95_legacy/r60/screens/R60Plc.md   → 0
+而在 chunks/R60Plc.jsonl 里能找到这句话</code></pre>
+<p>原文里没有的东西，删了索引就真没了。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 发现四：三条硬约束（决定方案形态）</h2>
+<h3>5.1 知识不能搬进 <code>tools/</code></h3>
+<pre><code>tools/trace_check/__init__.py:285   SCAN_BASES = (&quot;docs&quot;, &quot;.claude&quot;, &quot;tutorial&quot;)
+tools/trace_check/__init__.py:689   targets += [p for p in tools_dir.rglob(&quot;*.py&quot;)]</code></pre>
+<p><code>docs/<strong></code>、<code>.claude/</strong></code>、<code>tutorial/**</code> 都受 gate1（野号）/ gate3（front-matter）/ gate6（机密）保护；<br>而 <code>tools/</code> 下<strong>只有 <code>.py</code> 进机密扫描</strong>。</p>
+<p><strong>所以：把知识 <code>.md</code> 搬进 <code>tools/kb-platform/repo/</code>，它们就跳出了机密红线⑦的扫描范围。</strong><br><a href="../../../.claude/rules/06-knowledge-flywheel.md">rules/06 §3</a> 明令「走査範囲を狭める変更をしてはならない」，这条必须先解决。</p>
+<p>（旁证：<code>tools/kb-platform/README.md</code> 等上游文档<strong>现在就已经</strong>不在扫描范围内——这是既存的洞，不是本次造成。）</p>
+<h3>5.2 <code>status</code> 词表冲突：一份文件无法同时满足两个 lint</h3>
+<p>实测：合并后的 front matter 送 kb lint → <code>OK</code>（多余键它不检查）。<br>但 <code>status</code> 这一个键被两个体系同时占用，且词表只有 <code>draft</code> 一个交集：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">体系</th><th style="text-align:left">允许值</th><th style="text-align:left">检索条件</th></tr></thead><tbody><tr><td style="text-align:left">骨架 gate3</td><td style="text-align:left">draft / open / <strong>baselined</strong> / changed / done / void</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">kb-platform</td><td style="text-align:left">draft / review / <strong>active</strong> / deprecated</td><td style="text-align:left">只返回 <code>active</code></td></tr></tbody></table>
+<p>后果：一篇文档若标 <code>baselined</code>（骨架合法），kb 检索<strong>一条都搜不到</strong>；若标 <code>active</code>（kb 可检索），gate3 直接判 <code>status 値不正</code>。</p>
+<p><strong>结论：「一份文件两用」不成立</strong>，除非改引擎或改门禁。这条是方案设计的硬边界。</p>
+<h3>5.3 kb 只索引 <code>.md</code></h3>
+<p><code>collect_docs()</code> 只取 <code>*.md</code>。36 个模块 YAML 卡要进库，必须在导出时<strong>渲染成表格式 Markdown</strong>——顺带正好符合上游指南 §4.5「項目定義表は 1 行 = 1 chunk」。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 发现五：其他一致性缺口</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">位置</th><th style="text-align:left">问题</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><a href="../../../.claude/rules/03-design-coding.md#L49">rules/03 §3</a>、<a href="../../../.claude/agents/trans-cosmos-ai-node4-framework.md#L36">node4:36</a></td><td style="text-align:left">把案件事实（16 函数）指定为框架唯一真源</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>docs/95_legacy/r60/00-index.md:15</code></td><td style="text-align:left">「附赠资产」表述</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>使用手册.md</code> 目录表</td><td style="text-align:left">只说明 <code>tools/kb-platform</code> 是「从 D:\AI_platform 复制」，未说明它与 R60 知识的关系、也未给检索命令</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><code>docs/95_legacy/r60/rag-usage.md</code></td><td style="text-align:left">只讲 <code>tools/rag</code>，不提 kb-platform，读者无从判断该用哪个</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. 影响评估：不改会怎样</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">场景</th><th style="text-align:left">后果</th></tr></thead><tbody><tr><td style="text-align:left">接第二个案件（greenfield）</td><td style="text-align:left">coach / node agent 会沿用 R60 的画面名、函数名、56 项目作为「范式」，<strong>新案件的 AI 产出会被 R60 的形状带偏</strong></td></tr><tr><td style="text-align:left">接第二个 legacy 案件</td><td style="text-align:left">除了 R60 以外<strong>没有知识可查</strong>——因为知识库是空的，<code>legacy-r60-navigator</code> 又只认 R60</td></tr><tr><td style="text-align:left">新人接手</td><td style="text-align:left">读到 <code>00-index.md:15</code> 会以为 R60 知识是「可选的附件」，而不知道它其实是一份<strong>该被检索的知识</strong></td></tr><tr><td style="text-align:left">公司级推广</td><td style="text-align:left"><code>D:\AI_platform</code> 那套「project → company 昇格」的管道在本仓库<strong>从未跑过一次</strong>，推广时没有任何实证</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>8. 结论</h2>
+<ol><li>用户的两点意见<strong>成立</strong>，且第一点比表述更深：不只是「称呼」问题，而是<strong>案件事实占据了框架的方法位置</strong>。</li><li>第二点的工作量比想象大：不是「把文件复制进 kb-platform」，而是<strong>一个内容归属 + 一个引擎取舍 + 三道门禁约束</strong>的组合题。</li><li>处置方案见 <code>02_详细方案_2026-10-29.md</code>，其中 <strong>§6 有 3 件需要用户拍板</strong>的事。</li></ol>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>01_复核报告_2026-10-29.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>
