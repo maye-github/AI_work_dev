@@ -235,4 +235,4 @@ version: 0.1.0
 | 号段 | 教学号段（`R-201` / `F-201` / `I-301…` / `L-201` / `D-201` / `E-201…` / `TC-201…`）。**`ids.yml` に登録しない** | `docs/00_registry/ids.yml` の実 ID のみ |
 | 検証 | `tutorial/` は gate1〜3 の走査対象外。**gate6（機密）は走査する**ので実値は絶対に書かない | 全 gate が走査する |
 | 産出先 | `tutorial/R60Login/节点N_*/`（無ければ作る） | 作業票 §4 の `docs/**` パス |
-| 呼ぶ skill | **`code-from-design-trans-cosmos-ai` を呼ばない**（`R-101` 専用で、教学号段は受理拒否される） | ノード 5 は `code-from-design-trans-cosmos-ai` に委譲可 |
+| 呼ぶ skill | **`code-from-design-trans-cosmos-ai` を呼ばない**（教学号段は `ids.yml` 未登録であり、Step 1 で受理拒否される） | ノード 5 は `code-from-design-trans-cosmos-ai` に委譲可 |

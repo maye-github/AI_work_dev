@@ -221,7 +221,8 @@ ls tutorial/R60Login/节点5_制造/05_承認版_制造记录.md
 - `secret-auditor`：機密漏洩・マスク漏れ（`--only-check secrets` ＋ `mask_demo --self-test`）
 - `spec-reviewer`：生成コードが設計（`L-201` / `D-201`）に逐条対応しているか
 - 製造そのものの内部手順は `.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md` を参照。
-  **実案件で `R-101` を扱う場合のみ**あのスキルを呼ぶ（演習の教学号段では Step 1 で受理拒否される）
+  **実案件では**あのスキルに委譲してよい（演習の教学号段は `ids.yml` 未登録なので Step 1 で受理拒否される）。
+  案件固有の値（共通部品・操作 ID・SQL）は知識庫 `tools/kb-platform/repo/projects/<P-ID>/` から取る。
 
 ## 10. 実案件では
 

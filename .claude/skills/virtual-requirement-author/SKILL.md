@@ -13,7 +13,15 @@ version: 0.1.0
 # 仮想需求書 産出スキル（実在資産からの倒推）
 
 > **このファイルだけ**読めばよい。手順の本体は本ファイルが唯一真源である。
-> 節点の進行役は `trans-cosmos-ai-lifecycle-coach`、実在資産の読み方は `legacy-r60-navigator`。
+> 節点の進行役は `trans-cosmos-ai-lifecycle-coach`、実在資産の読み方は `legacy-case-navigator`。
+>
+> **本文中の `<P-ID>` と「旧案件リポジトリのルート」は、案件ごとに読み替える。**
+> - `<P-ID>`（知識庫の案件 ID。例 `P-R60-001`）と旧案件リポジトリのルート（例 `D:\AI_work`）は、
+>   `docs/00_plan/coach/<module>/case.yml` と案件プロファイル
+>   `docs/01_context/case-profile-<案件>.yaml` が宣言する。**本スキルには固定値として書かない**
+>   （`.claude/rules/06-knowledge-flywheel.md` §8）。
+> - 取入対象の範囲は `docs/00_registry/ingest-manifest.yml`（人が編集する唯一の入力）が持つ。
+> - 本文に残る `R60Login` / `D:\AI_work` は**実測記録の出所**であり、**規則ではない**。
 
 ---
 
@@ -62,7 +70,7 @@ version: 0.1.0
 
 - [ ] 対象の**画面が 1 つに絞られている**（1 画面 = 1 需求書。混ざっていたら先に分ける）
 - [ ] `docs/00_plan/coach/<module>/case.yml` が実在し、`build_mode` を確認した
-- [ ] 実在資産の在り処を知っている（`tools/kb-platform/repo/projects/P-R60-001/00-index.md` §4）
+- [ ] 実在資産の在り処を知っている（`tools/kb-platform/repo/projects/<P-ID>/00-index.md` §4）
 
 **`build_mode: migration` だった場合**：本スキルは**そこで止めて人に確認する**。
 `migration` なら既存実装が**入力**になるので、倒推ではなく「移行要件の整理」になり、**別の作業**である。
@@ -106,12 +114,12 @@ coach と同じ鉄則。**1 回の返答で 6 ステップ全部を出さない�
 
 **やること**：題材の画面が**どの実在資産に対応するか**を確定する。
 
-1. `tools/kb-platform/repo/projects/P-R60-001/00-index.md` §4（いつどのファイルを開くか）を読む。
-2. `tools/kb-platform/repo/projects/P-R60-001/screens/00-screen-index.md` で画面を特定する。
-3. **画面カードが既にあるか**を確認する（現在は `screens/R60Login.md` の 1 枚のみ）。
+1. `tools/kb-platform/repo/projects/<P-ID>/00-index.md` §4（いつどのファイルを開くか）を読む。
+2. `tools/kb-platform/repo/projects/<P-ID>/screens/00-screen-index.md` で画面を特定する。
+3. **画面カードが既にあるか**を確認する（例: R60 案件は `screens/R60Login.md` の 1 枚から始めた）。
    - **ある** → それを使う。
    - **無い** → **先にカードを作る**。書式は `screens/00-screen-index.md` §7 の 12 節固定。
-     カード作りは `legacy-r60-navigator` skill に委ねてよい（本スキルは倒推の担当であり、カード作成の担当ではない）。
+     カード作りは `legacy-case-navigator` skill に委ねてよい（本スキルは倒推の担当であり、カード作成の担当ではない）。
 
 **産出**：無し（会話上で確定させるだけ）。
 
@@ -130,7 +138,7 @@ coach と同じ鉄則。**1 回の返答で 6 ステップ全部を出さない�
 |---|---|---|
 | ① 設計書 | 画面項目の定義・イベント一覧・業務処理説明 | `50.設計書/画面設計書/*.xlsx` を `py -3 -m tools.legacy <xlsx> --list` → `--sheet NAME` で抽出 |
 | ② 実装 | 実際の振る舞い（前後端の責任分界を含む） | `.vue` / `.ts` / `.py`（絶対パスは書かず、`D:\AI_work` 相対で控える） |
-| ③ 既存の知識 | 横断規約・DB・API 契約・既知の差異 | `tools/kb-platform/repo/projects/P-R60-001/` の `02`〜`08` |
+| ③ 既存の知識 | 横断規約・DB・API 契約・既知の差異 | `tools/kb-platform/repo/projects/<P-ID>/` の `02`〜`08` |
 
 **出所の記号**（**既存資産の語彙をそのまま使う。新しい語を作らない**）：
 
@@ -178,7 +186,7 @@ coach と同じ鉄則。**1 回の返答で 6 ステップ全部を出さない�
 **産出**：`tutorial/<案件>/节点1_需求/00_输入_客户需求书.md` の**草稿**（この時点では凍結しない）。
 
 **チェック**：
-- [ ] 顧客の言葉で書かれている（`R60Common.ts` の関数名や内部変数名が本文に出ていない）
+- [ ] 顧客の言葉で書かれている（既存共通部品の関数名や内部変数名が本文に出ていない）
 - [ ] 12 画面項目・5 イベント・API 端点の**数**が実在資産と一致している（数は最も安い検査）
 - [ ] **実在の敏感値が 1 つも無い**（`tutorial/` は gate6 の走査対象。占位を使う）
 
@@ -294,8 +302,8 @@ coach と同じ鉄則。**1 回の返答で 6 ステップ全部を出さない�
 3. 人に宣言する：
 
 > 要求書を凍結しました。**ここから先、節点 2〜8 は `D:\AI_work` と
-> `tools/kb-platform/repo/projects/P-R60-001/` を読み返しません。**
-> 人版を読むのは**事後の対比（`drill-comparator`）だけ**です。
+> `tools/kb-platform/repo/projects/<P-ID>/` を読み返しません。**
+> 人版を読むのは**事後の対比だけ**です（方法: `docs/90_knowledge/agent-run-record.md` §5.1）。
 > 凍結後に要求書を直すと sha256 が変わるので、変更の有無は機械で検出できます。
 
 **チェック**：
@@ -375,14 +383,14 @@ frozen_by: "<人の識別子>"       # AI 名を書かない（紅線③）
 book_path: "tutorial/<案件>/节点1_需求/00_输入_客户需求书.md"
 book_sha256: "<64桁>"
 frozen_scope:
-  - "D:/AI_work"
-  - "tools/kb-platform/repo/projects/P-R60-001/"
+  - "<旧案件リポジトリのルート>"          # 例: "D:/AI_work"
+  - "tools/kb-platform/repo/projects/<P-ID>/"
 # frozen_scope は「下流が読んではならない範囲」であると同時に、
 # 封印検査（--only-check seal）が下流成果物から探すパスの唯一の出所でもある。
 # 絶対パスの字面と、十分に長い basename の両方で照合する（境界一致）。
 # 実在の物理名・実装ファイル名・共通部品名は、ここではなく
 # reports/drill/<module>/seal_patterns.local.json に置く（reports/* は Git 管理外）。
-note: "凍結後、下流の節点 2〜8 は上記を読まない。対比（drill-comparator）のみが読む。"
+note: "凍結後、下流の節点 2〜8 は上記を読まない。対比のみが読む。"
 ```
 
 ---
@@ -439,7 +447,7 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比（dri
 > **★注意（正直に書いておく）**：5.2 で「新旧符号混在の実情を書かない」と決めた以上、
 > 節点1 は #3 を**「混在している」とは発見できない**。「符号系が未定義である」ことしか発見できない。
 > これは**本スキルの粒度設定に由来する既知の制約**であり、
-> **訓練報告の「需求書缺陷」に必ず記録する**（`drill-comparator` の仕事）。欠陥を隠さない。
+> **訓練報告の「需求書缺陷」に必ず記録する**（対比の担当の仕事。方法: `docs/90_knowledge/agent-run-record.md` §5.1）。欠陥を隠さない。
 
 ---
 
@@ -502,9 +510,9 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比（dri
 
 | | 許す | 禁じる |
 |---|---|---|
-| 節点 2〜8 の実行体 | 凍結済み要求書と、その上流成果物を読む | `D:\AI_work`・`tools/kb-platform/repo/projects/P-R60-001/` を読む |
-| `legacy-r60-navigator` | 対比・カード作成のために読む | — |
-| `drill-comparator` | **人版（`D:\AI_work`）を読む**（これが仕事） | 人版の内容を AI 側の成果物へ還流させる |
+| 節点 2〜8 の実行体 | 凍結済み要求書と、その上流成果物を読む | `D:\AI_work`・`tools/kb-platform/repo/projects/<P-ID>/` を読む |
+| `legacy-case-navigator` | 対比・カード作成のために読む | — |
+| 対比の担当（`docs/90_knowledge/agent-run-record.md` §5.1） | **人版（旧案件リポジトリ）を読む**（これが仕事） | 人版の内容を AI 側の成果物へ還流させる |
 | 本スキル | 次の画面のために読む | 凍結済み要求書を**黙って**書き換える（変えるなら再凍結と明示） |
 
 **機械で検出できること／できないこと（誇張しない）**：
@@ -564,9 +572,9 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比（dri
 | 既定の案件形態（`greenfield` / `migration`） | `docs/90_knowledge/ppt-deviation-register.md` **A-22** |
 | `case.yml` / `nNN.yml` の鍵仕様 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md` §4 |
 | 8 節点の手順 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/nodes/n0*.md` |
-| 実在資産の読み方・知識庫の入口 | `tools/kb-platform/repo/projects/P-R60-001/00-index.md`（§4 に読み順） |
-| 画面カードの書式（12 節） | `tools/kb-platform/repo/projects/P-R60-001/screens/00-screen-index.md` §7 |
-| 設計書と実装の既知の食い違い | `tools/kb-platform/repo/projects/P-R60-001/08-deviations.md`（D-1〜D-25） |
-| 対比の帰因分類（「AI が劣る」と即断しない） | `tools/kb-platform/repo/projects/P-R60-001/09-ai-workflow.md` §7.1 |
+| 実在資産の読み方・知識庫の入口 | `tools/kb-platform/repo/projects/<P-ID>/00-index.md`（§4 に読み順） |
+| 画面カードの書式（12 節） | `tools/kb-platform/repo/projects/<P-ID>/screens/00-screen-index.md` §7 |
+| 設計書と実装の既知の食い違い | `tools/kb-platform/repo/projects/<P-ID>/08-deviations.md`（差異登記簿。案件ごとに件数が違う） |
+| 対比の帰因分類（「AI が劣る」と即断しない） | `tools/kb-platform/repo/projects/<P-ID>/09-ai-workflow.md` §7.1 |
 | 節点1 以降を走らせる進行役 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md` |
-| 訓練報告の作り方 | `.claude/agents/drill-comparator.md` |
+| 訓練報告の作り方 | `docs/90_knowledge/agent-run-record.md` §5.1 |

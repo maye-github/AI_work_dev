@@ -53,7 +53,7 @@ version: 0.2.0
 
 | 已有 | 本次新建 | Phase 2+ 予定 |
 |---|---|---|
-| 手作業の工程受け渡し（メール・口頭・レビューでの都度すり合わせ） | **工程の編成体**：`.claude/skills/trans-cosmos-ai-lifecycle-coach/`（8 工程の伴走進行役。`nodes/n01..n09` の作業票＋`references/node-worker-contract.md`）<br>**工程別 Agent 9 体**：`trans-cosmos-ai-node1-requirements` … `node8-release-ops` ＋旁路環 `node9-change`<br>**検証・補助 Agent 5 体**：`spec-reviewer`／`secret-auditor`／`deliverable-reviewer`／`drill-comparator`／`legacy-module-surveyor`<br>`.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md`（4 件套 Skill：R-ID 受理→BD/DD 双向生成→製造→trace_check 検証）<br>`CONTRIBUTING.md`（`req/R-xxx` 集成分支＋`R-xxx/01-req`〜`07-release` 8 工程子分支の編成） | 内網 GitLab runner を `ai-gate.yml` へ接続<br>プロンプト・テンプレートの独立ライブラリ化（規格書 §11.4） |
+| 手作業の工程受け渡し（メール・口頭・レビューでの都度すり合わせ） | **工程の編成体**：`.claude/skills/trans-cosmos-ai-lifecycle-coach/`（8 工程の伴走進行役。`nodes/n01..n09` の作業票＋`references/node-worker-contract.md`）<br>**工程別 Agent 9 体**：`trans-cosmos-ai-node1-requirements` … `node8-release-ops` ＋旁路環 `node9-change`<br>**検証 Agent 3 体**：`spec-reviewer`／`secret-auditor`／`deliverable-reviewer`（訓練対比・旧資産普查の agent は 2026-10-29 に削除。方法は `agent-run-record.md` §5）<br>`.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md`（4 件套 Skill：R-ID 受理→BD/DD 双向生成→製造→trace_check 検証）<br>`CONTRIBUTING.md`（`req/R-xxx` 集成分支＋`R-xxx/01-req`〜`07-release` 8 工程子分支の編成） | 内網 GitLab runner を `ai-gate.yml` へ接続<br>プロンプト・テンプレートの独立ライブラリ化（規格書 §11.4） |
 
 - 参照：PPT 第 S26 页（編成層）、PPT 第 S27 页（工程別 Agent「各 Agent が専用ツール（DB・Git・Excel・テスト実行）を呼出」）。
 
@@ -73,7 +73,7 @@ AI と自動化の実行能力。出典：PPT 第 S26 页「能力層：モデ�
 
 | 已有 | 本次新建 | Phase 2+ 予定 |
 |---|---|---|
-| `project_memory.md` §18-§26（241 行・26 章の方法論。**原文の行数・章数は失効**——現物 11 行。`docs/00_plan/spec.md:34` を参照）<br>`doc/02_INPUT/`（日方規約／DB 定義／画面規約／旧 Java ソース／DDL）<br>`doc/03_AI/AB_Reports/`（A/B 比較レポート群） | `docs/90_knowledge/review_diff_assets/`（R60Area/R60Code/R60Item の review_before / review_after / review_comments 審査差分資産）<br>`docs/00_registry/glossary.yml`（中日英三語の用語集・30 用語以上）<br>`tools/kb-platform/repo/projects/P-R60-001/`（**migration 案件の読取専用ナレッジ**：画面卡・chunks・DB/API/規約・偏差記録。`legacy-r60-navigator` skill と `tools/legacy` が入口）<br>`docs/90_knowledge/answer-engine.md`（**出典等級 E1〜E4 の唯一真源**。確認票の根拠の格付け）<br>`docs/90_knowledge/ai-dev-playbook.md` / `onboarding-checklist.md` / `platform-map.md`（方法論・新人 Walkthrough・本マップ） | RAG 検索の精度向上（索引は `build/rag/`・語料から再生成可）<br>32 モジュール全量の資産インベントリ |
+| `project_memory.md` §18-§26（241 行・26 章の方法論。**原文の行数・章数は失効**——現物 11 行。`docs/00_plan/spec.md:34` を参照）<br>`doc/02_INPUT/`（日方規約／DB 定義／画面規約／旧 Java ソース／DDL）<br>`doc/03_AI/AB_Reports/`（A/B 比較レポート群） | `docs/90_knowledge/review_diff_assets/`（R60Area/R60Code/R60Item の review_before / review_after / review_comments 審査差分資産）<br>`docs/00_registry/glossary.yml`（中日英三語の用語集・30 用語以上）<br>`tools/kb-platform/repo/projects/P-R60-001/`（**migration 案件の読取専用ナレッジ**：画面卡・chunks・DB/API/規約・偏差記録。`legacy-case-navigator` skill と `tools/legacy` が入口）<br>`docs/90_knowledge/answer-engine.md`（**出典等級 E1〜E4 の唯一真源**。確認票の根拠の格付け）<br>`docs/90_knowledge/ai-dev-playbook.md` / `onboarding-checklist.md` / `platform-map.md`（方法論・新人 Walkthrough・本マップ） | RAG 検索の精度向上（索引は `build/rag/`・語料から再生成可）<br>32 モジュール全量の資産インベントリ |
 
 - 参照：PPT 第 S27 页（ナレッジベース「過去案件・用語辞書・設計規約・既存ソースを検索、流用資産を提示」）、PPT 第 S19 页（全鏈路成果物マップ）。
 
@@ -119,7 +119,7 @@ AI と自動化の実行能力。出典：PPT 第 S26 页「能力層：モデ�
 | §13.1 | **KPI 六大维度**（生産性・品質・AI 活用度・網羅性・リードタイム・知識資産）の数値計測 | **未実装**。指標を採る仕組みが無い。定性材料（`reports/drill/*/comparison.md`・`reports/AC-selfcheck.md`）のみ | Phase 2。まず製造・テスト工程で測る（§13.1 の指示どおり） |
 | §11.4 | **Prompt 模板库**の独立した置き場 | **独立していない**。プロンプトは `.claude/skills/**/references/` と各作業票に分散 | Phase 2。分割するかは、分散で困ってから決める（規則 00 §12 と同じ判断） |
 | §12.2 | **モデルゲートウェイ**（モデル路由・安全フィルタ・コスト管理） | **未実装**。モデル選択は Claude Code 任せ | Phase 2+。閉域・機密の要件が固まってから |
-| §10.2.1 | **差分検証パターン**（設計vs実装、新旧比較、要件vsテスト） | **部分的**。`drill-comparator` agent と `docs/90_knowledge/review_diff_assets/` が「審査前後の差分」を扱う。設計vs実装の自動差分は未実装 | Phase 2 |
+| §10.2.1 | **差分検証パターン**（設計vs実装、新旧比較、要件vsテスト） | **部分的**。`docs/90_knowledge/agent-run-record.md` §5.1 の手順と `docs/90_knowledge/review_diff_assets/` が「審査前後の差分」を扱う。設計vs実装の自動差分は未実装 | Phase 2 |
 | §9.3 | **成果物の二重化**（機読源 → 日文正式 Excel／Word） | **部分的**。`tools/gen_formal/book.py` が md → `.xlsx` を `reports/` 配下に生成できる。**顧客テンプレートへの接続と受控回流は Phase 2** | Phase 2（`tools/gen_formal/README.txt`） |
 | §16 | **実績データ**（Harmony 70%／JET 25% 等） | 本骨架自身の実績は**無い**。引用できるのは社内実績 PPT の値のみ | 実案件適用後に測る |
 

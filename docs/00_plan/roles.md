@@ -1,6 +1,6 @@
 # 角色一覧（旧 `AGENTS.md` → `docs/00_plan/roles.md`）— trans-cosmos-ai AI 全流程骨架 / 既定: 從無到有の新規構築
 
-本文件定义 trans-cosmos-ai 全流程中参与协作的 AI／人角色、各自职责边界、以及每个角色可直接复用的「启动 Prompt 模板」。**本文件の内部実行役割 8 つはすべて Claude Code が実行する**（工程内只有一个 AI 工具）。これに加えて、**社外の発注者である「日方顧客」を役割として併記する**（実行はせず、各ゲートで合意を与える主体）。人は各工程のレビュー・承認ゲート（要件合意・設計評審・合否判定・リリース判定）で拍板する。所有角色共用同一发号口 `docs/00_registry/ids.yml`。設計→製造パイプライン Skill `.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md`（Skill 名 `code-from-design-trans-cosmos-ai`）は **`build_mode: migration` 案件向け**である（既定の `greenfield`＝從無到有 では既存共通部品が無く、共通部品を本案件で新規定義するため発動しない）。機密点検・Review 独立検査・成果物還流・訓練対比・旧資産普查の 5 役割には専用サブエージェント（`.claude/agents/secret-auditor.md` / `.claude/agents/spec-reviewer.md` / `.claude/agents/deliverable-reviewer.md` / `.claude/agents/drill-comparator.md` / `.claude/agents/legacy-module-surveyor.md`）を割り当てる。**テスト設計には専用 agent を置かない** —— 工程 06 の実行体 `trans-cosmos-ai-node6-unit-test` が担う（比率と観点技法は `04-testing.md` が強制する）。訓練の入力（仮想需求書）は `.claude/skills/virtual-requirement-author/` が実在資産から倒推して作る（**8 工程の外側＝節点 0**。`build_mode: migration` では使わない）。分工红线参见根目录 `CLAUDE.md`：Claude Code が 8 工程すべてを実行し、人はレビュー・承認ゲートで拍板する。
+本文件定义 trans-cosmos-ai 全流程中参与协作的 AI／人角色、各自职责边界、以及每个角色可直接复用的「启动 Prompt 模板」。**本文件の内部実行役割 8 つはすべて Claude Code が実行する**（工程内只有一个 AI 工具）。これに加えて、**社外の発注者である「日方顧客」を役割として併記する**（実行はせず、各ゲートで合意を与える主体）。人は各工程のレビュー・承認ゲート（要件合意・設計評審・合否判定・リリース判定）で拍板する。所有角色共用同一发号口 `docs/00_registry/ids.yml`。設計→製造パイプライン Skill `.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md`（Skill 名 `code-from-design-trans-cosmos-ai`）は**両方の案件形態で使う**。`migration` では既存共通部品を唯一真源として呼び出し、既定の `greenfield`＝從無到有 では共通部品を本案件で新規定義する（工程 04 で人の承認を得る）。案件固有の値は知識庫 `tools/kb-platform/repo/projects/<P-ID>/` から取る。機密点検・Review 独立検査・成果物還流の 3 役割には専用サブエージェント（`.claude/agents/secret-auditor.md` / `.claude/agents/spec-reviewer.md` / `.claude/agents/deliverable-reviewer.md`）を割り当てる。**訓練対比と旧資産普查には agent を置かない**（2026-10-29 に削除。方法は `docs/90_knowledge/agent-run-record.md` §5 に残す）。**テスト設計には専用 agent を置かない** —— 工程 06 の実行体 `trans-cosmos-ai-node6-unit-test` が担う（比率と観点技法は `04-testing.md` が強制する）。訓練の入力（仮想需求書）は `.claude/skills/virtual-requirement-author/` が実在資産から倒推して作る（**8 工程の外側＝節点 0**。`build_mode: migration` では使わない）。分工红线参见根目录 `CLAUDE.md`：Claude Code が 8 工程すべてを実行し、人はレビュー・承認ゲートで拍板する。
 
 > **注記（2026-10-28 移設）**：旧 `AGENTS.md` を `docs/00_plan/` へ移し、git 管理下に置いた。Claude Code は本ファイルを自動ロードしない（`CLAUDE.md` が優先）。要点は `使用手册.md` の「角色与分工」。
 
@@ -15,7 +15,7 @@
 | 5 | 機密点検担当 | Claude Code（`.claude/agents/secret-auditor.md`） | 全工程（ゲート） | `tools/masking/mask_demo.py` |
 | 6 | Review 独立検査担当 | Claude Code（`.claude/agents/spec-reviewer.md`） | 全工程（独立検証） | `tools/trace_check.py --strict` |
 | 7 | 成果物還流担当 | Claude Code（`.claude/agents/deliverable-reviewer.md`） | 成果物可読化・顧客確認依頼書 | `tools/gen_view` |
-| 8 | 訓練対比担当 | Claude Code（`.claude/agents/drill-comparator.md`） | 訓練の対比・帰因（8 工程の外側を横断。合否は判定しない） | `.claude/agents/drill-comparator.md` |
+| 8 | 訓練対比担当 | Claude Code（手作業。`docs/90_knowledge/agent-run-record.md` §5.1） | 訓練の対比・帰因（8 工程の外側を横断。合否は判定しない） | `docs/90_knowledge/agent-run-record.md` §5.1 |
 | — | **日方顧客** | **人（社外・発注者）** | 要件合意 / 設計評審 / 合否判定 / リリース判定 | — |
 
 > **日方顧客 の位置づけ**：PPT 第 S6 页（六角色）および S17 页（RACI）は **日方顧客** を明示的な役割として置く。
@@ -228,7 +228,7 @@ PPT の 5 列（AI / SE / PG / テスター / 日方顧客）を、本骨格の�
 ### 启动 Prompt 模板
 
 ```
-あなたは訓練対比担当（.claude/agents/drill-comparator.md）です。
+あなたは訓練対比担当です（方法: `docs/90_knowledge/agent-run-record.md` §5.1）。
 対象: tutorial/R60Login（試点 #0）／節点 N
 1) reports/drill/R60Login/freeze.yaml と provenance.yaml を読み、
    要求書の sha256 を再計算して book_sha256 と一致するか確認する。

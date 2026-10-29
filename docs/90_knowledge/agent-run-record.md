@@ -160,7 +160,73 @@ version: 0.4.0
 - 実行体の共通契約：`.claude/skills/trans-cosmos-ai-lifecycle-coach/references/node-worker-contract.md`
 - 状態の唯一真源：`docs/00_plan/coach/<module>/*.yml`
 - 訓練の入力の作り方：`.claude/skills/virtual-requirement-author/SKILL.md`（登録：`ppt-deviation-register.md` A-23）
-- 対比と帰因：`.claude/agents/drill-comparator.md`（登録：`ppt-deviation-register.md` A-24）
+- 対比と帰因：本ファイル §5.1（登録：`ppt-deviation-register.md` A-24）。
+  旧 `.claude/agents/drill-comparator.md` は **2026-10-29 に削除**（ユーザー拍板）。方法は §5.1 に残す
 - 対照先（人が書いた版）：`D:/AI_work` の該当実装（**永久に読取専用**）
 - 前提となる評価：`docs/90_knowledge/ppt-coverage-assessment.md`
 - 骨架自身の踩坑記録：`docs/90_knowledge/review_diff_assets/_skeleton/review_comments.md`（RC-SK-01〜03）
+
+---
+
+## 5. 削除した agent の方法（2026-10-29）
+
+`.claude/agents/drill-comparator.md` と `.claude/agents/legacy-module-surveyor.md` は
+**2026-10-29 にユーザー拍板で削除した**（`reports/audit/kb-integration/03_拍板记录_2026-10-29.md` §1-9）。
+**能力を捨てたのではなく、agent を立てるほどの頻度が無いと判断した**ものである。
+必要になったときは、下記の方法で**手作業で**行う（または一時的に agent として書き直す）。
+
+### 5.1 訓練の対比・帰因（旧 `drill-comparator`）
+
+**手順**
+
+1. `reports/drill/<module>/freeze.yaml` と `provenance.yaml` を読む。
+2. **凍結の検証**：要求書の `sha256` を再計算し `book_sha256` と一致するか確認する。
+   **不一致はそれ自体が報告事項**である（凍結後に要求書が改変された）。
+3. **封印の検証（seal grep）**：下流成果物が実在資産を引用していないか機械走査する。
+   **空であること自体が証拠**になる。
+4. **対比**：AI 産出物と人版の対応物を項目ごとに突き合わせる
+   （索引は知識庫の `screens/<module>.md` にある `file:line`）。
+5. **帰因**：差分を下表で **1 件ずつ**分類する。**分類せずに「AI が劣る」と書かない。**
+6. `reports/drill/<module>/comparison.md` に**その節点ぶんの 1 節を追記**する（既存の節は書き換えない）。
+   **合否は判定しない**（紅线③）。
+
+**帰因分類**（根拠：`tools/kb-platform/repo/projects/P-R60-001/09-ai-workflow.md` §7.1 逐語
+「設計書に無いから落ちた」のか「設計書にあるのに読めていない」のかを切り分ける。
+この切り分けをせずに「AI の方が劣る」と結論してはならない）
+
+| 記号 | 分類 | 意味 |
+|---|---|---|
+| **R** | 要求書缺陷 | 要求書が定めていないため決まらない。AI の責任ではない |
+| **A1** | 要求書に無いから落ちた | AI の判断は妥当。無い情報を求めてはいけない |
+| **A2** | 要求書にあるのに読めていない | **AI の欠落。最も改善すべき対象** |
+| **A3** | 要求書に無いものを足した | **AI の過剰**。典型パターンへの引きずられ |
+| **G1** | 門番の誤報 | 正しいものを弾いた |
+| **G2** | 門番の漏報 | 弾くべきものを通した |
+| **D** | 骨架規則と実物の衝突 | 知識庫 `08-deviations.md` へ登記すべきもの |
+| **H** | 人版の歴史的負担 | 人版が設計書・規約と乖離。AI が正しくても差が出る |
+
+**報告の書式**：`reports/drill/<module>/comparison.md` は front matter を持たない
+（`reports/` は gate3 の走査対象外）。冒頭に元情報（実行日／対象画面／対象節点／`build_mode`／
+対比の相手）と、凍結検証・封印検証の**コマンドと実際の出力**を置く（規則 02 §10）。
+**報告は中文で書く**（読者は訓練を行う中国語話者だけであり、顧客に出す媒体ではない）。
+
+### 5.2 歴史モジュールの選型普查（旧 `legacy-module-surveyor`）
+
+**仕事は「このモジュールを教材にできるか」を根拠付きで採点することだけ**である。
+卡片・chunk・コード・要求・ID は作らない。設計を直さない。
+
+**読む順序**（全 sheet を読まない。`reports/module-survey/<module>/{design,test}/*.txt`）
+画面概要 → イベント一覧 → 業務処理説明（最も重い）→ 画面項目内容（数と群だけ）→
+チェック → 項目移送表 → テスト仕様 → A/B レポートの件数と失敗理由。
+
+**採点**（0〜5）5 観点：`doc_completeness`（資料完整）／`design_consistency`（設計自洽）／
+`impl_alignment`（実装一致。**A/B レポートが無ければ `null`——0 は「不合格」、null は「未測定」**）／
+`teachability`（可教学性）。採点には必ず `file:line` か `sheet=…; row=…` の根拠を付ける。
+**根拠の無い点を付けない。**
+
+**複雑度**（スコアとは別に必ず出す）：`simple`（画面 1・主従なし・端点 10 以下・表 1）／
+`medium`（主従または複数モード・端点 10〜20・表 2〜3）／
+`complex`（複数画面・アップロード／一括／外部連携・端点 20 超・表 4 以上）。
+`complexity.signals` に `screens / endpoints / tables / master_detail / upload / batch / sim / external` を実測で入れる。
+
+**出力**：`reports/module-survey/scores/<module>.yaml` に 1 モジュール 1 ファイル。

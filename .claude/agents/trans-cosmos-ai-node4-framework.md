@@ -33,7 +33,8 @@ model: sonnet
   - `greenfield`：**呼ぶ先の既存部品が存在しない。** 共通部品は本ノードで一覧化し、工程 05 で本案件の資産として
     新規定義する。定義後はそれが唯一真源となり、以降の改変禁止はそこに働く。
   - 呼び出し順の代表例は `.claude/rules/03-design-coding.md` §3 の抜粋表、全リストは
-    `.claude/skills/code-from-design-trans-cosmos-ai/SKILL.md` §3.5 が唯一の定義。**本ファイルに転記しない。**
+    **その案件の知識庫** `tools/kb-platform/repo/projects/<P-ID>/standards/` が唯一の定義
+    （R60 なら `r60common-map.md`）。**本ファイルに転記しない。**
 - **`BaseCamelModel` の `model_config` 4 行を変更しない（禁止事項②）。**
   `alias_generator` / `populate_by_name` / `serialize_by_alias` / `extra` は固定。
 - **選型は「なぜ既存で足りるか」を書く。** 新しいライブラリの導入提案は、既存で代替できない理由を

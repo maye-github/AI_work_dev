@@ -44,7 +44,7 @@ version: 0.1.1
 > - **`build_mode: migration` の案件では使わない。** 既存実装がそのまま入力になるので、倒推は不要であり、
 >   「答案」を先に読ませることになるため**測定を壊す**。
 > - 凍結後の下流（節点 2〜8）は `D:\AI_work` と `tools/kb-platform/repo/projects/P-R60-001/` を**読み返さない**。
->   人版を読むのは**事後の対比（`drill-comparator`）だけ**である。
+>   人版を読むのは**事後の対比だけ**である（方法: `docs/90_knowledge/agent-run-record.md` §5.1）。
 >
 > **★要求書そのものを審査したいとき**（真の案件ではこれが本命）：
 > **`requirement-interrogator` skill** を使う。顧客の要求書から「確認すべき点」を立てる技能で、
