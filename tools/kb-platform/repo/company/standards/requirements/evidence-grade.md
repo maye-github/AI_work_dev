@@ -6,15 +6,16 @@ doc_type: standard
 version: "1.0"
 status: active
 conf_level: 20
-owner: 共通基盤チーム
+owner: Nan
 updated_at: 2026-10-29
 tags: [requirements, evidence, provenance, quality]
+source_project: framework-rules
 ---
 
 # 出典等級 E1〜E4（その答えはどこから来たか）
 
 > **本条は要約であり、正本ではない。** 定義と事故記録の正本は
-> `docs/90_knowledge/answer-engine.md` §3〜§3.2。
+> `tools/kb-platform/repo/company/standards/requirements/answer-engine.md` §3〜§3.2。
 
 ## 1. 四つの等級
 

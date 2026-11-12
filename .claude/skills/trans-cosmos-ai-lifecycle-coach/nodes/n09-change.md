@@ -256,12 +256,12 @@ version: 0.1.0
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  ▶ 现在做：把这条指摘沉淀成知识，让全队下次不再犯
 
- 📂 打开：docs/90_knowledge/review_diff_assets/<module>/review_comments.md
+ 📂 打开：tools/kb-platform/repo/projects/P-R60-001/review/<module>/review_comments.md
 
  📋 复制这段给 Claude：
 
      请按 .claude/rules/06-knowledge-flywheel.md §4 的 4 点，
-     往 docs/90_knowledge/review_diff_assets/<module>/review_comments.md 追加 1 条记录：
+     往 tools/kb-platform/repo/projects/P-R60-001/review/<module>/review_comments.md 追加 1 条记录：
 
      事象：<何が起きたか（再現手順。値は占位 COL_1 / VAL_1）>
      影響：<どの工程で発見され、どこまで波及したか>
@@ -296,7 +296,7 @@ version: 0.1.0
 |---|---|---|
 | `docs/00_registry/ids.yml` の該当行 | **人が `tools.registry` で** | 発番された番号が実在すること |
 | `docs/80_operation/impact-<BUG-xxx>.yaml` | AI（実行体）＋人が裁定 | `root_cause_node` が埋まっていること |
-| `docs/90_knowledge/review_diff_assets/<module>/review_comments.md` | AI（下書き）＋人 | 4 点（事象/影響/原因/対策）が揃うこと |
+| `tools/kb-platform/repo/projects/P-R60-001/review/<module>/review_comments.md` | AI（下書き）＋人 | 4 点（事象/影響/原因/対策）が揃うこと |
 | `docs/00_plan/coach/<module>/n09.yml` | コーチ（機制） | 該当項の `state` が `closed` |
 
 ## 5. 審査清単（人が 1 項ずつ回答する）

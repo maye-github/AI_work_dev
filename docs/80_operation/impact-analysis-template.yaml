@@ -27,7 +27,7 @@ version: 0.1.0
 # 出所: 要件源 PPT（落地篇）S15 工程⑦ AI作業④「改修時の影響範囲を分析する
 #   （要件IDから設計・コード・テストを逆引き）」＋ S16「変更影響分析」。
 #   本テンプレートのフィールド構成は本骨架の追加要素であり、登録は
-#   docs/90_knowledge/ppt-deviation-register.md §2 の A-20 にある。
+#   tools/kb-platform/repo/company/standards/ppt-deviation.md §2 の A-20 にある。
 #
 # 書式の約束: 本ファイルは単一の YAML 文書である（冒頭の `---` は 1 つだけ）。
 #   散文はすべて `#` コメントで書く。front-matter の後に `---` を足すと
@@ -92,13 +92,13 @@ regression:
   gate_result: pending                  # py -3 -m tools.trace_check --strict の結果
 
 # ── ⑦ 知識沈殿（.claude/rules/06-knowledge-flywheel.md §4 の 4 点）────────
-#    追記先は docs/90_knowledge/review_diff_assets/<module>/review_comments.md
+#    追記先は tools/kb-platform/repo/projects/P-R60-001/review/<module>/review_comments.md
 knowledge_entry:
   symptom: "<事象: 何が起きたか（再現手順。値は占位）>"
   impact: "<影響: どの工程で発見され、どこまで波及したか>"
   cause: "<原因: 既存のどの規則・どの gate が捕まえるべきだったか>"
   countermeasure: "<対策: 機械化できるか / 規則化するならどの層か（紅线・rules・テンプレート・検査）>"
-  recorded_in: "docs/90_knowledge/review_diff_assets/<module>/review_comments.md"
+  recorded_in: "tools/kb-platform/repo/projects/P-R60-001/review/<module>/review_comments.md"
   appended: false                       # 実際に追記したら true
 
 open_issues:

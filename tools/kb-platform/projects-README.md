@@ -9,7 +9,76 @@
 
 ---
 
-## 1. 这里的东西是生成的
+## 0. 新しい案件の入れ方（2026-11-09 追加）
+
+**案件が来たら、まず `sources/` に原本を置く。それ以外は AI が作る。**
+
+```bash
+# 1) 案件の器を作る（sources/ と権限台帳の 1 行を作る）
+py -3 -m tools.kb_local project-init --id P-XXX-001 --name "案件名" --by <PM>
+
+# 2) 原本を置く（人が置く。AI は編集しない）
+#    repo/projects/P-XXX-001/sources/  ← xlsx / docx / pdf / md / txt
+
+# 3) 原本から機械抽出する（結果は extracted/ に draft で出る）
+py -3 -m tools.kb_local import --scan --project P-XXX-001 --by <PM>
+
+# 4) 人が原本と突き合わせ、draft を open にする
+# 5) AI が extracted/ をもとに knowledge/ 等へ整理する（下の §0.1 の型で）
+# 5.5) 形の検査（内容の正しさは人）
+py -3 -m tools.kb_local check-knowledge
+
+# 6) 索引に入れる
+py -3 -m tools.kb_local lint
+py -3 -m tools.kb_local ingest --prune
+```
+
+| フォルダ | 誰が作るか | 中身 |
+|---|---|---|
+| `sources/` | **人**（原本を置く） | 顧客から受領した設計書・仕様書・マスタ定義・QA 票など。**AI は生成しない・編集しない** |
+| `extracted/` | `import --scan`（機械） | 原本から抽出したテキスト。`status: draft`。人が `open` にして初めて検索に出る |
+| `knowledge/` `modules/` `playbooks/` `glossary/` `review/` `chunks/` | **AI**（人が確認） | 案件知識として整理したもの。`sources/` を根拠に書く |
+| `project.yml` | `project-init` | 案件メタ（人向け）。索引には入れない |
+
+- **`sources/` に置かないもの**：接続情報・パスワード・実データの実値（`kb-policy.md` §2.1）。
+- **権限**：`project-init` が `owners.yaml` に責任者を 1 行足す。無いと import / ingest が「未任命」で止まる。
+- **原本を消さない**：`sources/` は根拠の保管庫である。`extracted/` を作り直せばいつでも復元できる。
+
+### 0.1 AI が作る `knowledge/` の形（2026-11-09 追加）
+
+**形が決まっていないと検証できない。** `knowledge/` の 1 ファイルは次の型で書く
+（雛形: `tools/kb-platform/knowledge-template.md`）。
+
+```yaml
+---
+doc_id: KNW-<案件ID>-<連番>
+scope: project
+project_id: <P-XXX-001>
+title: "＜1 行で言い切る＞"
+doc_type: standard
+conf_level: 30
+status: draft            # 人が確認して open
+source_files:            # ★必須。出典の無い知識は許さない
+  - "sources/<原本>#<シート・節>"
+updated_at: <YYYY-MM-DD>
+---
+## 結論        # 1〜3 文。そのまま答えになる形
+## 根拠        # 原本のどこに書いてあるか
+## 適用範囲    # 適用する／例外
+## 未確定      # 原本に無いこと（推測で埋めない）
+## 更新条件    # 原本が改訂されたら読み直すトリガー
+```
+
+機械検査（内容の正しさは見ない・紅線③）:
+
+```bash
+py -3 -m tools.kb_local check-knowledge
+```
+
+見るのは 4 点だけ——必須字段（`source_files` 含む）／5 節の有無／`source_files` の実在／
+結論が空でないか。遡及免除は `tools/kb-platform/knowledge_exempt.txt`（理由を書いて 1 行）。
+
+## 1. ここ（P-R60-001）のものは生成物
 
 `repo/projects/P-R60-001/**/*.md` 全部是**生成物**，每一篇的 front matter 都带：
 
@@ -32,7 +101,7 @@ generated_by: tools/kb_migrate.py
 py -3 -m tools.kb_migrate --apply          # .md を作り直す（何度実行しても同じ結果）
 py -3 -m tools.kb_local lint
 py -3 -m tools.kb_local ingest --prune
-py -3 -m tools.kb_local eval
+py -3 -m tools.kb_local eval --all
 ```
 
 > **上流 CLI（`tools/kb-platform/run.py`）を直接叩かないこと。** 上流は `status = 'active'` 固定で、

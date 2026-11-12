@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05_承認版_制造记录.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>05_承認版_制造记录.zh</h1>
+<div class="meta">
+  机读源: <code>05_承認版_制造记录.zh.md</code> ／
+  生成: 2026-11-09 13:43 ／
+  节 7・表 4
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>05_承認版_制造记录.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">审定记录</a></li><li><a href="#sec-2">1. 生成文件清单（22 个文件）</a></li><li><a href="#sec-3">2. commit message 的格式</a></li><li><a href="#sec-4">3. 设计 v1.0.1 确定值的落实</a></li><li><a href="#sec-5">4. 设计对应的要点</a></li><li><a href="#sec-6">5. 检查结果（实际输出）</a> <span class="chip chip-io">项目定义</span></li><li><a href="#sec-7">6. 未定事项</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: MF-201<br>type: manufacturing-record<br>req_ids: [R-202]<br>status: open<br>sensitivity: internal<br>owner: AI-PG<br>version: 1.0.0<br>kb_refs:</p>
+<ul><li>"STD-CODING-001"</li><li>"TPL-DESIGN-DETAIL-001"</li><li>"PAT-DEV-PLAYBOOK-001"</li></ul>
+<hr>
+<h1>R60Maker 制造商主数据维护 制造记录（已批准 v1.0.0）</h1>
+<blockquote class="quote"><strong>本记录的输入</strong>是节点5 <code>00_输入模板.yaml</code>（v0.4.0，filled）、节点3 审定版 <code>05_承認版_详细设计书.md</code>（v1.0.1）、<br>节点4 审定版 <code>05_承認版_框架构筑记录.md</code>（v1.0.0）。<br>本稿已于 2026-11-09 通过代码评审（红线③），置为 <code>baselined</code>。演习中 1 人兼全部角色。<br><strong><code>build_mode: greenfield</code></strong>。生成物只放在 <code>tutorial/R60Maker/节点5_制造/</code> 下（<code>frontend/</code>、<code>backend/</code>），<br>没有触碰 <code>src/</code>、<code>app/routers</code> 的生产代码。<br><strong>不写任何真实环境值</strong>（一律用占位 <code>PWD_1</code> / <code>IP_1</code> / <code>PORT_1</code> / <code>SID_1</code> / <code>TBL_1</code>）。未定事项由<br><code>docs/00_plan/coach/R60Maker/n05.yml</code> 的 <code>open_questions</code> 跟踪（本审定版不列清单，依据规则 02 §6.1）。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>审定记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">版本</th><th style="text-align:left">日期</th><th style="text-align:left">审定者角色</th><th style="text-align:left">审定者</th><th style="text-align:left">审定状态</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-11-09</td><td style="text-align:left">SE</td><td style="text-align:left">Li</td><td style="text-align:left"><strong>承認（已批准）</strong></td><td style="text-align:left">设计对应、代码评审视角</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-11-09</td><td style="text-align:left">PG</td><td style="text-align:left">Li</td><td style="text-align:left"><strong>承認（已批准）</strong></td><td style="text-align:left">可制造性、实现细则（规则 03）</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-11-09</td><td style="text-align:left">测试</td><td style="text-align:left">Li</td><td style="text-align:left"><strong>承認（已批准）</strong></td><td style="text-align:left">可验证性、边界值（设计 §6）</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-11-09</td><td style="text-align:left">PM</td><td style="text-align:left">Li</td><td style="text-align:left"><strong>承認（已批准）</strong></td><td style="text-align:left">综合审定</td></tr></tbody></table>
+<blockquote class="quote">表中「承認待ち」是日文原文（实现用固定词），意为“待审定/待批准”。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 生成文件清单（22 个文件）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">路径（位于 <code>tutorial/R60Maker/节点5_制造/</code> 之下）</th><th style="text-align:left">层</th><th style="text-align:left">对应 L</th><th style="text-align:left">对应 D</th><th style="text-align:left">对应 E</th><th style="text-align:left">对应 I</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>backend/app/main.py</code></td><td style="text-align:left">启动、依赖注入</td><td style="text-align:left">L-212</td><td style="text-align:left">—</td><td style="text-align:left">E-223</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>backend/app/config.py</code></td><td style="text-align:left">配置（仅方式）</td><td style="text-align:left">L-212</td><td style="text-align:left">—</td><td style="text-align:left">E-221,E-222</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>backend/app/ports.py</code></td><td style="text-align:left">公共部件边界</td><td style="text-align:left">L-219,L-220</td><td style="text-align:left">—</td><td style="text-align:left">E-216,E-218</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><code>backend/app/schemas.py</code></td><td style="text-align:left">模型（BaseCamelModel）</td><td style="text-align:left">L-212,L-213,L-214,L-217,L-218,L-219,L-220</td><td style="text-align:left">—</td><td style="text-align:left">E-224</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>backend/app/repository/queries.py</code></td><td style="text-align:left">SQL 4.1〜4.11</td><td style="text-align:left">—</td><td style="text-align:left">D-207〜D-212</td><td style="text-align:left">E-213〜E-217,E-223</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>backend/app/domain/preprocess.py</code></td><td style="text-align:left">L-212 前处理</td><td style="text-align:left">L-212</td><td style="text-align:left">D-212</td><td style="text-align:left">E-220,E-221,E-222,E-223,E-224</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><code>backend/app/domain/search.py</code></td><td style="text-align:left">L-214／L-215</td><td style="text-align:left">L-214,L-215</td><td style="text-align:left">D-207,D-210</td><td style="text-align:left">E-213,E-214,E-223</td><td style="text-align:left">I-329,I-330,I-332,I-334,I-339</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left"><code>backend/app/domain/download.py</code></td><td style="text-align:left">L-218</td><td style="text-align:left">L-218</td><td style="text-align:left">D-207</td><td style="text-align:left">E-214,E-223</td><td style="text-align:left">I-353</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left"><code>backend/app/domain/init_edit.py</code></td><td style="text-align:left">L-217</td><td style="text-align:left">L-217</td><td style="text-align:left">D-207</td><td style="text-align:left">E-223</td><td style="text-align:left">SCR-202</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left"><code>backend/app/domain/delete.py</code></td><td style="text-align:left">L-219</td><td style="text-align:left">L-219</td><td style="text-align:left">D-207,D-208,D-209</td><td style="text-align:left">E-216,E-217,E-218,E-223</td><td style="text-align:left">SCR-202</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left"><code>backend/app/domain/edit.py</code></td><td style="text-align:left">L-220</td><td style="text-align:left">L-220</td><td style="text-align:left">D-207,D-208,D-209</td><td style="text-align:left">E-215,E-216,E-217,E-223</td><td style="text-align:left">SCR-202</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left"><code>backend/app/api/init_api.py</code></td><td style="text-align:left">POST /init</td><td style="text-align:left">L-212,L-213</td><td style="text-align:left">D-211</td><td style="text-align:left">E-220,E-221,E-222,E-223,E-224</td><td style="text-align:left">I-323,I-324,I-325,I-326,I-327,I-333</td></tr><tr><td style="text-align:left">13</td><td style="text-align:left"><code>backend/app/api/search_api.py</code></td><td style="text-align:left">POST /search</td><td style="text-align:left">L-212,L-214,L-215</td><td style="text-align:left">D-207,D-210</td><td style="text-align:left">E-213,E-214,E-220,E-223,E-224</td><td style="text-align:left">I-329,I-330,I-332,I-333,I-334,I-337,I-338,I-339,I-340,I-342,I-347,I-349</td></tr><tr><td style="text-align:left">14</td><td style="text-align:left"><code>backend/app/api/download_api.py</code></td><td style="text-align:left">POST /download</td><td style="text-align:left">L-212,L-218</td><td style="text-align:left">D-207</td><td style="text-align:left">E-214,E-220,E-223</td><td style="text-align:left">I-353</td></tr><tr><td style="text-align:left">15</td><td style="text-align:left"><code>backend/app/api/init_edit_api.py</code></td><td style="text-align:left">POST /initEdit</td><td style="text-align:left">L-212,L-217</td><td style="text-align:left">D-207</td><td style="text-align:left">E-220,E-223,E-224</td><td style="text-align:left">SCR-202</td></tr><tr><td style="text-align:left">16</td><td style="text-align:left"><code>backend/app/api/delete_api.py</code></td><td style="text-align:left">POST /delete</td><td style="text-align:left">L-212,L-219</td><td style="text-align:left">D-207,D-208,D-209</td><td style="text-align:left">E-216,E-217,E-218,E-220,E-223</td><td style="text-align:left">SCR-202</td></tr><tr><td style="text-align:left">17</td><td style="text-align:left"><code>backend/app/api/edit_api.py</code></td><td style="text-align:left">POST /edit</td><td style="text-align:left">L-212,L-220</td><td style="text-align:left">D-207,D-208,D-209</td><td style="text-align:left">E-215,E-216,E-217,E-218,E-220,E-223,E-224</td><td style="text-align:left">SCR-202</td></tr><tr><td style="text-align:left">18</td><td style="text-align:left"><code>frontend/views/SearchScreen.vue</code></td><td style="text-align:left">SCR-201</td><td style="text-align:left">L-213,L-214,L-215,L-216,L-221,L-222</td><td style="text-align:left">D-207,D-210</td><td style="text-align:left">E-213,E-214,E-219</td><td style="text-align:left">I-322〜I-354</td></tr><tr><td style="text-align:left">19</td><td style="text-align:left"><code>frontend/views/MakerEditScreen.vue</code></td><td style="text-align:left">SCR-202</td><td style="text-align:left">L-217,L-219,L-220,L-221,L-222</td><td style="text-align:left">D-207</td><td style="text-align:left">E-215,E-216,E-217,E-219</td><td style="text-align:left">SCR-202 的 9 个项目（未赋 I-ID）</td></tr><tr><td style="text-align:left">20</td><td style="text-align:left"><code>frontend/services/makerApi.ts</code></td><td style="text-align:left">6 个端点调用</td><td style="text-align:left">L-212〜L-220</td><td style="text-align:left">D-207〜D-212（响应）</td><td style="text-align:left">E-213〜E-224（errorCode）</td><td style="text-align:left">I-329,I-330,I-332,I-333,I-334,I-337,I-338,I-339,I-350,I-351,I-353,I-354</td></tr><tr><td style="text-align:left">21</td><td style="text-align:left"><code>frontend/stores/searchState.ts</code></td><td style="text-align:left">状态保持（Pinia）</td><td style="text-align:left">L-214,L-215,L-221</td><td style="text-align:left">D-207</td><td style="text-align:left">E-213,E-214</td><td style="text-align:left">I-331,I-332,I-333,I-334,I-337,I-338,I-350,I-351,I-353,I-354</td></tr><tr><td style="text-align:left">22</td><td style="text-align:left"><code>frontend/common/customerParts.ts</code></td><td style="text-align:left">公共 UI 边界</td><td style="text-align:left">L-212,L-214,L-215,L-221,L-222</td><td style="text-align:left">—</td><td style="text-align:left">E-221,E-222,E-223</td><td style="text-align:left">I-322〜I-326</td></tr></tbody></table>
+<blockquote class="quote">未生成单元测试代码（TC 编号由工程06 人工发号，依据规则 04 §9.3）。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. commit message 的格式</h2>
+<p>不实际提交（本演练不在 git 管理内，仅作记录）。类型从 <code>CLAUDE.md</code> §3 的 7 种中选 <code>feat</code>。<br>必须包含三段（Trace／AI／Review）以及末尾的归因行。<strong><code>Review:</code> 里不写 AI 的名字</strong>。</p>
+<pre><code>feat: F-202 R60Maker メーカーマスタメンテナンス の製造（2 画面・6 端点）
+
+Trace:F-202-&gt;D-207..D-212-&gt;L-212..L-222
+AI: code-from-design-trans-cosmos-ai@v0.1
+Review: Li
+
+Co-Authored-By: Claude Code &lt;noreply@anthropic.com&gt;</code></pre>
+<p>若按端点拆分，Trace 行如下（保持 <code>Trace:F-202-&gt;D-207-&gt;L-212..L-222</code> 的写法）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">单位</th><th style="text-align:left">Trace 行</th></tr></thead><tbody><tr><td style="text-align:left">/init</td><td style="text-align:left"><code>Trace:F-202-&gt;D-211,D-212-&gt;L-212,L-213</code></td></tr><tr><td style="text-align:left">/search</td><td style="text-align:left"><code>Trace:F-202-&gt;D-207,D-210-&gt;L-212,L-214,L-215</code></td></tr><tr><td style="text-align:left">/download</td><td style="text-align:left"><code>Trace:F-202-&gt;D-207-&gt;L-212,L-218</code></td></tr><tr><td style="text-align:left">/initEdit</td><td style="text-align:left"><code>Trace:F-202-&gt;D-207-&gt;L-212,L-217</code></td></tr><tr><td style="text-align:left">/delete</td><td style="text-align:left"><code>Trace:F-202-&gt;D-207,D-208,D-209-&gt;L-212,L-219</code></td></tr><tr><td style="text-align:left">/edit</td><td style="text-align:left"><code>Trace:F-202-&gt;D-207,D-208,D-209-&gt;L-212,L-220</code></td></tr><tr><td style="text-align:left">画面、迁移、活性</td><td style="text-align:left"><code>Trace:F-202-&gt;D-207-&gt;L-216,L-221,L-222</code></td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 设计 v1.0.1 确定值的落实</h2>
+<ul><li>D-207 <code>send_sts</code> 登记时的默认值 = <code>0</code>（未发送）。以 <code>INITIAL_SEND_STS</code> 固定在一处（<code>domain/edit.py</code>）。</li><li>D-210 <code>cd_kbn</code> 的区分实值 = <code>SEND_STS</code> / <code>DEL_FLG</code>。绑定到 SQL 4.11 的 <code>:cd_kbn_send_sts</code> / <code>:cd_kbn_del_flg</code>（<code>repository/queries.py</code>）。</li><li>L-213（/init）取得的消息 = MSG-C-001〜004、MSG-I-001〜003、MSG-E-001〜008（共 15 条，<code>config.py</code> 的 <code>INIT_MESSAGE_IDS</code>）。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 设计对应的要点</h2>
+<ul><li>SQL 只用设计 §4 的 SELECT／INSERT／UPDATE。仅使用 <code>:name</code> 绑定、不拼接值，不含物理删除语句（逻辑删除 <code>del_flg</code>）。</li><li>动态排序采用白名单 <code>ALLOWED_SORT_FIELDS = {MAKER_CD, MAKER_NM}</code>，白名单外或未指定时回落为 <code>ORDER BY del_flg, maker_cd, ROWID</code>。</li><li>响应固定为 <code>errorCode</code> 0／1／9（不使用 2）、<code>errorId</code> 4 位（正常 0000）、HTTP 200。</li><li><code>BaseCamelModel</code> 以 <code>model_config</code> 4 行固定方式新建，派生类不再重定义。接口层 camelCase、定义层 snake_case。</li></ul>
+</section>
+<section class="sec sec-io" id="sec-6">
+<h2>5. 检查结果（实际输出） <span class="chip chip-io">项目定义</span></h2>
+<table class="tbl"><thead><tr><th style="text-align:left">检查</th><th style="text-align:left">输出</th></tr></thead><tbody><tr><td style="text-align:left"><code>py -3 -m py_compile</code>（backend 17 个文件）</td><td style="text-align:left"><code>PY_COMPILE_EXIT=0</code></td></tr><tr><td style="text-align:left"><code>grep -rn "DELETE FROM" frontend backend | wc -l</code></td><td style="text-align:left"><code>0</code></td></tr><tr><td style="text-align:left"><code>grep -rn "Vue|FastAPI|Oracle"</code></td><td style="text-align:left"><code>8</code> 行（与工程04 采用的栈一致）</td></tr><tr><td style="text-align:left"><code>py -3 -m tools.trace_check --strict</code></td><td style="text-align:left"><code>gate1..gate6=PASS seal=PASS freeze=PASS total_ids=170 orphans=0 field_count=77 seal_hits=0</code>（Exit 0）</td></tr><tr><td style="text-align:left"><code>py -3 -m tools.trace_check --strict --only-check secrets</code></td><td style="text-align:left"><code>gate6=PASS seal_hits=0</code>（Exit 0）</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 未定事项</h2>
+<p>未定事项由 <code>docs/00_plan/coach/R60Maker/n05.yml</code> 的 <code>open_questions</code> 跟踪。<strong>本审定版不列清单</strong>（依据规则 02 §6.1）。<br>本记录在人工评审（设计评审、代码评审）以及在 <code>Review:</code> 中填入人的标识之后方可确定（红线③）。</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>05_承認版_制造记录.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

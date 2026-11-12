@@ -33,6 +33,12 @@ version: 0.1.0
 ## 1. 適用範囲と唯一発号口
 **Summary**: 本規則は R-ID を起点とする 8 工程の手続きを固定する。R-ID/Q-ID/F-ID/I-ID/D-ID/L-ID/E-ID/TC-ID の唯一発号口は `docs/00_registry/ids.yml`（単一ソース）、それ以外の野号（未登録番号）は `tools/trace_check.py` gate1 で Exit 1。
 - 発号規則: 3 桁起步・連番・**不使用番号の再利用禁止**（無効化は `void` で明示）。
+- **★連番はケース（モジュール）をまたいで継続する。ケースごとに 201 から数え直さない**（2026-11-10 追加）。
+  `ids.yml` は案件で 1 本であり、番号の意味は案件をまたいで一意でなければならない。
+  数え直すと、同じ番号が 2 つの意味を持つ（実測: `E-201` が R60Login では「社員なし」、
+  R60Maker では「検索 0 件」。どちらも `ids.yml` には「登録済み」としか出ないため gate1 を通過した）。
+  発号前に `py -3 -m tools.registry next <接頭辞>` で続きを確認する。
+  振り直しの実例は `tutorial/R60Maker/节点6_单元测试/02_审查结果.md` 付記 2。
 - **案件形態（`build_mode`）**: 既定は `greenfield`（從無到有・既存システム無し）。既存システム・旧設計書を持つ案件は `migration` 変種として `docs/00_plan/coach/<module>/case.yml` に**明示宣言**する（唯一の宣言場所）。
   本規則および 03/04 のうち `migration` にのみ適用される条項は、その旨を各所に明記している。宣言が無ければ `greenfield` とみなす。
 - 参照: spec.md NFR-1 / FR-2 ・ 落地篇 PPT S9-S17
@@ -138,7 +144,7 @@ version: 0.1.0
   3. **A／B の回答は顧客から、C の裁定内容は我方から**——**3 つとも揃って初めて次へ進める**（§7 鉄則 18）。
 - **★`02_確認事項一覧.md` の表は「出典等級（E1〜E4）」列を持つ**（2026-10-20 追加。
   **節点 2 以降で必須**。**節点 1 の承認済み `02` は遡及改訂しない**——承認済みの内容を後から書き換えないため）。
-  - **等級の定義は `docs/90_knowledge/answer-engine.md` §3.2 が唯一真源**。本条は定義を再記述しない。
+  - **等級の定義は `tools/kb-platform/repo/company/standards/requirements/answer-engine.md` §3.2 が唯一真源**。本条は定義を再記述しない。
   - 値域は `E1` / `E2` / `E3` / `E4` / `—`。**`—` は「未記載」であり、`E4` の代用ではない。**
     **提案（B）は等級必須**であり、等級の無い提案は「根拠の無い提案」として扱う。
   - `E2`（既存実装の実測）は `migration` でのみ根拠になる。`greenfield` では**使わない**
@@ -258,10 +264,10 @@ version: 0.1.0
     載っていない B は「承認をもらう相手が存在しない提案」であり、**分類を変えた意味が無い**
     （実測: R60Login で 1 件欠落し、提案を追加した）。
 - **A クラスの暫定値を勝手に埋めないこと**。これは工程 01 で最も起こりやすい違反であり、
-  実例と対策は `docs/90_knowledge/review_diff_assets/_skeleton/review_comments.md` **RC-SK-02** を参照。
+  実例と対策は `tools/kb-platform/repo/company/standards/review-log-skeleton.md` **RC-SK-02** を参照。
 - **機械検査はしない**。`A`/`B`/`C` は `ids.yml` の発号対象ではなく（発号対象は `R/F/I/D/L/E/TC/Q/CR/BUG`）、
   本文中に無数に現れるため gate で走査すると誤検出だらけになる。
-  **門番は 6 道のまま**（`docs/90_knowledge/ppt-deviation-register.md` §2 A-19）とし、本条は人読文案の層で守る。
+  **門番は 6 道のまま**（`tools/kb-platform/repo/company/standards/ppt-deviation.md` §2 A-19）とし、本条は人読文案の層で守る。
   **「出典等級」列も同じ扱いである**——列が在るか、B に等級が付いているかはレビューで見るが、
   **等級の値が正しいかは機械で判定しない**（`E1` と書いてある文が本当に要求書の明文かは、人が原文と照合する）。
 
@@ -304,7 +310,7 @@ version: 0.1.0
 > **これは「Q-ID が不要」という意味ではない** — 日方・元請への確認が必要な事項が生じた時点で、
 > `ids.yml` で `Q-xxx` を発号し、本表に追記する。**未登録番号（野号）を本表に書いてはならない。**
 > `open_issues` を空にする場合は「なぜ空でよいか」を人が説明できることが条件である
-> （`docs/90_knowledge/ai-dev-playbook.md` §6 原則 6 を参照）。
+> （`tools/kb-platform/repo/company/patterns/dev/ai-playbook.md` §6 原則 6 を参照）。
 
 ---
 
@@ -332,7 +338,7 @@ version: 0.1.0
 - 正例: `docs/_samples/10_requirements/R-101-R60Area.yaml`、`docs/01_context/case-profile-R60.yaml`（いずれも収尾 `---` なし）。
 - **症状の出方**: gate4 と gate6 は PASS のままなので「**6 門中 4 門 FAIL**」となり、「規約違反が 4 つある」と誤診しやすい。実際は**物理書式 1 件の単一原因**である。
 - **原因の特定手順**: `--strict` の既定出力には原因ファイルが出ない。`py -3 -m tools.trace_check --strict --report <path.json>` を取り、`stats.error` のメッセージを読むこと。当て推量で複数ファイルを触ると被害を広げる。
-- 記録: `docs/90_knowledge/review_diff_assets/_skeleton/review_comments.md` **RC-SK-01**。
+- 記録: `tools/kb-platform/repo/company/standards/review-log-skeleton.md` **RC-SK-01**。
 
 ---
 

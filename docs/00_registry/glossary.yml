@@ -57,7 +57,7 @@ terms:
   - {ja: トレーサビリティ, zh: 追溯性, en: Traceability, note: "要件⇄設計⇄コード⇄テストの双方向閉ループ（TR-4.2）" }
   - {ja: 成果物, zh: 交付物, en: Deliverable, note: "機読源(.md/YAML)→日文正式版の二重形態。単一ソース原則" }
   # ---------- 工程横断概念（二重化・回流）----------
-  - {ja: 成果物の二重化, zh: 成果物双重化, en: Dual Deliverable, note: "機読源 ⇄ 日文正式版。出典 落地篇 S24・S20／v1 S7「双轨制」。定義は docs/90_knowledge/dual-deliverable.md" }
+  - {ja: 成果物の二重化, zh: 成果物双重化, en: Dual Deliverable, note: "機読源 ⇄ 日文正式版。出典 落地篇 S24・S20／v1 S7「双轨制」。定義は tools/kb-platform/repo/company/patterns/delivery/dual-deliverable.md" }
   - {ja: 機読源, zh: 机读源, en: Machine-Readable Source, note: "Markdown ＋ YAML front matter。唯一の真源。AI が直接読み書きする" }
   - {ja: 日文正式版, zh: 日文正式版, en: Japanese Formal Deliverable, note: "Excel/Word。顧客提出・検収の対象。機読源から自動生成し手改め禁止" }
   - {ja: 受控回流, zh: 受控回流, en: Controlled Reflux, note: "正文読取専用＋指摘シート。双向回路（逆変換）は NFR-1 違反で禁止（規則 00 §11）" }

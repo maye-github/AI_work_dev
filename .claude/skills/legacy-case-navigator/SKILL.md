@@ -83,7 +83,7 @@ tools/kb-platform/repo/projects/<P-ID>/
 | 「この端点の要求/応答は？」 | `06-api.md` ＋ **実物の controller を読む** |
 | 「骨架規則と実物が違うのだが」 | **`08-deviations.md`**（まず既存の登記を検索） |
 | 「追跡はどう管理していた？」 | `07-traceability.md`（★最も示唆が大きい） |
-| 機械的に引く | `py -3 -m tools.kb_local search "<問い>" --project <P-ID> --top-k 5` |
+| 機械的に引く | `py -3 -m tools.kb_local search "<問い>" --as <人> --project <P-ID> --top-k 5` |
 
 **機械的に引くときの 2 つのスイッチ**（2026-10-29 追加。付けないと取りこぼす）:
 
@@ -93,13 +93,13 @@ tools/kb-platform/repo/projects/<P-ID>/
 | `--scope company` | 案件の事実ではなく**決め事**を聞いている（比率・分類・出典等級・命名規約） | 案件本文が上 6 位を占め、規約類が 7〜9 位に沈む |
 
 ```bash
-# モジュールが分かっている
+# モジュールが分かっている（--as は必須。無いと案件級は返らない）
 py -3 -m tools.kb_local search "検索一覧は実項目で何件" \
-    --project P-R60-001 --module R60SesModel --top-k 5
+    --as <人> --project P-R60-001 --module R60SesModel --top-k 5
 
 # 会社の決め事を聞く
 py -3 -m tools.kb_local search "テストケースの最低件数" \
-    --project P-R60-001 --scope company --top-k 5
+    --as <人> --project P-R60-001 --scope company --top-k 5
 ```
 
 `--module` は `doc_id` と `title` の部分一致である（`r60sesmodel` でも `R60SesModel` でも当たる）。

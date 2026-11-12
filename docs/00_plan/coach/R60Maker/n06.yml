@@ -1,0 +1,78 @@
+# n06.yml — ノード6 進捗（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4
+
+node: 6
+name: "単体テスト"
+state: approved
+owner: "Li"
+steps_total: 4
+steps_done: 4
+artifacts:
+  - "tutorial/R60Maker/节点6_单元测试/00_输入模板.yaml"
+  - "tutorial/R60Maker/节点6_单元测试/01_AI产出_测试用例集.md"
+  - "tutorial/R60Maker/节点6_单元测试/01_AI产出_测试用例集.zh.md"
+  - "tutorial/R60Maker/节点6_单元测试/01_AI产出_测试用例集.zh.html"
+  - "tutorial/R60Maker/节点6_单元测试/02_审查结果.md"
+  - "tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md"
+  - "tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.zh.md"
+  - "tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.zh.html"
+open_questions:
+  - q_ref: "Q-332"
+    text: "マスタ画面（SCR-202）の 9 項目は I-ID 未付与（Q-306）であり、単体テストの design_ids に入出力の I-ID を列挙できない。design_ids を SCR-202 の項目名称＋D-207 で代替してよいか、それとも I-34 以降を発番して I-ID を付与するか。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "本節点はマスタ画面 9 項目を名称で扱い、design_ids には含めない。I-ID の発番は Q-306 の裁定に従う。"
+    answered_by: "Li"
+    answered_at: "2026-11-10"
+  - q_ref: "Q-333"
+    text: "E-213（検索結果 0 件）は『検索成功として扱う』事象であり、規則 04 §2 の異常系に数えると正常業務フローを異常扱いすることになる。0 件を境界 TC（TC-PENDING-12）に置き、異常系の 12 件には数えない扱いでよいか。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "E-213（0 件）は境界系に置く。設計上「業務エラー＋検索成功扱い」であり、異常系の母数に含めない。"
+    answered_by: "Li"
+    answered_at: "2026-11-10"
+  - q_ref: "Q-334"
+    text: "端点別の必要権限の対応表が設計 §2.1 に無く『端点別に検証する』とのみ記す。明文は /download=MKR03 のみ・/delete=MKR03 のみ・/edit=MKR02 以上で、/init・/search・/initEdit の下限は推定になる。デシジョンテーブルを推定で埋めず、設計に追記を求めるか現状の推定で設計してよいか。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "端点別の権限は受領資料 §4.2 の可否表から導出し、本節点の TC 前提に使う。設計書への追記は工程03 の変更として扱う。"
+    answered_by: "Li"
+    answered_at: "2026-11-10"
+  - q_ref: "Q-335"
+    text: "単体テストの実行コードは本節点で生成しない（規則 04 §9.3：TC 設計 → 人の承認 → テストコード生成）。TC 設計の承認後、テストコードの生成をどの節点（工程06 の後半か工程07 か）で行うか。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "テストコードは TC 設計の確定と人の承認の後、工程06 内で生成する。本稿では生成しない（規則 04 §9.3）。"
+    answered_by: "Li"
+    answered_at: "2026-11-10"
+
+approved_by:
+  - "Li"
+approved_at: "2026-11-10"
+updated_at: "2026-11-10"
+note: |
+  2026-11-09: Li が認領。前置条件を実測（n03=approved／n05=approved／blockers 空）。
+  `00_输入模板.yaml` を R60Login から複製（status draft）。
+  ★TC 番号は人が発号する（`tools.registry alloc TC`）。AI は番号を考案しない（紅线①）。
+  Q 起点は **Q-332**（節点5 で Q-331 まで使用）。
+  2026-11-10: ステップ2 完了（`01_AI产出_测试用例集.md` 16,199 B・25 件・8/6/11）。
+  E-213〜E-224 全覆。TC は仮番 TC-PENDING-01…25（発番は人）。
+  **本産出の形に基づき、`constraints.yaml` に節点6 の構造制約を追加**（章節・design_ids・req_ids・TC-ID・E-ID）。
+  `check-constraints --node 6` → OK／`kb_refs --require-node --require-usage` → OK／`trace_check` 全 PASS。
+  2026-11-10: ステップ4 完了。TC 仮番を **TC-222〜TC-246**（`tools.registry alloc TC`・25 件）へ置換し、
+  `05_承認版_测试用例集.md` を産出（status: open・承認記録 4 行は承認待ち・付表 Q-332〜Q-335 は載せない）。
+  2026-11-10: **番号の重複を発見し、R60Maker の ID を全局序列の続きへ振り直した。**
+  旧: R-201／F-201／D-201〜206／L-201〜211／E-201〜212／I-01〜33／Q-201〜297
+  新: R-202／F-202／D-207〜212／L-212〜222／E-213〜224／I-322〜354／Q-239〜335（TC-222〜246 は据え置き）
+  根拠・実出力・未処置は `02_审查结果.md` 付記 2。振り直しは `reports/drill/R60Maker/_renumber.py` と
+  `_renumber_q.py`、台帳への追認は `_register.py`。誤発号 6 件（D-206／L-209〜211／E-211・212）は void。
+  gate1 に **短桁 ID 検査**と **借用検査（別ケースの番号）** を追加し、注入試験で両方が発火することを確認。
+  `registry verify` errors=0／warnings=0、`trace --write` 後 `trace_check --strict` 全 PASS（total_ids=259・orphans=0）。
+  `check-constraints --node 6` → OK／`kb_refs --node 6 --require-node --require-usage` → OK／blockers 空。
+  ★節点1〜5 の承認版も同じ理由で書き換わった。**2026-11-10 に Li が 5 節点を再承認済**（紅线③）。
+  2026-11-10: ユーザー指示によりセッション跨ぎ（同一セッションで節点6まで続行）。
+  2026-11-10: **合否判定を Li が承認。** 承認版の承認記録 4 行（SE／PG／テスター／PM）に記入し、status を baselined にした。

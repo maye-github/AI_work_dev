@@ -29,3 +29,35 @@ jobs:
       # step 3: トレーサビリティ門禁（gate6）。ローカルのみ前提のため失敗を許容。
       - name: Trace Check (gate 6)
         run: python -m tools.trace_check --strict --gate 6 2>&1 || echo "Phase1 local run only"
+
+      # step 4: 知識ベースの front matter lint（構築ガイド STEP 5）。
+      #   **PR 時は embed しない**（草案が索引に入るとノイズになる）。
+      #   ここで見るのは形だけ：doc_id / scope / doc_type / conf_level / status。
+      #   依存（numpy・pyyaml）は上流 kbkit が import するため先に入れる。
+      - name: KB front matter lint (no embed)
+        run: |
+          python -m pip install --quiet numpy pyyaml
+          python -m tools.kb_local lint 2>&1 || echo "Phase1 local run only"
+
+      # step 5: 知識ベースの更新権限（`tools/kb_acl`）。
+      #   会社級＝会社責任者／案件級＝PM／結案済みは読み取り専用。
+      #   ★ `owners.yaml` の owner 名と Git のユーザー名を一致させてから効く。
+      #     一致していない間は落ちるので、Phase1 では警告に留める（`|| echo`）。
+      - name: KB write permission (kb_acl)
+        run: |
+          python -m tools.kb_acl check --by "${{ github.actor }}" --from-git 2>&1 \
+            || echo "Phase1: owners.yaml の owner 名と Git ユーザー名の対応が未設定"
+
+      # step 6: 節点産出の先例参照（`tools.kb_refs`）。
+      #   承認版（05_承認版_*）が知識ベースの先例を引き、それが実在するかを見る。
+      #   ★ 既存の承認版（kb_refs 導入前）は未対応なので、Phase1 は警告に留める。
+      #   対象は**演習（05_承認版_*）と実戦（docs/10〜70_*）の両方**。
+      #   導入前の承認版は `kb_refs_exempt.txt` で「適用外」として除外済み。
+      #   以後、免除リストに無い成果物が kb_refs を持たなければここで落ちる（＝硬い門）。
+      - name: KB precedent refs (kb_refs)
+        run: python -m tools.kb_refs scan
+
+      # step 7（未実装・ガイド STEP 5 の残り）
+      #   - main へ merge 時：差分 ingest（`py -3 -m tools.kb_local ingest --prune`）
+      #   - 週次：全量整合チェック（doc_id 重複・孤児 chunk）
+      #   本リポジトリは内網・オフライン前提のため、当面はローカル運用で代替する。

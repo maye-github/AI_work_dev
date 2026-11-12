@@ -6,9 +6,10 @@ doc_type: standard
 version: "1.0"
 status: active
 conf_level: 20
-owner: 共通基盤チーム
+owner: Nan
 updated_at: 2026-10-29
 tags: [testing, test-design, coverage, ratio]
+source_project: framework-rules
 ---
 
 # テストケースの分類と最低比率（正常 3・境界 2・異常 3）

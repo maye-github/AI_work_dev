@@ -52,16 +52,16 @@
 - **FR-2 8 大工程操作模板（落地篇工程篇 S9-17）**：docs/10_requirements/ 放 `req-template.yaml` 与 `R-101-R60Area 示例`；docs/20_basic_design/ 放 `bd-template.yaml` 与 F-042-I-201~256 示例；docs/30_detail_design/ 放 `dd-template.yaml` 与 L-014/L-015 例（含 SQL/エラー一覧/境界値）；docs/40_framework/ 放选型记录；docs/50_unit_test/ + 60_integration_test/ 放 `tc-template.yaml` TC-001+TC-002 例；docs/70_release/ 放 `release-template.md`。
 - **FR-3 成果物二重化（PPT S20-S24 成果物6原則 + 二重形态）**：tools/gen_formal/ 放 `gen_excel.py` + R60 日文 Excel 模板占位；tools/trace_check/ 实现 §25.4 CI 6 门闸中的 ①ID 合法②追溯完整③front-matter 七字段④生成一致（本地可 `py -3 -m tools.trace_check --strict` 直接跑）。
 - **FR-4 机密与脱敏分级清单（PPT S27-S28 选型順序第一条）**：`.claude/rules/01-security-redlines.md` + tools/masking/ 双向脱敏脚本 `mask_demo.py` + `masking_dict.example.json`（真实字典占位 .gitignore，词典不进 Git）。
-- **FR-5 6 周执行计划 开球周验收（§23）+ R60Area/R60Code/R60Item 三模块评审差分资产**：docs/90_knowledge/review_diff_assets/ 为 3 模块各建 `R-xxx/{review_before,review_after,review_comments.md}` 目录结构 + R60Area 1 份填充实例（从 doc/01_内部用資料/ 已存 QA 票和修正依頼抽出），写清操作 SOP 满足新人猜中率 ≥70% 验收。
+- **FR-5 6 周执行计划 开球周验收（§23）+ R60Area/R60Code/R60Item 三模块评审差分资产**：tools/kb-platform/repo/projects/P-R60-001/review/ 为 3 模块各建 `R-xxx/{review_before,review_after,review_comments.md}` 目录结构 + R60Area 1 份填充实例（从 doc/01_内部用資料/ 已存 QA 票和修正依頼抽出），写清操作 SOP 满足新人猜中率 ≥70% 验收。
 - **FR-6 Git 运行规范（§25）+ CI 本地门禁脚本**：CODEOWNERS、`CONTRIBUTING.md`（分支 req/R-xxx + R-xxx/01-req~07-release；7 种 Commit 类型：req/design/feat/test/fix/rel/chore；baseline/R-xxx/basic-v1.0 Tag 约定）；.github/workflows/ai-gate.yml 占位（本地上传切换）。
-- **FR-7 7 层平台最小可行落地映射表（PPT S26-27）**：docs/90_knowledge/platform-map.md，把 7 层每层都对应到「本仓库已有/本次新建/Phase 2 实施」三件套。
+- **FR-7 7 层平台最小可行落地映射表（PPT S26-27）**：tools/kb-platform/repo/company/standards/platform-map.md，把 7 层每层都对应到「本仓库已有/本次新建/Phase 2 实施」三件套。
 - **FR-8 Phase 1 清单落地（PPT S30 3 段阶）+ Phase2/3 路线图**：`ROADMAP_3PHASE.md` 写入 R60 Phase1 全 16 条待办 × Phase2（3-6 ヶ月）/ Phase3（6-12 ヶ月）具体条目与验收指标。
 
 ## Non-Functional Requirements
 - **NFR-1 单一源一致性（PPT S20 4 条単一ソース）**：所有 R-ID/F-ID/I-ID/D-ID/L-ID/E-ID/TC-ID 的唯一发号口是 docs/00_registry/ids.yml，任何野号被 trace_check 打回；本项目不允许同一业务字段在两份 MD 文档中重复定义（除非是中文 Glossary + 日文正式版自动生成的 pair）。rule：`grep 字段名 → 唯一 hit 位置 = 定义处`。
 - **NFR-2 机密红线不越界（PPT S27 セキュリティ 6 要素）**：masking_demo 中可识别真实 Oracle/Auth0/AWS 值的关键字（接入ユーザ/内部 IP/接続ユーザ）**必须替换成 TBL_1/COL_1/PWD_1/IP_1** 占位（规则 01 §L3 第 1・6・7 条）；masking_dict.json 加入 .gitignore；在 01-security-redlines.md 写清单：公开可 / 需脱敏 / 禁止外投 3 级覆盖 §14 Lessons Learned 中已列明的 13 项敏感点，任何 trace_check 未脱敏敏感词打 Exit 1。
 - **NFR-3 可追溯闭环（PPT S16 7 連携ﾒｶﾆｽﾞﾑ）**：trace_check.py 必须双向检查 R→F→I→D/L→Code→TC 不断链；反向 TC → req_ids →设计→需求 也可通；R60Area 示例闭环 1 条 R-101 → L-015 → TC-003。
-- **NFR-4 新人 2 小时可上手（Phase1 目标值，对应落地篇 S6 SE/PG 角色再定义）**：docs/90_knowledge/onboarding-checklist.md 含 10 条 walkthrough，执行后新人能独立走通 `R-ID 发 → BD → DD → Claude Code 造代码 → trace_check → commit` 全流程；rubric 评分 ≥80。
+- **NFR-4 新人 2 小时可上手（Phase1 目标值，对应落地篇 S6 SE/PG 角色再定义）**：tools/kb-platform/repo/company/patterns/howto/onboarding.md 含 10 条 walkthrough，执行后新人能独立走通 `R-ID 发 → BD → DD → Claude Code 造代码 → trace_check → commit` 全流程；rubric 评分 ≥80。
 - **NFR-5 无侵入不破坏生产（非 Goal 1）**：本次新建目录/文件**必须全部出现在 .gitignore 的可选忽略白名单**中，可一键 `git add AI_FULL_LIFECYCLE=1` 时才纳入，默认不影响现有 R60 代码 Git 仓库构建与部署；现有 src/、app/routers 零修改。
 - **NFR-6 跨平台本地可実行（対応 §25 CI スクリプトが Git サービス非依存）**：tools/ 配下は Python 標準ライブラリのみに依存（`pyyaml` のみ許可）；trace_check は追加依存なし。**リポジトリルートで** `py -3 -m tools.trace_check --strict` が Windows／社内網でそのまま実行できる（外部モデル・外部サービス不要）。
   > コマンド統一の理由: Windows では裸の `python` が Microsoft Store のスタブに解決される環境があり、`python -m` は起動しないことがある。`py -3`（Python Launcher）を唯一の起動子とする。

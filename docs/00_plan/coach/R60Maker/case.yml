@@ -1,0 +1,17 @@
+# case.yml — モジュール 1 件分のケース情報（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4.2
+
+schema_version: "1"
+case: "tutorial/R60Maker"
+case_kind: tutorial
+mode: drill
+build_mode: greenfield
+module: "R60Maker"
+title: "R60Maker メーカーマスタメンテナンス — 2 本目の演習"
+team: ["Li"]
+started_at: "2026-11-05"
+updated_at: "2026-11-05"
+notes: |
+  2 本目の演習。目的は「先例引用（kb_refs）を伴う 8 工程」を初めて実データで回すこと。
+  R60Login は kb_refs 導入前のため適用外（kb_refs_exempt.txt）。本案件は免除しない。
+  R60Login との違い: 承認前に `py -3 -m tools.kb_refs check <承認版> --node N` を通す。

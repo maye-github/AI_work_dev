@@ -48,6 +48,12 @@ OWNED_BY_US = (
     "company-README.md",
     "projects-README.md",
     "UPSTREAM-SYNC.md",
+    "kb-policy.md",
+    "owners.yaml",
+    "知识库使用手顺.md",
+    "知识库使用手顺.zh.html",
+    "知識ベース利用手順.md",
+    "kb_refs_exempt.txt",
 )
 
 # 上流のコード。ここが「同期のたびに手で当て直す」対象であり、数を減らすべきもの。

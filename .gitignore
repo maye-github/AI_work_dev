@@ -20,12 +20,28 @@ tools/masking/masking_dict.json
 tools/masking/masking_dict.local.json
 !tools/masking/masking_dict.example.json
 tools/trace_check/secret_patterns.local.json
+tools/kb_local/promote_denylist.json
+tools/kb_local/promote_denylist.txt
+!tools/kb_local/promote_denylist.example.json
+tools/kb_local/promote_map.txt
+tools/kb_local/whoami.txt
+
+# 案件の原資料（Excel / Word / PDF）は**版管理に載せない**。
+# 中身が顧客の実データであることが多く、テキスト走査（gate6）も効かない。
+# 版管理するのは**抽出した `.md`**（人が目を通し、脱敏もそこに効く）だけ。
+tools/kb-platform/repo/projects/*/sources/*.xlsx
+tools/kb-platform/repo/projects/*/sources/*.xlsm
+tools/kb-platform/repo/projects/*/sources/*.docx
+tools/kb-platform/repo/projects/*/sources/*.pdf
 
 # ---- 派生物：可由源码/语料重建，不入库 ----------------------
 # RAG 索引
 build/
 # Stop 钩子每轮重画的预览 Excel
 reports/_auto/
+# 匿名化の下書き（`tools.kb_promote draft` の出力）。repo/ の外に置く——
+#   repo/ の中に置くと知識ベースに索引され、原本と下書きが二重にヒットする。
+reports/promote-drafts/
 # kb-platform 检索索引
 tools/kb-platform/data/*.sqlite3
 tools/kb-platform/data/*.sqlite3-wal

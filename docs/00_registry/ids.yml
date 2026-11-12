@@ -650,6 +650,156 @@ ids:
     r_id: R-201
     related_ids: [L-203, E-201]
     used_by: tutorial/R60Login/节点6_单元测试/05_承認版_测试用例集.md
+  TC-222:
+    status: open
+    name: 初期表示の正常系（候補あり・初期値設定）
+    origin_key: R60Maker 初期表示の正常系
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-223:
+    status: open
+    name: 検索の正常系（前方一致・中間一致・削除済み除外）
+    origin_key: R60Maker 検索の正常系
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-224:
+    status: open
+    name: 編集開始（モード3）の正常系
+    origin_key: R60Maker 編集開始（モード3）
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-225:
+    status: open
+    name: 新規登録の正常系
+    origin_key: R60Maker 新規登録
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-226:
+    status: open
+    name: 更新の正常系（楽観排他）
+    origin_key: R60Maker 更新
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-227:
+    status: open
+    name: 論理削除の正常系
+    origin_key: R60Maker 論理削除
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-228:
+    status: open
+    name: CSV ダウンロードの正常系
+    origin_key: R60Maker CSV ダウンロード
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-229:
+    status: open
+    name: 条件部の縮小・拡大（デシジョンテーブル）
+    origin_key: R60Maker 条件部の縮小拡大
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-230:
+    status: open
+    name: メーカーコード 5 桁ちょうど（境界）
+    origin_key: R60Maker コード5桁ちょうど
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-231:
+    status: open
+    name: メーカー名称 30Byte ちょうど（境界）
+    origin_key: R60Maker 名称30Byteちょうど
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-232:
+    status: open
+    name: メーカーカナ 15 文字ちょうど（境界）
+    origin_key: R60Maker カナ15文字ちょうど
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-233:
+    status: open
+    name: 検索結果 0 件（境界・E-201）
+    origin_key: R60Maker 検索0件
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-234:
+    status: open
+    name: 検索結果 500 件ちょうど（境界）
+    origin_key: R60Maker 検索500件ちょうど
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-235:
+    status: open
+    name: 1 頁 100 件（pageSize 上限・境界）
+    origin_key: R60Maker 1頁100件
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-236:
+    status: open
+    name: 検索結果 501 件（上限外・E-202）
+    origin_key: R60Maker 検索501件
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-237:
+    status: open
+    name: メーカーコード重複（E-203）
+    origin_key: R60Maker コード重複
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-238:
+    status: open
+    name: 被参照ありの削除拒否（E-204）
+    origin_key: R60Maker 被参照あり削除
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-239:
+    status: open
+    name: 排他不一致（E-205）
+    origin_key: R60Maker 排他不一致
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-240:
+    status: open
+    name: 被参照チェックの想定外結果（E-206）
+    origin_key: R60Maker 被参照チェック想定外
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-241:
+    status: open
+    name: 画面側入力チェック違反（E-207）
+    origin_key: R60Maker 画面側入力チェック違反
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-242:
+    status: open
+    name: 権限不足（E-208）
+    origin_key: R60Maker 権限不足
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-243:
+    status: open
+    name: セッション無効・30 分超過（E-209）
+    origin_key: R60Maker セッション無効
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-244:
+    status: open
+    name: 稼働時間外・計画停止（E-210）
+    origin_key: R60Maker 稼働時間外
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-245:
+    status: open
+    name: DB 例外・想定外の例外（E-211）
+    origin_key: R60Maker DB例外
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
+  TC-246:
+    status: open
+    name: サーバ側入力チェック違反（E-212）
+    origin_key: R60Maker サーバ側入力チェック違反
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md
 
   # ---------- CR / BUG ----------
   CR-001:
@@ -678,6 +828,11 @@ ids:
     description: 2026-10-22 起票・2026-10-23 に『节点3写清楚即可』の裁定で closed。番号は閉鎖後に台帳から発番（AI は番号を考案していない・紅线①）。
     origin_key: R60Login 節点3 Q-233 の変更（URL 組立主体の明記）
     used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  CR-006:
+    status: open
+    name: 要求 §6 は /R60Maker/<name>、実装はルート直下＋FE が /api 前置
+    origin_key: R60Maker 経路の接頭辞
+    used_by: tutorial/R60Maker/节点7_结合测试/01_AI产出_结合测试规格书.md
   BUG-001:
     status: void
     name: "無効バグレポート（void 記録例）"
@@ -691,6 +846,21 @@ ids:
     origin_key: R60Login ログイン試行回数ロックの未移送（節点2 承認済 → 節点3/5 未実装）
     related_ids: [R-201, L-203]
     used_by: docs/00_plan/coach/R60Login/n09.yml
+  BUG-003:
+    status: open
+    name: errorCode=9 を一律 system に振っている（E-221/E-222 の書き分けなし）
+    origin_key: R60Maker エラー画面分流
+    used_by: tutorial/R60Maker/节点7_结合测试/01_AI产出_结合测试规格书.md
+  BUG-004:
+    status: open
+    name: 登録ボタンに二度押し防止が無い（画面・サーバ双方）
+    origin_key: R60Maker 二度押し防止
+    used_by: tutorial/R60Maker/节点7_结合测试/01_AI产出_结合测试规格书.md
+  BUG-005:
+    status: open
+    name: C:/Program Files/Git/download は body を受けるのか最後の検索条件のみか、要求 §6 が両方を書いている
+    origin_key: R60Maker 要求 §6 内部矛盾
+    used_by: tutorial/R60Maker/节点1_需求/04_承認版_需求结构化表.md
 
 
   # ==========================================================
@@ -708,6 +878,11 @@ ids:
     name: "共通マスタログイン（R60Login）画面"
     description: "初期表示・ログイン判定・遷移用 URL 生成・画面遷移・閉じる（5 イベント／3 端点）"
     used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  R-202:
+    status: open
+    name: メーカーマスタメンテナンス（R60Maker）
+    origin_key: R60Maker R-202 メーカーマスタメンテナンス（R60Maker）
+    used_by: tutorial/R60Maker/节点1_需求/04_承認版_需求结构化表.md
   F-201:
     status: baselined
     status_reason: v2.0.5 再承認（SE-001・2026-10-27）
@@ -715,6 +890,12 @@ ids:
     r_id: R-201
     description: "画面項目 I-301〜I-320・イベント 5 件・処理モジュール 3 件"
     used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  F-202:
+    status: open
+    name: R60Maker 基本設計書（画面編）
+    origin_key: R60Maker F-202 R60Maker 基本設計書（画面編）
+    r_id: R-202
+    used_by: tutorial/R60Maker/节点2_基本设计/05_承認版_基本设计书.md
 
   # ---------- I: R60Login 画面項目（20 件）----------
   I-301:
@@ -844,6 +1025,204 @@ ids:
     description: "エラー応答に載せる利用者向け文言。サーバがメッセージ管理情報から取得する。E-201／E-207（/login の該当なし）には含めない"
     origin_key: I-3xx-error-message
     used_by: tutorial/R60Login/节点2_基本设计/05_承認版_基本设计书.md
+  I-322:
+    status: open
+    name: 画面タイトル
+    origin_key: R60Maker I-322 画面タイトル
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-323:
+    status: open
+    name: システム日時
+    origin_key: R60Maker I-323 システム日時
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-324:
+    status: open
+    name: 会社名
+    origin_key: R60Maker I-324 会社名
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-325:
+    status: open
+    name: 部署名
+    origin_key: R60Maker I-325 部署名
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-326:
+    status: open
+    name: ユーザー名
+    origin_key: R60Maker I-326 ユーザー名
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-327:
+    status: open
+    name: メッセージ領域
+    origin_key: R60Maker I-327 メッセージ領域
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-328:
+    status: open
+    name: 確認・エラーダイアログ
+    origin_key: R60Maker I-328 確認・エラーダイアログ
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-329:
+    status: open
+    name: メーカーコード
+    origin_key: R60Maker I-329 メーカーコード
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-330:
+    status: open
+    name: メーカー日本語名
+    origin_key: R60Maker I-330 メーカー日本語名
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-331:
+    status: open
+    name: メーカー日本語名クリア
+    origin_key: R60Maker I-331 メーカー日本語名クリア
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-332:
+    status: open
+    name: 削除含む
+    origin_key: R60Maker I-332 削除含む
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-333:
+    status: open
+    name: 1頁件数
+    origin_key: R60Maker I-333 1頁件数
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-334:
+    status: open
+    name: 仕掛表示
+    origin_key: R60Maker I-334 仕掛表示
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-335:
+    status: open
+    name: 表示
+    origin_key: R60Maker I-335 表示
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-336:
+    status: open
+    name: 検索条件(非)表示
+    origin_key: R60Maker I-336 検索条件(非)表示
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-337:
+    status: open
+    name: ページャ（上部）
+    origin_key: R60Maker I-337 ページャ（上部）
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-338:
+    status: open
+    name: ページャ（下部）
+    origin_key: R60Maker I-338 ページャ（下部）
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-339:
+    status: open
+    name: 総件数
+    origin_key: R60Maker I-339 総件数
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-340:
+    status: open
+    name: 一覧見出し：メーカーコード
+    origin_key: R60Maker I-340 一覧見出し：メーカーコード
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-341:
+    status: open
+    name: 一覧セル：メーカーコード
+    origin_key: R60Maker I-341 一覧セル：メーカーコード
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-342:
+    status: open
+    name: 一覧見出し：メーカー日本語名
+    origin_key: R60Maker I-342 一覧見出し：メーカー日本語名
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-343:
+    status: open
+    name: 一覧セル：メーカー日本語名
+    origin_key: R60Maker I-343 一覧セル：メーカー日本語名
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-344:
+    status: open
+    name: 一覧見出し：メーカーカナ名
+    origin_key: R60Maker I-344 一覧見出し：メーカーカナ名
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-345:
+    status: open
+    name: 一覧セル：メーカーカナ名
+    origin_key: R60Maker I-345 一覧セル：メーカーカナ名
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-346:
+    status: open
+    name: 一覧見出し：送信状態
+    origin_key: R60Maker I-346 一覧見出し：送信状態
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-347:
+    status: open
+    name: 一覧セル：送信状態
+    origin_key: R60Maker I-347 一覧セル：送信状態
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-348:
+    status: open
+    name: 一覧見出し：削除
+    origin_key: R60Maker I-348 一覧見出し：削除
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-349:
+    status: open
+    name: 一覧セル：削除
+    origin_key: R60Maker I-349 一覧セル：削除
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-350:
+    status: open
+    name: 複製
+    origin_key: R60Maker I-350 複製
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-351:
+    status: open
+    name: 戻る
+    origin_key: R60Maker I-351 戻る
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-352:
+    status: open
+    name: 業務終了
+    origin_key: R60Maker I-352 業務終了
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-353:
+    status: open
+    name: ダウンロード
+    origin_key: R60Maker I-353 ダウンロード
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  I-354:
+    status: open
+    name: 新規
+    origin_key: R60Maker I-354 新規
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
 
   # ---------- D: R60Login データモデル（5 件・論理）----------
   D-201:
@@ -876,6 +1255,50 @@ ids:
     f_id: F-201
     description: "PK cmn_key。稼働判定（SQL-1）"
     used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  D-206:
+    status: void
+    void_reason: 2026-11-10 R60Maker の番号振り直しで不要になった。R60Maker は全局序列の続き（D-212／L-222／E-224 まで）へ移動したため、この番号はどの成果物も使っていない。誤発号として void（番号は再利用しない）
+    f_id: F-201
+    name: 権限マスタ（AUTH_MST・物理名は Q-270b 待ち）
+    origin_key: R60Maker 権限マスタ
+    related_ids: [F-201]
+    used_by: tutorial/R60Maker/节点3_详细设计/00_输入模板.yaml
+  D-207:
+    status: open
+    name: メーカーマスタ
+    origin_key: R60Maker D-207 メーカーマスタ
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  D-208:
+    status: open
+    name: 購入品目別仕入先マスタ
+    origin_key: R60Maker D-208 購入品目別仕入先マスタ
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  D-209:
+    status: open
+    name: 原材料仕入単価マスタ
+    origin_key: R60Maker D-209 原材料仕入単価マスタ
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  D-210:
+    status: open
+    name: コード値マスタ
+    origin_key: R60Maker D-210 コード値マスタ
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  D-211:
+    status: open
+    name: メッセージマスタ
+    origin_key: R60Maker D-211 メッセージマスタ
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  D-212:
+    status: open
+    name: 権限マスタ
+    origin_key: R60Maker D-212 権限マスタ
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
 
   # ---------- L: R60Login 業務ロジック（8 件）----------
   L-201:
@@ -926,6 +1349,96 @@ ids:
     f_id: F-201
     description: "破棄要求の相手仕様は設計に無く環境変数で与える（差異登記 #2）"
     used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  L-209:
+    status: void
+    void_reason: 2026-11-10 R60Maker の番号振り直しで不要になった。R60Maker は全局序列の続き（D-212／L-222／E-224 まで）へ移動したため、この番号はどの成果物も使っていない。誤発号として void（番号は再利用しない）
+    f_id: F-201
+    name: 登録更新処理（/edit）
+    origin_key: R60Maker 登録更新処理
+    related_ids: [F-201]
+    used_by: tutorial/R60Maker/节点3_详细设计/00_输入模板.yaml
+  L-210:
+    status: void
+    void_reason: 2026-11-10 R60Maker の番号振り直しで不要になった。R60Maker は全局序列の続き（D-212／L-222／E-224 まで）へ移動したため、この番号はどの成果物も使っていない。誤発号として void（番号は再利用しない）
+    f_id: F-201
+    name: 表示制御処理
+    origin_key: R60Maker 表示制御処理
+    related_ids: [F-201]
+    used_by: tutorial/R60Maker/节点3_详细设计/00_输入模板.yaml
+  L-211:
+    status: void
+    void_reason: 2026-11-10 R60Maker の番号振り直しで不要になった。R60Maker は全局序列の続き（D-212／L-222／E-224 まで）へ移動したため、この番号はどの成果物も使っていない。誤発号として void（番号は再利用しない）
+    f_id: F-201
+    name: 画面遷移処理
+    origin_key: R60Maker 画面遷移処理
+    related_ids: [F-201]
+    used_by: tutorial/R60Maker/节点3_详细设计/00_输入模板.yaml
+  L-212:
+    status: open
+    name: 前処理
+    origin_key: R60Maker L-212 前処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-213:
+    status: open
+    name: 初期化処理
+    origin_key: R60Maker L-213 初期化処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-214:
+    status: open
+    name: 検索処理
+    origin_key: R60Maker L-214 検索処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-215:
+    status: open
+    name: ページャ制御処理
+    origin_key: R60Maker L-215 ページャ制御処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-216:
+    status: open
+    name: 条件部切替処理
+    origin_key: R60Maker L-216 条件部切替処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-217:
+    status: open
+    name: 初期値取得処理
+    origin_key: R60Maker L-217 初期値取得処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-218:
+    status: open
+    name: ダウンロード処理
+    origin_key: R60Maker L-218 ダウンロード処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-219:
+    status: open
+    name: 削除処理
+    origin_key: R60Maker L-219 削除処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-220:
+    status: open
+    name: 登録更新処理
+    origin_key: R60Maker L-220 登録更新処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-221:
+    status: open
+    name: 表示制御処理
+    origin_key: R60Maker L-221 表示制御処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  L-222:
+    status: open
+    name: 画面遷移処理
+    origin_key: R60Maker L-222 画面遷移処理
+    f_id: F-202
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
 
   # ---------- E: R60Login エラー（10 件）----------
   E-201:
@@ -996,6 +1509,94 @@ ids:
     l_id: L-205
     description: "切捨てない"
     used_by: tutorial/R60Login/节点3_详细设计/05_承認版_详细设计书.md
+  E-211:
+    status: void
+    void_reason: 2026-11-10 R60Maker の番号振り直しで不要になった。R60Maker は全局序列の続き（D-212／L-222／E-224 まで）へ移動したため、この番号はどの成果物も使っていない。誤発号として void（番号は再利用しない）
+    f_id: F-201
+    name: DB エラー・想定外の例外（9/9999）
+    origin_key: R60Maker DBエラー
+    related_ids: [F-201]
+    used_by: tutorial/R60Maker/节点3_详细设计/00_输入模板.yaml
+  E-212:
+    status: void
+    void_reason: 2026-11-10 R60Maker の番号振り直しで不要になった。R60Maker は全局序列の続き（D-212／L-222／E-224 まで）へ移動したため、この番号はどの成果物も使っていない。誤発号として void（番号は再利用しない）
+    f_id: F-201
+    name: サーバ側入力チェック違反（1/2005）
+    origin_key: R60Maker サーバ入力チェック
+    related_ids: [F-201]
+    used_by: tutorial/R60Maker/节点3_详细设计/00_输入模板.yaml
+  E-213:
+    status: open
+    name: 検索結果が 0 件
+    origin_key: R60Maker E-213 検索結果が 0 件
+    l_id: L-214
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-214:
+    status: open
+    name: 検索結果が上限 500 件を超えた
+    origin_key: R60Maker E-214 検索結果が上限 500 件を超えた
+    l_id: L-214
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-215:
+    status: open
+    name: 新規・複製でメーカーコードが既に存在する
+    origin_key: R60Maker E-215 新規・複製でメーカーコードが既に存在する
+    l_id: L-220
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-216:
+    status: open
+    name: 削除時に他のマスタから参照されている
+    origin_key: R60Maker E-216 削除時に他のマスタから参照されている
+    l_id: L-219
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-217:
+    status: open
+    name: 他の利用者が先に更新していた（両キーの少なくとも一方が不一致）
+    origin_key: R60Maker E-217 他の利用者が先に更新していた（両キーの少なくとも一方が不一致）
+    l_id: L-219
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-218:
+    status: open
+    name: 被参照チェックの共通部品が想定外の結果を返した
+    origin_key: R60Maker E-218 被参照チェックの共通部品が想定外の結果を返した
+    l_id: L-219
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-219:
+    status: open
+    name: 画面側の入力チェック違反
+    origin_key: R60Maker E-219 画面側の入力チェック違反
+    l_id: L-214
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-220:
+    status: open
+    name: API の権限検証で権限が不足している
+    origin_key: R60Maker E-220 API の権限検証で権限が不足している
+    l_id: L-212
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-221:
+    status: open
+    name: セッションが存在しない、または最終操作から 30 分を超過した
+    origin_key: R60Maker E-221 セッションが存在しない、または最終操作から 30 分を超過した
+    l_id: L-212
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-222:
+    status: open
+    name: オンライン利用が許可されていない（稼働時間外・計画停止）
+    origin_key: R60Maker E-222 オンライン利用が許可されていない（稼働時間外・計画停止）
+    l_id: L-212
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-223:
+    status: open
+    name: DB エラー・想定外の例外
+    origin_key: R60Maker E-223 DB エラー・想定外の例外
+    l_id: L-212
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  E-224:
+    status: open
+    name: サーバ側の入力チェック違反（画面側と同一条件）
+    origin_key: R60Maker E-224 サーバ側の入力チェック違反（画面側と同一条件）
+    l_id: L-212
+    used_by: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
 
   # ---------- IT: 追加 ----------
   IT-001:
@@ -1080,14 +1681,14 @@ ids:
 
 
 prefix_count_summary:
-  R: 2
+  R: 3
   Q: 0
-  F: 2
-  I: 77
-  D: 6
-  L: 10
-  E: 18
-  TC: 29
+  F: 3
+  I: 110
+  D: 13
+  L: 24
+  E: 32
+  TC: 54
   IT: 13
-  CR: 5
-  BUG: 2
+  CR: 6
+  BUG: 5

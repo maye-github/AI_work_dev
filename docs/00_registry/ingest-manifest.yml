@@ -75,7 +75,7 @@ projects:
       # 要件源 PPT 2 份に独立した「32」は 0 箇所。SDS3 PPT の「32」はスライド番号であって数量ではない。
       # → 計画に「JET 全 32 モジュール」と書かれていたのは、頁番号を数量と読み違えたものと推定される。
       # JET PPT slide 8 の実記載は「AI 適用済み API 数: 22 本（全 34 本のうち 64.7%）」＝ 全 34 本。
-      # 出所の唯一の定義は docs/90_knowledge/ppt-deviation-register.md §2 の訂正注記。
+      # 出所の唯一の定義は tools/kb-platform/repo/company/standards/ppt-deviation.md §2 の訂正注記。
       expected_count: 34
       expected_count_source: "JETプロジェクトにおけるAI活用シナリオ.pptx slide 8（全 34 本の API、うち AI 適用 22 本）"
       # 「モジュール」と「API」は同一の数え方ではないため、確定は人ゲートに委ねる。

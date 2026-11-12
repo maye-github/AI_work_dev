@@ -159,4 +159,4 @@ version: 0.2.0
   **新しい横断規則は紅线ではなく `.claude/rules/` 側へ置く**（`rules/06-knowledge-flywheel.md` §2）。
 - **運用**: 顧客から「この Agent を使ってよい」「このモデルを呼んでよい」という指示を得た場合は、
   その指示を `docs/01_context/` に記録し、以降はそれに従う。**口頭合意だけで進めない。**
-- 参照: `docs/90_knowledge/internal/sds2-lessons.md` §3・§4
+- 参照: `tools/kb-platform/repo/company/standards/internal/sds2-lessons.md` §3・§4

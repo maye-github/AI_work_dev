@@ -1,0 +1,8 @@
+{
+  "_comment": "昇格（tools.kb_promote check）で顧客名・個人名を検出するための語リスト。雛形であり実値ではない。実値を入れるときは同名の promote_denylist.json（gitignore 済）へ写す。",
+  "names": [
+    "顧客A",
+    "顧客B",
+    "個人名サンプル"
+  ]
+}

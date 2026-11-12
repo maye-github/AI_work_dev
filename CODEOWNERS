@@ -45,3 +45,13 @@
 
 # --- 10. CI ワークフロー（Git 管理者のみ。ゲート改竄防止）---
 /.github/workflows/      @git-admin
+
+# --- 11. 知識ベース（会社級は会社責任者、案件級は案件責任者）---
+# 二重に持つのは役割が違うため:
+#   CODEOWNERS  … マージを止める（Git サーバ側）
+#   owners.yaml … 変更を検査する（`tools/kb_acl check` ／ ローカル・CI）
+# ここのハンドルは `tools/kb-platform/owners.yaml` の owner と一致させること。
+/tools/kb-platform/repo/company/    @kb-company-owner
+/tools/kb-platform/repo/projects/   @kb-project-manager
+/tools/kb-platform/owners.yaml      @kb-company-owner
+/tools/kb-platform/kb-policy.md     @kb-company-owner

@@ -6,9 +6,10 @@ doc_type: pattern
 version: "1.1"
 status: active
 conf_level: 20
-owner: 共通基盤チーム
+owner: Nan
 updated_at: 2026-05-12
 tags: [screen, search, ux]
+source_project: upstream-demo
 ---
 
 # 一覧検索画面の標準パターン

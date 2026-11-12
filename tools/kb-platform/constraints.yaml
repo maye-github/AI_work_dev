@@ -1,0 +1,103 @@
+# constraints.yaml — 「知識どおりに書けているか」の機械検査（2026-11-09）
+# ------------------------------------------------------------
+# 何のためにあるか
+#   `kb_refs` は「引いたか」しか見ない。ここは「**その知識が要求する形になっているか**」を見る。
+#   例: 基本設計は 14 節、詳細設計は 7 節、コードは BaseCamelModel 4 行——知識が決めた形を、
+#   成果物が満たしているかを機械で確かめる。**内容の正しさは見ない**（人はそこだけ読む）。
+#
+# 実行: py -3 -m tools.kb_local check-constraints --node N <file|dir>
+# ★ 追加・変更は人の承認が要る。緩めると「知識どおり」が形骸化する。
+
+version: "1.0"
+updated_at: "2026-11-09"
+
+nodes:
+  2:
+    source: TPL-DESIGN-REF-001
+    kind: markdown
+    required_headings:
+      - 文書管理
+      - 画面概要
+      - 画面遷移図
+      - 画面レイアウト
+      - 画面項目内容
+      - イベント一覧
+      - 業務処理説明
+      - 処理モジュール
+      - 入力チェック一覧
+      - エラー一覧
+      - 使用エンティティ・共通部品
+      - 非機能・セキュリティ
+      - 制約・前提
+      - 追跡
+  3:
+    source: TPL-DESIGN-DETAIL-001
+    kind: markdown
+    required_headings:
+      - データモデル
+      - ロジック
+      - 項目定義
+      - SQL テンプレート
+      - {name: エラー一覧, also: [エラー分岐表]}
+      - 境界値表
+      - トレース
+    checks:
+      - name: no_fstring_sql
+        type: forbid_regex
+        pattern: 'f[\"'']\s*(SELECT|INSERT|UPDATE|DELETE)'
+        message: "SQL を f-string で組み立てている（値はプレースホルダで受ける）"
+      - name: has_bind
+        type: require_regex
+        pattern: ':\w+'
+        message: "バインド変数（:name）が見つからない"
+  5:
+    source: STD-CODING-001
+    kind: code
+    checks:
+      - name: basecamel_4lines
+        type: require_all
+        patterns:
+          - "alias_generator=to_camel"
+          - "populate_by_name=True"
+          - "serialize_by_alias=True"
+          - "extra=(\\\"forbid\\\"|'forbid')"
+        message: "BaseCamelModel の 4 行が揃っていない（規則 03 §2）"
+      - name: no_physical_delete
+        type: forbid_regex
+        pattern: 'DELETE\s+FROM'
+        message: "DELETE 文がある（削除は論理削除）"
+      - name: no_unmasked_secret
+        type: forbid_regex
+        pattern: '(password|secret|token)\s*=\s*[\"''][^\"'']{3,}[\"'']'
+        message: "実値らしき認証情報が直書きされている"
+  6:
+    source: TPL-TEST-CASE-001
+    kind: markdown
+    required_headings:
+      - 目的と範囲と前提
+      - 入力と出典
+      - テスト対象
+      - テスト観点
+      - 正常系テストケース
+      - 境界系テストケース
+      - 異常系テストケース
+      - E-ID 対応表
+      - 人による審査・合否判定
+      - 知識ベースの使用記録
+    checks:
+      - name: has_design_ids
+        type: require_regex
+        pattern: "design_ids"
+        message: "design_ids が見つからない（紅线⑤）"
+      - name: has_req_ids
+        type: require_regex
+        pattern: "req_ids"
+        message: "req_ids が見つからない"
+      - name: has_case_ids
+        type: require_regex
+        pattern: 'TC-(PENDING-\d+|\d{3})'
+        message: "テストケース ID（TC-xxx）が見つからない"
+      - name: has_error_ids
+        type: require_regex
+        pattern: 'E-2\d\d'
+        message: "異常系の E-ID が見つからない"

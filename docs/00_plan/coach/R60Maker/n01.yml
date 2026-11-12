@@ -1,0 +1,48 @@
+# n01.yml — ノード1 進捗（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4
+
+node: 1
+name: "要件理解"
+state: approved
+owner: "Li"
+steps_total: 4
+steps_done: 4
+artifacts:
+  - "tutorial/R60Maker/节点1_需求/00_输入_客户需求书.md"
+  - "tutorial/R60Maker/节点1_需求/01_AI产出_需求结构化表.md"
+  - "tutorial/R60Maker/节点1_需求/01_AI产出_需求结构化表.yaml"
+  - "tutorial/R60Maker/节点1_需求/02_確認事項一覧.md"
+  - "tutorial/R60Maker/节点1_需求/03_客户確認依頼書（AB類）.md"
+  - "tutorial/R60Maker/节点1_需求/03_技術者検討課題（C類）.md"
+  - "tutorial/R60Maker/节点1_需求/03_客户確認依頼書（AB類）.pdf"
+  - "tutorial/R60Maker/节点1_需求/03_技術者検討課題（C類）.pdf"
+  - "tutorial/R60Maker/节点1_需求/02_回答受領チェック.md"
+  - "tutorial/R60Maker/节点1_需求/04_承認版_需求结构化表.md"
+  - "reports/drill/R60Maker/incoming/調達・生産系マスタ基盤_共通前提条件書_v1.2.md"
+  - "reports/drill/R60Maker/incoming/共通部品インタフェース仕様書_v3.0.md"
+  - "reports/drill/R60Maker/incoming/NFR標準_v1.1.md"
+  - "reports/drill/R60Maker/incoming/R60共通画面項目定義_v2.0.md"
+open_questions: []
+approved_by:
+  - "Li"
+approved_at: "2026-11-10"
+updated_at: "2026-11-05"
+note: |
+  節点0 で仮想需求書を産出・凍結。要求書は v1.1（sha256 2e8d7001…）に改訂・再凍結済み（改訂 5 条）。
+  区分は A17 / B11 / C38（+無効1）。A・B は回答／承認済み、C 38 件は Li が裁定。
+  未提供 4 件は仮想受領資料 4 本で補い、受領済み（reports/drill/R60Maker/incoming/）。
+  **2026-11-05 に Li が要件合意を承認**（04 の承認記録 4 行に記入。演習のため 1 名が全役割を兼ねる）。
+  出口条件（gate1〜6 PASS／freeze PASS／seal PASS／kb_refs OK／blocker なし）を満たした。
+  2026-11-10: **番号の振り直しにより成果物が変更された（内容は同一・ID 表記のみ）。**
+  R60Maker の R/F/D/L/E/I/Q を全局序列の続きへ移した（R-202／F-202／D-207〜212／L-212〜222／
+  E-213〜224／I-322〜354／Q-239〜335）。理由は `tutorial/R60Maker/节点6_单元测试/02_审查结果.md` 付記 2。
+  **承認版の中身は変わっていないが、承認の対象だったファイルは変わった。再承認が必要**（紅线③）。
+  `approved_by` は当時の承認者を残す（履歴）。再承認したら `state` を `approved` に戻す。
+  2026-11-10: **再承認（Li）。** 前回承認（2026-11-05/06）の後に次の 2 点が変わったため。
+  　① 番号の振り直し（R-202／F-202／D-207〜212／L-212〜222／E-213〜224／I-322〜354／Q-239〜335）。
+  　② 承認版へ「知識ベースの使用記録」節を追加し、kb_refs を node-map と一致させた。
+  承認前の 4 条件を実測: blockers 空／`trace_check --strict` 全 PASS（orphans=0）／
+  `kb_refs --require-node --require-usage` OK／`check-constraints` OK（定義のある節点のみ）。
+  2026-11-10: 旁路環 n09 の差し戻しにより成果物が**内容ごと**変わった（番号の振り直しではない）。
+  対象: BUG-005（要求 §6 の内部矛盾）。詳細は `reports/drill/R60Maker/impact-2026-11-10.md`。**再承認待ち**（紅线③）。
+  2026-11-10: **再承認（Li）。** n09 差し戻し分の反映を確認した。

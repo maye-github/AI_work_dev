@@ -1,0 +1,59 @@
+# n09.yml — 旁路環（变更・指摘）の状態（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4.2.x
+node: 9
+name: 变更・指摘（旁路環）
+
+open_changes:
+  - case_ref: "BUG-005"
+    kind: bug
+    raised_by: "社内レビュー"
+    raised_at: "2026-11-10"
+    reenter_node: 1
+    state: fixing
+    owner: "Li"
+    report: "reports/drill/R60Maker/impact-2026-11-10.md"
+  - case_ref: "CR-006"
+    kind: change_request
+    raised_by: "社内レビュー"
+    raised_at: "2026-11-10"
+    reenter_node: 3
+    state: fixing
+    owner: "Li"
+    report: "reports/drill/R60Maker/impact-2026-11-10.md"
+  - case_ref: "BUG-003"
+    kind: bug
+    raised_by: "社内レビュー"
+    raised_at: "2026-11-10"
+    reenter_node: 5
+    state: fixing
+    owner: "Li"
+    report: "reports/drill/R60Maker/impact-2026-11-10.md"
+  - case_ref: "BUG-004"
+    kind: bug
+    raised_by: "社内レビュー"
+    raised_at: "2026-11-10"
+    reenter_node: 5
+    state: fixing
+    owner: "Li"
+    report: "reports/drill/R60Maker/impact-2026-11-10.md"
+
+closed_changes:
+  - case_ref: ""
+    kind: change_request
+    raised_by: "社内レビュー"
+    raised_at: "2026-11-09"
+    reenter_node: 3
+    state: "closed"
+    owner: "Li"
+    report: "tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md"
+
+updated_at: "2026-11-09"
+note: |
+  2026-11-09: 節点5（製造）で設計の穴 3 件を検出し、n09 に起票した（戻し先＝3）。
+  ① 05 承認版 D-207 の send_sts 既定値が「—（評審で確定）」のまま。**Q-315 の承認結果 0 が承認版へ
+     書き戻されていない**（承認後に結論を反映し忘れた。規則 02 §6.1）。
+  ② D-210 の cd_kbn に**区分の実値**（SEND_STS／DEL_FLG）が無い。
+  ③ L-213（/init）が取得する**メッセージ ID の一覧**が無い。
+  **case_ref は空＝発番待ち（紅线①。番号を振るのは人の仕事）。**
+  2026-11-09: 起票した変更（設計の穴 3 件）は節点3 で補完され、v1.0.1 として Li が再承認したため closed へ移した。
+  **case_ref は空＝発番待ち**（紅线①。番号を振るのは人の仕事）。

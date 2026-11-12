@@ -45,6 +45,6 @@ generated_by: tools/kb_migrate.py
 
 ## なぜ消したか
 
-`docs/90_knowledge/review_diff_assets/_skeleton/review_comments.md` の RC-SK 系と同じ理由である。
+`tools/kb-platform/repo/company/standards/review-log-skeleton.md` の RC-SK 系と同じ理由である。
 **同じ結論が二箇所（抽出物と手引）にあると、どちらが正か判別できなくなる**（成果物 6 原則 ④ 単一ソース）。
 抽出物は「結論を作るための材料」であり、材料は結論に吸収された時点で役目を終える。

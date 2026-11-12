@@ -6,9 +6,10 @@ doc_type: standard
 version: "1.0"
 status: active
 conf_level: 20
-owner: 共通基盤チーム
+owner: Nan
 updated_at: 2026-10-29
 tags: [requirements, questions, abc, client-communication]
+source_project: framework-rules
 ---
 
 # 未確定事項の A・B・C 分類（誰が決めるか）

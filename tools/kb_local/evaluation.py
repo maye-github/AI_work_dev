@@ -28,6 +28,8 @@ def evaluate(
     project_id: str | None = None,
     user_level: int = 30,
     top_k: int = 5,
+    allowed_projects: set[str] | None = None,
+    exclude_derived: bool = False,
 ) -> dict:
     rows: list[dict] = []
     hits = 0
@@ -44,6 +46,8 @@ def evaluate(
             top_k=top_k,
             module=case.get("module"),
             scope=case.get("scope"),
+            allowed_projects=allowed_projects,
+            exclude_derived=exclude_derived,
         )
         got = [r["doc_id"] for r in results]
         expect = case["expect"]

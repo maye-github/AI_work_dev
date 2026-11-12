@@ -116,7 +116,7 @@
   ```bash
   cd /d/AI_work_dev
   py -3 -c "
-  t=open('docs/90_knowledge/platform-map.md',encoding='utf-8').read()
+  t=open('tools/kb-platform/repo/company/standards/platform-map.md',encoding='utf-8').read()
   for n in ['利用層','編成層','能力層','知識層','データ・コンテキスト層','統制・ガバナンス層','基盤層']: print(n, t.count(n))"
   py -3 -c "
   import re;t=open('docs/00_plan/roadmap-3phase.md',encoding='utf-8').read()
@@ -124,7 +124,7 @@
   print('owner/date/formula', t.count('2026-10-31'))"
   ```
 - **合格条件**: 7 層すべてが正しい名称で出現し各層の「本次新建」>=2（合計 >=14）、ROADMAP が Phase1=16 / Phase2=12 / Phase3=8 件、Phase2・3 の各件に「PPT 第 Sxx 页」、Phase1 の各件に负责人位・予定日・受入式。
-- **Evidence**: `docs/90_knowledge/platform-map.md`, `docs/00_plan/roadmap-3phase.md`
+- **Evidence**: `tools/kb-platform/repo/company/standards/platform-map.md`, `docs/00_plan/roadmap-3phase.md`
 - **Result**: **_PASS_**（実測: 7 層すべて出現、本次新建 計 19 件、PPT 参照 27 箇所。ただし独立再実行が必要）
 
 ## CP-U-1: 开球周審査差分資産の構造完全度
@@ -155,8 +155,8 @@
   - 4 = 合計 <= 90 分で 10 条中 7 条合格
   - 5 = 合計 <= 60 分で 10/10 合格、かつ TC-009 を新規作成して trace_check を通せる
 - **合格閾値**: >= 4
-- **検査方法**: `docs/90_knowledge/onboarding-checklist.md` の 10 手順を実際に順番に実行し、各手順の「合格サイン」と所要時間を記録する。特に手順⑩の `py -3 -m tools.gen_formal.gen_excel --dry-run --module R-101` が Exit 0 で field_count=56 を返すこと。
-- **Evidence**: `docs/90_knowledge/onboarding-checklist.md` + 実行記録（時間・コマンド・出力）
+- **検査方法**: `tools/kb-platform/repo/company/patterns/howto/onboarding.md` の 10 手順を実際に順番に実行し、各手順の「合格サイン」と所要時間を記録する。特に手順⑩の `py -3 -m tools.gen_formal.gen_excel --dry-run --module R-101` が Exit 0 で field_count=56 を返すこと。
+- **Evidence**: `tools/kb-platform/repo/company/patterns/howto/onboarding.md` + 実行記録（時間・コマンド・出力）
 - **Result**: Pending（人力 Walkthrough の実測が必要。手順数 10 と手順⑩コマンドの Exit 0 は確認済み）
 
 ---
@@ -215,13 +215,13 @@
   - 5 = 4 に加え、「PPT 自身が述べていない部分」（例: 帰档の 5 問の中身、Harmony 5 ゲートの実装）を
         **本骨架の定義であると明示**して区別している
 - **合格閾値**: >= 4
-- **検査方法**: `.claude/rules/06-knowledge-flywheel.md`・`docs/90_knowledge/internal/*.md` を読み、
+- **検査方法**: `.claude/rules/06-knowledge-flywheel.md`・`tools/kb-platform/repo/company/standards/internal/*.md` を読み、
   各節の出所を `ppt-deviation-register.md` §2 の A-14/A-15/A-17/A-18 と照合する。
   **逆方向**に、§2 の各行が実在のファイルを指していることも確認する。
   数量の記載（例: JET の対象規模）は、出所 PPT の該当頁で**その数が何を数えたものか**を確認する
   （「32 モジュール」誤読の再発防止。§2 の訂正注記を参照）。
-- **Evidence**: `.claude/rules/00 §13 / 03 §7 / 04 §9 / 06`、`docs/90_knowledge/internal/{harmony-5gates,sds2-lessons}.md`、
-  `docs/90_knowledge/ppt-deviation-register.md` §2
+- **Evidence**: `.claude/rules/00 §13 / 03 §7 / 04 §9 / 06`、`tools/kb-platform/repo/company/standards/internal/{harmony-5gates,sds2-lessons}.md`、
+  `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2
 - **Result**: Pending（Phase 1.5 で起案済み。独立検査員の照合を待つ）
 
 ## CP-R-8: ID 台帳の唯一書込み口と阻塞の実効性（「規矩はあるが道具が無い」の解消）
@@ -295,7 +295,7 @@
    `reports/**`・`archive/**`・`tutorial/**` を gate6 の走査に追加した
    （`hits=0`。件数は `reports/trace_R101.json` の `gates[gate6].stats.scanned_files` を参照 —
    走査対象自身を含むため固定値を文書に書かない）。**検査員はこれを「対象を狭めた」と誤読しないこと。**
-6. **PPT に対する追加要素の登録簿**: `docs/90_knowledge/ppt-deviation-register.md`。
+6. **PPT に対する追加要素の登録簿**: `tools/kb-platform/repo/company/standards/ppt-deviation.md`。
    本骨架は 2 PPT の忠実復刻を原則とするため、PPT に無い追加（`gen_view`・6 重門番・
    サブエージェント（検証系 A-5／工程実行系 A-12）・`tutorial/` 等）は同表が唯一の登録簿である。**独立検査では同表の
    網羅性（実際の追加要素が漏れなく載っているか）も確認対象とする。**
@@ -306,5 +306,5 @@
    （片方だけ直すと本骨架が自己矛盾する。gate4 を変更する際に同時更新を要するのと同じ理由）。
    本ファイル冒頭の「CP 総数」表示も同じ作業単位で直す（2026-10-13 に 8 のまま残っていたのを修正）。
 8. **「JET 全 32 モジュール」は出所の誤読であった**（正: JET PPT slide 8 の**全 34 本の API**、うち AI 適用 22 本）。
-   経緯と走査結果は `docs/90_knowledge/ppt-deviation-register.md` §2 の訂正注記が唯一の定義。
+   経緯と走査結果は `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2 の訂正注記が唯一の定義。
    **検査員は、本骨架の文書に数量が現れたら「その数が何を数えたものか」を出所の頁で確認すること。**

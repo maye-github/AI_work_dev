@@ -1,0 +1,44 @@
+# n08.yml — ノード8 進捗（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4
+
+node: 8
+name: "リリース・運用保守"
+state: approved
+owner: "Li"
+steps_total: 4
+steps_done: 4
+artifacts:
+  - tutorial/R60Maker/节点8_发布运维/00_输入模板.yaml
+  - tutorial/R60Maker/节点8_发布运维/01_AI产出_发布运用计划.md
+  - tutorial/R60Maker/节点8_发布运维/01_AI产出_发布运用计划.zh.md
+  - tutorial/R60Maker/节点8_发布运维/01_AI产出_发布运用计划.zh.html
+  - tutorial/R60Maker/节点8_发布运维/02_审查结果.md
+  - tutorial/R60Maker/节点8_发布运维/05_承認版_发布运用计划.md
+  - tutorial/R60Maker/节点8_发布运维/05_承認版_发布运用计划.zh.md
+  - tutorial/R60Maker/节点8_发布运维/05_承認版_发布运用计划.zh.html
+open_questions: []
+approved_by: ["Li"]
+approved_at: "2026-11-10"
+updated_at: "2026-11-10"
+note: |
+  2026-11-10: 認領（team は Li 1 名）。産出先ディレクトリが存在しなかったため、
+  骨組みの入力模板（IN-308）を先に作成した（鉄則⑧）。
+  2026-11-10: ステップ1 完了——4 つの計画欄を **AI 暫定案（v0.2.0）** として記入（status: filled）。
+  2026-11-10: ステップ2 完了——`01_AI产出_发布运用计划.md`（344 行）と `.zh.md`／`.zh.html`。
+  禁語 `合格|PASS|已确认|已確認` の実測 = 0 行。kb_usage 3 件は本文で実参照。
+  2026-11-10: ステップ3 完了——人の審査 8 項を `02_审查结果.md` に記録。方式 A（逐項）で開始し、
+  #1 のあと人の指示「都对，直接过就行了」により #2〜#8 を一括是認（**一括是認であることを隠さない**）。
+  #2 は限定付き（目標時間未確定・演練未実施＝切戻し能力は未観測）、#6・#7 は「未観測・未关闭のまま」の是認。
+  2026-11-10: ステップ4 完了——`05_承認版_发布运用计划.md`（v1.0.0）を産出し、
+  **人（Li）が承認記録 4 役割に署名**（演習のため 1 名が兼務。実案件では役割ごとに別人）。
+  **リリース判定＝保留**（人：Li）。判定条件 12 条のうち充足 6・未充足 6
+  （未充足＝結合テスト未実行・保留 3 本未裁定・回滚未演練・物理名 Q-308b 未確定・監視閾値未設定・n09 の 4 件未关闭）。
+  承認ゲートの実測（生値）: `registry blockers` → 未解除なし／
+  `trace_check --strict` → `gate1..gate6=PASS seal=PASS freeze=PASS | total_ids=263 orphans=0 field_count=110 seal_hits=0`（Exit 0）／
+  `kb_refs check --node 8 --require-node --require-usage` → `判定: OK`／
+  `find docs -name "*.xlsx"` → 0。
+  ★未処置（人が裁定する）: ① `节点7_结合测试/verification.md` が存在しない
+  ② `节点3_详细设计/05_承認版_详细设计书.md` の front-matter は `baselined` v1.1.0 だが
+  本文 line 17・53-54 は「changed（再承認待ち）／版数 1.0.1」で文書内の状態が食い違う
+  ③ n09 の 4 件（BUG-003／004／005・CR-006）は `state: fixing` のまま（IT 未観測）
+  ④ 知識庫の昇格は 0 件可（26 候補すべて案件固有・`kb_promote check` が要修正。`CLOSED.md` 未作成）

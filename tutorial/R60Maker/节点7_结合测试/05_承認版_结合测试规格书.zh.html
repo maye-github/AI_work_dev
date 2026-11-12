@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05_承認版_结合测试规格书.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>05_承認版_结合测试规格书.zh</h1>
+<div class="meta">
+  机读源: <code>05_承認版_结合测试规格书.zh.md</code> ／
+  生成: 2026-11-10 14:07 ／
+  节 12・表 21
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>05_承認版_结合测试规格书.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">承认记录</a></li><li><a href="#sec-2">0. 本文档的定位</a></li><li><a href="#sec-3">1. 对象与前提</a></li><li><a href="#sec-4">2. IT 一览</a></li><li><a href="#sec-5">3. API 序列</a></li><li><a href="#sec-6">4. E2E 场景详细</a></li><li><a href="#sec-7">5. 验收基准的满足性判定（`greenfield` 的替代）</a></li><li><a href="#sec-8">6. 事务边界与非功能的观测</a></li><li><a href="#sec-9">7. 残余风险的承接</a></li><li><a href="#sec-10">8. 观测范围与保留（**只有结论**）</a></li><li><a href="#sec-11">9. 追踪</a></li><li><a href="#sec-12">知识库的使用记录</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: IT-PENDING-SPEC<br>type: testing<br>req_ids: [R-202]<br>status: baselined<br>sensitivity: internal<br>owner: AI-SE<br>version: 1.0.0<br>kb_refs:</p>
+<ul><li>TPL-INTEGRATION-TEST-001</li><li>PAT-DEV-PLAYBOOK-001</li><li>PAT-DEV-WALKTHROUGH-001</li></ul>
+<hr>
+<blockquote class="quote"><strong>本文是 <code>01_AI产出_结合测试规格书.md</code>（日文机读源）的中文派生视图。</strong> 两者内容不对时，<strong>以日文原文为准</strong>。<br>画面名、画面固定字样、项目名等<strong>会原样进入实现的值</strong>保留日文原文；需要时在括号里注明「（原文为日文，按原文实现）」。<br><strong>IT-ID 为临时编号</strong>（<code>IT-PENDING-01</code>〜<code>IT-PENDING-10</code>）。正式编号由人通过 <code>tools.registry alloc IT</code> 发放（红线①）。</blockquote>
+<h1>结合・综合测试规格书 —— 制造商主数据维护（R60Maker）</h1>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>承认记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">版</th><th style="text-align:left">角色</th><th style="text-align:left">承认者</th><th style="text-align:left">日期</th><th style="text-align:left">状态</th></tr></thead><tbody><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">SE</td><td style="text-align:left">Li</td><td style="text-align:left">2026-11-10</td><td style="text-align:left"><strong>承认</strong></td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">PG</td><td style="text-align:left">Li</td><td style="text-align:left">2026-11-10</td><td style="text-align:left"><strong>承认</strong></td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">测试</td><td style="text-align:left">Li</td><td style="text-align:left">2026-11-10</td><td style="text-align:left"><strong>承认</strong></td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">PM</td><td style="text-align:left">Li</td><td style="text-align:left">2026-11-10</td><td style="text-align:left"><strong>承认</strong></td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>0. 本文档的定位</h2>
+<p>本文档的输入为：<code>tutorial/R60Maker/节点7_结合测试/00_输入模板.yaml</code>（v0.1.0・<code>filled</code>）、<br><code>tutorial/R60Maker/节点6_单元测试/05_承認版_测试用例集.md</code>（v1.0.0・<code>baselined</code>，TC-222〜TC-246）、<br><code>tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md</code>（v1.1.0・<code>baselined</code>，CR-006 新设 §2.0「端点与路径」）、<br><code>tutorial/R60Maker/节点2_基本设计/05_承認版_基本设计书.md</code>（v1.0.0・<code>baselined</code>，F-202）、<br><code>tutorial/R60Maker/节点1_需求/04_承認版_需求结构化表.md</code>（v1.0.1・<code>baselined</code>，R-202。BUG-005 在 §6 明记 <code>/download</code> 例外）、<br><code>tutorial/R60Maker/节点4_框架构筑/05_承認版_框架构筑记录.md</code>（v1.0.0・<code>baselined</code>）、<br><code>tutorial/R60Maker/节点5_制造/05_承認版_制造记录.md</code>（v1.1.0・<code>baselined</code>，BUG-003・BUG-004・CR-006）以及<br><code>tutorial/R60Maker/节点5_制造/{backend,frontend}/</code>（22 个文件）。</p>
+<p><strong>本文档只定到测试设计为止，尚未执行。</strong> 合否由人判定（红线③）。本文档不使用「已实施」「PASS」这类词，<br>只把观测到的事实与要求・设计的期望并列写出来。</p>
+<p><strong>本版 v0.2.0（2026-11-10）的改订范围</strong>：跟随上游 3 个变更（节点1 v1.0.1＝BUG-005／<br>节点3 v1.1.0＝CR-006／节点5 v1.1.0＝BUG-003・BUG-004），改订 §1.1（路径）・§2（IT 一览的注解）・<br>§3（请求 path）・§4（IT-PENDING-06・07 的期望值）・§7（承接残余风险 #1）・§8。<br><strong>从 §8.1 移出的 4 项，不默默删掉，而是移到 §8.3「已解决」。</strong></p>
+<p><strong>本文中写作 <code>/xxx</code> 的地方，都是 <code>/R60Maker/xxx</code> 的略记</strong>（见 §1.1）。</p>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>1. 对象与前提</h2>
+<h3>1.1 对象</h3>
+<p>对象为 <strong>6 个端点</strong>（<code>POST /R60Maker/init</code>・<code>/R60Maker/search</code>・<code>/R60Maker/download</code>・<br><code>/R60Maker/initEdit</code>・<code>/R60Maker/delete</code>・<code>/R60Maker/edit</code>）。<br>路径以<strong>已承认的设计 §2.0（2026-11-10・CR-006）为唯一出处</strong>。<br>实现把 6 个路由以 <code>prefix="/R60Maker"</code> 注册（<code>backend/app/main.py:103-108</code>），<br>前端也把基底集中为 <code>/R60Maker</code>（<code>frontend/services/makerApi.ts:126</code>）。</p>
+<ul><li><strong>不要把前缀（<code>/api</code> 等）写进代码。</strong> 部署时的反向代理前缀属于环境设定，</li></ul>
+<p>应用以 <code>/R60Maker/&lt;name&gt;</code> 接收（设计 §2.0）。旧版曾出现「实现在根下注册、前端又在前面拼 <code>/api</code>」这第三条解释，<br>CR-006 已解决（见 §8.3 旧 #1）。</p>
+<ul><li><strong>接收请求体的是 <code>/download</code> 以外的 5 个端点。</strong> <code>/download</code> <strong>不接收请求体</strong>——</li></ul>
+<p>只用最后一次执行的检索条件生成 CSV（要求 §6 的例外段落・BUG-005，设计 §2.0）。见 §8.3 旧 #4。</p>
+<ul><li><strong><code>X-Session-Id</code> 由共通部品注入</strong>（要求 §8 #9・设计 §2.0）。本画面不自行生成。</li></ul>
+<p>若构成中不注入，会话系（E-221）即为<strong>未观测</strong>（见 §8.1 #2）。</p>
+<p><strong>结合</strong>＝观测跨多个层次（画面・API・DB・会话・CSV）的传递。<br><strong>综合</strong>＝观测用户的一连串操作能走到终点（一覧反映・画面结束）。<br>单一逻辑的输入输出由节点6 的 TC-222〜TC-246 负责，<strong>本节点不重复做</strong>。<br>本节点抓的是「顺序」与「边界」——依次调用多个 API 时的状态迁移、画面 ⇄ API 的往返、<br>排他与并发、真实的 DB 执行与事务边界。</p>
+<h3>1.2 不做 A/B 比较的理由（<code>greenfield</code>）</h3>
+<p>本案件为 <code>build_mode: greenfield</code>，不存在作为比较对象的旧版。<br>因此<strong>不做 A/B 比较</strong>（规则 04 §7.1）。<strong>本文档不设 A/B 一节</strong>，<br>也不创建 <code>doc/03_AI/AB_Reports/reports/&lt;模块&gt;/summary.md</code>，不设健康度分数，不设阈值<br>（规则 04 §7.1「不做事后单加阈值」）。</p>
+<p>替代做法是<strong>验收基准的满足性判定</strong>（§5）。期望值的来源是「已承认的要求（R-202）」与<br>「已承认的基本设计（F-202）」，因此判定是<strong>满足性判定，而不是一致性比较</strong>。<br>执行结果的记录位置为 <code>tutorial/R60Maker/节点7_结合测试/verification.md</code><br>（因为不是 A/B，所以不用 <code>summary.md</code>，见规则 04 §7.1）。<strong>本文档不负责创建该记录。</strong></p>
+<h3>1.3 数据的处理</h3>
+<p>输入与期望值一律用占位符表示（<code>COL_1</code>／<code>VAL_1</code>／<code>EMP_1</code>）。不写真实数据、真实 IP、连接信息<br>（规则 01・红线⑦）。表件数和 <code>rev_no</code> 也只写「增了／没变」这种<strong>关系</strong>，不写实际值。</p>
+<h3>1.4 数值的处理（单一来源）</h3>
+<p>非功能目标值以 <code>tutorial/R60Maker/节点2_基本设计/05_承認版_基本设计书.md</code> §11 的对应行为唯一定义。<br><strong>本文档不转抄数值</strong>（避免二重定义）。本文档只写「看哪一行・什么条件・测什么」。</p>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>2. IT 一览</h2>
+<p>下表中判定基准里出现的 <code>/xxx</code> 是端点的略记，<strong>实际路径都是 <code>/R60Maker/xxx</code></strong>（见 §1.1）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">IT-ID</th><th style="text-align:left">对应 E2E</th><th style="text-align:left">类别</th><th style="text-align:left">目的</th><th style="text-align:left">判定基准（主要观测的事实）</th><th style="text-align:left">依据</th></tr></thead><tbody><tr><td style="text-align:left">IT-PENDING-01</td><td style="text-align:left">E2E-201</td><td style="text-align:left">综合</td><td style="text-align:left">初期显示 → 条件输入 → 检索 → 一览 → 翻页 的贯通</td><td style="text-align:left">HTTP 200 与 <code>errorCode</code>／<code>errorId</code>・<code>pageSizeOptions</code>・消息 15 件・一览 5 列・总件数・排序・翻页时再次调用 <code>/R60Maker/search</code></td><td style="text-align:left">L-212／L-213／L-214／L-215、D-207／D-210／D-211／D-212、要求 §4.1 #1〜#16・§5 事件1〜4</td></tr><tr><td style="text-align:left">IT-PENDING-02</td><td style="text-align:left">E2E-202</td><td style="text-align:left">结合</td><td style="text-align:left">检索 0 件时画面不崩，按钮活性保持</td><td style="text-align:left"><code>errorCode="1"</code>／<code>errorId="1001"</code>（E-213）・明细 0 行・复制／返回／下载／新建保持活性</td><td style="text-align:left">L-214／L-221、E-213、要求 §4.1 #9・#16、设计 §5</td></tr><tr><td style="text-align:left">IT-PENDING-03</td><td style="text-align:left">E2E-203</td><td style="text-align:left">综合</td><td style="text-align:left">修改的往返（取得 → 更新 → 一览反映）</td><td style="text-align:left"><code>/R60Maker/initEdit</code> 返回 2 个排他项・<code>/R60Maker/edit</code> 后 <code>rev_no</code> 为旧值+1・一览显示改后值・不影响其他行</td><td style="text-align:left">L-217／L-220、D-207、E-217、要求 §4.3・§5 事件7・12</td></tr><tr><td style="text-align:left">IT-PENDING-04</td><td style="text-align:left">E2E-204</td><td style="text-align:left">综合</td><td style="text-align:left">新建的往返（<code>mode="1"</code>）</td><td style="text-align:left">增加 1 行・<code>reg_kbn=1</code>／<code>send_sts=0</code>／<code>del_flg=0</code>／<code>rev_no=1</code>・审计项由共通部品赋予</td><td style="text-align:left">L-220、D-207、要求 §4.2・§4.3・§5 事件5・12</td></tr><tr><td style="text-align:left">IT-PENDING-05</td><td style="text-align:left">E2E-205</td><td style="text-align:left">综合</td><td style="text-align:left">逻辑删除与从一览消失的方式</td><td style="text-align:left"><code>del_flg=1</code>・物理删除语句 0 条・不含删除时消失、含删除时出现・删除后不复原</td><td style="text-align:left">L-219、D-207、要求 §4.4・§4.5 #1・§5 事件11</td></tr><tr><td style="text-align:left">IT-PENDING-06</td><td style="text-align:left">E2E-206</td><td style="text-align:left">结合（并发）</td><td style="text-align:left">重复提交与排他竞争不产生重复行、不产生错误的 <code>rev_no</code> 增加</td><td style="text-align:left">画面侧不发出第 2 次请求（<code>submitting</code> 守卫）・即使 2 次到达，第 2 次也被 E-217 或 E-215 挡住・行数不增・<code>rev_no</code> 不增两次</td><td style="text-align:left">L-220、D-207、E-215／E-217、要求 §4.3、节点5 v1.1.0 BUG-004</td></tr><tr><td style="text-align:left">IT-PENDING-07</td><td style="text-align:left">E2E-207</td><td style="text-align:left">综合</td><td style="text-align:left">异常系贯通（会话・稼働・权限）能<strong>一直走到迁移目标画面</strong></td><td style="text-align:left">E-221／E-222／E-220 的响应，以及<strong>被替换成了哪个画面</strong>（9001→session／9002→online）</td><td style="text-align:left">L-212、E-220／E-221／E-222、要求 §7・§8 #9、设计 §2.0／§5、节点5 v1.1.0 BUG-003</td></tr><tr><td style="text-align:left">IT-PENDING-08</td><td style="text-align:left">E2E-208</td><td style="text-align:left">结合</td><td style="text-align:left">下载使用最后一次检索条件，且不暴露排他信息</td><td style="text-align:left"><code>Content-Type</code>／BOM／CRLF／表头行／5 列・没有 <code>last_update_datetime</code> 与 <code>rev_no</code> 两列・<strong>不发送请求体</strong></td><td style="text-align:left">L-218、D-207、要求 §6・§4.1 #14、设计 §2.0／§6</td></tr><tr><td style="text-align:left">IT-PENDING-09</td><td style="text-align:left">（无对应 E2E・由 §5 的满足性判定承接）</td><td style="text-align:left">综合</td><td style="text-align:left">复制的往返（<code>mode="2"</code>）与「仅复制且无变更则不登记」</td><td style="text-align:left">只继承代码・日文名・假名名 3 项・紧急配信关闭・删除栏空白・无变更时 INSERT 0 行</td><td style="text-align:left">L-217／L-220、要求 §4.2・§4.3、设计 §2.6</td></tr><tr><td style="text-align:left">IT-PENDING-10</td><td style="text-align:left">（无对应 E2E・承接残余风险 #4）</td><td style="text-align:left">结合</td><td style="text-align:left">被参照检查「不计已删除的参照源」</td><td style="text-align:left">参照源只有已删除行时可删除・存在未删除参照源时被 E-216（2002）挡住不删除</td><td style="text-align:left">L-219／L-220、D-208／D-209、E-216、要求 §4.4 #4・§7</td></tr></tbody></table>
+<p>件数为 <strong>10 条</strong>。IT-PENDING-01〜08 与输入模板的 E2E-201〜E2E-208 一一对应。<br>IT-PENDING-09・10 承接输入模板中没有对应 E2E 的验收基准（复制・被参照的计数方式），<br>不是「没做完」，而是<strong>为了不遗漏要求 §4 的条款而显式追加</strong>（见 §5）。</p>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>3. API 序列</h2>
+<p><strong>路径全部为 <code>/R60Maker/&lt;name&gt;</code></strong>（设计 §2.0）。<br><strong>顺序固定写死。</strong> 端末的画面操作也作为「无请求」的行保留（不把「哪里会发 API」写得含糊）。<br>6 个端点都经过共通前处理 L-212（会话 → 稼働可否 → 权限 → 输入检查，见要求 §6・设计 §2.1）。<br><strong>前处理只要有一项失败，后续一概不执行。</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">操作</th><th style="text-align:left">请求（method／path）</th><th style="text-align:left">期望响应</th><th style="text-align:left">事务边界</th><th style="text-align:left">迁移</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">打开检索画面</td><td style="text-align:left">（无・仅客户端）</td><td style="text-align:left">—</td><td style="text-align:left">无</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">初期显示</td><td style="text-align:left"><code>POST /R60Maker/init</code>（无输入）</td><td style="text-align:left">HTTP 200・<code>errorCode="0"</code>・<code>pageSizeOptions</code>（10／20／50／100）・默认 20・消息 15 件・初期标志</td><td style="text-align:left">读（<code>connect()</code>・仅 SELECT）</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">条件输入</td><td style="text-align:left">（无・L-214 步骤①的客户端输入检查）</td><td style="text-align:left">—</td><td style="text-align:left">无</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">显示（检索）</td><td style="text-align:left"><code>POST /R60Maker/search</code>（<code>{params:{makerCd／makerNm／includeDeleted／pageSize／shikakeMode／pageNo／sortField}}</code>）</td><td style="text-align:left">HTTP 200。先取总件数、再取当页（两段）。0 件为 <code>1</code>／<code>1001</code>・501 件以上为 <code>1</code>／<code>1002</code></td><td style="text-align:left">读</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">翻页</td><td style="text-align:left"><code>POST /R60Maker/search</code>（只改 <code>pageNo</code>）</td><td style="text-align:left">同步骤 4 的形态。总件数不变</td><td style="text-align:left">读</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">条件区收起・展开</td><td style="text-align:left">（无・L-216。<strong>不调 API</strong>）</td><td style="text-align:left">—</td><td style="text-align:left">无</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">选择新建／复制／修改</td><td style="text-align:left"><code>POST /R60Maker/initEdit</code>（<code>{params:{mode}}</code>。<code>mode="1"</code>／<code>"2"</code>／<code>"3"</code>）</td><td style="text-align:left"><code>mode="2"</code> 只 3 项・<code>mode="3"</code> 为当前值＋<code>lastUpdateDatetime</code>＋<code>revNo</code></td><td style="text-align:left">读</td><td style="text-align:left">进入主数据画面</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">登记（新建・复制）</td><td style="text-align:left"><code>POST /R60Maker/edit</code>（<code>{params:{mode:"1"／"2",…}}</code>。排他 2 项送 <code>null</code>）</td><td style="text-align:left"><code>errorCode="0"</code>。键重复为 <code>1</code>／<code>2001</code></td><td style="text-align:left"><strong>写</strong>（<code>begin()</code>・INSERT）</td><td style="text-align:left">关闭主数据画面，用最后检索条件重查一览（第 1 页）</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">登记（修改）</td><td style="text-align:left"><code>POST /R60Maker/edit</code>（<code>{params:{mode:"3",lastUpdateDatetime,revNo,…}}</code>）</td><td style="text-align:left"><code>errorCode="0"</code>。排他不一致为 <code>1</code>／<code>2003</code>，被参照为 <code>1</code>／<code>2002</code></td><td style="text-align:left"><strong>写</strong>（UPDATE）</td><td style="text-align:left">同上（删除打开时兼做逻辑删除）</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">删除</td><td style="text-align:left"><code>POST /R60Maker/delete</code>（<code>{params:{makerCd,lastUpdateDatetime,revNo}}</code>）</td><td style="text-align:left"><code>errorCode="0"</code>。被参照 <code>1</code>／<code>2002</code>、排他不一致 <code>1</code>／<code>2003</code>、想定外 <code>9</code>／<code>9101</code></td><td style="text-align:left"><strong>写</strong>（UPDATE <code>del_flg=1</code>）。物理 DELETE 0 条</td><td style="text-align:left">重查一览</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">下载</td><td style="text-align:left"><code>POST /R60Maker/download</code>（<strong>不发送请求体</strong>）</td><td style="text-align:left">CSV（UTF-8 BOM・CRLF・表头行・5 列）／超上限为 <code>1</code>／<code>1002</code></td><td style="text-align:left">读（用最后一次检索条件）</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">业务结束／返回</td><td style="text-align:left">（无・L-222。仅确认）</td><td style="text-align:left">—</td><td style="text-align:left">无</td><td style="text-align:left">回检索画面／结束业务</td></tr></tbody></table>
+<p><strong>顺序的固定点</strong></p>
+<ul><li><strong>步骤 2 必须最先执行且只执行一次。</strong> <code>/init</code> 的响应（<code>pageSize</code> 默认值・<code>includeDeleted</code> 初始值・条件区初始状态）是步骤 4 输入的前提。</li><li><strong>步骤 4 在步骤 2 之后。</strong> 不经 <code>/init</code> 直接打 <code>/search</code> 时的行为设计里没有明文，因此<strong>本节点不予观测</strong>。</li><li><strong>步骤 5 在步骤 4 之后。</strong> 翻页是重新调用 <code>/search</code>，不是另一个端点（设计 §2.4）。</li><li><strong>步骤 8・9・10 在步骤 7 之后</strong>（修改・删除要送 <code>/initEdit</code> 返回的排他 2 项；新建・复制送 <code>null</code>）。</li><li><strong>步骤 11 在步骤 4 之后。</strong> <code>/download</code> 用<strong>最后一次执行的检索条件</strong>，既不用画面当前值，也不用请求体（要求 §4.1 #14・§6 例外段落・设计 §2.0）。<strong>「不发送请求体」本身也列入观测项</strong>（§4 IT-PENDING-08）。</li><li><strong>步骤 10 之后要重跑步骤 4。</strong> 登记・删除后「用最后检索条件重查第 1 页」是设计的完成条件（要求 §4.3 共通・§4.4 #8）。</li><li><strong>只有步骤 8・9・10 会发出写操作</strong>（§6.1）。</li></ul>
+<p><strong>出错时的中断点</strong>（正常路径的分支。响应形态以设计 §5 为唯一定义）</p>
+<table class="tbl"><thead><tr><th style="text-align:left">发生点</th><th style="text-align:left">响应</th><th style="text-align:left">画面侧结果（设计 §5）</th><th style="text-align:left">观测它的 IT</th></tr></thead><tbody><tr><td style="text-align:left">步骤 2・4 及其它全部端点</td><td style="text-align:left"><code>9</code>／<code>9001</code>（E-221）</td><td style="text-align:left">替换为 SessionErrorScreen</td><td style="text-align:left">IT-PENDING-07</td></tr><tr><td style="text-align:left">步骤 2・4 及其它全部端点</td><td style="text-align:left"><code>9</code>／<code>9002</code>（E-222）</td><td style="text-align:left">替换为 OnlineControlErrorScreen</td><td style="text-align:left">IT-PENDING-07</td></tr><tr><td style="text-align:left">步骤 4</td><td style="text-align:left"><code>1</code>／<code>2004</code>（E-220・权限不足）</td><td style="text-align:left">中断处理。不迁移画面</td><td style="text-align:left">IT-PENDING-07</td></tr><tr><td style="text-align:left">步骤 4</td><td style="text-align:left"><code>1</code>／<code>1001</code>（E-213・0 件）</td><td style="text-align:left"><strong>不迁移。按检索成功处理并保持按钮活性</strong></td><td style="text-align:left">IT-PENDING-02</td></tr><tr><td style="text-align:left">步骤 4・11</td><td style="text-align:left"><code>1</code>／<code>1002</code>（E-214・超 500 件）</td><td style="text-align:left">不输出明细・不输出 CSV</td><td style="text-align:left">单体 TC-236（结合侧只观测步骤 4 的边界）</td></tr><tr><td style="text-align:left">步骤 8・9</td><td style="text-align:left"><code>1</code>／<code>2001</code>（E-215・键重复）</td><td style="text-align:left">高亮制造商代码。不迁移画面</td><td style="text-align:left">IT-PENDING-06</td></tr><tr><td style="text-align:left">步骤 9・10</td><td style="text-align:left"><code>1</code>／<code>2002</code>（E-216・被参照）</td><td style="text-align:left">不删除。停留在主数据画面</td><td style="text-align:left">IT-PENDING-10</td></tr><tr><td style="text-align:left">步骤 9・10</td><td style="text-align:left"><code>1</code>／<code>2003</code>（E-217・排他不一致）</td><td style="text-align:left">仅显示消息。不高亮项目、不移动焦点</td><td style="text-align:left">IT-PENDING-03・06</td></tr><tr><td style="text-align:left">步骤 10</td><td style="text-align:left"><code>9</code>／<code>9101</code>（E-218・被参照检查想定外）</td><td style="text-align:left">替换为 SystemErrorScreen。<strong>不得把参照件数当作 0</strong></td><td style="text-align:left">结合侧只在未连接时观测（§8.2 #8）</td></tr><tr><td style="text-align:left">任意</td><td style="text-align:left"><code>1</code>／<code>2005</code>（E-224・服务器侧输入检查）</td><td style="text-align:left">显示消息・中断处理・不迁移画面</td><td style="text-align:left">单体 TC-246</td></tr><tr><td style="text-align:left">任意</td><td style="text-align:left"><code>9</code>／<code>9999</code>（E-223・例外）</td><td style="text-align:left">回滚并替换为 SystemErrorScreen</td><td style="text-align:left">IT-PENDING-06（失败时的回滚）</td></tr></tbody></table>
+<blockquote class="quote"><code>errorCode=9</code> 的替换目标<strong>按 <code>errorId</code> 分流</strong>（<code>9001</code>→session／<code>9002</code>→online／其他→system。<br><code>frontend/common/customerParts.ts:63-72</code>。节点5 v1.1.0 BUG-003）。旧版「一律 system」的观测已解决（§8.3 旧 #3）。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>4. E2E 场景详细</h2>
+<p>每个 IT 写成「前提 → 操作 → 期望状态 → 确认方法」四点一套。期望值全部来自<strong>已承认的上游</strong>结论，<br>不是实现的实测值。判定由人进行。</p>
+<h3>IT-PENDING-01 从初期显示到检索・翻页的贯通（E2E-201）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">会话有效・在稼働时间内（平日 7:00–22:00 JST）・权限 MKR01 以上。消息主数据有 15 件，代码值主数据存在 <code>SEND_STS</code>／<code>DEL_FLG</code> 的区分。主数据中存在超过 1 页件数的行。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 打开检索画面 ② 记录 <code>/R60Maker/init</code> 的请求与响应 ③ 输入代码（前方一致）・日文名（中间一致） ④ 按显示 ⑤ 记录 <code>/R60Maker/search</code> 的请求与响应 ⑥ 读取一览・总件数・页码 ⑦ 按下一页 ⑧ 记录 <code>/R60Maker/search</code> 的再次调用与响应 ⑨ 按条件区收起・展开，确认不产生请求</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left"><code>/R60Maker/init</code> 为 <code>errorCode="0"</code>，<code>pageSizeOptions</code> 为 10／20／50／100，默认 20，消息 15 件，初始状态为「通常・不含删除・一览空・总件数 0・分页器非活性」。<code>/R60Maker/search</code> 为 <code>errorCode="0"</code>，一览 5 列，总件数＝条件一致件数，排序为「删除区分（未删除在前）→制造商代码升序」。翻页时总件数不变，页码从 1 开始递增。切换条件区时不调用 <code>/search</code>。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">实测响应 JSON 的键・值・数组顺序、画面显示值、请求 path 一览（<strong>全部为 <code>/R60Maker/…</code></strong>，且翻页时 <code>/R60Maker/search</code> 再次出现）、切换条件区时的<strong>请求 0 条</strong>，逐一比对。</td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.1 #1〜#16・§5 事件1〜4・§6。设计 §2.0／§2.1／§2.2／§2.3／§2.4／§2.5、§5 E-213／E-214。节点6 TC-222／TC-223／TC-229／TC-235。</td></tr></tbody></table>
+<h3>IT-PENDING-02 检索 0 件时画面不崩（E2E-202）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">IT-PENDING-01 成立，检索画面已显示一览。能准备出条件不一致的值。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 用 0 件一致的条件按显示 ② 读 <code>/R60Maker/search</code> 响应与画面 ③ 读复制・返回・下载・新建的活性 ④ 按复制 ⑤ 记录是否产生 <code>/R60Maker/initEdit</code> 请求</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left"><code>errorCode="1"</code>／<code>errorId="1001"</code>（E-213）。明细 0 行。<strong>按检索成功处理</strong>，复制・返回・下载・新建保持活性。总件数显示 0。复制因未选中行而非活性，无法按下。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">实测响应 JSON、明细行数、4 种按钮的活性状态、按复制时有无请求，逐一比对。<strong>还要从 URL 确认画面没有因错误处理而跳转。</strong></td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.1 #9・#16、§7。设计 §5 E-213、§2.10 L-221。节点6 TC-229／TC-233。</td></tr></tbody></table>
+<h3>IT-PENDING-03 修改的往返（E2E-203）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">IT-PENDING-01 成立。修改对象行 1 件（未删除），可从一览选中。同一条件下另有其他一致行。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 选行 → 按修改 ② 记录 <code>/R60Maker/initEdit</code>（<code>mode="3"</code>）的响应（<code>lastUpdateDatetime</code>／<code>revNo</code>） ③ 改日文名 ④ 按登记 ⑤ 记录 <code>/R60Maker/edit</code>（<code>mode="3"</code>）的请求体与响应 ⑥ 确认主数据画面关闭、一览被重查 ⑦ 读一览的该行与其他行 ⑧ 在 DB 确认该行的 <code>rev_no</code> 与 <code>last_update_datetime</code></td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left"><code>/R60Maker/initEdit</code> 返回当前值 5 项＋<code>lastUpdateDatetime</code>＋<code>revNo</code>，代码不可改。<code>/R60Maker/edit</code> 请求带排他 2 项。成功时 <code>rev_no</code> 为<strong>旧值+1</strong>，<code>last_update_datetime</code> 被更新，一览显示改后值。<strong>其他行不变。</strong></td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">比对请求体中的排他 2 项与改后值、响应 <code>errorCode</code>、重查请求（最后检索条件・第 1 页）、一览值、DB 的 <code>rev_no</code> 前后（按「+1」的关系记录，不记实际值）、其他行不变。</td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.3「修改」・§4.5 #4・§5 事件7・12・§6「排他信息」。设计 §2.0／§2.6／§2.9、§4.6／§4.10、§1.1。节点6 TC-224／TC-226。</td></tr></tbody></table>
+<h3>IT-PENDING-04 新建的往返（E2E-204）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">IT-PENDING-01 成立。使用的代码未登记（删除行里也没有）。权限 MKR02 以上。登记确认对话框可选「是」。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 按新建 ② 记录 <code>/R60Maker/initEdit</code>（<code>mode="1"</code>）是否有请求及其响应 ③ 输入代码・日文名・假名名 ④ 按登记 → 确认选「是」 ⑤ 记录 <code>/R60Maker/edit</code>（<code>mode="1"</code>）的请求体与响应 ⑥ 确认一览被重查 ⑦ 在 DB 确认该行的 5 项</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left"><code>mode="1"</code> <strong>不继承任何值</strong>（全项空・紧急配信关闭・删除栏空白）。<code>/R60Maker/edit</code> 请求中排他 2 项为 <code>null</code>。成功时<strong>增加 1 行</strong>。<code>reg_kbn=1</code>（仕掛）・<code>send_sts=0</code>（未发送）・<code>del_flg=0</code>・<code>rev_no=1</code>。审计项由共通部品赋予，本画面不设值。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">比对请求体（排他 2 项为 <code>null</code>）、响应 <code>errorCode</code>、DB 行数增量与 5 项、审计项非空、重查条件。</td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.2・§4.3「新建・复制」・§4.5 #4・§5 事件5・12。设计 §2.9、§4.9、§1.1。节点6 TC-225。</td></tr></tbody></table>
+<h3>IT-PENDING-05 逻辑删除与从一览消失的方式（E2E-205）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">IT-PENDING-01 成立。删除对象行 1 件、无被参照。权限 MKR03。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 选行 → 按删除 → 确认「是」 ② 记录 <code>/R60Maker/delete</code> 的请求体与响应 ③ 记录发出的 DML ④ 确认一览重查（不含删除） ⑤ 用含删除再查 ⑥ 在 DB 确认 <code>del_flg</code> ⑦ 在主数据画面打开该行，读「删除勾选能否取消」「登记是否非活性」</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left"><code>errorCode="0"</code>。<code>del_flg=1</code>。<strong>物理 DELETE 语句 0 条</strong>。不含删除的一览中消失，含删除时作为已删除出现，排序为「未删除在前 → 已删除」。删除后不复原（删除勾选不可取消，登记按钮非活性）。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">比对请求体中的排他 2 项、响应 <code>errorCode</code>、发出 DML 的语句种类（<code>DELETE</code> 为 0 条）、两种条件下的一览出现／不出现、排序、主数据画面的 2 处活性。</td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.4・§4.5 #1・§5 事件11。设计 §2.8、§4.7、§1.1。节点6 TC-227。</td></tr></tbody></table>
+<h3>IT-PENDING-06 重复提交与排他竞争（E2E-206）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">IT-PENDING-01 成立。<strong>两个会话</strong>（A・B）能打开同一行。能操作登记确认对话框。<strong>画面侧的防重复提交已由节点5 v1.1.0（BUG-004）实现</strong>：<code>submitting</code> 守卫・<code>try/finally</code>・按钮 <code>:disabled</code>（<code>frontend/views/MakerEditScreen.vue:21,120-155,242-244</code>）。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 在 A 中新建输入 → 以很短间隔按登记两次（在确认对话框「是」之前插入第 2 次） ② 记录 <code>/R60Maker/edit</code> 的<strong>请求次数</strong>与各自响应 ③ 读按下期间的登记・删除按钮 <code>disabled</code> 状态 ④ 确认 DB 行数与 <code>rev_no</code> ⑤ 另做一遍：A・B 同时以修改模式打开同一行，A 先登记 → B 再登记 ⑥ 确认 B 的响应与 DB ⑦ <code>/R60Maker/delete</code> 也做同样的竞争</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left"><strong>画面侧</strong>：第 2 次按下被 <code>submitting</code> 守卫挡住、<strong>不发出请求</strong>（<code>/R60Maker/edit</code> 的请求为 1 次）。处理中登记・删除按钮为 <code>:disabled</code>，结束后（成功・失败都经 <code>finally</code>）恢复。<strong>服务器侧</strong>：即使请求到达 2 次也不产生 2 行（第 2 次被 E-217 <code>1</code>／<code>2003</code> 或 E-215 <code>1</code>／<code>2001</code> 挡住）。排他竞争中后到者被 E-217 挡住，<strong><code>rev_no</code> 不增两次</strong>。失败时不能留下的状态＝<strong>重复行・半途的 <code>rev_no</code> 增加</strong>。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">比对请求次数（是否为 1 次）、各响应的 <code>errorCode</code>／<code>errorId</code>、按钮的 <code>disabled</code> 属性、DB 行数与 <code>rev_no</code>（以「不增」的关系记录）、失败后一览是否回滚。<strong>若画面侧守卫（BUG-004）没有生效，则记录「仅靠服务器侧的排他・键重复守住了不产生 2 行」这一事实。</strong></td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.3「修改」#7、§7 排他。设计 §2.9、§4.10、§5 E-215／E-217。节点5 v1.1.0 §7（BUG-004）。节点6 TC-237／TC-239。</td></tr></tbody></table>
+<h3>IT-PENDING-07 异常系的贯通（E2E-207）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">正常系已成立。① 可让会话自最后操作起超过 30 分钟 ② 可进入稼働时间外（或计划停止） ③ 可用低权限用户（MKR01）打 <code>/R60Maker/edit</code>。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 30 分钟过后按显示 → 记录响应与<strong>替换到的画面</strong> ② 稼働时间外调 <code>/R60Maker/init</code> → 记录响应与替换到的画面 ③ MKR01 调 <code>/R60Maker/edit</code> → 记录响应与画面状态 ④ 3 个用例都记录画面的 URL 与显示的画种类别</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left">E-221 为 <code>9</code>／<code>9001</code>，替换为 <strong>SessionErrorScreen</strong>。E-222 为 <code>9</code>／<code>9002</code>，替换为 <strong>OnlineControlErrorScreen</strong>。E-220 为 <code>1</code>／<code>2004</code>，<strong>中断处理・不迁移画面</strong>。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left"><strong>不能只看 <code>errorCode</code> 判合否。</strong> 必须实测并记录替换到的画面类别（session／online／system 中的哪一种）。实现由 <code>errorScreenKindFor(errorId)</code> 分流：<code>9001</code>→<code>session</code>・<code>9002</code>→<code>online</code>・其他→<code>system</code>（<code>frontend/common/customerParts.ts:63-72</code>。节点5 v1.1.0 BUG-003 已替换 6 处）。<strong>若 9001 没有落到 session、9002 没有落到 online，则可能是 <code>errorId</code> 没有出现在响应里（§8.1 #2 的注入构成），要把响应 JSON 的 <code>errorId</code> 与画面类别对起来看。</strong></td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §7・§8 #9。设计 §2.0／§2.1、§5 E-220／E-221／E-222。节点5 v1.1.0 §7（BUG-003）。节点6 TC-242／TC-243／TC-244。</td></tr></tbody></table>
+<h3>IT-PENDING-08 下载与排他信息不外露（E2E-208）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">IT-PENDING-01 成立且检索成功（500 件以下）。权限 MKR03。能用真实文件打开 CSV。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 检索成功后按下载 ② 记录 <code>/R60Maker/download</code> 的<strong>请求体为空</strong> ③ 记录响应的 <code>Content-Type</code> 与 <code>Content-Disposition</code> ④ 按字节序列和文本两种方式检查 CSV ⑤ 修改画面条件后再下载，确认用的是<strong>上一次的检索条件</strong> ⑥ 用超过 500 件的条件下载，确认不输出 CSV</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left"><strong>没有请求体</strong>（<code>/download</code> 只用最后一次执行的检索条件。要求 §6 例外段落・设计 §2.0）。UTF-8（带 BOM）・CRLF・有表头行・<strong>5 列</strong>。<strong>没有</strong> <code>last_update_datetime</code> 与 <code>rev_no</code> 两列。改条件后的下载仍按最后执行的检索条件输出。超过 500 件为 <code>1</code>／<code>1002</code>，不输出 CSV。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">实测请求体的长度／键数（是否为 <code>0</code>）、前 3 字节是 BOM、换行符、表头列名与列数、排他 2 列不存在、改条件前后输出件数与内容一致、超上限时 <code>Content-Type</code> 为 JSON，逐一比对。</td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.1 #14・§6「CSV」・§6 例外段落（BUG-005）。设计 §2.0／§2.7、§4.5、§6（CSV 行）。节点6 TC-228／TC-236。</td></tr></tbody></table>
+<h3>IT-PENDING-09 复制的往返与「仅复制且无变更不登记」（要求 §4.2・§4.3）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">IT-PENDING-01 成立。复制源行 1 件，能准备与其代码不同的未登记代码。权限 MKR02 以上。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 选行 → 按复制 ② 记录 <code>/R60Maker/initEdit</code>（<code>mode="2"</code>）的请求与响应 ③ 读画面继承的项目・紧急配信・删除栏 ④ <strong>不改代码</strong>直接按登记 ⑤ 确认响应与 DB ⑥ 改代码后再按登记 ⑦ 确认响应与一览重查</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left"><code>mode="2"</code> <strong>只继承代码・日文名・假名名 3 项</strong>，紧急配信为关，删除栏空白。步骤 ④ 为「无变更」，<strong>不登记、仅显示消息</strong>（INSERT 0 行）。步骤 ⑥ 增加 1 行，<code>reg_kbn=1</code>／<code>send_sts=0</code>／<code>del_flg=0</code>／<code>rev_no=1</code>。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">比对请求体（排他 2 项为 <code>null</code>）、继承的 3 项与未继承项、步骤 ④ 行数增量 0、步骤 ⑥ 增量 1、重查情况。</td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.2「复制」・§4.3「新建・复制」#5、§5 事件6。设计 §2.6、§2.9、§4.9。</td></tr></tbody></table>
+<h3>IT-PENDING-10 被参照检查不计已删除参照源（承接残余风险 #4）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">前提</td><td style="text-align:left">对删除对象行 A，能准备 ① 只有已删除参照源的行 ② 存在未删除参照源的行（D-208／D-209）。被参照检查的共通部品已连接（未连接则成 E-218。见 §8.2 #8）。</td></tr><tr><td style="text-align:left">操作</td><td style="text-align:left">① 删除 ① 的行 ② 确认响应与 DB ③ 删除 ② 的行 ④ 确认响应与 DB ⑤ 也删除参照源为 0 件的行作为对照</td></tr><tr><td style="text-align:left">期望状态</td><td style="text-align:left">① 可删除（<code>errorCode="0"</code>・<code>del_flg=1</code>）。② 被 E-216（<code>1</code>／<code>2002</code>）挡住、<strong>不删除</strong>（<code>del_flg</code> 不变）。③ 不变。⑤ 可删除。<strong>不得擅自把参照件数当作 0</strong>（共通部品想定外则为 E-218 <code>9</code>／<code>9101</code>）。</td></tr><tr><td style="text-align:left">确认方法</td><td style="text-align:left">记录 3 个用例的响应 <code>errorCode</code>／<code>errorId</code>、DB 的 <code>del_flg</code> 前后、参照源的 <code>del_flg</code> 状态（是否已删除），逐一比对。<strong>测试数据的准备方式属 §8.2 #10 的未确定事项</strong>；准备不了就记「未观测」，不得默默丢掉。</td></tr><tr><td style="text-align:left">依据</td><td style="text-align:left">要求 §4.4 #4・§7・§8 #6。设计 §2.8、§4.7、§5 E-216／E-218、§1.2／§1.3。节点6 TC-238／TC-240。</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>5. 验收基准的满足性判定（<code>greenfield</code> 的替代）</h2>
+<p>代替 A/B 比较，把<strong>已承认要求的条款一一对应到 IT</strong>。对不上的条款连理由一起列出（不得默默丢掉）。</p>
+<h3>5.1 要求 §4 业务规则</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">要求的节</th><th style="text-align:left">对应 IT</th><th style="text-align:left">对不上的部分的处理</th></tr></thead><tbody><tr><td style="text-align:left">§4.1 检索（#1〜#16）</td><td style="text-align:left">IT-PENDING-01（#1〜#8・#11・#12・#15）・IT-PENDING-02（#9・#16）・IT-PENDING-08（#14）</td><td style="text-align:left">#10 的超 500 件由单体 TC-236 主测；结合侧只在 IT-PENDING-08 步骤 ⑥ 观测 CSV 一侧。#13（已删除且仕掛）依赖测试数据（§8.2 #10），故为未确定</td></tr><tr><td style="text-align:left">§4.2 主数据画面的初期化</td><td style="text-align:left">IT-PENDING-09（复制）・IT-PENDING-04（新建）・IT-PENDING-03（修改）</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">§4.3 登记・更新</td><td style="text-align:left">IT-PENDING-04（新建）・IT-PENDING-09（复制）・IT-PENDING-03（修改）・IT-PENDING-06（排他竞争）</td><td style="text-align:left">输入检查（#3・#4）画面侧为单体 TC-241，服务器侧为单体 TC-246</td></tr><tr><td style="text-align:left">§4.4 删除</td><td style="text-align:left">IT-PENDING-05・IT-PENDING-10・IT-PENDING-06（排他竞争）</td><td style="text-align:left">无</td></tr><tr><td style="text-align:left">§4.5 数据的处理</td><td style="text-align:left">IT-PENDING-05（#1 逻辑删除・不复原）・IT-PENDING-03（#4 审计项）</td><td style="text-align:left">#2 名称允许重复属单体范围（结合侧观测点很薄）。#3 发送状态 9 的处理依赖测试数据（§8.2 #10）</td></tr><tr><td style="text-align:left">§4.6 输入检查</td><td style="text-align:left">IT-PENDING-09（画面侧挡住、不发给服务器）</td><td style="text-align:left">各桁・字符种的值见单体 TC-230〜TC-232／TC-241／TC-246</td></tr><tr><td style="text-align:left">§4.7 紧急配信</td><td style="text-align:left">IT-PENDING-04（以 <code>send_sts=0</code> 创建）</td><td style="text-align:left"><strong>配信处理本体不在范围内</strong>（要求 §2.2。共通部品。成败不返回本画面）。配信的启动顺序（确定后异步）不予观测</td></tr></tbody></table>
+<h3>5.2 要求 §5 事件 1〜12</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">事件</th><th style="text-align:left">API</th><th style="text-align:left">对应 IT</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:left">1 初期显示</td><td style="text-align:left"><code>/R60Maker/init</code></td><td style="text-align:left">IT-PENDING-01</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">2 显示</td><td style="text-align:left"><code>/R60Maker/search</code></td><td style="text-align:left">IT-PENDING-01・IT-PENDING-02</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">3 分页器操作</td><td style="text-align:left"><code>/R60Maker/search</code></td><td style="text-align:left">IT-PENDING-01（步骤 ⑦⑧）</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">4 条件区(非)显示</td><td style="text-align:left">无</td><td style="text-align:left">IT-PENDING-01（步骤 ⑨）</td><td style="text-align:left">观测 API 0 条</td></tr><tr><td style="text-align:left">5 新建</td><td style="text-align:left"><code>/R60Maker/initEdit</code></td><td style="text-align:left">IT-PENDING-04</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">6 复制</td><td style="text-align:left"><code>/R60Maker/initEdit</code></td><td style="text-align:left">IT-PENDING-09</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">7 修改</td><td style="text-align:left"><code>/R60Maker/initEdit</code></td><td style="text-align:left">IT-PENDING-03</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">8 下载</td><td style="text-align:left"><code>/R60Maker/download</code></td><td style="text-align:left">IT-PENDING-08</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">9 返回</td><td style="text-align:left">无</td><td style="text-align:left">IT-PENDING-03・IT-PENDING-04（观测画面结束）</td><td style="text-align:left">确认对话框选「否」则不迁移，见设计 §2.11</td></tr><tr><td style="text-align:left">10 业务结束</td><td style="text-align:left">无</td><td style="text-align:left"><strong>本节点对象外</strong></td><td style="text-align:left">不跨 API（仅画面结束）。已承认的栈里没有画面自动化，观测手段未确定（§8.2 #3）</td></tr><tr><td style="text-align:left">11 删除</td><td style="text-align:left"><code>/R60Maker/delete</code></td><td style="text-align:left">IT-PENDING-05・IT-PENDING-10</td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">12 登记</td><td style="text-align:left"><code>/R60Maker/edit</code></td><td style="text-align:left">IT-PENDING-03・IT-PENDING-04・IT-PENDING-09</td><td style="text-align:left">—</td></tr></tbody></table>
+<h3>5.3 判定的记录位置</h3>
+<p>满足性判定的结果记入 <code>tutorial/R60Maker/节点7_结合测试/verification.md</code>，<br>按 IT 逐条记为「满足／不满足／未观测」（<strong>本文档不创建该记录</strong>）。「未观测」不得留空。</p>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>6. 事务边界与非功能的观测</h2>
+<h3>6.1 事务边界</h3>
+<p>看的不是「能不能跑」，而是「会不会弄坏」。<strong>发出写操作的只有 <code>/edit</code> 与 <code>/delete</code> 两个端点</strong><br>（输入模板 <code>db_transaction_boundary</code>・设计 §2.9／§2.8）。实现中读 4 个端点用 <code>engine.connect()</code>，<br><code>/edit</code>・<code>/delete</code> 用 <code>engine.begin()</code>；<code>/edit</code> 发 INSERT／UPDATE，<code>/delete</code> 只发 UPDATE。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">确认项目</th><th style="text-align:left">步骤</th><th style="text-align:left">期望</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">读 4 个端点只有 SELECT</td><td style="text-align:left">在 <code>/R60Maker/init</code>・<code>/R60Maker/search</code>・<code>/R60Maker/initEdit</code>・<code>/R60Maker/download</code> 的执行区间记录发出的 DML 并分类语句种类（手段见 §8.2 #6）</td><td style="text-align:left"><code>INSERT</code>／<code>UPDATE</code>／<code>DELETE</code>／<code>MERGE</code> 为 <strong>0 条</strong></td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">更新对象仅限 D-207</td><td style="text-align:left">记录 <code>/edit</code>・<code>/delete</code> 的 DML 目标表</td><td style="text-align:left">更新仅 D-207。D-208〜D-212 只有 SELECT</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">确为逻辑删除</td><td style="text-align:left">记录 <code>/delete</code> 的 DML</td><td style="text-align:left">只有 <code>UPDATE ... SET del_flg='1'</code>。<strong>物理 <code>DELETE</code> 为 0 条</strong></td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">仅在成功时提交</td><td style="text-align:left">在 <code>/edit</code>・<code>/delete</code> 前后读 DB</td><td style="text-align:left">成功时确定。<strong>例外时回滚</strong>（<code>rev_no</code> 不增，行不残留）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">失败时回滚</td><td style="text-align:left">IT-PENDING-06 的竞争后读 DB</td><td style="text-align:left">行数与 <code>rev_no</code> 与<strong>竞争前一致</strong></td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">读 4 个端点件数不变</td><td style="text-align:left">各 IT 前后记录 D-207〜D-212 的件数</td><td style="text-align:left">所有表前后一致</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">读 4 个端点排他键不变</td><td style="text-align:left">同 6 表的 <code>last_update_datetime</code>／<code>rev_no</code> 最大值前后记录</td><td style="text-align:left">前后一致（若变化则能说明原因）</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">区分前提操作与应用写操作</td><td style="text-align:left">IT-PENDING-07 以会话・稼働状态为前提操作。<strong>该变更属测试准备、并非应用 DML</strong>，在记录中分开写</td><td style="text-align:left">应用 DML 0 条与准备操作被区分</td></tr></tbody></table>
+<h3>6.2 非功能（响应时间・同时更新・大量件数・回滚）</h3>
+<p><strong>合格基准以节点2 承认版 §11 的对应行为唯一定义，本文档不转抄数值</strong>（§1.4）。<br>在 <code>stg</code> 环境（节点4 §2。本番同等构成：TLS・JST・反向代理・共通部品连接）测量。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">观点</th><th style="text-align:left">合格基准的出处</th><th style="text-align:left">测量条件</th><th style="text-align:left">观测它的 IT</th><th style="text-align:left">观测的事实</th></tr></thead><tbody><tr><td style="text-align:left">一览检索的响应时间</td><td style="text-align:left">节点2 §11 No.4</td><td style="text-align:left">件数上限・每页 100 件・同时会话数按同 No.4／No.8 的条件。测<strong>服务器处理时间</strong></td><td style="text-align:left">IT-PENDING-01</td><td style="text-align:left">多次记录 <code>/search</code> 耗时，做分布（95 百分位）</td></tr><tr><td style="text-align:left">画面显示的响应时间</td><td style="text-align:left">节点2 §11 No.5</td><td style="text-align:left">初期显示与画面迁移分开测。扣除网络延迟</td><td style="text-align:left">IT-PENDING-01・03</td><td style="text-align:left">从 <code>/init</code> 到描画的耗时、画面迁移耗时</td></tr><tr><td style="text-align:left">登记・删除的完成响应</td><td style="text-align:left">节点2 §11 No.6</td><td style="text-align:left">含被参照检查・排他。不含配信受理</td><td style="text-align:left">IT-PENDING-03・04・05</td><td style="text-align:left"><code>/edit</code>・<code>/delete</code> 的耗时</td></tr><tr><td style="text-align:left">CSV 下载</td><td style="text-align:left">节点2 §11 No.7</td><td style="text-align:left">件数上限・UTF-8（带 BOM）。超上限时不输出</td><td style="text-align:left">IT-PENDING-08</td><td style="text-align:left">耗时与文件大小。超上限时不出 CSV</td></tr><tr><td style="text-align:left">同时更新（排他）</td><td style="text-align:left">设计 §1.1（排他为 2 键）・§5 E-217</td><td style="text-align:left">用 2 个会话同时更新同一行</td><td style="text-align:left">IT-PENDING-06</td><td style="text-align:left">后到者被 2003 挡住・<code>rev_no</code> 只增一次</td></tr><tr><td style="text-align:left">大量件数（边界）</td><td style="text-align:left">设计 §6（件数 0／500／501）</td><td style="text-align:left">准备恰好 500 件与 501 件</td><td style="text-align:left">IT-PENDING-01（500 件）・IT-PENDING-08（501 件不出 CSV）</td><td style="text-align:left">件数边界下的响应与输出有无</td></tr><tr><td style="text-align:left">例外时回滚</td><td style="text-align:left">设计 §5 E-223・§2.9</td><td style="text-align:left">让 <code>/edit</code>／<code>/delete</code> 处理中抛异常</td><td style="text-align:left">IT-PENDING-06</td><td style="text-align:left">异常后<strong>行数与 <code>rev_no</code> 不变</strong></td></tr><tr><td style="text-align:left">同时利用数</td><td style="text-align:left">节点2 §11 No.8</td><td style="text-align:left">同条件的同时会话数</td><td style="text-align:left">本节点<strong>不观测</strong>（负载生成基盘未确定。§8.2 #4）</td><td style="text-align:left">作为未确定记录</td></tr></tbody></table>
+<blockquote class="quote">因 <code>greenfield</code>，不设健康度分数与阈值（规则 04 §7.1）。**上表是「测什么」，<br>合否的数值判定请人打开 §1.4 指出的出处来定。**</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>7. 残余风险的承接</h2>
+<p>不能停在「发过去了」。要写清<strong>测什么才能判定</strong>；测不了就把这个局限留在记录里。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">残余风险（输入模板 <code>residual_risks</code>）</th><th style="text-align:left">哪个 IT</th><th style="text-align:left">测什么可以判定</th><th style="text-align:left">测不了时还剩什么</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">防重复提交依赖画面侧实现，单体测不到</td><td style="text-align:left">IT-PENDING-06</td><td style="text-align:left">连按登记时 <code>/R60Maker/edit</code> 是否发两次、第 2 次是否被服务器挡住、行数是否不增</td><td style="text-align:left">画面侧守卫（节点5 v1.1.0 BUG-004）若不生效，则<strong>只剩服务器侧的排他・键重复在守</strong>。把这一事实留在记录里</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">排他（<code>rev_no</code>）竞争在单进程内无法复现</td><td style="text-align:left">IT-PENDING-06</td><td style="text-align:left">2 个会话同时更新时，后到者是否被 2003 挡住、<code>rev_no</code> 是否只增一次</td><td style="text-align:left">准备不出 2 个会话则记「未观测」。单体 TC-239 已用 mock 担保</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">稼働时间・会话 30 分钟判定依赖时刻，单体无法固定</td><td style="text-align:left">IT-PENDING-07</td><td style="text-align:left">把时刻移到边界前后时是否出现 9002／9001 以及<strong>替换到的画面</strong></td><td style="text-align:left">移动服务器时刻的手段未确定（§8.2 #5）则「未观测」</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">被参照检查「不计已删除参照源」单体造不出来</td><td style="text-align:left">IT-PENDING-10</td><td style="text-align:left">只有已删除参照源的行能否删除、有未删除参照源时是否被 2002 挡住</td><td style="text-align:left">准备不出参照数据则「未观测」。记录<strong>依赖测试数据</strong>这一事实</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">测试执行基盘（后端启动・DB 往返・CSV 实际文件）未定义</td><td style="text-align:left">§8.2</td><td style="text-align:left">定义的有无本身。<strong>未确定时不得写「已实施」</strong></td><td style="text-align:left">确定之前 IT-PENDING-01〜10 无法执行。确定去处为 §8.2</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-10">
+<h2>8. 观测范围与保留（<strong>只有结论</strong>）</h2>
+<ul><li><strong>本节点的观测到 API 级为止。</strong> 画面显示值、按钮活性、替换后画面种类、执行时的 DML 文种<strong>不观测</strong>。</li></ul>
+<p><strong>未观测就写未观测，不当合格。</strong></p>
+<ul><li><strong>10 条中 7 条可、3 条保留。</strong> 保留为 IT-PENDING-06（造不出 2 个 session）、IT-PENDING-07（看不见替换后画面）、</li></ul>
+<p>IT-PENDING-10（被参照检查的共通部品未提供）。<strong>保留不是不合格。合格线有效，执行基盘就绪即可照用。</strong></p>
+<ul><li><strong>本节点承认的是规格书，不是测试结果。</strong> 执行结果为 0 件。</li><li><strong>本节点的未观测部分由节点 8 的发布判定承接。</strong></li><li>未确定事项清单、裁定经过、保留依据在 <code>docs/00_plan/coach/R60Maker/n07.yml</code> 与 <code>02_审查结果.md</code></li></ul>
+<p>（<strong>本承认版不列清单</strong>·规则 02 §6.1）。</p>
+</section>
+<section class="sec sec-plain" id="sec-11">
+<h2>9. 追踪</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">上游</th><th style="text-align:left">本文档的对应节</th></tr></thead><tbody><tr><td style="text-align:left">R-202 v1.0.1 §4 业务规则・§5 画面项目／事件・§6 接口（含 <code>/download</code> 例外）・§7 异常处理・§8 标准规约</td><td style="text-align:left">§1.1・§2・§3・§4（各 IT 的依据）・§5・§8.3</td></tr><tr><td style="text-align:left">F-202（已承认基本设计）的画面项目 I-322〜I-354・事件 12 件・§11 非功能・§12 制约</td><td style="text-align:left">§2・§4・§5.2・§6.2</td></tr><tr><td style="text-align:left">节点3 v1.1.0 §2.0 端点与路径・§1 数据模型・§2 逻辑 L-212〜L-222・§4 SQL・§5 错误分支・§6 边界值</td><td style="text-align:left">§1.1・§3・§4・§6.1・§6.2</td></tr><tr><td style="text-align:left">节点5 制造记录 v1.1.0（BUG-003・BUG-004・CR-006）与 22 个文件（backend 17・frontend 5）</td><td style="text-align:left">§4（IT-PENDING-06・07）・§8.1（实现观测）・§8.3・§6.1（事务边界）</td></tr><tr><td style="text-align:left">节点6 TC-222〜TC-246 的覆盖（单体担保的范围）</td><td style="text-align:left">§1.1・§5（单体担保条款的切分）</td></tr><tr><td style="text-align:left">节点4 承认版 §2 环境・§3 依赖・§4.1 门番</td><td style="text-align:left">§6.2（在 <code>stg</code> 测）・§8.2</td></tr><tr><td style="text-align:left">输入模板 <code>00_输入模板.yaml</code> 的 <code>api_sequence</code>／<code>e2e_scenarios</code>／<code>db_transaction_boundary</code>／<code>residual_risks</code></td><td style="text-align:left">§3・§4・§6.1・§7</td></tr></tbody></table>
+<p><strong>IT-ID 为临时编号（未在 <code>ids.yml</code> 登记）。</strong> 实际项目中由人在节点7 发放（红线①）。</p>
+</section>
+<section class="sec sec-plain" id="sec-12">
+<h2>知识库的使用记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">doc_id</th><th style="text-align:left">参照的节</th><th style="text-align:left">反映到</th></tr></thead><tbody><tr><td style="text-align:left">TPL-INTEGRATION-TEST-001</td><td style="text-align:left">§0 使用方法・§1 场景一览・§3 非功能（性能・排他・同时执行）</td><td style="text-align:left">§2（IT 一览的列构成与「失败时不能留下的状态」的并记）・§6.2（观点／合格基准出处／测量条件的 4 列）</td></tr><tr><td style="text-align:left">PAT-DEV-PLAYBOOK-001</td><td style="text-align:left">§0・§2 整体图・§3 各工程手册（工程⑦ 结合・综合测试）</td><td style="text-align:left">§1.1（与单体的切分）・§4（把场景写成业务流向）・§5（验收基准的满足性判定）</td></tr><tr><td style="text-align:left">PAT-DEV-WALKTHROUGH-001</td><td style="text-align:left">§2 走查主体（D6 结合测试・业务场景由人输入）</td><td style="text-align:left">§3（把 api_sequence 写成顺序）・§4（每个 IT 用前提／操作／期望／确认方法四点一套）</td></tr></tbody></table>
+<h3>8.4 观测范围的裁定（2026-11-10・人）</h3>
+<p><strong>本节点的观测范围到 API 级为止。</strong> 画面上显示的值、对话框操作、替换后的画面种类<strong>不观测</strong><br>（因承认栈中无浏览器自动化，见 §8.2 #3）。</p>
+<ul><li><strong>理由</strong>：往栈里加东西属于红线④，本节点不擅自加。不加的代价是——<strong>不把缺失的观测写成"已实施"</strong>。</li><li><strong>代价（写明）</strong>：E2E-207 里"替换后是 SessionErrorScreen 还是 OnlineControlErrorScreen"，</li></ul>
+<p>API 观测不到。只验证 <code>errorId</code> 9999/9001/9002 的返回，<strong>替换后的实体为未观测</strong>。</p>
+<ul><li><strong>波及</strong>：节点 8（发布判定）要<strong>承接这部分未观测</strong>作为遗留课题。</li></ul>
+<p>若把"画面被正确替换"纳入合格条件，须先在工程 04 定下栈。</p>
+<ul><li><strong>这不是质量妥协，而是把可观测范围讲清楚。</strong> 写明"未观测"比不装浏览器却宣称"E2E 合格"安全。</li></ul>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>05_承認版_结合测试规格书.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

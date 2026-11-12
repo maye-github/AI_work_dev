@@ -6,9 +6,10 @@ doc_type: pattern
 version: "1.0"
 status: active
 conf_level: 20
-owner: 共通基盤チーム
+owner: Nan
 updated_at: 2026-10-29
 tags: [requirements, review, lenses, questions]
+source_project: framework-rules
 ---
 
 # 要求書審査の観点（レンズ）— 4 群 52 本の使い方

@@ -1,0 +1,240 @@
+ledger_version: "1"
+case_ref: "R60Maker"
+frozen_at: "2026-11-05"
+source_legend:
+  - {mark: "文書", meaning: "設計書（xlsx の sheet）に明文がある"}
+  - {mark: "実測", meaning: "実装（.vue/.ts/.py）にそう書いてある"}
+  - {mark: "差異", meaning: "設計書と実装が食い違っている（又は設計書に欠落がある）"}
+  - {mark: "未確認", meaning: "どちらにも書いていない"}
+access_note: |
+  本案件の旧リポジトリルート（D:/AI_work）は**この作業環境に存在しない**。
+  したがって全項目は、設計書・実装から既に作られている知識庫カード
+  （screens/R60Maker.md と modules/R60Maker/*.yaml）を経由して取得した**二手の参照**である。
+  source_ref は知識庫側のパスを示す。原文（xlsx / 実装）を直接読んだ項目は 0 件である。
+  これは出典の捏造ではなく、参照経路の明示である（原文到達不能）。
+
+human_decisions:
+  - decision_no: "HD-01"
+    topic: "検索の上限件数（G1）"
+    ruling: "空白のまま残す。数値を書かず「弊社の共通仕様による」とする"
+    decided_by: "Li"
+    decided_at: "2026-11-05"
+    note: "節点1 が上限値の欠落を発見できるかを測るため"
+  - decision_no: "HD-02"
+    topic: "登録ステータス（仕掛／確定）の判定基準（G2）"
+    ruling: "空白のまま残す。判定基準を書かず「弊社の共通仕様による」とする"
+    decided_by: "Li"
+    decided_at: "2026-11-05"
+    note: "設計書に判定基準の本文が無い（D-MK-05）"
+  - decision_no: "HD-03"
+    topic: "削除時の緊急配信の判定時点（G3）"
+    ruling: "空白のまま残す。「緊急配信が指示されている場合」とだけ書き、時点を書かない"
+    decided_by: "Li"
+    decided_at: "2026-11-05"
+    note: "設計書の記述が一意でない（D-MK-08）"
+  - decision_no: "HD-04"
+    topic: "一覧「送信状態」の表示位置（G4）"
+    ruling: "空白のまま残す。列か行内ラベルかを書かない"
+    decided_by: "Li"
+    decided_at: "2026-11-05"
+    note: "設計書に列か行ラベルかの記載が無い"
+  - decision_no: "HD-05"
+    topic: "前提条件（G5）"
+    ruling: "「あり」とだけ書き、内容は「別途提示する」として空ける"
+    decided_by: "Li"
+    decided_at: "2026-11-05"
+    note: "AI が「なし」と補完しかけたが、設計書は「あり」であり、補完は測定を汚染するため空けた"
+
+items:
+  - ledger_no: "LG-01"
+    clause: "§1 背景／§3.1 画面の役割"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §2（概要 r12-r17）"
+    deviation_ref: null
+    note: "画面概要・利用対象者・使用頻度・画面区分は概要シートに明文"
+  - ledger_no: "LG-02"
+    clause: "§2 対象外（購入品目別仕入先・原材料仕入単価の各画面そのもの）"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §7（被参照元）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-03"
+    clause: "§2 対象外（アップロードを含まない）"
+    source_kind: "実測"
+    source_ref: "reports/module-survey/scores/R60Maker.yaml complexity.signals.upload=false"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-04"
+    clause: "§3.2 検索画面の項目"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §3.1（画面項目内容(検索) r15-r51・全 33 項目）"
+    deviation_ref: "D-MK-01"
+    note: "要求書では業務単位に集約して 21 行とした。33 との差は標準部品の細目の集約による"
+  - ledger_no: "LG-05"
+    clause: "§3.2 #16 送信状態"
+    source_kind: "未確認"
+    source_ref: "screens/R60Maker.md §3.1（No.23 送信）"
+    deviation_ref: null
+    note: "列か行ラベルかが未確定。判定は HD-04 で「空白のまま残す」"
+  - ledger_no: "LG-06"
+    clause: "§3.3 マスタ画面の項目"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §3.2（画面項目内容(マスタ項目) r16-r27・全 9 項目）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-07"
+    clause: "§3.4 イベント 13 件"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §4（イベント一覧 r14-r27）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-08"
+    clause: "§3.4 イベント 4・9・10・13"
+    source_kind: "差異"
+    source_ref: "screens/R60Maker.md §4 注記"
+    deviation_ref: "D-MK-13"
+    note: "「共通処理参照」「標準仕様参照」のみで本文が無い"
+  - ledger_no: "LG-09"
+    clause: "§3.5 検索条件（前方一致・中間一致・削除含む・仕掛表示）"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §5.2（業務処理説明 r22 以降）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-10"
+    clause: "§3.5 ソート指定は 2 項目のみ"
+    source_kind: "実測"
+    source_ref: "modules/R60Maker/02-api.yaml（ALLOWED_SORT_FIELDS = MAKER_CD, MAKER_NM）"
+    deviation_ref: null
+    note: "設計書には白名单の記載が無い"
+  - ledger_no: "LG-11"
+    clause: "§3.5 上限件数"
+    source_kind: "未確認"
+    source_ref: "screens/R60Maker.md §5.2 手順 3"
+    deviation_ref: null
+    note: "設計書の 3000 は例。実装はコード値マスタから取得。数は要求書に書かない（HD-01）"
+  - ledger_no: "LG-12"
+    clause: "§3.6 3 モードの初期化"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §5.3"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-13"
+    clause: "§3.6 複製で緊急配信・削除を引き継がない"
+    source_kind: "差異"
+    source_ref: "screens/R60Maker.md §5.3 注記"
+    deviation_ref: "D-MK-06"
+    note: "実装は複製時に元レコードの削除フラグ等も返すが、登録結果は設計どおり新規扱い"
+  - ledger_no: "LG-14"
+    clause: "§3.7 新規・複製のチェック順"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §5.5（業務処理説明 r258 以降）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-15"
+    clause: "§3.7 修正のチェック順"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §5.5"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-16"
+    clause: "§3.7 変更なしの扱い"
+    source_kind: "文書"
+    source_ref: "modules/R60Maker/04-errors.yaml（R60W0016 相当の警告）"
+    deviation_ref: null
+    note: "メッセージコードは要求書に書かない"
+  - ledger_no: "LG-17"
+    clause: "§3.8 削除のチェック順"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §5.4（業務処理説明 r329 以降）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-18"
+    clause: "§3.8 削除時は緊急配信のオンオフにかかわらず名称必須"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §5.4 手順 1・2"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-19"
+    clause: "§3.8 論理削除（物理削除しない）"
+    source_kind: "実測"
+    source_ref: "modules/R60Maker/01-fields.yaml（削除フラグによる論理削除）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-20"
+    clause: "§3.9 入力チェック（桁・文字種・禁止文字）"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §3.2・modules/R60Maker/04-errors.yaml（単項目チェック）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-21"
+    clause: "§3.10 緊急配信の起動条件"
+    source_kind: "文書"
+    source_ref: "screens/R60Maker.md §5.7 手順 4"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-22"
+    clause: "§3.10 削除時の緊急配信の判定時点"
+    source_kind: "未確認"
+    source_ref: "screens/R60Maker.md §5.4 注記"
+    deviation_ref: "D-MK-08"
+    note: "設計書の記述が一意でない。要求書には時点を書かない（HD-03）"
+  - ledger_no: "LG-23"
+    clause: "§3.11 登録ステータスの判定は弊社共通仕様"
+    source_kind: "差異"
+    source_ref: "screens/R60Maker.md §5.6"
+    deviation_ref: "D-MK-05"
+    note: "設計書に判定基準の本文が無い。実装値は確定規則として扱わない（HD-02）"
+  - ledger_no: "LG-24"
+    clause: "§3.11 監査項目は共通仕様で付与"
+    source_kind: "実測"
+    source_ref: "modules/R60Maker/01-fields.yaml（登録・更新系カラム）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-25"
+    clause: "§3.11 セッションを新たに生成しない"
+    source_kind: "実測"
+    source_ref: "screens/R60Maker.md §5.1（セッション情報存在チェックのみ）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-26"
+    clause: "§4 API 6 端点"
+    source_kind: "実測"
+    source_ref: "screens/R60Maker.md §6"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-27"
+    clause: "§4.5 モード値 1/2/3"
+    source_kind: "実測"
+    source_ref: "modules/R60Maker/02-api.yaml（mode 値域）"
+    deviation_ref: "D-MK-12"
+    note: "設計書に値域が無い。要求書では実装値を採った"
+  - ledger_no: "LG-28"
+    clause: "§4.3 検索区分 1/0"
+    source_kind: "実測"
+    source_ref: "modules/R60Maker/02-api.yaml（btn 値域）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-29"
+    clause: "§4.6・§4.7 排他情報（最終更新日時・改訂番号）"
+    source_kind: "実測"
+    source_ref: "modules/R60Maker/01-fields.yaml（排他項目）"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-30"
+    clause: "§5 エラー処理の各事象"
+    source_kind: "文書"
+    source_ref: "modules/R60Maker/04-errors.yaml（messages・exception_cases）"
+    deviation_ref: null
+    note: "メッセージ文言は要求書に書かない（標準規約に委ねる）"
+  - ledger_no: "LG-31"
+    clause: "§5 セッション／オンライン制御／システムエラーの遷移先"
+    source_kind: "文書"
+    source_ref: "modules/R60Maker/04-errors.yaml exception_cases"
+    deviation_ref: null
+    note: null
+  - ledger_no: "LG-32"
+    clause: "§3.1 前提条件"
+    source_kind: "未確認"
+    source_ref: "screens/R60Maker.md §2（前提条件「あり」・本文なし）"
+    deviation_ref: "D-MK-09"
+    note: "内容を特定できないため「別途提示する」として空けた（HD-05）"

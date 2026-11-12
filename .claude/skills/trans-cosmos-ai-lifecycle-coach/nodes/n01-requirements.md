@@ -29,6 +29,42 @@ version: 0.1.1
       ／ **無い場合**は、先に `virtual-requirement-author` skill で仮想需求書を産出・凍結してから始める（§2 の注記）
 - [ ] **要求の対象が 1 機能に絞られている**（1 要求 = 1 R-ID。混ざっていたら先に分ける）
 
+## 1.5 必查（この節点で知識ベースから先例を引く）
+
+**産出の前に必ず引く。** 引いた先例は承認版の front matter に `kb_refs:` として記録する。
+先例が無い場合は `kb_refs: []` とし、`open_questions` に「先例なし」と理由を書く。
+
+| 何を | どこから |
+|---|---|
+| 審査観点・案件用語 | `company/patterns/review/`・`projects/<P-ID>/glossary/` |
+
+```bash
+# 候補を出す（--as は必須。付けないと会社級しか返らない）
+py -3 -m tools.kb_refs suggest --project <P-ID> --as <人> --query "要件の曖昧さ"
+
+# 承認版を検査する
+py -3 -m tools.kb_refs check <承認版> --node 1
+```
+
+> **`kb_refs` に書くのは先例**（案件の事実・テンプレート・パターン）。
+> **★本节点必读**（`kb_refs` に必ず記録し、**本文で実際に参照する**。`py -3 -m tools.kb_refs check <承認版> --node 1 --require-node` で検査する）
+>
+> | doc_id | 何のために読むか |
+> |---|---|
+> | `PAT-REVIEW-LENS-001` | 52 の観点で要求書を審査する（内部矛盾・記述の穴・暗黙の前提） |
+> | `PAT-DEV-PLAYBOOK-001` | 工程① の入出力（人が入力するもの・レビューするもの） |
+>
+> **2026-11-10 に PAT-REVIEW-CAP-001（審査能力の分解）を必読から外した。** あれは「審査能力をどう分解し、
+> どう伸ばすか」を**人が学ぶため**の条目であり、節点1 の実行体が産出に使う知識ではない。
+> 実測でも R60Maker の全成果物・全レポートに 1 回も現れていない（0 件）。
+> **必読は「その節点が実際に使う知識」に限る**——使わない条目を並べると、`kb_refs` が
+> 埋めるための儀式になる。`node-map.yaml` も同時に直した（人の承認済 2026-11-10）。
+
+> **書くのは「その節点で実際に参照した条目」だけ**——先例（案件の事実・`TPL-*`・`PAT-*`）と
+> 規約（`STD-*`）のどちらも書いてよい。`STD-*` は「遵守の記録」であり、**本文で規則を再掲しない**
+> （規則の正本は `.claude/rules/`）。**`canonical: true` の `STD-*` は要約ではなく方法の正本**なので先例として扱う
+> （`kb-policy.md` §2.4）。
+
 ## 2. 入力
 
 | 何を | どこから | 無いとき |
@@ -44,13 +80,13 @@ version: 0.1.1
 > - **`build_mode: migration` の案件では使わない。** 既存実装がそのまま入力になるので、倒推は不要であり、
 >   「答案」を先に読ませることになるため**測定を壊す**。
 > - 凍結後の下流（節点 2〜8）は `D:\AI_work` と `tools/kb-platform/repo/projects/P-R60-001/` を**読み返さない**。
->   人版を読むのは**事後の対比だけ**である（方法: `docs/90_knowledge/agent-run-record.md` §5.1）。
+>   人版を読むのは**事後の対比だけ**である（方法: `tools/kb-platform/repo/projects/P-R60-001/knowledge/agent-run-record.md` §5.1）。
 >
 > **★要求書そのものを審査したいとき**（真の案件ではこれが本命）：
 > **`requirement-interrogator` skill** を使う。顧客の要求書から「確認すべき点」を立てる技能で、
 > 実在案件の QA 票 177 件から抽出した 52 の観点を持つ。
 > **節点1 の実行体がやるのは「転記」、本スキルがやるのは「審査」である**（別の能力。
-> `docs/90_knowledge/ppt-deviation-register.md` A-25 を参照）。
+> `tools/kb-platform/repo/company/standards/ppt-deviation.md` A-25 を参照）。
 
 ## 3. 手順（1 ステップずつ出す）
 

@@ -11,8 +11,8 @@ version: 0.2.0
 # 知識飛輪規則（踩坑 → 規則化 → 検査追加 → 全隊免疫）
 
 > **本規則の出所**: 社内 AI 実績 PPT `AI 在Harmony项目中的应用.pptx`（Harmony プロジェクト組、2026.06）。
-> **要件源（PPT 2 份）には無い追加要素**である。登録は `docs/90_knowledge/ppt-deviation-register.md` §2 を参照。
-> 詳細な実績値と 5 道ゲートの内訳は `docs/90_knowledge/internal/harmony-5gates.md` が唯一の定義。
+> **要件源（PPT 2 份）には無い追加要素**である。登録は `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2 を参照。
+> 詳細な実績値と 5 道ゲートの内訳は `tools/kb-platform/repo/company/standards/internal/harmony-5gates.md` が唯一の定義。
 
 **Summary**: 不具合やレビュー指摘を「直して終わり」にせず、**① 記録 → ② 分析 → ③ 規則化 → ④ 検査の自動化 → ⑤ 配布** の 5 段で組織へ固定する。本規則はその 5 段を本骨架の資産パスへ写像し、各段の責任者を定める。
 
@@ -36,7 +36,7 @@ Harmony プロジェクト（Vue 2→3 移行、3 人チーム）が実運用し
 | # | Harmony の段 | 本骨架での写像先 | 責任 |
 |---|-------------|----------------|------|
 | 1 | 踩坑（G1-G5 失敗） | `py -3 -m tools.trace_check --strict` の FAIL、または人レビューの指摘 | 実行した AI |
-| 2 | anomaly 自動創建 | `docs/90_knowledge/review_diff_assets/<module>/review_comments.md` に 1 件追記 | AI（起案） |
+| 2 | anomaly 自動創建 | `tools/kb-platform/repo/projects/P-R60-001/review/<module>/review_comments.md` に 1 件追記 | AI（起案） |
 | 3 | 5 問帰档分析 | **§2 の 5 問**（下記）に答える | 人（裁定）|
 | 4 | 規則を書く（guides/traps.md） | `.claude/rules/**` へ 1 条追記（起動時に自動ロードされるため配布工程が不要） | 人（承認）|
 | 5 | check スクリプト追加 | `tools/trace_check` に **gate を追加**（§3 の制約あり） | AI |
@@ -100,7 +100,7 @@ Harmony PPT は「5 問归档分析」とだけ述べ、**5 問の中身は展�
 **その裁定が記録されている場所（パス。可能なら節・行）を同じ行に書く**。
 **出典を書けない裁定は、書いてはならない**——それは裁定ではなく AI の判断である。
 
-- 正: `build_mode は greenfield のまま（出典: docs/90_knowledge/ppt-deviation-register.md A-22）`
+- 正: `build_mode は greenfield のまま（出典: tools/kb-platform/repo/company/standards/ppt-deviation.md A-22）`
 - 誤: `build_mode を greenfield → migration へ変更（ユーザー裁定 2026-10-14）`
   → **その裁定は実在しなかった**（RC-SK-03）。**日付だけでは出典にならない。**
 - **AI が自分で決めたことを人の裁定として書かない。** 自分の判断は「AI 案」と明記し、
@@ -116,7 +116,7 @@ Harmony PPT は「5 問归档分析」とだけ述べ、**5 問の中身は展�
 - **週次（30 分）**: 未処理の記録を §2 の 5 問にかけ、規則化するもの / 検査化するもの / 記録のみで閉じるものを仕分ける。
 - **四半期**: 追加した規則と検査を見直し、**使われていない検査**を特定する。
   （検査は「あること」ではなく「捕まえること」で評価する。）
-- 関連: `docs/90_knowledge/ppt-deviation-register.md` §4（追加要素を必ず 1 行登録する）、
+- 関連: `tools/kb-platform/repo/company/standards/ppt-deviation.md` §4（追加要素を必ず 1 行登録する）、
   `docs/00_plan/review.md`（独立検査 CP の追補）。
 
 ---
@@ -140,9 +140,9 @@ Harmony の 5 段のうち、本骨架で**まだ自動化できていない**�
 
 | 内容 | 唯一真源 |
 |------|---------|
-| Harmony の 5 道ゲート（G1〜G5）詳細と実績値 | `docs/90_knowledge/internal/harmony-5gates.md` |
-| SDS2 / SDS3 の失敗教訓（冪等性・人による二重確認・顧客指示優先） | `docs/90_knowledge/internal/sds2-lessons.md` |
-| 要件源 PPT に対する追加要素の登録簿 | `docs/90_knowledge/ppt-deviation-register.md` §2 |
+| Harmony の 5 道ゲート（G1〜G5）詳細と実績値 | `tools/kb-platform/repo/company/standards/internal/harmony-5gates.md` |
+| SDS2 / SDS3 の失敗教訓（冪等性・人による二重確認・顧客指示優先） | `tools/kb-platform/repo/company/standards/internal/sds2-lessons.md` |
+| 要件源 PPT に対する追加要素の登録簿 | `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2 |
 | 7 条紅线と禁止事項 | `CLAUDE.md` §1・§2 |
 | 独立検査のチェックリスト | `docs/00_plan/review.md` |
 

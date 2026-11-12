@@ -128,7 +128,7 @@ doc/03_AI/AB_Reports/reports/<モジュール名>/summary.md
 ## 9. 品質ゲートの写像・冪等性・生成量の統制（社内実績の取入）
 **Summary**: 社内実績（Harmony / SDS2）の品質ゲートと制約をテスト工程の規約に落とす。
 **出所は要件源 PPT ではない**（登録: `ppt-deviation-register.md` §2）。
-原典の逐語は `docs/90_knowledge/internal/harmony-5gates.md` §2・`sds2-lessons.md` §1 が唯一の定義。
+原典の逐語は `tools/kb-platform/repo/company/standards/internal/harmony-5gates.md` §2・`sds2-lessons.md` §1 が唯一の定義。
 
 ### 9.1 本骨架が持つゲートは G1 相当のみである（誇張しない）
 社内実績（Harmony）は 5 道ゲートを常時走らせていた。

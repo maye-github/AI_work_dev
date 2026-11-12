@@ -36,12 +36,14 @@ py -3 -m tools.kb_migrate --apply
 py -3 -m tools.kb_local ingest --prune
 
 # 3. 查（检索、lint、评测都要走 tools.kb_local，见下「偏离 1」）
-py -3 -m tools.kb_local search "エリアマスタ 排他制御" --project P-R60-001 --top-k 5
-py -3 -m tools.kb_local search "検索一覧は実項目で何件" --project P-R60-001 --module R60Ssk
+#    ★ 読権限の既定は「会社級のみ」。案件級を引くには --as <人> か --all が要る。
+py -3 -m tools.kb_local search "エリアマスタ 排他制御" --as <人> --project P-R60-001 --top-k 5
+py -3 -m tools.kb_local search "検索一覧は実項目で何件" --as <人> --project P-R60-001 --module R60Ssk
+py -3 -m tools.kb_local search "テスト比率" --all          # 管理者（制限なし）
 
 # 4. 状态 / 评测
 py -3 -m tools.kb_local stats
-py -3 -m tools.kb_local eval
+py -3 -m tools.kb_local eval --all                         # 全体で測る（--as <人> でも可）
 ```
 
 检索返回哪些状态，由 `tools/kb_local/_bootstrap.py` 的 `DEFAULT_RETRIEVABLE` 决定

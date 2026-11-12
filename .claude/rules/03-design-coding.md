@@ -131,7 +131,7 @@ def build_order_by(sort_field: str | None) -> str:
 ## 7. 決定性（冪等性）と人による二重確認（社内実績 SDS2 の取入）
 **Summary**: 社内実績（SDS2）が明示した 4 つの制約を製造工程の規約に落とす。
 **出所は要件源 PPT ではない**（登録: `ppt-deviation-register.md` §2）。
-詳細と原典の逐語は `docs/90_knowledge/internal/sds2-lessons.md` §1 が唯一の定義。
+詳細と原典の逐語は `tools/kb-platform/repo/company/standards/internal/sds2-lessons.md` §1 が唯一の定義。
 
 ### 7.1 生成・再実行は冪等でなければならない
 - **同じ設計入力（D/L/E）から生成されるコードと差分は、何度生成しても同一**であること。

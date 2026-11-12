@@ -1,0 +1,130 @@
+# n03.yml — ノード3 進捗（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4
+
+node: 3
+name: "詳細設計"
+state: approved
+owner: "Li"
+steps_total: 5
+steps_done: 5
+artifacts:
+  - "tutorial/R60Maker/节点3_详细设计/00_输入模板.yaml"
+  - "tutorial/R60Maker/节点3_详细设计/01_AI产出_详细设计书.md"
+  - "tutorial/R60Maker/节点3_详细设计/01_AI产出_详细设计书.zh.md"
+  - "tutorial/R60Maker/节点3_详细设计/01_AI产出_详细设计书.zh.html"
+  - "tutorial/R60Maker/节点3_详细设计/02_你在这里审查.md"
+  - "tutorial/R60Maker/节点3_详细设计/02_你在这里审查.zh.md"
+  - "tutorial/R60Maker/节点3_详细设计/02_你在这里审查.zh.html"
+  - "tutorial/R60Maker/节点3_详细设计/02_审查结果.md"
+  - "tutorial/R60Maker/节点3_详细设计/03_组内审查意见.md"
+  - "tutorial/R60Maker/节点3_详细设计/03_组内审查意见.zh.md"
+  - "tutorial/R60Maker/节点3_详细设计/03_组内审查意见.zh.html"
+  - "tutorial/R60Maker/节点3_详细设计/04_AI产出_详细设计书_改修版.md"
+  - "tutorial/R60Maker/节点3_详细设计/04_AI产出_详细设计书_改修版.zh.md"
+  - "tutorial/R60Maker/节点3_详细设计/04_AI产出_详细设计书_改修版.zh.html"
+  - "tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md"
+  - "tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.zh.md"
+  - "tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.zh.html"
+  - "reports/drill/R60Maker/upstream-transfer-n3.md"
+open_questions:
+  - q_ref: "Q-310"
+    text: "メーカーマスタの物理列名・型・桁（監査項目・排他キー rev_no の採番主体を含む）を AI 素案どおり固めてよいか。Q-308b の顧客回答が前提。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "AI 素案どおり。物理列名・型・桁は Q-308b の顧客回答後に確定する。rev_no はサーバが採番する（登録時 1、更新時 +1）。"
+    answered_by: "Li"
+    answered_at: "2026-11-06"
+  - q_ref: "Q-311"
+    text: "マスタ画面 9 項目の I-ID が未裁定（Q-306）。本節点は名称で扱い I-354 より後の番号を発番していないが、裁定後に I-ID を付与する必要があるか。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "本節点はマスタ画面 9 項目を名称で扱い、I-ID は付与しない（Q-306 の裁定を踏襲）。"
+    answered_by: "Li"
+    answered_at: "2026-11-06"
+  - q_ref: "Q-312"
+    text: "購入品目別仕入先マスタ・原材料仕入単価マスタの物理名・結合キーを本設計で定義せず ReferenceChecker.check に委ねてよいか（提供元 Q-307 の確定後）。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "D-208・D-209 の列は本設計で定義せず、被参照の有無のみ ReferenceChecker.check に委ねる。"
+    answered_by: "Li"
+    answered_at: "2026-11-06"
+  - q_ref: "Q-313"
+    text: "頁番号（1 始まり）による任意頁移動に対し、ページングを OFFSET/FETCH で実装する例外採用を承認してよいか（ROWID 安定ソートを併用）。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "OFFSET/FETCH を例外採用する（ROWID による安定ソートを併用）。工程04 のスタック承認後に方言を確定する。"
+    answered_by: "Li"
+    answered_at: "2026-11-06"
+  - q_ref: "Q-314"
+    text: "検索のソート白名单を makerCd／makerNm の 2 項目で確定してよいか（承認版 §4.1 #19/#21・§12 #5。規則 03 §5 の例示とは項目が異なる）。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "ソート白名单は makerCd／makerNm の 2 項目で確定する（上流 §4.1 #19/#21）。"
+    answered_by: "Li"
+    answered_at: "2026-11-06"
+  - q_ref: "Q-315"
+    text: "新規・複製登録時の送信状態（send_sts）の初期値、および緊急配信・夜間確定処理との関係が上流に明記されていない。どの共通仕様に従うか。"
+    kind: "question"
+    category: "B"
+    block: false
+    answer: "【演習・Li が顧客役で承認】新規・複製・修正で登録した時点の send_sts は 0（未送信）で作成する。以後の遷移（1=送信中／2=送信済み／9=送信エラー）は共通配信処理・夜間確定処理が更新し、本画面は send_sts を更新しない。緊急配信オン時も本画面は受付のみ。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+approved_by:
+  - "Li"
+approved_at: "2026-11-10"
+updated_at: "2026-11-09"
+note: |
+  2026-11-06: Li が認領。前置条件を実測で確認（n02=approved／05 承認版 実在／blockers 空／
+  KB の TPL-DESIGN-DETAIL-001 が suggest rank 1）。
+  `00_输入模板.yaml` を R60Login から複製し、**Q 起点を Q-310** に修正、status を draft に変更。
+  ★テンプレート本文には R60Login 由来の例（I-3xx・Q-2xx・stfKbn 等）が残っている。
+  記入時に R60Maker の体系（I-322〜I-354・E-213〜E-224・Q-310 以降）へ置換すること。
+  2026-11-06: ステップ1 完了（方式 A＝AI 代填）。`00_输入模板.yaml` を 38,467 B / 534 行・
+  status=filled / version=0.4.0 に更新。logic 11（L-212〜L-222）・data 6（D-207〜D-212）・
+  SQL 11・error 12（E-213〜E-224）・境界値 7。R60Login 由来の痕跡は grep 実測で 0
+  （`I-3[0-9][0-9]`／`stfKbn`／`gmnId`／`kgnKbn`／`R60Login`）。
+  **gate1 が野号 6 件（L-220〜L-222・D-212・E-223・E-224）を検出**したため、
+  Li の明示 Authorization を得て `tools.registry alloc --apply` で 6 件を発号し
+  （番号は台帳が出した。AI は考案していない＝紅线①）、`f_id: F-202` を補って
+  `registry trace --write` を実行。**trace_check --strict は全門 PASS・orphans=0・total_ids=170。**
+  Q-310〜Q-315 を open_questions に転記（Q-316 は発号により解決済）。
+  2026-11-06: ステップ2 完了（01_AI产出_详细设计书.md 40,956 B / 665 行＋.zh.md/.zh.html）。
+  構造: D 6／L 11／E 12／SQL 11／境界値 7。SQL は方言非依存・全 `:BIND`。
+  物理表名・列名は AI 素案として Q-308b 待ちを明記。技術スタック語は 0。
+  `trace_check --strict` 全門 PASS／`kb_refs check --node 3` 判定 OK（先例 TPL-DESIGN-DETAIL-001）。
+  ステップ3 の審査票 `02_你在这里审查.md`（6 節）を新設。作成時に凍結パスを本文へ書いて
+  seal が FAIL したため、パスを書かず「case.yml の凍結宣言を参照」に改めた（seal_hits=1→0）。
+  2026-11-09: **意見-06 を追加**（ユーザー指示「按 KB 規約走」）。物理表名を `_MST` → `_TBL` に統一
+  （設計書 17 箇所＋SQL 内の表名。根拠: KB `STD-CODING-001` §2「R60 系は *_TBL」）。
+  `04_AI产出_详细设计书_改修版.md` / `.zh.md` / `.zh.html` を更新。01 の初稿は履歴として `_MST` のまま残す。
+  **Q-308b に回答を記入**（n02.yml・Li が顧客役）: 顧客規約の提示なし → 当方 KB 規約 `*_TBL` を採用。
+  2026-11-09: ステップ5 完了・**Li が設計評審を承認**。`05_承認版_详细设计书.md` を `status: baselined` /
+  `version: 1.0.0` とし、承認記録 4 行（SE/PG/テスター/PM）に Li・2026-11-09 を記入。
+  承認前の三関を実測: `registry blockers` 空／`trace_check --strict` 全 PASS／`kb_refs check --node 3` OK。
+  Q-315（B）は Li が顧客役として承認（send_sts 初値 0・本画面は更新しない）。
+  **次ノード（n04 框架・n05 製造）の前提が満たされた**（n04 と n05 は並行可）。
+  2026-11-09: 節点5 の製造で設計の穴 3 件が判明し、**n09 の起票により節点3 へ差し戻し**（紅線②）。
+  修正対象: send_sts 既定値（Q-315=0 の書き戻し）／cd_kbn の区分実値／/init のメッセージ ID 一覧。
+  修正後 v1.0.1 として**再承認**を受ける。承認済み 05 の再版なので、n03 は approved→in_progress に戻した。
+  2026-11-09: **v1.0.1 を Li が再承認**。`05_承認版_详细设计书.md` を `status: baselined` に戻し、
+  承認記録を「版」列付きの 2 段（1.0.0／1.0.1）に変更。n09 の変更項は closed へ移した（番号は発番待ち）。
+  三関を実測: blockers 空／trace_check 全 PASS／kb_refs --node 3 OK。
+  2026-11-10: **番号の振り直しにより成果物が変更された（内容は同一・ID 表記のみ）。**
+  R60Maker の R/F/D/L/E/I/Q を全局序列の続きへ移した（R-202／F-202／D-207〜212／L-212〜222／
+  E-213〜224／I-322〜354／Q-239〜335）。理由は `tutorial/R60Maker/节点6_单元测试/02_审查结果.md` 付記 2。
+  **承認版の中身は変わっていないが、承認の対象だったファイルは変わった。再承認が必要**（紅线③）。
+  `approved_by` は当時の承認者を残す（履歴）。再承認したら `state` を `approved` に戻す。
+  2026-11-10: **再承認（Li）。** 前回承認（2026-11-05/06）の後に次の 2 点が変わったため。
+  　① 番号の振り直し（R-202／F-202／D-207〜212／L-212〜222／E-213〜224／I-322〜354／Q-239〜335）。
+  　② 承認版へ「知識ベースの使用記録」節を追加し、kb_refs を node-map と一致させた。
+  承認前の 4 条件を実測: blockers 空／`trace_check --strict` 全 PASS（orphans=0）／
+  `kb_refs --require-node --require-usage` OK／`check-constraints` OK（定義のある節点のみ）。
+  2026-11-10: 旁路環 n09 の差し戻しにより成果物が**内容ごと**変わった（番号の振り直しではない）。
+  対象: CR-006（端点の経路を §2.0 で確定）。詳細は `reports/drill/R60Maker/impact-2026-11-10.md`。**再承認待ち**（紅线③）。
+  2026-11-10: **再承認（Li）。** n09 差し戻し分の反映を確認した。

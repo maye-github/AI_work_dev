@@ -1,0 +1,73 @@
+# node-map.yaml — 節点 → 必読知識条目（**唯一真源**）
+# ------------------------------------------------------------
+# 何のためにあるか
+#   「各工程がその作業に必要な知識を、AI が自分で探すのではなく、機械的に同梱する」ための表。
+#   実行: `py -3 -m tools.kb_local node-brief --node N` がこの表を読み、条目の中身を抜粋で出力する。
+#   検査: `py -3 -m tools.kb_refs check <承認版> --node N --require-node` が、
+#         承認版の `kb_refs` にこの表の doc_id が入っているかを見る。
+#
+# ★ 変更は人の承認が要る。ここを緩めると「必読」が形骸化する（`kb-policy.md` §2.5）。
+# ★ `.claude/skills/trans-cosmos-ai-lifecycle-coach/nodes/nNN-*.md` §1.5 の表と一致させること
+#   （`--require-node` が両者の一致も検査する）。
+
+version: "1.0"
+updated_at: "2026-11-09"
+
+nodes:
+  1:
+    name: "要件理解"
+    required:
+      - PAT-REVIEW-LENS-001      # 52 の観点で要求書を審査する
+      - PAT-DEV-PLAYBOOK-001     # 工程① の入出力
+      # PAT-REVIEW-CAP-001 は 2026-11-10 に外した（人の承認済）。
+      #   あれは「審査能力をどう伸ばすか」を人が学ぶための条目であり、節点1 の実行体が
+      #   産出に使う知識ではない。実測でも R60Maker の成果物・レポートに 0 件。
+    use_for: "要求書の内部矛盾・記述の穴・暗黙の前提を洗い出す"
+  2:
+    name: "基本設計"
+    required:
+      - TPL-DESIGN-REF-001       # 14 節の骨格（章節の正本）
+      - TPL-DESIGN-BASIC-001     # 簡略テンプレート
+      - PAT-SCREEN-001           # 一覧検索画面の標準パターン
+    use_for: "設計書の章節・列構成・画面構成を標準に合わせる"
+  3:
+    name: "詳細設計"
+    required:
+      - TPL-DESIGN-DETAIL-001    # D/L/SQL/E/境界値
+      - STD-CODING-001           # 命名分区・SQL 白名单
+    use_for: "D/L/SQL/E と境界値を実装可能な粒度まで落とす"
+  4:
+    name: "框架・環境構築"
+    required:
+      - TPL-DESIGN-DETAIL-001
+      - STD-CODING-001
+      - PAT-DEV-PLAYBOOK-001
+    use_for: "採用スタックを設計事実に根拠づけて提案する"
+  5:
+    name: "製造"
+    required:
+      - STD-CODING-001
+      - PAT-DEV-PLAYBOOK-001
+      - TPL-DESIGN-DETAIL-001
+    use_for: "設計をコードへ写す（規約・共通部品・実装粒度）"
+  6:
+    name: "単体テスト"
+    required:
+      - STD-TEST-RATIO-001
+      - TPL-TEST-CASE-001
+      - PAT-DEV-PLAYBOOK-001
+    use_for: "正常3・境界2・異常3 と design_ids の付け方、ケース集の型"
+  7:
+    name: "結合・総合テスト"
+    required:
+      - TPL-INTEGRATION-TEST-001
+      - PAT-DEV-PLAYBOOK-001
+      - PAT-DEV-WALKTHROUGH-001
+    use_for: "シナリオ表・A/B・非機能の観点と期待値の作り方"
+  8:
+    name: "リリース・運用保守"
+    required:
+      - TPL-RELEASE-CHECKLIST-001
+      - PAT-DELIVERY-001
+      - PAT-DEV-PLAYBOOK-001
+    use_for: "リリース判定・切戻し・Runbook と成果物の二重化"

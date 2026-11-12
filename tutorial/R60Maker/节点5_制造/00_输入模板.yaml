@@ -1,0 +1,460 @@
+# =============================================================================
+# 节点5（制造 / 编码）输入模板 —— 文件编号: IN-305
+# -----------------------------------------------------------------------------
+# 【本节点的输入来自上一节点的哪个文件】
+#   节点3 承認版 詳細設計（L-212〜L-222 / D-207〜D-212 / SQL 4.1〜4.11 / E-213〜E-224）。
+#   详细设计是「唯一真源」。制造只做「把设计翻译成代码」，不做设计决策。
+#   技术栈・依存・ビルド・CI・機密の扱いは节点4 承認版（05_承認版_框架构筑记录.md）が持つ。
+#
+# =============================================================================
+# ★★ 本节点铁律：设计不许改，只做实现 ★★
+#   - 允许：照 L-212〜L-222 / D-207〜D-212 / SQL 4.1〜4.11 写代码。
+#   - 禁止：新增设计里没有的字段、分支、接口、画面；禁止「顺手优化」逻辑；
+#           禁止改 SQL 语义；禁止自行决定设计中未定的事项（設計に未確定が残るなら実装せず、人に返す）。
+#   - 若发现设计有误：停下来 → 写进 open_questions / 反馈给人 → 回到节点3 改设计，
+#           绝不在制造阶段偷偷改。
+# =============================================================================
+#
+# 【本节点 AI 会产出什么】
+#   源代码（前端画面 / 接口层 / API の 3 層構成。具体的なファイル名は工程04 で承認された
+#   スタックに従い、本ファイルの target_files はその構成案）と单元测试代码。
+#
+# 【人必须审查什么】
+#   ① 实现是否与设计一一对应（没有多、没有少）；② 禁止事項 5 条是否全守
+#      （**greenfield のため「既存共通資産の改変」は適用対象が無い**。代わりに
+#      「本節点で新規定義した共通部品・モデル基底を、定義後にみだりに変えていない」を見る）；
+#   ③ trace_check --strict 是否 Exit 0；④ 有无未登记野号；⑤ 敏感值有无外投。
+#
+# 规则：键名一律 snake_case；camelCase（makerCd / makerNm）只在值里出现。
+#
+# ★★ このファイルの現在の状態（2026-11-09・進捗 1/4「テンプレートを埋める」）★★
+#   `build_mode: greenfield`（docs/00_plan/coach/R60Maker/case.yml）。
+#   設計入力は節点3 承認版（v1.0.0 / `baselined` / 2026-11-09 Li 承認）1 本のみ。
+#   スタック・依存・ビルド・CI・機密は節点4 承認版（v1.0.0 / `baselined` / 2026-11-09 Li 承認）から受ける。
+#   **本ファイルは上流の設計値を 1 つも変えない。**
+#   禁①禁② は `migration` 案件固有の条項であり、**本案件には適用対象が無い**
+#   （改変すべき既存の共通関数資産・共通モデル基底が存在しない）。共通部品は
+#   工程04 の承認済み方針に従い**本案件で新規定義**し、定義後はそれを唯一真源とする。
+#   `target_files` の配置は**提案**である（工程04 承認版はスタック・依存・ビルドまでを定め、
+#   リポジトリ構成を定めていない → `open_questions` Q-323）。
+#   未確定 9 件（Q-323〜Q-331）は `open_questions` に置き、本文の結論として書かない。
+#   実在の環境値（IP・ホスト名・接続文字列・接続ユーザ・障壁値）は一切書かない。占位のみ。
+#   kb_refs: STD-CODING-001（規約・遵守の記録）／PAT-DEV-PLAYBOOK-001（先例・工程⑤の進め方）／
+#            TPL-DESIGN-DETAIL-001（先例・設計書の型）。
+# =============================================================================
+
+# ---------- 顶部 7 个固定字段 ----------
+id: IN-305
+type: node-input
+req_ids: [R-202]
+status: filled
+sensitivity: internal
+owner: AI-SE
+version: 0.4.0
+kb_refs:
+  - "STD-CODING-001"
+  - "PAT-DEV-PLAYBOOK-001"
+  - "TPL-DESIGN-DETAIL-001"
+
+# =============================================================================
+# 正文
+# =============================================================================
+
+# 【输入来源】上一节点承認版（详细设计）＋ 工程04 承認版（スタック）
+source_design:
+  file: tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md
+  version: "1.0.0"
+  status: baselined
+  approved_by: "Li（2026-11-09。承認記録は 05 冒頭の承認表。SE／PG／テスター／PM の 4 役を Li が兼任）"
+  build_mode: greenfield
+  logic_ids: [L-212, L-213, L-214, L-215, L-216, L-217, L-218, L-219, L-220, L-221, L-222]
+  data_ids: [D-207, D-208, D-209, D-210, D-211, D-212]
+  error_ids: [E-213, E-214, E-215, E-216, E-217, E-218, E-219, E-220, E-221, E-222, E-223, E-224]
+  sql_id_range: "SQL 4.1..4.11（05 §4）"
+  boundary_id_range: "05 §6 の境界値表（7 行）"
+  item_id_range: "I-322..I-354（検索画面 SCR-201。マスタ画面 SCR-202 の 9 項目は I-ID 未付与＝05 §3.2）"
+  stack_source:
+    file: tutorial/R60Maker/节点4_框架构筑/05_承認版_框架构筑记录.md
+    version: "1.0.0"
+    status: baselined
+    approved_by: "Li（2026-11-09。承認記録は 05 冒頭の承認表。SE／PG／テスター／PM の 4 役を Li が兼任）"
+    notes: |
+      frontend: Vue 3（Composition API ＋ `<script setup>`）＋ TypeScript（strict）＋ Vite ＋ PrimeVue ＋ Pinia。
+      backend: Python 3.12 ＋ FastAPI ＋ Pydantic v2 ＋ SQLAlchemy Core（`text()`）＋ oracledb（Thin）。
+      database: Oracle（物理型・版・エディションは顧客運用標準待ち）。auth: SSO ＋ 権限コード（MKR01〜MKR03）。
+      logs: 共通ログ部品（本画面は個別ログを持たない）。infra: コンテナ ＋ TLS 終端 ＋ dev/stg/prod の 3 環境。
+      6 端点はすべて POST・JSON 応答・HTTP 200 固定で、判定は本文の `errorCode`（0／1／9）と
+      `errorId`（4 桁・正常時 0000）を正とする（n04 §1.2・05 §5）。**本節点はこれを変えない**（紅線④）。
+      承認後のスタック変更は人の承認（変更環 CR）を要する。
+  notes: |
+    製造は**写経**である（`.claude/skills/trans-cosmos-ai-lifecycle-coach/nodes/n05-coding.md` §0）。
+    設計値を変えない・足さない。設計に誤り又は未確定を見つけたら、勝手に直さず**停止して人に返す**
+    （紅線②・`.claude/rules/02-requirements.md` §6.3）。本ファイルが挙げる `open_questions` 9 件は、
+    いずれも**設計又は工程04 に明文が無い**事項であり、裁定まで実装しない。
+
+# 【製造対象ファイル】
+#   パスは工程04 承認版のスタック構成に従う。ただし**工程04 はリポジトリ構成を定めていない**ため、
+#   以下は本節点の**提案**である（Q-323）。`backend/app/main.py` だけは工程04 §4.1 の
+#   `uvicorn app.main:app` に由来する。確定するまで生成しない。
+#   ★演習の産出先は `tutorial/R60Maker/节点5_制造/` の下のみ。`src/`・`app/routers` は触らない。
+target_files_layout: "提案（工程04 承認版にディレクトリ構成の記載が無い。Q-323 の裁定まで生成しない）"
+target_files:
+  # ---- frontend（Vue 3 + `<script setup>` + TS strict + PrimeVue + Pinia。工程04 §1.1）----
+  - path: tutorial/R60Maker/节点5_制造/frontend/views/SearchScreen.vue
+    role: "検索画面 SCR-201。I-322〜I-354 の表示・入力チェック・初期化・条件部切替・ページャ・一覧描画・活性制御・遷移要求"
+    design_ids: [L-213, L-214, L-215, L-216, L-221, L-222]
+  - path: tutorial/R60Maker/节点5_制造/frontend/views/MakerEditScreen.vue
+    role: "マスタ画面 SCR-202（9 項目・I-ID 未付与）。登録・更新・削除・確認ダイアログ・活性制御・遷移要求"
+    design_ids: [L-217, L-219, L-220, L-221, L-222]
+  - path: tutorial/R60Maker/节点5_制造/frontend/services/makerApi.ts
+    role: "接口サービス。6 端点（/init・/search・/download・/initEdit・/delete・/edit）への呼出。要求／応答は camelCase、外側は {params:{...}} 1 階層"
+    design_ids: [L-212, L-213, L-214, L-215, L-217, L-218, L-219, L-220]
+  - path: tutorial/R60Maker/节点5_制造/frontend/stores/searchState.ts
+    role: "検索条件・頁番号・仕掛表示・活性状態の保持（Pinia。工程04 §1.1）。L-215 が /search へ委譲する条件の出所"
+    design_ids: [L-214, L-215, L-221]
+  - path: tutorial/R60Maker/节点5_制造/frontend/common/customerParts.ts
+    role: "顧客提供の共通 UI ライブラリ v3.0 への薄い呼出し境界（CommonHeader・Pager・SessionErrorScreen・OnlineControlErrorScreen・SystemErrorScreen）。**再実装しない**。取得未提供の間の起動方法は Q-327"
+    design_ids: [L-212, L-214, L-215, L-221, L-222]
+  - path: tutorial/R60Maker/节点5_制造/frontend/tests/
+    role: "クライアント単体テスト（vitest run）。L-214／L-215／L-216／L-221／L-222 を対象。TC 番号は工程06 で人が発号する。産出の可否は Q-324"
+    design_ids: [L-214, L-215, L-216, L-221, L-222]
+  # ---- backend（Python 3.12 + FastAPI + Pydantic v2 + SQLAlchemy Core text() + oracledb Thin。工程04 §1.2）----
+  - path: tutorial/R60Maker/节点5_制造/backend/app/main.py
+    role: "FastAPI 起動・DI（設定・DB 接続・Session ストア・共通部品境界）。工程04 §4.1 の `app.main:app`。**設定値は持たず環境変数／シークレットから起動時に読む**"
+    design_ids: [L-212]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/api/init_api.py
+    role: "`POST /init` 端点（L-212 → L-213）"
+    design_ids: [L-212, L-213]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/api/search_api.py
+    role: "`POST /search` 端点（L-212 → L-214 → L-215）"
+    design_ids: [L-212, L-214, L-215]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/api/download_api.py
+    role: "`POST /download` 端点（L-212 → L-218。CSV 生成はサーバ、保存はクライアント）"
+    design_ids: [L-212, L-218]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/api/init_edit_api.py
+    role: "`POST /initEdit` 端点（L-212 → L-217。mode=1/2/3）"
+    design_ids: [L-212, L-217]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/api/delete_api.py
+    role: "`POST /delete` 端点（L-212 → L-219。MKR03 のみ）"
+    design_ids: [L-212, L-219]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/api/edit_api.py
+    role: "`POST /edit` 端点（L-212 → L-220。MKR02 以上）"
+    design_ids: [L-212, L-220]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/domain/preprocess.py
+    role: "L-212 前処理（セッション 30 分・オンライン可否 平日 7:00–22:00 JST・権限・入力チェックの順。1 つ失敗で後続を実行しない）"
+    design_ids: [L-212]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/domain/search.py
+    role: "L-214 検索（条件 AND・空条件除外・削除含む・仕掛モード・総件数・0 件／500 件超の判定・一覧）と L-215 ページャ委譲"
+    design_ids: [L-214, L-215]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/domain/download.py
+    role: "L-218 ダウンロード（最後の検索条件・500 件超は出力しない・CSV は UTF-8 BOM・CRLF・ヘッダ・5 列・排他情報を含めない）"
+    design_ids: [L-218]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/domain/init_edit.py
+    role: "L-217 初期値取得（mode=1 新規／2 複製／3 修正。3 は排他情報も取得、削除済みも取得）"
+    design_ids: [L-217]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/domain/delete.py
+    role: "L-219 削除（被参照 → 排他 → 論理削除 → コミット後に緊急配信を非同期起動 → 再検索）"
+    design_ids: [L-219]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/domain/edit.py
+    role: "L-220 登録更新（新規・複製：重複判定 → INSERT／修正：被参照 → 排他 → UPDATE。削除オンは論理削除）"
+    design_ids: [L-220]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/repository/queries.py
+    role: "SQL 4.1〜4.11 の実行（`text()` ＋ `:BIND` 名付きバインド）。SELECT／INSERT／UPDATE のみで、DELETE 文は作らない（論理削除）"
+    design_ids: [D-207, D-208, D-209, D-210, D-211, D-212]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/schemas.py
+    role: "`BaseCamelModel` を本案件で新規定義（`model_config` 4 行固定）し、6 端点の入出力モデルを派生させる。派生で `model_config` を再定義しない。接口 camelCase／定義層 snake_case"
+    design_ids: [L-212, L-213, L-214, L-217, L-218, L-219, L-220]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/config.py
+    role: "設定の読込（DB 接続情報・タイムゾーン Asia/Tokyo・Session 失効 30 分・オンライン稼働帯・共通部品の接続名）。**値は持たない（方式のみ）**"
+    design_ids: [L-212]
+  - path: tutorial/R60Maker/节点5_制造/backend/app/ports.py
+    role: "顧客提供の共通処理パッケージ v3.0 への薄い境界（ReferenceChecker.check・EmergencyDispatcher.dispatch・共通ログ）。**再実装しない**。取得未提供の間の扱いは Q-327"
+    design_ids: [L-219, L-220]
+  - path: tutorial/R60Maker/节点5_制造/backend/tests/
+    role: "サーバ単体テスト（pytest）。L-212／L-214／L-217／L-218／L-219／L-220 を対象。TC 番号は工程06 で人が発号する。産出の可否は Q-324"
+    design_ids: [L-212, L-214, L-217, L-218, L-219, L-220]
+
+# 【编码规范】
+#   ★greenfield（本演習）: 参照すべき既存コードが無い。したがって「規範」は
+#     ① 工程04 で承認された採用スタックの慣用、② 本節点で新規定義した共通部品、の 2 つになる。
+#     「既存の◯◯ファミリーに合わせる」という種類の指示は**出せない**（比較対象が存在しない）。
+coding_standards:
+  - "greenfield: 工程04 承認済みスタックの慣用に従う — Vue 3（Composition API ＋ `<script setup>`）＋ TypeScript（`strict`）＋ Vite ＋ PrimeVue ＋ Pinia（工程04 §1.1）"
+  - "greenfield: サーバは Python 3.12 ＋ FastAPI ＋ Pydantic v2 ＋ SQLAlchemy Core（`text()`。**ORM マッピングは作らない**）＋ oracledb（Thin）（工程04 §1.2）"
+  - "greenfield: 共通部品は**本案件で新規定義**する。既存部品の存在を前提にしない。**定義後はその新定義が唯一真源**となり、以後みだりに変えない（工程04 §1.1・§1.2）"
+  - "greenfield: 顧客提供の共通部品 v3.0（CommonHeader・Pager・各種 ErrorScreen・ReferenceChecker・EmergencyDispatcher・共通ログ）は**呼ぶだけ**で、同等機能を画面／サーバ側で再実装しない（工程04 §0 末尾・§1.2）"
+  - "greenfield: `BaseCamelModel` は本案件で新規定義し、`model_config` の 4 行（`alias_generator` / `populate_by_name` / `serialize_by_alias` / `extra`）を固定する。**派生モデルで `model_config` を再定義しない**（`.claude/rules/03-design-coding.md` §2・工程04 §1.2）"
+  - "命名は 3 層で分離する — 画面・接口（TS）は camelCase（`makerCd`／`makerNm`）、定義層・Python は snake_case（`maker_cd`／`maker_nm`）、DB 物理名は UPPER（`MAKER_CD`／`MAKER_NM`）。**変換点は `BaseCamelModel` の 1 箇所だけ**。手書き変換を散在させない（規則 03 §4・工程04 §1.2）"
+  - "SQL は設計 §4 の本文をそのまま保持し、値は必ず `:name` の名前付きバインドで受け、**f-string 等で値を連結しない**。列名・表名を利用者入力から組み立てない。発行するのは設計にある SELECT／INSERT／UPDATE のみで、**DELETE 文は作らない**（論理削除 `del_flg` を用いる。05 §1.1・§4）"
+  - "動的ソートは白名单 `ALLOWED_SORT_FIELDS = {MAKER_CD, MAKER_NM}` のみ（05 §4.4）。白名单外・未指定は固定ソート `ORDER BY del_flg, maker_cd, ROWID` へフォールバックし、白名单指定時も第 1 キーは `del_flg`（未削除を先）を維持する。白名单の追加は設計変更（CR）"
+  - "頁送りは任意頁への直接移動のため `OFFSET/FETCH` を例外採用し、安定順序のため末尾に物理行識別子（`ROWID`）を付す（05 §4.4）。物理方言・物理行識別子の名称は Q-326 の裁定まで確定しない"
+  - "文字コードは UTF-8、タイムゾーンは Asia/Tokyo（JST）。日時を SQL に埋め込まず、**日付・時刻の実値をリテラルで書かない**（05 §5）。表示形式は YYYY/MM/DD hh:mm:ss（I-323）"
+  - "冪等性: 現在時刻・乱数・UUID・順序不定の反復を出力へ埋め込まない。`rev_no` はサーバが採番（登録時 1・更新時 +1）、`last_update_datetime` は引数（サーバ時刻）として注入しテストで固定できるようにする（規則 03 §7.1・05 §1.1）"
+  - "1 画面 1 生成・端点 6 本を単位に分割して生成する（規則 03 §7.4）。一括で全層を生成しない"
+  - "エラー応答は `errorCode`（0=正常／1=業務エラー／9=システムエラー。**2 を使わない**）と `errorId`（4 桁。正常時 0000）を正とする。HTTP ステータスはすべて 200（05 §5）"
+  - "複雑判定に該当する製造物は設計者以外が diff を読む（状態遷移・外部連携・複数表更新を伴う L-212／L-219／L-220 が該当。規則 03 §7.2）"
+  - "ログは共通ログ部品へ委ね、本画面は独自のログファイルを持たない。敏感値（接続情報・鍵・実データ）をログに出さない（05 §5・工程04 §1.5）"
+
+# 【接口签名（照设计写，不自行增改）】
+#   端点パスは 05 §2.2〜§2.9 の転記。要求／応答の外側形状は `{params:{...}}` の 1 階層・camelCase（05 §0）。
+#   項目の英語名は設計に明文が無いため、項目名称・物理列名から当方が導出した（Q-330）。
+interfaces:
+  - name: "POST /init"
+    side: server
+    params: |
+      {params:{}}
+      利用者入力を用いない（L-213 に要求項目の定義が無い）。
+      外側形状 `{params:{...}}` は設計 §0 の共通方針に従うが、L-213 は params を参照しない。
+    returns: |
+      errorCode（0／1／9）／errorId（4 桁・正常時 0000）
+      serverTime（I-323・JST・YYYY/MM/DD hh:mm:ss）
+      companyNm（I-324）／deptNm（I-325）／userName（I-326）
+      pageSizeOptions（I-333 の候補 10／20／50／100・既定 20）
+      messageInfo（D-211 の msg_id／msg_kind／msg_txt。SQL 4.2）
+      初期状態：検索モード通常・削除含むオフ・1 頁件数 20・条件部拡大・一覧空・総件数 0・ページャ非活性（L-213 手順③）
+    http: "200 固定（判定は本文の errorCode。05 §5）"
+    logic_ids: [L-212, L-213]
+    sql_ids: [SQL-4.1, SQL-4.2]
+    notes: "`errorCode=9` はエラー画面へ置換、`errorCode=1` はメッセージ表示のみ（L-213 例外）。エラー文言の取得主体は Q-329"
+  - name: "POST /search"
+    side: server
+    params: |
+      {params:{ makerCd, makerNm, includeDeleted, pageSize, shikakeMode, pageNo, sortField }}
+      makerCd＝I-329・前方一致・空条件は除外／makerNm＝I-330・中間一致・空条件は除外（L-214 手順②）
+      includeDeleted＝I-332・オフ時は del_flg=0 のみ／shikakeMode＝I-334・仕掛時は reg_kbn=1 のみ（同手順③④）
+      pageSize＝I-333（10／20／50／100・既定 20）／pageNo＝I-337・I-338（1 始まり）
+      sortField＝I-340・I-342 の白名单 {MAKER_CD, MAKER_NM} のみ。指定時も第 1 キーは del_flg（05 §4.4）
+    returns: |
+      errorCode／errorId
+      items：一覧 5 列（makerCd／makerNm／makerKanaNm／sendSts／delFlg）。
+        送信状態・削除は名称（D-210 cd_nm）を返し、コードを直接返さない（I-347／I-349。SQL 4.11）
+      totalCount（I-339）／pager（頁番号・総頁数・1 頁件数）／messageInfo
+      0 件は E-213（errorCode=1・errorId=1001・MSG-E-001）を返しつつ**検索成功として扱う**
+      500 件ちょうどは可、501 件以上は E-214（1／1002・MSG-E-002）で明細を返さない（L-214 手順⑥⑦）
+    http: "200 固定"
+    logic_ids: [L-212, L-214, L-215]
+    sql_ids: [SQL-4.3, SQL-4.4, SQL-4.11]
+    notes: "空白入力チェック違反は E-219（画面側・サーバへ送らない）、サーバ側違反は E-224（L-214 例外）。失敗時に一覧・総件数を更新しない"
+  - name: "POST /download"
+    side: server
+    params: |
+      {params:{ makerCd, makerNm, includeDeleted, pageSize, shikakeMode, sortField }}
+      最後に実行した検索条件を用いる（画面の現在値は使わない。L-218 手順①）。
+      pageNo は対象外（全件）。/download は MKR03 のみ（L-218 前提）
+    returns: |
+      成功時は CSV ファイル：UTF-8（BOM あり）・CRLF・ヘッダ行あり・一覧 5 列・排他情報を含めない（L-218 手順④）
+      エラー時は JSON（errorCode／errorId）。500 件超は E-214（1／1002）でファイルを出力しない（L-218 手順②）
+      ファイルか JSON かの区別を応答で行う（L-218 手順⑤）
+    http: "200 固定（業務エラーは JSON 本文の errorCode で区分）"
+    logic_ids: [L-212, L-218]
+    sql_ids: [SQL-4.5]
+    notes: "CSV の 5MB・10 秒上限の判定主体と測定方法は設計に明文が無い（Q-331）"
+  - name: "POST /initEdit"
+    side: server
+    params: |
+      {params:{ mode, makerCd }}
+      mode＝"1"（新規）／"2"（複製）／"3"（修正）。不正は E-224（1／2005・L-217 手順①）
+      makerCd＝mode="3" の現在値取得キー（mode="1"/"2" では未使用）
+    returns: |
+      errorCode／errorId
+      mode="1"：全項目空・緊急配信オフ・削除欄ブランク（L-217 手順②）
+      mode="2"：D-207 から makerCd／makerNm／makerKanaNm の 3 項目のみ引き継ぎ・緊急配信オフ・削除欄ブランク（同手順③）
+      mode="3"：現在値＋lastUpdateDatetime・revNo（削除済みも取得・メーカーコード変更不可。SQL 4.6・同手順④）
+    http: "200 固定"
+    logic_ids: [L-212, L-217]
+    sql_ids: [SQL-4.1, SQL-4.6]
+    notes: "mode=\"3\" で対象が存在しない場合の挙動は上流に明文が無い（Q-328。新たな業務エラーを発明しない）"
+  - name: "POST /delete"
+    side: server
+    params: |
+      {params:{ makerCd, makerNm, makerKanaNm, emergencyDispatch, deleteFlg, lastUpdateDatetime, revNo }}
+      makerCd／makerNm／makerKanaNm＝マスタ画面の 3 項目（名称必須・形式チェック。L-219 手順①）
+      emergencyDispatch＝緊急配信（押下時点の画面値。L-219 手順⑦）
+      deleteFlg＝削除チェック（削除ボタンと同一処理。L-219「同一処理」）
+      lastUpdateDatetime／revNo＝排他比較キー（両方の一致を要する。L-219 手順⑤）
+    returns: |
+      errorCode／errorId
+      被参照あり E-216（1／2002・MSG-E-004）／被参照チェック想定外 E-218（9／9101）／
+      排他不一致 E-217（1／2003・MSG-E-005）／権限不足 E-220（1／2004）／完了 MSG-I-002
+      完了時：マスタ画面を閉じ、最後の検索条件で 1 頁目を再検索した一覧を返す（L-219 手順⑧）
+    http: "200 固定"
+    logic_ids: [L-212, L-219]
+    sql_ids: [SQL-4.1, SQL-4.7]
+    notes: "被参照チェックは共通部品 ReferenceChecker.check（対象 D-208・D-209。削除済みの参照元は数えない）。コミット確定後に EmergencyDispatcher.dispatch を非同期起動し、業務トランザクションをロールバックしない（L-219 手順③⑦）"
+  - name: "POST /edit"
+    side: server
+    params: |
+      {params:{ mode, makerCd, makerNm, makerKanaNm, emergencyDispatch, deleteFlg, lastUpdateDatetime, revNo }}
+      mode＝"1"（新規）／"2"（複製）／"3"（修正）
+      makerCd／makerNm／makerKanaNm＝マスタ画面の 3 項目。新規・複製は必須・形式チェック（L-220 新規複製 ①〜④）
+      修正は緊急配信オン／削除オン時に名称必須・形式チェック（L-220 修正 ①〜③）
+      lastUpdateDatetime／revNo＝排他の両キー。**新規・複製は null を送り比較しない**（L-220 修正 ⑦）
+    returns: |
+      errorCode／errorId
+      変更なし MSG-I-003（登録しない・画面を閉じない）／キー重複 E-215（1／2001・MSG-E-003）／
+      被参照 E-216（1／2002）／想定外 E-218（9／9101）／排他不一致 E-217（1／2003）
+      完了時：マスタ画面を閉じ、最後の検索条件で 1 頁目を再検索した一覧を返す（L-220）
+    http: "200 固定"
+    logic_ids: [L-212, L-220]
+    sql_ids: [SQL-4.1, SQL-4.8, SQL-4.9, SQL-4.10]
+    notes: "一意制約はメーカーコードのみ（名称の重複は許容）。新規・複製は reg_kbn=1（仕掛）で INSERT。緊急配信オンのときコミット確定後に EmergencyDispatcher.dispatch を非同期起動（L-220）"
+  - name: "interface service: init() / search() / download() / initEdit() / delete() / edit()"
+    side: client
+    params: "上記 6 端点の要求項目と同じ（camelCase・`{params:{...}}` 1 階層）"
+    returns: "上記 6 端点の応答と同じ（camelCase。`BaseCamelModel` が snake↔camel を変換する）"
+    logic_ids: [L-212, L-213, L-214, L-215, L-217, L-218, L-219, L-220]
+    notes: "メソッド名は端点名に由来する。サービス層のクラス名・ファイル名は設計に無い（Q-323）"
+
+# 【提交约束】
+commit_rules:
+  branch: "feature/D-207-R60Maker（演習は実 commit を行わず、様式のみ記録する）"
+  commit_types_used: [feat, test, fix]
+  format: "7 種様式（req / design / feat / test / fix / rel / chore）のいずれか 1 つで始め、本文に Trace / AI / Review の三段、末尾に Co-Authored-By 行を置く（`.claude/rules/05-commit-messages.md` §2・§3・§5）"
+  trace_line: |
+    1 コミット = 1 生成単位。Trace は F-202 → その単位が使う D-ID → L-ID。
+      /init        : Trace:F-202->D-211,D-212->L-212,L-213
+      /search      : Trace:F-202->D-207,D-210->L-212,L-214,L-215
+      /download    : Trace:F-202->D-207->L-212,L-218
+      /initEdit    : Trace:F-202->D-207->L-212,L-217
+      /delete      : Trace:F-202->D-207,D-208,D-209->L-212,L-219
+      /edit        : Trace:F-202->D-207,D-208,D-209->L-212,L-220
+      画面・遷移・活性 : Trace:F-202->D-207->L-216,L-221,L-222
+    D-207〜D-212 は read／write の対象であり、単独のコミット単位を作らない。
+  ai_line: "AI: trans-cosmos-ai-node5-coding@v0.1（演習。`code-from-design-trans-cosmos-ai` は R-101 専用・ids.yml 事前登録必須のため使わない）"
+  review_line: "Review: <人の拍板者識別子>（**AI を書かない**。人の拍板が無いうちはコミットしない＝紅線③。本案件の拍板者は Li）"
+  attribution: "Co-Authored-By: Claude Code <noreply@anthropic.com>"
+  gate_before_commit: "`py -3 -m tools.trace_check --strict` が Exit 0。**`--skip` による門隙突破を禁止**（禁④・紅線⑥）"
+  notes: |
+    種別の使い分け: 源コードは `feat`、単体テストコードは `test`、レビュー指摘の是正は `fix`。
+    `design`（設計の確定）は本節点では使わない（設計は節点3 で確定済み）。
+
+# ---------------------------------------------------------------------------
+# ★ 禁止事项 5 条（制造提示词必须原样包含）
+#   ★禁①禁② は **migration 案件固有**（改変すべき既存資産＝既存の共通関数資産・共通モデル基底を
+#     持つ案件に限る）。**本案件は greenfield であり、適用対象が存在しない。**
+#     代わりに働くのは「本節点で新規定義した共通部品・共通モデル基底を、以後みだりに変えない」である。
+#   ★禁③④⑤ は全案件共通。本案件でも有効。
+# ---------------------------------------------------------------------------
+prohibitions:
+  - rule_id: ban_1
+    applies_to: "greenfield 版（migration の禁①の言い換え。**本案件には既存の共通関数資産が無い**）"
+    text: "禁①（greenfield 版）：本節点で新規定義した共通部品を、定義後に勝手に改変しない（定義後はその新定義が唯一真源）。並行新版（parallel 版）を作らない。"
+    not_applicable_reason: "既存の共通関数資産が存在しない（從無到有）。呼ぶ先が無い。必要な共通部品は工程04 の承認済み方針に従い本案件で新規定義し、定義後はそれを唯一真源とする（工程04 §1.1・§1.2）"
+  - rule_id: ban_2
+    applies_to: "greenfield 版（migration の禁②の言い換え。**本案件には既存の共通モデル基底が無い**）"
+    text: "禁②（greenfield 版）：`BaseCamelModel` の `model_config`（`alias_generator` / `populate_by_name` / `serialize_by_alias` / `extra`）を変更しない。派生モデルで `model_config` を再定義しない。"
+    not_applicable_reason: "改変すべき既存の共通モデル基底が存在しない。**本案件で `model_config` 4 行固定の `BaseCamelModel` を新規定義**し、以降はその新定義に改変禁止が働く（規則 03 §2・工程04 §1.2）"
+  - rule_id: ban_3
+    applies_to: "全案件共通（本案件でも有効）"
+    text: "禁③：`ids.yml` 未登録の **野号**（飛び番・自作 ID）を引入しない。"
+    not_applicable_reason: null
+  - rule_id: ban_4
+    applies_to: "全案件共通（本案件でも有効）"
+    text: "禁④：`trace_check --strict` を跳过しない。"
+    not_applicable_reason: null
+  - rule_id: ban_5
+    applies_to: "全案件共通（本案件でも有効）"
+    text: "禁⑤：マスク未処理の敏感値を外抛しない（`PWD_1` / `IP_1` / `TBL_1` 等へ占位化）。"
+    not_applicable_reason: null
+
+# 【验收条件】
+acceptance:
+  - "`py -3 -m tools.trace_check --strict` → Exit 0（`chain_complete=true`・`orphan_ids=[]`）。`--skip` は禁止（禁④）"
+  - "`py -3 -m tools.trace_check --strict --only-check secrets` → ヒット 0（禁⑤）"
+  - "実装が L-212〜L-222／D-207〜D-212／E-213〜E-224／I-322〜I-354／SQL 4.1〜4.11 に**一一対応**し、設計に無い処理・項目・端点・分岐を足していない（無多無少）"
+  - "`BaseCamelModel` は `model_config` 4 行固定で**新規定義**され、派生モデルで再定義されていない。接口は camelCase・定義層は snake_case（gate5）"
+  - "SQL は設計 §4 の SELECT／INSERT／UPDATE のみ。`:name` バインドのみで、f-string などによる値の連結が無く、列名・表名を入力から組み立てていない（05 §4）"
+  - "ソートは白名单 {MAKER_CD, MAKER_NM} 経由、白名单外・未指定は `ORDER BY del_flg, maker_cd, ROWID` へフォールバックし、白名单指定時も第 1 キーは `del_flg`"
+  - "エラー応答は `errorCode` 0／1／9（2 を使わない）と `errorId` 4 桁（正常時 0000）で、HTTP ステータスはすべて 200（05 §5）"
+  - "`rev_no` はサーバ採番・`last_update_datetime` は引数注入であり、同一入力＋同一時刻から同一出力になる（現在時刻・乱数・UUID を埋め込んでいない。規則 03 §7.1）"
+  - "境界値（05 §6）を満たす：メーカーコード 1〜5 の半角英数字・日本語名 UTF-8 30Byte・カナ 15 文字・頁件数 10/20/50/100・件数 0 件は正常／500 件ちょうど可／501 件以上は E-214"
+  - "生成物は `tutorial/R60Maker/节点5_制造/` の下のみ。`src/`・`app/routers` の生産コードに触れていない"
+  - "敏感値は占位のみ（`PWD_1` / `IP_1` / `PORT_1` / `TBL_1` / `SID_1`）。実値・実接続情報・実在データが無い"
+
+# 【人必须拍板的点】
+human_review_required:
+  - "実装が設計（L-212〜L-222／D-207〜D-212／E-213〜E-224／I-322〜I-354／SQL 4.1〜4.11）に**厳密に対応**しているか（無多無少・自行决策なし）。とくに**限定句**（0 件は検索成功扱い・削除済みの参照元は数えない・名称の重複は許容・修正でメーカーコード変更不可・緊急配信は押下時点の画面値）と**符号系**（send_sts 0/1/2/9・del_flg 0/1・reg_kbn 1/2・errorCode 0/1/9）"
+  - "設計に誤り又は未確定を見つけたとき、**実装で辻褄を合わせず停止してノード3 へ戻した**か（紅線②）。本ファイルの `open_questions` 9 件は裁定まで実装していないか"
+  - "禁止事項 5 条を全守しているか。**greenfield のため禁①禁②は適用対象が無く**、代わりに「新規定義した共通部品・`BaseCamelModel` の 4 行をみだりに変えていない」を見る。禁③④⑤は実質判定する"
+  - "`py -3 -m tools.trace_check --strict` が Exit 0 か（`--skip` で通していないか）。`--only-check secrets` の実出力を確認したか"
+  - "野号が無いか（教学号段の R-202／F-202／I-322…／L-212／D-207／E-213…／TC を `ids.yml` へ登録していないこと。登録は人が行う＝紅線①）"
+  - "敏感値の占位・マスク（接続情報・鍵・実データをログ／応答に出さない）が守られているか"
+  - "`open_questions` 9 件（配置／単体テストの時期／Session 保持先／物理型・方言／共通部品取得／初期値取得の該当なし／文言取得主体／英语项目名／CSV 上限）の裁定。とくに Q-326・Q-328・Q-329 は設計の空白又は矛盾候補であり、ノード3 へ戻すか否かを人が決める"
+
+# 【未决事项】
+#   設計又は工程04 に明文が無い事項のみ。`answer` / `answered_by` は**人が埋める欄**である。
+#   AI は値を入れない（紅線③）。裁定までは該当箇所を実装しない。
+#   キーは `q_ref` を用いる（`q_id` / `related_ids` は用いない）。
+open_questions:
+  - q_ref: "Q-323"
+    kind: "question"
+    category: "C"
+    block: true
+    text: "生成物の配置（`frontend/` と `backend/` の分割、ディレクトリ名・ファイル名）。工程04 承認版は技術スタック・依存・ビルド・CI までは定めるが、リポジトリ構成を定めていない。"
+    answer: "AI 案（人未裁定・C 相当）：`tutorial/R60Maker/节点5_制造/` の下に `frontend/` と `backend/` の 2 本を置く（本ファイルの `target_files` のとおり）。工程04 承認版にリポジトリ構成の記載が無いための暫定であり、人の裁定で変わりうる。"
+    answered_by: ""
+    notes: "`backend/app/main.py` のみ工程04 §4.1 の `uvicorn app.main:app` に由来する。工程04 の産出漏れとして扱い、① ノード4 へ戻して構成を確定するか、② 本提案で進めるかを人が決める（紅線③）。確定までコードを生成しない。"
+  - q_ref: "Q-324"
+    kind: "question"
+    category: "C"
+    block: false
+    text: "単体テストコードを本節点で生成するか。本節点の入出力契約は「ソースコード＋単体テストコード」を産出物とする（`nodes/n05-coding.md` §3 ステップ2・§4）が、規則 04 §9.3 は『① TC 設計を確定 → ② 人の承認 → ③ テストコード生成』の順を要求し、TC 番号は工程06 で人が発号する。"
+    answer: "AI 案（人未裁定・C 相当）：本節点では単体テストコードを生成しない（規則 04 §9.3 の順序＝TC 設計 → 人の承認 → テストコード生成。TC 番号は工程06 で人が発号する）。本節点の産出はソースコードのみとする。"
+    answered_by: ""
+    notes: "TC 番号が未発号のままテストコードを書くと、`design_ids` を持つ TC が存在しないテストコードになり、紅線⑤（出典なきテストケース禁止）の趣旨に触れうる。裁定まで、テストコードは生成しない。工程06 との分担は人が決める。"
+  - q_ref: "Q-325"
+    kind: "question"
+    category: "C"
+    block: false
+    text: "サーバ側 Session の保持先（プロセス内メモリ／外部ストア）と、複数インスタンス間の共有方式。工程04 §1.6 は『Session の保持先は冗長化構成に依存する』とし、保持先の実体を確定していない。"
+    answer: "AI 案（人未裁定・C 相当）：本演習は単一プロセスで動かすため、サーバ側 Session はプロセス内メモリに保持する。多インスタンス構成へ移す場合は外部ストアへ差し替えることをコードのコメントに明記する（05 §2.1 手順①の 30 分の水準は変えない）。"
+    answered_by: ""
+    notes: "プロセス内メモリで実装すると、複数インスタンス構成で Session が共有されず 05 §2.1 の水準を満たさない。単一プロセス前提を置いてよいかを含め、人が決める。**確定まで L-212 手順①を実装しない。**"
+  - q_ref: "Q-326"
+    kind: "question"
+    category: "B"
+    block: true
+    text: "物理型（VARCHAR2/NUMBER/DATE 等）と NLS_DATE_FORMAT、`OFFSET/FETCH` の物理方言、物理行識別子（`ROWID`）の名称。節点3 は型を論理型（文字列／数値／日時）で示し、節点4 は物理方言を『顧客運用標準待ち』とする。"
+    answer: "AI 案（人未裁定・B 相当・根拠 E4）：Oracle を前提とし、文字列は VARCHAR2(n CHAR)、数値は NUMBER、日時は DATE へ写す。物理行識別子は `ROWID`、頁送りは `OFFSET/FETCH` を用いる。NLS_DATE_FORMAT は案件の運用標準に従う。**設計の論理値は変えない**；確定は顧客の DB 運用標準による。"
+    answered_by: ""
+    notes: "DB 製品・版・エディションと物理方言は工程04 でも未確定（受領資料に記載なし）。**確定まで `repository/queries.py` の物理型・方言依存部を生成しない。** 設計へ製品固有の型名を書き戻さない（05 §1・n04 §1.3）。"
+  - q_ref: "Q-327"
+    kind: "question"
+    category: "C"
+    block: false
+    text: "顧客提供の共通部品 v3.0（共通 UI ライブラリ TypeScript・共通処理パッケージ Python）のパッケージ名・取得方法・版固定が未提供（工程04 でも未確定）。本節点で呼出し境界（port/adapter）を当方定義の薄い層に置き、実体未提供の間は未接続で起動できる構成にしてよいか。"
+    answer: "AI 案（人未裁定・C 相当）：共通部品は当方定義の薄い呼出し境界（`ports.py`／`customerParts.ts`）越しにのみ呼び、実体未提供の間は境界を未接続（起動は可）とする。**共通部品の機能を画面／サーバ側で再実装しない**（工程04 §0 末尾）。実体の取得後に接続する。"
+    answered_by: ""
+    notes: "再実装は工程04 の『画面側で同等機能を再実装しない』に反する。境界を置くのは取得方法の未確定を吸収するためであり、設計値（呼出し仕様）を変えるものではない。"
+  - q_ref: "Q-328"
+    kind: "question"
+    category: "B"
+    block: false
+    text: "`/initEdit` の mode=\"3\"（修正）で対象が存在しない場合の挙動。上流設計は『一覧から遷移するため通常発生しない。本稿では新たな業務エラーを発明しない』とし、挙動の明文が無い。"
+    answer: "AI 案（人未裁定・B 相当）：設計に無い分岐・業務エラーを足さない。対象が無い場合は既存の E-223（9／9999）系の扱いに寄せるか、設計へ追記するかを人が決める。裁定まで当該分岐を実装しない。"
+    answered_by: ""
+    notes: "**設計の空白候補**（本節点では裁定しない・紅線②）。新たな業務エラーを発明すると設計変更（CR）になる。必要ならノード3 へ戻す。"
+  - q_ref: "Q-329"
+    kind: "question"
+    category: "B"
+    block: false
+    text: "エラー文言（MSG-E-001〜MSG-E-008 等）の取得主体。設計 §2.2 は `/init` でメッセージ情報を D-211 から取得するとするが、業務エラー時の文言をサーバが取得して応答に載せるか、クライアントが取得済みのメッセージ情報から引くかが明文でない。"
+    answer: "AI 案（人未裁定・B 相当）：`/init` で取得したメッセージ情報をクライアントが保持し、エラー応答の `errorId`／`msg_id` に対応する文言をクライアント側で表示する。サーバは文言本文を返さない。ただし裁定まで、文言表示の最終形を確定しない。"
+    answered_by: ""
+    notes: "**設計の記述の空白候補**。① 各応答に文言を含める／② 文言取得の端点を追加する（6 端点固定に反する＝設計変更）／③ クライアントの静的資源に持つ（D-211 を唯一真源とする前提に反する）のいずれかを人が決める。"
+  - q_ref: "Q-330"
+    kind: "question"
+    category: "C"
+    block: false
+    text: "接口の英語項目名。設計は `{params:{...}}` と camelCase の方針のみを定め、各項目の英語名を持たない（項目名称と物理列名はある）。物理列名の snake_case から camelCase を当方が導出してよいか。"
+    answer: "AI 案（人未裁定・C 相当）：物理列名の snake_case から camelCase を機械的に導出する（例 maker_cd → makerCd）。`BaseCamelModel` の `alias_generator` と一致させる。新しい業務名を作らない。"
+    answered_by: ""
+    notes: "導出規則を 1 箇所（schemas.py のモデル定義）に閉じ、手書き変換を散在させない（規則 03 §2・§4）。設計に英語名が追記されたらそれを優先する。"
+  - q_ref: "Q-331"
+    kind: "question"
+    category: "B"
+    block: false
+    text: "CSV ダウンロードの 5MB・10 秒上限の判定主体と測定方法。設計 §6 の境界値表は 5MB・10 秒を挙げるが、§5 の E-214 は『500 件超』のみを定義し、5MB／10 秒の判定箇所・測定方法が明文でない。"
+    answer: "AI 案（人未裁定・B 相当）：500 件超のみを E-214 の判定とし、5MB・10 秒は非機能の目標値として扱う（合否の機械判定には使わない）。設計に判定を足す場合は CR とする。"
+    answered_by: ""
+    notes: "**設計の記述の粒度差**（§5 は件数、§6 はバイト・時間）。判定を実装で勝手に足さない（紅線②）。必要ならノード3 へ戻す。"

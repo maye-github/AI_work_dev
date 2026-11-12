@@ -24,6 +24,37 @@ version: 0.1.0
 - [ ] `05_承認版_详细设计书.md` が実在する
 - [ ] 禁止事項 5 条（案件固有）を読んでいる（本ファイル §6 に原文）
 
+## 1.5 必查（この節点で知識ベースから先例を引く）
+
+**産出の前に必ず引く。** 引いた先例は承認版の front matter に `kb_refs:` として記録する。
+先例が無い場合は `kb_refs: []` とし、`open_questions` に「先例なし」と理由を書く。
+
+| 何を | どこから |
+|---|---|
+| 共通部品・コーディング規約 | `projects/<P-ID>/standards/`・`company/standards/coding/` |
+
+```bash
+# 候補を出す（--as は必須。付けないと会社級しか返らない）
+py -3 -m tools.kb_refs suggest --project <P-ID> --as <人> --query "実装対象の共通部品"
+
+# 承認版を検査する
+py -3 -m tools.kb_refs check <承認版> --node 5
+```
+
+> **`kb_refs` に書くのは先例**（案件の事実・テンプレート・パターン）。
+> **★本节点必读**（`kb_refs` に必ず記録し、**本文で実際に参照する**。`py -3 -m tools.kb_refs check <承認版> --node 5 --require-node` で検査する）
+>
+> | doc_id | 何のために読むか |
+> |---|---|
+> | `STD-CODING-001` | BaseCamelModel・分区・SQL 白名单 |
+> | `PAT-DEV-PLAYBOOK-001` | 工程⑤ の検査点 |
+> | `TPL-DESIGN-DETAIL-001` | 実装が設計の粒度に合っているか |
+
+> **書くのは「その節点で実際に参照した条目」だけ**——先例（案件の事実・`TPL-*`・`PAT-*`）と
+> 規約（`STD-*`）のどちらも書いてよい。`STD-*` は「遵守の記録」であり、**本文で規則を再掲しない**
+> （規則の正本は `.claude/rules/`）。**`canonical: true` の `STD-*` は要約ではなく方法の正本**なので先例として扱う
+> （`kb-policy.md` §2.4）。
+
 ## 2. 入力
 
 | 何を | どこから | 無いとき |

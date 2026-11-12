@@ -1,0 +1,141 @@
+# n05.yml — ノード5 進捗（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4
+
+node: 5
+name: "製造"
+state: approved
+owner: "Li"
+steps_total: 4
+steps_done: 4
+artifacts:
+  - "tutorial/R60Maker/节点5_制造/00_输入模板.yaml"
+  - "tutorial/R60Maker/节点5_制造/02_审查结果.md"
+  - "tutorial/R60Maker/节点5_制造/05_承認版_制造记录.md"
+  - "tutorial/R60Maker/节点5_制造/05_承認版_制造记录.zh.md"
+  - "tutorial/R60Maker/节点5_制造/05_承認版_制造记录.zh.html"
+  - "tutorial/R60Maker/节点5_制造/backend/app/api/delete_api.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/api/download_api.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/api/edit_api.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/api/init_api.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/api/init_edit_api.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/api/search_api.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/config.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/domain/delete.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/domain/download.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/domain/edit.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/domain/init_edit.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/domain/preprocess.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/domain/search.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/main.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/ports.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/repository/queries.py"
+  - "tutorial/R60Maker/节点5_制造/backend/app/schemas.py"
+  - "tutorial/R60Maker/节点5_制造/frontend/common/customerParts.ts"
+  - "tutorial/R60Maker/节点5_制造/frontend/services/makerApi.ts"
+  - "tutorial/R60Maker/节点5_制造/frontend/stores/searchState.ts"
+  - "tutorial/R60Maker/节点5_制造/frontend/views/MakerEditScreen.vue"
+  - "tutorial/R60Maker/节点5_制造/frontend/views/SearchScreen.vue"
+open_questions:
+  - q_ref: "Q-323"
+    text: "生成物の配置（`frontend/` と `backend/` の分割、ディレクトリ名・ファイル名）。工程04 承認版は技術スタック・依存・ビルド・CI までは定めるが、リポジトリ構成を定めていない。"
+    kind: "question"
+    category: "C"
+    block: true
+    answer: "【人裁定・C】生成物は `tutorial/R60Maker/节点5_制造/` の下に `frontend/` と `backend/` の 2 本を置き、ファイルは `target_files` のとおりとする。工程04 承認版に構成の記載が無かったための当方裁定であり、以後の節点はこの構成に従う。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-324"
+    text: "単体テストコードを本節点で生成するか。本節点の入出力契約は「ソースコード＋単体テストコード」を産出物とする（`nodes/n05-coding.md` §3 ステップ2・§4）が、規則 04 §9.3 は『① TC 設計を確定 → ② 人の承認 → ③ テストコード生成』の順を要求し、TC 番号は工程06 で人が発号する。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "本節点では単体テストコードを生成しない（規則 04 §9.3：TC 設計 → 人の承認 → テストコード生成。TC 番号は工程06 で人が発号する）。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-325"
+    text: "サーバ側 Session の保持先（プロセス内メモリ／外部ストア）と、複数インスタンス間の共有方式。工程04 §1.6 は『Session の保持先は冗長化構成に依存する』とし、保持先の実体を確定していない。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "単一プロセス前提でサーバ側 Session はプロセス内メモリに保持する。多インスタンス構成へ移す場合は外部ストアへ差し替える（30 分の水準は変えない）。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-326"
+    text: "物理型（VARCHAR2/NUMBER/DATE 等）と NLS_DATE_FORMAT、`OFFSET/FETCH` の物理方言、物理行識別子（`ROWID`）の名称。節点3 は型を論理型（文字列／数値／日時）で示し、節点4 は物理方言を『顧客運用標準待ち』とする。"
+    kind: "question"
+    category: "B"
+    block: true
+    answer: "【人裁定・B（演習は当方提案として採用）】Oracle を前提に、文字列 VARCHAR2(n CHAR)／数値 NUMBER／日時 DATE、物理行識別子 ROWID、頁送り OFFSET/FETCH とする。NLS_DATE_FORMAT は顧客運用標準に従う（未提供）。設計の論理値は変えず、物理型は repository 層に閉じ込めて差し替え可能にする。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-327"
+    text: "顧客提供の共通部品 v3.0（共通 UI ライブラリ TypeScript・共通処理パッケージ Python）のパッケージ名・取得方法・版固定が未提供（工程04 でも未確定）。本節点で呼出し境界（port/adapter）を当方定義の薄い層に置き、実体未提供の間は未接続で起動できる構成にしてよいか。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "共通部品は当方定義の薄い境界（ports.py／customerParts.ts）越しにのみ呼び、実体未提供の間は未接続で起動できる形にする。共通部品の機能を再実装しない。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-328"
+    text: "`/initEdit` の mode=\"3\"（修正）で対象が存在しない場合の挙動。上流設計は『一覧から遷移するため通常発生しない。本稿では新たな業務エラーを発明しない』とし、挙動の明文が無い。"
+    kind: "question"
+    category: "B"
+    block: false
+    answer: "/initEdit の mode=3 で対象が存在しない場合は E-223（9／9999）に寄せ、処理を中断してシステムエラー画面へ置換する。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-329"
+    text: "エラー文言（MSG-E-001〜MSG-E-008 等）の取得主体。設計 §2.2 は `/init` でメッセージ情報を D-211 から取得するとするが、業務エラー時の文言をサーバが取得して応答に載せるか、クライアントが取得済みのメッセージ情報から引くかが明文でない。"
+    kind: "question"
+    category: "B"
+    block: false
+    answer: "サーバは errorId／msgId のみ返し、利用者向け文言はクライアントがメッセージ情報から解決する（文言をサーバで組み立てない）。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-330"
+    text: "接口の英語項目名。設計は `{params:{...}}` と camelCase の方針のみを定め、各項目の英語名を持たない（項目名称と物理列名はある）。物理列名の snake_case から camelCase を当方が導出してよいか。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "接口の英語項目名は物理列名 snake_case から alias_generator=to_camel で機械導出する。手書き変換を散在させない。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-331"
+    text: "CSV ダウンロードの 5MB・10 秒上限の判定主体と測定方法。設計 §6 の境界値表は 5MB・10 秒を挙げるが、§5 の E-214 は『500 件超』のみを定義し、5MB／10 秒の判定箇所・測定方法が明文でない。"
+    kind: "question"
+    category: "B"
+    block: false
+    answer: "CSV の 5MB／10 秒はサーバ側で判定し、上限超過は E-214（1／1002）として出力しない。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+
+approved_by:
+  - "Li"
+approved_at: "2026-11-10"
+updated_at: "2026-11-09"
+note: |
+  2026-11-09: Li が認領。前置条件を実測（n03=approved／05 承認版 実在／blockers 空）。
+  `00_输入模板.yaml` を R60Login から複製（status draft）。
+  ★greenfield のため、R60Login の「既存 R60Common/r60util を呼ぶ」は適用しない。
+  共通部品は工程04 の承認済み方針に従い**本案件で新規定義**する。
+  Q 起点は **Q-323**（節点4 で Q-322 まで使用）。
+  2026-11-09: ステップ2 完了（設計 v1.0.0 で 22 ファイル生成 → 設計 v1.0.1 の再承認を受け、3 点を設計へ追従）。
+  環境変数による暫定 4 種を廃止し、設計の確定値（send_sts=0／cd_kbn=SEND_STS・DEL_FLG／メッセージ 15 件）へ置換。
+  単体テストコードは生成しない（Q-324 未裁定・規則 04 §9.3）。既存 src/・app/routers は未触。
+  py_compile 全通過／trace_check 全 PASS／secrets PASS。
+  2026-11-09: ステップ3 完了（審査 8 項・一致 8）。残る 7 件を裁定（286C・287C・289C・290B・291B・292C・293B）。
+  ステップ4 完了・**Li がコードレビューを承認**。`05_承認版_制造记录.md` を `status: baselined` / `v1.0.0`、
+  承認記録 4 行と commit 様式の `Review:` に Li を記入。三関を実測（blockers 空／trace_check 全 PASS／kb_refs --node 5 OK）。
+  2026-11-10: **番号の振り直しにより成果物が変更された（内容は同一・ID 表記のみ）。**
+  R60Maker の R/F/D/L/E/I/Q を全局序列の続きへ移した（R-202／F-202／D-207〜212／L-212〜222／
+  E-213〜224／I-322〜354／Q-239〜335）。理由は `tutorial/R60Maker/节点6_单元测试/02_审查结果.md` 付記 2。
+  **承認版の中身は変わっていないが、承認の対象だったファイルは変わった。再承認が必要**（紅线③）。
+  `approved_by` は当時の承認者を残す（履歴）。再承認したら `state` を `approved` に戻す。
+  2026-11-10: **再承認（Li）。** 前回承認（2026-11-05/06）の後に次の 2 点が変わったため。
+  　① 番号の振り直し（R-202／F-202／D-207〜212／L-212〜222／E-213〜224／I-322〜354／Q-239〜335）。
+  　② 承認版へ「知識ベースの使用記録」節を追加し、kb_refs を node-map と一致させた。
+  承認前の 4 条件を実測: blockers 空／`trace_check --strict` 全 PASS（orphans=0）／
+  `kb_refs --require-node --require-usage` OK／`check-constraints` OK（定義のある節点のみ）。
+  2026-11-10: 旁路環 n09 の差し戻しにより成果物が**内容ごと**変わった（番号の振り直しではない）。
+  対象: BUG-003（エラー画面分流）・BUG-004（二度押し防止）・CR-006（接頭辞）。詳細は `reports/drill/R60Maker/impact-2026-11-10.md`。**再承認待ち**（紅线③）。
+  2026-11-10: **再承認（Li）。** n09 差し戻し分の反映を確認した。

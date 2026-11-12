@@ -4,7 +4,9 @@
 外部 HTTP / DB / モデルに一切依存しない（NFR-6）。依存は標準ライブラリ + pyyaml のみ。
 
 6 ゲート:
-  gate1 ID 合法性      - ids.yml 未登録の野号 / void 号の無断使用を検出
+  gate1 ID 合法性      - ids.yml 未登録の野号 / void 号の無断使用を検出。
+                          **宣言キー（front matter）に加え、承認版・工程交付物の本文も走査する**
+                          （2026-11-06 追加。`BODY_SCAN_PATTERNS` / `LEGACY_UNREGISTERED` を参照）
   gate2 追跡双方向閉ループ - R→F→I→D→L→E→TC と逆方向が途切れていないか
                            ＋ TC の design_ids が出典（I-ID / E-ID）を漏らしていないか
   gate3 front-matter    - 7 字段 (id/type/req_ids/status/sensitivity/owner/version) 完全性
@@ -89,6 +91,71 @@ def _fm_exempt_reason(rel: str) -> str | None:
 
 # gate1 対象外（レジストリ本体。ここに野号が居るのは正常）
 ID_EXEMPT_DIRS = ("docs/00_registry",)
+
+# gate1 の本文走査（2026-11-06 追加）。
+#   従来 gate1 は front matter / YAML の「ID を宣言するキー」しか見ておらず、
+#   **承認版の本文で未登録 ID を使っても検出できなかった**
+#   （実測: R60Maker 節点2 承認版が E-211・E-212 を本文で使い、台帳に無いまま通過した）。
+#   走査対象は「機械可読の交付物」に限る。規則・手順書・報告の例示 ID は対象外。
+BODY_SCAN_PATTERNS = (
+    (r"^tutorial/[^/]+/[^/]+/05_承認版.*\.md$", "承認版の本文"),
+    (
+        r"^docs/(?:10_requirements|20_basic_design|30_detail_design|40_framework|"
+        r"50_unit_test|60_integration_test|70_release|80_operation)/.*\.(?:md|ya?ml)$",
+        "工程交付物の本文",
+    ),
+)
+BODY_SCAN_RES = tuple((re.compile(p), why) for p, why in BODY_SCAN_PATTERNS)
+
+# 本文走査で見つかる「台帳整備より前の歴史的参照」。**新しいものを足してはならない。**
+#   足した瞬間に、この免責は「野号を通すための穴」になる。追加はレビューで理由を言える場合だけ。
+LEGACY_UNREGISTERED = {
+    "CR-201": "R60Login の変更申請。n09 で運用済みだが台帳整備前に起票（2026-10-20）",
+    "CR-202": "同上",
+    "CR-203": "同上",
+    "Q-223": "R60Login 節点4 の裁定。教学 Q が docs/80_operation に転記された",
+}
+
+# `MSG-I-001` のようなメッセージ ID を拾わない（`(?<!MSG-)` が要）。
+BODY_ID_RE = re.compile(r"(?<!MSG-)\b(TC|IT|CR|BUG|R|Q|F|I|D|L|E)-(\d{3,})\b")
+
+# 短桁 ID（2026-11-10 追加）。
+#   ID_RE / BODY_ID_RE は 3 桁以上を要求する。そのため `I-01`〜`I-33` のように
+#   2 桁で振られた ID は **門番から一度も見えない**。実測: R60Maker 節点2〜6 の
+#   承認版が受領資料の 2 桁項目番号をそのまま使い、33 件が台帳外のまま全門番を通過した。
+#   走査範囲を狭める変更ではない（2 桁は今まで 0 件走査だった）。追加のみである。
+SHORT_ID_RE = re.compile(r"(?<!MSG-)\b(TC|IT|CR|BUG|R|Q|F|I|D|L|E)-(\d{1,2})\b")
+
+# 「上流 §8 E-07」のような**顧客文書の節番号**を短桁 ID と誤認しないための判別。
+#   実測（2026-11-10）: R60Login の承認版が「上流 §4.3 規則 23・§8 E-07 の明文どおり」と
+#   書いており、E-01〜E-09 が 9 件そっくり短桁 ID として拾われた。§番号の直後にある
+#   `E-xx` は顧客文書の節記号であって、こちらの ID ではない。
+_SECTION_CITE = re.compile(r"§\s*[\d.]+[ 　]$")
+
+# 上流（顧客要求書）の**節番号**として現れる短桁 ID。我々の ID ではない。
+#   R60Login は上流のエラー区分 E-01〜E-09 を §9.3 の対応表で引用している
+#   （我々の E-ID は E-201〜E-212）。**これは歴史的引用であり、増やしてはならない。**
+#   増やすと「短桁 ID 検査を通すための穴」になる（`LEGACY_UNREGISTERED` と同じ扱い）。
+SHORT_ID_UPSTREAM_CITES = {
+    "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09",
+}
+
+
+
+def _case_root(rel: str) -> str | None:
+    """`tutorial/<case>/...` の `<case>` 根を返す。tutorial 以外は None。"""
+    parts = rel.split("/")
+    if len(parts) >= 3 and parts[0] == "tutorial":
+        return "/".join(parts[:2])
+    return None
+
+
+def _body_scan_reason(rel: str) -> str | None:
+    for rx, why in BODY_SCAN_RES:
+        if rx.search(rel):
+            return why
+    return None
+
 
 # gate1 の接頭辞単位の免除。`(パス前方一致, 免除する接頭辞)`。
 #   tutorial/ の Q-*: 演習では Q を台帳に出さない（coach SKILL §3.1 の演练例外）。
@@ -330,7 +397,9 @@ class Repo:
 def _collect_declared_ids(node, acc: set[str]):
     """front-matter / YAML の中で「ID を宣言しているキー」の値だけを拾う。
 
-    prose（本文）は走査しないので、手順書中の例示 ID（R-102 等）は誤検知しない。
+    **本文はここでは走査しない**（手順書中の例示 ID を誤検知しないため）。
+    本文の走査は gate1 の後段で、`BODY_SCAN_PATTERNS` に該当する
+    「承認版・工程交付物」だけを対象に行う（2026-11-06 追加）。
     """
     if isinstance(node, dict):
         for key, value in node.items():
@@ -389,7 +458,47 @@ def gate1_id_validity(repo: Repo) -> dict:
         elif str(entry.get("status", "")) == "void":
             void_used.append({"id": one, "used_in": where})
 
-    ok = not wild and not void_used
+    # 本文走査（承認版・工程交付物のみ）。宣言キーで拾えなかった野号をここで捕まえる。
+    body_hits: dict[str, list[str]] = {}
+    short_hits: dict[str, list[str]] = {}
+    borrowed: dict[str, list[str]] = {}
+    for path in repo.iter_docs():
+        rel = repo.rel(path)
+        if not _body_scan_reason(rel):
+            continue
+        try:
+            text = path.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        for m in SHORT_ID_RE.finditer(text):
+            one = m.group(0)
+            if _prefix_exempt(rel, one) or one in SHORT_ID_UPSTREAM_CITES:
+                continue
+            if _SECTION_CITE.search(text[max(0, m.start() - 12):m.start()]):
+                continue
+            short_hits.setdefault(one, []).append(rel)
+        for m in BODY_ID_RE.finditer(text):
+            one = m.group(0)
+            if _prefix_exempt(rel, one) or one in LEGACY_UNREGISTERED:
+                continue
+            body_hits.setdefault(one, []).append(rel)
+            # 借用検査（2026-11-10 追加）: 台帳の `used_by` が別の tutorial ケースを指す ID を、
+            # この成果物が使っていたら「他人の番号」。gate1 は従来「登録済みか」しか見ておらず、
+            # R60Login と R60Maker が同じ D-201 を別の意味で使っていても PASS していた。
+            entry = repo.ids.get(one)
+            if not entry:
+                continue
+            here = _case_root(rel)
+            there = _case_root(str(entry.get("used_by") or ""))
+            if here and there and here != there:
+                borrowed.setdefault(one, []).append("%s (used_by=%s)" % (rel, entry.get("used_by")))
+
+    seen_wild = {w["id"] for w in wild}
+    for one, where in sorted(body_hits.items()):
+        if repo.ids.get(one) is None and one not in seen_wild:
+            wild.append({"id": one, "used_in": sorted(set(where)), "where": "body"})
+
+    ok = not wild and not void_used and not short_hits and not borrowed
     return {
         "pass": ok,
         "stats": {
@@ -397,9 +506,13 @@ def gate1_id_validity(repo: Repo) -> dict:
             "registered_ids": len(repo.ids),
             "wild_ids": len(wild),
             "void_used": len(void_used),
+            "short_ids": len(short_hits),
+            "borrowed_ids": len(borrowed),
         },
         "wild_ids": wild,
         "void_used": void_used,
+        "short_ids": [{"id": k, "used_in": sorted(set(v))} for k, v in sorted(short_hits.items())],
+        "borrowed_ids": [{"id": k, "used_in": sorted(set(v))} for k, v in sorted(borrowed.items())],
     }
 
 
@@ -683,7 +796,7 @@ def gate6_secret_scan(repo: Repo) -> dict:
     hits = []
     scanned = 0
     patterns = load_secret_patterns(repo.root)
-    # .jsonl は RAG の chunk 正本（docs/90_knowledge/**/chunks/*.jsonl）。
+    # .jsonl は RAG の chunk 正本（tools/kb-platform/repo/**/chunks/*.jsonl）。
     # 走査範囲を狭める変更は行わない（追加のみ）ため、ここで追加する。
     targets = list(repo.iter_docs(suffixes=(".yaml", ".yml", ".md", ".jsonl")))
     for extra in ("CLAUDE.md", "AGENTS.md", "CONTRIBUTING.md", "CODEOWNERS", "ROADMAP_3PHASE.md"):

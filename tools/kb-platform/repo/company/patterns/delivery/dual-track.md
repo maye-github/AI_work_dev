@@ -6,14 +6,15 @@ doc_type: pattern
 version: "1.0"
 status: active
 conf_level: 20
-owner: 共通基盤チーム
+owner: Nan
 updated_at: 2026-10-29
 tags: [delivery, dual-track, evidence, review]
+source_project: framework-rules
 ---
 
 # 成果物の二重化（機読源と日文正式版の二本立て）
 
-> **本条は要約であり、正本ではない。** 定義の正本は `docs/90_knowledge/dual-deliverable.md`、
+> **本条は要約であり、正本ではない。** 定義の正本は `tools/kb-platform/repo/company/patterns/delivery/dual-deliverable.md`、
 > 運用の正本は `.claude/rules/00-project-global.md` §11〜§12。食い違ったら正本を採る。
 
 ## 1. 二本立ての理由

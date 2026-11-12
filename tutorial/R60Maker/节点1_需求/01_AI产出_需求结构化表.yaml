@@ -1,0 +1,1052 @@
+---
+schema_version: "1"
+case_ref: "R60Maker"
+req_ref: "R-202"
+title: "メーカーマスタメンテナンス（R60Maker）画面 要求構造化表"
+status: "draft"
+sensitivity: "internal"
+owner: "AI-SE"
+version: "0.2.0"
+background: >-
+  調達・生産系の各種マスタを新しい基盤で構築するにあたり、メーカー（資材・原材料の供給元）の情報を
+  維持管理する画面が必要である。メーカーマスタは購入品目別仕入先マスタおよび原材料仕入単価マスタから
+  参照される基礎データであり、登録・変更・削除の際に他マスタからの参照関係を壊さないことが求められる。
+  本要求は新規構築であり、対象はメーカーマスタメンテナンスの検索画面・マスタ画面およびその API である。
+scope:
+  in_scope:
+    - "メーカーマスタメンテナンスの検索画面"
+    - "メーカーマスタメンテナンスのマスタ画面（新規・複製・修正）"
+    - "上記2画面が利用する6つの API 端点"
+  api_common: '6端点はすべて POST。パスは /R60Maker/<name>。要求は {"params": {...}} の形式、応答の項目名はキャメルケースとする。'
+non_goals:
+  - "購入品目別仕入先マスタの画面そのもの（本画面は参照の有無を確認するのみ）"
+  - "原材料仕入単価マスタの画面そのもの（本画面は参照の有無を確認するのみ）"
+  - "緊急配信の配信処理そのもの（本画面は弊社の共通部品を呼び出すのみ）"
+  - "メーカー情報の一括取り込み（アップロード）"
+business_rules:
+  - rule_no: "BR-01"
+    summary: "検索条件は AND で結合し、空の条件は検索条件に含めない。"
+    source_clause: "§3.5 条件の組み合わせ"
+  - rule_no: "BR-02"
+    summary: "メーカーコードは前方一致（入力値で始まるもの）で検索する。"
+    source_clause: "§3.5 表"
+  - rule_no: "BR-03"
+    summary: "メーカー日本語名は中間一致（入力値を含むもの）で検索する。"
+    source_clause: "§3.5 表"
+  - rule_no: "BR-04"
+    summary: "削除含むがオフのとき、削除済みのデータを検索対象から除く。"
+    source_clause: "§3.5 表"
+  - rule_no: "BR-05"
+    summary: "削除含むがオンのとき、削除済みのデータも検索対象に含める。"
+    source_clause: "§3.5 表"
+  - rule_no: "BR-06"
+    summary: "仕掛表示は登録が未確定のデータのみを対象とし、確定済みは対象外とする。"
+    source_clause: "§3.5 表／§3.2 #8"
+  - rule_no: "BR-07"
+    summary: "既定の並び順は、削除済みかどうか（未削除を先）の次にメーカーコードの昇順とする。"
+    source_clause: "§3.5 並び順"
+  - rule_no: "BR-08"
+    summary: "利用者がソートを指定できるのはメーカーコードとメーカー日本語名の2項目のみとし、それ以外の指定は受け付けず既定の並び順とする。"
+    source_clause: "§3.5 並び順"
+  - rule_no: "BR-09"
+    summary: "該当0件の場合は一覧を表示せずメッセージを表示する。"
+    source_clause: "§3.5 件数／§5"
+  - rule_no: "BR-10"
+    summary: "上限件数を超えた場合は一覧を表示せずメッセージを表示する。上限値は弊社の共通仕様による。"
+    source_clause: "§3.5 件数"
+  - rule_no: "BR-11"
+    summary: "ページングは画面で選択した1頁件数を用い、頁の移動は弊社標準規約による。"
+    source_clause: "§3.5 ページング"
+  - rule_no: "BR-12"
+    summary: "ダウンロードは直前に実行した検索条件をそのまま用い、出力項目と並び順は一覧と同じとする。ファイル形式・文字コード・ファイル名は弊社標準規約による。"
+    source_clause: "§3.5 ダウンロード"
+  - rule_no: "BR-13"
+    summary: "表示ボタンは検索条件による検索を、仕掛表示ボタンは登録が未確定のデータのみを対象とする検索を実行する。"
+    source_clause: "§3.4 #2／#3"
+  - rule_no: "BR-14"
+    summary: "一覧のメーカーコードまたはメーカー日本語名のリンク押下で、選択行を引き継いだ修正のマスタ画面を開く。"
+    source_clause: "§3.2 #13／#14／§3.4 #6"
+  - rule_no: "BR-15"
+    summary: "複製ボタンは選択した行の内容を引き継ぎ、複製のマスタ画面を開く。"
+    source_clause: "§3.2 #12／§3.4 #5"
+  - rule_no: "BR-16"
+    summary: "新規ボタンは新規のマスタ画面を開く。"
+    source_clause: "§3.2 #21／§3.4 #7"
+  - rule_no: "BR-17"
+    summary: "マスタ画面は新規・複製・修正の3つのモードを持ち、操作モードの項目にいずれかを表示する。"
+    source_clause: "§3.3 #1／§3.6"
+  - rule_no: "BR-18"
+    summary: "新規モードは引継ぎ値なしとし、全項目を空、緊急配信をオフ、削除欄をブランクとする。"
+    source_clause: "§3.6 表"
+  - rule_no: "BR-19"
+    summary: "複製モードはメーカーコード・メーカー日本語名・メーカーカナ名の3項目のみを引き継ぎ、緊急配信をオフ、削除欄をブランクとする。"
+    source_clause: "§3.6 表"
+  - rule_no: "BR-20"
+    summary: "複製は新規登録の下書きであり、緊急配信と削除の状態は引き継がない。"
+    source_clause: "§3.6 複製の扱い"
+  - rule_no: "BR-21"
+    summary: "修正モードは対象行の全項目を登録されている値のまま表示し、メーカーコードは変更できない。"
+    source_clause: "§3.6 表／§3.3 #2"
+  - rule_no: "BR-22"
+    summary: "登録ボタン押下時は、示された順に確認し、違反した時点で処理を中断する。"
+    source_clause: "§3.7 冒頭"
+  - rule_no: "BR-23"
+    summary: "新規・複製では、メーカーコードが未入力ならエラーとする。"
+    source_clause: "§3.7 新規・複製 手順1"
+  - rule_no: "BR-24"
+    summary: "新規・複製では、メーカーコードが半角英数字5文字以内でなければエラーとする。"
+    source_clause: "§3.7 新規・複製 手順2"
+  - rule_no: "BR-25"
+    summary: "新規・複製では、緊急配信がオンのとき、日本語名・カナ名が未入力ならエラーとする。"
+    source_clause: "§3.7 新規・複製 手順3／§3.10"
+  - rule_no: "BR-26"
+    summary: "新規・複製では、日本語名・カナ名が §3.9 の条件を満たさなければエラーとする。"
+    source_clause: "§3.7 新規・複製 手順4"
+  - rule_no: "BR-27"
+    summary: "複製では、全項目が引き継いだ値のままなら登録せずメッセージを表示して終了する。"
+    source_clause: "§3.7 新規・複製 手順5"
+  - rule_no: "BR-28"
+    summary: "登録確認を利用者に求め、No なら中断する。"
+    source_clause: "§3.7 新規・複製 手順6"
+  - rule_no: "BR-29"
+    summary: "新規・複製では、同じメーカーコードが既に存在する場合エラーとし、エラー時はメーカーコードを強調表示する。"
+    source_clause: "§3.7 新規・複製 手順7／§5"
+  - rule_no: "BR-30"
+    summary: "新規・複製では、新規レコードとして登録する。"
+    source_clause: "§3.7 新規・複製 手順8"
+  - rule_no: "BR-31"
+    summary: "修正では、緊急配信がオンのとき、日本語名・カナ名が未入力ならエラーとする。"
+    source_clause: "§3.7 修正 手順1"
+  - rule_no: "BR-32"
+    summary: "修正では、削除をオンにして登録するとき、日本語名・カナ名が未入力ならエラーとする。"
+    source_clause: "§3.7 修正 手順2"
+  - rule_no: "BR-33"
+    summary: "修正では、日本語名・カナ名が §3.9 の条件を満たさなければエラーとする。"
+    source_clause: "§3.7 修正 手順3"
+  - rule_no: "BR-34"
+    summary: "修正では、全項目が変更されていなければ登録せずメッセージを表示して終了する。"
+    source_clause: "§3.7 修正 手順4"
+  - rule_no: "BR-35"
+    summary: "修正でも登録確認を利用者に求め、No なら中断する。"
+    source_clause: "§3.7 修正 手順5"
+  - rule_no: "BR-36"
+    summary: "修正では、削除をオンにした場合のみ被参照チェックを行い、参照されていれば削除できない。"
+    source_clause: "§3.7 修正 手順6／§3.8"
+  - rule_no: "BR-37"
+    summary: "修正では排他を行い、他の利用者が先に更新していた場合はエラーとして処理を中断する。"
+    source_clause: "§3.7 修正 手順7"
+  - rule_no: "BR-38"
+    summary: "修正では既存レコードを更新し、削除をオンにした場合は論理削除とする。"
+    source_clause: "§3.7 修正 手順8"
+  - rule_no: "BR-39"
+    summary: "登録・更新の完了時は完了メッセージを表示し、マスタ画面を閉じて一覧を再検索する。"
+    source_clause: "§3.7 登録・更新の共通"
+  - rule_no: "BR-40"
+    summary: "登録・更新で緊急配信がオンの場合は、完了後に緊急配信の処理を起動する。"
+    source_clause: "§3.7 登録・更新の共通／§3.10"
+  - rule_no: "BR-41"
+    summary: "削除ボタン押下時も、示された順に確認し、違反した時点で処理を中断する。"
+    source_clause: "§3.8 冒頭"
+  - rule_no: "BR-42"
+    summary: "削除では、緊急配信のオン・オフにかかわらず、日本語名・カナ名が未入力ならエラーとする。"
+    source_clause: "§3.8 手順1"
+  - rule_no: "BR-43"
+    summary: "削除では、日本語名・カナ名が §3.9 の条件を満たさなければエラーとする。"
+    source_clause: "§3.8 手順2"
+  - rule_no: "BR-44"
+    summary: "削除確認を利用者に求め、No なら中断する。"
+    source_clause: "§3.8 手順3"
+  - rule_no: "BR-45"
+    summary: "購入品目別仕入先マスタまたは原材料仕入単価マスタから参照されている場合は削除できない。"
+    source_clause: "§3.8 手順4"
+  - rule_no: "BR-46"
+    summary: "削除でも排他を行い、他の利用者が先に更新していた場合はエラーとして処理を中断する。"
+    source_clause: "§3.8 手順5"
+  - rule_no: "BR-47"
+    summary: "削除は論理削除とし、物理削除は行わない。"
+    source_clause: "§3.8 手順6"
+  - rule_no: "BR-48"
+    summary: "緊急配信が指示されている場合、緊急配信の処理を起動する。"
+    source_clause: "§3.8 手順7"
+  - rule_no: "BR-49"
+    summary: "削除の完了時は完了メッセージを表示し、マスタ画面を閉じて一覧を再検索する。"
+    source_clause: "§3.8 手順8"
+  - rule_no: "BR-50"
+    summary: "参照の有無は弊社の共通部品で判定する。"
+    source_clause: "§3.8 被参照チェックの考え方／§3.11"
+  - rule_no: "BR-51"
+    summary: "削除ボタンは新規・複製では非活性、修正では活性、削除済みのデータでは非活性とする。"
+    source_clause: "§3.3 #8"
+  - rule_no: "BR-52"
+    summary: "修正の削除チェックは、オンにして登録すると削除となり、削除済みのデータを開いた場合はチェック済みで表示する。"
+    source_clause: "§3.3 #6"
+  - rule_no: "BR-53"
+    summary: "メーカーコードは新規・複製では必須（修正では変更不可）、半角英数字5文字以内、使用できない文字は「−」とする。"
+    source_clause: "§3.9 表"
+  - rule_no: "BR-54"
+    summary: "メーカー日本語名は緊急配信の指定時・削除時・削除を選択して登録するとき必須、30Byte以内（全角使用可）、使用できない文字はカンマ・アポストロフィ・ダブルクォート・パイプとする。"
+    source_clause: "§3.9 表"
+  - rule_no: "BR-55"
+    summary: "メーカーカナ名は日本語名と同じ条件で必須、半角カナ15文字以内、使用できない文字はアポストロフィ・カンマ・円マーク・半角スペースとする。"
+    source_clause: "§3.9 表"
+  - rule_no: "BR-56"
+    summary: "入力チェックに違反したときは該当項目の背景色を変え、その項目にフォーカスを移す。メッセージの文面は弊社標準規約による。"
+    source_clause: "§3.9 違反したときの扱い"
+  - rule_no: "BR-57"
+    summary: "検索画面のメーカーコード・メーカー日本語名も同じ桁・文字種で確認し、違反した場合は検索を行わず該当項目にフォーカスを移す。"
+    source_clause: "§3.9 検索条件の入力チェック"
+  - rule_no: "BR-58"
+    summary: "緊急配信にチェックを付けて登録または削除した場合、弊社の共通部品による緊急配信の処理を起動する。本画面はこれを呼び出すのみである。"
+    source_clause: "§3.10 第1項"
+  - rule_no: "BR-59"
+    summary: "緊急配信を指定するときは、メーカー日本語名とメーカーカナ名の入力が必須である。"
+    source_clause: "§3.10 第2項"
+  - rule_no: "BR-60"
+    summary: "一覧には送信状態を表示する。"
+    source_clause: "§3.10 第3項／§3.2 #16"
+  - rule_no: "BR-61"
+    summary: "緊急配信の初期値はオフとする。"
+    source_clause: "§3.3 #5"
+  - rule_no: "BR-62"
+    summary: "エラー応答・メッセージ・ログの形式は弊社の標準規約による。正常／業務エラー／システムエラーの区分けおよびエラーコード体系も標準規約の方式による。"
+    source_clause: "§3.11 第1項／§5"
+  - rule_no: "BR-63"
+    summary: "共通ヘッダ・ページャ・セッションエラー画面・オンライン制御エラー画面・システムエラー画面は弊社の共通部品であり、本件ではこれらを呼び出し、新規に作成しない。"
+    source_clause: "§3.11 第2項／§2"
+  - rule_no: "BR-64"
+    summary: "コード値の名称（送信状態・削除の区分など）は弊社のコード値マスタから取得し、本画面は取得して表示するのみとする。"
+    source_clause: "§3.11 第3項"
+  - rule_no: "BR-65"
+    summary: "登録ステータス（仕掛／確定）の判定基準は弊社の共通仕様による。本画面はその結果を用いるのみとする。"
+    source_clause: "§3.11 第4項"
+  - rule_no: "BR-66"
+    summary: "監査項目（登録者・登録日時・更新者・更新日時・改訂番号など）の付与は弊社の共通仕様による。本画面が個別に値を決めない。"
+    source_clause: "§3.11 第5項"
+  - rule_no: "BR-67"
+    summary: "1頁件数の候補および検索の上限件数は弊社の共通仕様による。"
+    source_clause: "§3.11 第7項"
+  - rule_no: "BR-68"
+    summary: "非機能（対応ブラウザ・画面解像度・同時利用数・性能）は弊社の標準に従う。"
+    source_clause: "§3.11 第8項"
+  - rule_no: "BR-69"
+    summary: "セッションの有効期限・タイムアウト時の扱いは弊社の共通仕様による。本画面は新たにセッションを生成しない。"
+    source_clause: "§3.11 第9項"
+  - rule_no: "BR-70"
+    summary: "すべてのイベントに共通する前提として、セッション情報が存在しない場合はセッションエラー画面へ、オンライン利用が許可されていない場合はオンライン制御エラー画面へ遷移する。"
+    source_clause: "§3.4 すべてのイベントに共通する前提／§5"
+input_items:
+  - item_no: "S-01"
+    screen: "検索画面"
+    name: "画面タイトル"
+    kind: "ラベル"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "固定値「メーカーマスタメンテ」"
+    source_clause: "§3.2 #1"
+  - item_no: "S-02"
+    screen: "検索画面"
+    name: "システム日時"
+    kind: "ラベル"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "弊社標準規約による"
+    source_clause: "§3.2 #2／§3.11"
+  - item_no: "S-03"
+    screen: "検索画面"
+    name: "会社／部署／ユーザー名"
+    kind: "ラベル"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "ログイン中の利用者の情報"
+    source_clause: "§3.2 #3"
+  - item_no: "S-04"
+    screen: "検索画面"
+    name: "メーカーコード"
+    kind: "テキストボックス"
+    required_when: "任意（空のとき検索条件に含めない）"
+    max_length: 5
+    char_type: "半角英数字"
+    initial_value: "空白"
+    source_clause: "§3.2 #4／§3.5"
+  - item_no: "S-05"
+    screen: "検索画面"
+    name: "メーカー日本語名"
+    kind: "テキストボックス（入力を消すボタンを添える）"
+    required_when: "任意（空のとき検索条件に含めない）"
+    max_length: 30
+    char_type: "全角可（30Byte 以内）"
+    initial_value: "空白"
+    source_clause: "§3.2 #5／§3.5"
+  - item_no: "S-06"
+    screen: "検索画面"
+    name: "削除含む"
+    kind: "チェックボックス"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "オフ"
+    source_clause: "§3.2 #6／§3.5"
+  - item_no: "S-07"
+    screen: "検索画面"
+    name: "1頁件数"
+    kind: "ドロップダウン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "既定の候補"
+    source_clause: "§3.2 #7／§3.11"
+  - item_no: "S-08"
+    screen: "検索画面"
+    name: "仕掛表示"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "活性"
+    source_clause: "§3.2 #8／§3.4 #3"
+  - item_no: "S-09"
+    screen: "検索画面"
+    name: "表示"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "活性"
+    source_clause: "§3.2 #9／§3.4 #2"
+  - item_no: "S-10"
+    screen: "検索画面"
+    name: "検索条件(非)表示"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "活性"
+    source_clause: "§3.2 #10／§3.4 #4"
+  - item_no: "S-11"
+    screen: "検索画面"
+    name: "ページャ（上部・下部）"
+    kind: "リンク・ラベル"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "弊社標準規約による"
+    source_clause: "§3.2 #11／§3.11"
+  - item_no: "S-12"
+    screen: "検索画面"
+    name: "複製"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "検索成功後に活性"
+    source_clause: "§3.2 #12"
+  - item_no: "S-13"
+    screen: "検索画面"
+    name: "一覧：メーカーコード"
+    kind: "リンク"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "ソート指定可能"
+    source_clause: "§3.2 #13／§3.5"
+  - item_no: "S-14"
+    screen: "検索画面"
+    name: "一覧：メーカー日本語名"
+    kind: "リンク"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "ソート指定可能"
+    source_clause: "§3.2 #14／§3.5"
+  - item_no: "S-15"
+    screen: "検索画面"
+    name: "一覧：メーカーカナ名"
+    kind: "ラベル"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "表示のみ"
+    source_clause: "§3.2 #15"
+  - item_no: "S-16"
+    screen: "検索画面"
+    name: "一覧：送信状態"
+    kind: "ラベル"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "コード値の名称で表示"
+    source_clause: "§3.2 #16／§3.11"
+  - item_no: "S-17"
+    screen: "検索画面"
+    name: "一覧：削除"
+    kind: "ラベル"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "コード値の名称で表示"
+    source_clause: "§3.2 #17／§3.11"
+  - item_no: "S-18"
+    screen: "検索画面"
+    name: "戻る"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "検索成功後に活性"
+    source_clause: "§3.2 #18／§3.4 #9"
+  - item_no: "S-19"
+    screen: "検索画面"
+    name: "業務終了"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "活性"
+    source_clause: "§3.2 #19／§3.4 #10"
+  - item_no: "S-20"
+    screen: "検索画面"
+    name: "ダウンロード"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "検索成功後に活性"
+    source_clause: "§3.2 #20／§3.4 #8"
+  - item_no: "S-21"
+    screen: "検索画面"
+    name: "新規"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "検索成功後に活性"
+    source_clause: "§3.2 #21／§3.4 #7"
+  - item_no: "M-01"
+    screen: "マスタ画面"
+    name: "操作モード"
+    kind: "ラベル"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "起動したモード（新規／複製／修正）"
+    source_clause: "§3.3 #1／§3.6"
+  - item_no: "M-02"
+    screen: "マスタ画面"
+    name: "メーカーコード"
+    kind: "テキストボックス（新規・複製）／ラベル（修正）"
+    required_when: "新規・複製では必須（修正では変更不可）"
+    max_length: 5
+    char_type: "半角英数字（使用できない文字「−」）"
+    initial_value: "新規は空白、複製・修正は引継ぎ値"
+    source_clause: "§3.3 #2／§3.6／§3.9"
+  - item_no: "M-03"
+    screen: "マスタ画面"
+    name: "メーカー日本語名"
+    kind: "テキストボックス"
+    required_when: "緊急配信の指定時・削除時・削除を選択して登録するとき"
+    max_length: 30
+    char_type: "全角可（30Byte 以内。使用不可：カンマ・アポストロフィ・ダブルクォート・パイプ）"
+    initial_value: "モードにより引継ぎ値または空白"
+    source_clause: "§3.3 #3／§3.9"
+  - item_no: "M-04"
+    screen: "マスタ画面"
+    name: "メーカーカナ名"
+    kind: "テキストボックス"
+    required_when: "緊急配信の指定時・削除時・削除を選択して登録するとき"
+    max_length: 15
+    char_type: "半角カナ（使用不可：アポストロフィ・カンマ・円マーク・半角スペース）"
+    initial_value: "モードにより引継ぎ値または空白"
+    source_clause: "§3.3 #4／§3.9"
+  - item_no: "M-05"
+    screen: "マスタ画面"
+    name: "緊急配信"
+    kind: "チェックボックス"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "オフ（複製でも引き継がない）"
+    source_clause: "§3.3 #5／§3.6／§3.10"
+  - item_no: "M-06"
+    screen: "マスタ画面"
+    name: "削除"
+    kind: "ラベル（ブランク、新規・複製）／チェックボックス（修正）"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "新規・複製はブランク、削除済みデータを開いた場合はチェック済み"
+    source_clause: "§3.3 #6"
+  - item_no: "M-07"
+    screen: "マスタ画面"
+    name: "戻る"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "活性（値の変更がある場合は確認のうえ一覧へ戻る）"
+    source_clause: "§3.3 #7／§3.4 #13"
+  - item_no: "M-08"
+    screen: "マスタ画面"
+    name: "削除"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "新規・複製は非活性、修正は活性、削除済みデータは非活性"
+    source_clause: "§3.3 #8"
+  - item_no: "M-09"
+    screen: "マスタ画面"
+    name: "登録"
+    kind: "ボタン"
+    required_when: null
+    max_length: null
+    char_type: null
+    initial_value: "記載なし"
+    source_clause: "§3.3 #9／§3.4 #12"
+output_endpoints:
+  - endpoint: "/R60Maker/init"
+    method: "POST"
+    event_refs: ["イベント1 初期表示"]
+    request_fields: ["入力を持たない（{}）"]
+    response_fields: ["1頁件数の候補（値・表示名）", "メッセージ情報", "エラー区分"]
+    source_clause: "§4.1 #1／§4.2"
+  - endpoint: "/R60Maker/search"
+    method: "POST"
+    event_refs: ["イベント2 表示ボタンクリック", "イベント3 仕掛表示ボタンクリック"]
+    request_fields: ["メーカーコード", "メーカー日本語名", "削除含む", "検索区分（1=表示／0=仕掛表示）", "1頁件数", "頁番号", "ソート項目", "昇降順"]
+    response_fields: ["総件数", "明細の配列", "エラー区分"]
+    source_clause: "§4.1 #2／§4.3"
+  - endpoint: "/R60Maker/download"
+    method: "POST"
+    event_refs: ["イベント8 ダウンロードボタンクリック"]
+    request_fields: ["§4.3 と同じ検索条件"]
+    response_fields: ["CSV ファイル（添付）"]
+    source_clause: "§4.1 #3／§4.4"
+  - endpoint: "/R60Maker/initEdit"
+    method: "POST"
+    event_refs: ["イベント5 複製ボタンクリック", "イベント6 一覧データリンククリック", "イベント7 新規ボタンクリック"]
+    request_fields: ["モード（1=新規／2=複製／3=修正）", "メーカーコード（複製・修正の場合）"]
+    response_fields: ["モード別の初期値（§3.6 の表のとおり）"]
+    source_clause: "§4.1 #4／§4.5"
+  - endpoint: "/R60Maker/delete"
+    method: "POST"
+    event_refs: ["イベント11 削除ボタンクリック（マスタ）"]
+    request_fields: ["メーカーコード", "メーカー日本語名", "メーカーカナ名", "緊急配信", "排他情報（最終更新日時・改訂番号）"]
+    response_fields: ["エラー区分"]
+    source_clause: "§4.1 #5／§4.6"
+  - endpoint: "/R60Maker/edit"
+    method: "POST"
+    event_refs: ["イベント12 登録ボタンクリック（マスタ）"]
+    request_fields: ["モード", "メーカーコード", "メーカー日本語名", "メーカーカナ名", "緊急配信", "削除", "排他情報（最終更新日時・改訂番号）"]
+    response_fields: ["エラー区分"]
+    source_clause: "§4.1 #6／§4.7"
+exceptions:
+  - event: "検索結果が0件"
+    handling: "業務エラー。メッセージを表示し、明細を表示しない。"
+    destination: "検索画面に留まる"
+    source_clause: "§5"
+  - event: "検索結果が上限件数を超えた"
+    handling: "業務エラー。メッセージを表示し、明細を表示しない。"
+    destination: "検索画面に留まる"
+    source_clause: "§5"
+  - event: "メーカーコードが既に存在する（新規・複製）"
+    handling: "業務エラー。メーカーコードを強調表示する。"
+    destination: "マスタ画面に留まる"
+    source_clause: "§5／§3.7 新規・複製 手順7"
+  - event: "他のマスタから参照されている（削除）"
+    handling: "業務エラー。削除しない。"
+    destination: "マスタ画面に留まる"
+    source_clause: "§5／§3.8 手順4"
+  - event: "他の利用者が先に更新していた（排他）"
+    handling: "業務エラー。処理を中断する。"
+    destination: "マスタ画面に留まる"
+    source_clause: "§5／§3.7 修正 手順7／§3.8 手順5"
+  - event: "被参照チェックの共通部品が想定外の結果を返した"
+    handling: "システムエラー。処理を中断する。"
+    destination: "遷移先の記載なし"
+    source_clause: "§5"
+  - event: "入力チェック違反（画面側）"
+    handling: "該当項目を強調表示し、フォーカスを移す。サーバへは送らない。"
+    destination: "画面に留まる"
+    source_clause: "§5／§3.9"
+  - event: "セッション情報が存在しない"
+    handling: "セッションエラー画面へ遷移する。"
+    destination: "セッションエラー画面"
+    source_clause: "§5／§3.4"
+  - event: "オンライン利用が許可されていない"
+    handling: "オンライン制御エラー画面へ遷移する。"
+    destination: "オンライン制御エラー画面"
+    source_clause: "§5／§3.4"
+  - event: "API の権限検証で権限が不足している"
+    handling: "業務エラー。処理を中断する。画面のボタン活性制御は補助であり、これとは独立に判定する。"
+    destination: "画面に留まる（エラー区分で通知）"
+    source_clause: "§5／§3.1"
+  - event: "DB エラー・想定外の例外"
+    handling: "ロールバックし、システムエラー画面へ遷移する。"
+    destination: "システムエラー画面"
+    source_clause: "§5"
+  - event: "登録確認で No"
+    handling: "中断する（エラーではない）。"
+    destination: "マスタ画面に留まる"
+    source_clause: "§3.7 新規・複製 手順6／修正 手順5"
+  - event: "変更なし（複製・修正）"
+    handling: "登録せずメッセージを表示して終了する。"
+    destination: "記載なし（画面に留まるか閉じるか未記載）"
+    source_clause: "§3.7 新規・複製 手順5／修正 手順4"
+  - event: "削除確認で No"
+    handling: "中断する（エラーではない）。"
+    destination: "マスタ画面に留まる"
+    source_clause: "§3.8 手順3"
+delegations:
+  - item: "権限マスタの内容（操作別・エンドポイント別の必要権限）"
+    delegate_to: "弊社共通（権限マスタ）"
+    source_clause: "§3.1（v1.1 で追記）"
+  - item: "エラー応答・メッセージ・ログの形式"
+    delegate_to: "弊社標準規約"
+    source_clause: "§3.11 第1項"
+  - item: "正常／業務エラー／システムエラーの区分け、エラーコード体系"
+    delegate_to: "弊社標準規約"
+    source_clause: "§3.11 第1項／§5"
+  - item: "共通ヘッダ"
+    delegate_to: "弊社共通部品"
+    source_clause: "§3.11 第2項／§2"
+  - item: "ページャ"
+    delegate_to: "弊社共通部品"
+    source_clause: "§3.11 第2項／§2"
+  - item: "セッションエラー画面"
+    delegate_to: "弊社共通部品"
+    source_clause: "§3.11 第2項／§2"
+  - item: "オンライン制御エラー画面"
+    delegate_to: "弊社共通部品"
+    source_clause: "§3.11 第2項／§2"
+  - item: "システムエラー画面"
+    delegate_to: "弊社共通部品"
+    source_clause: "§3.11 第2項／§2"
+  - item: "コード値の名称（送信状態・削除の区分など）"
+    delegate_to: "弊社コード値マスタ"
+    source_clause: "§3.11 第3項"
+  - item: "登録ステータス（仕掛／確定）の判定基準"
+    delegate_to: "弊社共通仕様"
+    source_clause: "§3.11 第4項"
+  - item: "監査項目（登録者・登録日時・更新者・更新日時・改訂番号など）の付与"
+    delegate_to: "弊社共通仕様"
+    source_clause: "§3.11 第5項"
+  - item: "被参照チェック"
+    delegate_to: "弊社共通部品"
+    source_clause: "§3.11 第6項／§3.8"
+  - item: "1頁件数の候補、検索の上限件数"
+    delegate_to: "弊社共通仕様"
+    source_clause: "§3.11 第7項／§3.5"
+  - item: "非機能（対応ブラウザ・画面解像度・同時利用数・性能）"
+    delegate_to: "弊社標準"
+    source_clause: "§3.11 第8項"
+  - item: "セッションの有効期限・タイムアウト時の扱い"
+    delegate_to: "弊社共通仕様"
+    source_clause: "§3.11 第9項"
+  - item: "CSV のファイル形式・文字コード・ファイル名の付け方"
+    delegate_to: "弊社標準規約"
+    source_clause: "§3.5 ダウンロード"
+  - item: "戻る・業務終了の画面遷移"
+    delegate_to: "弊社標準規約"
+    source_clause: "§3.4 #9／#10／#13"
+  - item: "緊急配信の処理本体"
+    delegate_to: "弊社共通部品"
+    source_clause: "§3.10／§2"
+  - item: "画面項目の全33項目の細目"
+    delegate_to: "弊社画面項目定義"
+    source_clause: "§3.2 注記"
+open_issues:
+  - issue_no: "Q-239"
+    text: "§3.1 の前提条件が「あり（内容は弊社より別途提示する）」とあるが、その内容が本文に無い。前提条件は何か。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-240"
+    text: "§3.11 の「弊社の標準規約」の実体（文書名・版・入手先）が示されていない。エラー応答・メッセージ・ログの形式、正常／業務エラー／システムエラーの区分け、エラーコード体系を確定できない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-241"
+    text: "§3.11 の共通部品5種（共通ヘッダ・ページャ・セッションエラー画面・オンライン制御エラー画面・システムエラー画面）の呼出インタフェース・提供形態・バージョンが示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-242"
+    text: "§3.11 のコード値マスタが示されていない。送信状態および削除の区分のコード値と表示名称（未送信／送信済みなど、ほかにどの値があるか）を確定できない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-243"
+    text: "§3.11 の「登録ステータス（仕掛／確定）の判定基準」が示されていない。どの状態を仕掛とみなすか確定できない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-244"
+    text: "§3.11 の監査項目の付与仕様（対象項目・設定主体・更新条件）が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-245"
+    text: "§3.11 の被参照チェック共通部品のインタフェース・戻り値・異常時の意味が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-246"
+    text: "§3.11 の「1頁件数の候補」および §3.2 #7 の「既定の候補」の一覧と既定値が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-247"
+    text: "§3.11 の「検索の上限件数」の値が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-248"
+    text: "§3.11 の非機能標準（対応ブラウザ・画面解像度・同時利用数・性能）の実体が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-249"
+    text: "§3.11 のセッション有効期限・タイムアウト時の扱いが示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-250"
+    text: "§3.10 の緊急配信の共通部品について、起動方法・インタフェース・戻り値・失敗時の扱いが示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-251"
+    text: "§3.5 の CSV のファイル形式・文字コード・ファイル名の付け方（弊社標準規約）が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-252"
+    text: "§3.2 注記は「弊社の画面項目定義では全33項目に細分されている」とするが、本文の表は21行のみで、33項目の内訳が示されていない。不足する項目は何か。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-253"
+    text: "§3.4 #9・#10・#13 の戻る・業務終了の画面遷移が「弊社標準規約による」とあるが、遷移先の画面と確認の内容が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-254"
+    text: "§3.1 の「利用権限保持者のみ」について、利用権限の定義と、参照・登録・更新・削除・ダウンロードの操作別の可否が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-255"
+    text: "§3.2 #2 のシステム日時について、取得元・書式・タイムゾーンが「弊社標準規約」とあるが実体が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-256"
+    text: "§3.9 の入力チェック違反時のメッセージ文面が「弊社標準規約」とあるが、実体が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-257"
+    text: "§3.7・§3.8 の登録確認・削除確認・完了メッセージの文面と表示方法が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-258"
+    text: "§3.4 イベント1 の「メッセージ」の内容と取得元（共通ヘッダか共通仕様か）が示されていない。"
+    kind: "dangling_reference"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-259"
+    text: "仕掛表示ボタンと表示ボタンの併用関係が不明である。仕掛表示は検索モードの切替か一回限りの検索か、初期表示時の検索区分はどちらか、仕掛表示の後に表示を押すと通常検索に戻るか。"
+    kind: "condition_combination"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-260"
+    text: "削除含むをオンにした状態で仕掛表示を実行した場合、削除済みかつ仕掛のデータを対象に含めるか。"
+    kind: "condition_combination"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-261"
+    text: "利用者がメーカー日本語名でソート指定した場合、既定の並び順の第1キー「削除済みかどうか（未削除を先）」を維持するか、指定項目のみで並べ替えるか。同値時の順序も不明である。"
+    kind: "condition_combination"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-262"
+    text: "複製ボタン押下時に行が選択されていない場合の扱い（エラー・メッセージ・無処理）が示されていない。"
+    kind: "condition_combination"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-263"
+    text: "検索結果0件は §5 で業務エラーとされるが、§3.2 の複製・戻る・ダウンロード・新規は「検索成功後に活性」とある。0件の場合を検索成功とみなしてボタンを活性にするか、非活性のままにするか。"
+    kind: "contradiction"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-264"
+    text: "ダウンロードの「直前に実行した検索条件」とは、画面上の現在値か、最後に実行した条件か。仕掛表示で検索した直後や、検索後に画面の条件を変更した場合の扱いも不明である。"
+    kind: "condition_combination"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-265"
+    text: "検索条件(非)表示ボタンで縮小・拡大される範囲が不明である。またマスタ画面から一覧へ戻った際に縮小・拡大の状態を保持するか。"
+    kind: "condition_combination"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-266"
+    text: "一覧の行選択方式（単一選択か複数選択か）が不明である。またメーカーコード・日本語名のリンク押下時にその行が選択状態になるか。"
+    kind: "condition_combination"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-267"
+    text: "修正画面で「削除」チェックをオンにして登録する削除と、「削除」ボタンによる削除の関係が不明である。同一の削除処理か、両方の操作を許すのか、緊急配信の起動条件も同じか。"
+    kind: "condition_combination"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-268"
+    text: "削除済みのデータを修正画面で開いた場合、登録ボタンは活性か。削除チェックを外して登録することで復活できるのか。"
+    kind: "condition_combination"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-269"
+    text: "1頁件数・削除含むの変更時、およびメーカー日本語名の入力を消すボタン押下時に、自動で再検索するか、表示ボタンの押下を待つか。"
+    kind: "condition_combination"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-270"
+    text: "一覧のメーカーコード・メーカー日本語名はリンク（修正画面へ遷移）かつソート指定可能とされている。ヘッダのソート操作とリンク押下の競合をどう扱うか。"
+    kind: "condition_combination"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-271"
+    text: "登録・削除の完了後に「一覧を再検索」する際の条件が不明である。直前の検索条件か現在の画面値か、仕掛表示の状態を引き継ぐか、頁番号を先頭に戻すか。"
+    kind: "condition_combination"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-272"
+    text: "検索画面の業務終了ボタンの「確認」の内容（何を確認するか、未登録の変更をどう扱うか）が示されていない。"
+    kind: "condition_combination"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-273"
+    text: "検索結果が上限件数とちょうどの場合を許すか、上限以上を超過として扱うか。"
+    kind: "boundary"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-274"
+    text: "メーカーコードは「5文字以内」とあるが、1〜4文字を登録・検索で許すか。最小桁数の記載が無い。"
+    kind: "boundary"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-275"
+    text: "論理削除済みのレコードと同一のメーカーコードで新規登録できるか。キー重複チェックが削除済みを対象に含めるかが不明である。"
+    kind: "boundary"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-276"
+    text: "メーカー日本語名・メーカーカナ名の重複を許すか。一意性の条件がメーカーコードのみと読めるが明記されていない。"
+    kind: "boundary"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-277"
+    text: "日本語名の30Byte・カナ名の15文字の数え方が不明である。全角を2Byteとして数えるのか、半角カナの濁点・半濁点を1文字として数えるのか。"
+    kind: "boundary"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-278"
+    text: "§3.9 で検索条件は「同じ桁・文字種」で確認するとあるが、「使用できない文字」のチェックも検索条件に適用するか。"
+    kind: "boundary"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-279"
+    text: "メーカーコードの使用できない文字「−」の実体が不明である（ASCII のハイフン、全角マイナス、その他の記号のどれか）。"
+    kind: "boundary"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-280"
+    text: "検索結果が上限件数を超えた場合、ダウンロードも同じ条件で実行されるため同様にエラーとなるか。上限を超えても CSV 出力を許すか。"
+    kind: "boundary"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-281"
+    text: "§3.3 #3・#4 と §3.9 に「削除時」と「削除を選択して登録するとき」が並記されている。前者は削除ボタン、後者は修正画面で削除チェックをオンにして登録する操作を指すのか。"
+    kind: "term_ambiguity"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-282"
+    text: "§3.8 手順7 の「緊急配信が指示されている場合」の指示主体が不明である。マスタ画面の緊急配信チェックの値か、削除要求の緊急配信項目か。"
+    kind: "term_ambiguity"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-283"
+    text: "§3.2 #1 の画面タイトル固定値は「メーカーマスタメンテ」であるが、文書名は「メーカーマスタメンテナンス」である。固定値が途中で切れているのは意図か。"
+    kind: "term_ambiguity"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-284"
+    text: "一覧の表示項目に登録ステータス（仕掛／確定）が無いが、仕掛表示は登録未確定を検索対象にする。利用者が一覧上で仕掛を識別する手段が必要か。"
+    kind: "contradiction"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-285"
+    text: "「修正」「更新」「変更」「登録」の用語範囲が不明である。§3.7 は表題を「登録・更新」としつつ修正モードでも登録ボタンを使い、§3.3 #9 の登録ボタンは新規・複製・修正のすべてを扱う。"
+    kind: "term_ambiguity"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-286"
+    text: "API 要求・応答の項目名（キャメルケースの実名）とネスト構造が示されていない。§4 は日本語の項目名と「キャメルケース」の指定のみである。"
+    kind: "value_system"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-287"
+    text: "検索区分・モード・ソート項目・昇降順の値の型と値域が不明である。ソート項目はコードか名称か、昇降順はどの値をとるか。"
+    kind: "value_system"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-288"
+    text: "頁番号の起番が不明である（0始まりか1始まりか）。"
+    kind: "value_system"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-289"
+    text: "応答の「エラー区分」の型と値が不明である。正常／業務エラー／システムエラーをどの項目・どの値で区別するか。"
+    kind: "value_system"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-290"
+    text: "§4.2 の「メッセージ情報」の構造（コード・文面・種別など）が示されていない。"
+    kind: "value_system"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-291"
+    text: "search 応答の「明細の配列」の項目と、CSV の列および値が不明である。一覧と同じとするが、コード値の名称を出すか内部コードを出すか、ヘッダ行を持つか。"
+    kind: "value_system"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-292"
+    text: "initEdit の応答に排他情報（最終更新日時・改訂番号）を含むか。edit・delete の要求に必要だが、§3.6 の初期値の記載に排他情報が無い。"
+    kind: "value_system"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-293"
+    text: "新規モードの edit 要求に排他情報（最終更新日時・改訂番号）をどの値で送るか。新規には表示時点の値が存在しない。"
+    kind: "missing_rule"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-294"
+    text: "排他の比較方法が不明である。最終更新日時と改訂番号の両方が一致することを要するか、いずれか一方か。"
+    kind: "missing_rule"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-295"
+    text: "緊急配信の処理が失敗した場合の扱いが示されていない。登録・削除の更新を取り消すのか、更新は確定してエラーを返すのか。"
+    kind: "missing_rule"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-296"
+    text: "入力チェックをサーバ側でも実施するか。§5 は画面側の違反のみを述べ、API 単体で不正値を受けた場合の扱いが無い。"
+    kind: "missing_rule"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-297"
+    text: "被参照チェックの対象テーブル・参照キー・参照条件（削除済みの参照を数えるか）が示されていない。"
+    kind: "missing_rule"
+    category: null
+    block: true
+    answer: null
+  - issue_no: "Q-298"
+    text: "セッションエラー・オンライン制御エラーの検知主体が不明である。画面側で判定するのか、API のエラー区分で通知するのか、共通部品が遷移させるのか。"
+    kind: "missing_rule"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-299"
+    text: "修正で削除をオンにしない場合、被参照チェックを行わないことでよいか（§3.7 修正 手順6 が削除時のみとしている）の確認。"
+    kind: "missing_rule"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-300"
+    text: "排他エラー時の画面表示が不明である。対象項目の強調表示やフォーカス移動を行うか、メッセージのみか。"
+    kind: "missing_rule"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-301"
+    text: "登録ボタンの活性・非活性の条件が §3.3 に記載されていない（他のボタンは初期状態や活性条件が示されている）。"
+    kind: "missing_rule"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-302"
+    text: "「変更なし」で処理を終了した場合、マスタ画面を閉じるのか留まるのかが不明である。"
+    kind: "missing_rule"
+    category: null
+    block: false
+    answer: null
+  - issue_no: "Q-303"
+    text: "登録・更新・削除と緊急配信起動のトランザクション境界が不明である。同一トランザクションで扱うのか、更新確定後に配信を起動するのか。"
+    kind: "missing_rule"
+    category: null
+    block: true
+    answer: null
+kb_refs:
+  - "PAT-REVIEW-LENS-001"

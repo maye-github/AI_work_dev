@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>AI 全链路开发管理平台 · 开发模版实例演示</title>
+<style>
+  :root{
+    --navy:#10304f; --navy2:#1b4a72; --accent:#b8902f; --accent2:#2f7d8c;
+    --ink:#1b2734; --muted:#5d6b7a; --line:#e2e7ee; --soft:#f4f6f9;
+    --ok:#2f7d5e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:#0b1622; color:var(--ink); overflow:hidden;
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC","Noto Sans SC","Hiragino Sans",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  #viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #stage{width:1280px;height:720px;position:relative;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.55);transform-origin:center center;overflow:hidden}
+
+  .slide{position:absolute;inset:0;padding:42px 60px 50px;display:none;flex-direction:column;background:#fff}
+  .slide.active{display:flex}
+  .slide::before{content:"";position:absolute;left:0;top:0;right:0;height:6px;background:linear-gradient(90deg,var(--navy) 0 62%, var(--accent) 62% 100%)}
+
+  .kicker{font-size:12px;letter-spacing:.16em;color:var(--accent);font-weight:700;margin-bottom:7px}
+  h1.sl-title{font-size:29px;line-height:1.25;color:var(--navy);font-weight:700}
+  .sub{margin-top:7px;font-size:13.5px;color:var(--muted);line-height:1.5}
+  .rule{width:54px;height:4px;background:var(--accent);margin:12px 0;border-radius:2px}
+  .body{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;justify-content:center}
+  .foot{position:absolute;left:60px;right:60px;bottom:14px;display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:#9aa6b2;border-top:1px solid var(--line);padding-top:6px}
+  .foot .pg{font-variant-numeric:tabular-nums}
+
+  .path{display:inline-block;font-family:"Cascadia Mono","Consolas","Menlo",monospace;font-size:10.5px;color:#6c7b8b;background:#eef1f5;border:1px solid #e2e7ee;padding:2px 8px;border-radius:4px;margin-top:8px;align-self:flex-start;white-space:normal;line-height:1.7;max-width:100%}
+  .path b{color:#4a5a6a;font-weight:600}
+
+  /* cover */
+  .cover{justify-content:center;background:var(--navy);color:#fff}
+  .cover::before{background:linear-gradient(90deg,var(--accent) 0 18%,var(--accent2) 18% 100%)}
+  .cover .tag{font-size:13px;letter-spacing:.28em;color:#c9d6e3;margin-bottom:22px}
+  .cover h1{font-size:50px;line-height:1.18;font-weight:700}
+  .cover h2{margin-top:14px;font-size:22px;font-weight:400;color:#bcd0e2}
+  .cover .src{margin-top:32px;font-size:14px;color:#8fa6bc;line-height:1.85;border-left:3px solid var(--accent);padding-left:16px}
+  .cover .meta{position:absolute;right:60px;bottom:44px;text-align:right;font-size:13px;color:#8fa6bc;line-height:1.9}
+  .cover .hint{position:absolute;left:60px;bottom:22px;font-size:11px;color:#6d849a;letter-spacing:.08em}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:12.2px}
+  th,td{padding:11px 12px;text-align:left;vertical-align:middle;line-height:1.55}
+  thead th{background:var(--navy);color:#fff;font-weight:600;font-size:12px}
+  tbody tr:nth-child(even){background:#fafbfc}
+  tbody td{border-bottom:1px solid var(--line)}
+  td.no{color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums;width:34px}
+  td.k{color:var(--navy);font-weight:700;white-space:nowrap}
+  td.dim{color:var(--muted)}
+  .mono{font-family:"Cascadia Mono","Consolas","Menlo",monospace;font-size:10.8px;color:#5f7183}
+
+  /* demo layout */
+  .demo{display:flex;gap:20px;align-items:stretch;flex:1;min-height:0}
+  .demo .left{flex:0 0 380px;display:flex;flex-direction:column;justify-content:center;gap:11px}
+  .demo .right{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:9px}
+
+  .pt{display:flex;gap:9px;align-items:flex-start}
+  .pt .ic{flex:none;width:21px;height:21px;border-radius:6px;background:#eaf0f6;color:var(--navy);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .pt .tx{font-size:12.2px;color:var(--muted);line-height:1.68}
+  .pt .tx b{color:var(--navy);font-size:12.6px;display:block;margin-bottom:1px}
+
+  /* screenshot placeholder */
+  .shot{background:#fbfcfd;border:1.5px dashed #c3cedb;border-radius:10px;display:flex;flex-direction:column;overflow:hidden;flex:0 1 auto;align-self:center;width:100%;min-height:330px;max-height:100%}
+  .shot .hd{background:#eef2f7;border-bottom:1px solid #e2e8f0;padding:6px 12px;font-size:10.5px;color:#64748b;letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center}
+  .shot .hd .tag2{background:#dfe7f0;color:#41556b;border-radius:3px;padding:1px 6px;font-size:9.5px}
+  .shot .bd{flex:1;padding:11px 13px;display:flex;flex-direction:column;justify-content:center;gap:8px;min-height:0}
+  .shot .bd.fill{padding:0;justify-content:flex-start;gap:0}
+  .shot .bd.fill .term{flex:0 0 auto;border-radius:0;display:block;font-size:13px;line-height:2.05;padding:20px 24px}
+  .shot .bd.fill .note{margin:0;border-left:none;border-top:1px solid #e6ecf3;background:#f7f9fb;padding:11px 16px;font-size:11.2px;line-height:1.7}
+  .fbox.fill{flex:1;display:flex;flex-direction:column;min-height:0}
+  .fbox.fill .c{flex:1;display:block;font-size:12px;line-height:2;padding:14px 16px;overflow:hidden}
+  .shot .ft{padding:5px 12px;font-size:10px;color:#94a3b8;border-top:1px dashed #d8e0e9;text-align:right}
+
+  /* terminal */
+  .term{background:#0f2233;color:#cfdeea;border-radius:8px;padding:11px 14px;font-family:"Cascadia Mono","Consolas","Menlo",monospace;font-size:11.3px;line-height:1.72;white-space:pre;overflow:hidden}
+  .term .c{color:#7f9ab2}
+  .term .g{color:#5fd39a}
+  .term .y{color:#e0b95e}
+  .term .w{color:#e8eef4}
+
+  /* small file box */
+  .fbox{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .fbox .t{background:#eef2f7;padding:4px 10px;font-size:10.5px;color:#5b6c7d;font-family:"Cascadia Mono","Consolas","Menlo",monospace}
+  .fbox .c{padding:8px 11px;font-family:"Cascadia Mono","Consolas","Menlo",monospace;font-size:10.8px;line-height:1.7;color:#33475b;white-space:pre}
+  .fbox .c .k2{color:#8a6d1f}
+
+  /* chips */
+  .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .chips.six{grid-template-columns:repeat(6,1fr)}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:7px;padding:7px 10px;display:flex;gap:7px;align-items:flex-start}
+  .chip .no{flex:none;width:16px;height:16px;border-radius:50%;background:var(--navy);color:#fff;font-size:9.5px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:1px}
+  .chip b{color:var(--navy);font-weight:700;display:block;font-size:11.4px;margin-bottom:1px}
+  .chip span{font-size:10.4px;color:var(--muted);line-height:1.45;display:block}
+  .chips.six .chip{flex-direction:column;gap:3px;padding:7px 8px}
+
+  /* platform diagram */
+  .prow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .pbox{background:#fff;border:1px solid var(--line);border-top:3px solid var(--navy2);border-radius:8px;padding:9px 12px}
+  .pbox b{display:block;font-size:12.5px;color:var(--navy);margin-bottom:3px}
+  .pbox span{font-size:10.8px;color:var(--muted);line-height:1.5;display:block}
+  .pdrop{display:flex;align-items:center;gap:9px;font-size:10.8px;color:#8a97a5;padding-left:22px;margin:-2px 0}
+  .pdrop::before{content:"";width:2px;height:14px;background:#cdd8e4;border-radius:1px}
+  .inst{display:flex;justify-content:space-between;align-items:center;gap:18px;background:#f5fafd;border:1.5px solid #93b8d6;border-radius:9px;padding:11px 16px;box-shadow:0 3px 12px rgba(16,48,79,.07)}
+  .inst b{display:block;font-size:13.5px;color:var(--navy);margin-bottom:3px}
+  .inst span{font-size:11.5px;color:#4a5f74;line-height:1.55;display:block}
+  .inst .r{flex:none;text-align:right;font-size:11px;color:var(--accent2);line-height:1.65;font-weight:700}
+  .proj{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .proj .chip{padding:8px 11px}
+  .chip .tag3{display:inline-block;font-style:normal;font-size:9.5px;color:#96731c;background:#fdf9ee;border:1px solid #e8ddb8;border-radius:3px;padding:0 5px;margin-left:5px;font-weight:700;vertical-align:1px}
+
+  /* flow mini */
+  .flowmini{display:flex;gap:7px;align-items:stretch}
+  .fm{flex:1;border:1px solid var(--line);border-radius:6px;padding:6px 3px;text-align:center;background:#fff;position:relative}
+  .fm b{display:block;font-size:11px;color:var(--navy);font-weight:700;line-height:1.3}
+  .fm i{display:block;font-style:normal;font-size:9.5px;color:#93a1b1;margin-top:1px;font-family:"Cascadia Mono",Consolas,monospace}
+  .fm .c{position:absolute;right:4px;top:2px;font-size:9.5px;color:var(--ok);font-weight:700}
+  .fm.done{background:#f4faf7;border-color:#cfe6da}
+  .fm.ring{background:#fbf6e8;border-color:#e8ddb8}
+  .fm.ring .c{color:var(--accent)}
+
+  /* status strip */
+  .strip{display:flex;gap:9px;flex-wrap:wrap;align-items:center;background:#f4f6f9;border:1px solid var(--line);border-radius:8px;padding:9px 13px}
+  .strip .lb{font-size:11px;color:#7a8794;letter-spacing:.08em;margin-right:3px}
+  .pill{font-size:11.5px;color:var(--navy);background:#fff;border:1px solid #dfe6ee;border-radius:20px;padding:3px 11px;font-weight:600}
+  .pill.ok{border-color:#cfe6da;color:#2f7d5e;background:#f5fbf8}
+  .pill.wait{border-color:#e8ddb8;color:#96731c;background:#fdf9ee}
+
+  .note{font-size:11.2px;color:var(--muted);line-height:1.65;border-left:3px solid var(--line);padding-left:10px}
+
+  /* closing band */
+  .band{background:var(--navy);border-radius:10px;padding:15px 20px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:18px}
+  .band .l{font-size:15px;font-weight:700;line-height:1.5}
+  .band .r{font-size:12px;color:#b6c9da;line-height:1.7;text-align:right;flex:none}
+
+  .cards{display:flex;gap:14px}
+  .card{flex:1;background:#fff;border:1px solid var(--line);border-radius:9px;padding:13px 15px;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:var(--accent2)}
+  .card .num{font-size:10.5px;letter-spacing:.18em;color:var(--accent);font-weight:700;margin-bottom:5px}
+  .card h3{font-size:15px;color:var(--navy);margin-bottom:6px}
+  .card p{font-size:11.8px;color:var(--muted);line-height:1.68}
+
+  #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);width:0;transition:width .25s ease;z-index:20}
+
+  @media print{
+    @page{size:1280px 720px;margin:0}
+    body{background:#fff;overflow:visible}
+    #viewport{position:static;display:block}
+    #stage{transform:none!important;box-shadow:none;width:1280px;height:auto}
+    .slide{display:flex!important;position:relative;page-break-after:always;break-after:page;width:1280px;height:720px}
+    #progress{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+<!-- 1 封面 -->
+<section class="slide cover active">
+  <div class="tag">公 司 内 部 · 平 台 实 例 演 示</div>
+  <h1>AI 全链路开发管理平台</h1>
+  <h2>开发模版实例演示 —— VS Code + Claude Code</h2>
+  <div class="src">
+    平台管四件事：知识库管理 · AI 模型网关 · 开发模版 · 项目进度<br>
+    本实例是「开发模版库」中的一套，任一项目组都可按项目类型选用与裁剪
+  </div>
+  <div class="meta">2026 年 10 月 29 日<br>汇报对象：公司领导</div>
+  <div class="hint">← → 翻页　·　F 全屏　·　Ctrl+P 导出 PDF</div>
+</section>
+
+<!-- 2 平台与本实例的关系 -->
+<section class="slide">
+  <div class="kicker">先 说 清 楚 关 系</div>
+  <h1 class="sl-title">平台是底座，本实例是模版库里的一套</h1>
+  <div class="sub">同一个平台可以并存多套开发模版；换 AI 工具或开发框架，换的是模版，平台其余能力不动</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="prow">
+      <div class="pbox"><b>知识库管理</b><span>案件资产、术语、规约统一收存，按案件与模块检索</span></div>
+      <div class="pbox"><b>AI 模型网关</b><span>模型统一出口，按机密度与成本切换不同 AI 工具</span></div>
+      <div class="pbox"><b>开发模版库</b><span>多 AI 平台、多开发框架的全链路开发模版，版本化维护与下发</span></div>
+      <div class="pbox"><b>项目进度管理</b><span>在行项目的进展、卡点与签核状态汇总（规划中）</span></div>
+    </div>
+    <div class="pdrop">从「开发模版库」取一套</div>
+    <div class="inst">
+      <div>
+        <b>本实例：VS Code + Claude Code 全链路开发模版</b>
+        <span>8 个工程流程　+　执行层（prompt 模板 · AI 技能）　+　规则层（标准做法 · 禁止模式 · 工作流）　+　验证层（自动校验 · 检查脚本）　+　交付物生成<br></span>
+      </div>
+      <div class="r">可下载 · 可裁剪<br>按项目类型选用</div>
+    </div>
+    <div class="proj">
+      <div class="chip"><span><b>新规项目</b>从需求到发布，8 个工程全走一遍</span></div>
+      <div class="chip"><span><b>保守维护项目</b>只取变更环、自动校验与脱敏，改造既有系统</span></div>
+      <div class="chip"><span><b>中途接手项目<em class="tag3">规划中</em></b>任意节点都能作为项目起点：客户已给出基本设计书与详细设计书时，就从那一节点直接往下做，不必从需求重走</span></div>
+    </div>
+    <div class="note">前两种已在演练案件上跑通；中途接手是规划中的用法——三套共用同一批规则与校验，只是入口不同。</div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">2 / 12</span></div>
+</section>
+
+<!-- 3 与平台的接点 -->
+<section class="slide">
+  <div class="kicker">本 实 例 与 平 台 的 接 点</div>
+  <h1 class="sl-title">四项能力，两项已成形、两项待接</h1>
+  <div class="sub">这是当前的真实进度：模版与知识库已能跑，网关与进度上报还没有接口</div>
+  <div class="rule"></div>
+  <div class="body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:15%">平台能力</th>
+          <th style="width:26%">平台侧负责</th>
+          <th style="width:40%">本实例里对应的实现</th>
+          <th style="width:19%">现状</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">知识库管理</td>
+          <td class="dim">资产、术语、规约统一收存，按权限供给各项目</td>
+          <td>按案件与模块检索历史片段，每条带文件与行号出处<span class="mono">（tools/kb-platform · tools/rag）</span></td>
+          <td><span class="pill ok">已跑通</span></td>
+        </tr>
+        <tr>
+          <td class="k">AI 模型网关</td>
+          <td class="dim">统一出口、计量与切换，按机密度选模型</td>
+          <td>现阶段直连单一 AI 工具；接上网关后可按项目换模型，流程与规则不变</td>
+          <td><span class="pill wait">待接</span></td>
+        </tr>
+        <tr>
+          <td class="k">开发模版库</td>
+          <td class="dim">多平台多框架模版的版本管理与下发</td>
+          <td>本实例自身即一套模版：8 工程 prompt 模板 + 规则层 + 验证层 + 工具链</td>
+          <td><span class="pill ok">已成形</span><span class="pill wait" style="margin-left:5px">待纳入版本管理</span></td>
+        </tr>
+        <tr>
+          <td class="k">项目进度管理</td>
+          <td class="dim">汇总在行项目进展、卡点与签核（规划中）</td>
+          <td>每个案件 9 个进度文件记录工程、步骤与签核人；已有汇总脚本可读出当前位置</td>
+          <td><span class="pill wait">数据已有 · 接口待接</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="band" style="padding:12px 18px">
+      <div class="l" style="font-size:14px;color:#fff">
+        本实例自身：8 个工程全部签核 · 六项自动校验全绿 · 164 个编号零断链
+      </div>
+      <div class="r">网关与进度接口接通后<br>这套模版即可被任一项目组取用</div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">3 / 12</span></div>
+</section>
+
+<!-- 4 总览 -->
+<section class="slide">
+  <div class="kicker">这 套 模 版 能 干 什 么</div>
+  <h1 class="sl-title">七项功能，每一项都能现场跑一遍</h1>
+  <div class="sub">左边是你会看到的东西，右边是触发方式和它背后的实现</div>
+  <div class="rule"></div>
+  <div class="body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:32px">序</th>
+          <th style="width:16%">功能</th>
+          <th style="width:35%">你会看到</th>
+          <th style="width:22%">怎么触发</th>
+          <th>背后的实现</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">01</td><td class="k">开工定位</td><td>一句指令后，系统自己报出「现在做到哪、下一步做什么」</td><td class="dim">打一句固定指令</td><td class="dim">读进度文件推算位置</td></tr>
+        <tr><td class="no">02</td><td class="k">prompt 模板推进</td><td>8 个工程各一套 prompt 模板：写清输入、产出、限制、合格标准</td><td class="dim">照模板做</td><td class="dim">每步产出与签核写回进度文件</td></tr>
+        <tr><td class="no">03</td><td class="k">自动校验</td><td>一条命令，六项检查全绿；不绿就指出哪里断了</td><td class="dim">跑一条命令</td><td class="dim">全仓扫描六类问题</td></tr>
+        <tr><td class="no">04</td><td class="k">需求追溯与影响面</td><td>这条需求牵连了哪些设计、代码、测试，共多少件</td><td class="dim">输入一个需求编号</td><td class="dim">发号台账 + 双向追踪表</td></tr>
+        <tr><td class="no">05</td><td class="k">交付物生成</td><td>同一份机读源，自动生成正式 Excel</td><td class="dim">指定一份设计书</td><td class="dim">机读源生成，不手改</td></tr>
+        <tr><td class="no">06</td><td class="k">机密防护</td><td>敏感值被拦下；外发前自动脱敏，还能还原</td><td class="dim">跑扫描或脱敏</td><td class="dim">13 类形态 + 双向替换</td></tr>
+        <tr><td class="no">07</td><td class="k">知识检索</td><td>问一句话，返回带出处的原文片段</td><td class="dim">输入问题</td><td class="dim">按案件、按模块检索</td></tr>
+      </tbody>
+    </table>
+
+    <div class="strip">
+      <span class="lb">这套模版自身状态</span>
+      <span class="pill ok">8 / 8 工程已签核</span>
+      <span class="pill ok">六项自动校验全绿</span>
+      <span class="pill ok">164 个编号零断链</span>
+      <span class="pill ok">13 类机密形态零命中</span>
+      <span class="pill wait">已在演练案件上贯通</span>
+    </div>
+
+    <div class="note">
+      后面七页里，虚线框是截图位（已填入示例内容，保证现在就能讲）。把实机截图拖进去替换即可，版面按 16:9 预留。
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">4 / 12</span></div>
+</section>
+
+<!-- 5 功能01 开工定位 -->
+<section class="slide">
+  <div class="kicker">功 能 演 示 　0 1</div>
+  <h1 class="sl-title">打一句指令，系统自己知道做到哪了</h1>
+  <div class="sub">不需要交代背景，不需要说「上次做到哪」</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="demo">
+      <div class="left">
+        <div class="pt"><span class="ic">1</span><span class="tx"><b>先读进度，再开口</b>系统打开时会读该案件下 9 个进度文件，算出哪些工程已签核、有没有没处理完的指摘、下一步该做哪一件。</span></div>
+        <div class="pt"><span class="ic">2</span><span class="tx"><b>给的是 prompt 模板，不是聊天</b>输入是什么、产出写哪个文件、受什么限制、什么算合格——四要素写全，不是一个「我可以帮你做什么」的空对话。</span></div>
+        <div class="pt"><span class="ic">3</span><span class="tx"><b>换人、隔天、并行都不断线</b>位置来自文件而不是对话记忆，谁打开看到的都一样。</span></div>
+        <div><span class="path"><b>实现：</b>.claude/skills/trans-cosmos-ai-lifecycle-coach/ · docs/00_plan/coach/&lt;案件&gt;/</span></div>
+      </div>
+      <div class="right">
+        <div class="shot">
+          <div class="hd"><span>截图位 ① 开工定位</span><span class="tag2">示例内容 · 可替换</span></div>
+          <div class="bd fill">
+            <div class="term"><span class="c">$</span> <span class="w">/trans-cosmos-ai-lifecycle-coach</span>
+<span class="g">[coach]</span> R60Login（tutorial）  <span class="y">8/8 已承认</span>
+  8 工程全部已承认。之后只剩变更环（n09）。
+  <span class="y">⚠</span> 未处理的变更 1 件（n09.yml）
+  有交接票: docs/00_plan/coach/R60Login/handoff.md
+  <span class="c">▶ 继续请打 /trans-cosmos-ai-lifecycle-coach</span></div>
+            <div class="note" style="border-color:#cfe0ee">读法：<b>8/8 已承认</b>＝八个工程都签核完了；<b>未处理的变更 1 件</b>＝有一张指摘单还没走完，这是当前该做的事。</div>
+          </div>
+          <div class="shot-ft ft">建议截取：会话打开后的前 6 行 + 一张交接票</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">5 / 12</span></div>
+</section>
+
+<!-- 6 功能02 prompt 模板 -->
+<section class="slide">
+  <div class="kicker">功 能 演 示 　0 2</div>
+  <h1 class="sl-title">八个工程不靠人记，每一步都有 prompt 模板、都有登记</h1>
+  <div class="sub">每道工序都有一张标准化作业卡，卡的内容就是 prompt 模板的四要素——输入、输出形式、制约条件、合格基准；在这之上，卡还带了执行状态和人签核</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="flowmini">
+      <div class="fm done"><span class="c">✓</span><b>需求理解</b><i>n01</i></div>
+      <div class="fm done"><span class="c">✓</span><b>基本设计</b><i>n02</i></div>
+      <div class="fm done"><span class="c">✓</span><b>详细设计</b><i>n03</i></div>
+      <div class="fm done"><span class="c">✓</span><b>框架环境</b><i>n04</i></div>
+      <div class="fm done"><span class="c">✓</span><b>制造</b><i>n05</i></div>
+      <div class="fm done"><span class="c">✓</span><b>单元测试</b><i>n06</i></div>
+      <div class="fm done"><span class="c">✓</span><b>集成测试</b><i>n07</i></div>
+      <div class="fm done"><span class="c">✓</span><b>发布运维</b><i>n08</i></div>
+      <div class="fm ring"><span class="c">↻</span><b>变更环</b><i>n09</i></div>
+    </div>
+    <div class="demo">
+      <div class="left">
+        <div class="pt"><span class="ic">1</span><span class="tx"><b>每步一套 prompt 模板</b>写清输入是什么、产出写哪个文件、受哪些限制、什么算合格，四要素齐了才算一套。照模板做即可，不需要先理解整条链。</span></div>
+        <div class="pt"><span class="ic">2</span><span class="tx"><b>模板之外还有状态与签核</b>prompt 模板只管「怎么干」；做完一步，产出路径、第几步、谁签核，全部写进该工程的进度文件——状态和签核才是它成为一道工序的原因。</span></div>
+        <div class="pt"><span class="ic">3</span><span class="tx"><b>下游读文件，不读记忆</b>下一个工程从上一工程的产出继续，人换了、隔了两个月，接得上。</span></div>
+        <div><span class="path"><b>实现：</b>.claude/skills/…/nodes/n01…n09（模板）　·　docs/00_plan/coach/&lt;案件&gt;/（状态与签核）</span></div>
+      </div>
+      <div class="right">
+        <div class="shot">
+          <div class="hd"><span>截图位 ② prompt 模板配套的进度文件（制造工程为例）</span><span class="tag2">示例内容 · 可替换</span></div>
+          <div class="bd fill">
+            <div class="fbox fill">
+              <div class="t">docs/00_plan/coach/R60Login/n05.yml</div>
+              <div class="c">node: 5
+name: 製造
+<span class="k2">state: approved</span>
+<span class="k2">owner: SE-001</span>          <span style="color:#93a1b1">← 谁签核的</span>
+steps_total: 4
+<span class="k2">steps_done: 4</span>          <span style="color:#93a1b1">← 四步全部完成</span>
+artifacts:                <span style="color:#93a1b1">← 产出逐条登记</span>
+- …/backend/app/api/login_api.py
+- …/frontend/views/LoginScreen.vue
+- …/05_承認版_制造记录.md
+- …/06_設計との差異.md</div>
+            </div>
+          </div>
+          <div class="shot-ft ft">建议截取：一套 prompt 模板（nodes/n05）+ 这张进度文件</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">6 / 12</span></div>
+</section>
+
+<!-- 7 功能03 自动校验 -->
+<section class="slide">
+  <div class="kicker">功 能 演 示 　0 3</div>
+  <h1 class="sl-title">一条命令，六项检查：全绿才允许签核</h1>
+  <div class="sub">机器能判的交给机器，判不了的（内容对不对）才留给人</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="chips six">
+      <div class="chip"><span class="no">1</span><span><b>编号合法</b>不得出现未登记编号</span></div>
+      <div class="chip"><span class="no">2</span><span><b>追踪闭合</b>需求↔测试双向不断链</span></div>
+      <div class="chip"><span class="no">3</span><span><b>字段完整</b>每份成果物必备字段不缺</span></div>
+      <div class="chip"><span class="no">4</span><span><b>生成物一致</b>人读版与设计项数一致</span></div>
+      <div class="chip"><span class="no">5</span><span><b>命名分区</b>定义层与接口层不混写</span></div>
+      <div class="chip"><span class="no">6</span><span><b>机密零命中</b>13 类敏感形态全扫</span></div>
+    </div>
+    <div class="demo">
+      <div class="left">
+        <div class="pt"><span class="ic">1</span><span class="tx"><b>一条命令扫全仓</b>不需要人逐项翻文件。每次都跑同一套，结果可复核。</span></div>
+        <div class="pt"><span class="ic">2</span><span class="tx"><b>不过就退出码非 0</b>不是「建议」，是硬闸：不绿不能签核、不能提交。</span></div>
+        <div class="pt"><span class="ic">3</span><span class="tx"><b>规矩会自己变长</b>每次踩过的坑写成规则、再加进检查，下一次全公司自动免疫。</span></div>
+        <div><span class="path"><b>实现：</b>tools/trace_check/　·　规则 .claude/rules/</span></div>
+      </div>
+      <div class="right">
+        <div class="shot">
+          <div class="hd"><span>截图位 ③ 自动校验执行结果</span><span class="tag2">示例内容 · 可替换</span></div>
+          <div class="bd fill">
+            <div class="term"><span class="c">$</span> <span class="w">py -3 -m tools.trace_check --strict</span>
+<span class="g">[trace_check]</span> gate1=<span class="g">PASS</span> gate2=<span class="g">PASS</span> gate3=<span class="g">PASS</span>
+              gate4=<span class="g">PASS</span> gate5=<span class="g">PASS</span> gate6=<span class="g">PASS</span>
+              seal=<span class="g">PASS</span> freeze=<span class="g">PASS</span>
+              | total_ids=164  orphans=0  field_count=77  seal_hits=0</div>
+            <div class="note" style="border-color:#cfe0ee">读法：六项全 PASS；<b>orphans=0</b>＝没有断链的编号；<b>seal_hits=0</b>＝没有扫到机密。任何一项 FAIL 或数字不对，命令直接返回失败。</div>
+          </div>
+          <div class="shot-ft ft">建议截取：终端里这条命令与它的输出（含命令本身）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">7 / 12</span></div>
+</section>
+
+<!-- 8 功能04 追溯与影响面 -->
+<section class="slide">
+  <div class="kicker">功 能 演 示 　0 4</div>
+  <h1 class="sl-title">一条需求牵动多少东西，一条命令算出来</h1>
+  <div class="sub">需求编号是钥匙：正向查它落到哪，反向查它是谁要求的</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="demo">
+      <div class="left">
+        <div class="pt"><span class="ic">1</span><span class="tx"><b>只在台账里发号</b>需求、设计、代码、测试的编号都从一处发出，不能自己编。自编的编号在自动校验时直接被判不合格。</span></div>
+        <div class="pt"><span class="ic">2</span><span class="tx"><b>每件产出都写「我来自谁」</b>台账据此生成双向追踪表：需求 → 设计 → 代码 → 测试，反着也查得回来。</span></div>
+        <div class="pt"><span class="ic">3</span><span class="tx"><b>改之前先算账</b>客户提一条修改，先算出受影响的清单和重做顺序，再决定回哪个工程——不靠人回忆，也不整条链推倒。</span></div>
+        <div><span class="path"><b>实现：</b>docs/00_registry/ids.yml · traceability.yml · tools/impact</span></div>
+      </div>
+      <div class="right">
+        <div class="shot">
+          <div class="hd"><span>截图位 ④ 影响面查询</span><span class="tag2">示例内容 · 可替换</span></div>
+          <div class="bd fill">
+            <div class="term"><span class="c">$</span> <span class="w">py -3 -m tools.impact R-101</span>
+[impact] 対象: R-101（status=baselined）  方向=both  深さ=無制限
+
+  <span class="y">▼ 下流（作り直しが必要になり得る）: 77 件</span>
+    D-043  R60Area詳細設計（DML定義）   <span class="c">[+2]</span>
+    E-001 … E-008                      <span class="c">[+4]</span>
+    F-042  R60Area全画面機能
+    I-201  cmpCd  I-202  jigCd          <span class="c">[+2]</span>
+    …（以下、関連項目が続く）</div>
+            <div class="note" style="border-color:#cfe0ee">读法：这条需求一旦变更，<b>下游共有 77 件</b>设计、代码、测试需要重做或复核；清单直接给出重做顺序。</div>
+          </div>
+          <div class="shot-ft ft">建议截取：命令 + 前 10 行输出（数量与清单开头）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">8 / 12</span></div>
+</section>
+
+<!-- 9 功能05 交付物生成 -->
+<section class="slide">
+  <div class="kicker">功 能 演 示 　0 5</div>
+  <h1 class="sl-title">同一份机读源，自动生成正式 Excel</h1>
+  <div class="sub">真源只有一份机读文件；对客交付的正是由它生成的 Excel，不手改</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="demo">
+      <div class="left">
+        <div class="pt"><span class="ic">1</span><span class="tx"><b>一份真源，正式成书</b>设计书只写一次，交给客户的正式 Excel 由它自动生成，列数与设计项数自动对齐；网页视图只供内部查看，不对外交付。</span></div>
+        <div class="pt"><span class="ic">2</span><span class="tx"><b>生成物不手改</b>手改的部分下次生成就没了。客户要改，只在「指摘栏」写——系统只读那一栏，回填真源后再生成。</span></div>
+        <div class="pt"><span class="ic">3</span><span class="tx"><b>同一字段只定义一处</b>避免两份文档各说各话，也避免 AI 拿旧版本当依据。</span></div>
+        <div><span class="path"><b>实现：</b>tools/gen_formal（正式 Excel）　·　tools/gen_view（内部查看视图）</span></div>
+      </div>
+      <div class="right">
+        <div class="shot">
+          <div class="hd"><span>截图位 ⑤ 一份设计书 → 正式 Excel</span><span class="tag2">示例内容 · 可替换</span></div>
+          <div class="bd fill">
+            <div style="display:flex;gap:10px;align-items:stretch;flex:1;min-height:0;padding:12px 13px">
+              <div class="fbox fill" style="flex:1">
+                <div class="t">① 真源：设计书 .md / .yaml</div>
+                <div class="c">項目:
+  - id: I-201
+    name: cmpCd
+    label: 会社コード
+    type: 半角英数
+  - id: I-202
+    name: jigCd
+    label: 事業場コード
+    …</div>
+              </div>
+              <div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#8fa0b2;font-size:22px">→</div>
+              <div class="fbox fill" style="flex:1;border-style:dashed;border-width:1.5px;border-color:#c3cedb">
+                <div class="t">② 生成的正式版（此处放截图）</div>
+                <div class="c" style="color:#8a9aa9;font-family:inherit;font-size:11.6px;line-height:1.9">正式 Excel 工作表：<br>项目名 / 型 / 桁 / 必须 / 初期值 …<br><br>列数与设计项数一致<br>（客户在指摘栏批注，不回改正文）<br><br>（把生成的 xlsx 截图放这里）</div>
+              </div>
+            </div>
+            <div class="note">生成前先 dry-run 核对列数：<span class="mono">[gen_formal] field_count=77 | output_columns=ara_cmp_list_77items.csv</span> —— 列数与设计项数一致，才允许出正式版。</div>
+          </div>
+          <div class="shot-ft ft">建议截取：左侧设计书原文 + 右侧生成的正式 Excel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">9 / 12</span></div>
+</section>
+
+<!-- 10 功能06 机密防护 -->
+<section class="slide">
+  <div class="kicker">功 能 演 示 　0 6</div>
+  <h1 class="sl-title">敏感值进不来、出不去：扫描拦截 + 脱敏还原</h1>
+  <div class="sub">对日项目最容易出事的一环，做成了两道闸</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="demo">
+      <div class="left">
+        <div class="pt"><span class="ic">1</span><span class="tx"><b>进不来：全仓扫描</b>连接串、口令、内网地址、员工编号、业务实值等 13 类形态，写进任何文件都会被拦下，提交不了。</span></div>
+        <div class="pt"><span class="ic">2</span><span class="tx"><b>出不去：外发前脱敏</b>真要发给对方的资料，先把真值换成占位（如口令→占位、内网地址→占位），再发。</span></div>
+        <div class="pt"><span class="ic">3</span><span class="tx"><b>替换是双向的</b>对方回了修改，占位能原样还原成真值，不需要人工对照表格。</span></div>
+        <div><span class="path"><b>实现：</b>.claude/rules/01-security-redlines.md　·　tools/masking/mask_demo.py</span></div>
+      </div>
+      <div class="right">
+        <div class="shot">
+          <div class="hd"><span>截图位 ⑥ 脱敏自检与拦截</span><span class="tag2">示例内容 · 可替换</span></div>
+          <div class="bd fill">
+            <div class="term"><span class="c">$</span> <span class="w">py -3 -m tools.masking.mask_demo --self-test</span>
+<span class="g">mask_hits=11  unmask_ok=true  exit=0</span>
+<span class="c">（11 处真值被替换为占位；还原后与原文完全一致）</span>
+
+<span class="c">$</span> <span class="w">py -3 -m tools.trace_check --strict --only-check secrets</span>
+<span class="c">→ 命中 1 处：内网地址 / 口令 → 阻断，退出码 1</span></div>
+            <div class="note" style="border-color:#cfe0ee">一次真实验收记录里，注入一条内网地址与一条口令后，自动校验确实以失败退出——不是「提示一下」，是拦住。</div>
+          </div>
+          <div class="shot-ft ft">建议截取：自检通过的一行 + 注入敏感值后被拦下的输出</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">10 / 12</span></div>
+</section>
+
+<!-- 11 功能07 知识检索 -->
+<section class="slide">
+  <div class="kicker">功 能 演 示 　0 7</div>
+  <h1 class="sl-title">问一句，返回带出处的原文片段</h1>
+  <div class="sub">不是「AI 凭印象回答」，而是「哪份文件的哪一行这么说」</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="demo">
+      <div class="left">
+        <div class="pt"><span class="ic">1</span><span class="tx"><b>先把历史资产切碎入库</b>旧案件的设计书、代码、规则被切成片段，逐条标上案件 / 模块 / 文件 / 行号。</span></div>
+        <div class="pt"><span class="ic">2</span><span class="tx"><b>检索先收窄范围</b>先按案件、再按模块过滤，只把相关片段交出去——不把全量资料塞进去，也就不容易串味。</span></div>
+        <div class="pt"><span class="ic">3</span><span class="tx"><b>每条都能点回原文</b>答不出来就答不出来，不编。出处可查，评审时才敢用。</span></div>
+        <div><span class="path"><b>实现：</b>tools/kb-platform/repo/　·　tools/rag（build / query / eval）</span></div>
+        <div><span class="path"><b>与平台的关系：</b>同属「知识库管理」；接上平台后，库与检索接口改由平台统一供给</span></div>
+      </div>
+      <div class="right">
+        <div class="shot">
+          <div class="hd"><span>截图位 ⑦ 知识库检索结果</span><span class="tag2">示例内容 · 可替换</span></div>
+          <div class="bd fill">
+            <div class="term"><span class="c">$</span> <span class="w">py -3 -m tools.rag query "排他制御 更新日時" -k 3</span>
+<span class="g">1.</span> R60Area:field:ksn-dat  [R60Area/field]  score=0.2809
+   KSN_DAT（更新日時）と排他制御
+   <span class="y">reports/legacy-raw/R60Area/design/15_項目移送表(DB).txt ; row=32-33</span>
+<span class="g">2.</span> SES-LGC-018  [R60SesModel/logic]  score=0.2579
+   排他制御（L-SM-20）
+   <span class="y">…/modules/R60SesModel/03-logic.yaml ; logics[L-SM-20]</span>
+<span class="g">3.</span> SES-FLD-008  [R60SesModel/field]  score=0.2388
+   キー列・排他・状態列
+   <span class="y">…/modules/R60SesModel/01-fields.yaml ; key_columns</span></div>
+            <div class="note" style="border-color:#cfe0ee">每条命中都带文件路径与行号／字段名，可以直接翻回原文核对。当前演示库 341 个片段；案件知识库另有 5,753 个片段（91 份文档）。</div>
+          </div>
+          <div class="shot-ft ft">建议截取：一次查询的完整 3 条结果（含出处行）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">11 / 12</span></div>
+</section>
+
+<!-- 12 背后的实现 + 下一步 -->
+<section class="slide">
+  <div class="kicker">为 什 么 换 个 项 目 组 也 能 用</div>
+  <h1 class="sl-title">角色 · 方法 · 上下文，三样都在文件里</h1>
+  <div class="sub">所以可复制、可替换、可审计；新人接手只读当前这一步，不必先通读全部规约</div>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="flowmini">
+      <div class="fm"><b>你下一句指令</b><i>入口</i></div>
+      <div class="fm"><b>角色接活</b><i>agent</i></div>
+      <div class="fm"><b>按方法施工</b><i>skill</i></div>
+      <div class="fm"><b>读上下文与知识</b><i>context</i></div>
+      <div class="fm"><b>产出写回文件</b><i>artifact</i></div>
+      <div class="fm"><b>自动校验把关</b><i>gate</i></div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="num">A G E N T</div>
+        <h3>角色：谁来干</h3>
+        <p>
+          8 个工程各有一个专属执行角色，加 1 个变更环角色；另有 3 个独立验证角色（规格审、机密审、交付物审）。
+          每个角色拿自己的上下文干活，产出写回文件，不靠上一轮对话的记忆。
+        </p>
+        <div><span class="path"><b>路径：</b>.claude/agents/　（共 12 个）</span></div>
+      </div>
+      <div class="card">
+        <div class="num">S K I L L</div>
+        <h3>方法：怎么干</h3>
+        <p>
+          5 套作业方法：总流程推进、设计→代码、需求书审查（52 个观察点）、需求倒推、历史案件导航。
+          每套是一份可复用的作业说明书（流程 + 模板 + 检查项），匹配到任务就自动启用。
+        </p>
+        <div><span class="path"><b>路径：</b>.claude/skills/　（含 nodes/ 九套 prompt 模板）</span></div>
+      </div>
+      <div class="card">
+        <div class="num">C O N T E X T</div>
+        <h3>上下文：依据什么干</h3>
+        <p>
+          三种：需求上下文（编号贯穿，可正反查）、会话上下文（进度落在进度文件，换人不断线）、
+          知识上下文（按案件与模块检索历史片段）。三种都可查、可复核。
+        </p>
+        <div><span class="path"><b>路径：</b>docs/00_registry/ · docs/00_plan/coach/ · tools/kb-platform/</span></div>
+      </div>
+    </div>
+
+    <div class="band">
+      <div class="l" style="font-size:14px;color:#fff">
+        本实例现状：8 个工程全部签核 · 六项自动校验全绿 · 164 个编号零断链。<br>
+        接入平台前还要做：AI 模型网关 · 进度上报接口 · 模版纳入平台版本管理 · 真实案件试点。
+      </div>
+      <div class="r">AI 是执行主体<br>人是责任主体</div>
+    </div>
+  </div>
+  <div class="foot"><span>AI 全链路开发管理平台 · 开发模版实例</span><span class="pg">12 / 12</span></div>
+</section>
+
+</div></div>
+
+<div id="progress"></div>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage');
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var i=0, progress=document.getElementById('progress');
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,k){ s.classList.toggle('active',k===i); });
+    progress.style.width=((i+1)/slides.length*100)+'%';
+    try{ history.replaceState(null,'','?p='+(i+1)); }catch(e){}
+  }
+  function fit(){
+    var s=Math.min(window.innerWidth/1280, window.innerHeight/720);
+    stage.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit); fit();
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1);}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();show(i-1);}
+    else if(e.key==='Home'){show(0);} else if(e.key==='End'){show(slides.length-1);}
+    else if(e.key==='f'||e.key==='F'){
+      if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+      else{document.exitFullscreen&&document.exitFullscreen();}
+    }
+  });
+  document.addEventListener('click',function(e){
+    if(e.clientX > window.innerWidth*0.62) show(i+1);
+    else if(e.clientX < window.innerWidth*0.20) show(i-1);
+  });
+  var m=/[?&]p=(\d+)/.exec(location.search);
+  show(m?parseInt(m[1],10)-1:0);
+})();
+</script>
+</body>
+</html>

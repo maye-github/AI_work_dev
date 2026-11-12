@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05_承認版_发布运用计划.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>05_承認版_发布运用计划.zh</h1>
+<div class="meta">
+  机读源: <code>05_承認版_发布运用计划.zh.md</code> ／
+  生成: 2026-11-10 15:12 ／
+  节 11・表 18
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>05_承認版_发布运用计划.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">承认记录</a></li><li><a href="#sec-2">0. 本文的定位</a></li><li><a href="#sec-3">1. 前提与输入</a> <span class="chip chip-io">项目定义</span></li><li><a href="#sec-4">2. 发布步骤</a></li><li><a href="#sec-5">3. 切回步骤</a></li><li><a href="#sec-6">4. 运维监视</a></li><li><a href="#sec-7">5. 交接物</a></li><li><a href="#sec-8">6. 发布判定条件与现状</a></li><li><a href="#sec-9">7. 未观测・未关闭事项（**不得悄悄丢掉**）</a></li><li><a href="#sec-10">8. 追溯</a></li><li><a href="#sec-11">知识库使用记录</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: REL-308<br>type: release-ops<br>req_ids: [R-202]<br>status: baselined<br>sensitivity: internal<br>owner: AI-SE<br>version: 1.0.0<br>kb_refs:</p>
+<ul><li>"TPL-RELEASE-CHECKLIST-001"</li><li>"PAT-DELIVERY-001"</li><li>"PAT-DEV-PLAYBOOK-001"</li></ul>
+<hr>
+<p>&lt;!-- 本文件是中文派生视图，不是机读源；请勿手工编辑。机读源为同名的 .md 文件（日文）。两者内容不一致时，以日文原文为准。 --&gt;</p>
+<blockquote class="quote"><strong>本文是 <code>05_承認版_发布运用计划.md</code>（日文机读源）的中文派生视图。</strong> 正式媒体是日文 <code>.md</code> 与由它生成的中文 <code>.zh.html</code>。端点名、项目名、画面名、固定文案等<strong>会原样进入实现的值</strong>一律保留日文原文（原文为日文，按原文实现），不做翻译。</blockquote>
+<h1>发布・运维计划（承认版） — 制造商主数据维护（R60Maker）</h1>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>承认记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">版</th><th style="text-align:left">日期</th><th style="text-align:left">承认者角色</th><th style="text-align:left">承认者</th><th style="text-align:left">承认状态</th><th style="text-align:left">备考</th></tr></thead><tbody><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-11-10</td><td style="text-align:left">SE</td><td style="text-align:left">Li</td><td style="text-align:left">承认</td><td style="text-align:left">发布准备物的承认（判定见 §6）</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-11-10</td><td style="text-align:left">PG</td><td style="text-align:left">Li</td><td style="text-align:left">承认</td><td style="text-align:left">切回步骤的可执行性</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-11-10</td><td style="text-align:left">测试员</td><td style="text-align:left">Li</td><td style="text-align:left">承认</td><td style="text-align:left">监视项目与观测手段</td></tr><tr><td style="text-align:left">1.0.0</td><td style="text-align:left">2026-11-10</td><td style="text-align:left">PM</td><td style="text-align:left">Li</td><td style="text-align:left">承认</td><td style="text-align:left">综合（发布判定＝<strong>保留</strong>。§6）</td></tr></tbody></table>
+<blockquote class="quote"><strong>AI 不签名</strong>（红线③）。本表由人（Li）填写。<br><strong>本次是演练且参加者 1 名，故由 Li 兼任 4 个角色。</strong> 実案件中由各角色分别签名。<br>承认的对象是<strong>发布准备物</strong>，<strong>发布判定为"保留"</strong>（§6）。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>0. 本文的定位</h2>
+<h3>0.1 是什么、不是什么</h3>
+<p>本文是<strong>发布准备物</strong>，<strong>不是发布判定</strong>。AI 负责备齐判定材料（步骤、切回步骤、运维 Runbook、交接物），是否可以发布由人决定（红线③）。因此本文既不写"可以发布"，也不写"不可发布"。</p>
+<p><code>status: baselined</code> 表示<strong>已整理为承认版</strong>。<strong>承认者栏为空，填写由人进行。</strong> <strong>发布判定（GO／保留／NO-GO）尚未实施</strong>（§6 开头）。</p>
+<p><strong>★结合测试执行 0 件。</strong> 节点7 承认的是<strong>规格书</strong>，<strong>不是测试结果</strong>（<code>节点7_结合测试/05_承認版_结合测试规格书.md</code> §8）。因此本文的任何记述都不以"已用结合测试验证过"为依据。本文不使用表示验证已完成的词，只使用<strong>未观测・未实施・未确定・未裁定・未关闭</strong>。</p>
+<h3>0.2 输入（上游承认版。已核实实际存在并读过）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">上游</th><th style="text-align:left">路径</th><th style="text-align:left">版・状态</th><th style="text-align:left">在本文中的用法</th></tr></thead><tbody><tr><td style="text-align:left">需求</td><td style="text-align:left"><code>节点1_需求/04_承認版_需求结构化表.md</code>（R-202）</td><td style="text-align:left">v1.0.1・<code>baselined</code></td><td style="text-align:left">验收基准的条款（§4 业务规则・§5 事件）</td></tr><tr><td style="text-align:left">基本设计</td><td style="text-align:left"><code>节点2_基本设计/05_承認版_基本设计书.md</code>（F-202）</td><td style="text-align:left">v1.0.0・<code>baselined</code></td><td style="text-align:left"><strong>§11 非功能目标值是唯一定义</strong>。本文只作引用</td></tr><tr><td style="text-align:left">详细设计</td><td style="text-align:left"><code>节点3_详细设计/05_承認版_详细设计书.md</code></td><td style="text-align:left">v1.1.0・<code>baselined</code></td><td style="text-align:left">6 个端点・D-207〜D-212・L-212〜L-222・E-213〜E-224</td></tr><tr><td style="text-align:left">框架构筑</td><td style="text-align:left"><code>节点4_框架构筑/05_承認版_框架构筑记录.md</code></td><td style="text-align:left">v1.0.0・<code>baselined</code></td><td style="text-align:left">3 种环境（dev／stg／prod）・依赖・取值方式</td></tr><tr><td style="text-align:left">制造</td><td style="text-align:left"><code>节点5_制造/05_承認版_制造记录.md</code></td><td style="text-align:left">v1.1.0・<code>baselined</code></td><td style="text-align:left">BUG-003・BUG-004・CR-006 的反映</td></tr><tr><td style="text-align:left">单元测试</td><td style="text-align:left"><code>节点6_单元测试/05_承認版_测试用例集.md</code></td><td style="text-align:left">v1.0.0・<code>baselined</code></td><td style="text-align:left">TC-222〜TC-246（仅设计）</td></tr><tr><td style="text-align:left">结合综合测试</td><td style="text-align:left"><code>节点7_结合测试/05_承認版_结合测试规格书.md</code></td><td style="text-align:left">v1.0.0・<code>baselined</code></td><td style="text-align:left">IT-PENDING-01〜10 的规格・§7 残余风险・§8 保留</td></tr><tr><td style="text-align:left">本节点初稿</td><td style="text-align:left"><code>节点8_发布运维/01_AI产出_发布运用计划.md</code></td><td style="text-align:left">v0.1.0・<code>open</code></td><td style="text-align:left">本承认版的来源。继承其结构与内容</td></tr><tr><td style="text-align:left">本节点模板</td><td style="text-align:left"><code>节点8_发布运维/00_输入模板.yaml</code></td><td style="text-align:left">v0.2.0・<code>filled</code></td><td style="text-align:left">4 个栏位（release_plan／rollback_plan／monitoring／handover）的初始值</td></tr></tbody></table>
+<h3>0.3 媒体与成果物双重化</h3>
+<ul><li>机读源是本文 <code>.md</code>（日文）。面向人的视图只做<strong>同名 <code>.zh.html</code>（中文）1 份</strong>，用</li></ul>
+<p><code>py -3 -m tools.gen_view</code> 生成。<strong>生成物不得手工编辑</strong>（<code>PAT-DELIVERY-001</code> §3）。</p>
+<ul><li><code>docs/**</code> 下不生成 <code>.xlsx</code>。目视用、对外草稿放在 <code>reports/</code> 下（同 §3）。</li></ul>
+<p>到出顾客交付用正式版的阶段，加上 <code>_正式版</code> 另出一份。<strong>日常的 <code>_预览版</code> 不是顾客交付物。</strong></p>
+<ul><li><strong>禁止的回路</strong>（<code>PAT-DELIVERY-001</code> §2）：机读源 → Excel → 人用红笔改正文 → 交给 AI 再转回 <code>.md</code>。</li></ul>
+<p>不走这个回路。意见通过受控回流（另表的意见栏）接收。</p>
+<h3>0.4 记法</h3>
+<ul><li>不写任何环境相关的实值。使用占位（<code>IP_1</code>／<code>PORT_1</code>／<code>PWD_1</code>／<code>BUCKET_1</code>／<code>DOM_1</code>／<code>SID_1</code>／<code>TBL_1</code>／<code>COL_1</code>／<code>VAL_1</code>／<code>EMP_1</code>），只保留设置键的<strong>名称</strong>。</li><li>业务上的决定事项（上线时间、目标时间、监视阈值、联络方式）不由 AI 决定。写"由人决定"，不填数值。</li><li>非功能数值<strong>指向节点2 §11 的 No.</strong>。本文不转抄数值（单一来源）。</li></ul>
+<hr>
+</section>
+<section class="sec sec-io" id="sec-3">
+<h2>1. 前提与输入 <span class="chip chip-io">项目定义</span></h2>
+<h3>1.1 不启动发布步骤的条件（任一项不满足即不启动）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">前提</th><th style="text-align:left">确认方法</th><th style="text-align:left">现状</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">上游承认版齐备</td><td style="text-align:left">各成果物为 <code>status: baselined</code></td><td style="text-align:left">已齐备（§0.2）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">结合・综合测试的<strong>合否已由人的标识符记录</strong></td><td style="text-align:left"><code>节点7_结合测试/verification.md</code> 的判定栏（本节点输入时<strong>该文件不存在</strong>。执行 0 件）</td><td style="text-align:left"><strong>未满足</strong></td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">节点7 的 3 项保留（IT-PENDING-06／07／10）的处理已由人裁定</td><td style="text-align:left">裁定记录（<code>n07.yml</code> 的 <code>open_questions</code> 由人关闭的记录）</td><td style="text-align:left"><strong>未裁定</strong></td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">切回步骤已完成演练</td><td style="text-align:left">§3.4 的演练记录</td><td style="text-align:left"><strong>未实施</strong></td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">物理名・物理类型已确定</td><td style="text-align:left">Q-308b 的回答。节点3 §1 是 AI 素案（<code>*_TBL</code> 案）</td><td style="text-align:left"><strong>未确定</strong></td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">通用部件 v3.0 的提供路径已确保</td><td style="text-align:left">能按引用名解析（节点4 §5 的未确定）</td><td style="text-align:left"><strong>未确定</strong></td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">密钥管理服务・通用日志部件的<strong>引用名</strong>已准备</td><td style="text-align:left">设置键名清单（不看值）</td><td style="text-align:left"><strong>未确定</strong></td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">本次发布如伴随 DDL，其实施主体・实施窗口已由人决定</td><td style="text-align:left"><strong>应用 6 个端点一条 DDL 都不发</strong>。物理定义的投入是应用之外的工作</td><td style="text-align:left"><strong>未确定</strong>（等物理名）</td></tr></tbody></table>
+<blockquote class="quote">2〜8 未满足时不得启动步骤。<strong>不得把"未满足"留成空白</strong>（在 <code>02_审查结果</code> 中由人裁定）。</blockquote>
+<h3>1.2 本节点不决定的事项</h3>
+<p>上线窗口（§2.4）／切回的目标时间（§3.3）／监视阈值的数值（§4.2）／联络方式的实值（§5.2）／n09 的 4 件能否置为 closed（§7）。全部属于人（或顾客）的决定事项，AI 只负责把材料列出来。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>2. 发布步骤</h2>
+<h3>2.1 步骤（带确认点・仅角色）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">步骤</th><th style="text-align:left">确认点（进入下一步的条件）</th><th style="text-align:left">实施角色</th><th style="text-align:left">记录</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">对 §1.1 的 8 项与判定记录做通读核对</td><td style="text-align:left">8 项全部"满足"／判定记录中有人的标识符・日期・状态</td><td style="text-align:left">发布责任人</td><td style="text-align:left">判定记录的版・日期</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">生成构建产物（frontend／backend）并识别版本</td><td style="text-align:left">构建成功，且<strong>frontend 与 backend 为同一版</strong>（版本标识＝提交或 Tag）</td><td style="text-align:left">实施负责人</td><td style="text-align:left">版本标识</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">备份上一版（切回用的产物与设置备份）</td><td style="text-align:left">与 §3.2 步骤 1・2 所引用的备份一致</td><td style="text-align:left">运维负责人</td><td style="text-align:left">备份取得结果</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">投入环境设置（连接目标・会话保持目标・日志送出目标・通用部件的引用名）</td><td style="text-align:left"><strong>未设置 0 件</strong>。值从密钥管理或环境变量注入，不放在仓库与本文中</td><td style="text-align:left">运维负责人</td><td style="text-align:left">键名与设置有无（不记录值）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">DB 准备（D-207〜D-212）</td><td style="text-align:left">物理定义已确定（Q-308b）。<strong>应用不发 DDL</strong>，因此投入由应用之外的主体・窗口进行</td><td style="text-align:left">运维负责人＋DB 负责人</td><td style="text-align:left">实施主体・实施窗口</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">确认已接入通用部件 v3.0（认证・会话・日志・引用检查・紧急配信）</td><td style="text-align:left">能按引用名解析，且连接成立</td><td style="text-align:left">实施负责人</td><td style="text-align:left">连接确认结果</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">确认应用启动与 6 个端点连通（<code>/R60Maker/init</code> → <code>/R60Maker/search</code>）</td><td style="text-align:left">启动日志无异常／2 个端点有响应</td><td style="text-align:left">运维负责人</td><td style="text-align:left">启动时刻</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">冒烟测试（§2.2）</td><td style="text-align:left">对 §2.2 各行<strong>由人判定</strong>，全部满足</td><td style="text-align:left">实施负责人＋运维负责人</td><td style="text-align:left">各项目的实测值</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">画面走一圈（检索画面前往主数据画面再返回）</td><td style="text-align:left">迁移成立，返回时检索条件保持</td><td style="text-align:left">实施负责人</td><td style="text-align:left">实施记录</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">确认监视・日志已启用（§4）</td><td style="text-align:left">日志已到达采集基盘／已设告警／健康检查已登记</td><td style="text-align:left">运维负责人</td><td style="text-align:left">到达确认结果</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">记录发布完成</td><td style="text-align:left">版本标识・完成时刻・实施者角色・冒烟结果齐备</td><td style="text-align:left">发布责任人</td><td style="text-align:left">完成记录</td></tr></tbody></table>
+<h3>2.2 冒烟基准（<strong>是基准，不是结果。判定由人进行</strong>）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">对象</th><th style="text-align:left">应满足的条件</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">6 个端点的正常系</td><td style="text-align:left"><code>POST /R60Maker/init</code>・<code>/search</code>・<code>/initEdit</code>・<code>/edit</code>・<code>/delete</code>・<code>/download</code> 返回 HTTP 200 且 <code>errorCode="0"</code>（HTTP 状态恒为 200，判定以正文的 <code>errorCode</code> 为准）</td><td style="text-align:left">节点2 §12-6・节点3 §2.0</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">检索的 3 个条件</td><td style="text-align:left">用"1 件・0 件・501 件以上"三种条件请求 <code>/search</code>。0 件为 <code>1</code>／<code>1001</code>，超上限为 <code>1</code>／<code>1002</code></td><td style="text-align:left">节点3 §5 E-213／E-214</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>mode</code> 的 3 个值</td><td style="text-align:left">用 <code>mode="1"</code>／<code>"2"</code>／<code>"3"</code> 请求 <code>/initEdit</code>。<code>"2"</code> 仅 3 项，<code>"3"</code> 为当前值＋排他 2 项</td><td style="text-align:left">节点3 §2.6</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">登录的往返</td><td style="text-align:left">按新增（<code>mode="1"</code>）→ 修改（<code>mode="3"</code>）的顺序请求 <code>/edit</code>，修改时 <code>rev_no</code> 为旧值+1</td><td style="text-align:left">节点3 §2.9</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">逻辑删除</td><td style="text-align:left"><code>/delete</code> 的 DML 仅为 <code>UPDATE ... SET del_flg=1</code>。<strong>物理 DELETE 为 0 条</strong></td><td style="text-align:left">节点3 §2.8</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">4 个读端点的非更新</td><td style="text-align:left"><code>init</code>／<code>search</code>／<code>initEdit</code>／<code>download</code> 中 <code>INSERT</code>・<code>UPDATE</code>・<code>DELETE</code>・<code>MERGE</code> 均为 <strong>0 条</strong></td><td style="text-align:left">节点7 §6.1 #1</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">更新对象的限定</td><td style="text-align:left">更新仅 D-207。D-208〜D-212 仅 SELECT</td><td style="text-align:left">节点7 §6.1 #2</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">业务数据不变</td><td style="text-align:left">D-207 除冒烟写入部分外无变化（前后比较件数与排他键的最大值）</td><td style="text-align:left">节点7 §6.1 #6・#7</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">下载</td><td style="text-align:left"><code>/download</code> <strong>不发送请求正文</strong>（使用最后执行的检索条件）。CSV 为 UTF-8 BOM・CRLF・表头行・5 列，不含 <code>last_update_datetime</code>／<code>rev_no</code> 列</td><td style="text-align:left">需求 §6 例外段落・BUG-005・节点3 §2.7</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">会话・可运行时间</td><td style="text-align:left">最终操作后超过 30 分钟与运行时间外的行为符合运维设置。<strong>但替换目标画面的实体尚未观测</strong>（IT-PENDING-07）</td><td style="text-align:left">节点2 §11 No.12・节点7 §8.4</td></tr></tbody></table>
+<ul><li><strong>第 10 项后半在本节点也无法观测。</strong> 因为承认的技术栈中没有浏览器自动化（节点7 §8.4 由人裁定的观测范围）。<strong>不写"已观测"。</strong></li><li>冒烟写入的行，善后时<strong>不做物理删除</strong>。以 <code>del_flg</code> 处理，其判断由人进行（§3.2 步骤 5）。</li></ul>
+<h3>2.3 发布说明中要写的"做不到的事"</h3>
+<p>把本文 §7 的未观测・未确定事项，原样转记为发布说明中的已知限制。<strong>不写"已用结合测试验证过"</strong>（执行 0 件）。</p>
+<h3>2.4 上线窗口（人的决定事项）</h3>
+<ul><li><strong>未确定。</strong> 在运行时间（工作日 7:00–22:00 JST）与计划停机窗口（每月 4 小时以内）的范围内<strong>由人决定</strong>（节点2 §11 No.9・No.10。数值见同表）。</li><li>AI 不写日期时间与所需时间。决定后的日期时间不写在本文，而写在发布判定记录中。</li><li>判断材料（方案・E4・人未承认）：使用者较少的时段／切回能在 §3.3 目标内完成／监视人员可以值守。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>3. 切回步骤</h2>
+<blockquote class="quote">回不去的发布不是发布。<strong>未演练的步骤不得写成"已演练"</strong>（§3.4）。</blockquote>
+<h3>3.1 触发（谁看到什么来宣告）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">触发</th><th style="text-align:left">观测到的事实</th><th style="text-align:left">宣告角色</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">6 个端点的任一返回 5xx，或 <code>errorCode="9"</code> 持续</td><td style="text-align:left">HTTP 状态与响应正文的 <code>errorCode</code></td><td style="text-align:left">发布责任人</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">列表检索的 95 百分位持续超过节点2 §11 No.4 的目标</td><td style="text-align:left"><code>/search</code> 的所需时间</td><td style="text-align:left">发布责任人</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">登录・删除的响应持续超过 No.6 的目标</td><td style="text-align:left"><code>/edit</code>・<code>/delete</code> 的所需时间</td><td style="text-align:left">发布责任人</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">D-207 出现非预期更新（不是使用者做的变更）</td><td style="text-align:left">审计日志・<code>last_update_datetime</code>／<code>rev_no</code> 的变动</td><td style="text-align:left">运维一线窗口 → 发布责任人</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">会话失效（9001）・运行状态（9002）的判定误动作</td><td style="text-align:left">按 <code>errorId</code> 分类的发生件数</td><td style="text-align:left">运维一线窗口 → 发布责任人</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">与通用部件 v3.0 的连接持续失败</td><td style="text-align:left">连接确认结果</td><td style="text-align:left">运维一线窗口 → 发布责任人</td></tr></tbody></table>
+<h3>3.2 步骤（可执行的粒度。谁・做什么・按什么顺序・看到什么进入下一步）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">步骤</th><th style="text-align:left">确认点（进入下一步的条件）</th><th style="text-align:left">实施角色</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>切回上一版本的构建产物</strong>（frontend 与 backend <strong>以同一版</strong>回退）</td><td style="text-align:left">回退后的版本标识与 §2.1 步骤 3 的备份一致</td><td style="text-align:left">运维负责人</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">把环境设置的引用名切回上一版（<strong>步骤书中不写实值</strong>。在密钥管理侧切换）</td><td style="text-align:left">引用名的差分为 0（与投入前的清单一致）</td><td style="text-align:left">运维负责人</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">确认应用启动与 6 个端点连通（<code>/R60Maker/init</code> → <code>/R60Maker/search</code>）</td><td style="text-align:left">启动日志无异常／2 个端点有响应</td><td style="text-align:left">运维负责人</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">重新实施冒烟测试（§2.2 的 1・5・6・7）</td><td style="text-align:left">4 个读端点 DML 0 条／<code>/delete</code> 仅逻辑删除</td><td style="text-align:left">实施负责人＋运维负责人</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">冒烟写入行的处理由人裁定</td><td style="text-align:left"><strong>不做物理删除。以 <code>del_flg</code> 处理</strong>。裁定已记录</td><td style="text-align:left">发布责任人</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">如切回了会话保持目标，提醒使用者重新登录</td><td style="text-align:left">告知的实施记录</td><td style="text-align:left">运维一线窗口</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">把切回结果（回退的版本・回退的引用名・重新实施的确认）追记到发布说明</td><td style="text-align:left">追记已完成</td><td style="text-align:left">发布责任人</td></tr></tbody></table>
+<ul><li><strong>DB 不回退。</strong> 因为应用不发 DDL，本步骤不包含模式的回滚。仅以逻辑删除回退（<code>del_flg</code>）。若需要回退数据，会触及 §3.5 的约束，因此<strong>当场上报给人</strong>。</li><li>步骤 2 的"引用名"只处理<strong>名称</strong>。不制作值的备份（值不得离开密钥管理）。</li></ul>
+<h3>3.3 目标时间</h3>
+<ul><li><strong>未确定。</strong> 从判断开始到切回完成的目标时间<strong>由人决定</strong>（AI 不填数值）。</li><li>上限约束：不得超过节点2 §11 No.11 的 RTO／RPO（数值以同表为唯一定义）。</li><li>决定后的值写在发布判定记录中。</li></ul>
+<h3>3.4 演练</h3>
+<ul><li><strong>未实施。</strong> 尚无演练记录。<strong>未演练的回滚步骤不得写成"已演练"。</strong></li><li>演练要确认：§3.2 的 7 个步骤能否仅凭步骤书执行／步骤 1〜2 需要几分钟（成为目标时间的依据）／步骤 4 的重新冒烟能否用同一判定基准跑通。</li><li>演练的实施窗口与环境由人决定（包括在本生产环境还是 stg 进行）。</li></ul>
+<h3>3.5 切回无法恢复的东西（先知道）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">无法恢复的东西</th><th style="text-align:left">原因</th><th style="text-align:left">替代做法</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">冒烟产生的业务数据</td><td style="text-align:left">不做物理删除的方针（§3.2 步骤 5）</td><td style="text-align:left">以 <code>del_flg</code> 处理，由人裁定</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">紧急配信的启动（<code>EmergencyDispatcher.dispatch</code>）</td><td style="text-align:left">是异步的，返回值是受理 ID 而非配信成败（节点2 §10 #7）</td><td style="text-align:left">已配信的事实无法回退。启动条件的确认在运维中进行</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">通用部件 v3.0 侧的状态（会话等）</td><td style="text-align:left">在本画面之外（节点4 §5 的提供路径未确定）</td><td style="text-align:left">上报提供方窗口（§5.2）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">物理定义（DDL）的变更</td><td style="text-align:left">应用不发布。实施主体在应用之外（§2.1 步骤 5）</td><td style="text-align:left">按 DB 负责人的步骤进行。<strong>明确写明不在本步骤书的范围内</strong></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>4. 运维监视</h2>
+<blockquote class="quote"><strong>数值的唯一定义在节点2 §11。</strong> 本节只写"看什么・以哪一行为出处・超过后做什么"，不重新定义数值。</blockquote>
+<h3>4.1 日志</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">对象</th><th style="text-align:left">看什么</th><th style="text-align:left">保持・处理的出处</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">访问日志</td><td style="text-align:left">请求的 path・status・所需时间</td><td style="text-align:left">节点2 §11 No.15（保持期间的数值见同表）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">操作日志</td><td style="text-align:left">按 <code>errorCode</code> 分类（<code>"0"</code>／<code>"1"</code>／<code>"9"</code>）与按 <code>errorId</code> 分类的明细（1001／1002／2001／2002／2003／2004／2005／9001／9002／9101／9999）</td><td style="text-align:left">节点2 §11 No.15・节点3 §5</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">操作日志</td><td style="text-align:left"><code>/edit</code>・<code>/delete</code> 的执行件数与失败件数（排他 2003・被引用 2002）</td><td style="text-align:left">节点3 §5</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">操作日志</td><td style="text-align:left">运行状态检查的判定结果（9002 的发生）・会话失效（9001）的发生件数</td><td style="text-align:left">节点2 §11 No.12・节点3 §2.1</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">响应时间</td><td style="text-align:left">响应超过 10 秒的件数（<strong>不自动重试</strong>。提示使用者重新操作）</td><td style="text-align:left">节点2 §11 No.18</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">机密</td><td style="text-align:left">操作日志中不输出连接信息・实数据。遮蔽交由通用日志部件</td><td style="text-align:left">规则 01・节点2 §10 #12</td></tr></tbody></table>
+<h3>4.2 告警（阈值由人决定）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">条件</th><th style="text-align:left">阈值</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">5xx 或 <code>errorCode="9"</code> 的发生</td><td style="text-align:left"><strong>未设置。由人决定</strong>（一定时间・一定件数）</td><td style="text-align:left">节点3 §5</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">列表检索的 95 百分位连续超过目标</td><td style="text-align:left">节点2 §11 No.4（数值见同表）</td><td style="text-align:left">节点2 §11 No.4</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">登录・删除的 95 百分位连续超过目标</td><td style="text-align:left">节点2 §11 No.6（数值见同表）</td><td style="text-align:left">节点2 §11 No.6</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">响应超过 10 秒的发生</td><td style="text-align:left">节点2 §11 No.18（数值见同表）</td><td style="text-align:left">节点2 §11 No.18</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">预计可用率低于目标（不含计划停机）</td><td style="text-align:left">节点2 §11 No.9（计划停机见 No.10。数值见同表）</td><td style="text-align:left">节点2 §11 No.9・No.10</td></tr></tbody></table>
+<ul><li><strong>"连续"与"一定时间"的定义也由人决定。</strong> AI 只按一般论列出项目，不填数值。</li><li>阈值未设置的状态下不得发布（§1.1 #7・§6）。</li></ul>
+<h3>4.3 健康检查</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">对象</th><th style="text-align:left">方法</th><th style="text-align:left">看什么</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">应用连通</td><td style="text-align:left"><code>POST /R60Maker/init</code>（不带输入，因此最轻）</td><td style="text-align:left">HTTP 200 与 <code>errorCode</code></td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">DB 参照</td><td style="text-align:left">对 D-207〜D-212 的 SELECT</td><td style="text-align:left">参照成立，件数与上次一致</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">通用部件 v3.0</td><td style="text-align:left">认证・会话・日志的连接</td><td style="text-align:left">连接成败</td></tr></tbody></table>
+<h3>4.4 故障时的一次应对与联络（<code>TPL-RELEASE-CHECKLIST-001</code> §3 的型）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">故障受理</td><td style="text-align:left">运维一线窗口接单，判断是否属于 §3.1 的触发。<strong>判断的时限由人决定</strong></td></tr><tr><td style="text-align:left">一次判断的材料</td><td style="text-align:left">§4.1 #2 的 <code>errorCode</code>／<code>errorId</code> 明细、§4.3 的健康检查结果、最近的发布差分</td></tr><tr><td style="text-align:left">升级</td><td style="text-align:left">一线窗口 → 发布责任人 →（通用部件引起时）提供方窗口</td></tr><tr><td style="text-align:left">定常作业</td><td style="text-align:left">夜间通用主数据确定处理（1:00–4:00）的运行确认。日次备份的成败确认（节点2 §11 No.16・§12-12）</td></tr><tr><td style="text-align:left">切回的判断</td><td style="text-align:left">属于 §3.1 的触发，且能在 §3.3 目标内回退时，<strong>由发布责任人宣告</strong></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>5. 交接物</h2>
+<h3>5.1 交接文档</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">文档</th><th style="text-align:left">版本的写法</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">发布说明（含本文 §2.3・§7）</td><td style="text-align:left">必须附版本标识与日期</td><td style="text-align:left">本节点</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">切回步骤书（本文 §3）</td><td style="text-align:left">同上</td><td style="text-align:left">本节点</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">运维 Runbook（本文 §4）</td><td style="text-align:left">同上</td><td style="text-align:left">本节点</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">单元测试承认版</td><td style="text-align:left">v1.0.0・<code>baselined</code></td><td style="text-align:left">节点6</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">结合综合测试规格书承认版</td><td style="text-align:left">v1.0.0・<code>baselined</code>（<strong>是规格书，不是结果</strong>）</td><td style="text-align:left">节点7</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">框架构筑记录</td><td style="text-align:left">v1.0.0・<code>baselined</code>（3 种环境・依赖・取值方式・门番）</td><td style="text-align:left">节点4</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">详细设计承认版</td><td style="text-align:left">v1.1.0・<code>baselined</code>（端点・SQL・边界值・错误分支）</td><td style="text-align:left">节点3</td></tr></tbody></table>
+<ul><li><strong>区分"AI 初稿"与"顾客交付版"来写</strong>（<code>PAT-DELIVERY-001</code> §4）。在交接记录中写"看过成果物"时，要注明<strong>看的是哪种形态・哪个版本</strong>。</li></ul>
+<h3>5.2 联络体制（仅角色。不写实名・联系方式）</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">角色</th><th style="text-align:left">窗口类别</th><th style="text-align:left">备考</th></tr></thead><tbody><tr><td style="text-align:left">发布责任人</td><td style="text-align:left">公司内联络渠道（具体值不写）</td><td style="text-align:left">发布判定・切回的宣告</td></tr><tr><td style="text-align:left">运维一线窗口</td><td style="text-align:left">公司内联络渠道（具体值不写）</td><td style="text-align:left">故障受理・一次判断</td></tr><tr><td style="text-align:left">通用部件 v3.0 的提供方窗口</td><td style="text-align:left"><strong>未确定</strong>（节点4 §5）</td><td style="text-align:left">引用检查・紧急配信・错误画面的提供方</td></tr></tbody></table>
+<h3>5.3 维护负责人应当知道的已知限制</h3>
+<p>直接引用 §7 的表。尤其是以下几点会成为运维前提：<strong>结合测试执行 0 件</strong>／IT-PENDING-06・07・10 未观测／同时使用数未观测／物理名未确定。</p>
+<h3>5.4 知识的交接（结案时）</h3>
+<ul><li>用 <code>promotion-criteria.md</code>（5 项）判定是否上报到公司级（<code>TPL-RELEASE-CHECKLIST-001</code> §4）。</li><li><strong>第 1 个案件不上报。</strong> 本骨架的 R60Maker 是演练，只有被第 2 个案件用过的才上报到公司级。</li><li>本节点<strong>不上报</strong>（也不判定）。判定由人进行。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>6. 发布判定条件与现状</h2>
+<blockquote class="quote"><strong>本承认版是对发布准备物的承认，发布判定为"保留"</strong>（人：Li / 2026-11-10）。下表的"判定（人）"栏由人对照现状栏的事实填写。<strong>"保留"不是不合格</strong>——而是"上游未补齐之前不放行"的判断。<br><strong>"执行了测试"与"结果满足基准"是两回事。</strong> 未执行的项目写"未执行"（<code>TPL-RELEASE-CHECKLIST-001</code> §1 的注记）。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">条件</th><th style="text-align:left">确认方法</th><th style="text-align:left">现状</th><th style="text-align:left">判定（人）</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">上游承认版齐备</td><td style="text-align:left">各成果物的 <code>status: baselined</code></td><td style="text-align:left">已齐备（§0.2）</td><td style="text-align:left">满足</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">单元测试的合否已由人判定</td><td style="text-align:left"><code>节点6_单元测试/05_承認版_测试用例集.md</code> 的承认记录中有人的标识符</td><td style="text-align:left">承认记录由人填写（仅设计）</td><td style="text-align:left">满足（仅设计。<strong>合否判定未实施</strong>）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">已执行结合・综合测试的场景并有观测结果</td><td style="text-align:left"><code>节点7_结合测试/verification.md</code>（<strong>输入时点不存在</strong>）</td><td style="text-align:left"><strong>未执行（0 件）</strong></td><td style="text-align:left"><strong>未满足</strong></td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">节点7 的 3 项保留（IT-PENDING-06／07／10）的处理已裁定</td><td style="text-align:left">裁定记录</td><td style="text-align:left"><strong>未裁定</strong></td><td style="text-align:left"><strong>未满足</strong></td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">回滚步骤的演练已完成</td><td style="text-align:left">§3.4 的演练记录</td><td style="text-align:left"><strong>未实施</strong></td><td style="text-align:left"><strong>未满足</strong></td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>py -3 -m tools.trace_check --strict</code> 为 Exit 0</td><td style="text-align:left">附上原始输出</td><td style="text-align:left">已执行</td><td style="text-align:left">满足（<code>total_ids=263 orphans=0</code>・Exit 0）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><code>--only-check secrets</code> 无任何命中</td><td style="text-align:left">附上原始输出</td><td style="text-align:left">已执行</td><td style="text-align:left">满足（<code>gate6=PASS</code>）</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left"><code>docs/**</code> 下无 <code>.xlsx</code>（仅有机器可读源）</td><td style="text-align:left"><code>find docs -name "*.xlsx"</code> 的件数</td><td style="text-align:left">已执行</td><td style="text-align:left">满足（0 件）</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">手册・报告书中无敏感值（仅占位）</td><td style="text-align:left">本文 §0.4 的占位而已</td><td style="text-align:left">本稿仅有占位</td><td style="text-align:left">满足</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">物理名・物理类型已确定</td><td style="text-align:left">Q-308b 的回答</td><td style="text-align:left"><strong>未确定</strong></td><td style="text-align:left"><strong>未满足</strong></td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">监视阈值已设置</td><td style="text-align:left">§4.2 的 5 行中已填入数值</td><td style="text-align:left"><strong>未设置（由人决定）</strong></td><td style="text-align:left"><strong>未满足</strong></td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">n09 的 4 件（BUG-003／BUG-004／BUG-005／CR-006）能否置为 closed 的裁定</td><td style="text-align:left"><code>n09.yml</code> 的状态与裁定记录</td><td style="text-align:left"><strong>未关闭</strong>（§7）</td><td style="text-align:left"><strong>未满足</strong></td></tr></tbody></table>
+<ul><li><strong>综合判定：保留</strong>（人：Li / 2026-11-10）。满足 6 件・未满足 6 件。</li></ul>
+<ul><li><strong>本稿的称呼是"发布准备物"。</strong> 条件 3・4・5・10・11・12 未满足期间，不称"可发布"。<strong>发布判定为"保留"（Li / 2026-11-10）。</strong> 条件补齐后，由人重新判定。</li><li><strong>"保留"不是不合格。</strong> 步骤・切回・Runbook・交接物都已齐备，上游观测补齐即可直接使用。不放行的理由是"还没有确认过"。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>7. 未观测・未关闭事项（<strong>不得悄悄丢掉</strong>）</h2>
+<blockquote class="quote">下表是尚不能称"已关闭"的事项一览。<strong>不得留成空白，要写清观测什么才能关闭。</strong></blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">区分</th><th style="text-align:left">编号</th><th style="text-align:left">内容</th><th style="text-align:left">观测什么才能关闭</th><th style="text-align:left">出处</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">未观测</td><td style="text-align:left">IT-PENDING-06</td><td style="text-align:left">重复提交与排他竞争（2 会话构成无法准备，因此未观测）</td><td style="text-align:left">用 2 个会话竞争同一行，后到者被 E-217 拦住且 <code>rev_no</code> 只增 1 次</td><td style="text-align:left">节点7 §2・§8</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">未观测</td><td style="text-align:left">IT-PENDING-07</td><td style="text-align:left">异常系贯通中的<strong>替换目标画面实体</strong>（承认的技术栈中没有浏览器自动化）</td><td style="text-align:left">实测 9001→session／9002→online 的画面种类。<code>errorId</code> 的返回在 API 层面可见</td><td style="text-align:left">节点7 §8.4</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">未观测</td><td style="text-align:left">IT-PENDING-10</td><td style="text-align:left">被引用检查"不把已删除的引用源计入"（引用检查通用部件・夹具未提供）</td><td style="text-align:left">只有已删除引用源的行可以删除／有未删除引用源时被 E-216 拦住</td><td style="text-align:left">节点7 §2・§8</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">未观测</td><td style="text-align:left">同时使用数</td><td style="text-align:left">本画面群・基盘整体的同时会话数（负载生成基盘未确定）</td><td style="text-align:left">按节点2 §11 No.8 的测定条件施加负载，对照目标</td><td style="text-align:left">节点7 §6.2・§8.2</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">未确定</td><td style="text-align:left">Q-308b</td><td style="text-align:left">物理名・物理类型（节点3 §1 是 AI 素案 <code>*_TBL</code>）</td><td style="text-align:left">顾客命名规范的回复。回复后确定 D-207〜D-212 的物理定义</td><td style="text-align:left">节点3 §0・§1</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">未确定</td><td style="text-align:left">通用部件 v3.0</td><td style="text-align:left">提供路径（<code>SessionErrorScreen</code>／<code>OnlineControlErrorScreen</code>／<code>SystemErrorScreen</code>／<code>ReferenceChecker</code>／<code>EmergencyDispatcher</code> 等）</td><td style="text-align:left">确认能按引用名解析</td><td style="text-align:left">节点4 §5</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">未实施</td><td style="text-align:left">回滚演练</td><td style="text-align:left">切回步骤的演练（§3.4）</td><td style="text-align:left">演练记录（7 个步骤能仅凭步骤书执行＋所需时间）</td><td style="text-align:left">本文 §3.4</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">未关闭</td><td style="text-align:left">BUG-003</td><td style="text-align:left">按 <code>errorId</code> 分支替换目标（修正已在制造中反映）</td><td style="text-align:left">前提是能观测替换目标画面实体（与 #2 同）。<strong>IT 中未观测</strong></td><td style="text-align:left"><code>n09.yml</code>・节点5 v1.1.0 §7</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">未关闭</td><td style="text-align:left">BUG-004</td><td style="text-align:left">画面侧的重复提交防止（<code>submitting</code> 守卫。修正已反映）</td><td style="text-align:left">IT-PENDING-06 的观测（与 #1 同）。<strong>IT 中未观测</strong></td><td style="text-align:left"><code>n09.yml</code>・节点5 v1.1.0 §7</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">未关闭</td><td style="text-align:left">BUG-005</td><td style="text-align:left"><code>/download</code> 不发送请求正文（需求侧例外段落已明确）</td><td style="text-align:left">在冒烟 §2.2 #9 与 IT-PENDING-08 中实测请求正文为空</td><td style="text-align:left"><code>n09.yml</code>・节点1 v1.0.1 §6</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">未关闭</td><td style="text-align:left">CR-006</td><td style="text-align:left">端点与路径（<code>/R60Maker/&lt;name&gt;</code>。前缀不埋进代码。<code>X-Session-Id</code> 由通用部件注入）</td><td style="text-align:left">在冒烟 §2.2 #1 中实测 6 个端点的 path／在注入构成下观测会话系</td><td style="text-align:left"><code>n09.yml</code>・节点3 v1.1.0 §2.0</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">事实</td><td style="text-align:left">结合测试执行 0 件</td><td style="text-align:left">节点7 承认的是规格书，没有执行结果</td><td style="text-align:left">确定执行基盘，执行 IT-PENDING-01〜10 并留下记录</td><td style="text-align:left">节点7 §8</td></tr></tbody></table>
+<ul><li><strong>#8〜#11 的"修正已进入"与"可以关闭"是两回事。</strong> 修正的反映在制造记录中，<strong>IT 中没有观测</strong>。向 closed 的迁移由人在 <code>n09.yml</code> 中完成（AI 不碰）。</li><li><strong>#1〜#4 是"保留"，并不表示"未达到基准"</strong>（节点7 §8）。判定基准线仍然有效，执行基盘齐备后可直接使用。但<strong>未观测的事实不变</strong>。</li></ul>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-10">
+<h2>8. 追溯</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">上游</th><th style="text-align:left">本文对应节</th></tr></thead><tbody><tr><td style="text-align:left">R-202 v1.0.1 §4 业务规则・§5 事件・§6 接口（含 <code>/download</code> 例外）・§7 异常处理</td><td style="text-align:left">§2.2・§3.1・§7</td></tr><tr><td style="text-align:left">F-202（基本设计）§11 非功能（No.4〜No.18）・§12 制约</td><td style="text-align:left">§1・§2.4・§3.3・§4.2・§7</td></tr><tr><td style="text-align:left">节点3 v1.1.0 §2.0 端点与路径・§2.1〜§2.11 逻辑・§5 错误分支・§12 制约</td><td style="text-align:left">§2.1・§2.2・§3.1・§4.1・§7</td></tr><tr><td style="text-align:left">节点4 v1.0.0 §2 环境配置清单（dev／stg／prod）・§3 依赖・§5 未确定事项</td><td style="text-align:left">§2.1 步骤 4・6／§5.2・§7</td></tr><tr><td style="text-align:left">节点5 v1.1.0（BUG-003・BUG-004・CR-006）</td><td style="text-align:left">§2.2 #9・§7 #8〜#11</td></tr><tr><td style="text-align:left">节点6 v1.0.0 TC-222〜TC-246・§9 人的合否判定</td><td style="text-align:left">§6 #2・§5.1</td></tr><tr><td style="text-align:left">节点7 v1.0.0 §2 IT 一览・§3 API 序列・§6 事务边界与非功能・§7 残余风险・§8 保留／§8.4 观测范围的裁定</td><td style="text-align:left">§2.2・§7（全行）</td></tr><tr><td style="text-align:left"><code>00_输入模板.yaml</code>（IN-308 v0.2.0）的 <code>release_plan</code>／<code>rollback_plan</code>／<code>monitoring</code>／<code>handover</code>／<code>release_criteria</code>／<code>human_review_required</code></td><td style="text-align:left">§2・§3・§4・§5・§6</td></tr><tr><td style="text-align:left"><code>n09.yml</code> 的 <code>open_changes</code> 4 件（BUG-003／BUG-004／BUG-005／CR-006）</td><td style="text-align:left">§7 #8〜#11</td></tr></tbody></table>
+<p><strong>IT-ID 是临时编号</strong>（<code>IT-PENDING-01</code>〜<code>IT-PENDING-10</code>。<code>ids.yml</code> 未登记）。在实案件中由人在工程07 中发号（红线①）。</p>
+</section>
+<section class="sec sec-plain" id="sec-11">
+<h2>知识库使用记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">doc_id</th><th style="text-align:left">参照的节</th><th style="text-align:left">反映到</th></tr></thead><tbody><tr><td style="text-align:left">TPL-RELEASE-CHECKLIST-001</td><td style="text-align:left">§0 このテンプレートの使い方／§1 リリース判定（すべて満たすこと）／§2 切戻し手順／§3 運用 Runbook／§4 ナレッジの引き継ぎ（結案時）／§5 未確定事項の扱い（<strong>この節は承認版に載せない</strong>）</td><td style="text-align:left">承认记录（判定栏由人签名・不以空栏提交）／§6（条件・确认方法・判定（人）三列与"未执行就写未执行"）／§3.1〜§3.4（触发・步骤・数据・确认・演练）／§4.4（监视・故障受理・联络・定常作业）／§5.4（5 项判定・第 1 个案件不上报）／§7（为不丢掉未观测的事实，本承认版仍予保留）</td></tr><tr><td style="text-align:left">PAT-DELIVERY-001</td><td style="text-align:left">§1 二本立ての理由／§2 禁止する回路と、代わりに使う回路／§3 生成物の置き場／§4 判定に使うときの注意</td><td style="text-align:left">§0.3（机读源与中文视图二本立て・<code>docs/**</code> 不生成 <code>.xlsx</code>・生成物不手工编辑）／§0.3（不走红笔逆转换）／§5.1（区分"AI 初稿"与"顾客交付版"，写明看的是哪个版本）</td></tr><tr><td style="text-align:left">PAT-DEV-PLAYBOOK-001</td><td style="text-align:left">§0 このガイドの使い方／§2 全体像 — 8 工程 × Claude Code × 人のゲート／§3 工程別プレイブック・工程⑦ 結合・総合テスト（PPT S14）／工程⑧ リリース・運用保守（PPT S15）</td><td style="text-align:left">§0.1（工程⑧ 的门是发布判定，AI 只做到材料）／§1.1（输入＝先备齐上游承认版再委托）／§7（节点7 的保留由本节点承接）／§1.2・§6（由人输入的内容＝上线窗口・阈值・裁定）</td></tr></tbody></table>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>05_承認版_发布运用计划.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

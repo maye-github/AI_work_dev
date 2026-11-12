@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知识库使用手顺</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>知识库使用手顺</h1>
+<div class="meta">
+  机读源: <code>知识库使用手顺.md</code> ／
+  生成: 2026-11-11 09:53 ／
+  节 8・表 21
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>知识库使用手顺.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">0. 先搞懂三件事（2 分钟）</a></li><li><a href="#sec-2">1. 五步上手（10 分钟）</a></li><li><a href="#sec-3">2. 按功能分的七件事</a></li><li><a href="#sec-4">3. 看结果：可信度标记</a></li><li><a href="#sec-5">4. 查不到怎么办（按顺序排查）</a></li><li><a href="#sec-6">5. 谁能改什么</a></li><li><a href="#sec-7">6. 每周 10 分钟巡检（可选）</a></li><li><a href="#sec-8">7. 命令速查（平时不用看）</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: KB-MANUAL-001<br>type: manual<br>req_ids: []<br>status: open<br>sensitivity: internal<br>owner: AI-SE<br>version: 0.2.0</p>
+<hr>
+<h1>知识库使用手顺（新手版）</h1>
+<blockquote class="quote"><strong>一句话</strong>：想知道以前怎么做的，问它；想把东西交出去，它替你把关。<br><strong>但它不会主动开口——你不问，它不说话。</strong></blockquote>
+<p>这份文档写给第一次用的人。<strong>你不用记任何命令</strong>，会用中文说话就行。<br>每一节都是「什么时候用 → 你说什么 → AI 做什么 → 你拿到什么」。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>0. 先搞懂三件事（2 分钟）</h2>
+<h3>0.1 库里分两层</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">层</th><th style="text-align:left">放什么</th><th style="text-align:left">现在有多少</th></tr></thead><tbody><tr><td style="text-align:left"><strong>公司级</strong></td><td style="text-align:left">换个客户还成立的东西：模板、规约、画面模式、通用术语</td><td style="text-align:left">30 篇</td></tr><tr><td style="text-align:left"><strong>项目级</strong></td><td style="text-align:left">这个客户自己的事实：画面卡、模块卡、审查记录、旧设计</td><td style="text-align:left">85 篇</td></tr></tbody></table>
+<p>（数字会变。问一句「<strong>知识库现在什么状态</strong>」我就报当前值。）</p>
+<p><strong>为什么分两层</strong>：公司级谁都能查；项目级只有该项目的人能查。混在一起，A 客户的东西就会被 B 客户看到。</p>
+<h3>0.2 它和「搜索」不一样</h3>
+<p>普通搜索给你一堆链接；这个库给你<strong>一段有出处的结论</strong>，并告诉你<strong>这个结论有多可靠</strong>（见 §3）。</p>
+<p>它也不会主动推给你。<strong>你不问，它不说话。</strong></p>
+<h3>0.3 三个词，认识一下就够了</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">词</th><th style="text-align:left">说人话</th></tr></thead><tbody><tr><td style="text-align:left"><code>draft</code> / <code>open</code></td><td style="text-align:left">草稿 / 可检索。机器抽出来的东西先是草稿，<strong>人看过才变可检索</strong></td></tr><tr><td style="text-align:left"><code>doc_id</code></td><td style="text-align:left">每条知识的名字，比如 <code>TPL-DESIGN-BASIC-001</code>。引用它，就等于指到那一条</td></tr><tr><td style="text-align:left"><code>ingest</code></td><td style="text-align:left">入库。<strong>文件改了不跑这一步，等于没改</strong></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>1. 五步上手（10 分钟）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">步</th><th style="text-align:left">做什么</th><th style="text-align:left">怎么做</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">报上你是谁（只做一次）</td><td style="text-align:left">跟我说「<strong>我是李</strong>」</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">问一句</td><td style="text-align:left">「<strong>查知识库：以前的一览画面怎么做</strong>」</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">看结果</td><td style="text-align:left">先看有没有 <code>【推測】</code>，再看 <code>doc_id</code></td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">换说法再问</td><td style="text-align:left">中文随便问，系统自己补日文术语</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">查不到就说查不到</td><td style="text-align:left">不要说「库里没有」，先按 §4 排查</td></tr></tbody></table>
+<blockquote class="quote"><strong>别把它当搜索引擎，当"老同事"。</strong><br>老同事不会主动找你，但你问对了，他会告诉你上次是怎么做的、当时踩了哪个坑。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>2. 按功能分的七件事</h2>
+<p>下面每一节都是一个完整功能。<strong>你只要看「你说什么」，剩下的 AI 做。</strong></p>
+<hr>
+<h3>功能 ①　查：这件事以前怎么做的</h3>
+<p><strong>什么时候用</strong>：接到新画面、新功能，不想从零想。</p>
+<blockquote class="quote"><strong>你说</strong>：「查知识库：以前的一览画面怎么做」<br><strong>或</strong>：「这个有没有先例？」</blockquote>
+<p><strong>AI 会做</strong>：按中文词去搜（自动补日文术语），按相关度返回，并标出<strong>依据强弱</strong>。</p>
+<p><strong>你拿到</strong>：</p>
+<pre><code>[PAT-SCREEN-001] 一覧検索画面の標準パターン —— 条件部 + 结果部怎么摆
+[r60-001-screens-r60area] 某个真实画面当时怎么设计的</code></pre>
+<p><strong>注意</strong>：出现 <code>【推測】</code> 的条目<strong>别当结论</strong>——那是文里没写、系统推出来的。</p>
+<hr>
+<h3>功能 ②　找：模板、共通部品、规约</h3>
+<p><strong>什么时候用</strong>：要写设计书、要写代码。</p>
+<blockquote class="quote"><strong>你说</strong>：「有没有基本设计书的模板」<br><strong>你说</strong>：「R60 的共通部品有哪些」<br><strong>你说</strong>：「编码规约在哪」</blockquote>
+<p><strong>你拿到</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">你要的</th><th style="text-align:left">会给你</th></tr></thead><tbody><tr><td style="text-align:left">基本设计模板</td><td style="text-align:left"><code>TPL-DESIGN-BASIC-001</code>（9 节骨架，照着填）</td></tr><tr><td style="text-align:left">详细设计模板</td><td style="text-align:left"><code>TPL-DESIGN-DETAIL-001</code></td></tr><tr><td style="text-align:left">测试用例模板</td><td style="text-align:left"><code>TPL-TEST-CASE-001</code></td></tr><tr><td style="text-align:left">结合测试模板</td><td style="text-align:left"><code>TPL-INTEGRATION-TEST-001</code></td></tr><tr><td style="text-align:left">共通部品对应表</td><td style="text-align:left"><code>r60-001-standards-r60common-map</code>（16 个代表函数，什么场景调哪个）</td></tr><tr><td style="text-align:left">编码规约</td><td style="text-align:left"><code>STD-CODING-001</code></td></tr></tbody></table>
+<p><strong>省掉的事</strong>：不会重复造一个已经有现成的函数。</p>
+<hr>
+<h3>功能 ③　建：给一个新项目开知识库</h3>
+<p><strong>什么时候用</strong>：来了一个新客户 / 新项目，要开始攒知识。</p>
+<blockquote class="quote"><strong>你说</strong>：「我要建一个新项目的知识库。项目叫『受注管理システム』，ID 用 P-ABC-001。」</blockquote>
+<p><strong>AI 会做</strong>：用三个信息（ID、名称、责任人＝你）建好文件夹，并登记权限。</p>
+<pre><code>tools/kb-platform/repo/projects/P-ABC-001/
+├── sources/     ← 你放原始资料（xlsx/docx/pdf/md/txt）
+├── extracted/   ← 机器抽出来的文字（草稿，还不能搜）
+├── knowledge/   ← AI 整理好的知识（人确认后可搜）
+├── modules/  screens/  standards/  playbooks/  glossary/  review/  chunks/</code></pre>
+<p><strong>你拿到</strong>：一句「建好了」，以及下一步该干什么。</p>
+<p><strong>注意</strong>：目录建好是<strong>幂等</strong>的——重复跑不会覆盖你已经放进去的东西。</p>
+<hr>
+<h3>功能 ④　加：把 Excel / Word / PDF 放进去</h3>
+<p><strong>什么时候用</strong>：客户给了一堆旧资料。</p>
+<p><strong>你只需要做一件事：把文件丢进 <code>sources/</code></strong>，然后说一句：</p>
+<blockquote class="quote"><strong>你说</strong>：「把 sources 里的资料导入知识库」</blockquote>
+<p><strong>AI 会做</strong>（分四步，中间会停下来等你）：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">步</th><th style="text-align:left">AI 做什么</th><th style="text-align:left">要你做什么</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">把原稿转成 <code>.md</code>，放进 <code>extracted/</code>，标成<strong>草稿</strong></td><td style="text-align:left">—</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">给你一份报告：抽了几张表、几行、几字、哪里有警告</td><td style="text-align:left"><strong>对一下原稿有没有抽错</strong></td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">你确认后，把草稿改成<strong>可检索</strong></td><td style="text-align:left"><strong>这一步必须你点头</strong></td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">建索引，能搜了</td><td style="text-align:left">—</td></tr></tbody></table>
+<p><strong>报告长这样，重点看这三行</strong>：</p>
+<pre><code>[P-ABC-001] 2 件
+  ○ ログイン仕様.docx → login-spec.md  (段落 2 / 表 1 / 字 57)
+       ⚠ 抽出が極端に短い — 図や画像だけの可能性があります
+  ○ 画面項目一覧.xlsx → screen-items.md  (sheet 1 / 行 6 / 结合 1 / 字 137)
+       ⚠ 結合セル 1 箇所 — 結合された内容が落ちていないか確認してください</code></pre>
+<table class="tbl"><thead><tr><th style="text-align:left">看到</th><th style="text-align:left">意思</th></tr></thead><tbody><tr><td style="text-align:left"><code>sheet 3 / 行 120</code></td><td style="text-align:left">原件 3 张表、抽出 120 行——<strong>对一下有没有少张</strong></td></tr><tr><td style="text-align:left"><code>结合 14</code></td><td style="text-align:left">合并单元格 14 处，<strong>最容易丢内容</strong>，抽查这里</td></tr><tr><td style="text-align:left"><code>字 57</code></td><td style="text-align:left">抽出字数。<strong>太少说明原文是图片</strong>，得人工处理</td></tr></tbody></table>
+<p><strong>为什么草稿不能直接搜</strong>：</p>
+<blockquote class="quote">机器抽错（表格错列、合并单元格丢内容、PDF 版式错位）是常事。<br>错的東西一旦能搜到，就会被 AI 引用、复制、再包装。<strong>所以必须有人对一眼。</strong></blockquote>
+<p><strong>支持的格式</strong>：<code>.xlsx</code> <code>.docx</code> <code>.pdf</code> <code>.md</code> <code>.txt</code><br>（PDF 需要机器上装了 <code>pdftotext</code>；没有会明确报错，不会静默失败。）</p>
+<p><strong>改了原件怎么办</strong>：再跑一次导入。它会发现内容变了，<strong>自动退回草稿</strong>，让你重看。</p>
+<hr>
+<h3>功能 ⑤　用：做 8 个工程节点时引用先例</h3>
+<p><strong>什么时候用</strong>：你在跑那套 8 工程流程，每个节点都要出承认版。</p>
+<blockquote class="quote"><strong>你说</strong>：「节点 3 该引哪些先例？」<br><strong>或</strong>：「帮我找这个主题的先例」</blockquote>
+<p><strong>AI 会做</strong>：告诉你<strong>这个节点必须读哪些条目</strong>，然后帮你找候选，写进文档的 <code>kb_refs</code> 字段。</p>
+<p><strong>你拿到</strong>：一段写好的引用清单。</p>
+<pre><code>kb_refs: [TPL-DESIGN-BASIC-001, r60-001-screens-r60login]</code></pre>
+<p><strong>规矩有两条</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">写法</th><th style="text-align:left">什么意思</th></tr></thead><tbody><tr><td style="text-align:left">✅ <code>TPL-*</code>（模板）、<code>PAT-*</code>（模式）、<code>r60-*</code>（案件事实）</td><td style="text-align:left"><strong>先例</strong>——照着抄/对照的对象</td></tr><tr><td style="text-align:left">⚠️ <code>STD-*</code>（规约）</td><td style="text-align:left"><strong>遵守的证明</strong>，不是先例。规约是"照做"，不是"参考"</td></tr></tbody></table>
+<p><strong>没有先例怎么办</strong>：写 <code>kb_refs: []</code>，并在「未确定事项」里说明为什么没有。<strong>不要留空不写</strong>——留空和"没找"看起来一样。</p>
+<p><strong>这道检查过不去，节点承认不了。</strong></p>
+<hr>
+<h3>功能 ⑥　交：项目结束后，把有用的升格为公司级</h3>
+<p><strong>什么时候用</strong>：一个项目做完了，想把「以后别的项目也用得上」的东西交出去。</p>
+<blockquote class="quote"><strong>你说</strong>：「帮我看看哪些可以升格」</blockquote>
+<p><strong>AI 会做</strong>：出一张<strong>评审表</strong>，分成四节：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">节</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">§0</td><td style="text-align:left">公司级现在有什么（按类型分类）</td></tr><tr><td style="text-align:left">§1</td><td style="text-align:left">候选清单：每条给<strong>建议 + 理由 + 脱敏后还剩几个问题</strong></td></tr><tr><td style="text-align:left">§2</td><td style="text-align:left">每种建议对应该做什么</td></tr><tr><td style="text-align:left">§3</td><td style="text-align:left">脱敏还缺哪些词（要补进对照表）</td></tr></tbody></table>
+<p><strong>建议只有 5 种</strong>，每条都带理由：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">建议</th><th style="text-align:left">意思</th></tr></thead><tbody><tr><td style="text-align:left"><code>昇格可</code></td><td style="text-align:left">可以直接升</td></tr><tr><td style="text-align:left"><code>雛形のみ</code></td><td style="text-align:left">内容是这个项目的事实，只能抽「形」</td></tr><tr><td style="text-align:left"><code>要補表</code></td><td style="text-align:left">先把缺的词补进脱敏对照表</td></tr><tr><td style="text-align:left"><code>見送り</code></td><td style="text-align:left">建议别升（但你可以覆盖）</td></tr><tr><td style="text-align:left"><code>要人判断</code></td><td style="text-align:left">不属于标准/术语/模板，得人看着定</td></tr></tbody></table>
+<p><strong>判定有 5 条</strong>（规则正本 <code>promotion-criteria.md</code>）：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">条件</th><th style="text-align:left">谁来判</th></tr></thead><tbody><tr><td style="text-align:left">①</td><td style="text-align:left">顾客非依存（不含客户名/系统名/函数名）</td><td style="text-align:left">机器查形态，<strong>人看语义</strong></td></tr><tr><td style="text-align:left">②</td><td style="text-align:left">有出处（哪份原稿的哪一节）</td><td style="text-align:left">机器</td></tr><tr><td style="text-align:left">③</td><td style="text-align:left"><strong>第 2 个项目用过</strong></td><td style="text-align:left">机器查，<strong>但只是建议</strong></td></tr><tr><td style="text-align:left">④</td><td style="text-align:left">形可复用（模板/规约/术语）</td><td style="text-align:left">机器</td></tr><tr><td style="text-align:left">⑤</td><td style="text-align:left">已脱敏（检查 0 件）</td><td style="text-align:left">机器</td></tr></tbody></table>
+<blockquote class="quote"><strong>③ 是建议，不是闸门。</strong> 你判断某条确实通用，照样可以升——工具只会把它标成 <code>雛形のみ</code>。</blockquote>
+<p><strong>然后你会走这条流程</strong>（AI 会一步步带你）：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">步</th><th style="text-align:left">谁做</th><th style="text-align:left">做什么</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>你</strong></td><td style="text-align:left">在评审表上勾选要升的条目</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>你</strong></td><td style="text-align:left">把草稿替换回原稿（<strong>不能跳</strong>，见下）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">AI</td><td style="text-align:left">生成计划文件</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">AI</td><td style="text-align:left">校验计划（不写任何东西）</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><strong>公司负责人</strong></td><td style="text-align:left">执行落库（权限卡在这一步）</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">AI</td><td style="text-align:left">更新索引 + 建结案记录</td></tr></tbody></table>
+<blockquote class="quote"><strong>为什么第 2 步不能跳</strong>：落库命令只负责「搬文件」，<strong>不会替你改字</strong>。<br>原稿里如果还写着 <code>R60</code>，搬过去的就是带 <code>R60</code> 的版本。所以现在是硬拦：<br><code>移送元がまだ脱敏されていません（要修正 37 件）</code>——不换就不让搬。</blockquote>
+<p><strong>为什么要脱敏</strong>：公司级是所有项目共用的。客户名、人名、系统名混进去，等于把 A 客户的资料给 B 客户看。</p>
+<p><strong>脱敏靠两张表</strong>（都在 <code>tools/kb_local/</code>）：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">文件</th><th style="text-align:left">作用</th></tr></thead><tbody><tr><td style="text-align:left"><code>promote_map.txt</code></td><td style="text-align:left">替换表：<code>原词 =&gt; 替换成</code></td></tr><tr><td style="text-align:left"><code>promote_denylist.txt</code></td><td style="text-align:left">屏蔽词：只要出现就拦下（客户名、人名）</td></tr></tbody></table>
+<blockquote class="quote">⚠ <strong>现在这两张表是</strong>模拟数据**（<code>朝日サンプル社</code>、<code>山田太郎</code>）。<br>真案件上必须先换成真名，否则脱敏等于没做。</blockquote>
+<p><strong>有两类东西机器处理不了，只能人来</strong>：</p>
+<ol><li><strong><code>file:line</code> 引用</strong>（<code>r60util.py:293</code>）——它不是"词"，是实现在哪。要人抽象成「共通ヘッダ部品」这类说法。</li><li><strong>语义泄漏</strong>——某条知识形态全干净，但内容只有这家客户才有。机器看不出来。</li></ol>
+<hr>
+<h3>功能 ⑦　防：发客户前，查有没有混进内部的东西</h3>
+<p><strong>什么时候用</strong>：要给客户发资料，怕里面混了内部的东西。</p>
+<blockquote class="quote"><strong>你说</strong>：「这份能不能发」+ 文件名</blockquote>
+<p><strong>AI 会做</strong>：拿这份文件和库里标成 <strong>L40（<code>client_only</code>，仅限客户侧）</strong> 的文档比对，<br><strong>连续 20 字以上相同</strong>就报出来（阈值可调）。</p>
+<p><strong>注意</strong>：<strong>它不下结论。</strong> 发不发你决定，它只把证据摆出来。<br>另外它只抓「长段复制」——<strong>改写过的内容抓不到</strong>，别把它当唯一的防线。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>3. 看结果：可信度标记</h2>
+<p>每条结果前面会有一个标记，<strong>这比内容本身更重要</strong>：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">标记</th><th style="text-align:left">含义</th><th style="text-align:left">怎么用</th></tr></thead><tbody><tr><td style="text-align:left"><code>【推測】</code></td><td style="text-align:left">文里没写，是推出来的</td><td style="text-align:left"><strong>别当结论</strong>，要另行确认</td></tr><tr><td style="text-align:left"><code>【差異】</code></td><td style="text-align:left">文里登记了不一致</td><td style="text-align:left">看差异内容再判断</td></tr><tr><td style="text-align:left"><code>[文書]</code></td><td style="text-align:left">有文档依据</td><td style="text-align:left">可用</td></tr><tr><td style="text-align:left"><code>[実測]</code></td><td style="text-align:left">看过实装确认的</td><td style="text-align:left"><strong>最可靠</strong></td></tr><tr><td style="text-align:left"><code>[摘要]</code></td><td style="text-align:left">为检索重写过的摘要（非原文）</td><td style="text-align:left">用它找到位置，<strong>结论回正本确认</strong></td></tr></tbody></table>
+<p>出现 <code>【推測】</code> 时，末尾会多一行提示：「確定値として使う前に別途確認してください」。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>4. 查不到怎么办（按顺序排查）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">顺序</th><th style="text-align:left">先查这个</th><th style="text-align:left">为什么</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>身份设了吗</strong></td><td style="text-align:left">没设 <code>whoami</code> 只能看到公司级，项目知识一条都出不来</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>换两次说法</strong></td><td style="text-align:left">系统按<strong>字面</strong>匹配，不懂意思。用库里常见的词更容易命中</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>是不是 xlsx/pdf</strong></td><td style="text-align:left">库里<strong>只索引 <code>.md</code></strong>。原件要按功能④导入才能搜</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>改过文件忘入库</strong></td><td style="text-align:left">问一句「索引是最新的吗」，红了就重新入库</td></tr></tbody></table>
+<p><strong>查不到 ≠ 没有。</strong> 说「这个说法查不到」，别说「库里没有」。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>5. 谁能改什么</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">事</th><th style="text-align:left">谁</th><th style="text-align:left">在哪登记</th></tr></thead><tbody><tr><td style="text-align:left">公司级增删改</td><td style="text-align:left">公司负责人</td><td style="text-align:left"><code>owners.yaml</code> → <code>company.owner</code></td></tr><tr><td style="text-align:left">项目级增删改</td><td style="text-align:left">该项目 PM</td><td style="text-align:left"><code>owners.yaml</code> → <code>projects.&lt;P&gt;.owner</code></td></tr><tr><td style="text-align:left">谁能读哪个项目</td><td style="text-align:left">同上</td><td style="text-align:left"><code>owners.yaml</code> → <code>projects.&lt;P&gt;.members</code></td></tr><tr><td style="text-align:left">升格落库</td><td style="text-align:left">公司负责人</td><td style="text-align:left">执行 <code>apply</code> 时校验</td></tr></tbody></table>
+<p><strong><code>null</code> = 冻结，不是"谁都能改"。</strong> 没任命就等于谁都不能改。</p>
+<blockquote class="quote"><strong>你说</strong>：「这些文件我有权限改吗？」<br><strong>AI 会做</strong>：拿你当前的改动去对权限表，逐条告诉你哪些超界。</blockquote>
+<blockquote class="quote">⚠ <strong>这是提交前的提醒，不是文件锁。</strong> 能打开目录的人照样能看、能改。<br>真要保密，得把案件放到只有该项目组能访问的位置——那是文件系统那边的事。</blockquote>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>6. 每周 10 分钟巡检（可选）</h2>
+<blockquote class="quote"><strong>你说</strong>：「跑一下知识库巡检」</blockquote>
+<p>AI 会跑 6 项检查并报结果：</p>
+<table class="tbl"><thead><tr><th style="text-align:left">检查</th><th style="text-align:left">看什么</th><th style="text-align:left">红了怎么办</th></tr></thead><tbody><tr><td style="text-align:left">索引新鲜度</td><td style="text-align:left">文件改了有没有入库</td><td style="text-align:left"><strong>立刻重新入库</strong>（否则搜到的是旧内容）</td></tr><tr><td style="text-align:left">格式</td><td style="text-align:left">字段有没有填坏</td><td style="text-align:left">按提示补</td></tr><tr><td style="text-align:left">检索质量</td><td style="text-align:left">能不能搜到该搜的</td><td style="text-align:left">看是哪类词搜不到</td></tr><tr><td style="text-align:left">出处</td><td style="text-align:left">公司级有没有写来源</td><td style="text-align:left">补 <code>source_project</code></td></tr><tr><td style="text-align:left">权限表</td><td style="text-align:left"><code>owners.yaml</code> 有没有写坏</td><td style="text-align:left">修 YAML</td></tr><tr><td style="text-align:left">引用统计</td><td style="text-align:left">每条知识被引用几次</td><td style="text-align:left"><strong>长期 0 次的，就是"该删"或"该用起来"的候选</strong></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>7. 命令速查（平时不用看）</h2>
+<blockquote class="quote">上面每一节，你只要说一句就行。这一节是给「想自己动手 / 要排错」的人看的。</blockquote>
+<p><strong>所有命令都在仓库根目录（<code>src</code>）跑。</strong> 在 <code>tools/</code> 里跑会报 <code>No module named 'tools'</code>。</p>
+<h3>7.1 日常</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">用途</th><th style="text-align:left">命令</th></tr></thead><tbody><tr><td style="text-align:left">设身份（只做一次）</td><td style="text-align:left"><code>py -3 -m tools.kb_local whoami --set &lt;你的名字&gt;</code></td></tr><tr><td style="text-align:left">查</td><td style="text-align:left"><code>py -3 -m tools.kb_local search "&lt;词&gt;" --as &lt;人&gt; [--project &lt;P&gt;]</code></td></tr><tr><td style="text-align:left">只查公司级</td><td style="text-align:left"><code>py -3 -m tools.kb_local search "&lt;词&gt;"</code></td></tr><tr><td style="text-align:left">中日对照表</td><td style="text-align:left"><code>py -3 -m tools.kb_local synonyms</code></td></tr><tr><td style="text-align:left">库里有什么</td><td style="text-align:left"><code>py -3 -m tools.kb_local stats</code></td></tr><tr><td style="text-align:left">索引新鲜度</td><td style="text-align:left"><code>py -3 -m tools.kb_local freshness</code></td></tr><tr><td style="text-align:left">格式检查</td><td style="text-align:left"><code>py -3 -m tools.kb_local lint</code></td></tr><tr><td style="text-align:left">检索质量</td><td style="text-align:left"><code>py -3 -m tools.kb_local eval --all</code></td></tr><tr><td style="text-align:left">出处点检</td><td style="text-align:left"><code>py -3 -m tools.kb_local extra report</code></td></tr><tr><td style="text-align:left">对外文件检查</td><td style="text-align:left"><code>py -3 -m tools.kb_local external-check &lt;文件&gt;</code></td></tr></tbody></table>
+<h3>7.2 建库 / 加资料</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">用途</th><th style="text-align:left">命令</th></tr></thead><tbody><tr><td style="text-align:left">建新项目容器</td><td style="text-align:left"><code>py -3 -m tools.kb_local project-init --id &lt;P-ID&gt; --name "&lt;案件名&gt;" --by &lt;PM&gt;</code></td></tr><tr><td style="text-align:left">导入资料（预演）</td><td style="text-align:left"><code>py -3 -m tools.kb_local import --scan --by &lt;PM&gt; --dry-run</code></td></tr><tr><td style="text-align:left">导入资料（真跑）</td><td style="text-align:left"><code>py -3 -m tools.kb_local import --scan --by &lt;PM&gt; [--project &lt;P&gt;]</code></td></tr><tr><td style="text-align:left">入库建索引</td><td style="text-align:left"><code>py -3 -m tools.kb_local ingest --prune</code></td></tr><tr><td style="text-align:left">建空术语表</td><td style="text-align:left"><code>py -3 -m tools.kb_promote init-glossary --project &lt;P&gt; --by &lt;PM&gt; --apply</code></td></tr></tbody></table>
+<h3>7.3 8 节点引用先例</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">用途</th><th style="text-align:left">命令</th></tr></thead><tbody><tr><td style="text-align:left">这个节点该引什么</td><td style="text-align:left"><code>py -3 -m tools.kb_refs show --node &lt;N&gt;</code></td></tr><tr><td style="text-align:left">这个节点的必读条目（带摘要）</td><td style="text-align:left"><code>py -3 -m tools.kb_local node-brief --node &lt;N&gt;</code></td></tr><tr><td style="text-align:left">先例候选</td><td style="text-align:left"><code>py -3 -m tools.kb_refs suggest --project &lt;P&gt; --query "&lt;主题&gt;"</code></td></tr><tr><td style="text-align:left">检查一份</td><td style="text-align:left"><code>py -3 -m tools.kb_refs check &lt;承认版&gt; --node &lt;N&gt;</code></td></tr><tr><td style="text-align:left">检查全部</td><td style="text-align:left"><code>py -3 -m tools.kb_refs scan</code></td></tr><tr><td style="text-align:left"><strong>反查：这条被谁用过</strong></td><td style="text-align:left"><code>py -3 -m tools.kb_refs cited &lt;doc_id&gt;</code></td></tr><tr><td style="text-align:left"><strong>从没被用过的</strong></td><td style="text-align:left"><code>py -3 -m tools.kb_refs cited --zero</code></td></tr></tbody></table>
+<h3>7.4 升格</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">用途</th><th style="text-align:left">命令</th></tr></thead><tbody><tr><td style="text-align:left">列候选</td><td style="text-align:left"><code>py -3 -m tools.kb_promote candidates --project &lt;P&gt;</code></td></tr><tr><td style="text-align:left"><strong>出评审表（建议 + 理由 + 勾选栏）</strong></td><td style="text-align:left"><code>py -3 -m tools.kb_promote review --project &lt;P&gt; --as &lt;人&gt;</code></td></tr><tr><td style="text-align:left">勾选结果 → 计划文件</td><td style="text-align:left"><code>py -3 -m tools.kb_promote review --project &lt;P&gt; --as &lt;人&gt; --plan-out &lt;plan.yaml&gt;</code></td></tr><tr><td style="text-align:left">校验计划（不写盘）</td><td style="text-align:left"><code>py -3 -m tools.kb_promote plan --from-plan &lt;plan.yaml&gt; --by &lt;人&gt;</code></td></tr><tr><td style="text-align:left">抽模板（只留形）</td><td style="text-align:left"><code>py -3 -m tools.kb_promote skeleton &lt;成品.md&gt; --out &lt;模板.md&gt; --source-project &lt;P&gt;</code></td></tr><tr><td style="text-align:left">查匿名化</td><td style="text-align:left"><code>py -3 -m tools.kb_promote check &lt;文件&gt;</code></td></tr><tr><td style="text-align:left">生成脱敏草稿</td><td style="text-align:left"><code>py -3 -m tools.kb_promote draft &lt;文件&gt;</code></td></tr><tr><td style="text-align:left">屏蔽词候选</td><td style="text-align:left"><code>py -3 -m tools.kb_promote denylist --project &lt;P&gt;</code></td></tr><tr><td style="text-align:left"><strong>落库（公司负责人）</strong></td><td style="text-align:left"><code>py -3 -m tools.kb_promote apply --from-plan &lt;plan.yaml&gt; --by &lt;公司负责人&gt; --apply</code></td></tr><tr><td style="text-align:left">结案记录</td><td style="text-align:left"><code>py -3 -m tools.kb_promote close --project &lt;P&gt; --apply --by &lt;PM&gt;</code></td></tr></tbody></table>
+<h3>7.5 权限</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">用途</th><th style="text-align:left">命令</th></tr></thead><tbody><tr><td style="text-align:left">谁能改 / 谁能读</td><td style="text-align:left"><code>py -3 -m tools.kb_acl show</code></td></tr><tr><td style="text-align:left">这些改动我有权吗</td><td style="text-align:left"><code>py -3 -m tools.kb_acl check --by &lt;人&gt; --from-git</code></td></tr><tr><td style="text-align:left">权限表自检</td><td style="text-align:left"><code>py -3 -m tools.kb_acl verify</code></td></tr></tbody></table>
+<hr>
+<blockquote class="quote">规则正本在 <code>kb-policy.md</code>（什么能进库、谁能改、怎么升格）。<br>升格判定正本在 <code>promotion-criteria.md</code>（5 条）。<br><strong>本文件只讲「手怎么动」。</strong></blockquote>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>知识库使用手顺.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

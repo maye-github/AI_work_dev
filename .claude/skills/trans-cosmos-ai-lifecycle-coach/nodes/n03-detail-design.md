@@ -25,6 +25,36 @@ version: 0.1.0
 - [ ] `05_承認版_基本设计书.md` が実在する
 - [ ] 詳細設計は**基本設計の範囲を超えない**ことを理解している（超えたら基本設計へ戻す）
 
+## 1.5 必查（この節点で知識ベースから先例を引く）
+
+**産出の前に必ず引く。** 引いた先例は承認版の front matter に `kb_refs:` として記録する。
+先例が無い場合は `kb_refs: []` とし、`open_questions` に「先例なし」と理由を書く。
+
+| 何を | どこから |
+|---|---|
+| モジュールカード・データ定義・**設計書雛形**・**設計規約** | `projects/<P-ID>/modules/`・`projects/<P-ID>/standards/`・`company/templates/`・`company/standards/` |
+
+```bash
+# 候補を出す（--as は必須。付けないと会社級しか返らない）
+py -3 -m tools.kb_refs suggest --project <P-ID> --as <人> --query "業務ロジックとテーブル定義"
+
+# 承認版を検査する
+py -3 -m tools.kb_refs check <承認版> --node 3
+```
+
+> **`kb_refs` に書くのは先例**（案件の事実・テンプレート・パターン）。
+> **★本节点必读**（`kb_refs` に必ず記録し、**本文で実際に参照する**。`py -3 -m tools.kb_refs check <承認版> --node 3 --require-node` で検査する）
+>
+> | doc_id | 何のために読むか |
+> |---|---|
+> | `TPL-DESIGN-DETAIL-001` | D/L/SQL/E/境界値の構成（実装可能粒度） |
+> | `STD-CODING-001` | snake/camel 分区・SQL 白名单・命名 |
+
+> **書くのは「その節点で実際に参照した条目」だけ**——先例（案件の事実・`TPL-*`・`PAT-*`）と
+> 規約（`STD-*`）のどちらも書いてよい。`STD-*` は「遵守の記録」であり、**本文で規則を再掲しない**
+> （規則の正本は `.claude/rules/`）。**`canonical: true` の `STD-*` は要約ではなく方法の正本**なので先例として扱う
+> （`kb-policy.md` §2.4）。
+
 ## 2. 入力
 
 | 何を | どこから | 無いとき |

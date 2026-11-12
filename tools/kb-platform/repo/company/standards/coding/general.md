@@ -6,12 +6,17 @@ doc_type: standard
 version: "1.3"
 status: active
 conf_level: 20
-owner: 品質保証部
+owner: Nan
 updated_at: 2026-04-10
 tags: [coding, naming, review]
+source_project: upstream-demo
 ---
 
 # コーディング規約（共通）
+
+> **本条は要約であり、正本ではない。**
+> 命名・実装の正本は `.claude/rules/03-design-coding.md`（§2 `BaseCamelModel`・§4 snake/camel 分区・§5 SQL 白名单）。
+> **食い違ったら規則を採る。** 本条は「案件をまたいで共通な一般則」だけを持つ。
 
 ## 1. 適用範囲
 
@@ -20,10 +25,13 @@ tags: [coding, naming, review]
 
 ## 2. 命名規則
 
-- クラス名は PascalCase、変数・関数は snake_case とする。
+- クラス名は PascalCase。変数・関数は snake_case を**既定**とする。
+  **ただし TypeScript の接口層は camelCase**（分区の正本は `.claude/rules/03-design-coding.md` §4。
+  `BaseCamelModel` が変換を担う。本条の snake 既定を接口層へ適用しない）。
 - 定数は UPPER_SNAKE_CASE とし、マジックナンバーの直書きを禁止する。
 - 真偽値の変数は `is_` / `has_` / `can_` で始める。
-- データベースのテーブル名は `T_` 接頭辞、カラム名は snake_case とする。
+- データベースのテーブル名は**案件の命名規約に従う**。本条の `T_` 接頭辞は既定案であり、
+  案件規約が優先する（本骨架の R60 系は `*_TBL` を用いる）。カラム名は snake_case とする。
 - 画面ID・PGM_ID・APIパスは案件内で一意にし、命名規則をREADMEに1箇所だけ書く。
 
 ## 3. コメント

@@ -18,7 +18,7 @@ notes: |
   ids.yml に登録しない。gate1〜3 は tutorial/ を走査しないため検証は通る。
   gate6（機密走査）は tutorial/ を走査するので、実在の敏感値は一切書かない。
 
-  build_mode: greenfield — 骨架の既定（根拠: `docs/90_knowledge/ppt-deviation-register.md` A-22）。
+  build_mode: greenfield — 骨架の既定（根拠: `tools/kb-platform/repo/company/standards/ppt-deviation.md` A-22）。
   本演習は「**從無到有（新規構築）**」として走る。節点 2〜8 の産出は**すべて新規**であり、
   既存システムの実装・設計書を**入力にしない**。
 
@@ -29,7 +29,7 @@ notes: |
       `reports/drill/<module>/provenance.yaml` に台帳として残す。
       **倒推は「節点 1 の入力を作る」ところで止まる。**
     - 要求書を凍結した後、**下流のどの節点も `D:\AI_work` を読み返さない**。
-      人版（`D:\AI_work`）を読むのは**事後の対比だけ**である（方法: `docs/90_knowledge/agent-run-record.md` §5.1）。
+      人版（`D:\AI_work`）を読むのは**事後の対比だけ**である（方法: `tools/kb-platform/repo/projects/P-R60-001/knowledge/agent-run-record.md` §5.1）。
     - したがって既存資産は「**答案の出所**」ではなく「**客户要求的材料**」である（A-22 逐語）。
 
   本演習の目的は「**同じ画面を AI 全链路で作ったとき、人間が書いた版とどこで分岐するか**」を

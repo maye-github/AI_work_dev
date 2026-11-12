@@ -378,7 +378,7 @@ open_questions:
   # ★★ 2026-10-23: 下の 5 件は**仮想答案**である（人の指示により人版実装から倒推）。
   #   顧客の回答ではない。`answer_status` で区別し、承認（ステップ3・4）まで確定値として扱わない。
   #   汚染源 5 として `case.yml` に登記した。greenfield では E2（既存実装の実測）を根拠にできない
-  #   （`docs/90_knowledge/answer-engine.md` §3.2）ため、**設計の根拠には使っていない**。
+  #   （`tools/kb-platform/repo/company/standards/requirements/answer-engine.md` §3.2）ため、**設計の根拠には使っていない**。
   - ref: OQ-01
     text: "顧客の共通基盤の仕様（メニューヘッダ・Session エラー画面・オンライン利用エラー画面・システムエラー画面の遷移先 URL と提供オリジン。同一オリジンか別オリジンか）。"
     block: "frontend の遷移方式／HO-04 の保持領域／別オリジンなら CORS と Cookie 属性の設計"

@@ -6,9 +6,10 @@ doc_type: glossary
 version: "2.0"
 status: active
 conf_level: 20
-owner: 共通基盤チーム
+owner: Nan
 updated_at: 2026-03-28
 tags: [glossary, order, stock]
+source_project: upstream-demo
 ---
 
 # 業務用語集（受注・在庫）

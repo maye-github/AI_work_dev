@@ -1,0 +1,534 @@
+# =============================================================================
+# 节点3（详细设计）输入模板 —— 文件编号: IN-303
+# -----------------------------------------------------------------------------
+# 【本节点的输入来自上一节点的哪个文件】
+#   节点2_基本设计/05_承認版_基本设计书.md（F-202 / R-202 / v1.0.0）
+#   把它作为上位文件，往下细化到「逻辑 / 数据 / SQL / 错误 / 境界值」的可生产粒度。
+#
+# 【你要填哪些字段】
+#   target_function ……… 细化的对象机能（F-202）
+#   logic_list …………… 要拆成几条业务逻辑（L-212…）
+#   data_items …………… 要定义的数据模型（D-207，含物理列）
+#   sql_targets …………… 需要落 SQL 模板的步骤
+#   error_detail ………… 每个 E-20x 的分支条件与迁移
+#   boundary_values ……… 境界值表（桁数・件数・上限下限）
+#   existing_assets ……… 复用/参照的既有资产
+#        ★build_mode で意味が変わる：
+#          migration＝既存資産（改変禁止。呼ぶだけ）
+#          greenfield（既定・本演習）＝**既存資産は無い**。ここには「本案件で新規定義するもの」を書く。
+#            物理表名は本節点（工程03）で確定するが、**それらしい名前を発明しない**。
+#   constraints …………… 约束
+#   open_questions ……… 本節点で新たに生じた未決（**Q-310 以降**）。節点2 からの持ち越しは Q-306〜Q-309（A/B/C 裁定済・顧客回答待ちを含む）
+#   human_review_required  必须人拍板的点
+#
+# ★★ このファイルの現在の状態（2026-11-06・status: filled）★★
+#   节点2 承認版 v1.0.0（baselined）の内容を、AI が項目ごとに転記した草稿である。
+#   本節点で生じた未決は Q-310 以降に記録した（Q-306〜Q-309 は節点2 からの持ち越し・顧客回答待ち）。
+#   **このファイル自体はまだ人の承認（設計評審）を受けていない**（紅线③）。
+#   `logic_list` / `data_items` / `sql_targets` / `error_detail` の番号・物理名は**AI 素案**であり、
+#   `ids.yml` への登録と物理名の確定は人が行う（紅线①）。
+# =============================================================================
+
+# ---------- 顶部 7 个固定字段 ----------
+id: IN-303
+type: node-input
+req_ids: [R-202]
+status: filled
+sensitivity: internal
+owner: AI-SE
+version: 0.4.0
+kb_refs:
+  - "TPL-DESIGN-DETAIL-001"
+
+# =============================================================================
+# 正文
+# =============================================================================
+
+# 【输入来源】上一节点承认版路径
+source_design:
+  file: tutorial/R60Maker/节点2_基本设计/05_承認版_基本设计书.md
+  version: "1.0.0"
+  function_id: F-202
+
+# 【细化对象机能】
+#   出所: 承認版 §1（画面概要）・§5（イベント一覧）・§6（業務処理説明）・§12（制約）
+target_function:
+  function_id: F-202
+  name: メーカーマスタメンテナンス
+  screen_id: SCR-201            # 検索画面
+  master_screen_id: SCR-202     # マスタ画面（新規・複製・修正・削除）
+  process_steps: |
+    検索画面（SCR-201）: イベント1 初期表示（/init）→ イベント2 表示（/search）
+      → イベント3 ページャ操作（/search 再実行）→ イベント4 検索条件(非)表示（サーバ通信なし）
+      → イベント8 ダウンロード（/download）→ イベント9 戻る → イベント10 業務終了。
+    マスタ画面（SCR-202）: イベント5 新規（/initEdit mode=1）・イベント6 複製（mode=2）
+      → イベント7 修正（mode=3）→ イベント11 削除（/delete）・イベント12 登録（/edit）。
+      戻る（イベント9）はマスタ画面にも置き、確認（MSG-C-003）のうえ検索画面へ戻る。
+    共通の前処理順は セッション → オンライン可否 → 権限 → 入力チェック。
+      1 つでも失敗したら後続を実行しない（承認版 §12 #7）。
+    端点はすべて POST、パス接頭辞は /R60Maker/（承認版 §12 #3）。
+  endpoints:                    # 6 端点・すべて POST（承認版 §6・§12 #3）
+    - init
+    - search
+    - download
+    - initEdit
+    - delete
+    - edit
+
+# 【要拆成几条业务逻辑 L-212…】每条 = 一个可独立实现/测试的处理单位
+#   ★番号 L-212〜L-222 は AI 素案。確定は人が行う（ids.yml 発号は人・紅线①）。
+logic_list:
+  - logic_id: L-212
+    name: 前処理（セッション・オンライン可否・権限・入力チェック）
+    scope: 全 6 端点の先頭（承認版 §6 各イベント・§12 #7）
+    notes: |
+      順序は セッション → オンライン可否 → 権限 → 入力チェック。1 つでも失敗したら後続を実行しない。
+      セッションなし・最終操作から 30 分超過＝E-221（9／9001）、稼働時間外・計画停止＝E-222（9／9002）、
+      権限不足＝E-220（1／2004）、サーバ側入力違反＝E-224（1／2005）。
+      エンドポイント別の権限は §12 #8/#9（MKR01=参照／MKR02=参照＋登録・更新／MKR03=全操作。上位は下位を含む）。
+      権限は利用者 1 名につき 1 コードを取得し、ログイン時に再取得する（§12 #10）。
+  - logic_id: L-213
+    name: 初期化処理（/init）
+    scope: 承認版 §6 イベント1・§7 #1
+    notes: |
+      1 頁件数の候補（10／20／50／100、既定 20）とメッセージ情報を取得する（承認版 §6 イベント1 (2)）。
+      検索モード通常・削除含むオフ・1 頁件数 20・条件部拡大・一覧空・総件数 0・ページャ非活性に初期化する。
+      共通ヘッダは I-322 タイトル固定値「メーカーマスタメンテ」・I-323 サーバ時刻（YYYY/MM/DD hh:mm:ss、JST）・
+      I-324/I-325/I-326（会社名・部署名・ユーザー名は別項目で描画し連結しない）。
+      失敗時は errorCode=9 をエラー画面へ置換、errorCode=1 はメッセージ表示のみで画面遷移しない。
+  - logic_id: L-214
+    name: 検索処理（/search）
+    scope: 承認版 §6 イベント2・3・§7 #2
+    notes: |
+      条件は AND 結合とし、空の条件を含めない。I-329 は前方一致、I-330 は中間一致。
+      I-332 削除含むを反映し、I-334 仕掛モードでは登録区分=1 のみを対象とする。
+      既定の並び順は 削除区分（未削除を先）→ メーカーコード昇順。
+      利用者指定のソートは メーカーコード（I-340）／メーカー日本語名（I-342）の 2 項目のみ（白名单）とし、
+      指定時も削除区分を第 1 キーとして維持する。
+      0 件は 1／1001（E-213、MSG-E-001）で明細を表示しないが、検索成功として扱う（複製・戻る・ダウンロード・新規を活性）。
+      500 件超は 1／1002（E-214、MSG-E-002）で明細・CSV を出力しない。ちょうど 500 件は許容する。
+  - logic_id: L-215
+    name: ページャ制御処理
+    scope: 承認版 §6 イベント3・§7 #7
+    notes: |
+      頁番号を 1 始まりで更新し、画面が保持する検索条件で /search へ委譲する。
+      総件数 0 件のときページャ（I-337／I-338）を非活性とする。
+      1 頁件数（I-333）の変更では自動再検索しない（「表示」押下で検索する）。
+  - logic_id: L-216
+    name: 条件部切替処理
+    scope: 承認版 §6 イベント4・§7 #8
+    notes: |
+      検索条件部の縮小／拡大を切り替えるのみ。サーバ通信は行わない。状態は画面内で保持する（I-336）。
+  - logic_id: L-217
+    name: 初期値取得処理（/initEdit）
+    scope: 承認版 §6 イベント5・6・7・§7 #3
+    notes: |
+      mode="1" 新規: 全項目を空、緊急配信オフ、削除欄ブランク。削除ボタン非活性・登録ボタン常時活性。
+      mode="2" 複製: メーカーコード・日本語名・カナ名の 3 項目のみ引き継ぎ、緊急配信オフ・削除欄ブランク。
+        複製は新規登録の下書きであり配信・削除の状態は引き継がない。行未選択では複製（I-350）非活性。
+      mode="3" 修正: 現在値と排他情報（lastUpdateDatetime／revNo、画面には表示しない）を返す。
+        メーカーコードは変更不可。削除済みは削除チェックを外せず、登録ボタン非活性（承認版 §4.2 #6・§4.5）。
+  - logic_id: L-218
+    name: ダウンロード処理（/download）
+    scope: 承認版 §6 イベント8・§7 #4
+    notes: |
+      最後に実行した検索条件（画面の現在値は使わない）で出力する。
+      列は一覧の 5 列（メーカーコード・日本語名・カナ名・送信状態・削除）、
+      UTF-8（BOM あり）・CRLF・ヘッダ行ありとし、排他情報は含めない。
+      500 件超は 1／1002（E-214）でファイルを出力しない。0 件の検索も押下できる（Q-263）。
+      応答がファイルの場合は保存し、エラー応答（JSON）と区別する。権限は MKR03 のみ。
+  - logic_id: L-219
+    name: 削除処理（/delete）
+    scope: 承認版 §6 イベント11・§7 #5
+    notes: |
+      画面入力チェック（緊急配信のオン・オフにかかわらず日本語名・カナ名必須、名称の形式）→
+      削除確認（MSG-C-002）→ /delete。前処理は L-212 の共通順序による（/delete は MKR03 のみ）。
+      被参照チェック（購入品目別仕入先マスタ・原材料仕入単価マスタ。削除済みの参照元は数えない）。
+        被参照あり＝E-216（1／2002）。共通部品の想定外＝E-218（9／9101。参照件数を 0 として扱わない）。
+      排他判定は lastUpdateDatetime と revNo の両方の一致を要する。不一致＝E-217（1／2003）。
+      論理削除のみ行う（物理削除しない）。業務データのコミット確定後に、緊急配信が指示されていれば非同期で起動する
+        （判定は削除ボタン押下時点の画面値）。
+      完了メッセージ（MSG-I-002）の後、マスタ画面を閉じ、最後に実行した検索条件で 1 頁目を再検索する
+        （仕掛表示の状態を引き継ぐ）。
+      削除ボタンと「削除チェック＋登録」は同一の削除処理であり、確認項目・被参照・排他・配信条件も同一とする（承認版 §4.4）。
+      失敗時に残さない状態: 論理削除を行わず、マスタ画面に留まる。
+  - logic_id: L-220
+    name: 登録更新処理（/edit）
+    scope: 承認版 §6 イベント12・§7 #6
+    notes: |
+      新規・複製: (1) メーカーコード必須、(2) 形式（半角英数字 1〜5 文字）、
+        (3) 緊急配信オンのとき日本語名・カナ名必須、(4) 名称の形式、
+        (5) 変更なし（複製のみ）は登録せず MSG-I-003、(6) 登録確認（MSG-C-001）で No なら中断、
+        (7) /edit（MKR02 以上）、(8) キー重複判定（削除済みも存在とみなす。重複＝E-215／1／2001）、
+        (9) INSERT（登録区分は共通仕様により仕掛=1 で作成）、(10) 緊急配信オンならコミット確定後に非同期起動。
+      修正: (1) 緊急配信オンのとき名称必須、(2) 削除をオンにして登録するとき名称必須、(3) 名称の形式、
+        (4) 変更なしは MSG-I-003、(5) 登録確認（MSG-C-001）、(6) 削除をオンにした場合のみ被参照チェック、
+        (7) 排他判定（両方一致を要する。新規・複製は null を送り比較しない。不一致＝E-217）、
+        (8) UPDATE（削除オンなら論理削除。処理はイベント11 と同一）、(9) 緊急配信オンならコミット確定後に非同期起動。
+      名称（日本語名・カナ名）の重複は許容し、一意制約はメーカーコードのみとする（§12 #16）。
+      「変更なし」で終了した場合は画面を閉じずに留まる（承認版 §5.2）。
+      失敗時に残さない状態: 登録・更新を行わず、マスタ画面に留まる。
+  - logic_id: L-221
+    name: 表示制御処理
+    scope: 承認版 §6 各イベント・§7 #10
+    notes: |
+      権限コード・検索結果・行選択・モード・削除状態でボタン・リンクの活性を制御する（誤操作防止の補助。最終可否はサーバ側）。
+      I-331 は I-330 が空白でないとき活性。I-350 複製は検索成功後かつ行が選択されているとき活性。
+      I-351 戻る・I-353 ダウンロード・I-354 新規は検索成功後に活性（0 件も検索成功）。
+      登録ボタンは常時活性。削除ボタンは新規・複製で非活性、修正で活性、削除済みで非活性。
+      緊急配信・削除の判定は押下時点の画面値を用いる。
+  - logic_id: L-222
+    name: 画面遷移処理
+    scope: 承認版 §6 イベント9・10・§7 #9
+    notes: |
+      検索画面の I-351 は前画面へ戻る。マスタ画面の戻るは確認（MSG-C-003）を表示し、承認した場合のみ検索画面へ戻る。
+      I-352 業務終了は確認（MSG-C-004）を表示し、承認した場合のみ業務を終了する。
+      遷移の要求は共通部品の仕様に従い、本画面は要求のみを出す。
+
+# 【要定义的数据模型 D-207】物理名は **AI 素案**（Q-308b 顧客回答待ち）。確定値として扱わない。
+#   ★承認版 §10.1 の 6 つの論理エンティティを 1 対 1 で受ける。
+#   ★命名は AI 素案: 表 = 業務対象の英字略号 + _MST、列 = snake_case（_cd/_nm/_flg/_kbn/_dat/_user/_sts/_no）。
+#     論理削除 = del_flg（0=未削除／1=削除済み。物理削除しない）。
+#     大文字小文字の実装規約（DB 製品依存）は工程04 のスタック承認後に反映する（名前の実体は変えない）。
+data_items:
+  - data_id: D-207
+    table_name: MKR_MST            # 【AI 素案・Q-308b 待顾客回答】
+    logical_name: メーカーマスタ
+    access: read_write
+    columns:
+      - "maker_cd（メーカーコード。主キー。半角英数字 1〜5。I-329／I-341・マスタ画面の同項目）"
+      - "maker_nm（メーカー日本語名。UTF-8 30Byte。I-330／I-343）"
+      - "maker_kana_nm（メーカーカナ名。半角カナ 15。I-345）"
+      - "send_sts（送信状態。0=未送信／1=送信中／2=送信済み／9=送信エラー。I-347。名称を表示しコードを直接表示しない）"
+      - "del_flg（削除区分。0=未削除／1=削除済み。I-349。物理削除しない）"
+      - "reg_kbn（登録区分。1=仕掛／2=確定。画面からの登録は仕掛で作成）"
+      - "last_update_datetime（更新日時。監査項目かつ排他の比較キー。画面には表示しない）"
+      - "rev_no（改訂番号。監査項目かつ排他の比較キー。画面には表示しない）"
+      - "reg_user（登録者。監査項目。本画面は値を設定しない）"
+      - "reg_dat（登録日時。監査項目。本画面は値を設定しない）"
+      - "upd_user（更新者。監査項目。本画面は値を設定しない）"
+    notes: |
+      物理名・型・桁は AI 素案（Q-308b／Q-310）。確定値として扱わない。
+      参照・登録・更新・論理削除を行う。一意制約はメーカーコードのみ（名称の重複は許容）。
+      キー重複は削除済みも存在とみなす（E-215）。排他は last_update_datetime と rev_no の両方の一致を要する（E-217）。
+      登録区分は画面から仕掛（1）で作成され、確定は夜間の共通マスタ確定処理が行う（承認版 §12 #12）。
+  - data_id: D-208
+    table_name: PUR_HIN_SIR_MST    # 【AI 素案・Q-308b／Q-307 待顾客回答】
+    logical_name: 購入品目別仕入先マスタ
+    access: read
+    columns: []
+    notes: |
+      被参照チェックの判定対象。参照の有無のみを確認し、更新しない。削除済みの参照元は数えない。
+      列・結合キーは本設計では定義しない（共通部品 ReferenceChecker.check が判定する。承認版 §10.2 #6）。
+      物理名は AI 素案であり、提供元の確定（Q-307）後に見直す。
+  - data_id: D-209
+    table_name: GEN_SIR_TNK_MST    # 【AI 素案・Q-308b／Q-307 待顾客回答】
+    logical_name: 原材料仕入単価マスタ
+    access: read
+    columns: []
+    notes: |
+      D-208 と同様。被参照の有無のみを確認し、更新しない。削除済みの参照元は数えない。
+      列・結合キーは本設計では定義しない（ReferenceChecker.check が判定する）。
+  - data_id: D-210
+    table_name: CD_VAL_MST         # 【AI 素案・Q-308b 待顾客回答】
+    logical_name: コード値マスタ
+    access: read
+    columns:
+      - "cd_kbn（コード区分。送信状態コード／削除区分コードを区別する）"
+      - "cd_val（コード値）"
+      - "cd_nm（名称。表示名）"
+    notes: |
+      送信状態コード（0=未送信／1=送信中／2=送信済み／9=送信エラー）と
+      削除区分コード（0=未削除／1=削除済み）の表示名称を取得する。コードを直接表示しない。
+      取得は共通部品 コード値取得部品 に委ねる（承認版 §10.2 #10）。物理名・列は AI 素案（Q-308b）。
+  - data_id: D-211
+    table_name: MSG_MST            # 【AI 素案・Q-308b 待顾客回答】
+    logical_name: メッセージマスタ
+    access: read
+    columns:
+      - "msg_id（メッセージID）"
+      - "msg_kind（種別。E／W／I／C）"
+      - "msg_txt（文面）"
+    notes: |
+      画面に表示するメッセージの文面を取得する。画面側で文面を直書きしない。
+      /init の応答およびエラー応答で用いる（messages[] は {code, kind, text}。承認版 §10.2 #9）。
+      物理名・列は AI 素案（Q-308b）。
+  - data_id: D-212
+    table_name: AUTH_MST           # 【AI 素案・Q-308b 待顾客回答】
+    logical_name: 権限マスタ
+    access: read
+    columns:
+      - "user_id（利用者識別子）"
+      - "auth_cd（権限コード。MKR01／MKR02／MKR03）"
+    notes: |
+      利用者 1 名につき 1 つの権限コードを取得し、エンドポイント別の可否を判定する（承認版 §10.1 #6・§12 #8）。
+      権限変更は翌営業日 9:00 までに反映し、ログイン時に再取得する（§12 #10）。
+      物理名・列は AI 素案（Q-308b）。
+
+# 【需要落 SQL 模板的步骤】
+#   ★SQL の表名・列名は上記 data_items（AI 素案・Q-308b）に一致させる。
+#   ★値はすべて :BIND で受ける（実値・実コードを埋め込まない）。
+#   ★ソート項目は白名单方式（許可列以外は固定ソートへ落とす）。ページングは任意頁移動のため
+#     OFFSET/FETCH を例外採用し、安定順序のため末尾に ROWID を付す（理由を各 SQL に明記）。
+sql_targets:
+  - step: 前処理（L-212）権限コードの取得
+    sql_placeholder: |
+      -- 利用者 1 名につき 1 コード。上位は下位を含む（MKR01 → MKR02 → MKR03）。
+      SELECT auth_cd
+        FROM AUTH_MST
+       WHERE user_id = :user_id
+  - step: イベント1 /init メッセージ情報の取得
+    sql_placeholder: |
+      -- 文言は画面に直書きせず、メッセージ管理情報から取得する（承認版 §10.2 #9）。
+      SELECT msg_id, msg_kind, msg_txt
+        FROM MSG_MST
+       WHERE msg_id = :msg_id
+  - step: イベント2・3 /search 一覧の総件数取得
+    sql_placeholder: |
+      -- 条件は一覧取得と同一。空条件はアプリ側で除外する。
+      SELECT COUNT(*)
+        FROM MKR_MST
+       WHERE (maker_cd LIKE :maker_cd_prefix OR :maker_cd_prefix IS NULL)
+         AND (maker_nm LIKE :maker_nm_partial OR :maker_nm_partial IS NULL)
+         AND (del_flg = :not_deleted OR :include_deleted = :include_deleted_val)
+         AND (reg_kbn = :shikake_kbn OR :shikake_mode = :shikake_off)
+  - step: イベント2・3 /search 一覧取得（ソート白名单・頁番号）
+    sql_placeholder: |
+      -- ソート白名单（識別子は値ではないため :BIND 不可。白名单で担保する）:
+      --   ALLOWED_SORT_FIELDS = {MAKER_CD, MAKER_NM}
+      --   白名单外・未指定は固定ソート ORDER BY del_flg, maker_cd, ROWID へフォールバック。
+      --   白名单指定時も第 1 キーは del_flg（未削除を先）を維持する。
+      -- 任意頁への直接移動（頁番号 1 始まり）のため OFFSET/FETCH を例外採用する。
+      --   安定順序のため末尾に ROWID を付す。
+      SELECT maker_cd, maker_nm, maker_kana_nm, send_sts, del_flg
+        FROM MKR_MST
+       WHERE (maker_cd LIKE :maker_cd_prefix OR :maker_cd_prefix IS NULL)
+         AND (maker_nm LIKE :maker_nm_partial OR :maker_nm_partial IS NULL)
+         AND (del_flg = :not_deleted OR :include_deleted = :include_deleted_val)
+         AND (reg_kbn = :shikake_kbn OR :shikake_mode = :shikake_off)
+       ORDER BY /* 白名单時: del_flg, MAKER_NM または MAKER_CD, ROWID ／ 固定時: del_flg, maker_cd, ROWID */
+               del_flg, maker_cd, ROWID
+       OFFSET :offset ROWS FETCH NEXT :page_size ROWS ONLY
+  - step: イベント8 /download 一覧取得（500 件超は出力しない）
+    sql_placeholder: |
+      -- 最後に実行した検索条件で抽出する。件数 500 超は E-214 で出力しない。
+      -- 列は一覧 5 列。CSV は UTF-8（BOM あり）・CRLF・ヘッダ行あり。
+      SELECT maker_cd, maker_nm, maker_kana_nm, send_sts, del_flg
+        FROM MKR_MST
+       WHERE (maker_cd LIKE :maker_cd_prefix OR :maker_cd_prefix IS NULL)
+         AND (maker_nm LIKE :maker_nm_partial OR :maker_nm_partial IS NULL)
+         AND (del_flg = :not_deleted OR :include_deleted = :include_deleted_val)
+         AND (reg_kbn = :shikake_kbn OR :shikake_mode = :shikake_off)
+       ORDER BY del_flg, maker_cd, ROWID
+  - step: イベント7 /initEdit mode=3 現在値と排他情報の取得
+    sql_placeholder: |
+      -- 修正対象の現在値と排他情報を取得する。削除済みも取得する（削除済みは削除チェック固定・登録ボタン非活性）。
+      SELECT maker_cd, maker_nm, maker_kana_nm, send_sts, del_flg,
+             last_update_datetime, rev_no
+        FROM MKR_MST
+       WHERE maker_cd = :maker_cd
+  - step: イベント11 /delete 論理削除（排他判定を含む）
+    sql_placeholder: |
+      -- 被参照チェックは ReferenceChecker.check が行う（本 SQL の対象外。E-216／E-218）。
+      -- 排他: last_update_datetime と rev_no の両方の一致を要する（E-217）。
+      UPDATE MKR_MST
+         SET del_flg = :deleted,
+             last_update_datetime = :new_last_update_datetime,
+             rev_no = rev_no + 1,
+             upd_user = :upd_user
+       WHERE maker_cd = :maker_cd
+         AND last_update_datetime = :last_update_datetime
+         AND rev_no = :rev_no
+  - step: イベント12 /edit キー重複判定（新規・複製）
+    sql_placeholder: |
+      -- キー重複は削除済みも存在とみなす（E-215）。1 行でも返れば重複。
+      SELECT 1
+        FROM MKR_MST
+       WHERE maker_cd = :maker_cd
+  - step: イベント12 /edit INSERT（新規・複製）
+    sql_placeholder: |
+      -- 登録区分は共通仕様により仕掛（1）で作成する（承認版 §12 #12）。
+      INSERT INTO MKR_MST (
+        maker_cd, maker_nm, maker_kana_nm, send_sts, del_flg, reg_kbn,
+        reg_user, reg_dat, upd_user, last_update_datetime, rev_no
+      ) VALUES (
+        :maker_cd, :maker_nm, :maker_kana_nm, :send_sts, :not_deleted, :shikake_kbn,
+        :reg_user, :reg_dat, :upd_user, :last_update_datetime, :initial_rev_no
+      )
+  - step: イベント12 /edit UPDATE（修正。削除オンなら論理削除）
+    sql_placeholder: |
+      -- 排他: last_update_datetime と rev_no の両方の一致を要する（E-217）。
+      -- 削除をオンにした場合は del_flg を削除済みにする（処理はイベント11 と同一）。
+      UPDATE MKR_MST
+         SET maker_nm = :maker_nm,
+             maker_kana_nm = :maker_kana_nm,
+             del_flg = :del_flg,
+             last_update_datetime = :new_last_update_datetime,
+             rev_no = rev_no + 1,
+             upd_user = :upd_user
+       WHERE maker_cd = :maker_cd
+         AND last_update_datetime = :last_update_datetime
+         AND rev_no = :rev_no
+  - step: 一覧描画 コード値（送信状態・削除区分）の名称取得
+    sql_placeholder: |
+      -- コードを直接表示せず、名称を表示する（承認版 §10.2 #10）。
+      SELECT cd_kbn, cd_val, cd_nm
+        FROM CD_VAL_MST
+       WHERE cd_kbn IN (:cd_kbn_send_sts, :cd_kbn_del_flg)
+       ORDER BY cd_kbn, cd_val
+
+# 【每个 E-20x 的分支条件与迁移】
+#   出所: 承認版 §9（エラー一覧・E-213〜E-224 の 12 件）
+error_detail:
+  - error_id: E-213
+    condition: "検索結果が 0 件（イベント2・3）"
+    next_action: "1／1001・MSG-E-001。明細を表示しない。0 件も検索成功として複製・戻る・ダウンロード・新規を活性にする"
+  - error_id: E-214
+    condition: "検索結果が上限 500 件を超えた（イベント2・3・8）"
+    next_action: "1／1002・MSG-E-002。明細・CSV を出力しない。ちょうど 500 件は許容する"
+  - error_id: E-215
+    condition: "新規・複製でメーカーコードが既に存在する（削除済みも存在とみなす）"
+    next_action: "1／2001・MSG-E-003。メーカーコードを強調表示する。画面遷移しない"
+  - error_id: E-216
+    condition: "削除時に他のマスタ（購入品目別仕入先・原材料仕入単価）から参照されている"
+    next_action: "1／2002・MSG-E-004。削除しない。削除済みの参照元は数えない。マスタ画面に留まる"
+  - error_id: E-217
+    condition: "他の利用者が先に更新していた（lastUpdateDatetime と revNo の少なくとも一方が不一致）"
+    next_action: "1／2003・MSG-E-005。メッセージのみ表示し、項目の強調表示・フォーカス移動はしない"
+  - error_id: E-218
+    condition: "被参照チェックの共通部品が想定外の結果を返した"
+    next_action: "9／9101。処理を中断し、システムエラー画面へ置換する。参照件数を 0 として扱わない"
+  - error_id: E-219
+    condition: "画面側の入力チェック違反（I-329・I-330・名称の形式など）"
+    next_action: "API を呼ばない。MSG-E-007／MSG-E-008。該当項目の背景色を変え、フォーカスを移す。サーバへ送らない"
+  - error_id: E-220
+    condition: "API の権限検証で権限が不足している"
+    next_action: "1／2004・MSG-E-006。処理を中断し、画面遷移しない。ボタン活性制御とは独立に判定する"
+  - error_id: E-221
+    condition: "セッションが存在しない、または最終操作から 30 分を超過した"
+    next_action: "9／9001。セッションエラー画面へ置換する"
+  - error_id: E-222
+    condition: "オンライン利用が許可されていない（稼働時間外・計画停止）"
+    next_action: "9／9002。オンライン制御エラー画面へ置換する"
+  - error_id: E-223
+    condition: "DB エラー・想定外の例外"
+    next_action: "9／9999。ロールバックし、システムエラー画面へ置換する"
+  - error_id: E-224
+    condition: "サーバ側の入力チェック違反（画面側と同一条件）"
+    next_action: "1／2005・MSG-E-007／MSG-E-008。メッセージを表示し、処理を中断する（画面遷移しない）"
+
+# 【境界値表】出所: 承認版 §4.1・§4.2・§6・§8・§11・§12
+boundary_values:
+  - item: "メーカーコード（I-329・マスタ画面の同項目）"
+    min: "1 文字"
+    max: "5 文字"
+    boundary_handling: "半角英数字 1〜5 は可。0 文字（未入力）・6 文字以上・数字以外の文字は不可。修正では変更不可"
+    source: "承認版 §4.1 #8・§4.2 #2・§8 #1"
+  - item: "メーカー日本語名（I-330・マスタ画面の同項目）"
+    min: "0 Byte"
+    max: "30 Byte"
+    boundary_handling: "UTF-8 で 30Byte ちょうどは可、31Byte は不可。使用不可文字（カンマ・アポストロフィ・ダブルクォート・パイプ）を含むと不可"
+    source: "承認版 §4.1 #9・§4.2 #3・§8 #2・Q-277"
+  - item: "メーカーカナ名（マスタ画面）"
+    min: "0 文字"
+    max: "15 文字"
+    boundary_handling: "半角カナ 15 文字ちょうどは可、16 文字は不可。濁点・半濁点は独立した 1 文字として数える。使用不可文字（アポストロフィ・カンマ・円マーク・半角スペース）を含むと不可"
+    source: "承認版 §4.2 #4・§8 #3"
+  - item: "1 頁件数（I-333）"
+    min: "10"
+    max: "100"
+    boundary_handling: "候補は 10／20／50／100 のみ。既定 20。それ以外の値は不可"
+    source: "承認版 §4.1 #12・§8 #4・Q-246"
+  - item: "検索結果件数"
+    min: "0 件"
+    max: "500 件"
+    boundary_handling: "0 件は正常（E-213 を表示しつつ検索成功扱い）。500 件ちょうどは可、501 件は E-214 で出力しない"
+    source: "承認版 §6 イベント2・§9 E-213/E-214・Q-263・Q-273・Q-280"
+  - item: "頁番号（I-337・I-338）"
+    min: "1"
+    max: "総頁数"
+    boundary_handling: "1 始まり。総件数 0 件のとき非活性。頁番号は画面が保持し検索条件とともに送る"
+    source: "承認版 §4.1 #16/#17・§6 イベント3"
+  - item: "CSV 出力（イベント8）"
+    min: "0 件"
+    max: "500 件・5MB・10 秒"
+    boundary_handling: "500 件超・5MB 超は出力しない（E-214）。0 件の検索も押下できる。UTF-8（BOM あり）・CRLF・ヘッダ行あり"
+    source: "承認版 §6 イベント8・§11 #7・§12 #15"
+
+# 【复用/参照的既有资产 —— ★greenfield では「新規定義するもの」】
+existing_assets:
+  - "greenfield（本演習）: 旧システムの既存資産は無い。以下を本案件で新規定義・実装する。"
+  - "「本案件で新規定義するもの」= 6 つの API 端点（/init・/search・/download・/initEdit・/delete・/edit）と 2 画面（SCR-201・SCR-202）の画面ロジック。工程04 で一覧化し工程05 で定義する。"
+  - "「呼び出すのみ・本件で新規作成しない」共通部品（提供元は工程04 で確定・Q-307）: CommonHeader／Pager／SessionErrorScreen／OnlineControlErrorScreen／SystemErrorScreen／ReferenceChecker.check／EmergencyDispatcher.dispatch／権限チェック部品／メッセージ取得部品／コード値取得部品／監査項目付与部品／共通ログ部品／セッション・オンライン可否判定部品（承認版 §10.2 の 13 件）"
+  - "受領資料（共通前提条件書 v1.2・共通部品インタフェース仕様書 v3.0・NFR 標準 v1.1・R60 共通画面項目定義 v2.0）は教学用の仮想資料である（承認版 §0.1）"
+
+# 【约束】
+constraints:
+  - "詳細設計は基本設計の範囲を超えない。I-322〜I-354 と マスタ画面 9 項目（I-ID 未付与・Q-306）の範囲を超えない。I-354 より後の I-ID を発番しない（承認版 §4.3・§13）"
+  - "スタックは工程04 で提案し人が承認する（紅線④）。本節点で確定させない"
+  - "物理名・列名・型・桁は AI 素案であり、Q-308b の顧客回答待ち。確定値として扱わない（紅線③・A 類を当方が埋めない）"
+  - "論理削除 del_flg（0=未削除／1=削除済み）を使い、物理削除しない。検索条件に削除区分を必ず含める（削除含むオフ時は未削除のみ）"
+  - "キー重複は削除済みも存在とみなす。名称（日本語名・カナ名）の重複は許容し、一意制約はメーカーコードのみ（承認版 §12 #16）"
+  - "排他は lastUpdateDatetime と revNo の両方の一致を要する。新規・複製は null を送りサーバは比較しない（承認版 §1.2・§6 イベント7・12）"
+  - "検索のソートは白名单方式。許可は MAKER_CD／MAKER_NM の 2 項目のみ（承認版 §4.1 #19/#21・§12 #5）。白名单外・未指定は固定ソート（削除区分→メーカーコード昇順→ROWID）へフォールバック"
+  - "SQL は :BIND プレースホルダのみ。実値・実コードを文字列連結で埋め込まない。敏感値は占位（TBL_1／COL_1／VAL_1）を用いる"
+  - "ページングは任意頁移動（頁番号 1 始まり）のため OFFSET/FETCH を例外採用し、安定順序のため末尾に ROWID を付す（理由を sql_targets に明記）"
+  - "緊急配信は業務データのコミット確定後に非同期で起動する。戻り値は受付 ID であり配信の成否ではない（承認版 §10.2 #7）"
+  - "エラー応答は HTTP ステータス 200 とし、判定は本文の errorCode を正とする。errorCode は 0=正常／1=業務エラー／9=システムエラー（2 を使わない）。errorId は 4 桁（承認版 §12 #6）"
+  - "前処理順は セッション → オンライン可否 → 権限 → 入力チェック。1 つでも失敗したら後続を実行しない（承認版 §12 #7）"
+  - "CSV は UTF-8（BOM あり）・CRLF・ヘッダ行あり。列は一覧の 5 列で排他情報を含めない（承認版 §12 #15）"
+  - "ログに実データ・機密値をそのまま出力しない。実値は占位（TBL_1／COL_1／VAL_1）で扱う（紅線⑦）"
+  - "ID は ids.yml が唯一の発号口。L-212〜L-222／D-207〜D-212／E-213〜E-224 は素案（教学号段は ids.yml に登録しない・紅線①）"
+
+# 【未决事项】区分（A/B/C）は人が裁定する欄である。AI は値を入れない（紅线③）。
+#   節点2 からの持ち越し: Q-306（マスタ画面 9 項目の I-ID）・Q-307（共通部品の提供元）・
+#   Q-308b（物理テーブル名・A 類・顧客回答待ち）・Q-309（権限マトリクスの顧客承認）。
+#   本節点で新たに生じた未決は Q-310 以降。
+open_questions:
+  - q_id: Q-310
+    summary: "メーカーマスタの物理列名・型・桁（とくに監査項目と排他キー rev_no の採番主体）を、AI 素案のとおり固めてよいか。Q-308b の顧客回答を前提とする"
+    related: [D-207]
+    category: null
+    status: "未回答"
+  - q_id: Q-311
+    summary: "マスタ画面 9 項目の I-ID が未裁定（Q-306）。本節点は項目名称で扱い I-354 より後の番号を発番していないが、裁定後に I-ID を付与する必要があるか"
+    related: [F-202]
+    category: null
+    status: "未回答"
+  - q_id: Q-312
+    summary: "購入品目別仕入先マスタ・原材料仕入単価マスタの物理名・結合キーを本設計で定義せず ReferenceChecker.check に委ねてよいか（提供元 Q-307 の確定後）"
+    related: [D-208, D-209]
+    category: null
+    status: "未回答"
+  - q_id: Q-313
+    summary: "頁番号（1 始まり）による任意頁移動に対し、ページングを OFFSET/FETCH で実装する例外採用を承認してよいか（ROWID 安定ソートを併用）"
+    related: [L-214, L-215]
+    category: null
+    status: "未回答"
+  - q_id: Q-314
+    summary: "検索のソート白名单を makerCd／makerNm の 2 項目で確定してよいか（承認版 §4.1 #19/#21・§12 #5。規則 03 §5 の例示とは項目が異なる）"
+    related: [L-214]
+    category: null
+    status: "未回答"
+  - q_id: Q-315
+    summary: "新規・複製登録時の送信状態（send_sts）の初期値、および緊急配信・夜間確定処理との関係が上流に明記されていない。どの共通仕様に従うか"
+    related: [D-207, L-220]
+    category: null
+    status: "未回答"
+
+  - q_id: Q-316
+    summary: "ids.yml の教学号段は L-212〜L-219／D-207〜D-211／E-213〜E-222 までで、上流が用いる E-223・E-224 と本節点の L-220〜L-222・D-212 は未登録（gate1 が野号として検出）。発号は人ゲート（紅线①）で行う必要がある"
+    related: [L-220, L-221, L-222, D-212, E-223, E-224]
+    category: null
+    status: "解決済（2026-11-06・Li の明示 Authorization により tools.registry alloc で 6 件を発号、trace --write で辺を補写。gate1/2 PASS）"
+
+# 【人必须拍板的点】
+human_review_required:
+  - "12 イベントの処理順序と分岐が承認版 §6 と一致するか（とくに前処理順 セッション→オンライン可否→権限→入力チェック）"
+  - "SQL の列名・条件・ソート白名单が本節点で定めた data_items（AI 素案・Q-308b 待ち）と一致するか"
+  - "E-213〜E-224 の 12 件が過不足なく、遷移先が業務上正しいか"
+  - "境界・排他・被参照・重複（論理削除・削除済みを存在とみなす・lastUpdateDatetime と revNo の両方一致）が明示されているか"
+  - "顧客が決める事項（A 類）を当方が先に埋めていないか。物理名を確定値として書いていないか（Q-308b）"
+  - "当方提案・顧客承認待ちの事項を、確定済みの事実として書いていないか"
+  - "L-212〜L-222 の分割粒度と番号（素案）を認めるか"
+  - "Q-310〜Q-315 の要旨が妥当か（A／B／C の区分は人が裁定する）"

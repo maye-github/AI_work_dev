@@ -8,7 +8,7 @@
 
 なぜ必要か
 ----------
-実施規格書 §10.2 ② の「知識庫」は、本骨架では `docs/90_knowledge/`（方法論）と `tools/kb-platform/repo/projects/P-R60-001/`（旧案件知識）の `.md` 群でしかない。
+実施規格書 §10.2 ② の「知識庫」は、本骨架では `tools/kb-platform/repo/`（方法論）と `tools/kb-platform/repo/projects/P-R60-001/`（旧案件知識）の `.md` 群でしかない。
 一方、社内には既に `D:\\AI_platform\\kb-platform`（front matter ＋ chunk ＋ 索引 ＋ 検索 API）がある。
 **同じ知識を二つの流儀で持つと、どちらが正か分からなくなる**（NFR-1）。
 

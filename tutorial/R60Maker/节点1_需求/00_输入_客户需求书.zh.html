@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>00_输入_客户需求书.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>00_输入_客户需求书.zh</h1>
+<div class="meta">
+  机读源: <code>00_输入_客户需求书.zh.md</code> ／
+  生成: 2026-11-05 14:12 ／
+  节 8・表 20
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>00_输入_客户需求书.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">1. 背景</a> <span class="chip chip-bg">前提</span></li><li><a href="#sec-2">2. 对象范围</a></li><li><a href="#sec-3">3. 业务要求</a></li><li><a href="#sec-4">4. 接口（API）</a></li><li><a href="#sec-5">5. 错误处理</a> <span class="chip chip-err">异常</span></li><li><a href="#sec-6">6. 恳请贵方完成的工作</a></li><li><a href="#sec-7">7. 用语</a></li><li><a href="#sec-8">8. 不明之处</a></li></ol></nav>
+<section class="sec sec-lead">
+<p>&lt;!-- 这是派生视图（中文），不是机读源。机读源是同目录的 00_输入_客户需求书.md（日文）。<br>两者不一致时以日文原文为准。不要手改本文件的内容去"修正"业务；原文改了，就改这里的同一处再重新生成。 --&gt;</p>
+<h1>厂商主数据维护（R60Maker）画面　需求书</h1>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">文件名称</td><td style="text-align:left">厂商主数据维护（R60Maker）画面　需求书</td></tr><tr><td style="text-align:left">发行方</td><td style="text-align:left">朝日啤酒株式会社　信息系统部（教学用模拟）</td></tr><tr><td style="text-align:left">收件方</td><td style="text-align:left">开发受托公司　启</td></tr><tr><td style="text-align:left">版本</td><td style="text-align:left"><strong>v1.1</strong>（2026/11/05 改订。§3.1・§3.9・§5）</td></tr><tr><td style="text-align:left">发行日</td><td style="text-align:left">2025/10/06</td></tr><tr><td style="text-align:left">机密区分</td><td style="text-align:left">社外秘</td></tr></tbody></table>
+<blockquote class="quote"><strong>注记（教学用）</strong>：本文件是<strong>教学用</strong>的模拟客户需求书，由真实案件的设计资料<strong>改写为"需求"的形式</strong>。<br>因此<strong>出处等级为 E2（二手资料）</strong>，不存在客户签发的原始需求书。<br>文中<strong>不含真实的连接信息（IP・主机・端口・口令）</strong>，也<strong>不含真实的员工编号・姓名・实际数据值</strong>。<br>说明用中文书写；业务用语保留日文原文（「メーカーコード」「緊急配信」「仕掛」等）。<br><strong>本案为新建。</strong> 在采购・生产系共通主数据之中，<strong>新建厂商主数据的维护画面</strong>。</blockquote>
+<hr>
+</section>
+<section class="sec sec-bg" id="sec-1">
+<h2>1. 背景 <span class="chip chip-bg">前提</span></h2>
+<p>本公司正以<strong>新基盘</strong>构建采购・生产系的各类主数据。<br>其中需要<strong>维护厂商（资材・原材料的供应方）信息</strong>的画面。</p>
+<p>厂商主数据是被<strong>按采购品目区分的供应商主数据</strong>以及<strong>原材料采购单价主数据</strong><br><strong>所参照的基础数据</strong>。因此，登记・变更・删除时，<br><strong>不得破坏其他主数据的参照关系</strong>。</p>
+<p>本需求书即是对该画面「<strong>厂商主数据维护（R60Maker）</strong>」的委托。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>2. 对象范围</h2>
+<ul><li><strong>对象</strong>：厂商主数据维护的<strong>检索画面</strong>・<strong>主数据画面</strong>，以及<strong>其 API</strong>。</li><li><strong>对象外（明示）</strong>：</li><li><strong>按采购品目区分的供应商主数据</strong>、<strong>原材料采购单价主数据</strong>各自的画面本身。</li></ul>
+<p>本画面<strong>只做参照有无的确认</strong>。</p>
+<ul><li><strong>紧急配信（紧急下发）的处理本身</strong>。本画面<strong>只调用本公司的共通部品</strong>。</li><li><strong>厂商信息的一次性导入（上传）</strong>（即"导入"）。本件不含。</li><li><strong>相关共通部品</strong>：<strong>共通页眉</strong>、<strong>分页器</strong>、<strong>会话错误画面</strong>、</li></ul>
+<p><strong>在线控制错误画面</strong>、<strong>系统错误画面</strong>。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>3. 业务要求</h2>
+<h3>3.1 画面的职责</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">画面概要</td><td style="text-align:left">对厂商信息进行维护（参照・登记・更新・删除・下载）</td></tr><tr><td style="text-align:left">使用对象</td><td style="text-align:left"><strong>仅限持有使用权限者</strong></td></tr><tr><td style="text-align:left">使用频率</td><td style="text-align:left"><strong>月度・随时</strong></td></tr><tr><td style="text-align:left">画面区分</td><td style="text-align:left"><strong>参照・登记・更新・删除・下载</strong></td></tr><tr><td style="text-align:left">前提条件</td><td style="text-align:left"><strong>有</strong>（内容由本公司另行提供）</td></tr></tbody></table>
+<p><strong>使用权限同时用于"画面的操作可否"与"API 的执行可否"两方面。</strong><br>画面侧的按钮活性控制<strong>只是防止误操作的辅助</strong>，<strong>最终可否由服务器端判定</strong>。<br>所需权限按<strong>接口（endpoint）逐个</strong>规定（§5）。</p>
+<p>本画面由<strong>两个画面</strong>构成。从<strong>检索画面</strong>选定对象，在<strong>主数据画面</strong>查看・修改内容。</p>
+<hr>
+<h3>3.2 检索画面的项目</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">项目名称</th><th style="text-align:left">种类</th><th style="text-align:left">规格</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">画面标题</td><td style="text-align:left">标签</td><td style="text-align:left">显示固定值「<strong>メーカーマスタメンテ</strong>」</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">系统日期时间</td><td style="text-align:left">标签</td><td style="text-align:left">依本公司标准规约（§3.11）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">公司／部门／用户名</td><td style="text-align:left">标签</td><td style="text-align:left">显示当前登录用户的信息</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">メーカーコード</td><td style="text-align:left">文本框</td><td style="text-align:left">作为<strong>前方一致</strong>检索条件。<strong>半角英数字・5 位以内</strong>。初始值为<strong>空白</strong>。<strong>任意</strong></td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">メーカー日本語名</td><td style="text-align:left">文本框</td><td style="text-align:left">作为<strong>中间一致</strong>检索条件。<strong>30Byte 以内</strong>。初始值为<strong>空白</strong>。<strong>任意</strong>。附清除按钮</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">削除含む</td><td style="text-align:left">复选框</td><td style="text-align:left"><strong>初始值为关</strong>。打开时，已删除的数据也出现在一览中（§3.5）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">1頁件数</td><td style="text-align:left">下拉框</td><td style="text-align:left">一览每页显示的件数。候选项从<strong>本公司的共通件数候选</strong>取得。<strong>初始值为既定候选</strong></td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">仕掛表示</td><td style="text-align:left">按钮</td><td style="text-align:left">仅以登记<strong>未确定</strong>的数据为对象检索（§3.5）。初始状态为<strong>可用</strong></td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">表示</td><td style="text-align:left">按钮</td><td style="text-align:left">按检索条件执行检索。初始状态为<strong>可用</strong></td></tr><tr><td style="text-align:left">10</td><td style="text-align:left">検索条件(非)表示</td><td style="text-align:left">按钮</td><td style="text-align:left">将检索条件部分<strong>收起／展开</strong>。初始状态为<strong>可用</strong></td></tr><tr><td style="text-align:left">11</td><td style="text-align:left">分页器（上・下）</td><td style="text-align:left">链接・标签</td><td style="text-align:left">首页／前页／页号／次页／末页／总件数。依本公司标准规约（§3.11）</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left">複製</td><td style="text-align:left">按钮</td><td style="text-align:left">将选中行<strong>复制</strong>后打开主数据画面（§3.6）。<strong>检索成功后可用</strong></td></tr><tr><td style="text-align:left">13</td><td style="text-align:left">一览：メーカーコード</td><td style="text-align:left">链接</td><td style="text-align:left">点击打开<strong>修正</strong>的主数据画面（§3.6）。<strong>可指定排序</strong></td></tr><tr><td style="text-align:left">14</td><td style="text-align:left">一览：メーカー日本語名</td><td style="text-align:left">链接</td><td style="text-align:left">点击打开<strong>修正</strong>的主数据画面（§3.6）。<strong>可指定排序</strong></td></tr><tr><td style="text-align:left">15</td><td style="text-align:left">一览：メーカーカナ名</td><td style="text-align:left">标签</td><td style="text-align:left">仅显示</td></tr><tr><td style="text-align:left">16</td><td style="text-align:left">一览：送信状态</td><td style="text-align:left">标签</td><td style="text-align:left">将<strong>紧急配信的发送状态</strong>替换为代码值的名称后显示（§3.11）</td></tr><tr><td style="text-align:left">17</td><td style="text-align:left">一览：删除</td><td style="text-align:left">标签</td><td style="text-align:left">将<strong>是否已删除</strong>替换为代码值的名称后显示（§3.11）</td></tr><tr><td style="text-align:left">18</td><td style="text-align:left">戻る</td><td style="text-align:left">按钮</td><td style="text-align:left">返回前一画面。<strong>检索成功后可用</strong></td></tr><tr><td style="text-align:left">19</td><td style="text-align:left">業務終了</td><td style="text-align:left">按钮</td><td style="text-align:left">确认后结束业务。初始状态为<strong>可用</strong></td></tr><tr><td style="text-align:left">20</td><td style="text-align:left">ダウンロード</td><td style="text-align:left">按钮</td><td style="text-align:left">按<strong>上一次执行的检索条件</strong>将一览输出为 CSV（§3.5）。<strong>检索成功后可用</strong></td></tr><tr><td style="text-align:left">21</td><td style="text-align:left">新規</td><td style="text-align:left">按钮</td><td style="text-align:left">打开<strong>新建</strong>的主数据画面（§3.6）。<strong>检索成功后可用</strong></td></tr></tbody></table>
+<blockquote class="quote">※ 上表按<strong>业务上成组的单位</strong>记载。<strong>页眉・分页器等标准部品的细目依 §3.11</strong><br>（本公司的画面项目定义中细分为全 33 项）。</blockquote>
+<hr>
+<h3>3.3 主数据画面的项目</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">项目名称</th><th style="text-align:left">新建・复制</th><th style="text-align:left">修正</th><th style="text-align:left">规格</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">操作模式</td><td style="text-align:left">标签</td><td style="text-align:left">标签</td><td style="text-align:left">显示<strong>新建／复制／修正</strong>之一</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">メーカーコード</td><td style="text-align:left">文本框</td><td style="text-align:left">标签</td><td style="text-align:left">新建・复制时<strong>可输入</strong>（<strong>必填</strong>・<strong>半角英数字 5 位以内</strong>）。修正时<strong>仅显示、不可修改</strong></td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">メーカー日本語名</td><td style="text-align:left">文本框</td><td style="text-align:left">文本框</td><td style="text-align:left"><strong>30Byte 以内</strong>。<strong>指定紧急配信时・删除时・打开删除后登记时必填</strong>（§3.9）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">メーカーカナ名</td><td style="text-align:left">文本框</td><td style="text-align:left">文本框</td><td style="text-align:left"><strong>半角片假名 15 位以内</strong>。<strong>同上必填</strong></td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">緊急配信</td><td style="text-align:left">复选框</td><td style="text-align:left">复选框</td><td style="text-align:left">打开即作为<strong>紧急配信对象</strong>（§3.10）。初始值为关</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">削除</td><td style="text-align:left">标签（空白）</td><td style="text-align:left">复选框</td><td style="text-align:left">修正时<strong>打开后登记即为删除</strong>（§3.7）。打开已删除的数据时<strong>以勾选状态</strong>显示</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">戻る</td><td style="text-align:left">按钮</td><td style="text-align:left">按钮</td><td style="text-align:left">若有值变更，<strong>确认后</strong>返回一览（§3.11）</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">削除</td><td style="text-align:left">按钮</td><td style="text-align:left">按钮</td><td style="text-align:left"><strong>新建・复制时不可用</strong>。<strong>修正时可用</strong>。<strong>已删除的数据不可用</strong></td></tr><tr><td style="text-align:left">9</td><td style="text-align:left">登録</td><td style="text-align:left">按钮</td><td style="text-align:left">按钮</td><td style="text-align:left">登记输入内容（§3.7）</td></tr></tbody></table>
+<hr>
+<h3>3.4 事件</h3>
+<p><strong>13 个事件</strong>。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">事件</th><th style="text-align:left">处理概要</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>初始显示</strong></td><td style="text-align:left">取得用户信息・消息・每页件数候选，初始化画面</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><strong>按下表示按钮</strong></td><td style="text-align:left">按检索条件检索并显示一览（§3.5）</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><strong>按下仕掛表示按钮</strong></td><td style="text-align:left">仅以登记未确定的数据为对象检索并显示一览（§3.5）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>按下検索条件(非)表示按钮</strong></td><td style="text-align:left">收起／展开检索条件部分。<strong>仅画面内处理</strong>，不与服务器交互</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><strong>按下複製按钮</strong></td><td style="text-align:left">继承选中行的内容，打开<strong>复制</strong>的主数据画面（§3.6）</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><strong>点击一览数据链接</strong></td><td style="text-align:left">继承选中行的内容，打开<strong>修正</strong>的主数据画面（§3.6）</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><strong>按下新規按钮</strong></td><td style="text-align:left">打开<strong>新建</strong>的主数据画面（§3.6）</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left"><strong>按下ダウンロード按钮</strong></td><td style="text-align:left">按上一次执行的检索条件将一览输出为 CSV（§3.5）</td></tr><tr><td style="text-align:left">9</td><td style="text-align:left"><strong>按下戻る按钮（一览）</strong></td><td style="text-align:left">返回前一画面。依本公司标准规约（§3.11）</td></tr><tr><td style="text-align:left">10</td><td style="text-align:left"><strong>按下業務終了按钮</strong></td><td style="text-align:left">确认后结束业务。依本公司标准规约（§3.11）</td></tr><tr><td style="text-align:left">11</td><td style="text-align:left"><strong>按下削除按钮（主数据）</strong></td><td style="text-align:left">单项目检查 → 项目间检查 → 逻辑删除 → 完成消息（§3.8）</td></tr><tr><td style="text-align:left">12</td><td style="text-align:left"><strong>按下登録按钮（主数据）</strong></td><td style="text-align:left">单项目检查 → 项目间检查 → 登记／更新 → 完成消息（§3.7）</td></tr><tr><td style="text-align:left">13</td><td style="text-align:left"><strong>按下戻る按钮（主数据）</strong></td><td style="text-align:left">若有值变更，确认后返回一览。依本公司标准规约（§3.11）</td></tr></tbody></table>
+<p><strong>所有事件的共通前提</strong>：<strong>会话信息不存在时</strong>转向会话错误画面，<br><strong>不允许在线使用时</strong>转向在线控制错误画面（§5）。</p>
+<hr>
+<h3>3.5 检索</h3>
+<p><strong>条件组合</strong>：已输入条件之间为 <strong>AND</strong>。空条件<strong>不纳入检索条件</strong>。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">条件</th><th style="text-align:left">处理</th></tr></thead><tbody><tr><td style="text-align:left">メーカーコード</td><td style="text-align:left"><strong>前方一致</strong>（以输入值开头者）</td></tr><tr><td style="text-align:left">メーカー日本語名</td><td style="text-align:left"><strong>中间一致</strong>（含输入值者）</td></tr><tr><td style="text-align:left">削除含む = 关</td><td style="text-align:left"><strong>排除已删除的数据</strong></td></tr><tr><td style="text-align:left">削除含む = 开</td><td style="text-align:left">已删除的数据也包含在内</td></tr><tr><td style="text-align:left">仕掛表示</td><td style="text-align:left"><strong>仅以登记未确定的数据</strong>为对象。已确定者不在对象内</td></tr></tbody></table>
+<p><strong>排序</strong></p>
+<ol><li><strong>是否已删除</strong>（未删除在前）</li><li><strong>メーカーコード</strong> 升序</li></ol>
+<p>用户<strong>可指定排序的仅「メーカーコード」与「メーカー日本語名」2 项</strong>。<br>其他指定一律不接受，按上述既定顺序排列。</p>
+<p><strong>件数</strong></p>
+<ul><li><strong>命中 0 件</strong>时，不显示一览，显示消息。</li><li><strong>超过上限件数</strong>时，不显示一览，显示消息。<strong>上限值依本公司共通规格</strong>（§3.11）。</li></ul>
+<p><strong>分页</strong>：每页件数采用画面选定的值。页的移动依本公司标准规约（§3.11）。</p>
+<p><strong>下载</strong>：<strong>直接采用上一次执行的检索条件</strong>输出 CSV。<br>输出项目与排序<strong>与一览相同</strong>。文件格式・字符编码・文件命名方式<br><strong>依本公司标准规约</strong>（§3.11）。</p>
+<hr>
+<h3>3.6 主数据画面的初始化</h3>
+<p>主数据画面有<strong>3 种模式</strong>。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">模式</th><th style="text-align:left">继承的值</th><th style="text-align:left">初始状态</th></tr></thead><tbody><tr><td style="text-align:left"><strong>新建</strong></td><td style="text-align:left">无</td><td style="text-align:left">全项目为空。紧急配信为关。删除栏为空白</td></tr><tr><td style="text-align:left"><strong>复制</strong></td><td style="text-align:left"><strong>メーカーコード・メーカー日本語名・メーカーカナ名</strong></td><td style="text-align:left">仅继承上述 3 项。<strong>紧急配信为关・删除栏为空白</strong></td></tr><tr><td style="text-align:left"><strong>修正</strong></td><td style="text-align:left">对象行的<strong>全部项目</strong></td><td style="text-align:left">原样显示已登记的值。<strong>メーカーコード不可修改</strong></td></tr></tbody></table>
+<p><strong>复制的处理</strong>：复制<strong>只是新建登记的草稿</strong>。<br><strong>不继承紧急配信与删除的状态</strong>（与新建相同处理）。</p>
+<hr>
+<h3>3.7 登记・更新</h3>
+<p>按下「登録」按钮时的处理，按模式示明。<strong>自上而下依次确认，违反即中断。</strong></p>
+<p><strong>新建・复制</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">顺序</th><th style="text-align:left">确认</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">メーカーコード必填</td><td style="text-align:left">未输入则报错</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">メーカーコード格式</td><td style="text-align:left">非半角英数字 5 位以内则报错</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">紧急配信的必填</td><td style="text-align:left">紧急配信为开时，若日本語名・カナ名未输入则报错（§3.10）</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">名称的格式</td><td style="text-align:left">日本語名・カナ名不满足 §3.9 条件则报错</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">无变更（<strong>仅复制</strong>）</td><td style="text-align:left">全部项目仍为继承值则<strong>不登记</strong>，显示消息并结束</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">登记确认</td><td style="text-align:left">向用户确认。<strong>选 No 则中断</strong></td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><strong>键重复</strong></td><td style="text-align:left">同一メーカーコード已存在则报错。<strong>报错时高亮メーカーコード</strong></td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">登记</td><td style="text-align:left">作为新记录登记</td></tr></tbody></table>
+<p><strong>修正</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">顺序</th><th style="text-align:left">确认</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left">紧急配信的必填</td><td style="text-align:left">紧急配信为开时，若日本語名・カナ名未输入则报错</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">删除选择的必填</td><td style="text-align:left">打开删除后登记时，若日本語名・カナ名未输入则报错</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">名称的格式</td><td style="text-align:left">不满足 §3.9 条件则报错</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left">无变更</td><td style="text-align:left">全部项目均未变更则<strong>不登记</strong>，显示消息并结束</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left">登记确认</td><td style="text-align:left">向用户确认。<strong>选 No 则中断</strong></td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><strong>被参照检查</strong>（<strong>仅在打开删除时</strong>）</td><td style="text-align:left">与 §3.8 相同。被参照则不可删除</td></tr><tr><td style="text-align:left">7</td><td style="text-align:left"><strong>排他</strong></td><td style="text-align:left">其他用户已先行更新时视为错误，<strong>中断处理</strong></td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">更新</td><td style="text-align:left">更新已存在的记录。<strong>打开删除时按逻辑删除</strong>处理</td></tr></tbody></table>
+<p><strong>登记・更新的共通处理</strong></p>
+<ul><li>完成后显示<strong>完成消息</strong>，<strong>关闭主数据画面并重新检索一览</strong>。</li><li><strong>紧急配信为开时</strong>，完成后<strong>启动紧急配信处理</strong>（§3.10）。</li></ul>
+<hr>
+<h3>3.8 删除</h3>
+<p>按下「削除」按钮时的处理。<strong>自上而下依次确认，违反即中断。</strong></p>
+<table class="tbl"><thead><tr><th style="text-align:left">顺序</th><th style="text-align:left">确认</th><th style="text-align:left">内容</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><strong>名称必填</strong></td><td style="text-align:left"><strong>无论紧急配信开或关</strong>，若日本語名・カナ名未输入则报错</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left">名称的格式</td><td style="text-align:left">不满足 §3.9 条件则报错</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left">删除确认</td><td style="text-align:left">向用户确认。<strong>选 No 则中断</strong></td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><strong>被参照检查</strong></td><td style="text-align:left">若被<strong>按采购品目区分的供应商主数据</strong>或<strong>原材料采购单价主数据</strong>参照，则不可删除</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><strong>排他</strong></td><td style="text-align:left">其他用户已先行更新时视为错误，<strong>中断处理</strong></td></tr><tr><td style="text-align:left">6</td><td style="text-align:left">更新</td><td style="text-align:left">按<strong>逻辑删除</strong>处理。<strong>不做物理删除</strong></td></tr><tr><td style="text-align:left">7</td><td style="text-align:left">紧急配信</td><td style="text-align:left">指定了紧急配信时，启动紧急配信处理（§3.10）</td></tr><tr><td style="text-align:left">8</td><td style="text-align:left">完成</td><td style="text-align:left">显示完成消息，关闭主数据画面并重新检索一览</td></tr></tbody></table>
+<p><strong>被参照检查的思路</strong>：厂商是<strong>其他主数据的基础数据</strong>，因此<br><strong>只要被参照就不允许删除</strong>。参照有无由<strong>本公司的共通部品</strong>判定（§3.11）。</p>
+<hr>
+<h3>3.9 输入检查</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">项目</th><th style="text-align:left">必填的条件</th><th style="text-align:left">位数・字符种</th><th style="text-align:left">不可使用的字符</th></tr></thead><tbody><tr><td style="text-align:left">メーカーコード</td><td style="text-align:left"><strong>新建・复制</strong>时必填（修正时不可修改）</td><td style="text-align:left">半角英数字 <strong>5 位以内</strong></td><td style="text-align:left">无（仅约束字符种）</td></tr><tr><td style="text-align:left">メーカー日本語名</td><td style="text-align:left"><strong>指定紧急配信时</strong>、<strong>删除时</strong>、<strong>打开删除后登记时</strong></td><td style="text-align:left"><strong>30Byte 以内</strong>（可用全角）</td><td style="text-align:left">逗号・撇号・双引号・竖线（`</td><td style="text-align:left">`）</td></tr><tr><td style="text-align:left">メーカーカナ名</td><td style="text-align:left">同上</td><td style="text-align:left"><strong>半角片假名 15 位以内</strong></td><td style="text-align:left">撇号・逗号・日元符号・半角空格</td></tr></tbody></table>
+<p><strong>违反时的处理</strong>：<strong>改变该项目的背景色，并将焦点移到该项目</strong>。<br><strong>消息文面依本公司标准规约</strong>（§3.11）。</p>
+<p><strong>检索条件的输入检查</strong>：检索画面的「メーカーコード」「メーカー日本語名」也按相同位数・字符种确认。<br>违反时<strong>不执行检索</strong>，将焦点移到该项目。</p>
+<hr>
+<h3>3.10 紧急配信</h3>
+<ul><li>勾选「緊急配信」后登记或删除时，<strong>启动由本公司共通部品执行的紧急配信处理</strong>。</li></ul>
+<p>本画面<strong>仅调用</strong>该部品，配信机制本身不在本件对象内。</p>
+<ul><li><strong>指定紧急配信时，メーカー日本語名与メーカーカナ名必须有输入</strong>（§3.9）。</li><li>一览中显示<strong>发送状态</strong>（§3.2 #16）。</li></ul>
+<hr>
+<h3>3.11 标准规约・共通部品</h3>
+<p>以下<strong>依本公司的标准</strong>，本需求书不个别规定。</p>
+<ul><li><strong>错误响应・消息・日志的格式</strong>依本公司的<strong>标准规约</strong>。</li></ul>
+<p>「正常／业务错误／系统错误」的区分以及<strong>错误码体系</strong>也依标准规约的方式（§5）。</p>
+<ul><li><strong>共通页眉</strong>、<strong>分页器</strong>、<strong>会话错误画面</strong>、<strong>在线控制错误画面</strong>、</li></ul>
+<p><strong>系统错误画面</strong>是本公司的<strong>共通部品</strong>。本件<strong>调用它们</strong>，<br><strong>不在本件中新建</strong>。</p>
+<ul><li><strong>代码值的名称</strong>（发送状态・删除区分等）从本公司的<strong>代码值主数据</strong>取得。</li></ul>
+<p>本画面<strong>仅取得并显示</strong>。</p>
+<ul><li><strong>登记状态（仕掛／确定）的判定基准</strong>依<strong>本公司的共通规格</strong>。</li></ul>
+<p>本画面<strong>仅使用其判定结果</strong>。</p>
+<ul><li><strong>审计项目</strong>（登记人・登记时间・更新人・更新时间・修订号等）的赋予</li></ul>
+<p>依<strong>本公司的共通规格</strong>。本画面不个别决定这些值。</p>
+<ul><li><strong>被参照检查</strong>由本公司的<strong>共通部品</strong>判定。</li><li><strong>每页件数的候选</strong>、<strong>检索的上限件数</strong>依本公司的<strong>共通规格</strong>。</li><li><strong>非功能</strong>（支持浏览器・画面分辨率・并发用户数・性能）<strong>依本公司的标准</strong>。</li><li><strong>会话的有效期限・超时时的处理</strong>依<strong>本公司的共通规格</strong>。</li></ul>
+<p>本画面<strong>不新生成会话</strong>。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>4. 接口（API）</h2>
+<p><strong>6 个端点</strong>。<strong>全部为 POST</strong>。路径为 <code>/R60Maker/&lt;name&gt;</code>。<br>请求为 <code>{"params": {...}}</code> 的形式，响应的项目名为<strong>驼峰式</strong>。</p>
+<h3>4.1 一览</h3>
+<table class="tbl"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">端点</th><th style="text-align:left">对应事件</th><th style="text-align:left">职责</th></tr></thead><tbody><tr><td style="text-align:left">1</td><td style="text-align:left"><code>POST /R60Maker/init</code></td><td style="text-align:left">事件 1</td><td style="text-align:left">返回初始显示所需信息（每页件数候选・消息）</td></tr><tr><td style="text-align:left">2</td><td style="text-align:left"><code>POST /R60Maker/search</code></td><td style="text-align:left">事件 2・3</td><td style="text-align:left">返回符合条件的明细与总件数</td></tr><tr><td style="text-align:left">3</td><td style="text-align:left"><code>POST /R60Maker/download</code></td><td style="text-align:left">事件 8</td><td style="text-align:left">按上一次执行的条件返回 CSV</td></tr><tr><td style="text-align:left">4</td><td style="text-align:left"><code>POST /R60Maker/initEdit</code></td><td style="text-align:left">事件 5・6・7</td><td style="text-align:left">按模式返回主数据画面的初始值</td></tr><tr><td style="text-align:left">5</td><td style="text-align:left"><code>POST /R60Maker/delete</code></td><td style="text-align:left">事件 11</td><td style="text-align:left">执行逻辑删除</td></tr><tr><td style="text-align:left">6</td><td style="text-align:left"><code>POST /R60Maker/edit</code></td><td style="text-align:left">事件 12</td><td style="text-align:left">执行新建・复制・更新</td></tr></tbody></table>
+<blockquote class="quote"><strong>事件 4・9・10・13 没有端点。</strong> 属于画面内处理，或依本公司标准规约的跳转。</blockquote>
+<h3>4.2 <code>POST /R60Maker/init</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left"></th></tr></thead><tbody><tr><td style="text-align:left">请求</td><td style="text-align:left"><code>{}</code> — <strong>无输入</strong></td></tr><tr><td style="text-align:left">响应</td><td style="text-align:left">每页件数的候选（值・显示名）、消息信息、错误区分</td></tr></tbody></table>
+<h3>4.3 <code>POST /R60Maker/search</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left"></th></tr></thead><tbody><tr><td style="text-align:left">请求</td><td style="text-align:left"><code>メーカーコード</code>、<code>メーカー日本語名</code>、<code>削除含む</code>、<code>检索区分</code>、<code>1頁件数</code>、<code>页号</code>、<code>排序项目</code>、<code>升降序</code></td></tr><tr><td style="text-align:left"><code>检索区分</code></td><td style="text-align:left"><strong><code>1</code>＝表示 ／ <code>0</code>＝仕掛表示</strong></td></tr><tr><td style="text-align:left">响应</td><td style="text-align:left">总件数、明细数组、错误区分</td></tr></tbody></table>
+<h3>4.4 <code>POST /R60Maker/download</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left"></th></tr></thead><tbody><tr><td style="text-align:left">请求</td><td style="text-align:left">与 §4.3 相同的检索条件</td></tr><tr><td style="text-align:left">响应</td><td style="text-align:left"><strong>CSV 文件</strong>（附件）</td></tr></tbody></table>
+<h3>4.5 <code>POST /R60Maker/initEdit</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left"></th></tr></thead><tbody><tr><td style="text-align:left">请求</td><td style="text-align:left"><code>模式</code>、<code>メーカーコード</code>（复制・修正时）</td></tr><tr><td style="text-align:left"><code>模式</code></td><td style="text-align:left"><strong><code>1</code>＝新建 ／ <code>2</code>＝复制 ／ <code>3</code>＝修正</strong></td></tr><tr><td style="text-align:left">响应</td><td style="text-align:left">按模式的初始值（如 §3.6 的表）</td></tr></tbody></table>
+<h3>4.6 <code>POST /R60Maker/delete</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left"></th></tr></thead><tbody><tr><td style="text-align:left">请求</td><td style="text-align:left"><code>メーカーコード</code>、<code>メーカー日本語名</code>、<code>メーカーカナ名</code>、<code>緊急配信</code>、<strong>排他信息</strong>（最终更新时间・修订号）</td></tr><tr><td style="text-align:left">响应</td><td style="text-align:left">错误区分</td></tr></tbody></table>
+<h3>4.7 <code>POST /R60Maker/edit</code></h3>
+<table class="tbl"><thead><tr><th style="text-align:left"></th><th style="text-align:left"></th></tr></thead><tbody><tr><td style="text-align:left">请求</td><td style="text-align:left"><code>模式</code>、<code>メーカーコード</code>、<code>メーカー日本語名</code>、<code>メーカーカナ名</code>、<code>緊急配信</code>、<code>削除</code>、<strong>排他信息</strong>（最终更新时间・修订号）</td></tr><tr><td style="text-align:left">响应</td><td style="text-align:left">错误区分</td></tr></tbody></table>
+<blockquote class="quote"><strong>排他信息发送的是画面保持的值（显示时点的值）。</strong><br>服务器与当前值比对，<strong>不一致则不更新</strong>（§3.7 顺序 7・§3.8 顺序 5）。</blockquote>
+<hr>
+</section>
+<section class="sec sec-err" id="sec-5">
+<h2>5. 错误处理 <span class="chip chip-err">异常</span></h2>
+<p>「正常／业务错误／系统错误」<strong>必须可区分</strong>（依 §3.11 的标准规约）。</p>
+<table class="tbl"><thead><tr><th style="text-align:left">事象</th><th style="text-align:left">处理</th></tr></thead><tbody><tr><td style="text-align:left">检索结果为 0 件</td><td style="text-align:left"><strong>业务错误</strong>。显示消息，不显示明细</td></tr><tr><td style="text-align:left">检索结果超过上限件数</td><td style="text-align:left"><strong>业务错误</strong>。显示消息，不显示明细</td></tr><tr><td style="text-align:left">メーカーコード 已存在（新建・复制）</td><td style="text-align:left"><strong>业务错误</strong>。高亮 メーカーコード</td></tr><tr><td style="text-align:left">被其他主数据参照（删除）</td><td style="text-align:left"><strong>业务错误</strong>。不删除</td></tr><tr><td style="text-align:left">其他用户已先行更新（排他）</td><td style="text-align:left"><strong>业务错误</strong>。中断处理</td></tr><tr><td style="text-align:left">被参照检查的共通部品返回预期外结果</td><td style="text-align:left"><strong>系统错误</strong>。中断处理</td></tr><tr><td style="text-align:left">输入检查违反（画面侧）</td><td style="text-align:left">高亮该项目并将焦点移入。<strong>不发送到服务器</strong></td></tr><tr><td style="text-align:left">会话信息不存在</td><td style="text-align:left"><strong>转向会话错误画面</strong></td></tr><tr><td style="text-align:left">不允许在线使用</td><td style="text-align:left"><strong>转向在线控制错误画面</strong></td></tr><tr><td style="text-align:left"><strong>API 的权限验证中权限不足</strong></td><td style="text-align:left"><strong>业务错误</strong>。中断处理。<strong>画面的按钮活性控制只是辅助，与此独立判定</strong>（§3.1）</td></tr><tr><td style="text-align:left">DB 错误・预期外的异常</td><td style="text-align:left"><strong>回滚</strong>，并<strong>转向系统错误画面</strong></td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>6. 恳请贵方完成的工作</h2>
+<ol><li>依据本需求书，完成<strong>基本设计・详细设计・制造・测试</strong>。</li><li>本需求书<strong>未记载的事项</strong>，若业务上或设计上需要决定，</li></ol>
+<p><strong>请勿自行决定，向本公司确认</strong>。</p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-7">
+<h2>7. 用语</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">用语</th><th style="text-align:left">含义</th></tr></thead><tbody><tr><td style="text-align:left">メーカー</td><td style="text-align:left">提供资材・原材料的厂商</td></tr><tr><td style="text-align:left">マスタ</td><td style="text-align:left">主数据（master data）。业务基础所需的清单数据</td></tr><tr><td style="text-align:left">仕掛</td><td style="text-align:left">登记<strong>未确定</strong>的状态。指确定前的数据</td></tr><tr><td style="text-align:left">确定</td><td style="text-align:left">登记内容已确定、可被其他主数据参照的状态</td></tr><tr><td style="text-align:left">緊急配信</td><td style="text-align:left">将登记・删除的内容<strong>即时通知</strong>到相关机制的処理</td></tr><tr><td style="text-align:left">送信状态</td><td style="text-align:left">紧急配信的发送情况（未发送／已发送等）</td></tr><tr><td style="text-align:left">删除（逻辑删除）</td><td style="text-align:left">不删除记录，只加"已删除"标记</td></tr><tr><td style="text-align:left">排他</td><td style="text-align:left">多名用户同时更新时，防止后到的更新覆盖</td></tr><tr><td style="text-align:left">被参照</td><td style="text-align:left">被其他主数据参照</td></tr><tr><td style="text-align:left">削除含む</td><td style="text-align:left">是否把已删除的数据也纳入检索对象的指定</td></tr></tbody></table>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>8. 不明之处</h2>
+<p>关于本需求书的记载如有不明之处，请联系本公司信息系统部。<br>但是，<strong>§3.11 中记载"依本公司标准"的事项，请参照标准规约</strong>。</p>
+<hr>
+<p>以上，敬请研讨。</p>
+<p><strong>朝日啤酒株式会社　信息系统部（模拟）</strong></p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>00_输入_客户需求书.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

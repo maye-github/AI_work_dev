@@ -26,9 +26,9 @@
 9. **`tools/trace_check/` 6 重門番** — 负责人位：AI推進 / 预计完成日：2026-10-31 / 验收公式：`py -3 -m tools.trace_check --strict --gate 6` → Exit 0（`pass=6/fail=0`）
 10. **`tools/gen_formal/` 二重化 dry-run** — 负责人位：PG / 预计完成日：2026-10-31 / 验收公式：`field_count == 56 && output_columns == I-ID 数`
 11. **`tools/masking/` 双方向脱敏** — 负责人位：AI推進 / 预计完成日：2026-10-31 / 验收公式：`py -3 -m tools.masking.mask_demo --self-test` → Exit 0 かつ `unmask_ok=true`
-12. **`docs/90_knowledge/platform-map.md` 7 層マップ** — 负责人位：AI推進 / 预计完成日：2026-10-31 / 验收公式：`7 層の今回新建が各 >= 2、合計 >= 14`
+12. **`tools/kb-platform/repo/company/standards/platform-map.md` 7 層マップ** — 负责人位：AI推進 / 预计完成日：2026-10-31 / 验收公式：`7 層の今回新建が各 >= 2、合計 >= 14`
 13. **`ROADMAP_3PHASE.md` 3 段階計画** — 负责人位：AI推進 / 预计完成日：2026-10-31 / 验收公式：`Phase1 == 16 && Phase2 == 12 && Phase3 == 8`
-14. **`docs/90_knowledge/onboarding-checklist.md` 新人 Walkthrough 10 条** — 负责人位：AI推進 / 预计完成日：2026-10-31 / 验收公式：`步骤数 == 10 && 合計 <= 90 分（rubric >= 4）`
+14. **`tools/kb-platform/repo/company/patterns/howto/onboarding.md` 新人 Walkthrough 10 条** — 负责人位：AI推進 / 预计完成日：2026-10-31 / 验收公式：`步骤数 == 10 && 合計 <= 90 分（rubric >= 4）`
 15. **全 AC 自動検証＆レポート生成（`reports/`）** — 负责人位：全員+AI / 预计完成日：2026-10-31 / 验收公式：`reports/AC-selfcheck.md` の AC-1〜AC-8 すべて Result == PASS
 16. **独立検査 `review.md`＋引渡しメモ** — 负责人位：全員+AI / 预计完成日：2026-10-31 / 验收公式：`review.md` の CP 数 == 8（6 rule + 2 rubric）
 
@@ -36,7 +36,7 @@
 
 ## Phase 2（3〜6 ヶ月）全工程への展開 — 全 12 条
 
-各条目は対応する PPT ページを明示する。**PPT に対応頁が無い条目は「本骨架の追加要素」と明記する**（登録は `docs/90_knowledge/ppt-deviation-register.md` §2）。
+各条目は対応する PPT ページを明示する。**PPT に対応頁が無い条目は「本骨架の追加要素」と明記する**（登録は `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2）。
 
 1. **`gen_formal` を実 Excel 生成へ：顧客テンプレートへ接続**（openpyxl 導入、手改め禁止の単一ソース原則を維持。あわせて**受控回流**を実装：生成 Excel の正文は読み取り専用とし、「指摘シート／レビュー欄」（行番号・R-ID 付き）を別シートとして添付、顧客はそこにのみ記入 → AI はその欄だけを読んで機読源を修正）— 参照：PPT 第 S24 页・PPT 第 S20 页
 2. **内網 GitLab runner を `ai-gate.yml` へ接続**（ローカル門番から CI 常設ゲートへ移行）— 参照：PPT 第 S28 页
@@ -53,13 +53,13 @@
 
 > **本条目は既知の未実装範囲を明示するものである。** 落地篇 PPT 第 S6 页の角色「統制・セキュリティ」は
 > **監査・権限設計まで含む**が、本骨架（Phase 1）が実装したのは **マスキングと機密走査まで**である。
-> この差は `docs/00_plan/roles.md` §0 の注記と `docs/90_knowledge/ppt-deviation-register.md` §3 にも記録している。
+> この差は `docs/00_plan/roles.md` §0 の注記と `tools/kb-platform/repo/company/standards/ppt-deviation.md` §3 にも記録している。
 
 ---
 
 ## Phase 3（6〜12 ヶ月）平台化と全社展開 — 全 8 条
 
-各条目は対応する PPT ページを明示する。**PPT に対応頁が無い条目は「本骨架の追加要素」と明記する**（登録は `docs/90_knowledge/ppt-deviation-register.md` §2）。
+各条目は対応する PPT ページを明示する。**PPT に対応頁が無い条目は「本骨架の追加要素」と明記する**（登録は `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2）。
 
 1. **骨架を同構プロジェクト（Harmony／酒税／SDS）へ複製展開** — 参照：PPT 第 S30 页
 2. **CI/CD の本格稼働**（生成コード自動テスト・未通過はマージ不可の品質ゲート常設）— 参照：PPT 第 S28 页
@@ -88,8 +88,8 @@
 ---
 
 ## 関連ドキュメント
-- `docs/90_knowledge/ppt-deviation-register.md`（**PPT に対する追加要素・差異の唯一の登録簿**。Phase 2/3 の判断材料）
-- `docs/90_knowledge/v1-platform-4layer.md`（v1 認知層 ↔ 落地篇 7 層の対応、実装状況 §4・粒度差 §5）
-- `docs/90_knowledge/platform-map.md`（PPT 第 S26-S27 页 7 層マップ、Phase 2+ 予定列の詳細）
-- `docs/90_knowledge/onboarding-checklist.md`（NFR-4 新人 2 時間 Walkthrough、Phase 1 条 14 の実体）
+- `tools/kb-platform/repo/company/standards/ppt-deviation.md`（**PPT に対する追加要素・差異の唯一の登録簿**。Phase 2/3 の判断材料）
+- `tools/kb-platform/repo/company/standards/v1-platform-4layer.md`（v1 認知層 ↔ 落地篇 7 層の対応、実装状況 §4・粒度差 §5）
+- `tools/kb-platform/repo/company/standards/platform-map.md`（PPT 第 S26-S27 页 7 層マップ、Phase 2+ 予定列の詳細）
+- `tools/kb-platform/repo/company/patterns/howto/onboarding.md`（NFR-4 新人 2 時間 Walkthrough、Phase 1 条 14 の実体）
 - `docs/00_plan/spec.md`（AC-7 / FR-8）・`docs/00_plan/tasks.md`（Task 12〜14）

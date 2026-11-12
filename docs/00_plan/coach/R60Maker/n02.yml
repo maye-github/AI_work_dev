@@ -1,0 +1,110 @@
+# n02.yml — ノード2 進捗（機制生成物・手で編集しない）
+# 仕様の唯一真源: .claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md §4
+
+node: 2
+name: "基本設計"
+state: approved
+owner: "Li"
+steps_total: 5
+steps_done: 5
+artifacts:
+  - "tutorial/R60Maker/节点2_基本设计/00_输入模板.yaml"
+  - "tutorial/R60Maker/节点2_基本设计/01_输入_已填写.yaml"
+  - "tutorial/R60Maker/节点2_基本设计/01_AI产出_基本设计书.md"
+  - "tutorial/R60Maker/节点2_基本设计/01_AI产出_基本设计书.zh.html"
+  - "tutorial/R60Maker/节点2_基本设计/02_你在这里审查.md"
+  - "tutorial/R60Maker/节点2_基本设计/02_你在这里审查.zh.md"
+  - "tutorial/R60Maker/节点2_基本设计/02_你在这里审查.zh.html"
+  - "tutorial/R60Maker/节点2_基本设计/02_审查结果.md"
+  - "tutorial/R60Maker/节点2_基本设计/03_组内审查意见.md"
+  - "tutorial/R60Maker/节点2_基本设计/03_组内审查意见.zh.md"
+  - "tutorial/R60Maker/节点2_基本设计/03_组内审查意见.zh.html"
+  - "tutorial/R60Maker/节点2_基本设计/01_AI产出_基本设计书.zh.md"
+  - "tutorial/R60Maker/节点2_基本设计/04_AI产出_基本设计书_改修版.md"
+  - "tutorial/R60Maker/节点2_基本设计/04_AI产出_基本设计书_改修版.zh.md"
+  - "tutorial/R60Maker/节点2_基本设计/04_AI产出_基本设计书_改修版.zh.html"
+  - "tutorial/R60Maker/节点2_基本设计/05_承認版_基本设计书.md"
+  - "tutorial/R60Maker/节点2_基本设计/05_承認版_基本设计书.zh.md"
+  - "tutorial/R60Maker/节点2_基本设计/05_承認版_基本设计书.zh.html"
+  - "reports/drill/R60Maker/upstream-transfer-map.md"
+open_questions:
+  - q_ref: "Q-306"
+    text: "マスタ画面の9項目（操作モード・メーカーコード・日本語名・カナ名・緊急配信・削除・戻る・削除ボタン・登録ボタン）に I-ID を付与するか。承認版 §5.2 は9項目を列挙するが、R60共通画面項目定義 v2.0 は検索画面のみ対象でマスタ画面は対象外。I-ID 体系は I-322〜I-354 で当該番号が無い。"
+    kind: "question"
+    category: "C"
+    block: false
+    answer: "本節点はマスタ画面の 9 項目を名称で扱い、I-ID は発番しない。必要になった時点で工程03（詳細設計）で D/L と同時に発号する。"
+    answered_by: "Li"
+    answered_at: "2026-11-05"
+  - q_ref: "Q-307"
+    text: "承認版 §8 #2 は共通部品を「本件では新規作成しない」とし受領資料が I/F を定めるが、build_mode は greenfield で当方の既存資産が無い。共通部品の実体は顧客基盤が提供するのか、本案件で新規定義するのか。"
+    kind: "question"
+    category: "B"
+    block: false
+    answer: null
+    answered_by: null
+    answered_at: null
+  - q_ref: "Q-308"
+    text: "【分割後】技術スタックと画面実装ファイルのパスは greenfield のため本節点で確定できない（本節点では null）。工程04 で当方が提案し人が承認する（紅線④）。"
+    kind: "question"
+    category: "B"
+    block: false
+    answer: null
+    answered_by: null
+    answered_at: null
+  - q_ref: "Q-308b"
+    text: "【Q-308 から分割】物理テーブル名の命名規約に顧客の統制（DB 命名標準）があるか。あるならそれに従い、無いなら当方が工程03 で論理名から起こす。"
+    kind: "question"
+    category: "A"
+    block: false
+    answer: "【演習・Li が顧客役】顧客からの命名規約提示なし。当方の KB 規約（STD-CODING-001 §2：R60 系は *_TBL）に従い、物理表名を *_TBL とする。顧客規約が後に提示されたらそれを優先する。"
+    answered_by: "Li"
+    answered_at: "2026-11-09"
+  - q_ref: "Q-309"
+    text: "受領資料 §4.2 の権限マトリクス（download・delete は MKR03 のみ、edit は MKR02 以上）を、当方の提案として顧客の正式承認に供する。承認版 §3 は端点ごとに権限を定めるとするが、可否表そのものは受領資料の判断である。"
+    kind: "question"
+    category: "B"
+    block: false
+    answer: null
+    answered_by: null
+    answered_at: null
+approved_by:
+  - "Li"
+approved_at: "2026-11-10"
+updated_at: "2026-11-06"
+note: |
+  節点1 の承認（2026-11-05）を受けて開始。
+  成果物ディレクトリが無かったため作成し、`00_輸入模板.yaml` を R60Login から複製した
+  （Q 番号の起点を Q-258 → **Q-306** に修正。節点1 が Q-239〜Q-305 を使い切っているため）。
+  ★ユーザー指示によりセッション跨ぎ（SKILL.md §10.5 の例外条項）。
+  2026-11-05: ステップ1 の入力は **A（AI 代填）** を Li が選択（作業票 §3 の三択）。
+  2026-11-05: `01_输入_已填写.yaml` 産出（50,370 bytes / 496 行 / status=filled / v0.1.1）。
+  自己検証の生値: 残余尖括号 0 件／`I-2[0-9][0-9]` 0 件／gate1..gate6 PASS。
+  open_questions は Q-306〜Q-309 を転記。**区分は AI 素案（C/B）であり、`category` は null のまま**
+  ——A/B/C の確定は人の裁定（紅線③）。**Q-306 のみ block: true**（I-ID の有無が設計書の中身を変えるため、
+  節点2 承認前に裁定が要る）。残り 3 件は工程03/04 または実案件で解く。
+  2026-11-05: ステップ2 で `01_AI产出_基本设计书.md`（54,473 B / 506 行 / 14 節）と `.zh.html` を産出。
+  コーチの独立実測: I-ID 33 件（I-322〜I-354 と一致・I-34 以降 0 件）／E-ID 12 件／イベント 12／
+  「未確定|確認待ち」0 行／gate1..gate6 PASS。ステップ3 の審査票 `02_你在这里审查.md`（6 節）を新設し、
+  `.zh.md` → `.zh.html`（gen_view EXIT 0・sections=6）も生成。
+  2026-11-05: ステップ3（人の逐項審査・方式 A）完了。判定 20 項のうち **一致 17・不一致 1（第4項 B-05）・存疑 1（第5項 0件）**、
+  第21〜23項は第4/5歩で判定。結果は `02_审查结果.md`。改修意見は `03_组内审查意见.md` の **意见-01 のみ**
+  （I-331 に「クリア押下では自動再検索しない」を追記）。独立読者の移送マップは
+  `reports/drill/R60Maker/upstream-transfer-map.md`（表A 149・表B 8・表C 32）。
+  **Q-306=C（名称扱い）／Q-307=B／Q-308=B＋Q-308b=A（分割）／Q-309=B** に裁定。
+  2026-11-06: ステップ4 完了（`04_AI产出_基本设计书_改修版.md`・意见-01 反映・diff は I-331 の 1 行と版数/日付/対照表のみ）。
+  中文ビューの言語誤り（.zh.html が日本語だった）を是正し、01/04/05 の `.zh.md` → `.zh.html` を再生成。
+  2026-11-06: ステップ5 完了・**Li が設計評審を承認**（鉄則13 の三関＝blockers 空／trace_check EXIT 0／kb_refs OK を実測）。
+  `05_承認版_基本设计书.md` を `status: baselined` / `version: 1.0.0` とし、承認記録 4 行に Li・2026-11-06 を記入。
+  審査 23 項は全て判定済（第5項は承認前に「存疑」→「一致」へ再判定し、経緯を `02_审查结果.md` に残置）。
+  **次ノード（n03 詳細設計）の前提が満たされた。**
+  2026-11-10: **番号の振り直しにより成果物が変更された（内容は同一・ID 表記のみ）。**
+  R60Maker の R/F/D/L/E/I/Q を全局序列の続きへ移した（R-202／F-202／D-207〜212／L-212〜222／
+  E-213〜224／I-322〜354／Q-239〜335）。理由は `tutorial/R60Maker/节点6_单元测试/02_审查结果.md` 付記 2。
+  **承認版の中身は変わっていないが、承認の対象だったファイルは変わった。再承認が必要**（紅线③）。
+  `approved_by` は当時の承認者を残す（履歴）。再承認したら `state` を `approved` に戻す。
+  2026-11-10: **再承認（Li）。** 前回承認（2026-11-05/06）の後に次の 2 点が変わったため。
+  　① 番号の振り直し（R-202／F-202／D-207〜212／L-212〜222／E-213〜224／I-322〜354／Q-239〜335）。
+  　② 承認版へ「知識ベースの使用記録」節を追加し、kb_refs を node-map と一致させた。
+  承認前の 4 条件を実測: blockers 空／`trace_check --strict` 全 PASS（orphans=0）／
+  `kb_refs --require-node --require-usage` OK／`check-constraints` OK（定義のある節点のみ）。

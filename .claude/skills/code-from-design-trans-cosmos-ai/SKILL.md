@@ -63,8 +63,9 @@ version: 0.2.0
 # 1. 何が入っているかを見る
 py -3 -m tools.kb_local stats
 
-# 2. 案件知識を引く（project を必ず指定する）
-py -3 -m tools.kb_local search "共通部品 呼び出し順" --project P-XXXXXX-001 --top-k 5
+# 2. 案件知識を引く（--as と project を必ず指定する）
+#    ★ 読権限の既定は「会社級のみ」。--as を付けないと案件級は 1 件も返らない。
+py -3 -m tools.kb_local search "共通部品 呼び出し順" --as <人> --project P-XXXXXX-001 --top-k 5
 
 # 3. 引いた文書を読む（落点は doc_id で示される）
 ```

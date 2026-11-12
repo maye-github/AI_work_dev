@@ -31,7 +31,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 在 `D:\AI_work_dev` 项目根创建本次骨架所需的全部空目录：`.claude/rules/`、`.claude/skills/code-from-design-trans-cosmos-ai/`、`docs/00_registry/`、`docs/01_context/`、`docs/10_requirements/`、`docs/20_basic_design/`、`docs/30_detail_design/`、`docs/40_framework/`、`docs/50_unit_test/`、`docs/60_integration_test/`、`docs/70_release/`、`docs/80_operation/`、`docs/90_knowledge/review_diff_assets/R60Area/`、`docs/90_knowledge/review_diff_assets/R60Code/`、`docs/90_knowledge/review_diff_assets/R60Item/`、`tools/trace_check/`、`tools/gen_formal/`、`tools/masking/`、`.github/workflows/`、`reports/`
+  - 在 `D:\AI_work_dev` 项目根创建本次骨架所需的全部空目录：`.claude/rules/`、`.claude/skills/code-from-design-trans-cosmos-ai/`、`docs/00_registry/`、`docs/01_context/`、`docs/10_requirements/`、`docs/20_basic_design/`、`docs/30_detail_design/`、`docs/40_framework/`、`docs/50_unit_test/`、`docs/60_integration_test/`、`docs/70_release/`、`docs/80_operation/`、`tools/kb-platform/repo/projects/P-R60-001/review/R60Area/`、`tools/kb-platform/repo/projects/P-R60-001/review/R60Code/`、`tools/kb-platform/repo/projects/P-R60-001/review/R60Item/`、`tools/trace_check/`、`tools/gen_formal/`、`tools/masking/`、`.github/workflows/`、`reports/`
   - 在项目根 `.gitignore` 追加「AI骨架可选忽略块」，使所有新文件默认不入库，设置环境变量 `AI_FULL_LIFECYCLE=1` 时才纳入；确认 `tools/masking/masking_dict.json` 被忽略
   - 在 `.gitignore` 追加 `reports/` 与 `docs/00_plan/*.bak` 忽略规则
 - **Acceptance Criteria Addressed**: AC-1, NFR-5
@@ -81,7 +81,7 @@
   - `docs/00_registry/ids.yml`：R60Area/R60Code/R60Item 三模块 开球周 ID 发号本，前缀 10 类（R/Q/F/I/D/L/E/TC/CR/BUG）三位起步不复用；至少登记：R-101 R60Areaマスタ検索登録修正削除 / F-042 R60Area全画面機能 / I-201~256（56件、名称与 DB 列 56 字段对应，名称列表从实际 R60_AREA_M_TBL 抽出）/ D-043 R60Area詳細設計 / L-014（search 业务）/ L-015（initEdit/edit/delete 排他+参照+重複）/ E-001~E-005（R60W0010/R60W0006/R60W0014/R60W0024/R60E0025）/ TC-001~TC-008 / CR-001（初期 Phase1 申请）/ BUG-001 void（示例作废标记）；每条 id 含 status 和 used_by 字段
   - `docs/00_registry/glossary.yml`：中日英三语用語集，至少收录 30 核心术语（エリアマスタ/Area Master/区域主数据；排他制御/Optimistic Lock/乐观锁；被参照チェック/Referential Check/引用检查；ROWID 分页/ROWID Paging/ROWID 分页；当日鍵（yyyymmdd）/...）
   - `docs/00_registry/traceability.yml`：R-101 → F-042 → I-201..256 → D-043 → L-014/L-015 → E-001..005 → TC-001..008 双向链 map（forward_links + back_links 双字段）
-  - `CODEOWNERS`：分 11 块（当初計画は 7 块。実物は `.claude/agents/`・`.claude/settings.json`・`docs/00_plan/` を追加して 11 块になった。`.claude/rules/` = AI推進担当 / `.claude/skills/`・`.claude/agents/` = SE+PG / `.claude/settings.json` = AI推進担当 / `docs/10_requirements/` = 上流 SE / `docs/20_basic_design/`・`docs/30_detail_design/` = 設計 PG / `docs/00_plan/` = 上流 SE / `tools/` = AI 推進 + PG / `docs/90_knowledge/` = 全員 / `.github/workflows/` = Git管理者）
+  - `CODEOWNERS`：分 11 块（当初計画は 7 块。実物は `.claude/agents/`・`.claude/settings.json`・`docs/00_plan/` を追加して 11 块になった。`.claude/rules/` = AI推進担当 / `.claude/skills/`・`.claude/agents/` = SE+PG / `.claude/settings.json` = AI推進担当 / `docs/10_requirements/` = 上流 SE / `docs/20_basic_design/`・`docs/30_detail_design/` = 設計 PG / `docs/00_plan/` = 上流 SE / `tools/` = AI 推進 + PG / `tools/kb-platform/repo/` = 全員 / `.github/workflows/` = Git管理者）
   - `CONTRIBUTING.md`：分支模型（req/R-xxx 集成分支 + R-xxx/01-req 到 07-release 七层子分支）·工作流 8 工程 S9-S17 日数概算·7 种 commit 完整样例 3 条·Tag 命名 baseline/R-xxx/basic-v1.0 + 对应验收·baseline 後变更走 CR-xxx 流程
   - `.github/workflows/ai-gate.yml`：占位空 workflow（on: pull_request → runs-on: ubuntu-latest → 3 steps：checkout / setup-python / run: python -m tools.trace_check --strict --gate 6 2>&1 || echo "Phase1 local run only" ）；不配置实际 runner，注释写「用户可按需复制到内网 GitLab/Jenkinsfile」
   - `docs/_samples/01_context/R-101-R60Area.md`：R-101 需求背景 5 条（朝日ビール調達生産/エリアマスタ 56 項目/ cmpCd+jigCd+araCd 三键/排他 ksn_dat+rev_no/検索 OFFSET-FETCH ROWID ページング）
@@ -149,7 +149,7 @@
   - 为 R60Area / R60Code / R60Item 三模块各建标准三目录：`{module}/review_before/`（评审前设计或代码骨架占位）、`{module}/review_after/`（评审后修正版占位）、`{module}/review_comments.md`（5 模板分类的评论）
   - R60Area/review_comments.md 充实 10 条评论（从 doc/00_管理/【QA票】共通マスタ.xlsx 的公开字段抽 10 个典型指摘），每条包含 5 模板：問題点 / 根本原因 / 修正方針 / 予防策（防止再発规则化）/ 关联 R-ID（固定 R-101）；模拟新人猜中率实验表（review_before vs review_after 对照，列出 10 条中 ≥7 条「新人盲 review 可还原指摘」还原率 >= 70% 记录段落）
   - R60Code/review_comments.md 和 R60Item/review_comments.md 仅填 3 条示例 + SOP 指示段落（如何补全、新人猜中率验收步骤），不强行造 10 条（符合 Open Questions #1 默认口径）
-  - `docs/90_knowledge/review_diff_assets/SOP-review-diff.md`：开球周资产盘点操作手順 10 步（Git clone→识别简/中/难三模块→准备 review_before 历史评审版本→准备 review_after 最终版→人工填 review_comments 5 模板→新人盲猜验证→猜中率 ≥70% 合格→失败重投→归档到 ids.yml→升阶 4 级规则化）
+  - `tools/kb-platform/repo/company/patterns/review/sop-review-diff.md`：开球周资产盘点操作手順 10 步（Git clone→识别简/中/难三模块→准备 review_before 历史评审版本→准备 review_after 最终版→人工填 review_comments 5 模板→新人盲猜验证→猜中率 ≥70% 合格→失败重投→归档到 ids.yml→升阶 4 级规则化）
 - **Acceptance Criteria Addressed**: AC-5, FR-5
 - **Test Requirements**:
   - `rubric` TR-8.1: R60Area review_comments.md 结构完整度；scale 1-5；anchors 1=无分类 2=只有问题/原因 2 项 3=5 模板齐全但无举例 4=5 模板 + 10 条完整且每条有关联 R-ID 5=5 模板+10 条+新人猜中率模拟段落给出统计；threshold >= 4
@@ -208,7 +208,7 @@
 - **Priority**: medium
 - **Depends On**: Task 3 (CLAUDE.md), Task 4, Task 5, Task 8, Task 9
 - **Description**:
-  - `docs/90_knowledge/platform-map.md`：7 層毎に 3 列（已有/本次新建/Phase 2+ 予定）表格；七層：①利用層（Claude Code IDE 統合＋CLI）②編成層（req/R-xxx 分支 + 8 工程 pipeline + trace_check 門番）③能力層（4 件套 Skill code-from-design-trans-cosmos-ai / trace_check.py / gen_formal / mask_demo）④知識層（`D:\TraeWork_memory\` の 4 文書 / doc/02_INPUT 規約 / doc/03_AI AB_Reports / review_diff_assets 开球周 / glossary.yml 30 用語）⑤データ層（Git 仓库 + ids.yml 发号 + traceability.yml 链 + .claude/rules 7 份）⑥統制層（01-security-redlines 3 级清单 / gitleaks 等价 gate6 / CODEOWNERS 11 块 / CONTRIBUTING 基线 Tag）⑦基盤層（Oracle RDS / Auth0 RS256 / AWS S3 SQS / 内网 IP 段 IP_1）
+  - `tools/kb-platform/repo/company/standards/platform-map.md`：7 層毎に 3 列（已有/本次新建/Phase 2+ 予定）表格；七層：①利用層（Claude Code IDE 統合＋CLI）②編成層（req/R-xxx 分支 + 8 工程 pipeline + trace_check 門番）③能力層（4 件套 Skill code-from-design-trans-cosmos-ai / trace_check.py / gen_formal / mask_demo）④知識層（`D:\TraeWork_memory\` の 4 文書 / doc/02_INPUT 規約 / doc/03_AI AB_Reports / review_diff_assets 开球周 / glossary.yml 30 用語）⑤データ層（Git 仓库 + ids.yml 发号 + traceability.yml 链 + .claude/rules 7 份）⑥統制層（01-security-redlines 3 级清单 / gitleaks 等价 gate6 / CODEOWNERS 11 块 / CONTRIBUTING 基线 Tag）⑦基盤層（Oracle RDS / Auth0 RS256 / AWS S3 SQS / 内网 IP 段 IP_1）
   - 每层「本次新建」条目不得少于 2 条（对应 AC-7 第①子条件）；每条 3 列标注「来源 PPT 第 x 页」（S25-27 平台篇）
 - **Acceptance Criteria Addressed**: AC-7, FR-7
 - **Test Requirements**:
@@ -237,7 +237,7 @@
 - **Priority**: medium
 - **Depends On**: Task 3, Task 4, Task 5, Task 9, Task 13
 - **Description**:
-  - `docs/90_knowledge/onboarding-checklist.md`：10 条 walkthrough 步骤，每条含「作業内容」「実行コマンド」「予定時間（分）」「合格サイン Exit or stdout」
+  - `tools/kb-platform/repo/company/patterns/howto/onboarding.md`：10 条 walkthrough 步骤，每条含「作業内容」「実行コマンド」「予定時間（分）」「合格サイン Exit or stdout」
   - 10 条示例：①Git clone + 确认 .claude/ 存在（5 分）②ids.yml 手動 R-102 申请并登记（10 分）③用 req-template.yaml 复制一份 R-102（10 分）④copy F-042→F-043 改 I-ID 引用 3 条（10 分）⑤L-016 一条逻辑 + E-009 一个错误码登记（10 分）⑥TC-009 新用例 用 tc-template 设计（15 分）⑦运行 trace_check --strict 找出 野号并修正（20 分）⑧commit message 符合 05-commit 规则 + git tag baseline/R-102/basic-v0.1（10 分）⑨masking self-test + secrets スキャン（5 分）⑩gen_formal dry-run field_count 确认（5 分）；时间合计约 100 分钟 rubric 4（≤90）或 rubric5（≤60）
   - 末尾加「AI Utilization」记录段与「新人自評価アンケート 5 問」
 - **Acceptance Criteria Addressed**: AC-8, NFR-4
@@ -310,7 +310,7 @@
 - **Depends On**: Task 17
 - **Description**:
   - Phase1.5 で追加した「歴史資産 取入機制」（`tools/ingest/` ＋ `docs/00_registry/ingest-manifest.yml`）と
-    「方法論取入」（`.claude/rules/06`・`rules/00 §13`・`rules/03 §7`・`rules/04 §9`・`docs/90_knowledge/internal/*`）は、
+    「方法論取入」（`.claude/rules/06`・`rules/00 §13`・`rules/03 §7`・`rules/04 §9`・`tools/kb-platform/repo/company/standards/internal/*`）は、
     既存の CP では検査されない。本 Task はその**独立検査項目のみ**を定義する（実装はしない）。
   - 検査は `review.md` の CP-R-7 / CP-U-3 / CP-U-4 が担う。本 Task はその TR の定義を与える。
 - **Acceptance Criteria Addressed**: AC-1 / AC-4 / AC-6 / AC-7（間接）
@@ -320,8 +320,8 @@
     かつ `tools/ingest/` に機密パターンの定義が無く、`tools.trace_check.scan_text` を import している
   - `rule` TR-19.2: `py -3 -m tools.ingest --self-test` Exit 0。`reports/ingest/**` の出力に
     **機密の実値が含まれない**（パス・size・sha1 のみ）。`id-apply` が `approved: true` 以外の行を書かない
-  - `rule` TR-19.3: `.claude/rules/06-knowledge-flywheel.md`・`docs/90_knowledge/internal/*.md` の各節の出所が
-    `docs/90_knowledge/ppt-deviation-register.md` §2（A-14/A-15/A-17/A-18）から辿れる。
+  - `rule` TR-19.3: `.claude/rules/06-knowledge-flywheel.md`・`tools/kb-platform/repo/company/standards/internal/*.md` の各節の出所が
+    `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2（A-14/A-15/A-17/A-18）から辿れる。
     逆に §2 の各行が実在ファイルを指す。**数量の記載は出所 PPT の該当頁で「何を数えた数か」を確認済み**
   - `rule` TR-19.4: `grep -c "^## CP" docs/00_plan/review.md` == 12（TR-17.1 と同一の値であること。
     片方だけ更新すると本骨架が自己矛盾する）
@@ -386,7 +386,7 @@
   - `rule` TR-21.3: **紅線は 7 条のまま**・**門番は 6 道のまま**。
     `head -10 CLAUDE.md | grep -c "7 条红线"` == 1、`grep -rn "gate7" tools/` == 0 件、
     `grep -c "^## CP" docs/00_plan/review.md` == 12（TR-17.1 / TR-20.5 と同一の値）
-  - `rule` TR-21.4: `docs/90_knowledge/ppt-deviation-register.md` §2 に **A-20** が 1 行あり、
+  - `rule` TR-21.4: `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2 に **A-20** が 1 行あり、
     その行が `n09-change.md` / `trans-cosmos-ai-node9-change` / `impact-analysis-template.yaml`
     の実在パスを指す。かつ **A-16 は依然として空番**である（飛び番の注記が残っていること）
   - `rule` TR-21.5: **鍵名の罠を踏んでいない**。`docs/00_plan/coach/**` と `docs/80_operation/**` に
@@ -437,7 +437,7 @@
     「出典等級（E1〜E4）」と「節点 2 以降で必須」の記載があり、§4.1 の回答形態表に
     「出典等級」列がある。`nodes/n02-basic-design.md` の出口条件に `--only-check seal` がある。
     `nodes/n01-requirements.md` に「節点 1 は遡及改訂しない」旨がある
-  - `rule` TR-22.6: `docs/90_knowledge/ppt-deviation-register.md` §2 に **A-26 / A-27** が各 1 行あり、
+  - `rule` TR-22.6: `tools/kb-platform/repo/company/standards/ppt-deviation.md` §2 に **A-26 / A-27** が各 1 行あり、
     いずれも「**第 7 の門ではない**」と `stats.gates_run` が 6 のままであることに言及している
   - `rule` TR-22.7: **不変量**。`head -10 CLAUDE.md | grep -c "7 条红线"` が 1、
     `grep -c "^## CP" docs/00_plan/review.md` が 12（本 Task は `review.md` を編集しない）

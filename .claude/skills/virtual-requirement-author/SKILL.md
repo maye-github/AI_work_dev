@@ -49,7 +49,7 @@ version: 0.1.0
 そこで、実在資産（設計書・実装）から**要求として書き直した**仮想の需求書を作る。
 これが本スキルの唯一の役割である。
 
-> **本骨架の既定は `greenfield`**（`docs/90_knowledge/ppt-deviation-register.md` A-22）。
+> **本骨架の既定は `greenfield`**（`tools/kb-platform/repo/company/standards/ppt-deviation.md` A-22）。
 > 「既存がある」＝`migration` と即断しない。`migration` は**宣言された変種**であり、
 > 宣言の唯一の故郷は `docs/00_plan/coach/<module>/case.yml` の `build_mode` である。
 
@@ -303,7 +303,7 @@ coach と同じ鉄則。**1 回の返答で 6 ステップ全部を出さない�
 
 > 要求書を凍結しました。**ここから先、節点 2〜8 は `D:\AI_work` と
 > `tools/kb-platform/repo/projects/<P-ID>/` を読み返しません。**
-> 人版を読むのは**事後の対比だけ**です（方法: `docs/90_knowledge/agent-run-record.md` §5.1）。
+> 人版を読むのは**事後の対比だけ**です（方法: `tools/kb-platform/repo/projects/P-R60-001/knowledge/agent-run-record.md` §5.1）。
 > 凍結後に要求書を直すと sha256 が変わるので、変更の有無は機械で検出できます。
 
 **チェック**：
@@ -447,7 +447,7 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比のみ
 > **★注意（正直に書いておく）**：5.2 で「新旧符号混在の実情を書かない」と決めた以上、
 > 節点1 は #3 を**「混在している」とは発見できない**。「符号系が未定義である」ことしか発見できない。
 > これは**本スキルの粒度設定に由来する既知の制約**であり、
-> **訓練報告の「需求書缺陷」に必ず記録する**（対比の担当の仕事。方法: `docs/90_knowledge/agent-run-record.md` §5.1）。欠陥を隠さない。
+> **訓練報告の「需求書缺陷」に必ず記録する**（対比の担当の仕事。方法: `tools/kb-platform/repo/projects/P-R60-001/knowledge/agent-run-record.md` §5.1）。欠陥を隠さない。
 
 ---
 
@@ -512,7 +512,7 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比のみ
 |---|---|---|
 | 節点 2〜8 の実行体 | 凍結済み要求書と、その上流成果物を読む | `D:\AI_work`・`tools/kb-platform/repo/projects/<P-ID>/` を読む |
 | `legacy-case-navigator` | 対比・カード作成のために読む | — |
-| 対比の担当（`docs/90_knowledge/agent-run-record.md` §5.1） | **人版（旧案件リポジトリ）を読む**（これが仕事） | 人版の内容を AI 側の成果物へ還流させる |
+| 対比の担当（`tools/kb-platform/repo/projects/P-R60-001/knowledge/agent-run-record.md` §5.1） | **人版（旧案件リポジトリ）を読む**（これが仕事） | 人版の内容を AI 側の成果物へ還流させる |
 | 本スキル | 次の画面のために読む | 凍結済み要求書を**黙って**書き換える（変えるなら再凍結と明示） |
 
 **機械で検出できること／できないこと（誇張しない）**：
@@ -569,7 +569,7 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比のみ
 
 | 内容 | 唯一真源 |
 |---|---|
-| 既定の案件形態（`greenfield` / `migration`） | `docs/90_knowledge/ppt-deviation-register.md` **A-22** |
+| 既定の案件形態（`greenfield` / `migration`） | `tools/kb-platform/repo/company/standards/ppt-deviation.md` **A-22** |
 | `case.yml` / `nNN.yml` の鍵仕様 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md` §4 |
 | 8 節点の手順 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/nodes/n0*.md` |
 | 実在資産の読み方・知識庫の入口 | `tools/kb-platform/repo/projects/<P-ID>/00-index.md`（§4 に読み順） |
@@ -577,4 +577,4 @@ note: "凍結後、下流の節点 2〜8 は上記を読まない。対比のみ
 | 設計書と実装の既知の食い違い | `tools/kb-platform/repo/projects/<P-ID>/08-deviations.md`（差異登記簿。案件ごとに件数が違う） |
 | 対比の帰因分類（「AI が劣る」と即断しない） | `tools/kb-platform/repo/projects/<P-ID>/09-ai-workflow.md` §7.1 |
 | 節点1 以降を走らせる進行役 | `.claude/skills/trans-cosmos-ai-lifecycle-coach/SKILL.md` |
-| 訓練報告の作り方 | `docs/90_knowledge/agent-run-record.md` §5.1 |
+| 訓練報告の作り方 | `tools/kb-platform/repo/projects/P-R60-001/knowledge/agent-run-record.md` §5.1 |

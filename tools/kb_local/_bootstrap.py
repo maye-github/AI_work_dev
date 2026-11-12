@@ -10,15 +10,18 @@
 そこで **上流は逐字のまま置き、差分はこの層（`tools/kb_local/`）にだけ書く**。
 同期は「フォルダを丸ごと差し替える」で済み、当て直すファイルは 0 本になる。
 
-差し込み口は 2 つだけ（どちらも上流の**公開関数を呼ぶ前に**一時的に差し替え、直後に戻す）
+差し込み口は 3 つだけ（いずれも上流の**公開関数を呼ぶ前に**一時的に差し替え、直後に戻す）
 --------------------------------------------------------------------------------------
 1. `kbkit.retrieval._load_candidates` … 候補抽出の WHERE 句。
    `kbkit.retrieval.search()` はこの名前をモジュール global から引くので、
    呼び出しの間だけ差し替えれば **並び替え（dense+sparse→RRF→rerank）は上流のまま**使える。
    上流の並び替えを複製しないことが、同期コストを増やさない唯一の方法である。
 2. `kbkit.pipeline.STATUSES` … lint の語彙。`lint()` の間だけ広げる。
+3. `kbkit.pipeline.DOC_TYPES` … lint の文書種別。構築ガイド §4.2 は `template` を持つが、
+   上流の集合には無い。`template`（成果物テンプレート）は会社級知識の主要な一類型であり、
+   ここを広げないと **入れ物だけ作って中身を登録できない**。`lint()` の間だけ足す。
 
-**上流がこの 2 つの名前を変えたら、ここが例外で落ちる。** 黙って挙動が変わるより、
+**上流がこの 3 つの名前を変えたら、ここが例外で落ちる。** 黙って挙動が変わるより、
 同期のときに気づけるほうがよい（`UPSTREAM-SYNC.md` §2 の手順で必ず回帰を取る）。
 """
 
@@ -47,11 +50,27 @@ DEFAULT_RETRIEVABLE = "active,open,baselined,changed,done"
 #: 上流 `pipeline.STATUSES` に足す分（差分だけを持つ。上流の集合は書き換えない）。
 EXTRA_STATUSES = frozenset({"open", "baselined", "changed", "done", "void"})
 
+#: 上流 `pipeline.DOC_TYPES` に足す分。構築ガイド §4.2 の `template`（成果物テンプレート）。
+#: 上流の集合には無いため、そのままでは `doc_type: template` が lint で弾かれる。
+EXTRA_DOC_TYPES = frozenset({"template"})
+
 _CANDIDATE_SQL = """
     SELECT c.chunk_id, c.doc_id, c.ord, c.heading, c.kind, c.text, c.embedding,
-           d.title, d.doc_type, d.scope, d.project_id, d.conf_level
+           d.title, d.doc_type, d.scope, d.project_id, d.conf_level, d.path
     FROM kb_chunk c
     JOIN kb_doc d ON d.doc_id = c.doc_id
+    WHERE {where}
+"""
+
+#: 退避表 `kb_doc_extra` がある場合の版。出处と要求紐付けを結果に載せる。
+#: 表が無い DB（上流だけを流した直後など）では JOIN できないので、上の版へ落とす。
+_CANDIDATE_SQL_EXTRA = """
+    SELECT c.chunk_id, c.doc_id, c.ord, c.heading, c.kind, c.text, c.embedding,
+           d.title, d.doc_type, d.scope, d.project_id, d.conf_level, d.path,
+           x.req_ids, x.source_project
+    FROM kb_chunk c
+    JOIN kb_doc d ON d.doc_id = c.doc_id
+    LEFT JOIN kb_doc_extra x ON x.doc_id = d.doc_id
     WHERE {where}
 """
 
@@ -67,11 +86,17 @@ def load_candidates(
     user_level: int,
     module: str | None = None,
     scope: str | None = None,
+    allowed_projects: set[str] | None = None,
+    exclude_derived: bool = False,
 ) -> list[sqlite3.Row]:
     """上流 `_load_candidates` の差し替え版。
 
     上流の鉄則「権限・スコープのフィルタは SQL の WHERE に押し込む（後掛け禁止）」に従い、
     status・module・scope もすべて WHERE で絞る（取得後に Python で捨てない）。
+
+    `allowed_projects` が与えられたときは**読権限モード**になる。
+      会社級は常に見える／案件級は自分が所属する案件だけ見える。
+      `None`（既定）は従来どおり `project_id` 指定に従う（管理者・後方互換）。
     """
     statuses = retrievable_statuses()
     placeholders = ", ".join(f":st{i}" for i in range(len(statuses)))
@@ -80,7 +105,25 @@ def load_candidates(
     for i, st in enumerate(statuses):
         params[f"st{i}"] = st
 
-    if project_id:
+    # `chunks/`（検索用の摘要＝派生物）は**既定では外さない**。
+    # 2026-11-03 の実測：外すと recall 1.0000 → 0.9167、節一致 0.8333 → 0.0833 に落ちた。
+    # 摘要は「検索されるために書かれた」ものであり、検索対象としては正本より強い。
+    # ただし**要約に移す過程で【推測】等の印が落ちる**ことがあるので、
+    # 結果側で `[摘要]` と表示し、正本（modules/・screens/）を確認するよう促す。
+    if exclude_derived:
+        where.append("instr(d.path, '/chunks/') = 0")
+
+    if allowed_projects is not None:
+        if allowed_projects:
+            ph = ", ".join(f":ap{i}" for i in range(len(allowed_projects)))
+            where.append(
+                f"(d.scope = 'company' OR (d.scope = 'project' AND d.project_id IN ({ph})))"
+            )
+            for i, name in enumerate(sorted(allowed_projects)):
+                params[f"ap{i}"] = name
+        else:
+            where.append("d.scope = 'company'")
+    elif project_id:
         # 会社共通は全案件から、案件知識はその案件からのみ（上流と同じ）
         where.append(
             "(d.scope = 'company' OR (d.scope = 'project' AND d.project_id = :pid))"
@@ -101,11 +144,19 @@ def load_candidates(
         )
         params["mod"] = module.strip().lower()
 
-    return conn.execute(_CANDIDATE_SQL.format(where=" AND ".join(where)), params).fetchall()
+    has_extra = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='kb_doc_extra'"
+    ).fetchone() is not None
+    sql = (_CANDIDATE_SQL_EXTRA if has_extra else _CANDIDATE_SQL).format(
+        where=" AND ".join(where)
+    )
+    return conn.execute(sql, params).fetchall()
 
 
 @contextlib.contextmanager
-def patched_candidates(module: str | None, scope: str | None):
+def patched_candidates(module: str | None, scope: str | None,
+                       allowed_projects: set[str] | None = None,
+                       exclude_derived: bool = False):
     """`kbkit.retrieval._load_candidates` を呼び出しの間だけ差し替える。"""
     orig = getattr(_retrieval, "_load_candidates", None)
     if orig is None:
@@ -115,7 +166,8 @@ def patched_candidates(module: str | None, scope: str | None):
         )
 
     def replacement(conn, project_id, user_level):
-        return load_candidates(conn, project_id, user_level, module, scope)
+        return load_candidates(conn, project_id, user_level, module, scope,
+                               allowed_projects, exclude_derived)
 
     _retrieval._load_candidates = replacement
     try:
@@ -133,3 +185,18 @@ def wider_statuses():
         yield
     finally:
         _pipeline.STATUSES = orig
+
+
+@contextlib.contextmanager
+def wider_doc_types():
+    """`kbkit.pipeline.DOC_TYPES` を lint の間だけ `template` まで広げる。
+
+    構築ガイド §4.2 の enum には `template` があるが、上流の集合には無い。
+    広げないと成果物テンプレートを会社級に置けない（`company/templates/`）。
+    """
+    orig = _pipeline.DOC_TYPES
+    _pipeline.DOC_TYPES = set(orig) | EXTRA_DOC_TYPES
+    try:
+        yield
+    finally:
+        _pipeline.DOC_TYPES = orig

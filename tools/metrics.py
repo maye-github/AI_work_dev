@@ -168,7 +168,7 @@ def latest_rag_eval(root: Path) -> dict | None:
 
 
 def count_knowledge(root: Path) -> dict:
-    """知識の件数。`docs/90_knowledge/**` と `tools/kb-platform/repo/projects/**` の `.md` を数える。
+    """知識の件数。`tools/kb-platform/repo/**` と `tools/kb-platform/repo/projects/**` の `.md` を数える。
 
     2026-10-29 に R60 知識を `tools/kb-platform/repo/projects/P-R60-001/` から kb-platform の project scope へ移した。
     どちらも知識資産であることに変わりはない（生成物 `.html` は数えない）。

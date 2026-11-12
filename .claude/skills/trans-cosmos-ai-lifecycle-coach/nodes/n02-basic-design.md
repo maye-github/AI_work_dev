@@ -29,6 +29,37 @@ version: 0.1.1
 - [ ] `04_承認版_需求结构化表.md` が実在する
 - [ ] **未解決の A 分類（顧客に聞くべき項目）の扱いが決まっている**（確定 or 暫定前提と明記）
 
+## 1.5 必查（この節点で知識ベースから先例を引く）
+
+**産出の前に必ず引く。** 引いた先例は承認版の front matter に `kb_refs:` として記録する。
+先例が無い場合は `kb_refs: []` とし、`open_questions` に「先例なし」と理由を書く。
+
+| 何を | どこから |
+|---|---|
+| 画面パターン・画面カード・**設計書雛形**・**設計規約** | `company/patterns/screen/`・`projects/<P-ID>/screens/`・`company/templates/`・`company/standards/` |
+
+```bash
+# 候補を出す（--as は必須。付けないと会社級しか返らない）
+py -3 -m tools.kb_refs suggest --project <P-ID> --as <人> --query "画面項目と画面遷移"
+
+# 承認版を検査する
+py -3 -m tools.kb_refs check <承認版> --node 2
+```
+
+> **`kb_refs` に書くのは先例**（案件の事実・テンプレート・パターン）。
+> **★本节点必读**（`kb_refs` に必ず記録し、**本文で実際に参照する**。`py -3 -m tools.kb_refs check <承認版> --node 2 --require-node` で検査する）
+>
+> | doc_id | 何のために読むか |
+> |---|---|
+> | `TPL-DESIGN-REF-001` | 基本設計書の 14 節と列構成（**章節の正本**） |
+> | `TPL-DESIGN-BASIC-001` | 入力しやすい簡略テンプレート（節数は REF を採る） |
+> | `PAT-SCREEN-001` | 一覧検索画面の標準パターン（条件部・一覧・件数・CSV） |
+
+> **書くのは「その節点で実際に参照した条目」だけ**——先例（案件の事実・`TPL-*`・`PAT-*`）と
+> 規約（`STD-*`）のどちらも書いてよい。`STD-*` は「遵守の記録」であり、**本文で規則を再掲しない**
+> （規則の正本は `.claude/rules/`）。**`canonical: true` の `STD-*` は要約ではなく方法の正本**なので先例として扱う
+> （`kb-policy.md` §2.4）。
+
 ## 2. 入力
 
 | 何を | どこから | 無いとき |
@@ -118,7 +149,7 @@ version: 0.1.1
         （.claude/rules/02-requirements.md §6.1・§6.2：上流对下流是透明的，
         承认版里不挂待确认事项）
      7. 敏感值一律占位（EMP_0001 / VAL_1 / IP_1 / PWD_1），不写任何真实值
-     8. **章节结构与列构成按 docs/90_knowledge/reference-design-book.md**（「基本设计书（画面编）」标准构成）。
+     8. **章节结构与列构成按 tools/kb-platform/repo/company/templates/reference-design-book.md**（「基本设计书（画面编）」标准构成）。
         结构照参考书，**事实只取上游承认版**；参考书同位置的业务内容不抄。
         （画面项目内容 16 列／事件一览 7 列／业务流程按事件分块）
 

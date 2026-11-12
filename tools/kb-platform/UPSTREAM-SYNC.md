@@ -21,17 +21,21 @@
 | 実測 | 値 |
 |---|---|
 | 上流のファイル数（`data/`・`__pycache__` を除く） | **23** |
-| 本抄本で上流と一致 | **22** |
+| 本抄本で上流と一致 | **19** |
 | 本抄本で手を入れた（**コード**） | **0** — `kbkit/` `run.py` `api.py` は上流と逐字一致 |
-| 本抄本で手を入れた（データ） | **1** — `repo/eval/golden.yaml`（案件 12 問を追記した金標。規則ではなくデータ） |
-| 本抄本だけの追加 | **132** = 案件データ 122（`repo/projects/`）＋ 会社条目 5（`repo/company/`）＋ 説明 5（`VENDORED.md` / `UPSTREAM-SYNC.md` / `company-README.md` / `projects-README.md` / `VENDOR_BASE.json`）。本地拡張層は `tools/kb_local/`（`tools/` 側）なのでここには入らない |
+| 本抄本で手を入れた（データ） | **4** — `repo/eval/golden.yaml`（案件 12 問を追記）＋ `repo/company/` の上流デモ 3 篇（`source_project: upstream-demo` を追記。`kb-policy.md` §2.3）。いずれも規則ではなくデータ |
+| 本抄本だけの追加 | **134** = 案件データ 122（`repo/projects/`）＋ 会社条目 6（`repo/company/`：5 篇＋`templates/`）＋ 説明 6（`VENDORED.md` / `UPSTREAM-SYNC.md` / `company-README.md` / `projects-README.md` / `kb-policy.md` / `VENDOR_BASE.json`）。本地拡張層は `tools/kb_local/`（`tools/` 側）なのでここには入らない |
 
 確認コマンド:
 
 ```bash
 py -3 -m tools.kb_vendor_manifest --check
-# → 上流由来 23 件: 一致=22 本地改変=1（うちコード 0） 消失=0
+# → 上流由来 23 件: 一致=19 本地改変=4（うちコード 0） 消失=0
 ```
+
+> **データの改変 4 件は、同期のたびに手で当て直す必要がある。** 当て方は
+> `repo/eval/golden.yaml` は「上流 24 問を残したまま後ろに案件 12 問を足す」、
+> 上流デモ 3 篇は「front matter に `source_project: upstream-demo` を 1 行足す」。
 
 **コード側の本地改変は 0 である。** 次に上流の新版が来たら、`kbkit/` と `run.py` は
 「フォルダを丸ごと差し替える」だけで済む。
@@ -59,7 +63,7 @@ py -3 -m tools.kb_vendor_manifest --check
 ```bash
 # 0) 出発点を汚さない。いまの状態で回帰を取る（§2.1 の基準値と一致するはず）
 py -3 -m tools.kb_local lint
-py -3 -m tools.kb_local eval
+py -3 -m tools.kb_local eval --all
 py -3 -m tools.kb_eval
 py -3 -m tools.kb_eval --with-module
 py -3 -m tools.rag eval
@@ -68,7 +72,10 @@ py -3 -m tools.rag eval
 py -3 -m tools.kb_vendor_manifest --check      # 「上流そのものが N 件動いています」を見る
 
 # 2) 上流のコードを丸ごと差し替える（当て直すファイルは 0 本）
-#    ただし repo/eval/golden.yaml だけは「上流の 24 問 ＋ こちらの 12 問」に戻す（データ）
+#    ただしデータ 4 件は当て直す:
+#      repo/eval/golden.yaml                      … 「上流の 24 問 ＋ こちらの 12 問」に戻す
+#      repo/company/{glossary/terms,patterns/screen/list-search,standards/coding/general}.md
+#                                                 … front matter に source_project: upstream-demo を 1 行戻す
 cp -r "/d/AI_platform/kb-platform/kbkit" tools/kb-platform/
 cp "/d/AI_platform/kb-platform/run.py" tools/kb-platform/
 
@@ -78,7 +85,7 @@ py -3 -m tools.kb_vendor_manifest --snapshot
 # 4) 回帰。数値が動いたら、動いた理由を説明できるまで次へ進まない
 py -3 -m tools.kb_local lint
 py -3 -m tools.kb_local ingest --prune          # 上流 CLI へ委譲（差分取り込み）
-py -3 -m tools.kb_local eval
+py -3 -m tools.kb_local eval --all
 py -3 -m tools.kb_eval
 py -3 -m tools.kb_eval --with-module
 py -3 -m tools.rag eval
@@ -95,7 +102,7 @@ py -3 -m tools.rag eval
 | 指標 | 値 | 意味 |
 |---|---|---|
 | `tools.kb_local lint` | `OK 91 文書` | 形（front matter・scope・doc_type） |
-| `tools.kb_local eval` | `recall@5=1.000  MRR=0.958  節recall=0.833 (12 件)` | 上流 demo 24 問。**下がったら同期で壊した** |
+| `tools.kb_local eval --all` | `recall@5=1.000  MRR=0.958  節recall=0.833 (12 件)` | 上流 demo 24 問。**下がったら同期で壊した** |
 | `tools.kb_eval`（KPI⑥）— ヒントなし | `recall@5=0.863  MRR=0.672  top1_module=76/80` | 80 問を案件知識に対して。**これが本来の指標** |
 | `tools.kb_eval --with-module` | `recall@5=0.925  MRR=0.720  top1_module=80/80` | 呼び出し側がモジュールを知っている場合の上限。**下がったら `tools/kb_local` の module 絞り込みが壊れた** |
 | `tools.rag eval` | `filtered 1.000 / 0.901` `unfiltered 0.863 / 0.645` | chunk 単位の回帰尺。**同期では動いてはならない** |
@@ -124,11 +131,14 @@ py -3 -m tools.rag eval
 |---|---|---|
 | 検索 | `py -3 -m tools.kb_local search …` | **0 件**（我々の文書は `active` でないため） |
 | lint | `py -3 -m tools.kb_local lint` | **`NG 79 件の問題`**（`open`/`baselined` を知らないため） |
-| 評価 | `py -3 -m tools.kb_local eval` | **`recall@5=0.500`**（上流 demo 12 問は `active` なので当たる。案件 12 問が全落ち） |
+| 評価 | `py -3 -m tools.kb_local eval --all` | **`recall@5=0.500`**（上流 demo 12 問は `active` なので当たる。案件 12 問が全落ち） |
 | 取り込み・索引状態 | 上流 `run.py ingest` / `stats` でも可（この層も委譲している） | 問題なし |
 
-`repo/eval/golden.yaml` だけは上流のデータを追記して使っている（上流 24 問 ＋ 案件 12 問）。
-これは**規則ではなくデータ**であり、同期のときは「上流の 24 問を残したまま 12 問を後ろに足す」だけである。
+上流のデータに手を入れたのは 4 件だけである（§0 の表）。
+- `repo/eval/golden.yaml` … 上流 24 問 ＋ 案件 12 問。同期のときは「24 問を残したまま後ろに足す」
+- `repo/company/` の上流デモ 3 篇 … `source_project: upstream-demo` を 1 行足しただけ（`kb-policy.md` §2.3）
+
+いずれも**規則ではなくデータ**であり、同期のときに当て直す箇所はこの 4 つに限られる。
 
 ---
 

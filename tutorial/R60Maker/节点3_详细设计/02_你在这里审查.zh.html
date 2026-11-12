@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02_你在这里审查.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>02_你在这里审查.zh</h1>
+<div class="meta">
+  机读源: <code>02_你在这里审查.zh.md</code> ／
+  生成: 2026-11-06 16:30 ／
+  节 6・表 0
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>02_你在这里审查.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">一、追溯（链条断一处，后面全白做）</a></li><li><a href="#sec-2">二、业务正确性（AI 最容易「看起来对」的地方）</a></li><li><a href="#sec-3">三、红线合规（碰了就是废品）</a></li><li><a href="#sec-4">四、非机能</a></li><li><a href="#sec-5">五、未确定事项的处置 ★（本节点的核心）</a></li><li><a href="#sec-6">六、承认前最后一眼</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: RV-201-N3-ZH<br>type: human-review-checklist<br>req_ids: [R-202]<br>status: open<br>sensitivity: internal<br>owner: SE-001<br>version: 0.1.0</p>
+<hr>
+<h1>节点3 你在这里审查 —— 详细设计审查清单（R60Maker）</h1>
+<blockquote class="quote">下面每一项都必须由你（人）亲自确认。<strong>打勾之前，不要进入下一步。</strong><br>详细设计是<strong>节点4（框架）和节点5（制造）的共同输入</strong>。这里薄一分，制造时 AI 就开始猜一分。<br><strong>本节点是 greenfield。</strong> 判断依据只有：<strong>① 节点2 的承認版</strong>／<strong>② 你自己对业务与工程边界的判断</strong>。</blockquote>
+<p>审查对象：<code>01_AI产出_详细设计书.md</code><br>对照输入：<code>00_输入模板.yaml</code>、<code>../节点2_基本设计/05_承認版_基本设计书.md</code></p>
+<hr>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>一、追溯（链条断一处，后面全白做）</h2>
+<ul><li class="task"><span class="box">☐</span><strong>F-202 之下 L-212〜L-222 共 11 条</strong>，每条都是「可独立实现/测试」的单位，分割粒度你认不认。</li><li class="task"><span class="box">☐</span><strong>D-207〜D-212 共 6 个数据模型</strong>，与上游 §10.1 的 6 个实体对得上（没有多、没有少）。</li><li class="task"><span class="box">☐</span><strong>I-322〜I-354 每一项都落到了 D 或 L</strong>，且<strong>没有出现 I-34 以后</strong>（Q-306 未裁定）。</li><li class="task"><span class="box">☐</span><strong>E-213〜E-224 共 12 件</strong>，每件都有 errorCode / errorId / 迁移目标。</li><li class="task"><span class="box">☐</span><strong>★ 上游 05 的非 Q 欄也逐条对过</strong>：限定句（「〜のみ」「〜を除く」）、内部值的符号系</li></ul>
+<p>（画面 <code>1/0</code> 与 <code>Y/N</code>）、形状（端点路径・固定部分）、否定与例外（「〜しない」）。<br><strong>每一行都要能说出「写在本设计书哪一节」</strong>。</p>
+</section>
+<section class="sec sec-plain" id="sec-2">
+<h2>二、业务正确性（AI 最容易「看起来对」的地方）</h2>
+<ul><li class="task"><span class="box">☐</span><strong>前处理顺序固定</strong>：セッション → オンライン可否 → 権限 → 入力チェック（上游 §6）。6 个端点都在最前面走。</li><li class="task"><span class="box">☐</span><strong>SQL 用到的列，全部在 §1 的 D-207〜D-212 里定义过</strong>——没有表外的列、没有自造的条件。</li><li class="task"><span class="box">☐</span><strong>检索 0 件</strong>：业务错误（1/1001）+ 仍算检索成功（按钮活性），与 Q-263 一致。</li><li class="task"><span class="box">☐</span><strong>排他</strong>：<code>lastUpdateDatetime</code> 与 <code>revNo</code> <strong>两者一致</strong>；新规・复製送 <code>null</code> 不比较。</li><li class="task"><span class="box">☐</span><strong>删除</strong>：逻辑删除 + 被参照（已删除参照元不计数）+ 键重复（已删除也算存在）。</li><li class="task"><span class="box">☐</span><strong>紧急配信</strong>：提交确定后异步。判定用按下时点的画面值。</li><li class="task"><span class="box">☐</span><strong>send_sts 初值</strong>：上游无明文（Q-315）。<strong>我方有没有把它写成确定值</strong>。</li><li class="task"><span class="box">☐</span><strong>排序白名单只有 <code>MAKER_CD</code>／<code>MAKER_NM</code></strong>，白名单外走固定排序；<code>OFFSET/FETCH</code> 是否作为 Q-313 例外明确标注。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>三、红线合规（碰了就是废品）</h2>
+<ul><li class="task"><span class="box">☐</span><strong>没有在本节点把技术栈定下来</strong>（红线④）。SQL 是方言无关，没有 Oracle/PostgreSQL 方言。</li><li class="task"><span class="box">☐</span><strong>没有野号</strong>：只用 L-212〜L-222 / D-207〜D-212 / E-213〜E-224 / I-322〜I-354。</li><li class="task"><span class="box">☐</span><strong>SQL 的值全部是占位符</strong>（<code>:maker_cd</code> 等），没有实值、实代码。</li><li class="task"><span class="box">☐</span><strong>物理表名・列名都标了「AI 素案・Q-308b 待ち」</strong>，没有被当成确定值。</li><li class="task"><span class="box">☐</span><strong>没有真实敏感值</strong>（连接信息、键、真实员工号・姓名、真实 IP）。</li><li class="task"><span class="box">☐</span><strong>没有读冻结范围</strong>（历史案件素材・旧案件知识库。具体路径见 <code>case.yml</code> 的冻结宣言，本文不复写）。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>四、非机能</h2>
+<ul><li class="task"><span class="box">☐</span><strong>NFR 的水准</strong>与节点2 §11 / NFR 標準 v1.1 一致，没有自造数字。</li><li class="task"><span class="box">☐</span><strong>日志</strong>：哪些值不能进操作日志，有明确交代（或明确委给共通ログ部品）。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>五、未确定事项的处置 ★（本节点的核心）</h2>
+<ul><li class="task"><span class="box">☐</span><strong>Q-310〜Q-315 共 6 件，逐件定 A／B／C</strong>，并写出裁定内容：</li><li>Q-310 物理列・型・桁・rev_no 编号主体（前提：Q-308b）</li><li>Q-311 マスタ画面 9 項目的 I-ID（承接 Q-306）</li><li>Q-312 被参照两表的物理名・结合键是否委给 ReferenceChecker</li><li>Q-313 OFFSET/FETCH 的例外采用</li><li>Q-314 排序白名单 2 项</li><li>Q-315 send_sts 初值及其与紧急配信・夜间确定的关系</li><li class="task"><span class="box">☐</span><strong>判断顺序是 C → B → A</strong>（规则 02 §4.1）。<strong>A 多＝没查、没想</strong>；<strong>C 少＝把内部的事推给顾客</strong>。</li><li class="task"><span class="box">☐</span><strong>Q 编号没有跨节点撞号</strong>：节点1 = Q-239〜Q-305、节点2 = Q-306〜Q-309、<strong>节点3 新规 = Q-310〜</strong>。</li><li class="task"><span class="box">☐</span><strong>付表 B（未确定事项）不进承认版</strong>（规则 02 §6.1）。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>六、承认前最后一眼</h2>
+<ul><li class="task"><span class="box">☐</span><strong>组内审查意见</strong>（<code>03_组内审查意见.md</code>）已全部落实。演習可省略，但省略要记在 <code>n03.yml</code> 的 <code>note</code>。</li><li class="task"><span class="box">☐</span><strong>改修版</strong>（<code>04_AI产出_详细设计书_改修版.md</code>）开头有「意见→改动」对照表，每条都对得上。</li><li class="task"><span class="box">☐</span><strong>承认版</strong>（<code>05_承認版_详细设计书.md</code>）填了承認記録（版本 / 日期 / 承認者 / 状態）。</li></ul>
+<p>全部打勾 → <strong>节点3 完成</strong>，承認版同时成为<strong>节点4（框架）和节点5（制造）的输入</strong>。</p>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>02_你在这里审查.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>

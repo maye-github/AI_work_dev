@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01_AI产出_测试用例集.zh</title>
+<style>
+:root{
+  --fg:#1f2328; --muted:#6b7280; --line:#e5e7eb; --bg:#fff; --soft:#f9fafb;
+  --ask:#b45309; --ask-bg:#fffbeb; --ask-bd:#fcd34d;
+  --err:#b91c1c; --err-bg:#fef2f2; --err-bd:#fca5a5;
+  --ng:#4b5563;  --ng-bg:#f9fafb;  --ng-bd:#d1d5db;
+  --bgc:#1d4ed8; --bgc-bg:#eff6ff; --bgc-bd:#bfdbfe;
+  --br:#047857;  --br-bg:#ecfdf5;  --br-bd:#a7f3d0;
+  --io:#6d28d9;  --io-bg:#f5f3ff;  --io-bd:#ddd6fe;
+  --acc:#0f766e; --trace:#0369a1; --meta:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 80px; background:var(--bg); color:var(--fg);
+  font-family:"Yu Gothic UI","Meiryo",system-ui,-apple-system,"Segoe UI",
+              "Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.banner{
+  border:1px solid var(--line); border-left:4px solid var(--io); border-radius:8px;
+  background:var(--soft); padding:14px 18px; margin-bottom:22px;
+}
+.banner h1{margin:0 0 6px; font-size:20px; line-height:1.4}
+.banner .meta{color:var(--muted); font-size:12.5px}
+.banner .warn-note{
+  margin-top:10px; padding:8px 10px; border-radius:6px; font-size:12.5px;
+  background:var(--ask-bg); border:1px solid var(--ask-bd); color:var(--ask);
+}
+nav.toc{
+  border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+  margin-bottom:26px; background:#fff;
+}
+nav.toc .toc-title{font-weight:700; font-size:13px; color:var(--muted); margin-bottom:6px}
+nav.toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+nav.toc li{margin:2px 0; font-size:13.5px; break-inside:avoid}
+nav.toc a{color:var(--fg); text-decoration:none; border-bottom:1px dotted var(--line)}
+nav.toc a:hover{color:var(--io); border-bottom-color:var(--io)}
+section.sec{
+  margin:0 0 26px; padding:16px 20px; border-radius:8px;
+  border:1px solid transparent; background:transparent;
+}
+section.sec-ask{background:var(--ask-bg); border-color:var(--ask-bd)}
+section.sec-err{background:var(--err-bg); border-color:var(--err-bd)}
+section.sec-ng{background:var(--ng-bg);  border-color:var(--ng-bd)}
+section.sec-bg{background:var(--bgc-bg); border-color:var(--bgc-bd)}
+section.sec-br{background:var(--br-bg);  border-color:var(--br-bd)}
+section.sec-io{background:var(--io-bg);  border-color:var(--io-bd)}
+section.sec-ask,section.sec-err,section.sec-bg,section.sec-br,section.sec-io{color:var(--fg)}
+h2{
+  font-size:18px; margin:0 0 12px; padding-bottom:8px;
+  border-bottom:2px solid var(--line); line-height:1.45;
+}
+section.sec-ask h2{border-bottom-color:var(--ask-bd)}
+section.sec-err h2{border-bottom-color:var(--err-bd)}
+section.sec-bg h2{border-bottom-color:var(--bgc-bd)}
+section.sec-br h2{border-bottom-color:var(--br-bd)}
+section.sec-io h2{border-bottom-color:var(--io-bd)}
+h3{font-size:15.5px; margin:18px 0 8px}
+h4,h5,h6{font-size:14.5px; margin:14px 0 6px}
+p{margin:8px 0}
+hr{border:0; border-top:1px solid var(--line); margin:22px 0}
+ul,ol{margin:8px 0; padding-left:24px}
+li{margin:3px 0}
+ul:has(li.task){list-style:none; padding-left:2px}
+li.task{display:flex; gap:8px; align-items:flex-start; margin:6px 0}
+li.task .box{flex:0 0 auto; font-size:15px; line-height:1.75; color:var(--io)}
+li.task.done{color:var(--muted); text-decoration:line-through}
+li.task.done .box{color:var(--br)}
+code{
+  background:#f1f3f5; border:1px solid var(--line); border-radius:4px;
+  padding:0 4px; font-size:12.5px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+pre{
+  background:#f6f8fa; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow:auto;
+}
+pre code{background:none; border:0; padding:0; font-size:12.5px; line-height:1.6}
+blockquote{
+  margin:12px 0; padding:10px 14px; border-left:4px solid var(--line);
+  background:var(--soft); border-radius:0 6px 6px 0;
+}
+blockquote.warn{border-left-color:var(--ask-bd); background:var(--ask-bg); color:var(--ask)}
+blockquote.tip{border-left-color:var(--br-bd); background:var(--br-bg)}
+blockquote.hint{border-left-color:var(--io-bd); background:var(--io-bg)}
+.chip{
+  display:inline-block; vertical-align:middle; margin-left:8px; padding:1px 9px;
+  border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  background:#fff; border:1px solid var(--line); color:var(--muted);
+}
+.chip-ask{background:var(--ask); border-color:var(--ask); color:#fff}
+.chip-err{background:var(--err); border-color:var(--err); color:#fff}
+.chip-ng{background:var(--ng);  border-color:var(--ng);  color:#fff}
+.chip-bg{background:var(--bgc); border-color:var(--bgc); color:#fff}
+.chip-br{background:var(--br);  border-color:var(--br);  color:#fff}
+.chip-io{background:var(--io);  border-color:var(--io);  color:#fff}
+.chip-acc{background:var(--acc); border-color:var(--acc); color:#fff}
+.chip-trace{background:var(--trace); border-color:var(--trace); color:#fff}
+table.tbl{
+  width:100%; border-collapse:collapse; margin:12px 0; background:#fff;
+  font-size:13.5px; table-layout:auto;
+}
+table.tbl th{
+  background:#f1f3f5; border:1px solid var(--line); padding:8px 10px;
+  font-weight:700; white-space:nowrap; position:sticky; top:0; z-index:1;
+}
+table.tbl td{
+  border:1px solid var(--line); padding:8px 10px;
+  vertical-align:top; word-break:break-word; overflow-wrap:anywhere;
+}
+table.tbl tbody tr:nth-child(even) td{background:#fcfcfd}
+table.tbl tbody tr:hover td{background:#f5f9ff}
+table.tbl td:first-child{white-space:nowrap; font-weight:600; color:#374151}
+table.tbl-ask th{background:#fef3c7; border-color:var(--ask-bd)}
+table.tbl-ask td{border-color:#fde68a}
+table.tbl-err th{background:#fee2e2; border-color:var(--err-bd)}
+table.tbl-err td{border-color:#fecaca}
+table.tbl-ng th{background:#e5e7eb; border-color:var(--ng-bd)}
+.foot{
+  margin-top:34px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12px;
+}
+@media print{
+  body{padding:0; font-size:10.5pt}
+  .noprint{display:none !important}
+  nav.toc ol{columns:2}
+  section.sec{break-inside:auto}
+  table.tbl{font-size:9.5pt}
+  table.tbl th{position:static}
+  tr,li,blockquote{break-inside:avoid}
+  .banner{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="banner">
+<h1>01_AI产出_测试用例集.zh</h1>
+<div class="meta">
+  机读源: <code>01_AI产出_测试用例集.zh.md</code> ／
+  生成: 2026-11-10 09:27 ／
+  节 11・表 9
+</div>
+<div class="warn-note">
+  ⚠️ 本页由机读源 (<code>01_AI产出_测试用例集.zh.md</code>) 自动生成，是<strong>仅供阅读的视图</strong>。请勿直接修改本 HTML。修改一律写回机读源后重新生成（单一来源原则 / FR-3）。
+  <span class="noprint">按 Ctrl+P 可存为 PDF。</span>
+</div>
+</header>
+<nav class="toc noprint"><div class="toc-title">目录</div><ol><li><a href="#sec-1">1. 目的、范围与前提</a></li><li><a href="#sec-2">2. 输入与来源</a> <span class="chip chip-io">项目定义</span></li><li><a href="#sec-3">3. 测试对象</a></li><li><a href="#sec-4">4. 测试观点（三技法）</a></li><li><a href="#sec-5">5. 正常系用例（8 件）</a></li><li><a href="#sec-6">6. 边界系用例（6 件）</a></li><li><a href="#sec-7">7. 异常系用例（11 件）</a> <span class="chip chip-err">异常</span></li><li><a href="#sec-8">8. E-ID 对应表</a></li><li><a href="#sec-9">9. 未确定事项（附表）</a></li><li><a href="#sec-10">10. 人工审查与合格判定</a></li><li><a href="#sec-11">知识库使用记录</a></li></ol></nav>
+<section class="sec sec-lead">
+<hr>
+<p>id: TC-R201-UNIT<br>type: test-case-set<br>req_ids: [R-202]<br>status: draft<br>sensitivity: internal<br>owner: AI-SE<br>version: 1.0.0<br>kb_refs:</p>
+<ul><li>"STD-TEST-RATIO-001"</li><li>"TPL-TEST-CASE-001"</li><li>"PAT-DEV-PLAYBOOK-001"</li></ul>
+<hr>
+<h1>R60Maker 制造商主数据维护 单元测试用例集（AI 初稿）</h1>
+<blockquote class="quote"><strong>本稿的输入</strong>为节点3 承认版 <code>05_承認版_详细设计书.md</code>（v1.0.1。L-212〜L-222／D-207〜D-212／E-213〜E-224）、<br>节点5 承认版 <code>05_承認版_制造记录.md</code>（v1.0.0）及其代码（<code>frontend/</code>、<code>backend/</code>），<br>以及本节点 <code>00_输入模板.yaml</code>（v0.3.0、filled、骨架 25 件）。<br>本稿是节点6 第2步的 AI 初稿（<code>status: draft</code>），<strong>尚未经过人工逐项审查与合格判定</strong>（红线③）。<br><strong>TC 编号为 <code>TC-PENDING-01…25</code> 的临时编号。</strong> 最终编号由人通过 <code>py -3 -m tools.registry alloc TC</code> 发放（红线①）。<br>输入、期望值以占位符（<code>COL_1</code> / <code>VAL_1</code> 等）表示，不写真实数据与真实值。<br><strong>本稿止于测试设计，不生成测试代码</strong>（规则 04 §9.3）。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-1">
+<h2>1. 目的、范围与前提</h2>
+<ul><li><strong>目的</strong>：从详细设计设计单元测试用例，闭合到设计的追溯（<code>design_ids</code>）与到需求的追溯（<code>req_ids</code>）。</li><li><strong>范围</strong>：6 个端点（<code>/init</code>、<code>/search</code>、<code>/download</code>、<code>/initEdit</code>、<code>/delete</code>、<code>/edit</code>），以及 L-212〜L-222、D-207〜D-212、E-213〜E-224。</li><li><strong>前提</strong>：节点3 已 <code>baselined</code>、节点5 代码存在。检索画面项目为 I-322〜I-354，主数据画面 9 个项目未发放 I-ID（Q-306），故以项目名称处理（Q-332）。</li></ul>
+</section>
+<section class="sec sec-io" id="sec-2">
+<h2>2. 输入与来源 <span class="chip chip-io">项目定义</span></h2>
+<table class="tbl"><thead><tr><th style="text-align:left">类别</th><th style="text-align:left">路径与版本</th></tr></thead><tbody><tr><td style="text-align:left">详细设计</td><td style="text-align:left"><code>tutorial/R60Maker/节点3_详细设计/05_承認版_详细设计书.md</code>（v1.0.1）</td></tr><tr><td style="text-align:left">制造记录</td><td style="text-align:left"><code>tutorial/R60Maker/节点5_制造/05_承認版_制造记录.md</code>（v1.0.0）</td></tr><tr><td style="text-align:left">制造代码</td><td style="text-align:left"><code>tutorial/R60Maker/节点5_制造/{backend,frontend}/</code>（22 个文件）</td></tr><tr><td style="text-align:left">本节点模板</td><td style="text-align:left"><code>tutorial/R60Maker/节点6_单元测试/00_输入模板.yaml</code>（v0.3.0、filled）</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-3">
+<h2>3. 测试对象</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">单位</th><th style="text-align:left">对象</th><th style="text-align:left">对应 L、D</th><th style="text-align:left">对应 E</th></tr></thead><tbody><tr><td style="text-align:left">端点</td><td style="text-align:left"><code>POST /init</code></td><td style="text-align:left">L-212、L-213、D-211、D-212</td><td style="text-align:left">E-220〜E-224</td></tr><tr><td style="text-align:left">端点</td><td style="text-align:left"><code>POST /search</code></td><td style="text-align:left">L-212、L-214、L-215、D-207、D-210</td><td style="text-align:left">E-213、E-214、E-219、E-220、E-223、E-224</td></tr><tr><td style="text-align:left">端点</td><td style="text-align:left"><code>POST /download</code></td><td style="text-align:left">L-212、L-218、D-207</td><td style="text-align:left">E-214、E-220、E-223</td></tr><tr><td style="text-align:left">端点</td><td style="text-align:left"><code>POST /initEdit</code></td><td style="text-align:left">L-212、L-217、D-207</td><td style="text-align:left">E-220、E-223、E-224</td></tr><tr><td style="text-align:left">端点</td><td style="text-align:left"><code>POST /delete</code></td><td style="text-align:left">L-212、L-219、D-207、D-208、D-209</td><td style="text-align:left">E-216、E-217、E-218、E-220、E-223</td></tr><tr><td style="text-align:left">端点</td><td style="text-align:left"><code>POST /edit</code></td><td style="text-align:left">L-212、L-220、D-207、D-208、D-209</td><td style="text-align:left">E-215〜E-220、E-223、E-224</td></tr><tr><td style="text-align:left">逻辑</td><td style="text-align:left">L-212 前处理／L-216 条件区切换／L-221 显示控制／L-222 画面跳转</td><td style="text-align:left">—</td><td style="text-align:left">E-220〜E-224</td></tr><tr><td style="text-align:left">数据</td><td style="text-align:left">D-207〜D-212（经 <code>repository/queries.py</code>）</td><td style="text-align:left">—</td><td style="text-align:left">—</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-4">
+<h2>4. 测试观点（三技法）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">技法</th><th style="text-align:left">适用对象</th><th style="text-align:left">用例</th></tr></thead><tbody><tr><td style="text-align:left">等价类划分</td><td style="text-align:left">代码位数、名称字符、mode、检索条件的有效／无效类</td><td style="text-align:left">01〜08、16、20、22、24、25</td></tr><tr><td style="text-align:left">边界值</td><td style="text-align:left">代码 1、5 位／名称 30Byte／假名 15 字符／件数 0、500／页码 1、件数 100</td><td style="text-align:left">09〜15</td></tr><tr><td style="text-align:left">判定表</td><td style="text-align:left">权限 3 种×6 端点／被参照×排他×异常结果／mode×删除×排他／按钮活性控制</td><td style="text-align:left">08、17〜21</td></tr></tbody></table>
+<blockquote class="quote">比例为 <strong>正常 8／边界 6／异常 11＝25 件</strong>，满足规则 04 §2 的下限（正常 3／边界 2／异常 3）。</blockquote>
+</section>
+<section class="sec sec-plain" id="sec-5">
+<h2>5. 正常系用例（8 件）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">临时编号</th><th style="text-align:left">观点</th><th style="text-align:left">前提</th><th style="text-align:left">输入</th><th style="text-align:left">期望</th><th style="text-align:left">断言</th><th style="text-align:left">design_ids</th><th style="text-align:left">req_ids</th></tr></thead><tbody><tr><td style="text-align:left">TC-PENDING-01</td><td style="text-align:left">等价类划分</td><td style="text-align:left">会话有效、平日 7:00–22:00 JST、权限 MKR01 以上、消息 15 件存在</td><td style="text-align:left">无（<code>/init</code>）</td><td style="text-align:left">errorCode=0／errorId=0000。每页件数候选 {10,20,50,100}，默认 20。消息 15 件（MSG-C-001〜004、MSG-I-001〜003、MSG-E-001〜008）。初始状态＝通常、含删除关闭、20 件、条件区展开、一览为空、总数 0、分页器非活性</td><td style="text-align:left">errorCode=0 且候选集合一致 且消息件数=15 且初始标志一致</td><td style="text-align:left">L-212,L-213,D-211,D-212,I-322,I-323,I-324,I-325,I-326,I-327,I-333,I-335,I-336</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-02</td><td style="text-align:left">等价类划分</td><td style="text-align:left">权限 MKR01 以上、有匹配行</td><td style="text-align:left">maker_cd=COL_1（前缀匹配），maker_nm=COL_9（中间匹配），include_deleted=false，pageSize=20</td><td style="text-align:left">errorCode=0。total_count=VAL_2。一览 5 列。排序为删除标志（未删除在前）→制造商代码升序</td><td style="text-align:left">errorCode=0 且 total_count 一致 且首行为未删除且代码升序</td><td style="text-align:left">L-212,L-214,D-207,D-210,I-329,I-330,I-332,I-339,I-340,I-342,I-347,I-349</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-03</td><td style="text-align:left">等价类划分</td><td style="text-align:left">检索成功后、已选中行、目标行存在（含已删除）</td><td style="text-align:left">mode="3", maker_cd=COL_1</td><td style="text-align:left">errorCode=0。取得当前值（名称／假名／send_sts／del_flg）＋last_update_datetime＋rev_no。制造商代码不可变更。已删除时删除项固定、注册按钮非活性</td><td style="text-align:left">errorCode=0 且返回排他 2 项 且 del_flg=1 时删除项固定</td><td style="text-align:left">L-212,L-217,D-207,I-341,I-343</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-04</td><td style="text-align:left">等价类划分</td><td style="text-align:left">权限 MKR02 以上、键不存在、注册确认选择 Yes</td><td style="text-align:left">mode="1", maker_cd=COL_1, maker_nm=COL_9, maker_kana_nm=COL_10</td><td style="text-align:left">errorCode=0。插入 1 行。reg_kbn=1（暂定）、send_sts=0（未发送）、del_flg=0、rev_no=1</td><td style="text-align:left">插入 1 行 且 reg_kbn=1 且 send_sts=0 且 rev_no=1</td><td style="text-align:left">L-212,L-220,D-207,I-328</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-05</td><td style="text-align:left">等价类划分</td><td style="text-align:left">权限 MKR02 以上、目标行存在、两键一致</td><td style="text-align:left">mode="3", maker_cd=COL_1, rev_no=VAL_1</td><td style="text-align:left">errorCode=0。更新 1 行。rev_no=旧值+1。last_update_datetime 更新</td><td style="text-align:left">更新 1 行 且 rev_no=旧值+1</td><td style="text-align:left">L-212,L-220,D-207,I-328</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-06</td><td style="text-align:left">等价类划分</td><td style="text-align:left">权限 MKR03、无被参照、排他一致、删除确认 Yes</td><td style="text-align:left">maker_cd=COL_1, rev_no=VAL_1</td><td style="text-align:left">errorCode=0。del_flg=1（逻辑删除）。不做物理删除。以最后检索条件重新检索更新一览</td><td style="text-align:left">del_flg=1 且无物理删除语句 且被参照 0 件</td><td style="text-align:left">L-212,L-219,D-207,D-208,D-209,I-328</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-07</td><td style="text-align:left">等价类划分</td><td style="text-align:left">权限 MKR03、检索成功、不超过 500 件</td><td style="text-align:left">最后检索条件=COL_1</td><td style="text-align:left">CSV 文件。UTF-8（含 BOM）、CRLF、含标题行、5 列。不含排他信息</td><td style="text-align:left">首部含 BOM 且 CRLF 且列数=5 且无排他列</td><td style="text-align:left">L-212,L-218,D-207,I-353</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-08</td><td style="text-align:left">判定表</td><td style="text-align:left">检索成功后（含 0 件）、可变更行选中状态</td><td style="text-align:left">按下 I-336／行选中（有、无）</td><td style="text-align:left">条件区缩小、扩大切换且不发服务器通信。I-350 仅在选中行时活性。I-351／I-353／I-354 在检索成功后活性（0 件也算）。I-331 在 I-330 非空时活性</td><td style="text-align:left">服务器调用=0 且各按钮活性与判定表一致</td><td style="text-align:left">L-216,L-221,L-222,I-331,I-336,I-350,I-351,I-352,I-353,I-354</td><td style="text-align:left">R-202</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-6">
+<h2>6. 边界系用例（6 件）</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">临时编号</th><th style="text-align:left">观点</th><th style="text-align:left">前提</th><th style="text-align:left">输入</th><th style="text-align:left">期望</th><th style="text-align:left">断言</th><th style="text-align:left">design_ids</th><th style="text-align:left">req_ids</th></tr></thead><tbody><tr><td style="text-align:left">TC-PENDING-09</td><td style="text-align:left">边界值</td><td style="text-align:left">半角英数字 5 位整、键不存在</td><td style="text-align:left">maker_cd=COL_1（5 位）</td><td style="text-align:left">errorCode=0（有效。最大可）</td><td style="text-align:left">输入校验通过 且可注册（6 位在 TC-20／25 中为不可）</td><td style="text-align:left">L-214,L-220,D-207,I-329</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-10</td><td style="text-align:left">边界值</td><td style="text-align:left">UTF-8 恰好 30Byte 的日文名称</td><td style="text-align:left">maker_nm=COL_9（30Byte）</td><td style="text-align:left">errorCode=0（有效）</td><td style="text-align:left">恰好 30Byte 可（31Byte 在 TC-20 中为不可）</td><td style="text-align:left">L-214,L-220,D-207,I-330</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-11</td><td style="text-align:left">边界值</td><td style="text-align:left">半角假名恰好 15 字符（浊点、半浊点各算独立 1 字符）</td><td style="text-align:left">maker_kana_nm=COL_10（15 字符）</td><td style="text-align:left">errorCode=0（有效）</td><td style="text-align:left">恰好 15 字符可（16 字符在 TC-20 中为不可）</td><td style="text-align:left">L-214,L-220,D-207,I-345</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-12</td><td style="text-align:left">边界值</td><td style="text-align:left">条件匹配 0 件</td><td style="text-align:left">maker_cd=COL_1（匹配 0 件）</td><td style="text-align:left">errorCode=1／errorId=1001（E-213）。明细 0 行。但作为检索成功处理，复制、返回、下载、新建均活性</td><td style="text-align:left">errorCode=1 且 errorId=1001 且 detail_rows=0 且按钮活性</td><td style="text-align:left">L-214,D-207,E-213,I-337,I-338,I-339,I-350,I-353,I-354</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-13</td><td style="text-align:left">边界值</td><td style="text-align:left">条件匹配恰好 500 件</td><td style="text-align:left">maker_cd=COL_1（匹配 500 件）</td><td style="text-align:left">errorCode=0。total_count=500。返回明细（501 件在 TC-15 中为 E-214）</td><td style="text-align:left">errorCode=0 且 total_count=500</td><td style="text-align:left">L-214,D-207,I-337,I-338,I-339</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-14</td><td style="text-align:left">边界值</td><td style="text-align:left">检索成功、总数超过 100 件</td><td style="text-align:left">pageSize=100, pageNo=1</td><td style="text-align:left">errorCode=0。pageSize=100（候选上限）。页码从 1 开始，每页 100 件</td><td style="text-align:left">errorCode=0 且 pageSize=100 且页码=1</td><td style="text-align:left">L-214,L-215,I-333,I-337,I-338,I-339</td><td style="text-align:left">R-202</td></tr></tbody></table>
+</section>
+<section class="sec sec-err" id="sec-7">
+<h2>7. 异常系用例（11 件） <span class="chip chip-err">异常</span></h2>
+<table class="tbl"><thead><tr><th style="text-align:left">临时编号</th><th style="text-align:left">观点</th><th style="text-align:left">前提</th><th style="text-align:left">输入</th><th style="text-align:left">期望</th><th style="text-align:left">断言</th><th style="text-align:left">design_ids</th><th style="text-align:left">req_ids</th></tr></thead><tbody><tr><td style="text-align:left">TC-PENDING-15</td><td style="text-align:left">边界值（外侧）</td><td style="text-align:left">条件匹配 501 件</td><td style="text-align:left">maker_cd=COL_1（501 件）</td><td style="text-align:left">E-214：errorCode=1／errorId=1002。不输出明细与 CSV</td><td style="text-align:left">errorCode=1 且 errorId=1002 且 detail_rows=0 且不输出 CSV</td><td style="text-align:left">L-214,L-218,D-207,E-214,I-339,I-353</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-16</td><td style="text-align:left">等价类（无效）</td><td style="text-align:left">同一制造商代码已存在（未删除或已删除）</td><td style="text-align:left">mode="1", maker_cd=COL_1（已存在键）</td><td style="text-align:left">E-215：errorCode=1／errorId=2001。高亮制造商代码。不跳转画面</td><td style="text-align:left">errorCode=1 且 errorId=2001 且插入 0 行</td><td style="text-align:left">L-220,D-207,E-215,I-328</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-17</td><td style="text-align:left">判定表</td><td style="text-align:left">被 D-208 或 D-209 参照（已删除的参照源不计）</td><td style="text-align:left">maker_cd=COL_1（有被参照）</td><td style="text-align:left">E-216：errorCode=1／errorId=2002。不删除。停留在主数据画面</td><td style="text-align:left">errorCode=1 且 errorId=2002 且 del_flg=0</td><td style="text-align:left">L-219,L-220,D-208,D-209,E-216,I-328</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-18</td><td style="text-align:left">判定表</td><td style="text-align:left">他人先更新（两键中至少一方不一致）</td><td style="text-align:left">maker_cd=COL_1, rev_no=VAL_1（不一致）</td><td style="text-align:left">E-217：errorCode=1／errorId=2003。仅显示消息，不高亮项目、不移动焦点</td><td style="text-align:left">errorCode=1 且 errorId=2003 且更新 0 行 且 focus_moved=false</td><td style="text-align:left">L-219,L-220,D-207,E-217,I-328</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-19</td><td style="text-align:left">判定表</td><td style="text-align:left">被参照检查返回异常结果／未连接（PortNotConnected）</td><td style="text-align:left">maker_cd=COL_1（异常结果）</td><td style="text-align:left">E-218：errorCode=9／errorId=9101。中断处理并替换为 SystemErrorScreen。不把参照件数当作 0</td><td style="text-align:left">errorCode=9 且 errorId=9101 且画面=SystemErrorScreen</td><td style="text-align:left">L-219,L-220,D-208,D-209,E-218,I-328</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-20</td><td style="text-align:left">等价类（无效）</td><td style="text-align:left">代码为空、6 位以上、全角符号，或名称含禁用字符（, ' " |）</td><td style="text-align:left">maker_cd=COL_2, maker_nm=COL_11（无效类）</td><td style="text-align:left">E-219：画面侧输入校验违规。变更该项目的背景色、移动焦点。不发送到服务器</td><td style="text-align:left">服务器调用=0 且高亮存在 且 focus_moved=true</td><td style="text-align:left">L-214,L-219,L-220,E-219,I-329,I-330</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-21</td><td style="text-align:left">判定表</td><td style="text-align:left">不满足所需权限（例：以 MKR01 执行 <code>/edit</code>）</td><td style="text-align:left">auth_cd=COL_12（权限不足）</td><td style="text-align:left">E-220：errorCode=1／errorId=2004。中断处理、不跳转画面</td><td style="text-align:left">errorCode=1 且 errorId=2004 且 navigated=false</td><td style="text-align:left">L-212,D-212,E-220,I-335</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-22</td><td style="text-align:left">等价类（无效）</td><td style="text-align:left">会话不存在 或 距最后操作超过 30 分钟</td><td style="text-align:left">session_token=COL_13, idle_minutes=VAL_1（超过 30 分钟）</td><td style="text-align:left">E-221：errorCode=9／errorId=9001。替换为 SessionErrorScreen</td><td style="text-align:left">errorCode=9 且 errorId=9001 且画面=SessionErrorScreen</td><td style="text-align:left">L-212,E-221,I-335</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-23</td><td style="text-align:left">边界值</td><td style="text-align:left">非运行时间（平日 7:00–22:00 JST 之外）或计划停机</td><td style="text-align:left">request_time=VAL_1（非运行时间）</td><td style="text-align:left">E-222：errorCode=9／errorId=9002。替换为 OnlineControlErrorScreen</td><td style="text-align:left">errorCode=9 且 errorId=9002 且画面=OnlineControlErrorScreen</td><td style="text-align:left">L-212,E-222,I-335</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-24</td><td style="text-align:left">等价类（无效）</td><td style="text-align:left">DB 异常 或 预期外异常（含 <code>/initEdit</code> mode=3 目标不存在、Q-328）</td><td style="text-align:left">maker_cd=COL_1（诱发 DB 异常）</td><td style="text-align:left">E-223：errorCode=9／errorId=9999。回滚并替换为 SystemErrorScreen</td><td style="text-align:left">errorCode=9 且 errorId=9999 且 rolled_back=true 且画面=SystemErrorScreen</td><td style="text-align:left">L-214,L-220,D-207,E-223,I-335</td><td style="text-align:left">R-202</td></tr><tr><td style="text-align:left">TC-PENDING-25</td><td style="text-align:left">等价类（无效）</td><td style="text-align:left">绕过画面侧校验发送非法值（例：6 位代码）</td><td style="text-align:left">maker_cd=COL_2（无效类）</td><td style="text-align:left">E-224：errorCode=1／errorId=2005。显示消息、中断处理、不跳转画面</td><td style="text-align:left">errorCode=1 且 errorId=2005 且 navigated=false</td><td style="text-align:left">L-212,E-224,I-329,I-330</td><td style="text-align:left">R-202</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-8">
+<h2>8. E-ID 对应表</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">E-ID</th><th style="text-align:left">事象</th><th style="text-align:left">errorCode／errorId</th><th style="text-align:left">覆盖用例</th></tr></thead><tbody><tr><td style="text-align:left">E-213</td><td style="text-align:left">检索结果 0 件（作检索成功处理）</td><td style="text-align:left">1／1001</td><td style="text-align:left">TC-PENDING-12（边界）</td></tr><tr><td style="text-align:left">E-214</td><td style="text-align:left">检索结果超过 500 件</td><td style="text-align:left">1／1002</td><td style="text-align:left">TC-PENDING-15</td></tr><tr><td style="text-align:left">E-215</td><td style="text-align:left">新建、复制时键重复（含已删除）</td><td style="text-align:left">1／2001</td><td style="text-align:left">TC-PENDING-16</td></tr><tr><td style="text-align:left">E-216</td><td style="text-align:left">删除时存在被参照</td><td style="text-align:left">1／2002</td><td style="text-align:left">TC-PENDING-17</td></tr><tr><td style="text-align:left">E-217</td><td style="text-align:left">排他不一致（两键之一不一致）</td><td style="text-align:left">1／2003</td><td style="text-align:left">TC-PENDING-18</td></tr><tr><td style="text-align:left">E-218</td><td style="text-align:left">被参照检查的异常结果</td><td style="text-align:left">9／9101</td><td style="text-align:left">TC-PENDING-19</td></tr><tr><td style="text-align:left">E-219</td><td style="text-align:left">画面侧输入校验违规</td><td style="text-align:left">—／—</td><td style="text-align:left">TC-PENDING-20</td></tr><tr><td style="text-align:left">E-220</td><td style="text-align:left">API 权限不足</td><td style="text-align:left">1／2004</td><td style="text-align:left">TC-PENDING-21</td></tr><tr><td style="text-align:left">E-221</td><td style="text-align:left">会话不存在、超过 30 分钟</td><td style="text-align:left">9／9001</td><td style="text-align:left">TC-PENDING-22</td></tr><tr><td style="text-align:left">E-222</td><td style="text-align:left">在线运行不可</td><td style="text-align:left">9／9002</td><td style="text-align:left">TC-PENDING-23</td></tr><tr><td style="text-align:left">E-223</td><td style="text-align:left">DB 错误、预期外异常</td><td style="text-align:left">9／9999</td><td style="text-align:left">TC-PENDING-24</td></tr><tr><td style="text-align:left">E-224</td><td style="text-align:left">服务器侧输入校验违规</td><td style="text-align:left">1／2005</td><td style="text-align:left">TC-PENDING-25</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-9">
+<h2>9. 未确定事项（附表）</h2>
+<blockquote class="quote">起草中产生的未决。<strong>不继承到承认版</strong>（规则 02 §6.1。状态由 <code>docs/00_plan/coach/R60Maker/n06.yml</code> 持有）。</blockquote>
+<table class="tbl"><thead><tr><th style="text-align:left">Q</th><th style="text-align:left">要旨</th><th style="text-align:left">区分</th><th style="text-align:left">本稿处理</th></tr></thead><tbody><tr><td style="text-align:left">Q-332</td><td style="text-align:left">主数据画面 9 个项目未发放 I-ID（Q-306）。<code>design_ids</code> 可否以项目名称＋D-207 替代</td><td style="text-align:left">C</td><td style="text-align:left">TC-04〜11、16〜19 以 SCR-202 项目名称替代，不发放 I-ID</td></tr><tr><td style="text-align:left">Q-333</td><td style="text-align:left">E-213（0 件）作「检索成功处理」，不计入异常系而放在边界是否可行</td><td style="text-align:left">C</td><td style="text-align:left">TC-PENDING-12 放在边界，不计入异常 11 件</td></tr><tr><td style="text-align:left">Q-334</td><td style="text-align:left">详细设计 §2.1 无端点别所需权限对应表（明文仅 /download、/delete＝MKR03，/edit＝MKR02 以上）</td><td style="text-align:left">C</td><td style="text-align:left">判定表（TC-08、21）只覆盖明文范围。/init、/search、/initEdit 的下限不以推定填补</td></tr><tr><td style="text-align:left">Q-335</td><td style="text-align:left">测试代码在哪个节点生成（规则 04 §9.3）</td><td style="text-align:left">C</td><td style="text-align:left">本节点止于设计，不生成测试代码</td></tr></tbody></table>
+</section>
+<section class="sec sec-plain" id="sec-10">
+<h2>10. 人工审查与合格判定</h2>
+<ul><li><strong>合格判定由人进行</strong>（规则 04 §9.4）。AI 不宣布合格。只有记录人的标识符后才算合格。</li><li>审查要点：① 所有 TC 均有 <code>design_ids</code> 与 <code>req_ids</code>／② 比例 正常 8、边界 6、异常 11／③ 覆盖 E-213〜E-224 全部／④ 边界值取「恰好」／⑤ 测试数据仅为占位符／⑥ 由人把 TC-PENDING 临时编号替换为正式编号。</li></ul>
+</section>
+<section class="sec sec-plain" id="sec-11">
+<h2>知识库使用记录</h2>
+<table class="tbl"><thead><tr><th style="text-align:left">doc_id</th><th style="text-align:left">参照的节</th><th style="text-align:left">反映到</th></tr></thead><tbody><tr><td style="text-align:left">STD-TEST-RATIO-001</td><td style="text-align:left">2. 三つの観点技法</td><td style="text-align:left">§4（三技法分配）、§5〜§7（正常／边界／异常的比率与 design_ids）</td></tr><tr><td style="text-align:left">TPL-TEST-CASE-001</td><td style="text-align:left">1. ケース一覧</td><td style="text-align:left">§5〜§7（临时编号、观点、前提、输入、期望、依据、req_ids 的列结构）</td></tr><tr><td style="text-align:left">PAT-DEV-PLAYBOOK-001</td><td style="text-align:left">工程⑥ 単体テスト（PPT S13）→ G4 合否判定</td><td style="text-align:left">§7（异常系展开）、§10（合格判定由人）</td></tr></tbody></table>
+</section>
+<div class="foot">
+  本视图由 <code>tools/gen_view</code> 生成，机读源是 <code>01_AI产出_测试用例集.zh.md</code>。来自人的意见请写进「指摘单／评审栏」。
+</div>
+</div>
+</body>
+</html>
